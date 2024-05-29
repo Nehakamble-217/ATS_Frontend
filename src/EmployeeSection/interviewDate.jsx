@@ -267,7 +267,7 @@ const InterviewDates = () => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.37:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://192.168.1.33:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -291,7 +291,7 @@ const InterviewDates = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.37:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://192.168.1.33:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
       setInterviewData(data);
@@ -303,7 +303,7 @@ const InterviewDates = () => {
   const updateInterviewStatus = async (candidateId, feedback) => {
     try {
       await fetch(
-        `http://192.168.1.37:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
+        `http://192.168.1.33:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
         {
           method: "PUT",
           headers: {
@@ -352,7 +352,7 @@ const InterviewDates = () => {
   
     try {
       const response = await fetch(
-        "http://192.168.1.41:8891/api/ats/157industries/save-interview-response",data,
+        "http://192.168.1.33:8891/api/ats/157industries/save-interview-response",data,
         {
           method: "POST",
           headers: {

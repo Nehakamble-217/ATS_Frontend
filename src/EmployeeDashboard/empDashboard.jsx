@@ -19,6 +19,8 @@ import CallingExcel from "../Excel/callingExcel";
 import Home from "../EmployeeDashboard/home";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
+import Profile from "../LogoImages/ProfilePic.png"
+
 
 import { faL } from "@fortawesome/free-solid-svg-icons";
     
@@ -284,6 +286,14 @@ const empDashboard = () => {
       <div className="empDash-main-content">
 
         <div className="time-and-data">
+         <div className="head d-flex" style={{alignItems:"center",justifyContent:"center"}}>
+        <div className="user-img">
+          <img src={Profile} alt="" />
+        </div>
+        <div className="user-details" style={{alignItems:"center",justifyContent:"center"}}>
+          <p >3 <br />Arshad Attar</p>
+        </div>
+      </div>
         <DailyWork employeeId={employeeId}
             successfulDataAdditions={successfulDataAdditions}
             />

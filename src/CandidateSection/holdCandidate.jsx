@@ -222,7 +222,7 @@ const HoldCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/hold-candidate/${employeeId}`
+        `http://192.168.1.33:8891/api/ats/157industries/hold-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);

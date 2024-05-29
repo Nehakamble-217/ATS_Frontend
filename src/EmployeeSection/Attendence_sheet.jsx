@@ -478,7 +478,7 @@ const Attendance = () => {
       <div className="App-after">
       <table className="attendance-table">
         <thead>
-          <tr className="attendancerows" style={{ width: '100px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+          <tr className="attendancerows" style={{ width: '100px', overflowX: 'scroll', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
             <th className="attendanceheading">Date</th>
             <th className="attendanceheading">Login Time</th>
             <th className="attendanceheading">Late Mark</th>

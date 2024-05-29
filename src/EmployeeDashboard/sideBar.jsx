@@ -611,7 +611,7 @@ function Sidebar({
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://192.168.1.41:8891/api/ats/157industries/add-data",
+        "http://192.168.1.33:8891/api/ats/157industries/add-data",
         {
           targetValue: 10,
           archived: 0,
@@ -643,17 +643,11 @@ function Sidebar({
 
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
+      <div className='head'></div>
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
       </div>
-      <div className="head">
-        <div className="user-img">
-          <img src='' alt="" />
-        </div>
-        <div className="user-details">
-          <p className="name">ATS</p>
-        </div>
-      </div>
+      
       <div className="nav">
         <div className="sidebar-menu">
           {/* <p className="sidebar-title-main">Main</p> */}
