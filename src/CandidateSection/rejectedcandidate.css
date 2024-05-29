@@ -1,0 +1,90 @@
+/* 
+
+.header-after h1 {
+    background: linear-gradient(#ffe5b5, #ffb281);
+    color: gray;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    height: 100%;
+    width: 1900px;
+    margin-bottom: 0%;
+  }
+  
+  .App-after{
+    width: 1800px;
+    height: 100%;
+    margin: auto;
+    
+    
+  } */
+  
+ 
+/*   
+  .container-after {
+    width: 2150px;
+    height: 100%;
+    margin: auto;
+    padding: 20px;         
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color:  #ffe5b5;
+    gap: 0%;
+  } */
+  
+  .rejectedcandidatetable {
+    width: 1500px;
+    height: 100%;
+    background: white;
+    border-radius: 5px;
+    padding-top: 0%;
+    
+  }
+  
+    /* padding: 10px; */
+  .rejectedcandidatetable .rejectedcandidatetabledata{
+    /* padding: 10px; */
+    border: 1px solid gray;
+   
+    font-size: 16px;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid gray;
+    padding: 10px 15px;
+    
+    position: sticky;
+    
+   
+  }
+  
+  .rejectedcandidatetable .rejectedcandidateheading {
+    background-color: #ffcb9b;
+    color: gray;
+    font-weight:100;
+    text-align: center;
+    font-size: 18px;
+    /* font-weight: bold; */
+    border: 1px solid gray;
+    padding: 10px 15px;
+    position: static;
+  }
+  
+ 
+  .tr{
+    margin-right: 10px;
+    width: 1500px;
+    border: 1px solid gray;
+    white-space: nowrap;
+  }
+  .rejectedcandidatetable .rejectedcandidatetabledata:hover {
+    background-color: #F2F2F2; /* Change this to the desired hover color */
+  }
+  
+  /* .summary {
+    margin-top: 20px;
+  } */
+  
+  
+  

@@ -1,0 +1,58 @@
+/* .table th {
+  background-color: #ffe5b5;
+  color: gray;
+}
+
+table tr:nth-child(even) {
+  background-color: white;
+  color: gray;
+}
+.holding-table tr:nth-child(even):hover {
+    background-color: #f2f2f2;
+    color: gray;
+  }
+  table td:hover{
+    background-color: #f2f2f2;
+
+  } 
+  table td{
+    background-color: white;
+    color: gray;
+
+  }
+  .c1-tabledate{
+    background-color: white;
+    border: 1px solid gray;
+  }*/
+
+  .shortlistedheading th{
+    background-color: #ffcb9b;
+    color: gray;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 16px;
+    padding: 15px 15px;
+    border: 1px solid gray;
+    
+  }
+.shortlisted-tablehead{
+  font-size: 16px;
+  color: gray;
+  font-weight: 100;
+}
+.tabledaterow td{
+  background-color: white;
+  font-size: 18px;
+  border: 1px solid gray;
+  text-align: center;
+}
+.shortlistedcandidate td{
+  text-align: center;
+    font-size: 16px;
+    border: 1px solid gray;
+    padding: 10px 15px;
+}
+
+.shortlistedcandidate .tabledaterow:hover {
+  background-color: #F2F2F2; /* Change this to the desired hover color */
+}

@@ -1,0 +1,92 @@
+.daily-work-div{
+    display: flex;
+}
+
+.daily-work-tabel{
+    position: fixed;
+    margin-left: 0px;
+    /* background-color: ; */
+    /* color: #ffcb9b; */
+}
+.targetvalues{
+    /* border: 1px solid gray; */
+    /* border-radius: 15px; */
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;    
+}
+.targetvalues th{
+    color: #ffcb9b;
+
+}
+.daily-work-time{
+    padding-left: 470px;
+}
+.timer-break-btn {
+    margin: 0 12px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 15px;
+    height: 40px;
+    width: 90px;
+
+    /* background: url(../LogoImages/Capture.PNG); */
+    background-color: white;
+    /* transition: background-color 0.3s ease; */
+    /* color: black; */
+  }
+  .timer-break-btn:hover {
+    background-color:white;
+    color: #fb6f92;
+    border: 1px solid #fb6f92;
+    border-radius: 15px;
+  }
+  
+  .logout-btn {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 15px;
+    height: 40px;
+    width: 90px;
+    /* background-color: #FF5733; */
+    background-color: #ffcb9b;
+    color: black;
+  }
+  .logout-btn:hover {
+    background-color:white;
+    color: #fb6f92;
+    border: 1px solid #fb6f92;
+    border-radius: 15px;
+  }
+  .loging-hr{
+    margin-top: 31px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    height: 40px;
+    width: 200px;
+    font-size: 16px;
+  }
+
+  .daily-tr-btn{
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px;
+    height: 40px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  

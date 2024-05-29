@@ -1,0 +1,97 @@
+/* header.css */
+.Clint img, .main-homepage-Member img, .main-homepage-candidate img {
+    width: 100%; /* Adjusted for responsiveness */
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Add a fallback font */
+}
+.main-homepage-heading h1{
+      position: absolute;
+      left: 44%;
+      top: 10px;
+}
+.main-homepage-main-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #e1f0e1;
+    /* padding: 20px; Added padding for better spacing */
+    height: 100vh;
+   width: 100%;
+}
+
+.main-homepage-Member, .main-homepage-candidate {
+    flex: 1; /* Adjusted for equal distribution */
+    max-width: 50%; /* Adjusted to fit better on smaller screens */
+    /* margin: 10px; Added margin for better spacing */
+    height: 100vh;
+    margin-top: 0;
+}
+.main-homepage-candidate:hover,.main-homepage-Member:hover{
+      background-color:  rgb(185, 217, 185);;
+}
+.main-homepage-Member{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      flex-wrap: wrap;
+      background-color: rgb(210, 243, 210);
+      margin-top: 0px;
+}
+.main-homepage-candidate{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+}
+.main-homepage-Member img, .main-homepage-candidate img {
+    width: 60%;
+    /* margin: auto; Reset margin */
+}
+
+.main-homepage-Member h1, .main-homepage-candidate h1 {
+    text-align: center;
+    font-size: 2.5vw; /* Responsive font size */
+    color: rgb(59, 148, 230);
+    font-weight: 600;
+    /* margin-top: 10px; Adjusted for smaller screens */
+}
+
+.btn {
+    font-size: 1.5vw; /* Responsive font size */
+    width: 50%; /* Adjusted for responsiveness */
+    /* margin-top: 10px; Adjusted for smaller screens */
+    padding: 10px;
+   
+}
+
+.main-homepage-heading {
+    text-align: center; /* Adjusted for center alignment */
+    /* padding: 20px 0; Adjusted for better spacing */
+}
+
+.main-homepage-heading h1 {
+    font-size: 3vw; /* Responsive font size */
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .main-homepage-Member, .main-homepage-candidate {
+        max-width: 100%; /* Adjusted for smaller screens */
+    }
+}
+.main-homepage-btn{
+    border: 2px solid black;
+    border-radius: 15px;
+    font-size: 16px;
+    color: black;
+    width: 200px;
+    height: 50px;
+}

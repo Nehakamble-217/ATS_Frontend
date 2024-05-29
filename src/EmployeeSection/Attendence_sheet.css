@@ -1,0 +1,160 @@
+/* .App-after{
+  width: 100%;
+  background-attachment: fixed;
+}
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  position: relative;
+}
+
+.attendanceheading, .tabledata {
+  border: 1px solid gray;
+  padding: 5px;
+  white-space: nowrap;
+  width: 50px;  
+  height: 50px;
+  overflow: hidden; 
+   text-overflow: ellipsis; 
+}
+
+.tabledata:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltiptext {
+  display: inline-block;
+ 
+ 
+}
+.attendancerows{
+ 
+  background-color: #ffcb9b;
+    color: gray;
+    font-weight: 100;
+    text-align: center;
+    font-size: 18px;
+  
+    border: 1px solid gray;
+    padding: 10px 15px;
+    top: 0;
+    position: sticky;
+    white-space: nowrap;
+    width: 80px;
+}
+
+.attendancerowsdata,.tabledata{
+  text-align: center;
+  font-size: 16px;
+  border: 1px solid gray;
+  padding: 5px;
+
+}
+.attendanceheading{
+  white-space: nowrap;
+}
+.tabledata{
+  white-space: wrap;
+  padding: 5px;
+} */
+
+
+
+
+
+
+
+
+.App-after {
+  width: 100%;
+  background-attachment: fixed;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  position: relative;
+}
+
+.attendanceheading, .tabledata {
+  border: 1px solid gray;
+  padding: 5px;
+  white-space: nowrap;
+  max-width: 200px;  /* Adjust the width as needed */
+  height: 50px;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
+.tabledata:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltiptext {
+  display: inline-block;
+}
+
+.attendancerows {
+  background-color: #ffcb9b;
+  color: gray;
+  font-weight: 100;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid gray;
+  padding: 10px 15px;
+  top: 0;
+  
+  max-width: 200px; 
+  overflow: hidden;
+  text-overflow: clip;
+  width: 100px;  /* Adjust the width as needed */
+}
+
+.attendancerowsdata, .tabledata {
+  text-align: center;
+  font-size: 16px;
+  border: 1px solid gray;
+  padding: 5px;
+  overflow: hidden;
+  max-width: 200px; 
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+
+
+.tabledata {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+}
