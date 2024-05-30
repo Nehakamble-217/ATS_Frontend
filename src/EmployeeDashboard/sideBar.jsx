@@ -515,6 +515,7 @@ import React, { useState, useEffect } from 'react';
 import '../EmployeeDashboard/sideBar.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { getEmployeeWorkData } from "../api/api";
+import Circle from "../LogoImages/circle.png"
 import axios from 'axios';
 
 function Sidebar({
@@ -556,9 +557,7 @@ function Sidebar({
     }
   }, [employeeId]);
 
-  const toggleSidebar = () => {
-    setIsActive(!isActive);
-  };
+ 
 
   const toggleSubMenu = (e) => {
     e.preventDefault();
@@ -607,6 +606,10 @@ function Sidebar({
       subMenu2.classList.toggle('active');
     }
   };
+   const toggleSidebar = () => {
+    setIsActive(!isActive);
+    OpenSidebar(); // Call the function to toggle sidebar state
+  };
 
   const handleLogout = async () => {
     try {
@@ -644,7 +647,7 @@ function Sidebar({
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
       <div className='head'></div>
-      <div className="sidebar-menu-btn" onClick={toggleSidebar}>
+       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
       </div>
       
@@ -673,21 +676,25 @@ function Sidebar({
               <ul className="sub-menu">
                 <li onClick={toggleShortListed}>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Shortlisted Candidate</span>
                   </a>
                 </li>
                 <li onClick={toggleSelectCandidate}>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Selected Candidate</span>
                   </a>
                 </li>
                 <li onClick={toggleHoldCandidate}>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Hold Candidate</span>
                   </a>
                 </li>
                 <li onClick={toggleRejectedCandidate}>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Rejected Candidate</span>
                   </a>
                 </li>
@@ -708,21 +715,25 @@ function Sidebar({
               <ul className="sub-menu sub-menu1">
                 <li onClick={toggleSelfCalling}>
                   <a href=" ">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Self Calling</span>
                   </a>
                 </li>
                 <li onClick={toggelLineUp}>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Self LineUp</span>
                   </a>
                 </li>
                 <li>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Self Offer Work</span>
                   </a>
                 </li>
                 <li onClick={toggleAttendance}>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">My Attendance </span>
                   </a>
                 </li>
@@ -737,16 +748,19 @@ function Sidebar({
               <ul className="sub-menu sub-menu1 sub-menu2">
                 <li onClick={toggleExcelCalling}>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Excel Calling</span>
                   </a>
                 </li>
                 <li>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Excel Line Up</span>
                   </a>
                 </li>
                 <li>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text">Excel Offers</span>
                   </a>
                 </li>
@@ -767,7 +781,7 @@ function Sidebar({
           </ul>
         </div>
 
-        <div className="sidebar-menu">
+        <div className="sidebar-menu " style={{paddingLeft:"20px"}}>
           {/* <p className="title">Account</p> */}
           <ul>
             <li className={isActive ? "active" : ""} onClick={toggleSubMenu2}>
@@ -778,6 +792,7 @@ function Sidebar({
               </a>
               <ul className="sub-menu sub-menu1 sub-menu2">
                 <li>
+                  <img src={Circle}  style={{width:"10px"}} alt="" />
                   <a href="#">
                     <span className="sidebar-text" onClick={openNaukriPlatform}>
                       Naukri
@@ -786,6 +801,7 @@ function Sidebar({
                 </li>
                 <li>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text" onClick={openLinkedinPlatform}>
                       LinkedIn
                     </span>
@@ -793,6 +809,7 @@ function Sidebar({
                 </li>
                 <li>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text" onClick={openTimesPlatform}>
                       Times Jobs
                     </span>
@@ -800,6 +817,7 @@ function Sidebar({
                 </li>
                 <li>
                   <a href="#">
+                    <img src={Circle}  style={{width:"10px"}} alt="" />
                     <span className="sidebar-text" onClick={openIndeedPlatform}>
                       Indeed
                     </span>

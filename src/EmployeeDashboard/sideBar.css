@@ -337,16 +337,15 @@ body {
   min-height: 100vh;
 } */
 .sidebar {
-  
-  position: fixed;
-  top: 80px;
+  position: sticky;
+  top: 0 !important;
   left: 0;
+  padding-top: 80px !important;
   width: 243px;
   /* background:url("https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2pvYjUxOC1rd2FuLTE4LWEuanBn.jpg") ; */
   /* background: url("https://rukminim2.flixcart.com/image/850/1000/kyuge4w0/lipstick/w/f/o/kiss-proof-non-trasfer-peach-brown-lip-gloss-lipstick-thtc-original-imagaznx7rys5uzz.jpeg?q=90&crop=false"); */
   background-repeat:initial;
   /* background-size: cover; */
-  
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -360,8 +359,8 @@ body {
   padding:0px;
   /* border: 1px solid #424141; */
   /* border-radius: 15px; */
-  transition: all 0.3s;
-  z-index: 999999;
+  transition: all 0.8s;
+  z-index: 999;
 }
 
 .sidebar .head {
@@ -370,15 +369,16 @@ body {
   width: 140px;
   height: 50px;
   /* gap: 10px; */
- 
+ font-size: 18px;
+ color: #f2f2f2;
   font-weight: bold;
   padding-bottom: 20px;
   /* background-color: #ffb07c; */
   /* border-bottom: 1px solid red; */
 }
 .user-img {
-  width: 44px;
-  height: 44px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -389,7 +389,7 @@ body {
 
 .user-details .title,
 .sidebar-menu .title {
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 500;
   color: #757575;
   text-transform: uppercase;
@@ -406,7 +406,7 @@ body {
 .sidebar-menu ul li {
   position: relative;
   list-style: none;
-  padding-left: 10px;
+  padding-left: 0px;
   margin-bottom: 1px;
 }
 .sidebar-menu ul{
@@ -422,13 +422,14 @@ body {
   text-decoration: none;
   padding: 15px 0px;
   border-radius: 15px;
-  transition: all 0.3s;
+  transition: all 0.7s;
 }
 .sidebar-menu ul li > a:hover,
 .sidebar-menu ul li.active > a {
   color: #000;
   /* background-color: #ff8799; */
   background-color: #ffd8a8;
+  
 }
 .sidebar-menu ul li .icon {
   font-size: 18px;
@@ -458,12 +459,13 @@ body {
 .sidebar-menu:not(:last-child) {
   padding-bottom: 10px;
   margin-bottom: 20px;
-  width: 300px;
+  /* width: 300px; */
+  padding-left: 20px;
   border-bottom: 1px solid #ffb281;
 }
 .sidebar-menu-btn {
   position: absolute;
-  right: 10px;
+  left: 10px;
   /* top: 3.5%; */
   width: 28px;
   height: 28px;
@@ -488,6 +490,7 @@ body {
 }
 .sidebar.active {
   width: 55px;
+  height: 100vh;
 }
 .sidebar.active .sidebar-menu-btn i {
   transform: rotate(360deg);
@@ -553,5 +556,7 @@ body {
 
 .sub-menu.active {
   display: block;
+  padding-left: 20px !important;
+  list-style:decimal !important;
 }
 

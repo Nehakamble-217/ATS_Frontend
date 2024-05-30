@@ -268,10 +268,10 @@ const DailyWork = ({ successfulDataAdditions }) => {
         </table>
       </div>
       <div className="daily-work-time">
-        <div style={{ paddingLeft: "20px" }}>
+        <div >
           <h6 hidden>Time: {currentTime}</h6>
           <h6 hidden>Date: {currentDate}</h6>
-          <h6 className="loging-hr">
+          <h6 className="loging-hr" style={{backgroundColor:"#ffcb9b",color:"white",border:"1px solid #f2f2f2"}}>
             Loging hr: {time.hours.toString().padStart(2, "0")}:
             {time.minutes.toString().padStart(2, "0")}:
             {time.seconds.toString().padStart(2, "0")}
@@ -280,20 +280,20 @@ const DailyWork = ({ successfulDataAdditions }) => {
         <div>
           <button
             className={running ? "timer-break-btn" : "timer-break-btn"}
-            style={{ position: "fixed", top: "20px", right: "95px" }}
+            style={{ position: "fixed",top:"30px", right: "95px" }}
             onClick={running ? handlePause : handleResume}
           >
             {running ? "Pause" : "Resume"}
           </button>
           <br />
 
-          <button
+          {/* <button
             className="logout-btn"
             style={{ position: "fixed", top: "20px", right: "10px" }}
             onClick={handleLogout}
           >
             Logout
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

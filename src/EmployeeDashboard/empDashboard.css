@@ -27,11 +27,13 @@ body {
 
 .time-and-data .head {
   display: flex;
-  
+  z-index: 99999;
   /* position: fixed; */
   /* width: 240px; */
   height: 50px;
   gap: 10px;
+  color: grey;
+  font-size: 18px;
   /* padding-left: 30px; */
   padding-top: 30px;
   font-weight: bold;
@@ -81,6 +83,7 @@ body {
 @media screen and (max-width: 992px) {
   .grid-container {
     grid-template-columns:1fr;
+    
     grid-template-rows: auto;
     grid-template-areas:
       'header'
@@ -94,6 +97,96 @@ body {
   .header-left {
     display: none;
   }
+}
+
+
+/* EmpDashboard.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f9fc;
+  color: rgb(250, 39, 11);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  transition: all 0.3s ease;
+}
+
+.sidebar {
+  background-color: #ffe5b5;
+  transition: all 0.3s ease;
+}
+
+.empDash-main-content {
+  padding: 20px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.time-and-data .head {
+  display: flex;
+  gap: 10px;
+  color: grey;
+  font-size: 18px;
+  padding-top: 30px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-and-data {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #ffe5b5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.user-img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 992px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  /* .sidebar {
+    display: none;
+  } */
+}
+.sidebar-open .empDash-main-content {
+  margin-left: 40px;
+}
+
+.sidebar-closed .empDash-main-content {
+  margin-left: 60px;
+}
+
+/* Classes for toggling sidebar state */
+.grid-container.sidebar-closed {
+  grid-template-columns: 0 1fr;
+}
+
+.grid-container.sidebar-closed .sidebar {
+  width: 55px;
+}
+.grid-container.sidebar-closed .sidebar-text {
+  display: block;
 }
 
 

@@ -496,7 +496,7 @@ const Attendance = () => {
             <th className="attendanceheading">Day Present Unpaid</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='attendanceTableData'>
           {attendanceData.map((data) => (
             <tr key={data.workId} className="attendancerowsdata">
               <td className="tabledata">
