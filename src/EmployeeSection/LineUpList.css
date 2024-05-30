@@ -3,20 +3,25 @@ body {
     padding: 0;
   }
   
-  .calling-list-container {
+  /* .calling-list-container {
     margin: 20px;
-  }
+  } */
   
   .calling-table {
     width: 2900px;
     border-collapse: collapse;
   }
   
-  .calling-table th,
+  
+  .calling-table th{
+ border: 1px solid gray;
+    padding: 4px;
+    text-align: left;
+  }
   .calling-table td {
     border: 1px solid gray;
-    padding: 8px;
-    text-align: left;
+    padding: 1px;
+    text-align: center;
   }
   
   .calling-table th {

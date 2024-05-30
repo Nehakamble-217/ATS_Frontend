@@ -1,12 +1,16 @@
 .daily-work-div{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
+
+
 
 .daily-work-tabel{
     position: fixed;
     margin-left: 0px;
+    
     /* background-color: ; */
     /* color: #ffcb9b; */
 }

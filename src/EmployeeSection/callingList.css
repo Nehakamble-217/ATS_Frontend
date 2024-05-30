@@ -4,7 +4,6 @@ body {
   }
   
   .calling-list-container {
-    /* margin: 20px; */
     overflow-x: scroll;
     overflow-y: scroll;
   }
@@ -14,7 +13,7 @@ body {
     border-collapse: collapse;
   }
   .table-container_forselfcalling tr td{
-  padding: 5px;}
+  padding: 1px;}
 
 
   .table-container_forselfcalling th,
@@ -29,7 +28,7 @@ body {
     background-color: #ffcb9b;
     position: static;
     color: gray; 
-    padding: 12px;
+    padding: 4px;
   }
   
   /* .calling-table tr:nth-child(even) {

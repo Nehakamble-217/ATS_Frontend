@@ -118,7 +118,7 @@
 
 
 
-/* .container-after {
+.container-after {
   width: 2150px;
   height: 100%;
   margin: auto;
@@ -127,7 +127,7 @@
   border-radius: 5px;
   background-color:  #ffe5b5;
   gap: 0%;
-} */
+}
 
 .holdingcandidate-table {
   width: 1500px;

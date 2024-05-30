@@ -300,7 +300,7 @@ const EmpDashboard = () => {
           </div>
           <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
         </div>
-        <div style={{ paddingTop: "100px" }}>
+        <div style={{ paddingTop: "80px" }}>
           {selfCalling && (
             <CallingList updateState={funForUpdateSelfCalling} funForGettingCandidateId={gettingCandidateIdForUpdate} />
           )}
@@ -315,7 +315,7 @@ const EmpDashboard = () => {
           {showJobDiscriptions && <Home />}
         </div>
         <div>
-          {updateSelfCalling && <UpdateCallingTracker candidateId={candidateIdForUpdate} />}
+          {updateSelfCalling && <UpdateCallingTracker candidateId={gettingCandidateIdForUpdate} />}
         </div>
         <div>
           {addCandidate && <CallingTrackerForm employeeId={parseInt(employeeId, 10)} onDataAdditionSuccess={handleDataAdditionSuccess} />}

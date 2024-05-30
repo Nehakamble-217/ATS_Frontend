@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const baseURL = "http://192.168.1.33:8891/api/ats/157industries";
+const baseURL = "http://192.168.1.37:8891/api/ats/157industries";
 
 export const getPasswordFromDB = (id) =>
   axios.post(`${baseURL}/fetch-pass/${id}`);

@@ -1,52 +1,80 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { useLocation, useParams } from "react-router-dom";
 
-const UpdateCallingTracker = ({ initialData, candidateId }) => {
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import "../EmployeeSection/AddCandidate.css";
+
+const UpdateCallingTracker = ({ initialData,candidateId }) => {
   const [callingTracker, setCallingTracker] = useState({
     date: new Date().toISOString().slice(0, 10),
     recruiterName: "",
     candidateName: "",
+    candidateEmail: "",
     position: "",
+    requirementId: "",
     requirementCompany: "",
+    sourceName: "",
     contactNumber: "",
     alternateNumber: "",
+    currentLocation: "",
     communicationRating: "",
     selectYesOrNo: "",
     personalFeedback: "",
     callingFeedback: "",
     lineUp: {
-      candidateEmail: "",
-      companyName: "",
+      dateOfBirth: "",
+      gender: "",
+      qualification: "",
+      yearOfPassing: "",
       totalExperience: "",
+      resume: "",
+      extraCertification: "",
+      companyName: "",
+
       currentCTC: "",
       expectedCTC: "",
       noticePeriod: "",
       holdingAnyOffer: "",
-      currentLocation: "",
       feedBack: "",
       availabilityForInterview: "",
+      msgForTeamLeader: "",
       finalStatus: "",
+      interviewTime: "",
     },
   });
 
-  const { employeeId } = useParams();
-  const newEmployeeId = parseInt(employeeId, 10);
+  const { employeeId} = useParams();
+  const employeeIdNew = parseInt(employeeId, 10);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [recruiterName, setRecruiterName] = useState("");
-  const [candidateFetched, setCandidateFetched] = useState(initialData);
+  const [candidateFetched, setCandidateFetched] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [requirementOptions, setRequirementOptions] = useState([]);
 
   const location = useLocation();
 
   useEffect(() => {
     fetchEmployeeName();
-    fetchCandidateData(candidateId);
-    // }, [employeeId, candidateId]);
+    fetchCandidateData();
+    fetchRequirementOptions();
   }, [employeeId, candidateId]);
 
-  // const candidatesId = parseInt(candidateId, 10);
+  const fetchRequirementOptions = async () => {
+    try {
+      const response = await axios.get(
+        `http://192.168.1.37:8891/api/ats/157industries/company-list/${employeeIdNew}`
+      );
+      const { data } = response;
+      setRequirementOptions(data);
+    } catch (error) {
+      console.error("Error fetching requirement options:", error);
+    }
+  };
+
   useEffect(() => {
     if (initialData) {
       setCallingTracker(initialData);
@@ -58,7 +86,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchEmployeeName = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.37:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const data = await response.text();
       setRecruiterName(data);
@@ -67,10 +95,10 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     }
   };
 
-  const fetchCandidateData = async (candidateId) => {
+  const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.37:8891/api/ats/157industries/specific-data/${candidateId}`
       );
       const data = await response.json();
       setCallingTracker(data);
@@ -78,6 +106,13 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     } catch (error) {
       console.error("Error fetching candidate data:", error);
     }
+  };
+
+  const handlePhoneNumberChange = (value, name) => {
+    setCallingTracker((prevState) => ({
+      ...prevState,
+      [name]: value ? value : "",
+    }));
   };
 
   const handleChange = (e) => {
@@ -101,7 +136,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
       };
 
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.37:8891/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {
@@ -112,7 +147,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
       );
 
       if (response.ok) {
-        const data = response.text();
+        const data = await response.text();
         console.log("Data updated successfully:", data);
         setFormSubmitted(true);
         setShowAlert(true);
@@ -130,406 +165,509 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
 
   return (
     <div>
-      <h1>Update Page</h1>
-      <form onSubmit={handleSubmit} className="m-3 px-2">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Updated Date</label>
-              <div className="col-sm-4">
-                <input
-                  type="date"
-                  name="date"
-                  style={{ width: "300px" }}
-                  value={callingTracker.date}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                  placeholder="Date"
-                />
-              </div>
-            </div>
+      <hr />
+      <center>
+        {" "}
+        <h3>Update Page & Follow Up Page 321</h3>
+      </center>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Recruiter Name</label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="recruiterName"
-                  value={recruiterName}
-                  readOnly
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Employee Id</label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="employeeId"
-                  value={employeeId}
-                  className="form-control mb-3"
-                  readOnly
-                />
-              </div>
-            </div>
+      <form onSubmit={handleSubmit}>
+        <div className="maintable">
+          <table id="studTables" className="table  table-striped  text-center">
+            <tbody className="table-group-divider">
+              <tr id="table-row">
+                <th scope="col">Added Date:</th>
+                <td>
+                  <input
+                    type="text"
+                    id="currentDate"
+                    name="currentDate"
+                    value={callingTracker.date}
+                    className="form-control"
+                    readOnly
+                  />
+                </td>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Candidate Name</label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="candidateName"
-                  value={callingTracker.candidateName}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+                <th>Recruiters Name</th>
+                <td>
+                  <input
+                    type="text"
+                    name="recruiterName"
+                    value={recruiterName}
+                    readOnly
+                    className="form-control"
+                  />
+                </td>
+              </tr>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Candidate Position
-              </label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="position"
-                  value={callingTracker.position}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+              <tr id="heading123">
+                <th hidden>Employee Id</th>
+                <td hidden>
+                  <input
+                    type="text"
+                    name="employeeId"
+                    value={employeeId}
+                    className="form-control mb-3"
+                    readOnly
+                    hidden
+                  />
+                </td>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Requirement Company
-              </label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="requirementCompany"
-                  value={callingTracker.requirementCompany}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Contact Number</label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="contactNumber"
-                  value={callingTracker.contactNumber}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Alternate Number
-              </label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="alternateNumber"
-                  value={callingTracker.alternateNumber}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Communication Rating
-              </label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="communicationRating"
-                  value={callingTracker.communicationRating}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Personal Feedback
-              </label>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="personalFeedback"
-                  value={callingTracker.personalFeedback}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Calling Feedback
-              </label>
-              <div className="col-sm-8">
-                <select
-                  className="form-select mb-2"
-                  style={{ width: "300px" }}
-                  name="callingFeedback"
-                  value={callingTracker.callingFeedback}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Feedback Type</option>
-                  <option value="Call Done">Call Done</option>
-                  <option value="Asked for Call Back">
-                    Asked for Call Back
-                  </option>
-                  <option value="No Answer">No Answer</option>
-                  <option value="Call Disconnected by Candidate">
-                    Call Disconnected by Candidate
-                  </option>
-                  <option value="Network Issue">Network Issue</option>
-                  <option value="Invalid Number">Invalid Number</option>
-                  <option value="Need to call back">Need to call back</option>
-                  <option value="Do not call again">Do not call again</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Candidate Interested
-              </label>
-              <div className="col-sm-8">
-                <select
-                  className="form-select mb-2"
-                  style={{ width: "300px" }}
-                  name="selectYesOrNo"
-                  value={callingTracker.selectYesOrNo}
-                  onChange={handleChange}
-                >
-                  <option value="">Select</option>
-                  <option value="Interested">Interested</option>
-                  <option value="Not Interested">Not Interested</option>
-                  <option value="Interested But Not Eligible">
-                    Interested But Not Eligible
-                  </option>
-                  <option value="Eligible">Eligible</option>
-                  <option value="Not Eligible">Not Eligible</option>
-                  <option value="Not Eligible But Interested">
-                    Not Eligible But Interested
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6">
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Candidate Email</label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.candidateEmail"
-                  value={callingTracker.lineUp?.candidateEmail}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Current Company</label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.companyName"
-                  value={callingTracker.lineUp?.companyName}
-                  onChange={handleChange}
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Total Experince</label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.totalExperience"
-                  value={callingTracker.lineUp?.totalExperience}
+                <th> Candidates Full Name*</th>
+                <td>
+                  <input
+                    type="text"
+                    name="candidateName"
+                    value={callingTracker.candidateName}
                     onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
 
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+                <th scope="col">Candidate Email</th>
+                <td>
+                  <input
+                    type="email"
+                    name="candidateEmail"
+                    value={callingTracker.candidateEmail}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Current CTC</label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.currentCTC"
-                  value={callingTracker.lineUp?.currentCTC}
-                  onChange={handleChange}
+              <tr>
+                <th scope="col">Contact Number*</th>
+                <td>
+                  <input
+                    placeholder="Enter phone number"
+                    name="contactNumber"
+                    value={callingTracker.contactNumber}
+                    onChange={(value) =>
+                      handlePhoneNumberChange(value, "contactNumber")
+                    }
+                  
+                    maxLength={12}
+                    className="PhoneInputInput"
+                  />
+                </td>
 
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+                <th scope="col">Alternate Number</th>
+                <td>
+                  <input
+                    placeholder="Enter phone number"
+                    name="alternateNumber"
+                    value={callingTracker.alternateNumber}
+                    onChange={(value) =>
+                      handlePhoneNumberChange(value, "alternateNumber")
+                    }
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Expected CTC</label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.expectedCTC"
-                  value={callingTracker.lineUp?.expectedCTC}
-                  onChange={handleChange}
+                    maxLength={12}
+                    className="PhoneInputInput"
+                  />
+                </td>
+              </tr>
 
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+              <tr>
+                <th scope="col">Source Name*</th>
+                <td>
+                  <select
+                    className="form-select"
+                    name="sourceName"
+                    value={callingTracker.sourceName}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Source Name</option>
+                    <option value="LinkedIn">linkedIn</option>
+                    <option value="Naukri">Naukri</option>
+                    <option value="Indeed">Indeed </option>
+                    <option value="Times">Times</option>
+                    <option value="Social Media">Social Media</option>
+                    <option value="Company Page">Company Page</option>
+                    <option value="Excel">Excel</option>
+                    <option value="Friends">Friends</option>
+                    <option value="others">others</option>
+                  </select>
+                </td>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Notice Period</label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.noticePeriod"
-                  value={callingTracker.lineUp?.noticePeriod}
-                  onChange={handleChange}
+                <th scope="col">Applying For Position</th>
+                <td>
+                  <input
+                    type="text"
+                    name="position"
+                    value={callingTracker.position}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
 
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+              <tr>
+                <th scope="col">Applying Company Id</th>
+                <td>
+                  <select
+                    className="form-select mb-1"
+                    name="requirementId"
+                    value={callingTracker.requirementId}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select ID</option>
+                    {requirementOptions.map((option) => (
+                      <option key={option[0]} value={option[0]}>
+                        {option[0]}
+                      </option>
+                    ))}
+                  </select>
+                </td>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Any Offere letter{" "}
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.holdingAnyOffer"
-                  value={callingTracker.lineUp?.holdingAnyOffer}
-                  onChange={handleChange}
+                <th scope="col">Applying Company Name</th>
+                <td>
+                  <select
+                    className="form-select"
+                    name="requirementCompany"
+                    value={callingTracker.requirementCompany}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Company</option>
+                    {requirementOptions.map((option) => (
+                      <option key={option.requirement_id} value={option[1]}>
+                        {option[1]}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
 
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+              <tr>
+                <th>Current Location</th>
+                <td>
+                  <input
+                    type="text"
+                    name="currentLocation"
+                    value={callingTracker.currentLocation}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Current Location
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.currentLocation"
-                  value={callingTracker.lineUp?.currentLocation}
-                  onChange={handleChange}
+                <th scope="col">Communication Rating</th>
+                <td>
+                  <input
+                    type="text"
+                    name="communicationRating"
+                    value={callingTracker.communicationRating}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
 
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+              <tr>
+                <th>Calling Feedback</th>
+                <td>
+                  <select
+                    className="form-select"
+                    name="callingFeedback"
+                    value={callingTracker.callingFeedback}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Feedback Type</option>
+                    <option value="Call Done">Call Done</option>
+                    <option value="Asked for Call Back">
+                      Asked for Call Back
+                    </option>
+                    <option value="No Answer">No Answer</option>
+                    <option value="Call Disconnected by Candidate">
+                      Call Disconnected by Candidate
+                    </option>
+                    <option value="Network Issue">Network Issue</option>
+                    <option value="Invalid Number">Invalid Number</option>
+                    <option value="Need to call back">Need to call back</option>
+                    <option value="Do not call again">Do not call again</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </td>
+                <th>Candidate Interested</th>
+                <td>
+                  <select
+                    className="form-select"
+                    name="selectYesOrNo"
+                    value={callingTracker.selectYesOrNo}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="Interested">Interested</option>
+                    <option value="No Interested">No Interested</option>
+                    <option value="Interested But Not Eligible">
+                      Intersted But Not Eligible
+                    </option>
+                    <option value="Eligible">Eligible</option>
+                    <option value="No Interested">No Eligible</option>
+                    <option value="Not Eligible But Interested">
+                      Not Eligible But Intersted
+                    </option>
+                  </select>
+                </td>
+              </tr>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Final Feedback</label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="feedBack"
-                  value={callingTracker.lineUp?.feedBack}
+              <tr>
+                <th scope="col">Date Of Birth</th>
+                <td>
+                  <input
+                    type="date"
+                    name="lineUp.dateOfBirth"
+                    value={callingTracker.lineUp?.dateOfBirth}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
 
-                  onChange={handleChange}
+                <th scope="col">Gender</th>
+                <td>
+                  <div
+                    className="main-gender"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <input
+                      style={{ paddingTop: "8px" }}
+                      type="checkbox"
+                      name="lineUp.gender"
+                      value="male"
+                      className="gender"
+                      checked={callingTracker.lineUp?.gender === "male"}
+                      onChange={handleChange}
+                    />
+                    <label className="px-2">Male</label>
 
-                />
-              </div>
-            </div>
+                    <input
+                      type="checkbox"
+                      name="lineUp.gender"
+                      value="female"
+                      className="gender"
+                      checked={callingTracker.lineUp?.gender === "female"}
+                      onChange={handleChange}
+                    />
+                    <label className="px-2">Female</label>
+                  </div>
+                </td>
+              </tr>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">
-                Availble For Interview
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="date"
-                  style={{ width: "300px" }}
-                  name="lineUp.availabilityForInterview}"
-                  value={callingTracker.lineUp?.availabilityForInterview}
-                  onChange={handleChange}
+              <tr>
+                <th scope="col">Education</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.qualification"
+                    value={callingTracker.lineUp?.qualification}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
 
-                  className="form-control mb-3"
-                />
-              </div>
-            </div>
+                <th scope="col">Year Of Passing</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.yearOfPassing"
+                    value={callingTracker.lineUp?.yearOfPassing}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
 
-            <div className="mb-1 row">
-              <label className="col-sm-4 col-form-label">Final Status</label>
-              <div className="col-sm-8">
-                <select
-                  type="text"
-                  style={{ width: "300px" }}
-                  name="lineUp.finalStatus"
-                  value={callingTracker.lineUp?.finalStatus}
-                  onChange={handleChange}
-                  className="form-control mb-3"
+              <tr>
+                <th scope="col">
+                  Upload Resume
+                  {/* {resumeUploaded && (
+                    <FaCheckCircle className="upload-success-icon" />
+                  )} */}
+                </th>
+                <td>
+                  <input
+                    type="file"
+                    // onChange={handleResumeFileChange}
+                    accept=".pdf,.doc,.docx"
+                    className="form-control pt-1"
+                  />
+                </td>
+
+                <th>Any Extra Certification</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.extraCertification"
+                    value={callingTracker.lineUp?.extraCertification}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="col">Current Company</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.companyName"
+                    value={callingTracker.lineUp?.companyName}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+
+                <th scope="col">Experince</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.totalExperience"
+                    value={callingTracker.lineUp?.totalExperience}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="col">Current CTC(LPA)</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.currentCTC"
+                    value={callingTracker.lineUp?.currentCTC}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+                <th scope="col">Expected CTC(LPA)</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.expectedCTC"
+                    value={callingTracker.lineUp?.expectedCTC}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="col">Notice Period(Days)</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.noticePeriod"
+                    value={callingTracker.lineUp?.noticePeriod}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+                <th scope="col">Holding Offer Letter</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.holdingAnyOffer"
+                    value={callingTracker.lineUp?.holdingAnyOffer}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="col">Recruiters Feedback</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.feedBack"
+                    value={callingTracker.lineUp?.feedBack}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+
+                <th scope="col">Comment For Eevaluter/TL</th>
+                <td>
+                  <input
+                    type="text"
+                    name="lineUp.msgForTeamLeader"
+                    value={callingTracker.lineUp?.msgForTeamLeader}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th scope="col">Availability Of a Interview</th>
+                <td
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingTop: "14px",
+                  }}
                 >
-                  <option value=""></option>
-                  <option value="Shortlisted">Shortlisted</option>
-                  <option value="rejected">Rejected</option>
-                  <option value="hold">hold</option>
-                </select>
-              </div>
-            </div>
-          </div>
+                  <input
+                    type="date"
+                    name="lineUp.availabilityForInterview"
+                    value={callingTracker.lineUp?.availabilityForInterview}
+                    onChange={handleChange}
+                    className="form-control"
+                    style={{ marginRight: "10px" }}
+                  />
+                  <input
+                    type="time"
+                    name="lineUp.interviewTime"
+                    value={callingTracker.lineUp?.interviewTime}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+
+                <th scope="col">Final Status</th>
+                <td>
+                  <select
+                    type="text"
+                    name="lineUp.finalStatus"
+                    value={callingTracker.lineUp?.finalStatus}
+                    onChange={handleChange}
+                    className="form-select"
+                  >
+                    <option value="">Select</option>
+                    <option value="Interview schedule">
+                      Interview schedule
+                    </option>
+                    <option value="Attending After Some time">
+                      Attending After Some time
+                    </option>
+                    <option value="hold">hold</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        {showAlert && ( // Display alert only if showAlert is true
+        {showAlert && (
           <div className="alert alert-success" role="alert">
             Data updated successfully!
           </div>
         )}
 
-        <button type="submit" className="btn btn-dark">
-          Update Data
-        </button>
+<center>
+<div className="d-grid gap-2 col-5 max-auto" >
+  
+
+  <button type="submit" className="btn btn-dark ">
+    Update Data
+  </button>
+
+  </div>
+</center>
       </form>
     </div>
-  );
+  );    
 };
 
 UpdateCallingTracker.propTypes = {

@@ -121,7 +121,7 @@ const RejectedCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/rejected-candidate/${employeeId}`
+        `http://192.168.1.37:8891/api/ats/157industries/rejected-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -140,9 +140,9 @@ const RejectedCandidate = () => {
         <div>
           {/* <h2>RejectedCandidate Candidates 33</h2> */}
           <div>
-          <table className="rejectedcandidatetable">
-              <thead>
-                <tr className="rejectedcandidateheading">
+          <table className="shortlistedcandidate">
+              <thead className="shortlisted-tablehead">
+                <tr className="shortlistedheading">
                   <th style={{ fontSize: "16px", whiteSpace:"nowrap" }}>Sr No.</th>
                   <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Id.</th>
                   <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Date</th>
@@ -181,7 +181,7 @@ const RejectedCandidate = () => {
               </thead>
               <tbody>
                 {shortListedData.map((item, index) => (
-                  <tr key={item.candidateId} className="rejectedcandidatetabledata">
+                  <tr key={item.candidateId} className="tabledaterow">
                     <td style={{ fontSize: "16px" }}>{index + 1}</td>
                     <td style={{ fontSize: "16px" }}>{item.date}</td>
                     <td className="c1-tabledate">{item.candidateId}</td>

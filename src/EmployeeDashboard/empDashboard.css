@@ -49,7 +49,7 @@ body {
   /* border: 1px solid #424141; */
   /* border-radius: 15px; */
   width: 100%;
-  height: 80px;
+  /* height: 80px; */
   display: flex;
   justify-content: space-around; 
   /* background:url("https://rukminim2.flixcart.com/image/850/1000/kyuge4w0/lipstick/w/f/o/kiss-proof-non-trasfer-peach-brown-lip-gloss-lipstick-thtc-original-imagaznx7rys5uzz.jpeg?q=90&crop=false"); */
@@ -130,6 +130,7 @@ body {
 .time-and-data .head {
   display: flex;
   gap: 10px;
+  text-align: center;
   color: grey;
   font-size: 18px;
   padding-top: 30px;
@@ -170,7 +171,7 @@ body {
   } */
 }
 .sidebar-open .empDash-main-content {
-  margin-left: 40px;
+  margin-left: 10px;
 }
 
 .sidebar-closed .empDash-main-content {

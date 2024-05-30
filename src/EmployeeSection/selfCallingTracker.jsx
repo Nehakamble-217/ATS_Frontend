@@ -18,7 +18,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.33:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.37:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -81,11 +81,16 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                   <th>Date</th>
                   <th>Recruiter Name</th>
                   <th>Candidate Name</th>
-                  <th>Position</th>
-                  <th>Current Company</th>
+                  <th>Candidate Email</th>
                   <th>Contact Number</th>
                   <th>Alternate Number</th>
+                  <th>Source Name</th>
+                  <th>Position</th>
+                 
+                  <th>Job Id</th>
+                  <th>Applying Company</th>
                   <th>Communication Rating</th>
+                  <th>Current Location</th>
                   <th>PersonalFeedback</th>
                   <th>CallingFeedback</th>
                   <th>Interested / Eligible</th>
@@ -99,11 +104,17 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                     <td>{item.date}</td>
                     <td>{item.recruiterName}</td>
                     <td >{item.candidateName}</td>
-                    <td>{item.position}</td>
-                    <td>{item.requirementCompany}</td>
+                    <td>{item.candidateEmail}</td>
                     <td>{item.contactNumber}</td>
-                    <td>{item.alternateNumber}</td>
+                     <td>{item.alternateNumber}</td>
+                     <td>{item.sourceName}</td>
+                    <td>{item.position}</td>
+                    <td>{item.requirementId}</td>
+                     <td>{item.requirementCompany}</td>
+                    
+
                     <td>{item.communicationRating}</td>
+                    <td>{item.currentLocation}</td>
                     <td>{item.personalFeedback}</td>
                     <td>{item.callingFeedback}</td>
                     <td>{item.selectYesOrNo}</td>

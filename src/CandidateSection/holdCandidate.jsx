@@ -202,7 +202,7 @@
 
 
 import React, { useState, useEffect } from "react";
-//import "../CandidateSection/holdCandidate.css";
+// import "../CandidateSection/holdCandidate.css";
 import { useNavigate, useParams } from "react-router-dom";
 import './holdCandidate.css'
 
@@ -222,7 +222,7 @@ const HoldCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/hold-candidate/${employeeId}`
+        `http://192.168.1.37:8891/api/ats/157industries/hold-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -241,9 +241,9 @@ const HoldCandidate = () => {
         <div>
           {/* <h2>HoldCandidate Candidates 77</h2> */}
           <div>
-            <table className=" holdingcandidate-table">
-              <thead>
-                <tr className="hodlcandidateheading" >
+            <table className="shortlistedcandidate">
+              <thead className="shortlisted-tablehead">
+                <tr className="shortlistedheading" >
                   <th>Sr No.</th>
                   <th>Candidate Id.</th>
                   <th>Date</th>
@@ -282,7 +282,7 @@ const HoldCandidate = () => {
               </thead>
               <tbody>
                 {shortListedData.map((item, index) => (
-                  <tr key={item.candidateId} className="holdcandidatetabledata">
+                  <tr key={item.candidateId} className="tabledaterow">
                     <td>{index + 1}</td>
                     <td >{item.date}</td>
                     <td>{item.candidateId}</td>
