@@ -227,7 +227,7 @@
   font-family: Futura Std Condensed Light;
   border-radius: 5px;
   font-weight: 600;
-  z-index: 999;
+  /* z-index: 999; */
   color: #767c83;
   border: 1px solid #e9eeee;
   line-height: 0.1;

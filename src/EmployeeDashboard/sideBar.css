@@ -539,6 +539,7 @@ body {
 .sidebar.active .sidebar-menu > ul > li > a:hover .sidebar-text {
   left: 62px;
   opacity: 1;
+  width: 200px;
   visibility: visible;
 }
 .sidebar.active .sidebar-menu .sub-menu {
