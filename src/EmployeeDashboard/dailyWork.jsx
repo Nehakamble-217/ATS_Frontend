@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../EmployeeDashboard/dailyWork.css";
+import Profile from "../LogoImages/ProfilePic.png";
 
 const DailyWork = ({ successfulDataAdditions }) => {
   const employeeId = localStorage.getItem("employeeId") || 1234;
+   const [showDetails, setShowDetails] = useState(false);
+
+    const toggleDailyTBtn = () => {
+    setShowDetails(!showDetails);
+  };
 
   const getStoredTime = () => {
     const storedTime = localStorage.getItem(`stopwatchTime_${employeeId}`);
@@ -192,109 +198,28 @@ const DailyWork = ({ successfulDataAdditions }) => {
   };
 
   return (
-    <div
-      className="daily-work-div d-flex"
-      style={{
-        alignItems: "center",
-        justifyContent: "space-between",
-        width: "80%",
-      }}
-    >
-      <div className="daily-work-tabel">
-
-        <table >
-          <thead>
-            
-            <tr className="targetvalues" >
-            <button className="daily-tr-btn">
-              <th
-                scope="col"
-                style={{
-                  whiteSpace: "nowrap",
-                //   fontSize: "16px",
-                //   color: "gray",
-                
-                }}
-              >
-                Target  :-
-                
-              </th>
-              <td
-                scope="row"
-                
-              >
-              10
-                
-              </td>
-              </button>
-
-              <button className="daily-tr-btn">
-
-              <th scope="col" >
-               Archived :-
-               
-              </th>
-              <td
-                scope="row"
-                style={{
-                  color: data.archived <= 3 ? "red" : "green",
-                  
-                }}
-              >
-                {data.archived}
-                
-              </td>
-
-              </button>
-              <button className="daily-tr-btn"> 
-              <th scope="col" >
-              Pending :-
-
-                
-              </th>
-              <td
-                scope="row"
-                style={{
-                  color: data.pending < 7 ? "green" : "red",
-                  
-                }}
-              >
-                {data.pending}
-                
-              </td>
-              </button>
-            </tr>
-          </thead>
-        </table>
+     <div className="daily-timeanddate">
+      <div className="head">
+        <div className="user-img">
+          <img src={Profile} alt="Profile" />
+        </div>
+        <div className="user-details">
+          <p>Arshad Attar <br />1628</p>
+        </div>
       </div>
-      <div className="daily-work-time">
-        <div >
-          <h6 hidden>Time: {currentTime}</h6>
-          <h6 hidden>Date: {currentDate}</h6>
-          <h6 className="loging-hr" style={{backgroundColor:"#ffcb9b",color:"white",border:"1px solid #f2f2f2"}}>
-            Loging hr: {time.hours.toString().padStart(2, "0")}:
-            {time.minutes.toString().padStart(2, "0")}:
-            {time.seconds.toString().padStart(2, "0")}
-          </h6>
+      <div className="all-daily-btns">
+        <div className={`daily-t-btn ${showDetails ? '' : 'hidden'}`}>
+          <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>Target : 10</button>
+          <button className="daily-tr-btn" style={{ color: data.archived <= 3 ? "red" : "green" }}>Archived : {data.archived}</button>
+          <button className="daily-tr-btn" style={{ color: data.pending < 7 ? "green" : "red" }}>Pending : {data.pending}</button>
         </div>
-        <div>
-          <button
-            className={running ? "timer-break-btn" : "timer-break-btn"}
-            style={{ position: "fixed",top:"30px", right: "95px" }}
-            onClick={running ? handlePause : handleResume}
-          >
-            {running ? "Pause" : "Resume"}
-          </button>
-          <br />
-
-          {/* <button
-            className="logout-btn"
-            style={{ position: "fixed", top: "20px", right: "10px" }}
-            onClick={handleLogout}
-          >
-            Logout
-          </button> */}
-        </div>
+        <button className="loging-hr">
+          Loging Hr : {time.hours.toString().padStart(2, "0")}:{time.minutes.toString().padStart(2, "0")}:{time.seconds.toString().padStart(2, "0")}
+        </button>
+        <button className={running ? "timer-break-btn" : "timer-break-btn"} onClick={running ? handlePause : handleResume}>
+          {running ? "Pause" : "Resume"}
+        </button>
+        <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>hide</button>
       </div>
     </div>
   );

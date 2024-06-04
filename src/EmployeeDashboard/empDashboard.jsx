@@ -290,14 +290,7 @@ const EmpDashboard = () => {
 
       <div className="empDash-main-content">
         <div className="time-and-data">
-          <div className="head d-flex" style={{ alignItems: "center", justifyContent: "center" }}>
-            <div className="user-img">
-              <img src={Profile} alt="Profile" />
-            </div>
-            <div className="user-details" style={{ alignItems: "center", justifyContent: "center", paddingTop: "20px" }}>
-              <p>Arshad Attar <br />1628</p>
-            </div>
-          </div>
+          
           <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
         </div>
         <div style={{ paddingTop: "80px" }}>

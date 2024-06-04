@@ -1,98 +1,145 @@
-.daily-work-div{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.daily-work-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid black;
 }
 
-
-
-.daily-work-tabel{
-    position: fixed;
-    margin-left: 0px;
-    
-    /* background-color: ; */
-    /* color: #ffcb9b; */
+.working-time-div{
+  display: flex;
+  gap: 10px;
 }
-.targetvalues{
-    /* border: 1px solid gray; */
-    /* border-radius: 15px; */
-    font-size: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;    
-}
-.targetvalues th{
-    color: #ffcb9b;
 
+.timer-break-btn, .logout-btn {
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 15px;
+  height: 40px;
+  width: 90px;
+  background-color: white;
+  transition: background-color 0.3s ease;
 }
-/* .daily-work-time{
-    padding-left: 470px;
-} */
-.timer-break-btn {
-    /* margin: 0 12px; */
-    /* padding: 8px 16px; */
+
+.timer-break-btn:hover, .logout-btn:hover {
+  background-color: white;
+  color: #fb6f92;
+  border: 1px solid #fb6f92;
+}
+
+.logout-btn {
+  background-color: #ffcb9b;
+  color: black;
+}
+
+.loging-hr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid gray;
+  border-radius: 15px;
+  background-color: #ffcb9b;
+  color: white;
+  height: 40px;
+  width: 200px;
+  font-size: 16px;
+}
+
+.daily-tr-btn {
+  border: 1px solid gray;
+  border-radius: 15px;
+  background-color: white;
+  font-size: 16px;
+  height: 40px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.daily-timeanddate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 100%;
+  padding: 10px;
+}
+
+.all-daily-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.daily-timeanddate .head {
+  margin-left: 10px;
+}
+
+.daily-t-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.show-daily-t-btn {
+  display: none;
+}
+
+.daily-t-btn.hidden {
+  display: none;
+}
+
+.daily-t-btn.vertical {
+  flex-direction: column;
+}
+
+@media (min-width: 1100px) {
+  .daily-t-btn {
+    display: none;
+  }
+
+  /* .show-daily-t-btn {
+    display: block;
     font-size: 16px;
     cursor: pointer;
     border: 1px solid gray;
     border-radius: 15px;
-    height: 40px;
-    width: 90px;
-
-    /* background: url(../LogoImages/Capture.PNG); */
-    background-color: white;
-    /* transition: background-color 0.3s ease; */
-    /* color: black; */
-  }
-  .timer-break-btn:hover {
-    background-color:white;
-    color: #fb6f92;
-    border: 1px solid #fb6f92;
-    border-radius: 15px;
-  }
-  
-  .logout-btn {
-    /* padding: 8px 16px; */
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid gray;
-    border-radius: 15px;
-    height: 40px;
-    width: 90px;
-    /* background-color: #FF5733; */
-    background-color: #ffcb9b;
-    color: black;
-  }
-  .logout-btn:hover {
-    background-color:white;
-    color: #fb6f92;
-    border: 1px solid #fb6f92;
-    border-radius: 15px;
-  }
-  .loging-hr{
-    margin-top: 31px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid gray;
-    border-radius: 15px;
-    /* background-color: white; */
-    height: 40px;
-    width: 200px;
-    font-size: 16px;
-  }
-
-  .daily-tr-btn{
-    border: 1px solid gray;
-    border-radius: 15px;
-    background-color: white;
-    font-size: 16px;
     height: 40px;
     width: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: white;
+    transition: background-color 0.3s ease;
+  } */
+
+  .show-daily-t-btn:hover {
+    background-color: #fb6f92;
+    color: white;
   }
 
-  
+  .daily-t-btn.hidden {
+    display: flex;
+  }
+}
+
+/* New media query added to show .show-daily-t-btn when width is below 1100px */
+@media (max-width: 1100px) {
+   .show-daily-t-btn {
+    display: block;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 15px;
+    height: 40px;
+    width: 150px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+  }
+}
