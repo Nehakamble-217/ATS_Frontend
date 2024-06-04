@@ -8,6 +8,17 @@ body {
     overflow-y: scroll;
   }
   
+.selfCallingUpdateBtn{
+  height: 30px;
+  background-color: #ffcb9b;
+  border-radius: 13px;
+  border: 1px solid #f2f2f2;
+  color:grey;
+  padding: 7px 6px;
+  margin: 2px 20px;
+}
+
+
   .calling-table {
     width: 2700px;
     border-collapse: collapse;
@@ -35,9 +46,9 @@ body {
     background-color: #ffcb9b;
   } */
   
-  .table-container_forselfcalling tr:hover {
+  /* .table-container_forselfcalling tr:hover {
     background-color: #f2f2f2;
-  }
+  } */
   
   /* .table-container_forselfcalling {
     max-width: 100%;
@@ -71,7 +82,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     /* max-width: 200px;  */
-    background-color: #f2f2f2;
+    background-color: white;
    
   }
   /* .table-container_forselfcalling td{
@@ -79,9 +90,7 @@ body {
   } */
   
 
-  html {
-    overflow-y: scroll;
-  }
+ 
   
   
   body::-webkit-scrollbar {

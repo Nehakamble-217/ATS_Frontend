@@ -29,6 +29,37 @@ const Attendance = () => {
     fetchData();
   }, [workId]);
 
+  const handleMouseOver = (event) => {
+    const tooltip = event.currentTarget.querySelector('.tooltip');
+    if (tooltip) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const tooltipWidth = tooltipRect.width;
+      const tooltipHeight = tooltipRect.height;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      let top = rect.top - tooltipHeight + 40; // above the cell
+      let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
+
+      // Adjust if the tooltip is out of the viewport
+      if (top < 0) top = rect.bottom +5; // below the cell
+      if (left < 0) left = 5; // align to the left edge
+      if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5; // align to the right edge
+
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+      tooltip.classList.add('visible');
+    }
+  };
+
+  const handleMouseOut = (event) => {
+    const tooltip = event.currentTarget.querySelector('.tooltip');
+    if (tooltip) {
+      tooltip.classList.remove('visible');
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -38,7 +69,8 @@ const Attendance = () => {
   }
 
   return (
-    <div className="App-after">
+    <div className="App-after calling-list-container ">
+       <h5 style={{color:"gray",paddingTop:"5px"}}>Attendance Sheet</h5> 
       <div className="container-after1">
         <div className="attendanceTableData">
           <table className="attendance-table">
@@ -63,88 +95,74 @@ const Attendance = () => {
             </thead>
             <tbody>
               {attendanceData.map((data) => (
-                <tr key={data.workId} className='attendancerows '>
-                  <td className='tabledata '>{data.date}
+                <tr key={data.workId} className='attendancerows'>
+                  <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.date}
                     <div className="tooltip">
-                      
                       <span className="tooltiptext">{data.date}</span>
                     </div>
                   </td>
-                  <td className='tabledata'>{data.loginTime}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.loginTime}
                     <div className="tooltip">
-                      
                       <span className="tooltiptext">{data.loginTime}</span>
                     </div>
                   </td>
-                  <td className='tabledata'> {data.lateMark}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.lateMark}
                     <div className="tooltip">
-                     
                       <span className="tooltiptext">{data.lateMark}</span>
                     </div>
                   </td>
-                  <td className='tabledata'> {data.logoutTime}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.logoutTime}
                     <div className="tooltip">
-                     
                       <span className="tooltiptext">{data.logoutTime}</span>
                     </div>
                   </td>
-                  <td className='tabledata'> {data.leaveType}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.leaveType}
                     <div className="tooltip">
-                     
                       <span className="tooltiptext">{data.leaveType}</span>
                     </div>
                   </td>
-                  <td className='tabledata'> {data.totalHoursWork}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.totalHoursWork}
                     <div className="tooltip">
-                     
                       <span className="tooltiptext">{data.totalHoursWork}</span>
                     </div>
                   </td>
-                  <td className='tabledata'> {data.halfDay}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.halfDay}
                     <div className="tooltip">
-                     
                       <span className="tooltiptext">{data.halfDay}</span>
                     </div>
                   </td>
-                  <td className='tabledata'>{data.paidLeaves}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.paidLeaves}
                     <div className="tooltip">
-                      
                       <span className="tooltiptext">{data.paidLeaves}</span>
                     </div>
                   </td>
-                  <td className='tabledata'>{data.unPaidLeaves}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.unPaidLeaves}
                     <div className="tooltip">
-                      
                       <span className="tooltiptext">{data.unPaidLeaves}</span>
                     </div>
                   </td>
-                  <td className='tabledata'>{data.holidayPaidLeave}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.holidayPaidLeave}
                     <div className="tooltip">
-                      
                       <span className="tooltiptext">{data.holidayPaidLeave}</span>
                     </div>
                   </td>
-                  <td className='tabledata'> {data.holidayUnPaidLeave}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.holidayUnPaidLeave}
                     <div className="tooltip">
-                     
                       <span className="tooltiptext">{data.holidayUnPaidLeave}</span>
                     </div>
                   </td>
-                  <td className='tabledata'> {data.remoteWork}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.remoteWork}
                     <div className="tooltip">
-                     
                       <span className="tooltiptext">{data.remoteWork}</span>
                     </div>
                   </td>
-                  <td className='tabledata'>{data.dayPresentPaid}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.dayPresentPaid}
                     <div className="tooltip">
-                      
                       <span className="tooltiptext">{data.dayPresentPaid}</span>
                     </div>
                   </td>
-                  <td className='tabledata'>{data.dayPresentUnpaid}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.dayPresentUnpaid}
                     <div className="tooltip">
-                      
                       <span className="tooltiptext">{data.dayPresentUnpaid}</span>
                     </div>
                   </td>

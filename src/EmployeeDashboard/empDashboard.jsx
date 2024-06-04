@@ -309,12 +309,12 @@ const EmpDashboard = () => {
 
           <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
         </div>
-        <div style={{ paddingTop: "80px" }}>
+        <div style={{ paddingTop: "50px" }}>
           {selfCalling && (
             <CallingList updateState={funForUpdateSelfCalling} funForGettingCandidateId={gettingCandidateIdForUpdate} />
           )}
         </div>
-        <div>
+        <div style={{paddingTop:"8px"}}>
           {showInterviewDate && <InterviewDates />}
         </div>
         <div>

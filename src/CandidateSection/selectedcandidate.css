@@ -9,6 +9,16 @@
     padding: 10px 15px;
     position: static;
 }
+
+.selectFlowBtn{
+  height: 35px;
+  margin: 2px 20px;
+  background-color: #ffcb9b;
+  border:1px solid #F2F2F2;
+  color: grey;
+  padding: 4px;
+  border-radius: 8px ;
+}
   /* .container-after {
     width: 2150px;
     height: 100%;
