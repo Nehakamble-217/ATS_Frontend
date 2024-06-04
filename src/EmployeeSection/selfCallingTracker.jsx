@@ -54,6 +54,38 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     funForGettingCandidateId(selectedCandidate.candidateId);
   };
 
+
+   const handleMouseOver = (event) => {
+    const tooltip = event.currentTarget.querySelector('.tooltip');
+    if (tooltip) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const tooltipWidth = tooltipRect.width;
+      const tooltipHeight = tooltipRect.height;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      let top = rect.top - tooltipHeight + 40; // above the cell
+      let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
+
+      // Adjust if the tooltip is out of the viewport
+      if (top < 0) top = rect.bottom + 5; // below the cell
+      if (left < 0) left = 5; // align to the left edge
+      if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5; // align to the right edge
+
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+      tooltip.classList.add('visible');
+    }
+  };
+
+  const handleMouseOut = (event) => {
+    const tooltip = event.currentTarget.querySelector('.tooltip');
+    if (tooltip) {
+      tooltip.classList.remove('visible');
+    }
+  };
+
    // if (selectedCandidate) {
     //   navigator(`/empDash/${employeeId}/${candidateId}`, {
     //     state: { initialData: selectedCandidate },
@@ -61,70 +93,116 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     // }
 
   return (
-    <div className="calling-list-container">
-      {/* <h2 className="m-4">Calling List</h2> */}
+    <div className="calling-list-container ">
+      <h5 style={{color:"gray",paddingTop:"5px"}}>Calling List</h5>
       {!showCallingForm && (
         <>
-          <input
+          {/* <input
             type="text"
             className="form-control"
             placeholder="Search here..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <br />
-          <div className="table-container_forselfcalling">
-            <table className="selfcalling-table">
+          /> */}
+         
+          <div className="attendanceTableData">
+            <table className="selfcalling-table attendance-table">
               <thead>
-                <tr>
-                  <th>Sr No.</th>
-                  <th>Date</th>
-                  <th>Recruiter Name</th>
-                  <th>Candidate Name</th>
-                  <th>Candidate Email</th>
-                  <th>Contact Number</th>
-                  <th>Alternate Number</th>
-                  <th>Source Name</th>
-                  <th>Position</th>
+                <tr className="attendancerows-head">
+                  <th className='attendanceheading'>Sr No.</th>
+                  <th className='attendanceheading'>Date</th>
+                  <th className='attendanceheading'>Recruiter Name</th>
+                  <th className='attendanceheading'>Candidate Name</th>
+                  <th className='attendanceheading'>Candidate Email</th>
+                  <th className='attendanceheading'>Contact Number</th>
+                  <th className='attendanceheading'>Alternate Number</th>
+                  <th className='attendanceheading'>Source Name</th>
+                  <th className='attendanceheading'>Position</th>
                  
-                  <th>Job Id</th>
-                  <th>Applying Company</th>
-                  <th>Communication Rating</th>
-                  <th>Current Location</th>
-                  <th>PersonalFeedback</th>
-                  <th>CallingFeedback</th>
-                  <th>Interested / Eligible</th>
-                  <th>Action</th>
+                  <th className='attendanceheading'>Job Id</th>
+                  <th className='attendanceheading'>Applying Company</th>
+                  <th className='attendanceheading'>Communication Rating</th>
+                  <th className='attendanceheading'>Current Location</th>
+                  <th className='attendanceheading'>PersonalFeedback</th>
+                  <th className='attendanceheading'>CallingFeedback</th>
+                  <th className='attendanceheading'>Interested / Eligible</th>
+                  <th className='attendanceheading'>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredCallingList.map((item, index) => (
-                  <tr key={item.candidateId}>
-                    <td>{index + 1}</td>
-                    <td>{item.date}</td>
-                    <td>{item.recruiterName}</td>
-                    <td >{item.candidateName}</td>
-                    <td>{item.candidateEmail}</td>
-                    <td>{item.contactNumber}</td>
-                     <td>{item.alternateNumber}</td>
-                     <td>{item.sourceName}</td>
-                    <td>{item.position}</td>
-                    <td>{item.requirementId}</td>
-                     <td>{item.requirementCompany}</td>
+                  <tr key={item.candidateId} className="attendancerows">
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{index + 1}</td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.date}
+                    <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.date}</span>
+                    </div>
+                    </td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.recruiterName} 
+                    <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.recruiterName} </span>
+                    </div>
+                    </td>
+                    <td  className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateName} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.candidateName}</span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateEmail} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.candidateEmail}</span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.contactNumber} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.contactNumber}</span>
+                    </div></td>
+                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.alternateNumber} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.alternateNumber}</span>
+                    </div></td>
+                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.sourceName} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.sourceName}</span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.position} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.position}</span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementId} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.requirementId}</span>
+                    </div></td>
+                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementCompany} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.requirementCompany} </span>
+                    </div></td>
                     
 
-                    <td>{item.communicationRating}</td>
-                    <td>{item.currentLocation}</td>
-                    <td>{item.personalFeedback}</td>
-                    <td>{item.callingFeedback}</td>
-                    <td>{item.selectYesOrNo}</td>
-                    <td>
-                      <button
-                       
-                        onClick={() => handleUpdate(item.candidateId)}
-                      >
-                        Update & Follow Up
-                      </button>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.communicationRating} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.communicationRating}</span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.currentLocation} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.personalFeedback} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.personalFeedback} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.callingFeedback} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.callingFeedback} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.selectYesOrNo} <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.selectYesOrNo} </span>
+                    </div></td>
+                    <td className="tabledata">
+                    
+                      <i onClick={() => handleUpdate(item.candidateId)} class="fa-regular fa-pen-to-square"></i>
+                     
                     </td>
                   </tr>
                 ))}

@@ -24,6 +24,7 @@ function Sidebar({
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [activeSubMenu, setActiveSubMenu] = useState(null); // Track the active submenu
+  const [activeButton, setActiveButton] = useState(null); // Track the active button
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
@@ -88,6 +89,13 @@ function Sidebar({
     window.open("https://in.indeed.com/?from=gnav-homepage", "_blank");
   };
 
+  const handleButtonClick = (buttonKey, callback) => (e) => {
+    setActiveButton(buttonKey);
+    callback(e);
+  };
+
+  const isCandidateSectionActive = ['selfCalling', 'lineUp', 'shortListed', 'selectCandidate', 'holdCandidate', 'rejectedCandidate'].includes(activeButton);
+
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
       <div className='head'></div>
@@ -98,56 +106,62 @@ function Sidebar({
       <div className="nav">
         <div className="sidebar-menu">
           <ul>
-            <li onClick={toggleInterviewDate}>
+            <li onClick={handleButtonClick('interviewDate', toggleInterviewDate)} className={activeButton === 'interviewDate' ? 'active' : ''}>
               <a href="#">
                 <i className="icon ph-bold ph-house-simple"></i>
                 <span className="sidebar-text">Today's Interview</span>
               </a>
             </li>
-            <li onClick={toggleCallingTrackerForm}>
+            <li onClick={handleButtonClick('callingTrackerForm', toggleCallingTrackerForm)} className={activeButton === 'callingTrackerForm' ? 'active' : ''}>
               <a href="#">
                 <i className="icon ph-bold ph-house-simple"></i>
                 <span className="sidebar-text">Add Candidate</span>
               </a>
             </li>
-            <li className={activeSubMenu === 'candidate' ? "active" : ""} onClick={toggleSubMenu('candidate')}>
+            <li className={`${activeSubMenu === 'candidate' || isCandidateSectionActive ? 'active' : ''}`} onClick={toggleSubMenu('candidate')}>
               <a href="#">
                 <i className="icon ph-bold ph-user"></i>
                 <span className="sidebar-text">Candidate Section</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
               <ul className={`sub-menu ${activeSubMenu === 'candidate' ? 'active' : ''}`}>
-                <li onClick={toggleSelfCalling}>
+                <li onClick={handleButtonClick('selfCalling', toggleSelfCalling)} className={activeButton === 'selfCalling' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Calling Tracker</span>
                   </a>
                 </li>
-                <li onClick={toggelLineUp}>
+                <li onClick={handleButtonClick('lineUp', toggelLineUp)} className={activeButton === 'lineUp' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">LineUp Tracker</span>
                   </a>
                 </li>
-                <li onClick={toggleShortListed}>
+                <li onClick={handleButtonClick('shortListed', toggleShortListed)} className={activeButton === 'shortListed' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Shortlisted Candidate</span>
                   </a>
                 </li>
-                <li onClick={toggleSelectCandidate}>
+                <li onClick={handleButtonClick('selectCandidate', toggleSelectCandidate)} className={activeButton === 'selectCandidate' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Selected Candidate</span>
                   </a>
                 </li>
-                <li onClick={toggleHoldCandidate}>
+                <li onClick={handleButtonClick('holdCandidate', toggleHoldCandidate)} className={activeButton === 'holdCandidate' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Hold Candidate</span>
                   </a>
                 </li>
-                <li onClick={toggleRejectedCandidate}>
+                <li>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Self Offer Work</span>
+                  </a>
+                </li>
+                <li onClick={handleButtonClick('rejectedCandidate', toggleRejectedCandidate)} className={activeButton === 'rejectedCandidate' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Rejected Candidate</span>
@@ -155,7 +169,7 @@ function Sidebar({
                 </li>
               </ul>
             </li>
-            <li onClick={toggleJobDescription}>
+            <li onClick={handleButtonClick('jobDescription', toggleJobDescription)} className={activeButton === 'jobDescription' ? 'active' : ''}>
               <a href="#">
                 <i className="icon ph-bold ph-file-text"></i>
                 <span className="sidebar-text">Job Description</span>
@@ -174,13 +188,8 @@ function Sidebar({
                     <span className="sidebar-text">Intensive</span>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Self Offer Work</span>
-                  </a>
-                </li>
-                <li onClick={toggleAttendance}>
+                
+                <li onClick={handleButtonClick('attendance', toggleAttendance)} className={activeButton === 'attendance' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">My Attendance </span>
@@ -195,7 +204,7 @@ function Sidebar({
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
               <ul className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === 'database' ? 'active' : ''}`}>
-                <li onClick={toggleExcelCalling}>
+                <li onClick={handleButtonClick('excelCalling', toggleExcelCalling)} className={activeButton === 'excelCalling' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Calling Data</span>
