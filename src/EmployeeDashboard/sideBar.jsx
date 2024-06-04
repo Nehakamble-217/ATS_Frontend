@@ -19,6 +19,8 @@ function Sidebar({
   toggleJobDescription,
   toggleInterviewDate,
   toggleAttendance,
+  toggleAllMasterSheet,
+  toggleEmployeeMasterSheet,
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -101,7 +103,7 @@ function Sidebar({
             <li onClick={toggleInterviewDate}>
               <a href="#">
                 <i className="icon ph-bold ph-house-simple"></i>
-                <span className="sidebar-text">Today's Interview</span>
+                <span className="sidebar-text">Shortlisted Candidate</span>
               </a>
             </li>
             <li onClick={toggleCallingTrackerForm}>
@@ -129,7 +131,7 @@ function Sidebar({
                     <span className="sidebar-text">LineUp Tracker</span>
                   </a>
                 </li>
-                <li onClick={toggleShortListed}>
+                <li onClick={toggleShortListed} hidden>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Shortlisted Candidate</span>
@@ -147,12 +149,28 @@ function Sidebar({
                     <span className="sidebar-text">Hold Candidate</span>
                   </a>
                 </li>
+
                 <li onClick={toggleRejectedCandidate}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Rejected Candidate</span>
                   </a>
                 </li>
+
+                <li onClick={toggleEmployeeMasterSheet}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Employee Sheet</span>
+                  </a>
+                </li>
+
+                <li onClick={toggleAllMasterSheet}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">All Master Sheet</span>
+                  </a>
+                </li>
+
               </ul>
             </li>
             <li onClick={toggleJobDescription}>

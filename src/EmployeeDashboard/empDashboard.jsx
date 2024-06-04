@@ -19,6 +19,8 @@ import Home from "../EmployeeDashboard/home";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
 import Profile from "../LogoImages/ProfilePic.png";
+import MasterSheet from "../EmployeeSection/masterSheet";
+import EmployeeMasterSheet from "../EmployeeSection/employeeMasterSheet";
 
 const EmpDashboard = () => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -38,7 +40,10 @@ const EmpDashboard = () => {
   const [showHome, setShowHome] = useState(false);
   const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
 
-  
+  const [showMasterSheet, setShowMasterSheet] = useState(false);
+  const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
+
+
   const { employeeId } = useParams();
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
   const navigator = useNavigate();
@@ -46,6 +51,7 @@ const EmpDashboard = () => {
 
   const gettingCandidateIdForUpdate = (id) => {
     setCandidateIdForUpdate(id);
+    setUpdateSelfCalling(true);
   };
 
   const handleDataAdditionSuccess = () => {
@@ -103,6 +109,14 @@ const EmpDashboard = () => {
     setShowCallingExcel(false);
     setAttendanceSheet(false);
   };
+
+  const toggleAllMasterSheet = () => {
+    setShowMasterSheet(!showMasterSheet)
+  }
+
+  const toggleEmployeeMasterSheet = () => {
+    setShowEmployeeMasterSheet(!showEmployeeMasterSheet)
+  }
 
   const toggleCallingTrackerForm = () => {
     setAddCandidate(!addCandidate);
@@ -265,16 +279,16 @@ const EmpDashboard = () => {
   };
   // const OpenSidebar = () => {
   //   setIsActive(!openSidebarToggle);
-    
+
   // };
-  
-  
+
+
 
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Sidebar
         openSidebarToggle={openSidebarToggle}
-       OpenSidebar={() => setOpenSidebarToggle(!openSidebarToggle)}
+        OpenSidebar={() => setOpenSidebarToggle(!openSidebarToggle)}
         toggleSelfCalling={toggleSelfCalling}
         toggelLineUp={toggelLineUp}
         toggleCallingTrackerForm={toggleCallingTrackerForm}
@@ -286,11 +300,13 @@ const EmpDashboard = () => {
         toggleExcelCalling={toggleExcelCalling}
         toggleJobDescription={toggleJobDescription}
         toggleInterviewDate={toggleInterviewDate}
+        toggleAllMasterSheet={toggleAllMasterSheet}
+        toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
       />
 
       <div className="empDash-main-content">
         <div className="time-and-data">
-          
+
           <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
         </div>
         <div style={{ paddingTop: "80px" }}>
@@ -304,6 +320,15 @@ const EmpDashboard = () => {
         <div>
           {lineUp && <LineUpList updateState={funForUpdateLineUp} funForGettingCandidateId={gettingCandidateIdForUpdate} />}
         </div>
+
+        <div>
+          {showEmployeeMasterSheet && <EmployeeMasterSheet></EmployeeMasterSheet>}
+        </div>
+        <div>
+          {showMasterSheet && <MasterSheet></MasterSheet>}
+        </div>
+
+
         <div>
           {showJobDiscriptions && <Home />}
         </div>

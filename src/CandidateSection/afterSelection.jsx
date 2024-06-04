@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import "../CandidateSection/afterSelection.css";
-import RightTick from "../LogoImages/Right.jpeg";
 import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import RightTick from '../photos/greenTick.jpg'
 
-const AfterSelection = () => {
+const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => {
+
+  useEffect(() => {
+    console.log("Received Props:", { candidateId, employeeId, requirementId });
+  }, [candidateId, employeeId, requirementId]);
+
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showJoinSuccessMessage, setShowJoinSuccessMessage] = useState(false);
   const [inquiryFormSubmitted, setInquiryFormSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
   const [mailReceived, setMailReceived] = useState("");
   const [offerLetterReceived, setOfferLetterReceived] = useState("");
   const [offerLetterAccepted, setOfferLetterAccepted] = useState("");
@@ -24,33 +28,32 @@ const AfterSelection = () => {
   const [inactiveReason, setInactiveReason] = useState("");
   const [activeStatus, setActiveStatus] = useState("");
   const [otherReason, setOtherReason] = useState("");
-  const [adharCardUploaded, setAdharCardUploaded] = useState(false);
-  const [panCardUploaded, setPanCardUploaded] = useState(false);
-  const [drivingLicenseUploaded, setDrivingLicenseUploaded] = useState(false);
-  const [degreeMarksheetUplaoded, setDegreeMarksheetUploaded] = useState(false);
-  const [hscMarksheetUplaoded, setHscMarksheetUploaded] = useState(false);
-  const [sscMarksheetUplaoded, setSscMarksheetUploaded] = useState(false);
+  const [aadhaarCard, setAdharCardUploaded] = useState(false);
+  const [panCard, setPanCardUploaded] = useState(false);
+  const [drivingLicense, setDrivingLicenseUploaded] = useState(false);
+  const [degreeMarkSheet, setDegreeMarksheetUploaded] = useState(false);
+  const [hscMarkSheet, setHscMarksheetUploaded] = useState(false);
+  const [sscMarkSheet, setSscMarksheetUploaded] = useState(false);
 
   const [shortListedData, setShortListedData] = useState([]);
   const [candidateData, setCandidateData] = useState(null);
-
-  const { candidateId } = useParams();
-  console.log(candidateId + " Candidate Id In Selection Form");
-  const employeeId = 6;
-  const requirementId = 4;
-
+  const [reasonForRejectionOfferLetter, setReasonForRejectionOfferLetter] =
+    useState("");
+  const [reasonForNotJoin, setReasonForNotJoin] = useState("");
+  
   useEffect(() => {
     const fetchData = async () => {
       await fetchCandidateData();
       await fetchCandidateTableData();
     };
     fetchData();
+    JoininghandleSubmit();
   }, [candidateId]);
 
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://localhost:8891/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -63,9 +66,12 @@ const AfterSelection = () => {
   };
 
   const fetchCandidateTableData = async () => {
+    console.log(candidateId + "---candidateId");
+    console.log(employeeId + "---> employeeId");
+    console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-        `http://192.268.1.37:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+        `http://localhost:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -77,25 +83,31 @@ const AfterSelection = () => {
     }
   };
 
-  const handleAdharCardUpload = () => {
-    setAdharCardUploaded(true);
+  const handleAdharCardUpload = (e) => {
+    const file = e.target.files[0];
+    setAdharCardUploaded(file);
   };
 
-  const handlePanCardUpload = () => {
-    setPanCardUploaded(true);
+  const handlePanCardUpload = (e) => {
+    const file = e.target.files[0];
+    setPanCardUploaded(file);
   };
 
-  const handleDrivingLicenseUpload = () => {
-    setDrivingLicenseUploaded(true);
+  const handleDrivingLicenseUpload = (e) => {
+    const file = e.target.files[0];
+    setDrivingLicenseUploaded(file);
   };
-  const handleDegreeMarksheetUpload = () => {
-    setDegreeMarksheetUploaded(true);
+  const handleDegreeMarksheetUpload = (e) => {
+    const file = e.target.files[0];
+    setDegreeMarksheetUploaded(file);
   };
-  const handleHSCMarksheetUpload = () => {
-    setHscMarksheetUploaded(true);
+  const handleHSCMarksheetUpload = (e) => {
+    const file = e.target.files[0];
+    setHscMarksheetUploaded(file);
   };
-  const handleSSCMarksheetUpload = () => {
-    setSscMarksheetUploaded(true);
+  const handleSSCMarksheetUpload = (e) => {
+    const file = e.target.files[0];
+    setSscMarksheetUploaded(file);
   };
 
   const handleMailReceivedChange = (e) => {
@@ -144,9 +156,10 @@ const AfterSelection = () => {
     setInactiveReason(reason);
   };
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = {
       candidateId: candidateId,
       employeeId: employeeId,
@@ -162,7 +175,7 @@ const AfterSelection = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.37:8891/api/ats/157industries/save-inquiry-data",
+        "http://localhost:8891/api/ats/157industries/add-after-selection",
         {
           method: "POST",
           headers: {
@@ -172,7 +185,7 @@ const AfterSelection = () => {
         }
       );
 
-      setInquiryFormSubmitted(true); // Set inquiryFormSubmitted to true on successful submission
+      setInquiryFormSubmitted(true);
       setFormSubmitted(true);
       setCallDate("");
       setOfficeEnvironment("");
@@ -192,20 +205,83 @@ const AfterSelection = () => {
     }
   };
 
+
+  const JoininghandleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    formData.append("employeeId", employeeId);
+    formData.append("candidateId", candidateId);
+    formData.append("requirementId", requirementId);
+    formData.append("mailReceived", mailReceived);
+
+    if (aadhaarCard) formData.append("aadhaarCard", aadhaarCard);
+    if (panCard) formData.append("panCard", panCard);
+    if (drivingLicense) formData.append("drivingLicense", drivingLicense);
+    if (degreeMarkSheet) formData.append("degreeMarkSheet", degreeMarkSheet);
+    if (hscMarkSheet) formData.append("hscMarkSheet", hscMarkSheet);
+    if (sscMarkSheet) formData.append("sscMarkSheet", sscMarkSheet);
+
+    formData.append("offerLetterReceived", offerLetterReceived);
+    formData.append("offerLetterAccepted", offerLetterAccepted);
+    formData.append(
+      "reasonForRejectionOfferLetter",
+      reasonForRejectionOfferLetter
+    );
+    formData.append("joinStatus", joinStatus);
+    formData.append("reasonForNotJoin", reasonForNotJoin);
+    formData.append("joinDate", joinDate);
+
+    try {
+      const response = await fetch(
+        "http://localhost:8891/api/ats/157industries/save-join-data",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+
+      let result;
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        result = await response.text();
+      }
+
+      console.log("Response received:", result);
+
+      if (
+        (typeof result === "string" && result.includes("Data Added successfully")) ||
+        (result && result.success)
+      ) {
+      onReturn(); 
+    } else {
+      throw new Error("Unexpected response format or error status");
+    }
+  } catch (error) {
+    console.error("Failed to submit form:", error);
+  }
+};
+
+
   return (
     <div>
-      <div className="join-container mt-4">
-        <h2>After Selection</h2>
-
-        <div className="mb-4">
+      <div className="join-container">
+        <div className="after-head">
           <button
-            className="btn btn-primary me-3"
+            className="after-button"
             onClick={() => setIsActiveInquiry(false)}
           >
             Joining Process
           </button>
           <button
-            className="btn btn-primary"
+            className="after-button"
             onClick={() => setIsActiveInquiry(true)}
           >
             Active Inquiry
@@ -213,21 +289,19 @@ const AfterSelection = () => {
         </div>
 
         {!isActiveInquiry ? (
-          <form className="Join-form-data" onSubmit={handleSubmit}>
-            <h3>Joining Process</h3>
-            <hr />
-            <div className="  mb-3">
-              <div className="col-md-4">
-                <label
-                  htmlFor="mailReceived"
-                  style={{ width: "800px" }}
-                  className="form-label"
-                >
+          <div className="after-main-div">
+            <form className="Join-form-data" onSubmit={JoininghandleSubmit}>
+              <div className="after-h3">
+                <h3>Joining Processe </h3>
+              </div>
+
+              <div className="after-mail-div">
+                <label htmlFor="mailReceived" className="after-label">
                   Mail Received:
                 </label>
                 <select
+                  className="after-select"
                   id="mailReceived"
-                  className="form-select"
                   value={mailReceived}
                   onChange={handleMailReceivedChange}
                 >
@@ -236,45 +310,47 @@ const AfterSelection = () => {
                   <option value="notReceived">Not Received</option>
                 </select>
               </div>
-            </div>
-            {mailReceived === "received" && (
-              <div className="row mb-3">
-                <div className="col-md-12">
-                  <h4>Document Submission</h4>
-                  <div className="row mb-3">
-                    <div className="col-md-4">
-                      <label htmlFor="adharCard" className="form-label">
-                        Adhar Card:
-                      </label>
+
+              <div className="after-documnet-main">
+                <div className="after-documnet-sub">
+                  <hr />
+                  <div className="after-document-fisrt">
+                    <div className="after-documnet-files">
+                      <div className="after-lable-div">
+                        <label htmlFor="adharCard" className="after-label">
+                          Adhar Card:
+                        </label>
+                      </div>
                       <input
                         type="file"
-                        className="form-control"
+                        className="after-file-input"
                         onChange={handleAdharCardUpload}
                         name=""
                         id=""
                       />
-                      {adharCardUploaded && (
+                      {aadhaarCard && (
                         <span>
                           <img
-                            style={{ width: "20px", marginLeft: "10px" }}
+                            style={{ width: "20px" }}
                             src={RightTick}
                             alt=""
                           />
                         </span>
                       )}
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="panCard" className="form-label">
+
+                    <div className="after-documnet-files">
+                      <label htmlFor="panCard" className="after-label">
                         Pan Card:
                       </label>
                       <input
                         type="file"
+                        className="after-file-input"
                         onChange={handlePanCardUpload}
-                        className="form-control"
                         name=""
                         id=""
                       />
-                      {panCardUploaded && (
+                      {panCard && (
                         <span>
                           <img
                             style={{ width: "20px", marginLeft: "10px" }}
@@ -284,18 +360,22 @@ const AfterSelection = () => {
                         </span>
                       )}
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="degreeMarksheet" className="form-label">
+
+                    <div className="after-documnet-files">
+                      <label
+                        htmlFor="degreeMarksheet"
+                        className="after-label"
+                      >
                         Driving License
                       </label>
                       <input
+                        className="after-file-input"
                         type="file"
                         onChange={handleDrivingLicenseUpload}
-                        className="form-control"
                         name=""
                         id=""
                       />
-                      {drivingLicenseUploaded && (
+                      {drivingLicense && (
                         <span>
                           <img
                             style={{ width: "20px", marginLeft: "10px" }}
@@ -306,19 +386,20 @@ const AfterSelection = () => {
                       )}
                     </div>
                   </div>
-                  <div className="row mb-3">
-                    <div className="col-md-4">
-                      <label htmlFor="sscMarksheet" className="form-label">
+
+                  <div className="after-document-fisrt">
+                    <div className="after-documnet-files">
+                      <label htmlFor="sscMarksheet" className="after-label">
                         Degree Marksheet
                       </label>
                       <input
                         type="file"
                         name=""
                         onChange={handleDegreeMarksheetUpload}
-                        className="form-control"
+                        className="after-file-input"
                         id=""
                       />
-                      {degreeMarksheetUplaoded && (
+                      {degreeMarkSheet && (
                         <span>
                           <img
                             style={{ width: "20px", marginLeft: "10px" }}
@@ -328,18 +409,19 @@ const AfterSelection = () => {
                         </span>
                       )}
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="hscMarksheet" className="form-label">
+
+                    <div className="after-documnet-files">
+                      <label htmlFor="hscMarksheet" className="after-label">
                         HSC Marksheet:
                       </label>
                       <input
                         type="file"
                         name=""
                         onChange={handleHSCMarksheetUpload}
-                        className="form-control"
+                        className="after-file-input"
                         id=""
                       />
-                      {hscMarksheetUplaoded && (
+                      {hscMarkSheet && (
                         <span>
                           <img
                             style={{ width: "20px", marginLeft: "10px" }}
@@ -349,18 +431,19 @@ const AfterSelection = () => {
                         </span>
                       )}
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="sscMarksheet" className="form-label">
+
+                    <div className="after-documnet-files">
+                      <label htmlFor="sscMarksheet" className="after-label">
                         SSC Marksheet:
                       </label>
                       <input
                         type="file"
                         onChange={handleSSCMarksheetUpload}
                         name=""
-                        className="form-control"
+                        className="after-file-input"
                         id=""
                       />
-                      {sscMarksheetUplaoded && (
+                      {sscMarkSheet && (
                         <span>
                           <img
                             style={{ width: "20px", marginLeft: "10px" }}
@@ -373,267 +456,277 @@ const AfterSelection = () => {
                   </div>
                 </div>
               </div>
-            )}
-            {mailReceived === "received" && (
-              <div className="row mb-3">
-                <div className="col-md-4">
-                  <label htmlFor="offerLetterReceived" className="form-label">
+
+
+              <div className="after-mail-div">
+                <div className="after-lable-div">
+                  <label
+                    htmlFor="offerLetterReceived"
+                    className="after-label"
+                  >
                     Offer Letter Received:
                   </label>
-                  <select
-                    id="offerLetterReceived"
-                    className="form-select"
-                    value={offerLetterReceived}
-                    onChange={handleOfferLetterReceivedChange}
-                  >
-                    <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
                 </div>
+
+                <select
+                  id="offerLetterReceived"
+                  className="after-select"
+                  value={offerLetterReceived}
+                  onChange={handleOfferLetterReceivedChange}
+                >
+                  <option value="">Select Option</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
               </div>
-            )}
-            {offerLetterReceived === "yes" && (
-              <div className="row mb-3">
-                <div className="col-md-4">
-                  <label htmlFor="offerLetterAccepted" className="form-label">
+
+
+              <div className="after-mail-div">
+                <div className="after-lable-div">
+                  <label
+                    htmlFor="offerLetterAccepted"
+                    className="after-label"
+                  >
                     Offer Letter Accepted:
                   </label>
-                  <select
-                    id="offerLetterAccepted"
-                    className="form-select"
-                    value={offerLetterAccepted}
-                    onChange={handleOfferLetterAcceptedChange}
-                  >
-                    <option value="">Select Option</option>
-                    <option value="accepted">Yes</option>
-                    <option value="notAccepted">No</option>
-                  </select>
                 </div>
-              </div>
-            )}
 
-            {offerLetterAccepted === "accepted" && (
-              <div className="row mb-3">
-                <div className="col-md-4">
-                  <label htmlFor="joinStatus" className="form-label">
+                <select
+                  id="offerLetterAccepted"
+                  className="after-select"
+                  value={offerLetterAccepted}
+                  onChange={handleOfferLetterAcceptedChange}
+                >
+                  <option value="">Select Option</option>
+                  <option value="accepted">Yes</option>
+                  <option value="notAccepted">No</option>
+                </select>
+              </div>
+
+
+
+              <div className="after-mail-div">
+                <div className="after-lable-div">
+                  <label htmlFor="joinStatus" className="after-label">
                     Joining Status:
                   </label>
-                  <select
-                    id="joinStatus"
-                    className="form-select"
-                    value={joinStatus}
-                    onChange={handleJoinStatusChange}
-                  >
-                    <option value="">Select Option</option>
-                    <option value="join">Join</option>
-                    <option value="drop">Drop</option>
-                    <option value="hold">Hold</option>
-                    <option value="toJoin">To Join</option>
-                  </select>
                 </div>
+
+                <select
+                  id="joinStatus"
+                  className="after-select"
+                  value={joinStatus}
+                  onChange={handleJoinStatusChange}
+                >
+                  <option value="">Select Option</option>
+                  <option value="join">Join</option>
+                  <option value="drop">Drop</option>
+                  <option value="hold">Hold</option>
+                  <option value="toJoin">To Join</option>
+                </select>
               </div>
-            )}
-            {offerLetterAccepted === "notAccepted" && (
-              <div className="d-flex" style={{ width: "35%" }}>
-                <label>Reason for Not Accepting :</label>
+
+
+              <div className="after-mail-div">
+                <div className="after-lable-div">
+                  <label className="after-label">
+                    Reason for Not Accepting :
+                  </label>
+                </div>
+
                 <input
                   type="text"
-                  className="form-control"
+                  className="after-input"
                   id="joinReason"
                   value={joinReason}
                   onChange={(e) => setJoinReason(e.target.value)}
                 />
               </div>
-            )}
-            {joinStatus === "join" && (
-              <div className="row mb-3">
-                <div className="col-md-4">
-                  <label htmlFor="joinDate" className="form-label">
+
+
+              <div className="after-mail-div">
+                <div className="after-lable-div">
+                  <label htmlFor="joinDate" className="after-label">
                     Join Date:
                   </label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="joinDate"
-                    value={joinDate}
-                    onChange={(e) => setJoinDate(e.target.value)}
-                  />
                 </div>
+
+                <input
+                  type="date"
+                  className="after-input"
+                  id="joinDate"
+                  value={joinDate}
+                  onChange={(e) => setJoinDate(e.target.value)}
+                />
               </div>
-            )}
-            {joinStatus !== "join" && joinStatus !== "" && (
-              <div className="row mb-3">
-                <div className="col-md-12 d-flex" style={{ width: "35%" }}>
-                  <label htmlFor="joinReason" className="form-label">
-                    Reason for{" "}
-                    {joinStatus === "drop" ? "Dropping" : "Not joining"}:
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="joinReason"
-                    value={joinReason}
-                    onChange={(e) => setJoinReason(e.target.value)}
-                  />
-                </div>
+
+
+              <div className="after-mail-div">
+                <label htmlFor="joinReason" className="after-label">
+                  Reason for{" "}
+                  {joinStatus === "drop" ? "Dropping" : "Not joining"}:
+                </label>
+                <input
+                  type="text"
+                  className="after-input"
+                  id="joinReason"
+                  value={joinReason}
+                  onChange={(e) => setJoinReason(e.target.value)}
+                />
               </div>
-            )}
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </form>
+
+              <br />
+              <button type="submit" className="after-button">
+                Update Candidate
+              </button>
+              {showJoinSuccessMessage && (
+        <div className="alert alert-success" role="alert">
+          Data Added Successfully!
+        </div>
+      )}
+            </form>
+
+          </div>
         ) : (
           <div>
-            <center>
-              <h2>90 Days Follow Up Data Inquiry Section</h2>
-            </center>
-            <hr />
             <div className="candidate-info">
               {candidateData ? (
                 <div className="candidate-selectdata">
-                  <div className="col-md-3">
-                    <p className="no-space">
-                      <strong>Recruiter Name:</strong>{" "}
-                      {candidateData.recruiterName}
-                    </p>
-                    <p className="no-space">
-                      <strong>Candidate Name:</strong>{" "}
-                      {candidateData.candidateName}
-                    </p>
-                    <p className="no-space">
-                      <strong>Email:</strong> {candidateData.candidateEmail}
-                    </p>
-                    <p className="no-space">
-                      <strong>Date of Birth:</strong>{" "}
-                      {candidateData.lineUp?.dateOfBirth}
-                    </p>
-                    <p className="no-space">
-                      <strong>Placed Company:</strong>{" "}
-                      {candidateData.requirementCompany}
-                    </p>
-                    <p className="no-space">
-                      <strong>Location:</strong> {candidateData.currentLocation}
-                    </p>
-                  </div>
-                  <div className="col-md-3">
-                    <p className="no-space">
-                      <strong>Gender:</strong> {candidateData.lineUp?.gender}
-                    </p>
-                    <p className="no-space">
-                      <strong>Qualification:</strong>{" "}
-                      {candidateData.lineUp?.qualification}
-                    </p>
-                    <p className="no-space">
-                      <strong>Year of Passing:</strong>{" "}
-                      {candidateData.lineUp?.yearOfPassing}
-                    </p>
-                    <p className="no-space">
-                      <strong>Pervious Company Name:</strong>{" "}
-                      {candidateData.lineUp?.companyName}
-                    </p>
-                    <p className="no-space">
-                      <strong>Total Experience:</strong>{" "}
-                      {candidateData.lineUp?.totalExperience}
-                    </p>
-                    <p className="no-space">
-                      <strong>Notice Period:</strong>{" "}
-                      {candidateData.lineUp?.noticePeriod}
-                    </p>
-                  </div>
-                  <div className="col-md-3">
-                    <p className="no-space">
-                      <strong>Position:</strong> {candidateData.position}
-                    </p>
-                    <p className="no-space">
-                      <strong>Contact Number:</strong>{" "}
-                      {candidateData.contactNumber}
-                    </p>
-                    <p className="no-space">
-                      <strong>Alternate Number:</strong>{" "}
-                      {candidateData.alternateNumber}
-                    </p>
-                    <p className="no-space">
-                      <strong>Source Name:</strong> {candidateData.sourceName}
-                    </p>
-                    <p className="no-space">
-                      <strong>Holding Any Offer:</strong>{" "}
-                      {candidateData.lineUp?.holdingAnyOffer}
-                    </p>
-                    <p className="no-space">
-                      <strong>Feedback:</strong> {candidateData.lineUp?.feedBack}
-                    </p>
-                    <p className="no-space">
-                      <strong style={{color:"green"}}>Join Date :</strong>
-                    </p>
-                    <p className="no-space">
-                      <strong style={{color:"red"}}>End Date :</strong>
-                    </p>
-                  </div>
+                  <table
+                    id="studTables"
+                    className="table  table-striped  text-center"
+                  >
+                    <tbody className="table-group-divider">
+                      <tr id="table-row">
+                        <th scope="col"> Recruiter Name:</th>
+                        <td>{candidateData.recruiterName}</td>
+                        <th scope="col">Candidate Name:</th>
+                        <td> {candidateData.candidateName}</td>
+                        <th scope="col"> Email:</th>
+                        <td> {candidateData.candidateEmail}</td>
+                      </tr>
+
+                      <tr id="table-row">
+                        <th scope="col"> Date of Birth:</th>
+                        <td>{candidateData.lineUp?.dateOfBirth}</td>
+                        <th scope="col">Placed Company:</th>
+                        <td> {candidateData.requirementCompany}</td>
+                        <th scope="col"> Location:</th>
+                        <td> {candidateData.currentLocation}</td>
+                      </tr>
+
+                      <tr id="table-row">
+                        <th scope="col">Gender</th>
+                        <td>{candidateData.lineUp?.gender}</td>
+                        <th scope="col">Qualification:</th>
+                        <td> {candidateData.lineUp?.qualification} </td>
+                        <th scope="col"> Year of Passing:</th>
+                        <td> {candidateData.lineUp?.yearOfPassing} </td>
+                      </tr>
+
+                      <tr id="table-row">
+                        <th scope="col">Pervious Company Name:</th>
+                        <td>{candidateData.lineUp?.companyName}</td>
+                        <th scope="col">Total Experience:</th>
+                        <td> {candidateData.lineUp?.totalExperience} </td>
+                        <th scope="col"> Notice Period:</th>
+                        <td> {candidateData.lineUp?.noticePeriod} </td>
+                      </tr>
+
+                      <tr id="table-row">
+                        <th scope="col">Position:</th>
+                        <td>{candidateData.position}</td>
+                        <th scope="col">Contact Number:</th>
+                        <td> {candidateData.lineUp?.totalExperience} </td>
+                        <th scope="col"> Alternate Number:</th>
+                        <td> {candidateData.alternateNumber}</td>
+                      </tr>
+
+                      <tr id="table-row">
+                        <th scope="col">Source Name :</th>
+                        <td>{candidateData.sourceName}</td>
+                        <th scope="col">Holding Any Offer :</th>
+                        <td> {candidateData.lineUp?.holdingAnyOffer} </td>
+                        <th scope="col"> Feedback:</th>
+                        <td> {candidateData.lineUp?.feedBack}</td>
+                      </tr>
+
+                      <tr id="table-row">
+                        <th style={{ color: "green", fontWeight: "bold" }}>
+                          Join Date :
+                        </th>
+                        <td>dd-mm-yyyy</td>
+                        <th scope="col">Date After 90 Days :</th>
+                        <td> dd-mm-yyyy </td>
+                        <th scope="col"> Days Remainig :</th>
+                        <td style={{ color: "red", fontWeight: "bold" }}>
+                          {" "}
+                          dd-mm-yyyy
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               ) : (
                 <p>Loading candidate data...</p>
               )}
             </div>
-            <hr />
-
-            <br />
             <div className="form-select-div">
               <form onSubmit={handleSubmit}>
-                <h3>Inquriy Form</h3>
-                <div className="mb-1 row">
-                  <label
-                    style={{ width: "150px" }}
-                    className="col-sm-1 col-form-label"
-                  >
+
+                <div className="after-mail-div">
+                  <label style={{ paddingTop: "5px" }} className="after-label">
                     Active Status :
                   </label>
-                  <div className="col-sm-3">
-                    <select
-                      id="activeStatus"
-                      style={{ width: "400px" }}
-                      className="form-select mb-2"
-                      name="activeStatus"
-                      value={activeStatus}
-                      onChange={(e) => setActiveStatus(e.target.value)}
-                    >
-                      <option value="">Select</option>
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
-                    </select>
-                  </div>
+
+                  <select
+                    id="activeStatus"
+                    style={{ width: "400px" }}
+                    className="after-select"
+                    name="activeStatus"
+                    value={activeStatus}
+                    onChange={(e) => setActiveStatus(e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
                 </div>
 
                 {activeStatus === "Active" && (
                   <table
-                    className="table table-bordered"
-                    style={{ width: "1500px" }}
+                    className="attendance-table"
+                    style={{ width: "1200px" }}
                   >
                     <thead>
-                      <tr>
-                        <th scope="col">Call Number.</th>
-                        <th scope="col">Call Date</th>
-                        <th scope="col">Office Environment</th>
-                        <th scope="col">Staff Behavior</th>
-                        <th scope="col">Your Daily Work</th>
-                        <th scope="col">Any Problem</th>
-                        <th scope="col">Status</th>
+                      <tr className="attendancerows">
+                        <th className="attendanceheading">Call Number.</th>
+                        <th className="attendanceheading">Call Date</th>
+                        <th className="attendanceheading">
+                          Office Environment
+                        </th>
+                        <th className="attendanceheading">Staff Behavior</th>
+                        <th className="attendanceheading">Your Daily Work</th>
+                        <th className="attendanceheading">Any Problem</th>
+                        <th className="attendanceheading">Status</th>
                       </tr>
                     </thead>
-                      <tbody>
-                        {shortListedData.map((item, index) => (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{item.callDate}</td>
-                            <td>{item.officeEnvironment}</td>
-                            <td>{item.staffBehavior}</td>
-                            <td>{item.dailyImpact}</td>
-                            <td>{item.anyProblem}</td>
-                            <td>{item.activeStatus}</td>
-                          </tr>
-                        ))}
-                      <tr>
-                        <td>😊</td>
+                    <tbody>
+                      {shortListedData.map((item, index) => (
+                        <tr key={index} className="attendancerows">
+                          <td className="tabledata">{index + 1}</td>
+                          <td className="tabledata">{item.callDate}</td>
+                          <td className="tabledata">
+                            {item.officeEnvironment}
+                          </td>
+                          <td className="tabledata">{item.staffBehavior}</td>
+                          <td className="tabledata">{item.dailyImpact}</td>
+                          <td className="tabledata">{item.anyProblem}</td>
+                          <td className="tabledata">{item.activeStatus}</td>
+                        </tr>
+                      ))}
+                      <tr className="attendancerows">
+                        <td className="tabledata">😊</td>
                         <input
                           type="text"
                           hidden
@@ -642,7 +735,7 @@ const AfterSelection = () => {
                           id=""
                         />
 
-                        <td>
+                        <td className="tabledata">
                           <input
                             type="date"
                             className="form-control"
@@ -650,7 +743,7 @@ const AfterSelection = () => {
                             onChange={(e) => setCallDate(e.target.value)}
                           />
                         </td>
-                        <td>
+                        <td className="tabledata">
                           <input
                             type="text"
                             id="officeEnvironment"
@@ -661,7 +754,7 @@ const AfterSelection = () => {
                             }
                           />
                         </td>
-                        <td>
+                        <td className="tabledata">
                           <input
                             type="text"
                             className="form-control"
@@ -669,7 +762,7 @@ const AfterSelection = () => {
                             onChange={(e) => setStaffBehavior(e.target.value)}
                           />
                         </td>
-                        <td>
+                        <td className="tabledata">
                           <input
                             type="text"
                             className="form-control"
@@ -677,7 +770,7 @@ const AfterSelection = () => {
                             onChange={(e) => setDailyWork(e.target.value)}
                           />
                         </td>
-                        <td>
+                        <td className="tabledata">
                           <input
                             type="text"
                             className="form-control"
@@ -685,8 +778,8 @@ const AfterSelection = () => {
                             onChange={(e) => setProblem(e.target.value)}
                           />
                         </td>
-                        <td>
-                          <select className="form-control">
+                        <td className="tabledata">
+                          <select>
                             <option value="">select</option>
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
@@ -698,40 +791,40 @@ const AfterSelection = () => {
                 )}
 
                 {activeStatus === "Inactive" && (
-                  <div className="mb-1 row">
-                    <label
-                      style={{ width: "150px" }}
-                      className="col-sm-1 col-form-label"
+
+                  <div className="after-mail-div">
+                    <div className="active-resone">
+                      <label className="after-label">Reason :</label>
+                    </div>
+                    <select
+                      name="inactiveReason"
+                      id="inactiveReason"
+                      style={{ width: inactiveReason === 'Other' ? '150px' : '400px' }}
+                      className="after-select"
+                      value={inactiveReason}
+                      onChange={handleInactiveReasonChange}
                     >
-                      Reason :
-                    </label>
-                    <div className="col-sm-3">
-                      <select
-                        name="inactiveReason"
-                        style={{ width: "400px" }}
-                        id="inactiveReason"
-                        className="form-select mb-2"
-                        value={inactiveReason}
-                        onChange={handleInactiveReasonChange}
-                      >
-                        <option value="">Select</option>
-                        <option value="Resigned">Resigned</option>
-                        <option value="Terminated">Terminated</option>
-                        <option value="Attrited">Attrited</option>
-                        <option value="Ask Leave">Ask Leave</option>
-                        <option value="Other">Other</option>
-                      </select>
-                      {inactiveReason === "Other" && (
+                      <option value="">Select</option>
+                      <option value="Resigned">Resigned</option>
+                      <option value="Terminated">Terminated</option>
+                      <option value="Attrited">Attrited</option>
+                      <option value="Ask Leave">Ask Leave</option>
+                      <option value="Other">Other</option>
+                    </select>
+
+                    {inactiveReason === 'Other' && (
+                      <div style={{ paddingLeft: '10px' }}>
                         <input
                           type="text"
-                          className="form-control"
                           placeholder="Enter reason"
                           value={otherReason}
+                          style={{ width: '350px' }}
                           onChange={(e) => setOtherReason(e.target.value)}
                         />
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
+
                 )}
 
                 <center>
@@ -740,7 +833,11 @@ const AfterSelection = () => {
                       Follow Up Data Added successfully!
                     </div>
                   )}
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    style={{ marginTop: "25px" }}
+                    className="after-button"
+                  >
                     Add Details
                   </button>
                 </center>

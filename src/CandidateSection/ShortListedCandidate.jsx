@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import './holdCandidate.css'
-//import './shortlistedcandidate.css'
 import './sorted.css'
-
-
 
 const ShortListedCandidates = () => {
     const [shortListedData, setShortListedData] = useState([]);
-    const [selectedCandidate, setSelectedCandidate] = useState(null);
     const { employeeId } = useParams();
     const newEmployeeId = parseInt(employeeId, 10);
-
     const navigator = useNavigate();
 
     useEffect(() => {
@@ -30,11 +24,7 @@ const ShortListedCandidates = () => {
         }
     };
 
-
-    const viewPage = () => {
-        navigator("/view-dates")
-    }
-
+  
     return (
         <div>
 
@@ -42,7 +32,7 @@ const ShortListedCandidates = () => {
                         <table className="shortlistedcandidate">
                             <thead className="shortlisted-tablehead">
                                 <tr className="shortlistedheading">
-                                    <th >Candidate ID</th>
+                                    <th >Candidate  ID</th>
                                     <th >Date</th>
                                     <th >Recruiter Name</th>
                                     <th >Candidate Name</th>
@@ -85,7 +75,7 @@ const ShortListedCandidates = () => {
                                         <td className="c1-tabledate"  style={{whiteSpace:"nowrap"}}>{item.lineUp.feedBack}</td>
                                         <td className="c1-tabledate"  style={{whiteSpace:"nowrap"}}>{item.lineUp.finalStatus}</td>
                                         <td className="c1-tabledate" style={{whiteSpace:"nowrap"}} >
-                                            <button onClick={() => viewPage(item.candidateId)}>View</button>
+                                            <button >View</button>
                                         </td>
                                     </tr>
                                 ))}
