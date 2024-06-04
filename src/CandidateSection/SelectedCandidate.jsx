@@ -134,97 +134,256 @@ const SelectedCandidate = () => {
 
   return (
     <div className="c1-mainDiv">
-      <div className="c1-subdiv">
-        <div>
-          {/* <h2>Selected Candidates 16</h2> */}
+      <h5 style={{color:"gray",paddingTop:"5px"}}>SelectedCandidate List</h5>
+      <div className="c1-subdiv attendanceTableData">
+        <div  >
+          
           <div>
-          <table className="selected-candidate-table">
+          <table className="selected-candidate-table attendance-table">
               <thead>
-                <tr>
-                  <th style={{ fontSize: "16px", whiteSpace:"nowrap" }}>Sr No.</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Id.</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Date</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Recruiter Name</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Name</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Email</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Contact Number</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Alternate Number</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Source Name</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Position</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Requirement id</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Requirement Company</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Communication Rating</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Location</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>CallingFeedback</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Interested / Eligible</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Line Up Id</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Date Of Birth</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Gender</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Qualification</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Year Of Passing</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Extra Certification</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Current Company Name</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Total Experince</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Current CTC</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Expected CTC</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Notice Period</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Any Offer Letter</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Feed Back</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Messege For Team Leader</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Interview Date</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>interview Time</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Status</th>
-                  <th style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Action</th>
+                <tr className='attendancerows-head'>
+                  <th className='attendanceheading' style={{ fontSize: "16px", whiteSpace:"nowrap" }}>Sr No.</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Id.</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Date</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Recruiter Name</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Name</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Email</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Contact Number</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Alternate Number</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Source Name</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Position</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Requirement id</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Requirement Company</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Communication Rating</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Location</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>CallingFeedback</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Interested / Eligible</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Line Up Id</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Date Of Birth</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Gender</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Qualification</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Year Of Passing</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Extra Certification</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Current Company Name</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Total Experince</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Current CTC</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Expected CTC</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Notice Period</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Any Offer Letter</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Feed Back</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Messege For Team Leader</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Interview Date</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>interview Time</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Candidate Status</th>
+                  <th className='attendanceheading' style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {shortListedData.map((item, index) => (
-                  <tr key={item.candidateId} className="selectedcandidaterows">
-                    <td style={{ fontSize: "16px" }}>{index + 1}</td>
-                    <td style={{ fontSize: "16px" }}>{item.date}</td>
-                    <td className="c1-tabledate">{item.candidateId}</td>
-                    <td style={{ fontSize: "16px" }}>{item.recruiterName}</td>
-                    <td style={{ fontSize: "16px" }}>{item.candidateName}</td>
-                    <td style={{ fontSize: "16px" }}>{item.candidateEmail}</td>
-                    <td style={{ fontSize: "16px" }}>{item.contactNumber}</td>
-                    <td style={{ fontSize: "16px" }}>{item.alternateNumber}</td>
-                    <td style={{ fontSize: "16px" }}>{item.sourceName}</td>
-                    <td style={{ fontSize: "16px" }}>{item.position}</td>
-                    <td style={{ fontSize: "16px" }}>{item.requirementId}</td>
-                    <td style={{ fontSize: "16px" }}>
-                      {item.requirementCompany}
+                  <tr key={item.candidateId} className=" attendancerows">
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{index + 1} 
+                    
                     </td>
-                    <td style={{ fontSize: "16px" }}>
-                      {item.communicationRating}
-                    </td>
-                    <td style={{ fontSize: "16px" }}>{item.currentLocation}</td>
-                    <td style={{ fontSize: "16px" }}>{item.callingFeedback}</td>
-                    <td style={{ fontSize: "16px" }}>{item.selectYesOrNo}</td>
-                    <td>{item.lineUp?.lineUpId}</td>
-                    <td>{item.lineUp?.dateOfBirth}</td>
-                    <td>{item.lineUp?.gender}</td>
-                    <td>{item.lineUp?.qualification}</td>
-                    <td>{item.lineUp?.yearOfPassing}</td>
-                    <td>{item.lineUp?.extraCertification}</td>
-                    <td>{item.lineUp?.companyName}</td>
-                    <td>{item.lineUp?.totalExperience}</td>
-                    <td>{item.lineUp?.currentCTC}</td>
-                    <td>{item.lineUp?.expectedCTC}</td>
-                    <td>{item.lineUp?.noticePeriod}</td>
-                    <td>{item.lineUp?.holdingAnyOffer}</td>
-                    <td>{item.lineUp?.feedBack}</td>
-                    <td>{item.lineUp?.msgForTeamLeader}</td>
-                    <td>{item.lineUp?.availabilityForInterview}</td>
-                    <td>{item.lineUp?.interviewTime}</td>
-                    <td>{item.lineUp?.finalStatus}</td>
-                    <td style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>
-                      <button
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.date} 
+                     <div className="tooltip">
                       
-                        // className="btn btn-info"
-                        onClick={() => viewPage(item.candidateId)}
-                      >
-                        Flow Up
-                      </button>
+                      <span className="tooltiptext">{item.date} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata c1-tabledate" style={{ fontSize: "16px" }} >{item.candidateId} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.candidateId}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.recruiterName} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.recruiterName} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.candidateName} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.candidateName}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.candidateEmail} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.candidateEmail} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.contactNumber} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.contactNumber}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.alternateNumber} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.alternateNumber} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.sourceName} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.sourceName}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.position} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.position}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.requirementId} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.requirementId} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>
+                      {item.requirementCompany}
+                     
+                      <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.requirementCompany}</span>
+                    </div>
+                     </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>
+                      {item.communicationRating}
+                     
+                      <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.communicationRating}</span>
+                    </div>
+                     </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.currentLocation} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.currentLocation}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.callingFeedback} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.callingFeedback} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata" style={{ fontSize: "16px" }}>{item.selectYesOrNo} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.selectYesOrNo}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.lineUpId} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.lineUpId} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.dateOfBirth} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.dateOfBirth} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.gender} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.gender} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.qualification} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.qualification} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.yearOfPassing} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.yearOfPassing}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.extraCertification} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.extraCertification} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.companyName} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.companyName} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.totalExperience} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.totalExperience}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.currentCTC} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.currentCTC} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.expectedCTC} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.expectedCTC} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.noticePeriod} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.noticePeriod} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.holdingAnyOffer} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.holdingAnyOffer} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.feedBack} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.feedBack}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.msgForTeamLeader} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.msgForTeamLeader} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.availabilityForInterview} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.availabilityForInterview}</span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.interviewTime} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.interviewTime} </span>
+                    </div>
+                    </td>
+                    <td className="tabledata">{item.lineUp?.finalStatus} 
+                     <div className="tooltip">
+                      
+                      <span className="tooltiptext">{item.lineUp?.finalStatus}</span>
+                    </div>
+                    </td>
+                    <td style={{ fontSize: "16px" ,textAlign:"center", whiteSpace:"nowrap"}}>
+                     
+                        <i  onClick={() => viewPage(item.candidateId)} class="fa-solid fa-person-walking-arrow-right"></i>
+                   
                     </td>
                   </tr>
                 ))}
