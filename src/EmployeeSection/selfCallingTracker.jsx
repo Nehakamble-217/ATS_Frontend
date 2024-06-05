@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/callingList.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 
 const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +20,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.40:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://localhost:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -201,7 +203,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                     </div></td>
                     <td className="tabledata">
                     
-                      <i onClick={() => handleUpdate(item.candidateId)} class="fa-regular fa-pen-to-square"></i>
+                      <i onClick={() => handleUpdate(item.candidateId)} className="fa-regular fa-pen-to-square">a</i>
                      
                     </td>
                   </tr>

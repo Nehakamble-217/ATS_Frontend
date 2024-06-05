@@ -19,6 +19,8 @@ function Sidebar({
   toggleJobDescription,
   toggleInterviewDate,
   toggleAttendance,
+  toggleAllMasterSheet,
+  toggleEmployeeMasterSheet,
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -109,7 +111,7 @@ function Sidebar({
             <li onClick={handleButtonClick('interviewDate', toggleInterviewDate)} className={activeButton === 'interviewDate' ? 'active' : ''}>
               <a href="#">
                 <i className="icon ph-bold ph-house-simple"></i>
-                <span className="sidebar-text">Today's Interview</span>
+                <span className="sidebar-text">Shortlisted Candidate</span>
               </a>
             </li>
             <li onClick={handleButtonClick('callingTrackerForm', toggleCallingTrackerForm)} className={activeButton === 'callingTrackerForm' ? 'active' : ''}>
@@ -137,7 +139,8 @@ function Sidebar({
                     <span className="sidebar-text">LineUp Tracker</span>
                   </a>
                 </li>
-                <li onClick={handleButtonClick('shortListed', toggleShortListed)} className={activeButton === 'shortListed' ? 'active' : ''}>
+
+                <li  hidden onClick={handleButtonClick('shortListed', toggleShortListed)} className={activeButton === 'shortListed' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Shortlisted Candidate</span>
@@ -155,6 +158,7 @@ function Sidebar({
                     <span className="sidebar-text">Hold Candidate</span>
                   </a>
                 </li>
+
                 <li>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
@@ -162,11 +166,27 @@ function Sidebar({
                   </a>
                 </li>
                 <li onClick={handleButtonClick('rejectedCandidate', toggleRejectedCandidate)} className={activeButton === 'rejectedCandidate' ? 'active' : ''}>
+
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Rejected Candidate</span>
                   </a>
                 </li>
+
+                <li onClick={toggleEmployeeMasterSheet}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Employee Sheet</span>
+                  </a>
+                </li>
+
+                <li onClick={toggleAllMasterSheet}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">All Master Sheet</span>
+                  </a>
+                </li>
+
               </ul>
             </li>
             <li onClick={handleButtonClick('jobDescription', toggleJobDescription)} className={activeButton === 'jobDescription' ? 'active' : ''}>

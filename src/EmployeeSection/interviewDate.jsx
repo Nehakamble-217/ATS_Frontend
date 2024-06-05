@@ -3,11 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./interviewDate.css";
+import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 
 const InterviewDates = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [interviewData, setInterviewData] = useState(null);
   const [interviewDates, setInterviewDates] = useState([]);
+  const [showAllData, setShowAllData] = useState(false);
   const [feedbackOptions] = useState([
     "Shortlisted For Hr Round",
     "Shortlisted For Technical Round",
@@ -68,6 +70,8 @@ const InterviewDates = () => {
     }
   };
 
+  
+
   const updateInterviewStatus = async (candidateId, feedback) => {
     try {
       await fetch(
@@ -102,12 +106,12 @@ const InterviewDates = () => {
     requirementId
   ) => {
     event.preventDefault();
-  
+
     const interviewRound = event.target.querySelector('select[name="interviewRound"]').value;
     const interviewResponse = event.target.querySelector('select[name="interviewResponse"]').value;
     const responseUpdatedDate = event.target.querySelector('input[name="responseUpdatedDate"]').value;
     const nextInterviewDate = event.target.querySelector('input[name="nextInterviewDate"]').value;
-  
+
     const data = {
       interviewRound,
       interviewResponse,
@@ -117,10 +121,10 @@ const InterviewDates = () => {
       requirementInfo: { requirementId },
       employee: { employeeId: employeeIdNew }
     };
-  
+
     try {
       const response = await fetch(
-        "http://192.168.1.40:8891/api/ats/157industries/save-interview-response",data,
+        "http://192.168.1.40:8891/api/ats/157industries/save-interview-response", data,
         {
           method: "POST",
           headers: {
@@ -132,7 +136,6 @@ const InterviewDates = () => {
       if (response.ok) {
         console.log("Interview response saved successfully");
         setUpdateSuccess(true);
-        // Refresh interview data
         await handleDateChange(selectedDate);
       } else {
         console.error(
@@ -144,9 +147,14 @@ const InterviewDates = () => {
       console.error("Error saving interview response:", error);
     }
   };
-  
+
+  const toggleShowAllData = () => {
+    setShowAllData(!showAllData);
+  };
+
   const renderInterviewTable = () => {
-    if (!interviewData || interviewData.length === 0) {
+      
+    if (!interviewData ) {
       return (
         <h3 style={{ color: "red" }}>
           No data available for the selected date.
@@ -264,13 +272,6 @@ const InterviewDates = () => {
                   <td>
                     <button
                       className="calender-saveresponse"
-                      // onClick={(event) =>
-                      //   handleInterviewResponseSubmit(
-                      //     event,
-                      //     item.candidateId,
-                      //     item.requirementId
-                      //   )
-                      // }
                     >
                       Save Response
                     </button>
@@ -297,24 +298,29 @@ const InterviewDates = () => {
 
   return (
     <div className="calendar-container">
-      <div className="calendar">
-        <div className="calendar-div">
-          <Calendar
-            value={selectedDate}
-            onChange={handleDateChange}
-            tileContent={tileContent}
-          />
+        <div className="calendar">
+          <div className="calendar-div">
+            <Calendar
+              value={selectedDate}
+              onChange={handleDateChange}
+              tileContent={tileContent}
+            />
+          </div>
+          <div>
+            <button style={{ width: "300px" }} onClick={toggleShowAllData}>
+              ShortListed All Data
+            </button>
+          </div>
         </div>
-        <div>
-          <h2 className="m-4">Todays Interviews 11</h2>
-        </div>
-      </div>
 
-      <div className="interview-table">
-        {interviewData && renderInterviewTable()}
-      </div>
+        {showAllData && (
+        <div className="interview-table">
+          {interviewData && renderInterviewTable()}
+        </div>
+      )}
+        
+        {!showAllData && <ShortListedCandidates />}
     </div>
   );
 };
-
 export default InterviewDates;
