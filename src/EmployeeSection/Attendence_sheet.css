@@ -97,9 +97,7 @@
 .attendancerows:hover {
   background-color: #f2f2f2;
 }
-html{
-  overflow: hidden;
-}
+
 html::-webkit-scrollbar{
   display: none;
 }
