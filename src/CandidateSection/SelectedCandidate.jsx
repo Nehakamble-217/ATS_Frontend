@@ -18,7 +18,7 @@ const SelectedCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8891/api/ats/157industries/selected-candidate/${employeeId}`
+        `http://192.168.1.41:8891/api/ats/157industries/selected-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -122,9 +122,7 @@ const SelectedCandidate = () => {
                   <td>{item.lineUp?.interviewTime}</td>
                   <td>{item.lineUp?.finalStatus}</td>
                   <td>
-                    <button onClick={() => viewPage(item.candidateId, item.requirementId)}>
-                      Follow Up
-                    </button>
+                     <i  onClick={() => viewPage(item.candidateId)} class="fa-solid fa-person-walking-arrow-right"></i>
                   </td>
                 </tr>
               ))}

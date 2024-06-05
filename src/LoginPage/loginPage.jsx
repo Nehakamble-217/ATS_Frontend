@@ -15,44 +15,49 @@ import LoginImage from "../LogoImages/LoginImge.jpg"
   // const [password, setPassword] = useState("");
   // const [error, setError] = useState("");
   // const navigate = useNavigate(); 
-   const LoginSignup = () => {
+   const LoginSignup = ({ onLogin }) => {
+    const [action, setAction] = useState("Login");
+    const [employeeId, setEmployeeId] = useState("");
+   const [password, setPassword] = useState("");
+   const [error, setError] = useState("");
+   const navigate = useNavigate(); 
     useEffect(() => {
     AOS.init({duration:3000})
   },[])
 
 
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   if (name === "employeeId") {
-  //     setEmployeeId(value);
-  //   } else if (name === "password") {
-  //     setPassword(value);
-  //   }
-  // };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "employeeId") {
+      setEmployeeId(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await getPasswordFromDB(employeeId);
-  //     const fetchedPassword = response.data;
-  //     console.log(fetchedPassword + " emp password");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await getPasswordFromDB(employeeId);
+      const fetchedPassword = response.data;
+      console.log(fetchedPassword + " emp password");
 
-  //     if (fetchedPassword === password) {
-  //       localStorage.setItem("employeeId", employeeId);
-  //       navigate(`/empDash/${employeeId}`);
-  //       onLogin();
-  //     } else {
-  //       setError("Invalid credentials. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching password:", error);
-  //     setError("Error occurred. Please try again.");
-  //   }
-  // };
+      if (fetchedPassword === password) {
+        localStorage.setItem("employeeId", employeeId);
+        navigate(`/empDash/${employeeId}`);
+        onLogin();
+      } else {
+        setError("Invalid credentials. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error fetching password:", error);
+      setError("Error occurred. Please try again.");
+    }
+  };
 
-  // const dashboardLink = () => {
-  //   navigate('/empDash/6');
-  // };
+  const dashboardLink = () => {
+    navigate('/empDash/6');
+  };
   
 
   return (
@@ -111,18 +116,33 @@ import LoginImage from "../LogoImages/LoginImge.jpg"
         </div>
         <div class="right-panel" data-aos="fade-left">
             <h2 >Login</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div class="input-groups" >
 					<i class="fas fa-user"></i>
-					<input type="text" placeholder="Username" required/>
+					<input
+                 type="text"
+                 id="loginpage-employeeId"
+                 name="employeeId"
+                 value={employeeId}
+                 onChange={handleChange}
+                 className="loginpage-form-control"
+              />
 				</div>
 				<div class="input-groups"  >
 					<i class="fas fa-lock"></i>
-					<input type="password" placeholder="Password" required/>
+					<input
+                 type="password"
+                 id="loginpage-password"
+                 name="password"
+                 value={password}
+                 onChange={handleChange}
+                 className="loginpage-form-control"
+             />
 				</div>
-				
-                <button type="submit" class="login-button"  data-aos="fade-top">Login</button>
-                <button type="button" class="dashboard-button" data-aos="fade-top">Dashboard</button>
+				     <div className="loginpage-error">{error}</div>
+
+                <button class="login-button"  type="submit"  data-aos="fade-top">Login</button>
+                <button type="button" class="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button>
             </form>
         </div>
     </div>
