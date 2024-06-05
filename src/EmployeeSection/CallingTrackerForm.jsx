@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -13,13 +12,14 @@ import "../EmployeeSection/CallingTrackerForm.css";
 
 const CallingTrackerForm = ({
   initialData,
-  // employeeId,
   onDataAdditionSuccess,
 }) => {
 
   const { employeeId } = useParams();
+
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
+    time: "",
     recruiterName: "",
     candidateName: "",
     candidateEmail: "",
@@ -30,17 +30,24 @@ const CallingTrackerForm = ({
     contactNumber: "",
     alternateNumber: "",
     currentLocation: "",
+    currentEducation:"",
     communicationRating: "",
     selectYesOrNo: "No",
     personalFeedback: "",
     callingFeedback: "",
+    totalExperienceYears: '',
+    totalExperienceMonths: '',
+    currentsalarylakh: '',
+    currentsalaryth: '',
     employee: {
-      employeeId: parseInt(employeeId, 10) // Pass the employeeId here
-    }
+      employeeId: parseInt(employeeId, 10)
+    },
+    
   };
 
   const initialLineUpState = {
     date: new Date().toISOString().slice(0, 10),
+    time: "",
     recruiterName: "",
     candidateName: "",
     candidateEmail: "",
@@ -51,11 +58,11 @@ const CallingTrackerForm = ({
     contactNumber: "",
     alternateNumber: "",
     currentLocation: "",
+    currentEducation:"",
     communicationRating: "",
     personalFeedback: "",
     selectYesOrNo: "No",
     callingFeedback: "",
-
     dateOfBirth: "",
     gender: "",
     qualification: "",
@@ -64,7 +71,6 @@ const CallingTrackerForm = ({
     resume: "",
     extraCertification: "",
     companyName: "",
-
     currentCompany: "",
     currentCTC: "",
     expectedCTC: "",
@@ -75,27 +81,63 @@ const CallingTrackerForm = ({
     msgForTeamLeader: "",
     finalStatus: "",
     interviewTime: "",
+    totalExperienceYears: '',
+    totalExperienceMonths: '',
+    currentsalarylakh: '',
+    currentsalaryth: '',
+
+    
   };
 
-  const [callingTracker, setCallingTracker] = useState(
-    initialCallingTrackerState
-  );
+  const [callingTracker, setCallingTracker] = useState(initialCallingTrackerState);
   const [showLineUpForm, setShowLineUpForm] = useState(false);
   const [lineUpData, setLineUpData] = useState(initialLineUpState);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [resumeUploaded, setResumeUploaded] = useState(false);
-
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
   const [requirementOptions, setRequirementOptions] = useState([]);
-
-  // const employeeIdNew = parseInt(employeeId, 10);
-  // console.log(employeeIdNew + "new Id form");
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [time, setTime] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
+  const [isOtherEducationSelected,setIsOtherEducationSelected] = useState(false);
+  const [currentSalaryLakh, setCurrentSalaryLakh] = useState('');
+  const [currentSalaryThousand, setCurrentSalaryThousand] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     fetchRecruiterName();
     fetchRequirementOptions();
   }, [employeeId]);
+
+  useEffect(() => {
+    if (initialData) {
+      setCallingTracker({
+        ...initialCallingTrackerState,
+        ...initialData,
+      });
+      if (initialData.selectYesOrNo === "Interested") {
+        setLineUpData(initialData.lineUp || initialLineUpState);
+      }
+    }
+  }, [initialData]);
+
+  useEffect(() => {
+    const updateTimer = () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      setTime(`${hours}:${minutes}:${seconds}`);
+    };
+
+    updateTimer(); // Initial call to set the timer immediately
+    const timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+
+    return () => clearInterval(timerInterval); // Cleanup on component unmount
+  }, []);
 
   const fetchRecruiterName = async () => {
     try {
@@ -128,18 +170,6 @@ const CallingTrackerForm = ({
     }
   };
 
-  useEffect(() => {
-    if (initialData) {
-      setCallingTracker({
-        ...initialCallingTrackerState,
-        ...initialData,
-      });
-      if (initialData.selectYesOrNo === "Interested") {
-        setLineUpData(initialData.lineUp || initialLineUpState);
-      }
-    }
-  }, [initialData]);
-
   const handleChange = (e) => {
     const { name, value } = e.target || e;
     if (name === "selectYesOrNo" && value === "No") {
@@ -171,7 +201,7 @@ const CallingTrackerForm = ({
       };
       let message = "";
 
-      if (callingTracker.selectYesOrNo === "Interested" ) {
+      if (callingTracker.selectYesOrNo === "Interested") {
         onDataAdditionSuccess();
         dataToUpdate.lineUp = lineUpData;
         setSuccessfulDataAdditions(true);
@@ -201,6 +231,156 @@ const CallingTrackerForm = ({
     }
   };
 
+  const handleChangeemail = (event) => {
+    setEmail(event.target.value);
+    setError(''); // Clear the error message when the user starts typing
+  };
+
+  const handleSubmitemail = (event) => {
+    event.preventDefault();
+    if (!email) {
+      setError('Email is mandatory');
+    } else {
+      // Proceed to the next step
+      alert('Form submitted successfully!');
+    }
+  };
+
+  const handleExperienceChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'totalExperienceYears' && value.length <= 2 && /^\d*$/.test(value)) {
+      setLineUpData({ ...lineUpData, [name]: value });
+    }
+    if (name === 'totalExperienceMonths' && value.length <= 2 && /^\d*$/.test(value)) {
+      setLineUpData({ ...lineUpData, [name]: value });
+    }
+  };
+
+  const handleLocationChange = (e) => {
+    const value = e.target.value;
+    if (value === 'Other') {
+      setIsOtherLocationSelected(true);
+      setCallingTracker({ ...callingTracker, currentLocation: '' });
+    } else {
+      setIsOtherLocationSelected(false);
+      setCallingTracker({ ...callingTracker, currentLocation: value });
+    }
+  };
+  const handleLocationInputChange = (e) => {
+    const { value } = e.target;
+    setCallingTracker((prevState) => ({
+      ...prevState,
+      currentLocation: value,
+    }));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCallingTracker({ ...callingTracker, [name]: value });
+  };
+
+  const handleEducationChange = (e) => {
+    const value = e.target.value;
+    if (value === 'Other') {
+      setIsOtherEducationSelected(true);
+      setCallingTracker({ ...callingTracker, currentEducation: '' });
+    } else {
+      setIsOtherEducationSelected(false);
+      setCallingTracker({ ...callingTracker, currentEducation: value });
+    }
+  };
+  const handleeducationInputChange = (e) => {
+    const { value } = e.target;
+    setCallingTracker((prevState) => ({
+      ...prevState,
+      currentEducation: value,
+    }));
+  };
+  const handleDateChange = (e) => {
+    const { value } = e.target;
+    const today = new Date();
+    const birthDate = new Date(value);
+
+    // Calculate age
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const dayDiff = today.getDate() - birthDate.getDate();
+
+    // Adjust age if birth date hasn't occurred yet this year
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
+
+    // Ensure date is within the 18 to 60 years old range
+    if (age >= 18 && age <= 60) {
+      setLineUpData({ ...lineUpData, dateOfBirth: value });
+    } else {
+      alert('Date of birth must make the user between 18 and 60 years old.');
+      e.target.value = ''; // Reset the input if the date is invalid
+    }
+  };
+
+  const handleExpectedCTCChange = (e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setLineUpData({
+        ...lineUpData,
+        expectedCTC: value,
+      });
+    }
+  };
+
+  const handleLakhChange = (e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setLineUpData({
+        ...lineUpData,
+        currentsalarylakh: value,
+      });
+    }
+  };
+
+  const handleThousandChange = (e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setLineUpData({
+        ...lineUpData,
+        currentsalaryth: value,
+      });
+    }
+  };
+      
+  const handleResumeFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLineUpData({ ...lineUpData, resume: file });
+      setResumeUploaded(true);
+    }
+  };
+  
+
+  const handleChangecompany = async (e) => {
+    const { name, employeeId } = e.target;
+    setCallingTracker({ ...callingTracker, [name]: employeeId });
+
+    if (name === 'requirementId') {
+      try {
+        const response = await axios.get(
+          `http://192.168.1.41:8891/api/ats/157industries/company-details/${employeeId}`
+        );
+        const { requirementCompany, positions } = response.data;
+        setCallingTracker((prevState) => ({
+          ...prevState,
+          requirementCompany,
+          position: positions.length > 0 ? positions[0] : ''
+        }));
+      } catch (error) {
+        console.error("Error fetching company details:", error);
+      }
+    }
+  };
+  
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -208,17 +388,28 @@ const CallingTrackerForm = ({
           <table id="studTables" className="table  table-striped  text-center">
             <tbody className="table-group-divider">
               <tr id="table-row">
-                <th scope="col">Date:</th>
-                <td>
-                  <input
-                    type="text"
-                    id="currentDate"
-                    name="currentDate"
-                    value={callingTracker.date}
-                    className="form-control"
-                    readOnly
-                  />
-                </td>
+              <th scope="col" >Date & Time:</th>
+              <td style={{ display: "flex", alignItems: "center",justifyContent:"center",paddingTop:"14px"}}>
+              <input
+                type="text"
+                id="currentDate"
+                name="currentDate"
+                value={date}
+                className="form-control mb-2"
+                style={{ marginRight: "20px",width:"180px" }}
+                
+                readOnly
+              />
+              <input
+                type="text"
+                id="currentTimer"
+                name="currentTimer"
+                value={time}
+                className="form-control"
+                style={{ marginBottom: "9px",width:"180px" , marginRight:"30px",paddingLeft:"10px" }}
+                readOnly
+              />
+            </td>
                 <th >Recruiters Name</th>
                 <td>
                   <input
@@ -226,19 +417,14 @@ const CallingTrackerForm = ({
                     name="recruiterName"
                     value={callingTracker.recruiterName}
                     onChange={handleChange}
+                    readOnly
                     className="form-control"
                   />
                 </td>
               </tr>
-              <tr hidden>
-                <th>Employee ID</th>
-                <td>
-                  <input type="text" name="employeeId" readOnly value={employeeId} />
-                </td>
-              </tr>
 
               <tr id="heading123">
-                <th> Candidates Full Name*</th>
+                <th> Full Adress</th>
                 <td>
                   <input
                     type="text"
@@ -248,16 +434,51 @@ const CallingTrackerForm = ({
                     className="form-control"
                   />
                 </td>
-                <th scope="col">Candidate Email</th>
+                <th scope="col">Relavent Exp</th>
+                <td>
+                <input
+                  type="email"
+                  name="relaventexp"
+                  value=""
+                  
+                  className={`form-control ${error ? 'is-invalid' : ''}`}
+                />
+               
+              </td>
+              </tr>
+
+              <div hidden>
+              <tr >
+                <th>Employee ID</th>
+                <td>
+                  <input type="text" name="employeeId" readOnly value={employeeId} />
+                </td>
+              </tr>
+              </div>
+
+              <tr id="heading123">
+                <th> Candidates Full Name*</th>
                 <td>
                   <input
-                    type="email"
-                    name="candidateEmail"
-                    value={callingTracker.candidateEmail}
+                    type="text"
+                    name="candidateName"
+                    value={callingTracker.candidateName}
+                    
                     onChange={handleChange}
                     className="form-control"
                   />
                 </td>
+                <th scope="col">Candidate Email</th>
+                <td>
+                <input
+                  type="email"
+                  name="candidateEmail"
+                  value={email}
+                  onChange={handleChangeemail}
+                  className={`form-control ${error ? 'is-invalid' : ''}`}
+                />
+                {error && <div className="invalid-feedback">{error}</div>}
+              </td>
               </tr>
               <tr>
                 <th scope="col">Contact Number*</th>
@@ -269,7 +490,7 @@ const CallingTrackerForm = ({
                       handlePhoneNumberChange(value, "contactNumber")
                     }
                     defaultCountry="IN"
-                    maxLength={12}
+                    maxLength={10}
                     className="PhoneInputInput"
                     name="contactNumber"
                   />
@@ -284,7 +505,7 @@ const CallingTrackerForm = ({
                       handlePhoneNumberChange(value, "alternateNumber")
                     }
                     defaultCountry="IN"
-                    maxLength={12}
+                    maxLength={10}
                     className="PhoneInputInput"
                     name="alternateNumber"
                   />
@@ -311,27 +532,13 @@ const CallingTrackerForm = ({
                     <option value="others">others</option>
                   </select>
                 </td>
-
-                <th scope="col">Applying For Position</th>
-                <td>
-                  <input
-                    type="text"
-                    name="position"
-                    value={callingTracker.position}
-                    onChange={handleChange}
-                    className="form-control"
-                  />
-                </td>
-              </tr>
-
-              <tr>
                 <th scope="col">Applying Company Id</th>
                 <td>
                   <select
                     className="form-select mb-1"
                     name="requirementId"
                     value={callingTracker.requirementId}
-                    onChange={handleChange}
+                    onChange={handleChangecompany}
                   >
                     <option value="">Select ID</option>
                     {requirementOptions.map((option) => (
@@ -342,6 +549,22 @@ const CallingTrackerForm = ({
                   </select>
                 </td>
 
+                
+              </tr>
+
+              <tr>
+              <th scope="col">Applying For Position</th>
+                <td>
+                  <input
+                    type="text"
+                    name="position"
+                    value={callingTracker.position}
+                    onChange={handleChangecompany}
+                    className="form-control"
+                  />
+                </td>
+                
+
                 <th scope="col">Applying Company Name</th>
                 <td>
                   <select
@@ -349,11 +572,11 @@ const CallingTrackerForm = ({
                    
                     name="requirementCompany"
                     value={callingTracker.requirementCompany}
-                    onChange={handleChange}
+                    onChange={handleChangecompany}
                   >
                     <option value="">Select Company</option>
                     {requirementOptions.map((option) => (
-                      <option key={option.requirement_id} value={option[1]}>
+                      <option key={option.requirement_id} employeeId={option[1]}>
                         {option[1]}
                       </option>
                     ))}
@@ -364,15 +587,29 @@ const CallingTrackerForm = ({
               <tr>
                 <th>Current Location</th>
                 <td>
-                  <input
-                    type="text"
-                
-                    name="currentLocation"
-                    value={callingTracker.currentLocation}
-                    onChange={handleChange}
-                    className="form-control"
-                  />
-                </td>
+            {!isOtherLocationSelected ? (
+              <select
+                name="currentLocation"
+                value={callingTracker.currentLocation}
+                onChange={handleLocationChange}
+                className="form-control"
+              >
+                <option value="">Select Location</option>
+                <option value="Pune City">Pune City</option>
+                <option value="PCMC">PCMC</option>
+                <option value="Other">Other</option>
+              </select>
+            ) : (
+              <input
+                type="text"
+                name="currentLocation"
+                value={callingTracker.currentLocation}
+                onChange={handleLocationInputChange}
+                className="form-control"
+                placeholder="Enter your location"
+              />
+            )}
+          </td> 
 
                 <th scope="col">Communication Rating</th>
                 <td>
@@ -437,19 +674,14 @@ const CallingTrackerForm = ({
               <tr>
                 <th scope="col">Date Of Birth</th>
                 <td>
-                  <input
-                    type="date"
-                    name="dateOfBirth"
-                    value={lineUpData.dateOfBirth}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        dateOfBirth: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
+            <input
+              type="date"
+              name="dateOfBirth"
+              value={lineUpData.dateOfBirth}
+              onChange={handleDateChange}
+              className="form-control"
+            />
+          </td>
 
                 <th scope="col">Gender</th>
                 <td>
@@ -497,50 +729,74 @@ const CallingTrackerForm = ({
               </tr>
 
               <tr>
-                <th scope="col">Education</th>
+              <th>Education</th>
                 <td>
-                  <input
-                    type="text"
-                    name="qualification"
-                    value={lineUpData.qualification}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        qualification: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
-
+            {!isOtherEducationSelected ? (
+              <select
+                name="currentEducation"
+                value={callingTracker.currentEducation}
+                onChange={handleEducationChange}
+                className="form-control"
+              >
+                <option value="">__Select __</option>
+                <option value="10th">10th</option>
+                <option value="12th">12 th</option>
+                <option value="ITI">ITI</option>
+                <option value="diploma in CS">Diploma in Computer science</option>
+                <option value="Degree In CS">BTech in Computer Science</option>
+                <option value="M-Tech In CS">MTech in Computer Science</option>
+                <option value="PhD ">PhD</option>
+                <option value="BSC">BSC in chemestry</option>
+                <option value="MSC">MSC </option>
+                <option value="BCA">BCA</option>
+                <option value="MCA">MCA</option>
+                <option value="ITI">Other</option>
+               
+              </select>
+            ) : (
+              <input
+                type="text"
+                name="education"
+                value={callingTracker.currentEducation}
+                onChange={handleeducationInputChange}
+                className="form-control"
+                placeholder="Enter your location"
+              />
+            )}
+          </td> 
                 <th scope="col">Year Of Passing</th>
-                <td>
-                  <input
-                    type="text"
-                    name="yearOfPassing"
-                    value={lineUpData.yearOfPassing}
-                    onChange={(e) =>
+                
+                  <td>
+                    <input
+                      type="text"
+                      name="yearOfPassing" 
+                      value={lineUpData.yearOfPassing}
+                      onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^\d{0,4}$/.test(value)) {
                       setLineUpData({
-                        ...lineUpData,
-                        yearOfPassing: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
-              </tr>
+                      ...lineUpData,
+                      yearOfPassing: value,
+                    
+                    });
+                  }
+                }}
+              className="form-control"
+            />
+          </td>
+        </tr>
 
               <tr>
                 <th scope="col">
                   Upload Resume
-                  {/* {resumeUploaded && (
+                  {resumeUploaded && (
                     <FaCheckCircle className="upload-success-icon" />
-                  )} */}
+                  )}
                 </th>
                 <td>
                   <input
                     type="file"
-                    // onChange={handleResumeFileChange}
+                    onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="form-control pt-1"
                   />
@@ -581,91 +837,157 @@ const CallingTrackerForm = ({
                 </td>
 
                 <th scope="col">Experince</th>
-                <td>
-                  <input
-                    type="text"
-        
-                    name="totalExperience"
-                    value={lineUpData.totalExperience}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        totalExperience: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
+                <td style={{ paddingLeft: '5px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px',  padding: '5px' }}>
+                <label htmlFor="totalExperienceYears" style={{ marginRight: '5px', width: '50px' }}>Years:</label>
+                <input
+                  type="text"
+                  name="totalExperienceYears"
+                  value={lineUpData.totalExperienceYears}
+                  onChange={handleExperienceChange}
+                  className="form-control"
+                  placeholder=""
+                  maxLength="2"
+                  style={{ width: '50px',border:"1px solid gray" }}
+                />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center',  padding: '5px' }}>
+                <label htmlFor="totalExperienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
+                <input
+                  type="number"
+                  name="totalExperienceMonths" 
+                  value={lineUpData.totalExperienceMonths}
+                  onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === '' || (Number(value) >= 1 && Number(value) <= 12)) {
+                  setLineUpData({
+                  ...lineUpData,
+                  totalExperienceMonths: value,
+                  
+                  });
+                }
+              }}
+             className="form-control"
+            placeholder=""
+            maxLength="2"
+            style={{ width: '60px', border: '1px solid gray' }}
+            min="1"
+            max="12"
+            />
+
+              </div>
+            </div>
+          </td>
               </tr>
 
               <tr>
-                <th scope="col">Current CTC(LPA)</th>
-                <td>
-                  <input
-                    type="text"
+            <th scope="col">Current CTC(LPA)</th>
                 
-                    name="currentCTC"
-                    value={lineUpData.currentCTC}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        currentCTC: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
-                <th scope="col">Expected CTC(LPA)</th>
-                <td>
-                  <input
-                    type="text"
-                  
-                    name="expectedCTC"
-                    value={lineUpData.expectedCTC}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        expectedCTC: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
-              </tr>
+          <td style={{ paddingLeft: '5px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
+                <label htmlFor="currentsalarylakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
+                <input
+                  type="text"
+                  name="currentsalarylakh"
+                  onChange={handleLakhChange}
+                  className="form-control"
+                  placeholder=""
+                  maxLength="2"
+                  style={{ width: '60px', border: "1px solid gray" }}
+                  pattern="\d*"
+                />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
+                <label htmlFor="currentsalaryth" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
+                <input
+                  type="text"
+                  name="currentsalaryth"
+                  // value={currentSalaryThousand}
+                  onChange={handleThousandChange}
+                  className="form-control"
+                  placeholder=""
+                  maxLength="2"
+                  style={{ width: '70px', border: "1px solid gray" }}
+                  pattern="\d*"
+                  inputMode="numeric"
+                />
+              </div>
+            </div>
+          </td>  
+              <th scope="col">Expected CTC(LPA)</th>
+              <td style={{ paddingLeft: '5px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
+                <label htmlFor="currentsalarylakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
+                <input
+                  type="text"
+                  name="currentsalarylakh"
+                 
+                  onChange={handleLakhChange}
+                  className="form-control"
+                  placeholder=""
+                  maxLength="2"
+                  style={{ width: '60px', border: "1px solid gray" }}
+                  pattern="\d*" 
+                />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
+                <label htmlFor="currentsalaryth" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
+                <input
+                  type="text"
+                  name="currentsalaryth"
+                  onChange={handleThousandChange}
+                  className="form-control"
+                  placeholder=""
+                  maxLength="2"
+                  style={{ width: '70px', border: "1px solid gray" }}
+                  pattern="\d*"
+                  inputMode="numeric"
+                />
+              </div>
+            </div>
+          </td>
+                </tr>
 
               <tr>
                 <th scope="col">Notice Period(Days)</th>
                 <td>
-                  <input
-                    type="text"
-                  
-                    name="noticePeriod"
-                    value={lineUpData.noticePeriod}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        noticePeriod: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
+  <input
+    type="number"
+    name="noticePeriod"
+    value={lineUpData.noticePeriod}
+    onChange={(e) => {
+      const value = e.target.value;
+      if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
+        setLineUpData({
+          ...lineUpData,
+          noticePeriod: value,
+        });
+      }
+    }}
+    className="form-control"
+    min="0"
+    max="90"
+  />
+</td>
+
                 <th scope="col">Holding Offer Letter</th>
-                <td>
-                  <input
-                    type="text"
-              
-                    name="holdingAnyOffer"
-                    value={lineUpData.holdingAnyOffer}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        holdingAnyOffer: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
+                <td><select type="text" name="finalStatus" 
+                value={lineUpData.holdingAnyOffer} 
+                onChange={(e) => setLineUpData({ ...lineUpData, holdingAnyOffer: e.target.value })} className="form-select" 
+                style={{ width: '150px', display: 'inline-block', marginRight: '10px' }}>
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  </select>
+                  <input type="text" name="Holdingofferlatter" 
+                  value={lineUpData.holdingOfferInput} 
+                  onChange={(e) => setLineUpData({ ...lineUpData, holdingOfferInput: e.target.value })}
+                  style={{ width: '150px',height:"35px", display: 'inline-block', border: '1px solid #ccc', padding: '5px' }} />
+                  </td>
+
               </tr>
 
               <tr>
@@ -745,12 +1067,8 @@ const CallingTrackerForm = ({
                     className="form-select"
                   >
                     <option value="">Select</option>
-                    <option value="Interview schedule">
-                      Interview schedule
-                    </option>
-                    <option value="Attending After Some time">
-                      Attending After Some time
-                    </option>
+                    <option value="Interview schedule">Interview schedule</option>
+                    <option value="Attending After Some time">Attending After Some time</option>
                     <option value="hold">hold</option>
                   </select>
                 </td>
@@ -767,7 +1085,7 @@ const CallingTrackerForm = ({
 
         <div className="buttonDiv">
           {callingTracker.selectYesOrNo !== "Interested" && (
-            <button type="submit" className="ctf-btn" id="uploadbtn2">
+            <button type="submit" className="ctf-btn" id="uploadbtn1">
               Add To Calling
             </button>
           )}

@@ -61,7 +61,7 @@ function Sidebar({
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://192.168.1.33:8891/api/ats/157industries/add-data",
+        "http://192.168.1.41:8891/api/ats/157industries/add-data",
         {
           targetValue: 10,
           archived: 0,

@@ -1,13 +1,14 @@
 .maintable {
   height: 100%;
   border-collapse: collapse;
+
  
 }
 
 
 #table-row{
-    background-color: aqua;
-    height: 30px !important;
+    background-color: #ffcb9b;
+    height: 10px !important;
     padding: 0%;
     margin: 0%;
 }
@@ -21,36 +22,40 @@
 
 #studTables th,
 #studTables td {
-  border: 1px solid black;
-  padding: 8px;
+  /* border: 1px solid black; */
+  /* padding: 8px; */
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  border: 1px solid gray;
+}
+
+.tabledata{
+  text-align: center;
+  align-items: center;
 }
 
 #studTables th {
   background-color: white;
-  color: black;
+  color: gray;
   padding: 10px;
-
- text-align: left;
+ text-align: center;
  font-size: 16px;
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
 }
-#studTables th input {
+/* #studTables th input {
   background-color: white;
-  border: 0.5px solid black;
+  
   border-collapse: collapse;
-}
-#studTables td {
-  border: 1px solid black;
-}
+} */
+
 #studTables input[type="text"] {
   width: 100%;
-  padding-bottom: 7px;
-  border: 1px solid white;
-  border: none;
+
+  border: 1px solid #ccc;
+  /* border: none; */
   border-radius: 4px;
+  
   box-sizing: border-box;   
 }
 .header {
@@ -60,7 +65,7 @@
 .form-group input[type="text"],
 .form-group select {
   width: 100%;
- font-size: 10px;
+  font-size: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -91,10 +96,10 @@
   margin-right: 5px; /* Adjust spacing between checkbox and label */
 }
 
-.ctf-header {
+/* .ctf-header {
   text-align: center;
   font-size: 40px;
-}
+} */
 
 #resumeUpload {
   height: 30px;
@@ -112,8 +117,50 @@
 }
 
 
+.ctf-btn{
+  margin-top: 23px;
+  padding:10px 24px ;
+  background-color: #ffcb9b;
+  color: white;
+  border-radius: 12px;
+  border: 1px solid gray; /* Add border */
+  padding: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  width: 100px; /* Adjust width as needed */
+  height: 40px; 
 
-#uploadbtn2 {
+  backdrop-filter: blur(2px);
+  transition: 0.5s;
+  overflow: hidden;
+  
+}
+
+.ctf-btn:hover{
+  background-color: white;
+  color:#ffcb9b ;
+  border-color: gray; 
+  transform: translateY(-20px); 
+}
+
+.ctf-btn::before {
+content: '';
+position: absolute;
+top:0;
+left: 0;
+width: 50px;
+height: 100%;
+/* background: rgba(255, 255, 255, 0.5); */
+background: #ffe5b5;
+transform: skewX(45deg) translateX(150px);
+transition: 0.5s;
+}
+
+.ctf-btn:hover::before {
+transform: skewX(45deg) translateX(-150px);
+}
+/* #uploadbtn2 {
   height: 50px;
   width: 220px;
   margin-left: 100px;
@@ -129,13 +176,13 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-}
+} */
 
-#uploadbtn2:hover {
+/* #uploadbtn2:hover {
   color: darkgoldenrod;
   background-color: lavender;
   border: 1px solid black;
-}
+} */
 
 .buttonDiv {
   display: flex;
@@ -158,46 +205,41 @@
 }
 
 #currentDate {
-  padding: 10px; /* Add some padding for better spacing */
-  font-size: 16px; /* Adjust the font size */
-  border: 1px solid #ccc; /* Add a border for better visibility */
-  border-radius: 4px; /* Add border radius for rounded corners */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  padding: 10px; 
+  font-size: 16px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; }
+
+/* .react-datepicker__input-container input {
+  width: 300px; 
+  height: 30px; 
+
 }
 
-.react-datepicker__input-container input {
-  width: 300px; /* Adjust the width of the input field */
-  height: 30px; /* Adjust the height of the input field */
-  /* font-size: x-large; */
-}
 
-/* Custom styles for the calendar container */
 .react-datepicker__calendar-container {
-  width: 800px; /* Adjust the width of the calendar */
-  /* font-size: x-large; */
+  width: 800px; 
+ 
 }
 
-/* Custom styles for the day labels */
+
 .react-datepicker__day-name,
 .react-datepicker__day {
-  width: 50px; /* Adjust the width of the day labels */
-  height: 30px; /* Adjust the height of the day labels */
-  line-height: 30px; /* Center the text vertically */
-  /* font-size: x-large;  */
-  /* Adjust the font size of the day labels */
+  width: 50px; 
+  height: 30px; 
+  line-height: 30px; 
+  /
 }
 
-/* Custom styles for the selected date */
+
 .react-datepicker__day--selected {
-  background-color: #007bff; /* Change the background color of the selected date */
-  color: #fff; /* Change the text color of the selected date */
-}
+  background-color: #007bff; 
+  color: #fff; }
 
-/* Custom styles for the time list */
 
-/* Custom styles for the time label */
 .react-datepicker__time-list-item {
-  width: auto; /* Allow time labels to adjust width based on content */
+  width: auto; /
 }
 .react-datepicker-time__header--time {
   font-size: 16px;
@@ -206,7 +248,7 @@
 .react-datepicker__time-list {
   height: 300px;
   width: 500px;
-}
+} */
 input{
     height: 30px;
     font-size: 10px;
