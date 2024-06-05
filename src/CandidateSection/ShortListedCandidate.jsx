@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import './holdCandidate.css'
-//import './shortlistedcandidate.css'
 import './sorted.css'
-
-
 
 const ShortListedCandidates = () => {
     const [shortListedData, setShortListedData] = useState([]);
-    const [selectedCandidate, setSelectedCandidate] = useState(null);
     const { employeeId } = useParams();
     const newEmployeeId = parseInt(employeeId, 10);
-
     const navigator = useNavigate();
 
     useEffect(() => {
@@ -29,7 +23,6 @@ const ShortListedCandidates = () => {
             console.error("Error fetching shortlisted data:", error);
         }
     };
-
 
     const viewPage = () => {
         navigator("/view-dates")
@@ -208,7 +201,8 @@ const ShortListedCandidates = () => {
                     </div>
                                         </td>
                                         <td className="tabledata" style={{whiteSpace:"nowrap"}} >
-                                            <i  onClick={() => viewPage(item.candidateId)} class="fa-sharp fa-solid fa-eye"></i>
+                                            <i  onClick={() => viewPage(item.candidateId)} className="fa-sharp fa-solid fa-eye"></i>
+
                                         </td>
                                     </tr>
                                 ))}
