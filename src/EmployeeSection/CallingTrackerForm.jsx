@@ -358,10 +358,10 @@ const CallingTrackerForm = ({
       <form onSubmit={handleSubmit}>
         <div className="maintable">
           <table id="studTables" className="table  table-striped  text-center">
-            <tbody className="tabledata">
+            <tbody className="table-group-divider">
               <tr id="table-row">
               <th scope="col" >Date & Time:</th>
-              <td style={{ display: "flex", alignItems: "center",justifyContent:"center",paddingTop:"14px",textAlign:"center"}}>
+              <td style={{ display: "flex", alignItems: "center",justifyContent:"center",paddingTop:"14px"}}>
               <input
                 type="text"
                 id="currentDate"
@@ -378,7 +378,7 @@ const CallingTrackerForm = ({
                 name="currentTimer"
                 value={time}
                 className="form-control"
-                style={{ marginBottom: "5px",width:"180px" , marginRight:"30px",paddingLeft:"10px" }}
+                style={{ marginBottom: "9px",width:"180px" , marginRight:"30px",paddingLeft:"10px" }}
                 readOnly
               />
             </td>
@@ -798,25 +798,25 @@ const CallingTrackerForm = ({
               <div style={{ display: 'flex', alignItems: 'center',  padding: '5px' }}>
                 <label htmlFor="totalExperienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
                 <input
-                     type="number"
-                     name="totalExperienceMonths"
-                     value={lineUpData.totalExperienceMonths}
-                     onChange={(e) => {
-                     const value = e.target.value;
-                     if (value === '' || (Number(value) >= 1 && Number(value) <= 12)) {
-                     setLineUpData({
-                     ...lineUpData,
-                     totalExperienceMonths: value,
-                   });
-                  }
-               }}
-                className="form-control"   
-               placeholder=""
-               maxLength="2"
-               style={{ width: '70px', border: '1px solid gray' }}
-               min="1"
-               max="12"
-               />
+       type="number"
+  name="totalExperienceMonths"
+  value={lineUpData.totalExperienceMonths}
+  onChange={(e) => {
+    const value = e.target.value;
+    if (value === '' || (Number(value) >= 1 && Number(value) <= 12)) {
+      setLineUpData({
+        ...lineUpData,
+        totalExperienceMonths: value,
+      });
+    }
+  }}
+  className="form-control"
+  placeholder=""
+  maxLength="2"
+  style={{ width: '50px', border: '1px solid gray' }}
+  min="1"
+  max="12"
+/>
 
               </div>
             </div>

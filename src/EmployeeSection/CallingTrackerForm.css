@@ -1,0 +1,262 @@
+.maintable {
+  height: 100%;
+  border-collapse: collapse;
+ 
+}
+
+
+#table-row{
+    background-color: #ffcb9b;
+    height: 30px !important;
+    padding: 0%;
+    margin: 0%;
+}
+
+
+#studTables {
+  width: 100%;
+  height: 8px;
+  border-collapse: collapse;
+}
+
+#studTables th,
+#studTables td {
+  /* border: 1px solid black; */
+  /* padding: 8px; */
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border: 1px solid gray;
+}
+
+.tabledata{
+  text-align: center;
+  align-items: center;
+}
+
+#studTables th {
+  background-color: white;
+  color: gray;
+  padding: 10px;
+ text-align: center;
+ font-size: 16px;
+  /* border-collapse: collapse; */
+}
+/* #studTables th input {
+  background-color: white;
+  
+  border-collapse: collapse;
+} */
+
+#studTables input[type="text"] {
+  width: 100%;
+
+  border: 1px solid #ccc;
+  /* border: none; */
+  border-radius: 4px;
+  
+  box-sizing: border-box;   
+}
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.form-group input[type="text"],
+.form-group select {
+  width: 100%;
+  font-size: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.PhoneInputInput {
+  width: 100%;
+  height: 30px;
+  border: none !important;
+
+}
+
+.buttons {
+  text-align: center;
+}
+.main-gender {
+  font-size: 16px;
+}
+
+.gender-checkboxes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* Optional: Adjust checkbox appearance */
+.gender-checkboxes input[type="checkbox"] {
+  margin-right: 5px; /* Adjust spacing between checkbox and label */
+}
+
+/* .ctf-header {
+  text-align: center;
+  font-size: 40px;
+} */
+
+#resumeUpload {
+  height: 30px;
+  width: 200px;
+  /* font-size:x-large; */
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 8px;
+  margin: 20px;
+  justify-content: space-around;
+  /* tab-size: x-large; */
+}
+
+
+.ctf-btn{
+  margin-top: 23px;
+  padding:10px 24px ;
+  background-color: #ffcb9b;
+  color: white;
+  border-radius: 12px;
+  border: 1px solid gray; /* Add border */
+  padding: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  width: 100px; /* Adjust width as needed */
+  height: 40px; 
+
+  backdrop-filter: blur(2px);
+  transition: 0.5s;
+  overflow: hidden;
+  
+}
+
+.ctf-btn:hover{
+  background-color: white;
+  color:#ffcb9b ;
+  border-color: gray; 
+  transform: translateY(-20px); 
+}
+
+.ctf-btn::before {
+content: '';
+position: absolute;
+top:0;
+left: 0;
+width: 50px;
+height: 100%;
+/* background: rgba(255, 255, 255, 0.5); */
+background: #ffe5b5;
+transform: skewX(45deg) translateX(150px);
+transition: 0.5s;
+}
+
+.ctf-btn:hover::before {
+transform: skewX(45deg) translateX(-150px);
+}
+/* #uploadbtn2 {
+  height: 50px;
+  width: 220px;
+  margin-left: 100px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  background-color: aquamarine;
+  padding: 6px;
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 10px;
+  margin: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+} */
+
+/* #uploadbtn2:hover {
+  color: darkgoldenrod;
+  background-color: lavender;
+  border: 1px solid black;
+} */
+
+.buttonDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.upload-success-icon {
+  color: green;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+.upload-success-icons {
+  color: green;
+}
+
+#currentDate {
+  width: 75%;
+}
+
+#currentDate {
+  padding: 10px; /* Add some padding for better spacing */
+  font-size: 16px; /* Adjust the font size */
+  border: 1px solid #ccc; /* Add a border for better visibility */
+  border-radius: 4px; /* Add border radius for rounded corners */
+  box-sizing: border-box; }
+
+.react-datepicker__input-container input {
+  width: 300px; 
+  height: 30px; 
+
+}
+
+
+.react-datepicker__calendar-container {
+  width: 800px; 
+ 
+}
+
+/* Custom styles for the day labels */
+.react-datepicker__day-name,
+.react-datepicker__day {
+  width: 50px; /* Adjust the width of the day labels */
+  height: 30px; /* Adjust the height of the day labels */
+  line-height: 30px; /* Center the text vertically */
+  /* font-size: x-large;  */
+  /* Adjust the font size of the day labels */
+}
+
+/* Custom styles for the selected date */
+.react-datepicker__day--selected {
+  background-color: #007bff; /* Change the background color of the selected date */
+  color: #fff; /* Change the text color of the selected date */
+}
+
+/* Custom styles for the time list */
+
+/* Custom styles for the time label */
+.react-datepicker__time-list-item {
+  width: auto; /* Allow time labels to adjust width based on content */
+}
+.react-datepicker-time__header--time {
+  font-size: 16px;
+  height: 61.8px;
+}
+.react-datepicker__time-list {
+  height: 300px;
+  width: 500px;
+}
+input{
+    height: 30px;
+    font-size: 10px;
+}
+.custom-datepicker-container {
+  position: relative; /* Ensure proper positioning */
+  display: inline-block; /* Display as inline-block */
+}
