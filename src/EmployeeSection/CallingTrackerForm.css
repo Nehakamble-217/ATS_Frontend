@@ -13,6 +13,16 @@
     margin: 0%;
 }
 
+.update-page-head{
+  width: 100%;
+  color: gray;
+  text-transform: uppercase;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 
 #studTables {
   width: 100%;

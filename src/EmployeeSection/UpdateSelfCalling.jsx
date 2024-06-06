@@ -7,7 +7,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import "../EmployeeSection/AddCandidate.css";
 
-const UpdateCallingTracker = ({ initialData,candidateId }) => {
+const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess, onCancel }) => {
   const [callingTracker, setCallingTracker] = useState({
     date: new Date().toISOString().slice(0, 10),
     recruiterName: "",
@@ -46,16 +46,18 @@ const UpdateCallingTracker = ({ initialData,candidateId }) => {
     },
   });
 
-  const { employeeId} = useParams();
-  const employeeIdNew = parseInt(employeeId, 10);
+  // const { employeeId} = useParams();
+  // const employeeIdNew = parseInt(employeeId, 10);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [recruiterName, setRecruiterName] = useState("");
   const [candidateFetched, setCandidateFetched] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [requirementOptions, setRequirementOptions] = useState([]);
+  const [candidateData, setCandidateData] = useState(null);
 
   const location = useLocation();
+  const previousUrl = location.state && location.state.from;
 
   useEffect(() => {
     fetchEmployeeName();
@@ -66,7 +68,9 @@ const UpdateCallingTracker = ({ initialData,candidateId }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.41:8891/api/ats/157industries/company-list/${employeeIdNew}`
+
+        `http://192.168.1.41:8891/api/ats/157industries/company-list/${employeeId}`
+
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -154,7 +158,8 @@ const UpdateCallingTracker = ({ initialData,candidateId }) => {
         setTimeout(() => {
           setShowAlert(false);
           setFormSubmitted(false);
-        }, 4000);
+          onSuccessfulUpdate();
+        }, 2000);
       } else {
         console.error("Failed to update data");
       }
@@ -165,13 +170,9 @@ const UpdateCallingTracker = ({ initialData,candidateId }) => {
 
   return (
     <div>
-      <hr />
-      <center>
-        {" "}
-        <h3>Update Page & Follow Up Page 321</h3>
-      </center>
-
-
+      <div className="update-page-head">
+        <h5>Update Page </h5>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="maintable">
           <table id="studTables" className="table  table-striped  text-center">
@@ -247,7 +248,7 @@ const UpdateCallingTracker = ({ initialData,candidateId }) => {
                     onChange={(value) =>
                       handlePhoneNumberChange(value, "contactNumber")
                     }
-                  
+
                     maxLength={12}
                     className="PhoneInputInput"
                   />
@@ -655,23 +656,23 @@ const UpdateCallingTracker = ({ initialData,candidateId }) => {
           </div>
         )}
 
-<center>
-<div className="d-grid gap-2 col-5 max-auto" >
-  
+        <center>
+          <div className="d-grid gap-2 col-3 max-auto" >
+            <button type="submit" className="loging-hr">
+              Update Data
+            </button>
+          </div>
+        </center>
 
-  <button type="submit" className="btn btn-dark ">
-    Update Data
-  </button>
-
-  </div>
-</center>
       </form>
     </div>
-  );    
+  );
 };
 
 UpdateCallingTracker.propTypes = {
-  initialData: PropTypes.object,
+  candidateId: PropTypes.number.isRequired,
+  employeeId: PropTypes.string.isRequired,
+  onComplete: PropTypes.func.isRequired,
 };
 
 export default UpdateCallingTracker;

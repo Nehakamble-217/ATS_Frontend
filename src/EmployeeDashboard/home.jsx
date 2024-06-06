@@ -246,34 +246,40 @@ const Jobdiscription = () => {
 
   return (
     <div className="job-page">     
+      <div className="search-container">
       <div className="search-bar">
-        <div className='main-search-bar'>
-          <div className='searchmenu'>
-     
-      <input
-        id="locationInput"
-        type="text"
-        placeholder="Enter location"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-      />
-        
-    <input
-              type="text"
-              placeholder="Key Skills"
-              value={keySkills}
-              onChange={(e) => setKeySkills(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Experience"
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}/>
-            <button onClick={handleSearch}> <label htmlFor="">Search </label>       <FontAwesomeIcon icon={faSearch}/></button>
-          </div>
-          
-        </div> 
+        <input 
+          className="search-input" 
+          placeholder="Enter keyword / designation / companies" 
+          type="text" 
+        />
+        <input 
+          className="search-input" 
+          list="experienceOptions" 
+          placeholder="Select experience" 
+          type="text" 
+        />
+        <datalist id="experienceOptions">
+          <option value="0-1 years" />
+          <option value="1-3 years" />
+          <option value="3-5 years" />
+          <option value="5+ years" />
+        </datalist>
+        <input 
+          className="search-input" 
+          placeholder="Enter location" 
+          type="text" 
+        />
+        <button className="search-button">
+          <span className="search-icon">
+            {/* Font Awesome icon for search */}
+            <i className="fas fa-search"></i>
+          </span>
+          <span>Search</span>
+        </button>
       </div>
+    </div>
+
       <div className="content" >
         <div className="jobDiscription-sidebar" style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}>
           <div className={`toggle-list ${selectedCompany === null ? 'active' : ''}`} onClick={() => handleShowJobDescription(null, selectedJobFunction, selectedLocation, selectedSalary)}>
