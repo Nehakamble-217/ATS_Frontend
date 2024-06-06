@@ -4,12 +4,15 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./interviewDate.css";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
+import UpdateCallingTracker from "./UpdateSelfCalling";
 
-const InterviewDates = () => {
+const InterviewDates = ({toggleShowShortListedCandidateData}) => {
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [interviewData, setInterviewData] = useState(null);
   const [interviewDates, setInterviewDates] = useState([]);
   const [showAllData, setShowAllData] = useState(false);
+
   const [feedbackOptions] = useState([
     "Shortlisted For Hr Round",
     "Shortlisted For Technical Round",
@@ -24,8 +27,7 @@ const InterviewDates = () => {
   ]);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
-  const navigator = useNavigate();
-
+  const navigate = useNavigate();
   const { employeeId } = useParams();
   const employeeIdNew = parseInt(employeeId, 10);
   console.log(employeeIdNew + " Interview ID");
@@ -37,7 +39,7 @@ const InterviewDates = () => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://localhost:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -61,21 +63,20 @@ const InterviewDates = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.40:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://localhost:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
       setInterviewData(data);
+      setShowAllData(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  
-
   const updateInterviewStatus = async (candidateId, feedback) => {
     try {
       await fetch(
-        `http://192.168.1.40:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
+        `http://localhost:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
         {
           method: "PUT",
           headers: {
@@ -98,7 +99,6 @@ const InterviewDates = () => {
     await updateInterviewStatus(candidateId, feedback);
     await handleDateChange(selectedDate);
   };
-
 
   const handleInterviewResponseSubmit = async (
     event,
@@ -124,7 +124,7 @@ const InterviewDates = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.40:8891/api/ats/157industries/save-interview-response", data,
+        "http://localhost:8891/api/ats/157industries/save-interview-response", data,
         {
           method: "POST",
           headers: {
@@ -148,13 +148,10 @@ const InterviewDates = () => {
     }
   };
 
-  const toggleShowAllData = () => {
-    setShowAllData(!showAllData);
-  };
+
 
   const renderInterviewTable = () => {
-      
-    if (!interviewData ) {
+    if (!interviewData) {
       return (
         <h3 style={{ color: "red" }}>
           No data available for the selected date.
@@ -285,6 +282,8 @@ const InterviewDates = () => {
     );
   };
 
+
+
   const tileContent = ({ date }) => {
     const tempdate = new Date(date);
     tempdate.setHours(tempdate.getHours() + 10);
@@ -296,31 +295,27 @@ const InterviewDates = () => {
     return isInterviewDate && <div className="highlighted-date"></div>;
   };
 
+
   return (
     <div className="calendar-container">
-        <div className="calendar">
-          <div className="calendar-div">
-            <Calendar
-              value={selectedDate}
-              onChange={handleDateChange}
-              tileContent={tileContent}
-            />
-          </div>
-          <div>
-            <button style={{ width: "300px" }} onClick={toggleShowAllData}>
-              ShortListed All Data
-            </button>
-          </div>
+      <div className="calendar">
+        <div className="calendar-div">
+          <Calendar
+            value={selectedDate}
+            onChange={handleDateChange}
+            tileContent={tileContent}
+          />
         </div>
+      </div>
 
-        {showAllData && (
+      {!showAllData && interviewData && (
         <div className="interview-table">
-          {interviewData && renderInterviewTable()}
+          {renderInterviewTable()}
         </div>
       )}
-        
-        {!showAllData && <ShortListedCandidates />}
+  
     </div>
   );
 };
+
 export default InterviewDates;

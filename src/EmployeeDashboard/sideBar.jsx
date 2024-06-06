@@ -21,6 +21,8 @@ function Sidebar({
   toggleAttendance,
   toggleAllMasterSheet,
   toggleEmployeeMasterSheet,
+  handleLogout,
+
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -55,24 +57,7 @@ function Sidebar({
 
   const toggleSidebar = () => {
     setIsActive(!isActive);
-    OpenSidebar(); // Call the function to toggle sidebar state
-  };
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://192.168.1.33:8891/api/ats/157industries/add-data",
-        {
-          targetValue: 10,
-          archived: 0,
-          date: formatDate(new Date()),
-        }
-      );
-      console.log("WorkData loaded ");
-      navigator("/employee-login");
-    } catch (error) {
-      console.error("Error adding data to the database:", error);
-    }
+    OpenSidebar(); 
   };
 
   const openNaukriPlatform = () => {
@@ -301,12 +286,14 @@ function Sidebar({
                 </li>
               </ul>
             </li>
-            <li>
-              <a href="#" onClick={handleLogout}>
+
+            <li >
+              <a href="#" >
                 <i className="icon ph-bold ph-sign-out"></i>
-                <span className="sidebar-text">Logout</span>
+                <span className="sidebar-text">Note Pad</span>
               </a>
             </li>
+
           </ul>
         </div>
       </div>

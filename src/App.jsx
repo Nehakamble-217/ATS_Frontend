@@ -11,7 +11,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sidebar from "./EmployeeDashboard/sideBar";
 import AfterSelection from "./CandidateSection/afterSelection";
 import Attendance from "./EmployeeSection/Attendence_sheet";
-function App() {
+import { LogoutProvider } from "./LoginPage/logoutProvider";
+
+
+const App = () => {
   return (
     <div>
       <BrowserRouter>
@@ -21,13 +24,8 @@ function App() {
           <Route path="/employee-login" element={<Login />} />
           <Route path="/empDash/:employeeId" element={<EmpDashboard />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection/>}/>
-
         </Routes>
       </BrowserRouter>
-     
-      
-
-      {/* <Attendance/> */}
     </div>
   );
 }

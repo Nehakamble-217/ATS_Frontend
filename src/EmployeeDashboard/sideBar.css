@@ -96,12 +96,12 @@ body {
 .sidebar-menu ul{
   padding-left: 0px !important;
 }
+
 .sidebar-menu ul li a {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 10px;
-  /* font-weight: 500; */
   color: rgb(63, 58, 58);
   text-decoration: none;
   padding: 15px 0px;
@@ -111,10 +111,10 @@ body {
 .sidebar-menu ul li > a:hover,
 .sidebar-menu ul li.active > a {
   color: #000;
-  /* background-color: #ff8799; */
-  background-color: #ffd8a8;
   
+  background-color: #ffd8a8;
 }
+
 .sidebar-menu ul li .icon {
   font-size: 18px;
 }
