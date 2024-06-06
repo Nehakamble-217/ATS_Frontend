@@ -100,6 +100,7 @@ function Sidebar({
 
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
+      <div className="clouds"></div>
       <div className='head'></div>
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>

@@ -199,6 +199,7 @@ const DailyWork = ({ successfulDataAdditions }) => {
 
   return (
      <div className="daily-timeanddate">
+      <div className="clouds"></div>
       <div className="head">
         <div className="user-img">
           <img src={Profile} alt="Profile" />

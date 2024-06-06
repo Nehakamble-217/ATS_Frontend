@@ -101,12 +101,10 @@
   background-color: #f2f2f2;
 }
 
-<<<<<<< HEAD
-=======
+
 /* html{
   overflow: hidden;
 } */
->>>>>>> 3fdbf87d562d38c1b112f635424c0e253c84c969
 html::-webkit-scrollbar{
   display: none;
 }
