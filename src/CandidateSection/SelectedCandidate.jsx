@@ -122,9 +122,7 @@ const SelectedCandidate = () => {
                   <td>{item.lineUp?.interviewTime}</td>
                   <td>{item.lineUp?.finalStatus}</td>
                   <td>
-                    <button onClick={() => viewPage(item.candidateId, item.requirementId)}>
-                      Follow Up
-                    </button>
+                     <i  onClick={() => viewPage(item.candidateId)} class="fa-solid fa-person-walking-arrow-right"></i>
                   </td>
                 </tr>
               ))}
