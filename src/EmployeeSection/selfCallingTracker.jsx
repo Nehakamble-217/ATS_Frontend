@@ -20,8 +20,13 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
     fetch(
+<<<<<<< HEAD
 
       `http://192.168.1.41:8891/api/ats/157industries/callingData/${employeeId}`
+=======
+      `http://192.168.1.40:8891/api/ats/157industries/callingData/${employeeId}`
+
+>>>>>>> 3fdbf87d562d38c1b112f635424c0e253c84c969
     )
       .then((response) => response.json())
       .then((data) => {
