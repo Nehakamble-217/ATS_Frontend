@@ -100,13 +100,10 @@
 .attendancerows:hover {
   background-color: #f2f2f2;
 }
-<<<<<<< HEAD
+
 /* html{
   overflow: hidden;
 } */
-=======
-
->>>>>>> 58a868be488e58b6ed9bb98d39cd67567b0ea4d4
 html::-webkit-scrollbar{
   display: none;
 }

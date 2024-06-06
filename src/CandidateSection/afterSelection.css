@@ -133,10 +133,12 @@ label{
       border: 1px solid gray;
       background-color:#ffe5b5 ;
       border-radius: 5px;
+      width: 580px;
+      margin-left: 10px;
   }
   
   .after-select{
-      width: 350px;
+      width: 320px;
       height: 35px;
       border-radius: 0.25rem;
       border: 1px solid #ced4da;
@@ -145,7 +147,7 @@ label{
   
   .after-lable-div{
   
-      width: 200px;
+      width: 210px;
   }
   .after-label{
       font-weight: bold;
@@ -155,7 +157,7 @@ label{
   
   .after-h3 h3{
       font-weight: bold;
-      font-size: 25px;
+      font-size: 18px;
   }
   .after-document-fisrt{
       height: 420px;
@@ -195,7 +197,7 @@ label{
   }
   
   .after-input{
-      width: 350px;
+      width: 320px;
   }
   
   /* active form css */
