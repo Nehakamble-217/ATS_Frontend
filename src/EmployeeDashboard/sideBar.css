@@ -45,6 +45,7 @@ body {
   /* border-radius: 15px; */
   transition: all 0.8s;
   z-index: 999;
+  height: auto;
 }
 
 .sidebar .head {

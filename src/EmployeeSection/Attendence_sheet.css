@@ -35,12 +35,12 @@
   text-overflow: ellipsis;
 }
 
-.tabledata:hover .tooltip {
+/* .tabledata:hover .tooltip {
   visibility: visible;
   opacity: 1;
-}
+} */
 
-.tooltip {
+/* .tooltip {
   visibility: hidden;
   background-color: #ffcb9b;
   color:grey;
@@ -52,10 +52,11 @@
   opacity: 0;
   transition: opacity 0.3s;
   overflow: hidden;
-}
+} */
+
 
 .tooltiptext {
-  display: inline-block;
+  display: none;
 }
 
 .attendancerows-head {
@@ -74,7 +75,8 @@
   text-align: center;
   font-size: 16px;
   border: 1px solid gray;
-  padding: 1px;
+  padding: 0px;
+  height: 30px;
   overflow: hidden;
   max-width: 200px;
   text-overflow: clip;
