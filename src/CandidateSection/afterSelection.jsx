@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RightTick from '../photos/greenTick.jpg'
+import './afterSelection.css'
 
 const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => {
 
@@ -234,7 +235,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
-        "http://localhost:8891/api/ats/157industries/save-join-data",
+        "http://192.168.1.41:8891/api/ats/157industries/save-join-data",
         {
           method: "POST",
           body: formData,
@@ -315,12 +316,12 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                 <div className="after-documnet-sub">
                   <hr />
                   <div className="after-document-fisrt">
-                    <div className="after-documnet-files">
-                      <div className="after-lable-div">
+                    <div className="after-document-files">
+                      
                         <label htmlFor="adharCard" className="after-label">
-                          Adhar Card:
+                          Aadhar Card:
                         </label>
-                      </div>
+                    
                       <input
                         type="file"
                         className="after-file-input"
@@ -339,7 +340,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                       )}
                     </div>
 
-                    <div className="after-documnet-files">
+                    <div className="after-document-files">
                       <label htmlFor="panCard" className="after-label">
                         Pan Card:
                       </label>
@@ -361,7 +362,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                       )}
                     </div>
 
-                    <div className="after-documnet-files">
+                    <div className="after-document-files">
                       <label
                         htmlFor="degreeMarksheet"
                         className="after-label"
@@ -385,10 +386,8 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                         </span>
                       )}
                     </div>
-                  </div>
 
-                  <div className="after-document-fisrt">
-                    <div className="after-documnet-files">
+                    <div className="after-document-files">
                       <label htmlFor="sscMarksheet" className="after-label">
                         Degree Marksheet
                       </label>
@@ -410,7 +409,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                       )}
                     </div>
 
-                    <div className="after-documnet-files">
+                    <div className="after-document-files">
                       <label htmlFor="hscMarksheet" className="after-label">
                         HSC Marksheet:
                       </label>
@@ -432,7 +431,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                       )}
                     </div>
 
-                    <div className="after-documnet-files">
+                    <div className="after-document-files">
                       <label htmlFor="sscMarksheet" className="after-label">
                         SSC Marksheet:
                       </label>
@@ -453,35 +452,18 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                         </span>
                       )}
                     </div>
+
+                    
+
+                   
+
+
+              
+
                   </div>
-                </div>
-              </div>
 
-
-              <div className="after-mail-div">
-                <div className="after-lable-div">
-                  <label
-                    htmlFor="offerLetterReceived"
-                    className="after-label"
-                  >
-                    Offer Letter Received:
-                  </label>
-                </div>
-
-                <select
-                  id="offerLetterReceived"
-                  className="after-select"
-                  value={offerLetterReceived}
-                  onChange={handleOfferLetterReceivedChange}
-                >
-                  <option value="">Select Option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
-
-
-              <div className="after-mail-div">
+                  <div className="after-document-fisrt">
+                  <div className="after-mail-div">
                 <div className="after-lable-div">
                   <label
                     htmlFor="offerLetterAccepted"
@@ -502,9 +484,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   <option value="notAccepted">No</option>
                 </select>
               </div>
-
-
-
               <div className="after-mail-div">
                 <div className="after-lable-div">
                   <label htmlFor="joinStatus" className="after-label">
@@ -525,9 +504,29 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   <option value="toJoin">To Join</option>
                 </select>
               </div>
+                  <div className="after-mail-div">
+                <div className="after-lable-div">
+                  <label
+                    htmlFor="offerLetterReceived"
+                    className="after-label"
+                  >
+                    Offer Letter Received:
+                  </label>
+                </div>
 
-
-              <div className="after-mail-div">
+                <select
+                  id="offerLetterReceived"
+                  className="after-select"
+                  value={offerLetterReceived}
+                  onChange={handleOfferLetterReceivedChange}
+                >
+                  <option value="">Select Option</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+                    
+                    <div className="after-mail-div">
                 <div className="after-lable-div">
                   <label className="after-label">
                     Reason for Not Accepting :
@@ -559,9 +558,22 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   onChange={(e) => setJoinDate(e.target.value)}
                 />
               </div>
+                  </div>
+                </div>
+              </div>
 
 
-              <div className="after-mail-div">
+               
+
+
+
+             
+
+
+              
+
+
+              <div hidden className="after-mail-div">
                 <label htmlFor="joinReason" className="after-label">
                   Reason for{" "}
                   {joinStatus === "drop" ? "Dropping" : "Not joining"}:
