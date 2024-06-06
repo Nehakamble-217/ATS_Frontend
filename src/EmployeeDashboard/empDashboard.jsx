@@ -100,6 +100,8 @@ const EmpDashboard = () => {
     setShowHome(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const funForUpdateLineUp = () => {
@@ -116,6 +118,8 @@ const EmpDashboard = () => {
     setShowHome(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleInterviewDate = () => {
@@ -135,14 +139,39 @@ const EmpDashboard = () => {
     // setAttendanceSheet(false);
     // setShowShortListedCandidates(false);
     // setShowUpdateCallingTracker(false);
+
   };
 
   const toggleAllMasterSheet = () => {
-    setShowMasterSheet(!showMasterSheet)
+    setShowMasterSheet(!showMasterSheet);
+    setShowInterviewDate(false);
+    setShortListed(false);
+    setSelectedCandidate(false);
+    setHoldCandidate(false);
+    setRejectedCandidate(false);
+    setShowJobDiscriptions(false);
+    setSelfCalling(false);
+    setLineUp(false);
+    setShowCallingExcel(false);
+    setAttendanceSheet(false);
+    setShowEmployeeMasterSheet(false);
+        
+
   }
 
   const toggleEmployeeMasterSheet = () => {
-    setShowEmployeeMasterSheet(!showEmployeeMasterSheet)
+    setShowEmployeeMasterSheet(!showEmployeeMasterSheet);
+    setShowInterviewDate(false);
+    setShortListed(false);
+    setSelectedCandidate(false);
+    setHoldCandidate(false);
+    setRejectedCandidate(false);
+    setShowJobDiscriptions(false);
+    setSelfCalling(false);
+    setLineUp(false);
+    setShowCallingExcel(false);
+    setAttendanceSheet(false);
+    setShowMasterSheet(false)
   }
 
   const toggleCallingTrackerForm = () => {
@@ -157,6 +186,8 @@ const EmpDashboard = () => {
     setLineUp(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleShortListed = () => {
@@ -172,6 +203,7 @@ const EmpDashboard = () => {
     setShowCallingExcel(false);
     setAttendanceSheet(false);
     setShowUpdateCallingTracker(false);
+
   };
 
   const toggleSelectCandidate = () => {
@@ -186,6 +218,8 @@ const EmpDashboard = () => {
     setLineUp(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleHoldCandidate = () => {
@@ -200,6 +234,8 @@ const EmpDashboard = () => {
     setLineUp(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleRejectedCandidate = () => {
@@ -215,6 +251,8 @@ const EmpDashboard = () => {
     setLineUp(false);
     setShowCallingTrackerForm(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleJobDescription = () => {
@@ -228,6 +266,8 @@ const EmpDashboard = () => {
     setSelfCalling(false);
     setLineUp(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleSelfCalling = () => {
@@ -243,6 +283,8 @@ const EmpDashboard = () => {
     setUpdateSelfCalling(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggelLineUp = () => {
@@ -258,6 +300,8 @@ const EmpDashboard = () => {
     setUpdateSelfCalling(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleExcelCalling = () => {
@@ -273,6 +317,8 @@ const EmpDashboard = () => {
     setSelfCalling(false);
     setUpdateSelfCalling(false);
     setAttendanceSheet(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleAttendance = () => {
@@ -288,6 +334,8 @@ const EmpDashboard = () => {
     setSelfCalling(false);
     setUpdateSelfCalling(false);
     setShowCallingExcel(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleHome = () => {
@@ -304,6 +352,8 @@ const EmpDashboard = () => {
     setSelfCalling(false);
     setUpdateSelfCalling(false);
     setShowCallingExcel(false);
+     setShowEmployeeMasterSheet(false);
+        setShowMasterSheet(false)
   };
 
   const toggleShortListedCandidates = () => {
@@ -403,7 +453,7 @@ const EmpDashboard = () => {
             />
           )}
         </div>
-        
+
         <div>
           {showCallingExcel && <CallingExcel />}
         </div>

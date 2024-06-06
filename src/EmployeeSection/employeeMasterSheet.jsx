@@ -54,96 +54,92 @@ const EmployeeMasterSheet = () => {
 
 
     return (
-        <div className="container mt-5">
-            <h2>Employee Master Sheet</h2>
+        <div className="App-after">
+             <h5 style={{color:"gray",paddingTop:"5px"}}>Employee Master Sheet</h5>
             {error && <div className="alert alert-danger">{error}</div>}
-            <div className="table-responsive">
-                <table className="table table-bordered">
+            <div className="attendanceTableData">
+                <table className="attendance-table">
                     <thead>
-                        <tr>
-
-                            <th>Alternate Number</th>
-                            <th>Calling Feedback</th>
-                            <th>Candidate ID</th>
-                            <th>Candidate Email</th>
-                            <th>Candidate Name</th>
-                            <th>Communication Rating</th>
-                            <th>Contact Number</th>
-                            <th>Current Location</th>
-                            <th>Date</th>
-                            <th>Position</th>
-                            <th>Recruiter Name</th>
-                            <th>Requirement Company</th>
-                            <th>Requirement ID</th>
-                            <th>Select Yes or No</th>
-                            <th>Source Name</th>
-                            <th>Emp ID</th>
-                            <th>Line Up ID</th>
-                            <th>Availability for Interview</th>
-                            <th>Company Name</th>
-                            <th>Current CTC</th>
-                            <th>Date of Birth</th>
-                            <th>Expected CTC</th>
-                            <th>Extra Certification</th>
-                            <th>Feedback</th>
-                            <th>Final Status</th>
-                            <th>Gender</th>
-                            <th>Holding Any Offer</th>
-                            <th>Message for Team Leader</th>
-                            <th>Notice Period</th>
-                            <th>Qualification</th>
-                            <th>Resume</th>
-                            <th>Total Experience</th>
-                            <th>Year of Passing</th>
-                            <th>Interview Time</th>
-                            <th>Response Update ID</th>
-                            <th>Interview Response</th>
-                            <th>Interview Round</th>
-                            <th>Next Interview Date</th>
-                            <th>Response Updated Date</th>
-                            <th>Next Interview Timing</th>
-                            <th>Details ID</th>
-                            <th>Mail Received</th>
-                            <th>Aadhaar Card</th>
-                            <th>PAN Card</th>
-                            <th>Driving License</th>
-                            <th>Degree Mark Sheet</th>
-                            <th>HSC Mark Sheet</th>
-                            <th>SSC Mark Sheet</th>
-                            <th>Offer Letter Received</th>
-                            <th>Offer Letter Accepted</th>
-                            <th>Reason for Rejection Offer Letter</th>
-                            <th>Join Status</th>
-                            <th>Reason for Not Join</th>
-                            <th>Join Date</th>
-                            <th>Inquiry ID</th>
-                            <th>Active Status</th>
-                            <th>Any Problem</th>
-                            <th>Call Date</th>
-                            <th>Daily Impact</th>
-                            <th>Inactive Reason</th>
-                            <th>Office Environment</th>
-                            <th>Staff Behavior</th>
+                        <tr  className="attendancerows-head">
+                           <th className='attendanceheading'>Candidate ID</th>
+                            <th className='attendanceheading'>Alternate Number</th>
+                            <th className='attendanceheading'>Calling Feedback</th>
+                            
+                            <th className='attendanceheading'>Candidate Email</th>
+                            <th className='attendanceheading'>Candidate Name</th>
+                            <th className='attendanceheading'>Communication Rating</th>
+                            <th className='attendanceheading'>Contact Number</th>
+                            <th className='attendanceheading'>Current Location</th>
+                            <th className='attendanceheading'>Date</th>
+                            <th className='attendanceheading'>Position</th>
+                            <th className='attendanceheading'>Recruiter Name</th>
+                            <th className='attendanceheading'>Requirement Company</th>
+                            <th className='attendanceheading'>Requirement ID</th>
+                            <th className='attendanceheading'>Select Yes or No</th>
+                            <th className='attendanceheading'>Source Name</th>
+                            <th className='attendanceheading'>Emp ID</th>
+                            <th className='attendanceheading'>Line Up ID</th>
+                            <th className='attendanceheading'>Availability for Interview</th>
+                            <th className='attendanceheading'>Company Name</th>
+                            <th className='attendanceheading'>Current CTC</th>
+                            <th className='attendanceheading'>Date of Birth</th>
+                            <th className='attendanceheading'>Expected CTC</th>
+                            <th className='attendanceheading'>Extra Certification</th>
+                            <th className='attendanceheading'>Feedback</th>
+                            <th className='attendanceheading'>Final Status</th>
+                            <th className='attendanceheading'>Gender</th>
+                            <th className='attendanceheading'>Holding Any Offer</th>
+                            <th className='attendanceheading'>Message for Team Leader</th>
+                            <th className='attendanceheading'>Notice Period</th>
+                            <th className='attendanceheading'>Qualification</th>
+                            <th className='attendanceheading'>Resume</th>
+                            <th className='attendanceheading'>Total Experience</th>
+                            <th className='attendanceheading'>Year of Passing</th>
+                            <th className='attendanceheading'>Interview Time</th>
+                            <th className='attendanceheading'>Response Update ID</th>
+                            <th className='attendanceheading'>Interview Response</th>
+                            <th className='attendanceheading'>Interview Round</th>
+                            <th className='attendanceheading'>Next Interview Date</th>
+                            <th className='attendanceheading'>Response Updated Date</th>
+                            <th className='attendanceheading'>Next Interview Timing</th>
+                            <th className='attendanceheading'>Details ID</th>
+                            <th className='attendanceheading'>Mail Received</th>
+                            <th className='attendanceheading'>Aadhaar Card</th>
+                            <th className='attendanceheading'>PAN Card</th>
+                            <th className='attendanceheading'>Driving License</th>
+                            <th className='attendanceheading'>Degree Mark Sheet</th>
+                            <th className='attendanceheading'>HSC Mark Sheet</th>
+                            <th className='attendanceheading'>SSC Mark Sheet</th>
+                            <th className='attendanceheading'>Offer Letter Received</th>
+                            <th className='attendanceheading'>Offer Letter Accepted</th>
+                            <th className='attendanceheading'>Reason for Rejection Offer Letter</th>
+                            <th className='attendanceheading'>Join Status</th>
+                            <th className='attendanceheading'>Reason for Not Join</th>
+                            <th className='attendanceheading'>Join Date</th>
+                            <th className='attendanceheading'>Inquiry ID</th>
+                            <th className='attendanceheading'>Active Status</th>
+                            <th className='attendanceheading'>Any Problem</th>
+                            <th className='attendanceheading'>Call Date</th>
+                            <th className='attendanceheading'>Daily Impact</th>
+                            <th className='attendanceheading'>Inactive Reason</th>
+                            <th className='attendanceheading'>Office Environment</th>
+                            <th className='attendanceheading'>Staff Behavior</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.map((entry, index) => (
-                            <tr key={index}>
+                            <tr key={index} className='attendancerows'>
                                 {entry.slice(0, 42).map((cell, cellIndex) => (
-                                    <td key={cellIndex}>{cell}</td>
+                                    <td className="tabledata" key={cellIndex}>{cell}</td>
                                 ))}
                                 {[42, 43, 44, 45, 46, 47].map((fileIndex) => (
-                                    <td key={fileIndex}>
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => handleViewFile(entry[fileIndex])}
-                                        >
-                                            View
-                                        </button>
+                                    <td className="tabledata" key={fileIndex}>
+                                       
+                                        <i   onClick={() => handleViewFile(entry[fileIndex])}className="fa-sharp fa-solid fa-eye"></i>
                                     </td>
                                 ))}
                                 {entry.slice(48).map((cell, cellIndex) => (
-                                    <td key={42 + cellIndex}>{cell}</td>
+                                    <td className="tabledata" key={42 + cellIndex}>{cell}</td>
                                 ))}
                             </tr>
                         ))}

@@ -27,8 +27,6 @@ const ShortlistedNavbar = () => {
             <div className='shortlisted-main-nav'>
                 <div className='shortlisted-nav-left'>
                     <img style={{width:"25px"}} onClick={displayCalendar}  src={calendar} alt="" />
-
-                    {/* <i id='calendar-icon-nav'  className="fa-thin fa-calendar-days"></i> */}
                     <button className='shortListed-btn-nav' onClick={displayShortlistedData}>ShortListed Candidate</button>
                     <button className='shortListed-btn-nav'>button 3</button>
                     <button className='shortListed-btn-nav'>button 4</button>

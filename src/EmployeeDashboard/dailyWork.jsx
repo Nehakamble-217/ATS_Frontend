@@ -247,7 +247,7 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
       };
 
       await axios.post(
-        "http://localhost:8891/api/ats/157industries/save-daily-work",
+        `"http://198.168.1.41:8891/api/ats/157industries/save-daily-work"`,
         formData
       );
 
@@ -290,7 +290,10 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
   };
 
   return (
-    <div className="daily-timeanddate">
+
+     <div className="daily-timeanddate">
+      <div className="clouds"></div>
+
       <div className="head">
         <div className="user-img">
           <img src={Profile} alt="Profile" />

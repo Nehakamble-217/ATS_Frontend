@@ -18,7 +18,7 @@ const SelectedCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8891/api/ats/157industries/selected-candidate/${employeeId}`
+        `http://192.168.1.41:8891/api/ats/157industries/selected-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -41,90 +41,90 @@ const SelectedCandidate = () => {
   };
 
   return (
-    <div className="c1-mainDiv">
+    <div className="App-after">
+       <h5>Selected Candidates 16</h5>
       {!selectedCandidateId ? (
-        <div className="c1-subdiv">
-          <h5>Selected Candidates 16</h5>
-          <table className="selected-candidate-table">
+        
+        <div className="attendanceTableData">
+         
+          <table className="attendance-table">
             <thead>
-              <tr>
+              <tr className='attendancerows-head'>
                 {/* Table headers */}
-                <th>Sr No.</th>
-                <th>Candidate Id.</th>
-                <th>Date</th>
-                <th>Recruiter Name</th>
-                <th>Candidate Name</th>
-                <th>Candidate Email</th>
-                <th>Contact Number</th>
-                <th>Alternate Number</th>
-                <th>Source Name</th>
-                <th>Position</th>
-                <th>Requirement id</th>
-                <th>Requirement Company</th>
-                <th>Communication Rating</th>
-                <th>Location</th>
-                <th>CallingFeedback</th>
-                <th>Interested / Eligible</th>
-                <th>Line Up Id</th>
-                <th>Date Of Birth</th>
-                <th>Gender</th>
-                <th>Qualification</th>
-                <th>Year Of Passing</th>
-                <th>Extra Certification</th>
-                <th>Current Company Name</th>
-                <th>Total Experience</th>
-                <th>Current CTC</th>
-                <th>Expected CTC</th>
-                <th>Notice Period</th>
-                <th>Any Offer Letter</th>
-                <th>Feed Back</th>
-                <th>Message For Team Leader</th>
-                <th>Interview Date</th>
-                <th>Interview Time</th>
-                <th>Candidate Status</th>
-                <th>Action</th>
+                <th className='attendanceheading'>Sr No.</th>
+                <th className='attendanceheading'>Candidate Id.</th>
+                <th className='attendanceheading'>Date</th>
+                <th className='attendanceheading'>Recruiter Name</th>
+                <th className='attendanceheading'>Candidate Name</th>
+                <th className='attendanceheading'>Candidate Email</th>
+                <th className='attendanceheading'>Contact Number</th>
+                <th className='attendanceheading'>Alternate Number</th>
+                <th className='attendanceheading'>Source Name</th>
+                <th className='attendanceheading'>Position</th>
+                <th className='attendanceheading'>Requirement id</th>
+                <th className='attendanceheading'>Requirement Company</th>
+                <th className='attendanceheading'>Communication Rating</th>
+                <th className='attendanceheading'>Location</th>
+                <th className='attendanceheading'>CallingFeedback</th>
+                <th className='attendanceheading'>Interested / Eligible</th>
+                <th className='attendanceheading'>Line Up Id</th>
+                <th className='attendanceheading'>Date Of Birth</th>
+                <th className='attendanceheading'>Gender</th>
+                <th className='attendanceheading'>Qualification</th>
+                <th className='attendanceheading'>Year Of Passing</th>
+                <th className='attendanceheading'>Extra Certification</th>
+                <th className='attendanceheading'>Current Company Name</th>
+                <th className='attendanceheading'>Total Experience</th>
+                <th className='attendanceheading'>Current CTC</th>
+                <th className='attendanceheading'>Expected CTC</th>
+                <th className='attendanceheading'>Notice Period</th>
+                <th className='attendanceheading'>Any Offer Letter</th>
+                <th className='attendanceheading'>Feed Back</th>
+                <th className='attendanceheading'>Message For Team Leader</th>
+                <th className='attendanceheading'>Interview Date</th>
+                <th className='attendanceheading'>Interview Time</th>
+                <th className='attendanceheading'>Candidate Status</th>
+                <th className='attendanceheading'>Action</th>
               </tr>
             </thead>
             <tbody>
               {Array.isArray(shortListedData) && shortListedData.map((item, index) => (
-                <tr key={item.candidateId} className="selectedcandidaterows">
-                  <td>{index + 1}</td>
-                  <td>{item.candidateId}</td>
-                  <td>{item.date}</td>
-                  <td>{item.recruiterName}</td>
-                  <td>{item.candidateName}</td>
-                  <td>{item.candidateEmail}</td>
-                  <td>{item.contactNumber}</td>
-                  <td>{item.alternateNumber}</td>
-                  <td>{item.sourceName}</td>
-                  <td>{item.position}</td>
-                  <td>{item.requirementId}</td>
-                  <td>{item.requirementCompany}</td>
-                  <td>{item.communicationRating}</td>
-                  <td>{item.currentLocation}</td>
-                  <td>{item.callingFeedback}</td>
-                  <td>{item.selectYesOrNo}</td>
-                  <td>{item.lineUp?.lineUpId}</td>
-                  <td>{item.lineUp?.dateOfBirth}</td>
-                  <td>{item.lineUp?.gender}</td>
-                  <td>{item.lineUp?.qualification}</td>
-                  <td>{item.lineUp?.yearOfPassing}</td>
-                  <td>{item.lineUp?.extraCertification}</td>
-                  <td>{item.lineUp?.companyName}</td>
-                  <td>{item.lineUp?.totalExperience}</td>
-                  <td>{item.lineUp?.currentCTC}</td>
-                  <td>{item.lineUp?.expectedCTC}</td>
-                  <td>{item.lineUp?.noticePeriod}</td>
-                  <td>{item.lineUp?.holdingAnyOffer}</td>
-                  <td>{item.lineUp?.feedBack}</td>
-                  <td>{item.lineUp?.msgForTeamLeader}</td>
-                  <td>{item.lineUp?.availabilityForInterview}</td>
-                  <td>{item.lineUp?.interviewTime}</td>
-                  <td>{item.lineUp?.finalStatus}</td>
-                  <td>
-                    <button onClick={() => viewPage(item.candidateId, item.requirementId)}>
-                      Follow Up
-                    </button>
+                <tr key={item.candidateId} className='attendancerows'>
+                  <td className='tabledata '>{index + 1}</td>
+                  <td className='tabledata '>{item.candidateId}</td>
+                  <td className='tabledata '>{item.date}</td>
+                  <td className='tabledata '>{item.recruiterName}</td>
+                  <td className='tabledata '>{item.candidateName}</td>
+                  <td className='tabledata '>{item.candidateEmail}</td>
+                  <td className='tabledata '>{item.contactNumber}</td>
+                  <td className='tabledata '>{item.alternateNumber}</td>
+                  <td className='tabledata '>{item.sourceName}</td>
+                  <td className='tabledata '>{item.position}</td>
+                  <td className='tabledata '>{item.requirementId}</td>
+                  <td className='tabledata '>{item.requirementCompany}</td>
+                  <td className='tabledata '>{item.communicationRating}</td>
+                  <td className='tabledata '>{item.currentLocation}</td>
+                  <td className='tabledata '>{item.callingFeedback}</td>
+                  <td className='tabledata '>{item.selectYesOrNo}</td>
+                  <td className='tabledata '>{item.lineUp?.lineUpId}</td>
+                  <td className='tabledata '>{item.lineUp?.dateOfBirth}</td>
+                  <td className='tabledata '>{item.lineUp?.gender}</td>
+                  <td className='tabledata '>{item.lineUp?.qualification}</td>
+                  <td className='tabledata '>{item.lineUp?.yearOfPassing}</td>
+                  <td className='tabledata '>{item.lineUp?.extraCertification}</td>
+                  <td className='tabledata '>{item.lineUp?.companyName}</td>
+                  <td className='tabledata '>{item.lineUp?.totalExperience}</td>
+                  <td className='tabledata '>{item.lineUp?.currentCTC}</td>
+                  <td className='tabledata '>{item.lineUp?.expectedCTC}</td>
+                  <td className='tabledata '>{item.lineUp?.noticePeriod}</td>
+                  <td className='tabledata '>{item.lineUp?.holdingAnyOffer}</td>
+                  <td className='tabledata '>{item.lineUp?.feedBack}</td>
+                  <td className='tabledata '>{item.lineUp?.msgForTeamLeader}</td>
+                  <td className='tabledata '>{item.lineUp?.availabilityForInterview}</td>
+                  <td className='tabledata '>{item.lineUp?.interviewTime}</td>
+                  <td className='tabledata '>{item.lineUp?.finalStatus}</td>
+                  <td className='tabledata '>
+                     <i  onClick={() => viewPage(item.candidateId)} class="fa-solid fa-person-walking-arrow-right"></i>
                   </td>
                 </tr>
               ))}

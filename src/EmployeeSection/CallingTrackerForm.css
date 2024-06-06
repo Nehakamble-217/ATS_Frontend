@@ -1,13 +1,14 @@
 .maintable {
   height: 100%;
   border-collapse: collapse;
+
  
 }
 
 
 #table-row{
     background-color: #ffcb9b;
-    height: 30px !important;
+    height: 10px !important;
     padding: 0%;
     margin: 0%;
 }
@@ -214,13 +215,13 @@ transform: skewX(45deg) translateX(-150px);
 }
 
 #currentDate {
-  padding: 10px; /* Add some padding for better spacing */
-  font-size: 16px; /* Adjust the font size */
-  border: 1px solid #ccc; /* Add a border for better visibility */
-  border-radius: 4px; /* Add border radius for rounded corners */
+  padding: 10px; 
+  font-size: 16px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
   box-sizing: border-box; }
 
-.react-datepicker__input-container input {
+/* .react-datepicker__input-container input {
   width: 300px; 
   height: 30px; 
 
@@ -232,27 +233,23 @@ transform: skewX(45deg) translateX(-150px);
  
 }
 
-/* Custom styles for the day labels */
+
 .react-datepicker__day-name,
 .react-datepicker__day {
-  width: 50px; /* Adjust the width of the day labels */
-  height: 30px; /* Adjust the height of the day labels */
-  line-height: 30px; /* Center the text vertically */
-  /* font-size: x-large;  */
-  /* Adjust the font size of the day labels */
+  width: 50px; 
+  height: 30px; 
+  line-height: 30px; 
+  /
 }
 
-/* Custom styles for the selected date */
+
 .react-datepicker__day--selected {
-  background-color: #007bff; /* Change the background color of the selected date */
-  color: #fff; /* Change the text color of the selected date */
-}
+  background-color: #007bff; 
+  color: #fff; }
 
-/* Custom styles for the time list */
 
-/* Custom styles for the time label */
 .react-datepicker__time-list-item {
-  width: auto; /* Allow time labels to adjust width based on content */
+  width: auto; /
 }
 .react-datepicker-time__header--time {
   font-size: 16px;
@@ -261,7 +258,7 @@ transform: skewX(45deg) translateX(-150px);
 .react-datepicker__time-list {
   height: 300px;
   width: 500px;
-}
+} */
 input{
     height: 30px;
     font-size: 10px;

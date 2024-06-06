@@ -39,7 +39,7 @@ const Attendance = () => {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
-      let top = rect.top - tooltipHeight + 40; // above the cell
+      let top = rect.top - tooltipHeight -5; // above the cell
       let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
 
       // Adjust if the tooltip is out of the viewport
@@ -69,8 +69,7 @@ const Attendance = () => {
   }
 
   return (
-    <div className="App-after calling-list-container ">
-       <h5 style={{color:"gray",paddingTop:"5px"}}>Attendance Sheet</h5> 
+    <div className="App-after">
       <div className="container-after1">
         <div className="attendanceTableData">
           <table className="attendance-table">

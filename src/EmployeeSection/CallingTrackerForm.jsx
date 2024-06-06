@@ -350,8 +350,36 @@ const CallingTrackerForm = ({
     }
   };
       
+  const handleResumeFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLineUpData({ ...lineUpData, resume: file });
+      setResumeUploaded(true);
+    }
+  };
   
 
+  const handleChangecompany = async (e) => {
+    const { name, employeeId } = e.target;
+    setCallingTracker({ ...callingTracker, [name]: employeeId });
+
+    if (name === 'requirementId') {
+      try {
+        const response = await axios.get(
+          `http://192.168.1.41:8891/api/ats/157industries/company-details/${employeeId}`
+        );
+        const { requirementCompany, positions } = response.data;
+        setCallingTracker((prevState) => ({
+          ...prevState,
+          requirementCompany,
+          position: positions.length > 0 ? positions[0] : ''
+        }));
+      } catch (error) {
+        console.error("Error fetching company details:", error);
+      }
+    }
+  };
+  
 
   return (
     <div>
@@ -389,16 +417,44 @@ const CallingTrackerForm = ({
                     name="recruiterName"
                     value={callingTracker.recruiterName}
                     onChange={handleChange}
+                    readOnly
                     className="form-control"
                   />
                 </td>
               </tr>
-              <tr hidden>
+
+              <tr id="heading123">
+                <th> Full Adress</th>
+                <td>
+                  <input
+                    type="text"
+                    name="candidateName"
+                    value={callingTracker.candidateName}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
+                <th scope="col">Relavent Exp</th>
+                <td>
+                <input
+                  type="email"
+                  name="relaventexp"
+                  value=""
+                  
+                  className={`form-control ${error ? 'is-invalid' : ''}`}
+                />
+               
+              </td>
+              </tr>
+
+              <div hidden>
+              <tr >
                 <th>Employee ID</th>
                 <td>
                   <input type="text" name="employeeId" readOnly value={employeeId} />
                 </td>
               </tr>
+              </div>
 
               <tr id="heading123">
                 <th> Candidates Full Name*</th>
@@ -407,6 +463,7 @@ const CallingTrackerForm = ({
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
+                    
                     onChange={handleChange}
                     className="form-control"
                   />
@@ -481,7 +538,7 @@ const CallingTrackerForm = ({
                     className="form-select mb-1"
                     name="requirementId"
                     value={callingTracker.requirementId}
-                    onChange={handleChange}
+                    onChange={handleChangecompany}
                   >
                     <option value="">Select ID</option>
                     {requirementOptions.map((option) => (
@@ -502,7 +559,7 @@ const CallingTrackerForm = ({
                     type="text"
                     name="position"
                     value={callingTracker.position}
-                    onChange={handleChange}
+                    onChange={handleChangecompany}
                     className="form-control"
                   />
                 </td>
@@ -515,11 +572,11 @@ const CallingTrackerForm = ({
                    
                     name="requirementCompany"
                     value={callingTracker.requirementCompany}
-                    onChange={handleChange}
+                    onChange={handleChangecompany}
                   >
                     <option value="">Select Company</option>
                     {requirementOptions.map((option) => (
-                      <option key={option.requirement_id} value={option[1]}>
+                      <option key={option.requirement_id} employeeId={option[1]}>
                         {option[1]}
                       </option>
                     ))}
@@ -732,14 +789,14 @@ const CallingTrackerForm = ({
               <tr>
                 <th scope="col">
                   Upload Resume
-                  {/* {resumeUploaded && (
+                  {resumeUploaded && (
                     <FaCheckCircle className="upload-success-icon" />
-                  )} */}
+                  )}
                 </th>
                 <td>
                   <input
                     type="file"
-                    // onChange={handleResumeFileChange}
+                    onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="form-control pt-1"
                   />
@@ -798,25 +855,26 @@ const CallingTrackerForm = ({
               <div style={{ display: 'flex', alignItems: 'center',  padding: '5px' }}>
                 <label htmlFor="totalExperienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
                 <input
-       type="number"
-  name="totalExperienceMonths"
-  value={lineUpData.totalExperienceMonths}
-  onChange={(e) => {
-    const value = e.target.value;
-    if (value === '' || (Number(value) >= 1 && Number(value) <= 12)) {
-      setLineUpData({
-        ...lineUpData,
-        totalExperienceMonths: value,
-      });
-    }
-  }}
-  className="form-control"
-  placeholder=""
-  maxLength="2"
-  style={{ width: '50px', border: '1px solid gray' }}
-  min="1"
-  max="12"
-/>
+                  type="number"
+                  name="totalExperienceMonths" 
+                  value={lineUpData.totalExperienceMonths}
+                  onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === '' || (Number(value) >= 1 && Number(value) <= 12)) {
+                  setLineUpData({
+                  ...lineUpData,
+                  totalExperienceMonths: value,
+                  
+                  });
+                }
+              }}
+             className="form-control"
+            placeholder=""
+            maxLength="2"
+            style={{ width: '60px', border: '1px solid gray' }}
+            min="1"
+            max="12"
+            />
 
               </div>
             </div>

@@ -1,6 +1,8 @@
 .App-after {
   width: 100%;
   background-attachment: fixed;
+  height: 100vh;
+  overflow: hidden !important;
 }
 
 .attendance-table {
@@ -49,6 +51,7 @@
   z-index: 1;
   opacity: 0;
   transition: opacity 0.3s;
+  overflow: hidden;
 }
 
 .tooltiptext {
@@ -98,6 +101,15 @@
   background-color: #f2f2f2;
 }
 
+<<<<<<< HEAD
 html::-webkit-scrollbar {
+=======
+
+/* html{
+  overflow: hidden;
+} */
+html::-webkit-scrollbar{
+>>>>>>> ea005a686d30e9d9624daa02e0eeb0eb6545cb00
   display: none;
 }
+
