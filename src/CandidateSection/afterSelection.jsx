@@ -306,9 +306,9 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   value={mailReceived}
                   onChange={handleMailReceivedChange}
                 >
-                  <option value="">Select Option</option>
-                  <option value="received">Received</option>
-                  <option value="notReceived">Not Received</option>
+                  <option value="" >Select Option</option>
+                  <option className="as-nofilechosen" value="received">Received</option>
+                  <option className="as-nofilechosen" value="notReceived">Not Received</option>
                 </select>
               </div>
 
