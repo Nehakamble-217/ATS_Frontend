@@ -1,8 +1,11 @@
+/* General Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+
 
 .tejal {
     display: flex;
@@ -12,8 +15,32 @@
     background-color: #ffe5b5;
     font-family: 'Arial', sans-serif;
     position: relative;
+    overflow: hidden;
 }
 
+.clouds {
+    position: absolute;
+    top: -593px;
+    left: 0;
+    width: 200%;
+    height: 177%;
+    background: url(/src/LogoImages/clouds.png) repeat-x;
+background-size: cover;    
+background-position: center;
+animation: moveClouds 60s linear infinite;
+    /* z-index: 99999; */
+}
+
+@keyframes moveClouds {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Small Containers */
 .small-container {
     position: absolute;
     width: 50%;
@@ -29,6 +56,7 @@
     left: 80%;
 }
 
+/* Pricing Plan */
 .pricing-plan {
     display: flex;
     align-items: center;
@@ -39,6 +67,7 @@
     text-align: justify;
     gap: 50px;
     margin-left: 120px;
+    z-index: 1; /* Ensure the content is above the clouds */
 }
 
 .square-box {
@@ -51,13 +80,13 @@
     box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1);
     background: linear-gradient(135deg, #ffe5b5, #ffd8a8, #ffcb9b, #fec08e, #ffb281);
     position: absolute;
-    z-index: 1;
     width: 400px;
     height: 250px;
     text-align: center;
     cursor: pointer;
     transition: 0.4s ease-in-out;
     color: #fcfbf9;
+    z-index: 2; /* Ensure the boxes are above the clouds */
 }
 
 .square-box:first-child {
@@ -129,6 +158,7 @@
     margin-right: 20px;
 }
 
+/* Login Buttons */
 .login,
 .login1 {
     padding: 10px 24px;
@@ -185,6 +215,7 @@
     border-color: gray;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
     .square-box {
         width: 100%;

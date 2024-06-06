@@ -227,48 +227,15 @@ label{
   
   /* table css work */
   
-  .attendance-table {
-    width: 1800px;
-    height: 100%;
-    background: white;
-    border-radius: 5px;
-    padding-top: 0%;
-    border: 1px solid gray;
-    
-  }
+ 
   
-  .attendance-table th {
-    background-color: #ffcb9b;
-    color: gray;
-    font-weight: 100;
-    text-align: center;
-    font-size: 18px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  }
+ 
   
+
   
-  .attendance-table .tabledata {
-    text-align: center;
-    font-size: 16px;
-    
-  }
-  .attendancerows{
-    margin-right: 10px;
-    width: 1800px;
-  }
-  .attendance-table .attendancerows:hover {
-    background-color: #ffe5b5; 
-  }
+ 
   
-  .attendance-table .attendanceheading,
-  .attendance-table .tabledata{
-    padding: 10px;
-    border: 1px solid wheat;
-    color: rgb(84, 84, 84);
-    font-size: 16px;
-    white-space: nowrap;
-   
-  }
+ 
   
   .active-resone{
     width: 110px;
