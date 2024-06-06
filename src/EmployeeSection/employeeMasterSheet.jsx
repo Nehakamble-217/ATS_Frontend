@@ -134,12 +134,8 @@ const EmployeeMasterSheet = () => {
                                 ))}
                                 {[42, 43, 44, 45, 46, 47].map((fileIndex) => (
                                     <td className="tabledata" key={fileIndex}>
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => handleViewFile(entry[fileIndex])}
-                                        >
-                                            View
-                                        </button>
+                                       
+                                        <i   onClick={() => handleViewFile(entry[fileIndex])}className="fa-sharp fa-solid fa-eye"></i>
                                     </td>
                                 ))}
                                 {entry.slice(48).map((cell, cellIndex) => (
