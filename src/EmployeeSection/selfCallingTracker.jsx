@@ -57,7 +57,7 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
   };
 
   const handleUpdateSuccess = () => {
-    // Reload the calling list data and show the calling list table again
+
     fetch(
       `http://localhost:8891/api/ats/157industries/callingData/${employeeId}`
     )
@@ -65,7 +65,7 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
       .then((data) => {
         setCallingList(data);
         setFilteredCallingList(data);
-        setShowUpdateCallingTracker(false); // Hide UpdateCallingTracker
+        setShowUpdateCallingTracker(false); 
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
@@ -214,7 +214,7 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
           </div>
         </>
       )}
-
+  
        {showUpdateCallingTracker && (
         <UpdateCallingTracker
           candidateId={selectedCandidateId}

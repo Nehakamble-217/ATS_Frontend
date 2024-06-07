@@ -58,7 +58,6 @@ function Sidebar({
   const toggleSidebar = () => {
     setIsActive(!isActive);
     OpenSidebar(); 
-
   };
 
   const openNaukriPlatform = () => {

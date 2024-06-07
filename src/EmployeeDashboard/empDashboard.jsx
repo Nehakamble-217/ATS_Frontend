@@ -125,26 +125,26 @@ const EmpDashboard = () => {
   const toggleInterviewDate = () => {
     setShowShortListdNav(!showShortListedNav)
     // setShowInterviewDate(!showInterviewDate);
-    // setAddCandidate(false);
-    // setShortListed(false);
-    // setSelectedCandidate(false);
-    // setHoldCandidate(false);
-    // setRejectedCandidate(false);
-    // setShowJobDiscriptions(false);
-    // setSelfCalling(false);
-    // setLineUp(false);
-    // setShowCallingTrackerForm(false);
-    // setShowHome(false);
-    // setShowCallingExcel(false);
-    // setAttendanceSheet(false);
-    // setShowShortListedCandidates(false);
-    // setShowUpdateCallingTracker(false);
+    setAddCandidate(false);
+    setShortListed(false);
+    setSelectedCandidate(false);
+    setHoldCandidate(false);
+    setRejectedCandidate(false);
+    setShowJobDiscriptions(false);
+    setSelfCalling(false);
+    setLineUp(false);
+    setShowCallingTrackerForm(false);
+    setShowHome(false);
+    setShowCallingExcel(false);
+    setAttendanceSheet(false);
+    setShowShortListedCandidates(false);
+    setShowUpdateCallingTracker(false);
 
   };
 
   const toggleAllMasterSheet = () => {
     setShowMasterSheet(!showMasterSheet);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setShortListed(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -161,7 +161,7 @@ const EmpDashboard = () => {
 
   const toggleEmployeeMasterSheet = () => {
     setShowEmployeeMasterSheet(!showEmployeeMasterSheet);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setShortListed(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -176,7 +176,7 @@ const EmpDashboard = () => {
 
   const toggleCallingTrackerForm = () => {
     setAddCandidate(!addCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setShortListed(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -192,7 +192,7 @@ const EmpDashboard = () => {
 
   const toggleShortListed = () => {
     setShortListed(!shortListed);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -208,7 +208,7 @@ const EmpDashboard = () => {
 
   const toggleSelectCandidate = () => {
     setSelectedCandidate(!selectCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setHoldCandidate(false);
@@ -224,7 +224,7 @@ const EmpDashboard = () => {
 
   const toggleHoldCandidate = () => {
     setHoldCandidate(!holdCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -234,13 +234,13 @@ const EmpDashboard = () => {
     setLineUp(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
+    setShowEmployeeMasterSheet(false);
+    setShowMasterSheet(false)
   };
 
   const toggleRejectedCandidate = () => {
     setRejectedCandidate(!rejectedCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -257,7 +257,7 @@ const EmpDashboard = () => {
 
   const toggleJobDescription = () => {
     setShowJobDiscriptions(!showJobDiscriptions);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -272,7 +272,7 @@ const EmpDashboard = () => {
 
   const toggleSelfCalling = () => {
     setSelfCalling(!selfCalling);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -289,7 +289,7 @@ const EmpDashboard = () => {
 
   const toggelLineUp = () => {
     setLineUp(!lineUp);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -307,7 +307,7 @@ const EmpDashboard = () => {
   const toggleExcelCalling = () => {
     setShowCallingExcel(!showCallingExcel);
     setLineUp(false);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -324,7 +324,7 @@ const EmpDashboard = () => {
   const toggleAttendance = () => {
     setAttendanceSheet(!attendancesheet);
     setLineUp(false);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -342,7 +342,7 @@ const EmpDashboard = () => {
     setShowHome(!showHome);
     setAttendanceSheet(false);
     setLineUp(false);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -358,12 +358,12 @@ const EmpDashboard = () => {
 
   const toggleShortListedCandidates = () => {
     setShowShortListedCandidates(!showShortListedCandidates);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
   };
 
   const toggleUpdateCallingTracker = () => {
     setShowUpdateCallingTracker(!showUpdateCallingTracker);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setShowShortListedCandidates(false);
   };
 

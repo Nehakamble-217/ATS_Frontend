@@ -6,17 +6,15 @@ import UpdateCallingTracker from '../EmployeeSection/UpdateSelfCalling';
 import calendar from '../photos/calendar.png'
 
 const ShortlistedNavbar = () => {
-    const [activeComponent, setActiveComponent] = useState(null); // 'shortlisted', 'calendar', 'update'
+    const [activeComponent, setActiveComponent] = useState(null); 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
     const displayShortlistedData = () => {
         setActiveComponent('shortlisted');
     };
-
     const displayCalendar = () => {
         setActiveComponent('calendar');
     };
-
     const handleViewUpdatedPage = (employeeId, candidateId) => {
         setSelectedCandidate({ employeeId, candidateId });
         setActiveComponent('update');
@@ -26,12 +24,15 @@ const ShortlistedNavbar = () => {
         <div>
             <div className='shortlisted-main-nav'>
                 <div className='shortlisted-nav-left'>
-                    <img style={{width:"25px"}} onClick={displayCalendar}  src={calendar} alt="" />
+            
+                   {/* <button id='shortListed-btn-nav-icon' className='shortListed-btn-nav' > */}
+                   <i  style={{fontSize:"22px"}} onClick={displayCalendar} className="fa-regular fa-calendar"></i>
+                   {/* </button> */}
                     <button className='shortListed-btn-nav' onClick={displayShortlistedData}>ShortListed Candidate</button>
-                    <button className='shortListed-btn-nav'>button 3</button>
+                    {/* <button className='shortListed-btn-nav'>button 3</button>
                     <button className='shortListed-btn-nav'>button 4</button>
                     <button className='shortListed-btn-nav'>button 5</button>
-                    <button className='shortListed-btn-nav'>button 6</button>
+                    <button className='shortListed-btn-nav'>button 6</button> */}
                 </div>
             </div>
 
