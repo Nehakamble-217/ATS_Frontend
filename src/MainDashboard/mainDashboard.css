@@ -20,10 +20,10 @@
 
 .clouds {
     position: absolute;
-    top: -523px;
+    top: -730px;
     left: 0;
     width: 200%;
-    height: 177%;
+    height: 200%;
     background: url(/src/LogoImages/clouds.png) repeat-x;
 background-size: cover;    
 background-position: center;

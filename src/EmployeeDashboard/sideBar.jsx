@@ -86,7 +86,7 @@ function Sidebar({
 
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
-      <div className="clouds"></div>
+      <div className="clouds1"></div>
       <div className='head'></div>
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
@@ -229,24 +229,16 @@ function Sidebar({
                     <span className="sidebar-text">Offers Data</span>
                   </a>
                 </li>
+                
               </ul>
+              
             </li>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu">
-          <ul>
             <li>
               <a href="#">
                 <i className="icon ph-bold ph-gear"></i>
                 <span className="sidebar-text">Chat Section</span>
               </a>
             </li>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
-          <ul>
             <li className={activeSubMenu === 'portal' ? "active" : ""} onClick={toggleSubMenu('portal')}>
               <a href="#">
                 <i className="icon ph-bold ph-chart-bar"></i>
@@ -288,13 +280,26 @@ function Sidebar({
                 </li>
               </ul>
             </li>
-
             <li >
               <a href="#" >
                 <i className="icon ph-bold ph-sign-out"></i>
                 <span className="sidebar-text">Note Pad</span>
               </a>
             </li>
+          </ul>
+        </div>
+
+        <div className="sidebar-menu">
+          <ul>
+            
+          </ul>
+        </div>
+
+        <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
+          <ul>
+            
+
+            
 
           </ul>
         </div>

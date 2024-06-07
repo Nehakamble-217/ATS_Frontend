@@ -292,7 +292,6 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
   return (
 
      <div className="daily-timeanddate">
-      <div className="clouds"></div>
 
       <div className="head">
         <div className="user-img">
@@ -323,9 +322,9 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
           <h6>Day Present Paid: {dayPresentPaid}</h6>
           <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
         </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        {/* <div style={{ display: "flex", flexDirection: "column" }}>
           <label htmlFor="remoteWork"></label>
-          <select 
+          <select className="select"
             id="remoteWork"
 
             value={remoteWork}
@@ -336,7 +335,7 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
             <option value="Work from Home">WFH</option>
             <option value="hybrid">hybrid</option>
           </select >
-        </div>
+        </div> */}
         <button className={running ? "timer-break-btn" : "timer-break-btn"} onClick={running ? handlePause : handleResume}>
           {running ? "Pause" : "Resume"}
         </button>

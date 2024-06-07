@@ -245,8 +245,9 @@
   
   .search-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
+    margin-top: 10px;
    
     /* background-color: #f8f8f8; */
   }
@@ -255,15 +256,15 @@
     display: flex;
     align-items: center;
     background-color: #fff;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 15px;
-    padding: 10px;
-    width: 60%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* padding: 10px; */
+    width: 100%;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   }
   
   .search-input {
-    padding: 10px;
+    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 10px;
