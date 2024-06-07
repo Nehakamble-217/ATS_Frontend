@@ -69,7 +69,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
     try {
       const response = await axios.get(
 
-        `http://192.168.1.41:8891/api/ats/157industries/company-list/${employeeId}`
+        `http://localhost:8891/api/ats/157industries/company-list/${employeeId}`
 
       );
       const { data } = response;
