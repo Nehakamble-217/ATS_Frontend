@@ -21,33 +21,35 @@ body {
   min-height: 100vh;
 } */
 .sidebar {
-  position: fixed;
-  top: 0 !important;
+  position: fixed; /* Ensure the sidebar stays in place */
+  top: 0;
   left: 0;
+  height: 100vh; /* Full viewport height */
+  /* overflow-y: auto; */
   padding-top: 80px !important;
   width: 243px;
-  /* background:url("https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2pvYjUxOC1rd2FuLTE4LWEuanBn.jpg") ; */
-  /* background: url("https://rukminim2.flixcart.com/image/850/1000/kyuge4w0/lipstick/w/f/o/kiss-proof-non-trasfer-peach-brown-lip-gloss-lipstick-thtc-original-imagaznx7rys5uzz.jpeg?q=90&crop=false"); */
+  transition: width 0.3s;
   background-repeat:initial;
-  /* background-size: cover; */
   display: flex;
   flex-direction: column;
   gap: 0px;
-  /* box-shadow: inset -20px -20px 20px #ca89a4; */
-  /* background-color: #eda6c4; */
-  /* background-color: white; */
-  /* background: linear-gradient(to Right, #ffcba4,#ffd0ad); */
   background-color: #ffe5b5;
-  /* background-color: rgb(255, 232, 229); */
-  /* background-color: #ffc3ba; */
   padding:0px;
-  /* border: 1px solid #424141; */
-  /* border-radius: 15px; */
-  transition: all 0.8s;
-  z-index: 9999;
-  height: 100vh;
+  transition: width 0.8s;
+  /* z-index: 9999; */
   
 }
+.sidebar::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: #ffcb9b; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded corners */
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #ffcb9b; /* Darker color on hover */
+}
+
 /* .clouds1 {
     position: absolute;
     top: -730px;
