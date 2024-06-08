@@ -10,6 +10,9 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [callingList, setCallingList] = useState([]);
   const [filteredCallingList, setFilteredCallingList] = useState([]);
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
+  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
+
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
 
@@ -18,14 +21,12 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
 
-  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
-  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
+ 
 
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(
-     `http://192.168.1.41:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://localhost:8891/api/ats/157industries/callingData/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -33,6 +34,7 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
+
 
   useEffect(() => {
     const filtered = callingList.filter((item) => {
@@ -52,20 +54,17 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
   }, [searchTerm, callingList]);
 
   const handleUpdate = (candidateId) => {
-    setSelectedCandidateId(candidateId); // Set candidateId for UpdateCallingTracker
-    setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
+    setSelectedCandidateId(candidateId);
+    setShowUpdateCallingTracker(true);
   };
 
   const handleUpdateSuccess = () => {
-
-    fetch(
-      `http://localhost:8891/api/ats/157industries/callingData/${employeeId}`
-    )
+    fetch(`http://localhost:8891/api/ats/157industries/callingData/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
         setFilteredCallingList(data);
-        setShowUpdateCallingTracker(false); 
+        setShowUpdateCallingTracker(false);
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
@@ -81,10 +80,10 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
-      let top = rect.top - tooltipHeight + 40; // above the cell
-      let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
+      let top = rect.top - tooltipHeight + 40; 
+      let left = rect.left + (rect.width - tooltipWidth) / 2; 
 
-      // Adjust if the tooltip is out of the viewport
+    
       if (top < 0) top = rect.bottom + 5; // below the cell
       if (left < 0) left = 5; // align to the left edge
       if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5; // align to the right edge
@@ -105,7 +104,7 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
   return (
     <div className="calling-list-container ">
     
-       {!showUpdateCallingTracker && !showCallingForm && (
+    {!showUpdateCallingTracker ? (
         <>
           <h5 style={{color:"gray",paddingTop:"5px"}}>Calling List</h5>
           <div className="attendanceTableData">
@@ -213,15 +212,15 @@ const CallingList = ({ updateState, funForGettingCandidateId  }) => {
             </table>
           </div>
         </>
-      )}
-  
-       {showUpdateCallingTracker && (
+        ) : (
+
+      //  {showUpdateCallingTracker && (
         <UpdateCallingTracker
-          candidateId={selectedCandidateId}
-          employeeId={employeeId}
-          onSuccess={handleUpdateSuccess}
-          onCancel={() => setShowUpdateCallingTracker(true)}
-        />
+        candidateId={selectedCandidateId}
+        employeeId={employeeId}
+        onSuccess={handleUpdateSuccess}
+        onCancel={() => setShowUpdateCallingTracker(false)}
+      />
       )}
 
     </div>

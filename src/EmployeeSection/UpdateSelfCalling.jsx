@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useLocation, useParams } from "react-router-dom";
-
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import "../EmployeeSection/AddCandidate.css";
@@ -68,9 +67,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-
         `http://localhost:8891/api/ats/157industries/company-list/${employeeId}`
-
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -89,9 +86,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
 
   const fetchEmployeeName = async () => {
     try {
-      const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/employeeName/${employeeId}`
-      );
+      const response = await fetch(`http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`);
       const data = await response.text();
       setRecruiterName(data);
     } catch (error) {
@@ -101,12 +96,9 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
 
   const fetchCandidateData = async () => {
     try {
-      const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/specific-data/${candidateId}`
-      );
+      const response = await fetch(`http://localhost:8891/api/ats/157industries/specific-data/${candidateId}`);
       const data = await response.json();
       setCallingTracker(data);
-      setCandidateFetched(true);
     } catch (error) {
       console.error("Error fetching candidate data:", error);
     }
@@ -140,7 +132,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
       };
 
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://localhost:8891/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {
@@ -153,13 +145,11 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
       if (response.ok) {
         const data = await response.text();
         console.log("Data updated successfully:", data);
-        setFormSubmitted(true);
         setShowAlert(true);
         setTimeout(() => {
           setShowAlert(false);
-          setFormSubmitted(false);
-          onSuccessfulUpdate();
-        }, 2000);
+          onSuccess();
+        }, 1000);
       } else {
         console.error("Failed to update data");
       }
@@ -167,6 +157,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
       console.error("Error updating data:", error);
     }
   };
+
 
   return (
     <div>
@@ -661,6 +652,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
             <button type="submit" className="loging-hr">
               Update Data
             </button>
+            <button type="button" className="loging-hr" onClick={onCancel}>Cancel</button>
           </div>
         </center>
 
@@ -671,8 +663,9 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
 
 UpdateCallingTracker.propTypes = {
   candidateId: PropTypes.number.isRequired,
-  employeeId: PropTypes.string.isRequired,
-  onComplete: PropTypes.func.isRequired,
+  employeeId: PropTypes.number.isRequired,
+  onSuccess: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default UpdateCallingTracker;
