@@ -5,7 +5,7 @@ import "../EmployeeDashboard/dailyWork.css";
 import Profile from "../LogoImages/ProfilePic.png";
 import logoutImg from '../photos/download.jpeg'
 
-const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
+const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
   const employeeId = localStorage.getItem("employeeId") || 1234;
   const [showDetails, setShowDetails] = useState(false);
 
@@ -161,19 +161,72 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     });
   };
 
+  // const handleLogout = async () => {
+  //   try {
+  //     const logoutTime = new Date().toLocaleTimeString("en-IN");
+  //     setLogoutTime(logoutTime);
+
+  //     const totalHoursWork = calculateTotalHoursWork(
+  //       loginTime,
+  //       logoutTime
+  //     );
+
+  //     const now = new Date();
+  //     const day = now.getDate().toString().padStart(2, "0");
+  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  //     const year = now.getFullYear();
+
+  //     const formData = {
+  //       employeeId,
+  //       date: `${day}/${month}/${year}`,
+  //       dailyTarget: data.pending + data.archived,
+  //       dailyArchived: data.archived,
+  //       dailyPending: data.pending,
+  //       loginTime,
+  //       logoutTime,
+  //       totalHoursWork,
+  //       dailyHours: breaks,
+  //       lateMark,
+  //       leaveType,
+  //       paidLeave,
+  //       unpaidLeave,
+  //       dayPresentPaid,
+  //       dayPresentUnpaid,
+  //       remoteWork,
+  //     };
+
+  //     await axios.post(
+  //       "http://localhost:8891/api/ats/157industries/save-daily-work",
+  //       formData
+  //     );
+
+  //     localStorage.removeItem(`stopwatchTime_${employeeId}`);
+  //     localStorage.removeItem(`dailyWorkData_${employeeId}`);
+  //     localStorage.removeItem("employeeId");
+
+  //     setTime({ hours: 0, minutes: 0, seconds: 0 });
+  //     setData({ archived: 0, pending: 10 });
+
+  //     console.log("Logged out successfully.");
+  //     navigate("/employee-login");
+  //   } catch (error) {
+  //     console.error("Error logging out:", error);
+  //   }
+  // };
+
 
   const handleLogoutLocal = async () => {
     try {
       const logoutTime = new Date().toLocaleTimeString("en-IN");
       setLogoutTime(logoutTime);
-  
+
       const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
-  
+
       const now = new Date();
       const day = now.getDate().toString().padStart(2, "0");
       const month = (now.getMonth() + 1).toString().padStart(2, "0");
       const year = now.getFullYear();
-  
+
       const formData = {
         employeeId,
         date: `${day}/${month}/${year}`,
@@ -192,26 +245,25 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         dayPresentUnpaid,
         remoteWork,
       };
-  
+
       await axios.post(
-        "http://localhost:8891/api/ats/157industries/save-daily-work",
+        `"http://198.168.1.41:8891/api/ats/157industries/save-daily-work"`,
         formData
       );
-  
+
       localStorage.removeItem(`stopwatchTime_${employeeId}`);
       localStorage.removeItem(`dailyWorkData_${employeeId}`);
       localStorage.removeItem("employeeId");
-  
+
       setTime({ hours: 0, minutes: 0, seconds: 0 });
       setData({ archived: 0, pending: 10 });
-  
+
       console.log("Logged out successfully.");
       navigate("/employee-login");
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
-  
 
   const calculateTotalHoursWork = (loginTime, logoutTime) => {
     const login = new Date(`01/01/2022 ${loginTime}`);
@@ -239,8 +291,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
 
   return (
 
-    <div className="daily-timeanddate">
-      <div className="clouds"></div>
+     <div className="daily-timeanddate">
 
       <div className="head">
         <div className="user-img">
@@ -271,9 +322,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           <h6>Day Present Paid: {dayPresentPaid}</h6>
           <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
         </div>
-        <div hidden style={{ display: "flex", flexDirection: "column" }}>
+        {/* <div style={{ display: "flex", flexDirection: "column" }}>
           <label htmlFor="remoteWork"></label>
-          <select
+          <select className="select"
             id="remoteWork"
 
             value={remoteWork}
@@ -284,18 +335,14 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
             <option value="Work from Home">WFH</option>
             <option value="hybrid">hybrid</option>
           </select >
-        </div>
+        </div> */}
         <button className={running ? "timer-break-btn" : "timer-break-btn"} onClick={running ? handlePause : handleResume}>
           {running ? "Pause" : "Resume"}
         </button>
         <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>hide</button>
-
-        <div >
-        
-          <img onClick={handleLogoutLocal} style={{ width: "30px", borderRadius: "60%" }} src="https://cdn-icons-png.flaticon.com/128/9208/9208320.png" alt="Logout" />
-        </div>
-
-
+        <img  onClick={handleLogoutLocal}   style={{ width: "30px",borderRadius:"60%" }} src="https://cdn-icons-png.flaticon.com/128/9208/9208320.png"/>
+         
+       
       </div>
     </div>
   );

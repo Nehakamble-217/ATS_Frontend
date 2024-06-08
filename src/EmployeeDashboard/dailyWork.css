@@ -4,9 +4,47 @@
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-  padding: 10px;
+  padding: 10px ;
   border: 1px solid black;
+  position: relative;
 }
+.select{
+      word-wrap: normal;
+    padding:2px;
+    height: 35px;
+    width: 90px;
+    border: 1px solid gray;
+    border-radius: 15px;
+}
+.select:hover{
+   background-color:#ffcb9b;
+  color: grey;
+}
+
+
+.clouds2 {
+    position: absolute;
+      top: -139px;
+    left: 0;
+    width: 200%;
+    height: 300%;
+    background: url(/src/LogoImages/clouds.png) repeat-x;
+background-size: cover;    
+background-position: center;
+animation: moveClouds 120s linear infinite;
+    z-index: 99999;
+}
+
+@keyframes moveClouds {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+
 
 .working-time-div{
   display: flex;
