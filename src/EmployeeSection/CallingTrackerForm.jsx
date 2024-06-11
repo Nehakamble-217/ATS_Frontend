@@ -142,7 +142,7 @@ const CallingTrackerForm = ({
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.41:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.43:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -161,7 +161,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.41:8891/api/ats/157industries/company-list/${employeeId}`
+        `http://192.168.1.43:8891/api/ats/157industries/company-list/${employeeId}`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -211,7 +211,7 @@ const CallingTrackerForm = ({
       }
 
       await axios.post(
-        `http://192.168.1.41:8891/api/ats/157industries/${employeeId}/addCallingData`,
+        `http://192.168.1.43:8891/api/ats/157industries/${employeeId}/addCallingData`,
         dataToUpdate
       );
 
@@ -366,7 +366,7 @@ const CallingTrackerForm = ({
     if (name === 'requirementId') {
       try {
         const response = await axios.get(
-          `http://192.168.1.41:8891/api/ats/157industries/company-details/${employeeId}`
+          `http://192.168.1.43:8891/api/ats/157industries/company-details/${employeeId}`
         );
         const { requirementCompany, positions } = response.data;
         setCallingTracker((prevState) => ({

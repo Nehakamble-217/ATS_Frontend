@@ -1,0 +1,51 @@
+.shortlisted-main-nav{
+    height: 50px;
+    width: 100%;
+    background-color: #ffe5b5;
+    border-top: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.shortlisted-nav-left{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#calendar-icon-nav{
+   font-size: 30px;
+}
+
+.shortlisted-nav-middel{
+    height: 100vh;
+}
+
+.shortListed-btn-nav {
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shortListed-btn-nav:hover{
+    background-color: #ffcb9b;
+    color: white;
+   box-shadow: 2px 2px 2px gray;
+}
+
+#shortListed-btn-nav-icon{
+    width: 110px;
+}

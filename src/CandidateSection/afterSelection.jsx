@@ -54,7 +54,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.43:8891/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -72,7 +72,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+        `http://192.168.1.43:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -306,9 +306,9 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   value={mailReceived}
                   onChange={handleMailReceivedChange}
                 >
-                  <option value="">Select Option</option>
-                  <option value="received">Received</option>
-                  <option value="notReceived">Not Received</option>
+                  <option value="" >Select Option</option>
+                  <option className="as-nofilechosen" value="received">Received</option>
+                  <option className="as-nofilechosen" value="notReceived">Not Received</option>
                 </select>
               </div>
 
@@ -367,7 +367,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                         htmlFor="degreeMarksheet"
                         className="after-label"
                       >
-                        Driving License
+                        Driving License:
                       </label>
                       <input
                         className="after-file-input"
@@ -389,7 +389,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
                     <div className="after-document-files">
                       <label htmlFor="sscMarksheet" className="after-label">
-                        Degree Marksheet
+                        Degree Marksheet:
                       </label>
                       <input
                         type="file"
@@ -453,13 +453,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                       )}
                     </div>
 
-                    
-
-                   
-
-
-              
-
                   </div>
 
                   <div className="after-document-fisrt">
@@ -484,6 +477,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   <option value="notAccepted">No</option>
                 </select>
               </div>
+
               <div className="after-mail-div">
                 <div className="after-lable-div">
                   <label htmlFor="joinStatus" className="after-label">
@@ -529,7 +523,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                     <div className="after-mail-div">
                 <div className="after-lable-div">
                   <label className="after-label">
-                    Reason for Not Accepting :
+                    Reason for Not Accepting:
                   </label>
                 </div>
 

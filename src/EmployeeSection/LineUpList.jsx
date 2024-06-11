@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+  import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/LineUpList.css";
+import UpdateCallingTracker from "./UpdateSelfCalling";
 
 const LineUpList = ({updateState,funForGettingCandidateId}) => {
   const [callingList, setCallingList] = useState([]);
@@ -9,10 +10,13 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
   const employeeIdnew = parseInt(employeeId);
   console.log(employeeId);
 
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
+  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
+
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.41:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.43:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -20,14 +24,19 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
 
   
   const handleUpdate = (candidateId) => {
-    updateState();
-    const selectedCandidate = callingList.find(
-      (item) => item.candidateId === candidateId
-    );
-
-    funForGettingCandidateId(selectedCandidate.candidateId);
+    setSelectedCandidateId(candidateId);
+    setShowUpdateCallingTracker(true);
   };
 
+  const handleUpdateSuccess = () => {
+    setShowUpdateCallingTracker(false);
+    fetch(`http://192.168.1.43:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+      .then((response) => response.json())
+      .then((data) => setCallingList(data))
+      .catch((error) => console.error("Error fetching data:", error));
+
+  };
+  
   
    const handleMouseOver = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
@@ -63,8 +72,11 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
 
   return (
     <div className="calling-list-container">
-      <h5 style={{color:"gray"}}>Line Up  List</h5>
+      
+      {!showUpdateCallingTracker ? (
+        
       <div className="attendanceTableData">
+        <h5 style={{color:"gray"}}>Line Up  List</h5>
         <table className="attendance-table">
           <thead>
             <tr className='attendancerows-head'>
@@ -231,7 +243,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
 
                     <td className='tabledata'>
                      
-                      <i onClick={() => handleUpdate(item.candidateId)} class="fa-regular fa-pen-to-square"></i>
+                      <i onClick={() => handleUpdate(item.candidateId)} className="fa-regular fa-pen-to-square"></i>
                      
                     </td>
                   </>
@@ -241,7 +253,18 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
           </tbody>
         </table>
       </div>
+      ) : (
+
+        <UpdateCallingTracker
+          candidateId={selectedCandidateId}
+          employeeId={employeeId}
+          onSuccess={handleUpdateSuccess}
+          onCancel={() => setShowUpdateCallingTracker(false)}
+        />
+        
+      )}
     </div>
+
   );
 
  

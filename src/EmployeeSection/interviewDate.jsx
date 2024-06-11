@@ -1,15 +1,19 @@
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./interviewDate.css";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
+import UpdateCallingTracker from "./UpdateSelfCalling";
 
-const InterviewDates = () => {
+const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [interviewData, setInterviewData] = useState(null);
   const [interviewDates, setInterviewDates] = useState([]);
   const [showAllData, setShowAllData] = useState(false);
+  const [noDataMessage, setNoDataMessage] = useState(false);
+
   const [feedbackOptions] = useState([
     "Shortlisted For Hr Round",
     "Shortlisted For Technical Round",
@@ -24,8 +28,7 @@ const InterviewDates = () => {
   ]);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
-  const navigator = useNavigate();
-
+  const navigate = useNavigate();
   const { employeeId } = useParams();
   const employeeIdNew = parseInt(employeeId, 10);
   console.log(employeeIdNew + " Interview ID");
@@ -37,7 +40,7 @@ const InterviewDates = () => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://192.168.1.43:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -61,21 +64,26 @@ const InterviewDates = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://192.168.1.43:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
-      setInterviewData(data);
+      if (data.length === 0) {
+        setNoDataMessage(true);
+        setInterviewData(null);
+      } else {
+        setInterviewData(data);
+        setNoDataMessage(false);
+      }
+      setShowAllData(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  
-
   const updateInterviewStatus = async (candidateId, feedback) => {
     try {
       await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
+        `http://192.168.1.43:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
         {
           method: "PUT",
           headers: {
@@ -98,7 +106,6 @@ const InterviewDates = () => {
     await updateInterviewStatus(candidateId, feedback);
     await handleDateChange(selectedDate);
   };
-
 
   const handleInterviewResponseSubmit = async (
     event,
@@ -124,7 +131,7 @@ const InterviewDates = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.41:8891/api/ats/157industries/save-interview-response", data,
+        "http://192.168.1.43:8891/api/ats/157industries/save-interview-response", data,
         {
           method: "POST",
           headers: {
@@ -148,13 +155,8 @@ const InterviewDates = () => {
     }
   };
 
-  const toggleShowAllData = () => {
-    setShowAllData(!showAllData);
-  };
-
   const renderInterviewTable = () => {
-      
-    if (!interviewData ) {
+    if (!interviewData) {
       return (
         <h3 style={{ color: "red" }}>
           No data available for the selected date.
@@ -163,56 +165,56 @@ const InterviewDates = () => {
     }
 
     return (
-      <div className="calling-list-container">
+      <div className="App-after">
         {updateSuccess && (
           <div className="alert alert-success" role="alert">
             Status updated successfully!
           </div>
         )}
-        <div className="table-container">
-          <table className="calling-table">
+        <div className="attendanceTableData">
+          <table className="attendance-table">
             <thead>
-              <tr>
-                <th>Sr No.</th>
-                <th>candidate Id</th>
-                <th>Added Date</th>
-                <th>Interview Date</th>
-                <th>Interview Round</th>
-                <th>Interview Response</th>
-                <th>Response Update Date</th>
-                <th>Next Interview Date</th>
-                <th>Recruiter Name</th>
-                <th>Candidate Name</th>
-                <th>Position</th>
-                <th>Company Name</th>
-                <th>Contact Number</th>
-                <th>Alternate Number</th>
-                <th>Communication Rating</th>
-                <th>Personal Feedback</th>
-                <th>Calling Feedback</th>
-                <th>Interested</th>
-                <th>Candidate Email</th>
-                <th>Your Current Company</th>
-                <th>Current Location</th>
-                <th>Current CTC</th>
-                <th>Expected CTC</th>
-                <th>Notice Period</th>
-                <th>Total Experience</th>
-                <th>Any Offer Letter</th>
-                <th>Feedback</th>
-                <th>Action</th>
+              <tr className="attendancerows-head">
+                <th className="attendanceheading">Sr No.</th>
+                <th className="attendanceheading">candidate Id</th>
+                <th className="attendanceheading">Added Date</th>
+                <th className="attendanceheading">Interview Date</th>
+                <th className="attendanceheading">Interview Round</th>
+                <th className="attendanceheading">Interview Response</th>
+                <th className="attendanceheading">Response Update Date</th>
+                <th className="attendanceheading">Next Interview Date</th>
+                <th className="attendanceheading">Recruiter Name</th>
+                <th className="attendanceheading">Candidate Name</th>
+                <th className="attendanceheading">Position</th>
+                <th className="attendanceheading">Company Name</th>
+                <th className="attendanceheading">Contact Number</th>
+                <th className="attendanceheading">Alternate Number</th>
+                <th className="attendanceheading">Communication Rating</th>
+                <th className="attendanceheading">Personal Feedback</th>
+                <th className="attendanceheading">Calling Feedback</th>
+                <th className="attendanceheading">Interested</th>
+                <th className="attendanceheading">Candidate Email</th>
+                <th className="attendanceheading">Your Current Company</th>
+                <th className="attendanceheading">Current Location</th>
+                <th className="attendanceheading">Current CTC</th>
+                <th className="attendanceheading">Expected CTC</th>
+                <th className="attendanceheading">Notice Period</th>
+                <th className="attendanceheading">Total Experience</th>
+                <th className="attendanceheading">Any Offer Letter</th>
+                <th className="attendanceheading">Feedback</th>
+                <th className="attendanceheading">Action</th>
               </tr>
             </thead>
             <tbody>
               {interviewData.map((item, index) => (
-                <tr key={item.candidateId}>
-                  <td>{index + 1}</td>
-                  <td>{item.candidateId}</td>
-                  <td>{item.date}</td>
-                  <td>
+                <tr className="attendancerows" key={item.candidateId}>
+                  <td className="tabledata">{index + 1}</td>
+                  <td className="tabledata">{item.candidateId}</td>
+                  <td className="tabledata">{item.date}</td>
+                  <td className="tabledata">
                     {item.lineUp ? item.lineUp.availabilityForInterview : ""}
                   </td>
-                  <td>
+                  <td className="tabledata">
                     <select name="interviewRound" defaultValue="">
                       <option value="" disabled hidden>Select Round</option>
                       <option value="Hr Round">Hr Round</option>
@@ -222,7 +224,7 @@ const InterviewDates = () => {
                       <option value="L3 Round">L3 Round</option>
                     </select>
                   </td>
-                  <td>
+                  <td className="tabledata">
                     <select name="interviewResponse" defaultValue="">
                       <option value="" disabled hidden>Select Response</option>
                       {feedbackOptions.map((option) => (
@@ -232,49 +234,45 @@ const InterviewDates = () => {
                       ))}
                     </select>
                   </td>
-                  <td>
+                  <td className="tabledata">
                     <input
                       type="date"
                       name="responseUpdatedDate"
                       className="form-control"
                     />
                   </td>
-                  <td>
+                  <td className="tabledata">
                     <input
                       type="date"
                       name="nextInterviewDate"
                       className="form-control"
                     />
                   </td>
-                  <td>{item.recruiterName}</td>
-                  <td>{item.candidateName}</td>
-                  <td>{item.position}</td>
-                  <td>{item.requirementCompany}</td>
-                  <td>{item.contactNumber}</td>
-                  <td>{item.alternateNumber}</td>
-                  <td>{item.communicationRating}</td>
-                  <td>{item.personalFeedback}</td>
-                  <td>{item.callingFeedback}</td>
-                  <td>{item.selectYesOrNo}</td>
+                  <td className="tabledata">{item.recruiterName}</td>
+                  <td className="tabledata">{item.candidateName}</td>
+                  <td className="tabledata">{item.position}</td>
+                  <td className="tabledata">{item.requirementCompany}</td>
+                  <td className="tabledata">{item.contactNumber}</td>
+                  <td className="tabledata">{item.alternateNumber}</td>
+                  <td className="tabledata">{item.communicationRating}</td>
+                  <td className="tabledata">{item.personalFeedback}</td>
+                  <td className="tabledata">{item.callingFeedback}</td>
+                  <td className="tabledata">{item.selectYesOrNo}</td>
                   {item.lineUp && (
                     <>
-                      <td>{item.lineUp.candidateEmail}</td>
-                      <td>{item.lineUp.companyName}</td>
-                      <td>{item.lineUp.currentLocation}</td>
-                      <td>{item.lineUp.currentCTC}</td>
-                      <td>{item.lineUp.expectedCTC}</td>
-                      <td>{item.lineUp.noticePeriod}</td>
-                      <td>{item.lineUp.totalExperience}</td>
-                      <td>{item.lineUp.holdingAnyOffer}</td>
-                      <td>{item.lineUp.feedBack}</td>
+                      <td className="tabledata">{item.lineUp.candidateEmail}</td>
+                      <td className="tabledata">{item.lineUp.companyName}</td>
+                      <td className="tabledata">{item.lineUp.currentLocation}</td>
+                      <td className="tabledata">{item.lineUp.currentCTC}</td>
+                      <td className="tabledata">{item.lineUp.expectedCTC}</td>
+                      <td className="tabledata">{item.lineUp.noticePeriod}</td>
+                      <td className="tabledata">{item.lineUp.totalExperience}</td>
+                      <td className="tabledata">{item.lineUp.holdingAnyOffer}</td>
+                      <td className="tabledata">{item.lineUp.feedBack}</td>
                     </>
                   )}
-                  <td>
-                    <button
-                      className="calender-saveresponse"
-                    >
-                      Save Response
-                    </button>
+                  <td className="tabledata">
+                    <i className="fa-solid fa-floppy-disk"></i>
                   </td>
                 </tr>
               ))}
@@ -298,29 +296,28 @@ const InterviewDates = () => {
 
   return (
     <div className="calendar-container">
-        <div className="calendar">
-          <div className="calendar-div">
-            <Calendar
-              value={selectedDate}
-              onChange={handleDateChange}
-              tileContent={tileContent}
-            />
-          </div>
-          <div>
-            <button style={{ width: "300px" }} onClick={toggleShowAllData}>
-              ShortListed All Data
-            </button>
-          </div>
+      <div className="calendar">
+        <div className="calendar-div">
+          <Calendar
+            value={selectedDate}
+            onChange={handleDateChange}
+            tileContent={tileContent}
+          />
         </div>
+      </div>
 
-        {showAllData && (
+      {!showAllData && interviewData && (
         <div className="interview-table">
-          {interviewData && renderInterviewTable()}
+          {renderInterviewTable()}
         </div>
       )}
-        
-        {!showAllData && <ShortListedCandidates />}
+
+      {!showAllData && noDataMessage && (
+        <h3 style={{ color: "red" }}>No interviews scheduled on this date.</h3>
+      )}
     </div>
   );
 };
+
 export default InterviewDates;
+

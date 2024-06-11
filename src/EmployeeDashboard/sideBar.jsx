@@ -21,6 +21,8 @@ function Sidebar({
   toggleAttendance,
   toggleAllMasterSheet,
   toggleEmployeeMasterSheet,
+  handleLogout,
+
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -55,24 +57,7 @@ function Sidebar({
 
   const toggleSidebar = () => {
     setIsActive(!isActive);
-    OpenSidebar(); // Call the function to toggle sidebar state
-  };
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://192.168.1.41:8891/api/ats/157industries/add-data",
-        {
-          targetValue: 10,
-          archived: 0,
-          date: formatDate(new Date()),
-        }
-      );
-      console.log("WorkData loaded ");
-      navigator("/employee-login");
-    } catch (error) {
-      console.error("Error adding data to the database:", error);
-    }
+    OpenSidebar(); 
   };
 
   const openNaukriPlatform = () => {
@@ -100,6 +85,7 @@ function Sidebar({
 
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
+      <div className="clouds1"></div>
       <div className='head'></div>
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
@@ -159,17 +145,19 @@ function Sidebar({
                   </a>
                 </li>
 
-                <li>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Self Offer Work</span>
-                  </a>
-                </li>
+          
                 <li onClick={handleButtonClick('rejectedCandidate', toggleRejectedCandidate)} className={activeButton === 'rejectedCandidate' ? 'active' : ''}>
 
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Rejected Candidate</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Self Offer Work</span>
                   </a>
                 </li>
 
@@ -242,24 +230,16 @@ function Sidebar({
                     <span className="sidebar-text">Offers Data</span>
                   </a>
                 </li>
+                
               </ul>
+              
             </li>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu">
-          <ul>
             <li>
               <a href="#">
                 <i className="icon ph-bold ph-gear"></i>
                 <span className="sidebar-text">Chat Section</span>
               </a>
             </li>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
-          <ul>
             <li className={activeSubMenu === 'portal' ? "active" : ""} onClick={toggleSubMenu('portal')}>
               <a href="#">
                 <i className="icon ph-bold ph-chart-bar"></i>
@@ -301,12 +281,27 @@ function Sidebar({
                 </li>
               </ul>
             </li>
-            <li>
-              <a href="#" onClick={handleLogout}>
+            <li >
+              <a href="#" >
                 <i className="icon ph-bold ph-sign-out"></i>
-                <span className="sidebar-text">Logout</span>
+                <span className="sidebar-text">Note Pad</span>
               </a>
             </li>
+          </ul>
+        </div>
+
+        <div className="sidebar-menu">
+          <ul>
+            
+          </ul>
+        </div>
+
+        <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
+          <ul>
+            
+
+            
+
           </ul>
         </div>
       </div>

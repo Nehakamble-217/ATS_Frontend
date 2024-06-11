@@ -9,7 +9,6 @@ import { Outlet, useParams } from "react-router-dom";
 import DataComponent from "../EmployeeSection/DataComponent";
 import Attendancesheet from '../EmployeeSection/Attendence_sheet';
 import InterviewDates from "../EmployeeSection/interviewDate";
-import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import SelectedCandidate from "../CandidateSection/SelectedCandidate";
 import RejectedCandidate from "../CandidateSection/rejectedCandidate";
 import HoldCandidate from "../CandidateSection/holdCandidate";
@@ -21,6 +20,8 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../LogoImages/ProfilePic.png";
 import MasterSheet from "../EmployeeSection/masterSheet";
 import EmployeeMasterSheet from "../EmployeeSection/employeeMasterSheet";
+import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
+import ShortlistedNavbar from "./shortlistedNavbar";
 
 const EmpDashboard = () => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -39,9 +40,21 @@ const EmpDashboard = () => {
   const [showCallingTrackerForm, setShowCallingTrackerForm] = useState(false);
   const [showHome, setShowHome] = useState(false);
   const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
+  const [showShortlistedCandidateData,setShortlistedCandidateData] = useState(false)
 
   const [showMasterSheet, setShowMasterSheet] = useState(false);
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
+
+
+  const [showShortListedCandidates, setShowShortListedCandidates] = useState(
+    false
+  );
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(
+    false
+  );
+
+  const [showShortListedNav,setShowShortListdNav]=useState(false)
+  
 
 
   const { employeeId } = useParams();
@@ -52,6 +65,7 @@ const EmpDashboard = () => {
   const gettingCandidateIdForUpdate = (id) => {
     setCandidateIdForUpdate(id);
     setUpdateSelfCalling(true);
+    setSelfCalling(false); // Hide CallingList when showing UpdateCallingTracker
   };
 
   const handleDataAdditionSuccess = () => {
@@ -60,6 +74,16 @@ const EmpDashboard = () => {
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
+  };
+
+  const toggleShowShortListedCandidateData =() =>{
+    setShortlistedCandidateData(true)
+    setShowInterviewDate(false)
+  }
+
+  const viewUpdatedPage = () => {
+    setShortlistedCandidateData(false);
+    setShowUpdateCallingTracker(true);
   };
 
   const funForUpdateSelfCalling = () => {
@@ -99,7 +123,8 @@ const EmpDashboard = () => {
   };
 
   const toggleInterviewDate = () => {
-    setShowInterviewDate(!showInterviewDate);
+    setShowShortListdNav(!showShortListedNav)
+    // setShowInterviewDate(!showInterviewDate);
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -112,13 +137,14 @@ const EmpDashboard = () => {
     setShowHome(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
+    setShowShortListedCandidates(false);
+    setShowUpdateCallingTracker(false);
+
   };
 
   const toggleAllMasterSheet = () => {
     setShowMasterSheet(!showMasterSheet);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setShortListed(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -135,7 +161,7 @@ const EmpDashboard = () => {
 
   const toggleEmployeeMasterSheet = () => {
     setShowEmployeeMasterSheet(!showEmployeeMasterSheet);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setShortListed(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -150,7 +176,7 @@ const EmpDashboard = () => {
 
   const toggleCallingTrackerForm = () => {
     setAddCandidate(!addCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setShortListed(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -166,7 +192,7 @@ const EmpDashboard = () => {
 
   const toggleShortListed = () => {
     setShortListed(!shortListed);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -176,13 +202,13 @@ const EmpDashboard = () => {
     setLineUp(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
+    setShowUpdateCallingTracker(false);
+
   };
 
   const toggleSelectCandidate = () => {
     setSelectedCandidate(!selectCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setHoldCandidate(false);
@@ -198,7 +224,7 @@ const EmpDashboard = () => {
 
   const toggleHoldCandidate = () => {
     setHoldCandidate(!holdCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -208,13 +234,13 @@ const EmpDashboard = () => {
     setLineUp(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
+    setShowEmployeeMasterSheet(false);
+    setShowMasterSheet(false)
   };
 
   const toggleRejectedCandidate = () => {
     setRejectedCandidate(!rejectedCandidate);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -231,7 +257,7 @@ const EmpDashboard = () => {
 
   const toggleJobDescription = () => {
     setShowJobDiscriptions(!showJobDiscriptions);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -246,7 +272,7 @@ const EmpDashboard = () => {
 
   const toggleSelfCalling = () => {
     setSelfCalling(!selfCalling);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -263,7 +289,7 @@ const EmpDashboard = () => {
 
   const toggelLineUp = () => {
     setLineUp(!lineUp);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -281,7 +307,7 @@ const EmpDashboard = () => {
   const toggleExcelCalling = () => {
     setShowCallingExcel(!showCallingExcel);
     setLineUp(false);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -298,7 +324,7 @@ const EmpDashboard = () => {
   const toggleAttendance = () => {
     setAttendanceSheet(!attendancesheet);
     setLineUp(false);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -316,7 +342,7 @@ const EmpDashboard = () => {
     setShowHome(!showHome);
     setAttendanceSheet(false);
     setLineUp(false);
-    setShowInterviewDate(false);
+    setShowShortListdNav(false)
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -329,11 +355,22 @@ const EmpDashboard = () => {
      setShowEmployeeMasterSheet(false);
         setShowMasterSheet(false)
   };
-  // const OpenSidebar = () => {
-  //   setIsActive(!openSidebarToggle);
 
-  // };
+  const toggleShortListedCandidates = () => {
+    setShowShortListedCandidates(!showShortListedCandidates);
+    setShowShortListdNav(false)
+  };
 
+  const toggleUpdateCallingTracker = () => {
+    setShowUpdateCallingTracker(!showUpdateCallingTracker);
+    setShowShortListdNav(false)
+    setShowShortListedCandidates(false);
+  };
+
+  const handleUpdateComplete = () => {
+    setShowUpdateCallingTracker(false);
+    setSelfCalling(true); // Show CallingList again after update is complete
+  };
 
 
   return (
@@ -354,21 +391,34 @@ const EmpDashboard = () => {
         toggleInterviewDate={toggleInterviewDate}
         toggleAllMasterSheet={toggleAllMasterSheet}
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
+        toggleShortListedCandidates={toggleShortListedCandidates}
+  
       />
 
       <div className="empDash-main-content">
         <div className="time-and-data">
 
-          <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
+          <DailyWork employeeId={employeeId}  successfulDataAdditions={successfulDataAdditions} />
         </div>
+
         <div style={{ paddingTop: "50px" }}>
           {selfCalling && (
-            <CallingList updateState={funForUpdateSelfCalling} funForGettingCandidateId={gettingCandidateIdForUpdate} />
+            <CallingList updateState={handleUpdateComplete} funForGettingCandidateId={gettingCandidateIdForUpdate} />
           )}
         </div>
-        <div style={{paddingTop:"8px"}}>
-          {showInterviewDate && <InterviewDates />}
+
+        <div>
+          {showShortListedNav &&(
+            <ShortlistedNavbar></ShortlistedNavbar>
+          )}
         </div>
+
+        <div>
+          {showShortlistedCandidateData && (
+            <ShortListedCandidates     viewUpdatedPage={viewUpdatedPage}></ShortListedCandidates>
+          )}
+        </div>
+        
         <div>
           {lineUp && <LineUpList updateState={funForUpdateLineUp} funForGettingCandidateId={gettingCandidateIdForUpdate} />}
         </div>
@@ -384,16 +434,30 @@ const EmpDashboard = () => {
         <div>
           {showJobDiscriptions && <Home />}
         </div>
+
         <div>
-          {updateSelfCalling && <UpdateCallingTracker candidateId={gettingCandidateIdForUpdate} />}
+          {showUpdateCallingTracker && (
+            <UpdateCallingTracker
+              onComplete={handleUpdateComplete}
+              candidateId={candidateIdForUpdate}
+              employeeId={employeeId}
+            />
+          )}
         </div>
-        <div>
-          {addCandidate && <CallingTrackerForm employeeId={parseInt(employeeId, 10)} onDataAdditionSuccess={handleDataAdditionSuccess} />}
+
+       <div>
+          {addCandidate && (
+            <CallingTrackerForm
+              employeeId={parseInt(employeeId, 10)}
+              onDataAdditionSuccess={handleDataAdditionSuccess}
+            />
+          )}
         </div>
+
         <div>
           {showCallingExcel && <CallingExcel />}
         </div>
-        {shortListed && <ShortListedCandidates />}
+
         {selectCandidate && <SelectedCandidate />}
         {rejectedCandidate && <RejectedCandidate />}
         {holdCandidate && <HoldCandidate />}

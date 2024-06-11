@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from "react";
-// import "../ATS_Frontend/callingList.css";
 import { useNavigate, useParams } from "react-router-dom";
 import'./rejectedcandidate.css'
+import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 
-const RejectedCandidate = () => {
-  const [shortListedData, setShortListedData] = useState([]);
-  const [selectedCandidate, setSelectedCandidate] = useState(null);
+const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
+  const [showRejectedData, setShowRejectedData] = useState([]);
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
+  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
 
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
@@ -14,23 +15,29 @@ const RejectedCandidate = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetchShortListedData();
+    fetchRejectedData();
   }, []);
 
-  const fetchShortListedData = async () => {
+  const fetchRejectedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/rejected-candidate/${employeeId}`
+        `http://192.168.1.43:8891/api/ats/157industries/rejected-candidate/${employeeId}`
       );
       const data = await response.json();
-      setShortListedData(data);
+      setShowRejectedData(data);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
     }
   };
 
-  const viewPage = (candidateId) => {
-    navigator(`/update-calling-data/${employeeId}/${candidateId}`);
+  const handleUpdateSuccess = () => {
+    setShowUpdateCallingTracker(false);
+    fetchRejectedData();
+  };
+
+  const handleUpdate = (candidateId) => {
+    setSelectedCandidateId(candidateId);
+    setShowUpdateCallingTracker(true);
   };
 
     const handleMouseOver = (event) => {
@@ -68,7 +75,7 @@ const RejectedCandidate = () => {
     <div className="App-after">
        <h5 style={{color:"gray",paddingTop:"5px"}}>RejectedCandidate List</h5> 
       <div className="attendanceTableData">
-       
+      {!showUpdateCallingTracker ? (
           <table className="attendance-table">
               <thead >
                 <tr className="attendancerows-head">
@@ -109,7 +116,7 @@ const RejectedCandidate = () => {
                 </tr>
               </thead>
               <tbody>
-                {shortListedData.map((item, index) => (
+                {showRejectedData.map((item, index) => (
                   <tr key={item.candidateId} className="attendancerows">
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} style={{ fontSize: "16px" }}>{index + 1}
                     
@@ -345,14 +352,24 @@ const RejectedCandidate = () => {
                     
                     </td>
                     <td  className="tabledata" style={{ fontSize: "16px" , whiteSpace:"nowrap"}}>
-                         <i  onClick={() => viewPage(item.candidateId)} class="fa-solid fa-person-walking-arrow-right"></i>
+                         <i  onClick={() => handleUpdate(item.candidateId)} className="fa-solid fa-person-walking-arrow-right"></i>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+         
+        ) : (
+          <UpdateCallingTracker
+          candidateId={selectedCandidateId}
+          employeeId={employeeId}
+          onSuccess={handleUpdateSuccess}
+          onCancel={() => setShowUpdateCallingTracker(false)}
+          />
+        )}
+ </div>
         </div>
+
      
   );
 };

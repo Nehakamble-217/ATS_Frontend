@@ -7,6 +7,12 @@ body {
     overflow-x: scroll;
     overflow-y: scroll;
   }
+  .search{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
   
 .selfCallingUpdateBtn{
   height: 30px;
