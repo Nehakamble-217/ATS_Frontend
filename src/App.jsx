@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/mainDashboard" element={<MainDashboard />} />
           <Route path="/employee-login" element={<Login  />} />
-          <Route path="/empDash/:employeeId/:userGroup" element={<EmpDashboard   />} />
+          <Route path="/empDash/:employeeId" element={<EmpDashboard   />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection/>}/>
         </Routes>
       </BrowserRouter>

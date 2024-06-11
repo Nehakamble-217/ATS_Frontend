@@ -10,12 +10,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [sortCriteria, setSortCriteria] = useState(null);
 const [sortOrder, setSortOrder] = useState("asc");
   const [callingList, setCallingList] = useState([]);
-
-  const [filteredCallingList, setFilteredCallingList] = useState([]);
-  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
-  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
-
-
+const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [showSearchBar, setShowSearchBar] = useState(false); // New state variable for search bar visibility
@@ -24,14 +19,13 @@ const [sortOrder, setSortOrder] = useState("asc");
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
 
- 
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
+  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
 
   const navigator = useNavigate();
 
   useEffect(() => {
-
     fetch(`http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`)
-
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -40,9 +34,7 @@ const [sortOrder, setSortOrder] = useState("asc");
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
-
   
-
   useEffect(() => {
     const filtered = callingList.filter((item) => {
       const searchTermLower = searchTerm.toLowerCase();
@@ -70,7 +62,7 @@ const [sortOrder, setSortOrder] = useState("asc");
 
 
 
-}
+
 
 const handleSort = (criteria) => {
   if (criteria === sortCriteria) {
@@ -99,11 +91,9 @@ const handleSort = (criteria) => {
   }, [sortCriteria, sortOrder]);
 
   const handleUpdate = (candidateId) => {
-    updateState();
-    const selectedCandidate = callingList.find(
-      (item) => item.candidateId === candidateId
-    );
-
+    setSelectedCandidateId(candidateId); // Set candidateId for UpdateCallingTracker
+    setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
+  };
 
   const handleUpdateSuccess = () => {
     // Reload the calling list data and show the calling list table again
@@ -117,7 +107,6 @@ const handleSort = (criteria) => {
         setShowUpdateCallingTracker(false); 
       })
       .catch((error) => console.error("Error fetching data:", error));
-
   };
  const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
@@ -129,7 +118,6 @@ const handleSort = (criteria) => {
         tooltip.style.visibility = 'visible';
         tooltip.style.opacity = '1';
 
-
         const tableDataRect = tableData.getBoundingClientRect();
         const tooltipRect = tooltip.getBoundingClientRect();
 
@@ -139,7 +127,6 @@ const handleSort = (criteria) => {
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
       }
-
     }
   };
 
@@ -160,11 +147,8 @@ const handleSort = (criteria) => {
   };
 
   return (
-
-    <div className="calling-list-container ">
-    
-    {!showUpdateCallingTracker ? (
-
+    <div className="calling-list-container">
+      {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
           <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
@@ -272,16 +256,15 @@ const handleSort = (criteria) => {
             </table>
           </div>
         </>
+      )}
 
-        ) : (
-
-      //  {showUpdateCallingTracker && (
+       {showUpdateCallingTracker && (
         <UpdateCallingTracker
-        candidateId={selectedCandidateId}
-        employeeId={employeeId}
-        onSuccess={handleUpdateSuccess}
-        onCancel={() => setShowUpdateCallingTracker(false)}
-      />
+          candidateId={selectedCandidateId}
+          employeeId={employeeId}
+          onSuccess={handleUpdateSuccess}
+          onCancel={() => setShowUpdateCallingTracker(true)}
+        />
       )}
     </div>
   );

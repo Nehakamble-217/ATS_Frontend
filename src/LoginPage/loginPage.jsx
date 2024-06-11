@@ -53,9 +53,9 @@ import LoginImage from "../LogoImages/LoginImge.jpg";
     }
   };
 
-//   const dashboardLink = () => {
-//     navigate('/empDash/6');
-//   };
+  const dashboardLink = () => {
+    navigate('/empDash/6');
+  };
     const handleButtonClick = (group) => {
     setUserGroup(group);
     navigate(`/empDash/6/${group}`);
@@ -98,18 +98,18 @@ import LoginImage from "../LogoImages/LoginImge.jpg";
 				     <div className="loginpage-error">{error}</div>
 
                 <button class="login-button"  type="submit"  data-aos="fade-top">Login</button>
-                {/* <button type="button" class="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button> */}
+                <button type="button" class="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button>
 
                
             </form>
-             <div>
+             {/* <div>
                    <button className="btn btn-primary m-2" onClick={() => handleButtonClick('A')}>Group A</button>
                    <button className="btn btn-primary m-2" onClick={() => handleButtonClick('B')}>Group B</button>
                    <button className="btn btn-primary m-2" onClick={() => handleButtonClick('C')}>Group C</button>
                    <button className="btn btn-primary m-2" onClick={() => handleButtonClick('D')}>Group D</button>
 
                     {userGroup && <EmpDashboard userGroup={userGroup} />}
-                </div>
+                </div> */}
         </div>
     </div>
 </div>
