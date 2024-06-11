@@ -466,6 +466,7 @@ const CallingTrackerForm = ({
                     
                     onChange={handleChange}
                     className="form-control"
+                    required
                   />
                 </td>
                 <th scope="col">Candidate Email</th>
@@ -475,9 +476,11 @@ const CallingTrackerForm = ({
                   name="candidateEmail"
                   value={email}
                   onChange={handleChangeemail}
+
+
                   className={`form-control ${error ? 'is-invalid' : ''}`}
                 />
-                {error && <div className="invalid-feedback">{error}</div>}
+                
               </td>
               </tr>
               <tr>
@@ -512,13 +515,14 @@ const CallingTrackerForm = ({
                 </td>
               </tr>
               <tr>
-                <th scope="col">Source Name*</th>
+                <th scope="col">Source Name* </th>
                 <td>
                   <select
                     className="form-select"
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
+                    
                   >
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>

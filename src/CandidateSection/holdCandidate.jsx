@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import './holdCandidate.css'
+import './holdCandidate.css';
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 
-const HoldCandidate = ({ updateState, funForGettingCandidateId  }) => {
+const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showHoldData, setShowHoldData] = useState([]);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
@@ -25,21 +25,19 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId  }) => {
       const data = await response.json();
       setShowHoldData(data);
     } catch (error) {
-      console.error("Error fetching shortlisted data:", error);
+      console.error("Error fetching hold candidate data:", error);
     }
   };
 
-
   const handleUpdateSuccess = () => {
-    setShowUpdateCallingTracker(false); // Hide UpdateCallingTracker
-    fetchHoldCandidateData(); // Refresh the table data
+    setShowUpdateCallingTracker(false);
+    fetchHoldCandidateData();
   };
 
-  const viewPage = (candidateId) => {
-    setSelectedCandidateId(candidateId); // Set candidateId for UpdateCallingTracker
-    setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
+  const handleUpdate = (candidateId) => {
+    setSelectedCandidateId(candidateId);
+    setShowUpdateCallingTracker(true);
   };
-
 
   const handleMouseOver = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
@@ -76,7 +74,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId  }) => {
       
        <h5 style={{color:"gray",paddingTop:"5px"}}>HoldCandidate List</h5> 
       <div className="attendanceTableData">
-      {!showUpdateCallingTracker && (
+      {!showUpdateCallingTracker ? (
         <div>
          <div>
             <table className="shortlistedcandidate attendance-table">
@@ -380,7 +378,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId  }) => {
                     </td>
                     <td >
                       
-                          <i  onClick={() => viewPage(item.candidateId)} className="fa-solid fa-person-walking-arrow-right"></i>
+                          <i  onClick={() => handleUpdate(item.candidateId)} className="fa-solid fa-person-walking-arrow-right"></i>
                      
                     </td>
                   </tr>
@@ -389,14 +387,13 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId  }) => {
             </table>
           </div>
         </div>
-      )}
-      
-      {showUpdateCallingTracker && (
+         ) : (
+    
         <UpdateCallingTracker
-          candidateId={selectedCandidateId}
-          employeeId={employeeId}
-          onSuccess={handleUpdateSuccess}
-          onCancel={() => setShowUpdateCallingTracker(true)}
+        candidateId={selectedCandidateId}
+        employeeId={employeeId}
+        onSuccess={handleUpdateSuccess}
+        onCancel={() => setShowUpdateCallingTracker(false)}
         />
       )}
       

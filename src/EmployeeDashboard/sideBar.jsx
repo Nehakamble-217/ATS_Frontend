@@ -156,17 +156,19 @@ function Sidebar({
                   </a>
                 </li>
 
-                <li>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Self Offer Work</span>
-                  </a>
-                </li>
+          
                 <li onClick={handleButtonClick('rejectedCandidate', toggleRejectedCandidate)} className={activeButton === 'rejectedCandidate' ? 'active' : ''}>
 
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Rejected Candidate</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Self Offer Work</span>
                   </a>
                 </li>
 

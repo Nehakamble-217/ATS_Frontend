@@ -24,8 +24,8 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
 
   
   const handleUpdate = (candidateId) => {
-    setSelectedCandidateId(candidateId); // Set candidateId for UpdateCallingTracker
-    setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
+    setSelectedCandidateId(candidateId);
+    setShowUpdateCallingTracker(true);
   };
 
   const handleUpdateSuccess = () => {
@@ -254,12 +254,14 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
         </table>
       </div>
       ) : (
+
         <UpdateCallingTracker
           candidateId={selectedCandidateId}
           employeeId={employeeId}
           onSuccess={handleUpdateSuccess}
           onCancel={() => setShowUpdateCallingTracker(false)}
         />
+        
       )}
     </div>
 
