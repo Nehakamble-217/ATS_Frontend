@@ -22,8 +22,9 @@ import MasterSheet from "../EmployeeSection/masterSheet";
 import EmployeeMasterSheet from "../EmployeeSection/employeeMasterSheet";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
+import AddJobDescription from "../JobDiscription/addJobDescription"
 
-const EmpDashboard = () => {
+const EmpDashboard = ({userGroup}) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
   const [addCandidate, setAddCandidate] = useState(false);
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
@@ -41,7 +42,7 @@ const EmpDashboard = () => {
   const [showHome, setShowHome] = useState(false);
   const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
   const [showShortlistedCandidateData,setShortlistedCandidateData] = useState(false)
-
+  const [addJobDescription,setAddJobDescription]=useState(false)
   const [showMasterSheet, setShowMasterSheet] = useState(false);
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
 
@@ -268,6 +269,7 @@ const EmpDashboard = () => {
     setAttendanceSheet(false);
      setShowEmployeeMasterSheet(false);
         setShowMasterSheet(false)
+        setAddJobDescription(false)
   };
 
   const toggleSelfCalling = () => {
@@ -360,6 +362,24 @@ const EmpDashboard = () => {
     setShowShortListedCandidates(!showShortListedCandidates);
     setShowShortListdNav(false)
   };
+  const toggleAddJobDescription=()=>{
+    setAddJobDescription( !addJobDescription);
+    setAttendanceSheet(false);
+    setLineUp(false);
+    setShowShortListdNav(false)
+    setAddCandidate(false);
+    setShortListed(false);
+    setSelectedCandidate(false);
+    setHoldCandidate(false);
+    setRejectedCandidate(false);
+    setShowJobDiscriptions(false);
+    setSelfCalling(false);
+    setUpdateSelfCalling(false);
+    setShowCallingExcel(false);
+    setShowEmployeeMasterSheet(false);
+    setShowMasterSheet(false)
+    setShowJobDiscriptions(false);
+  }  
 
   const toggleUpdateCallingTracker = () => {
     setShowUpdateCallingTracker(!showUpdateCallingTracker);
@@ -375,7 +395,8 @@ const EmpDashboard = () => {
 
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
-      <Sidebar
+      <Sidebar 
+         userGroup={userGroup}
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={() => setOpenSidebarToggle(!openSidebarToggle)}
         toggleSelfCalling={toggleSelfCalling}
@@ -392,6 +413,7 @@ const EmpDashboard = () => {
         toggleAllMasterSheet={toggleAllMasterSheet}
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
+        toggleAddJobDescription={toggleAddJobDescription}
   
       />
 
@@ -429,12 +451,15 @@ const EmpDashboard = () => {
         <div>
           {showMasterSheet && <MasterSheet></MasterSheet>}
         </div>
+        
 
 
         <div>
           {showJobDiscriptions && <Home />}
         </div>
-
+        <div>
+          {setAddJobDescription && <AddJobDescription/>}
+        </div>
         <div>
           {showUpdateCallingTracker && (
             <UpdateCallingTracker

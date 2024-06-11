@@ -6,15 +6,37 @@ import { fetchMasterSheetData, fetchResumeFile } from "../api/api";
 const MasterSheet = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filteredList, setFilteredList] = useState([]);
+
+
 
     useEffect(() => {
         fetchData();
     }, []);
 
+     useEffect(() => {
+    const filtered = data.filter((item) => {
+      const numberString = item.contactNumber
+        ? item.contactNumber.toString()
+        : "";
+      return (
+        item.recruiterName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.candidateName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        numberString.includes(searchTerm) ||
+        item.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.callingFeedback.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+    setFilteredList(filtered);
+  }, [searchTerm, data]);
+
     const fetchData = async () => {
         try {
             const data = await fetchMasterSheetData();
             setData(data);
+            setFilteredList(data)
             setError("");
         } catch (error) {
             setError("Error fetching data.");
@@ -34,6 +56,13 @@ const MasterSheet = () => {
         <div className="App-after">
             <h5 style={{color:"gray",paddingTop:"5px"}}> Master Sheet</h5>
             {error && <div className="alert alert-danger">{error}</div>}
+            <input
+            type="text"
+            className="form-control"
+            placeholder="Search here..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
             <div className="attendanceTableData">
                 <table className="attendance-table">
                     <thead>

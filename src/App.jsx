@@ -14,14 +14,15 @@ import Attendance from "./EmployeeSection/Attendence_sheet";
 
 
 const App = () => {
+  
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/mainDashboard" element={<MainDashboard />} />
-          <Route path="/employee-login" element={<Login />} />
-          <Route path="/empDash/:employeeId" element={<EmpDashboard />} />
+          <Route path="/employee-login" element={<Login  />} />
+          <Route path="/empDash/:employeeId/:userGroup" element={<EmpDashboard   />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection/>}/>
         </Routes>
       </BrowserRouter>

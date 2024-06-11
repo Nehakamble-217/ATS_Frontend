@@ -54,7 +54,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.43:8891/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -72,7 +72,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-        `http://192.168.1.41:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+        `http://192.168.1.43:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -176,7 +176,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
-        "http://192.168.1.41:8891/api/ats/157industries/add-after-selection",
+        "http://192.168.1.43:8891/api/ats/157industries/add-after-selection",
         {
           method: "POST",
           headers: {
@@ -235,7 +235,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
-        "http://192.168.1.41:8891/api/ats/157industries/save-join-data",
+        "http://192.168.1.43:8891/api/ats/157industries/save-join-data",
         {
           method: "POST",
           body: formData,

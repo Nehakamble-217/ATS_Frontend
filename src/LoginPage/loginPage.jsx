@@ -6,16 +6,14 @@ import logo157 from "../LogoImages/157logo.jpeg";
 import { getPasswordFromDB } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
+import EmpDashboard from "../EmployeeDashboard/empDashboard";
 import "aos/dist/aos.css"
-import LoginImage from "../LogoImages/LoginImge.jpg"
+import LoginImage from "../LogoImages/LoginImge.jpg";
 
-// const LoginSignup = ({ onLogin }) => {
-  // const [action, setAction] = useState("Login");
-  // const [employeeId, setEmployeeId] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
-  // const navigate = useNavigate(); 
    const LoginSignup = ({ onLogin }) => {
+      const [userGroup, setUserGroup] = useState(null);
+
+ 
     const [action, setAction] = useState("Login");
     const [employeeId, setEmployeeId] = useState("");
    const [password, setPassword] = useState("");
@@ -55,57 +53,15 @@ import LoginImage from "../LogoImages/LoginImge.jpg"
     }
   };
 
-  const dashboardLink = () => {
-    navigate('/empDash/6');
+//   const dashboardLink = () => {
+//     navigate('/empDash/6');
+//   };
+    const handleButtonClick = (group) => {
+    setUserGroup(group);
+    navigate(`/empDash/6/${group}`);
   };
-  
 
   return (
-    // <div className="loginpage-container">
-    //   <div className="loginpage-img-container">
-    //     <img src={logo157} alt="" height="450px" width="450px" />
-    //   </div>
-
-    //   <div>
-    //     <form onSubmit={handleSubmit}>
-    //       <div className="loginpage-header">
-    //         <div className="loginpage-text">{action}</div>
-    //         <div className="loginpage-underline"></div>
-    //       </div>
-    //       <div className="loginpage-inputs">
-    //         <div className="loginpage-input">
-    //           <img src={user_icon} alt="" height="40px" />
-    //           <input
-    //             type="text"
-    //             id="loginpage-employeeId"
-    //             name="employeeId"
-    //             value={employeeId}
-    //             onChange={handleChange}
-    //             className="loginpage-form-control"
-    //           />
-    //         </div>
-    //         <div className="loginpage-input">
-    //           <img src={password_icon} alt="" height="40px" />
-    //           <input
-    //             type="password"
-    //             id="loginpage-password"
-    //             name="password"
-    //             value={password}
-    //             onChange={handleChange}
-    //             className="loginpage-form-control"
-    //           />
-    //         </div>
-    //       </div>
-    //       <div className="loginpage-error">{error}</div>
-          
-    //       <div>
-    //         <button className="login-page-btn" type="submit">LOGIN</button>
-    //         <button className="login-page-btn" type="button" onClick={dashboardLink}>Dashboard</button>
-    //       </div>
-    //     </form>
-    //   </div>
-    // </div>
-    
     <div class="main-body" >
     <div class="hexagon-container ">
        
@@ -142,8 +98,18 @@ import LoginImage from "../LogoImages/LoginImge.jpg"
 				     <div className="loginpage-error">{error}</div>
 
                 <button class="login-button"  type="submit"  data-aos="fade-top">Login</button>
-                <button type="button" class="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button>
+                {/* <button type="button" class="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button> */}
+
+               
             </form>
+             <div>
+                   <button className="btn btn-primary m-2" onClick={() => handleButtonClick('A')}>Group A</button>
+                   <button className="btn btn-primary m-2" onClick={() => handleButtonClick('B')}>Group B</button>
+                   <button className="btn btn-primary m-2" onClick={() => handleButtonClick('C')}>Group C</button>
+                   <button className="btn btn-primary m-2" onClick={() => handleButtonClick('D')}>Group D</button>
+
+                    {userGroup && <EmpDashboard userGroup={userGroup} />}
+                </div>
         </div>
     </div>
 </div>

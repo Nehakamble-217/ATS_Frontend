@@ -16,7 +16,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.41:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.43:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -30,7 +30,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
 
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
-    fetch(`http://192.168.1.41:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.43:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
