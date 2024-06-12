@@ -92,6 +92,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage}) => {
                                 <th className="attendanceheading" >Holding Any Offer</th>
                                 <th className="attendanceheading" >Feedback</th>
                                 <th className="attendanceheading" >Final Status</th>
+                                
                                 <th className="attendanceheading" >Action</th>
                             </tr>
                         </thead>

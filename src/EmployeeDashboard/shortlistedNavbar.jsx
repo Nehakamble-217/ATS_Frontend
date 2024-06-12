@@ -6,8 +6,10 @@ import UpdateCallingTracker from '../EmployeeSection/UpdateSelfCalling';
 import calendar from '../photos/calendar.png'
 
 const ShortlistedNavbar = () => {
-    const [activeComponent, setActiveComponent] = useState(null); 
+    const [activeComponent, setActiveComponent] = useState(null);
+
     const [selectedCandidate, setSelectedCandidate] = useState(null);
+    const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
 
     const displayShortlistedData = () => {
         setActiveComponent('shortlisted');
@@ -24,25 +26,21 @@ const ShortlistedNavbar = () => {
         <div>
             <div className='shortlisted-main-nav'>
                 <div className='shortlisted-nav-left'>
-            
-                   {/* <button id='shortListed-btn-nav-icon' className='shortListed-btn-nav' > */}
-                   <i  style={{fontSize:"22px"}} onClick={displayCalendar} className="fa-regular fa-calendar"></i>
-                   {/* </button> */}
+
+                    <i style={{ fontSize: "22px" }} onClick={displayCalendar} className="fa-regular fa-calendar"></i>
+
                     <button className='shortListed-btn-nav' onClick={displayShortlistedData}>ShortListed Candidate</button>
-                    {/* <button className='shortListed-btn-nav'>button 3</button>
-                    <button className='shortListed-btn-nav'>button 4</button>
-                    <button className='shortListed-btn-nav'>button 5</button>
-                    <button className='shortListed-btn-nav'>button 6</button> */}
                 </div>
             </div>
 
             <div className='shortlisted-nav-middel'>
-                {activeComponent === 'shortlisted' && (
-                    <ShortListedCandidates viewUpdatedPage={handleViewUpdatedPage} />
-                )}
 
                 {activeComponent === 'calendar' && (
                     <InterviewDates />
+                )}
+
+                {activeComponent === 'shortlisted' && (
+                    <ShortListedCandidates viewUpdatedPage={handleViewUpdatedPage} />
                 )}
 
                 {activeComponent === 'update' && selectedCandidate && (

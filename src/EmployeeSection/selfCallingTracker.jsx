@@ -11,10 +11,12 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [sortCriteria, setSortCriteria] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [callingList, setCallingList] = useState([]);
+
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
+
   const [showSearchBar, setShowSearchBar] = useState(false); // New state variable for search bar visibility
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
@@ -22,7 +24,6 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   console.log(employeeId + "emp 1111 id");
 
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
-  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
 
   const navigator = useNavigate();
 
@@ -121,10 +122,12 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
  
   const handleUpdateSuccess = () => {
+
     // Reload the calling list data and show the calling list table again
     fetch(
       `http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`
     )
+
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -176,10 +179,12 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
+
             <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
           </div>
+
           {showSearchBar && (
             <input
               type="text"

@@ -51,7 +51,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
       let top = rect.top - tooltipHeight + 40; // above the cell
       let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
 
-      // Adjust if the tooltip is out of the viewport
+
       if (top < 0) top = rect.bottom + 5; // below the cell
       if (left < 0) left = 5; // align to the left edge
       if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5; // align to the right edge
