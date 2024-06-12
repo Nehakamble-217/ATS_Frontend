@@ -9,11 +9,11 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [callingList, setCallingList] = useState([]);
   const [filteredCallingList, setFilteredCallingList] = useState([]);
+
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
 
-  const [showCallingForm, setShowCallingForm] = useState(false);
-  const [callingToUpdate, setCallingToUpdate] = useState(null);
+
   const [showSearchBar, setShowSearchBar] = useState(false); // New state variable for search bar visibility
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
@@ -25,7 +25,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`)
 
       .then((response) => response.json())
       .then((data) => {
@@ -59,7 +59,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   };
 
   const handleUpdateSuccess = () => {
-    fetch(`http://localhost:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`)
 
       .then((response) => response.json())
       .then((data) => {
@@ -110,15 +110,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
         <>
           <div className="search">
           <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
-          <i class="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
+          <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
             style={{ margin: "10px", width:"auto",fontSize:"15px" }}></i>
             </div>
-          {/* <button
-            className="btn btn-primary"
-            
-          >
-            {showSearchBar ? "Hide Search" : "Show Search"}
-          </button> */}
           {showSearchBar && (
             <input
               type="text"

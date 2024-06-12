@@ -161,60 +161,6 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
     });
   };
 
-  // const handleLogout = async () => {
-  //   try {
-  //     const logoutTime = new Date().toLocaleTimeString("en-IN");
-  //     setLogoutTime(logoutTime);
-
-  //     const totalHoursWork = calculateTotalHoursWork(
-  //       loginTime,
-  //       logoutTime
-  //     );
-
-  //     const now = new Date();
-  //     const day = now.getDate().toString().padStart(2, "0");
-  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
-  //     const year = now.getFullYear();
-
-  //     const formData = {
-  //       employeeId,
-  //       date: `${day}/${month}/${year}`,
-  //       dailyTarget: data.pending + data.archived,
-  //       dailyArchived: data.archived,
-  //       dailyPending: data.pending,
-  //       loginTime,
-  //       logoutTime,
-  //       totalHoursWork,
-  //       dailyHours: breaks,
-  //       lateMark,
-  //       leaveType,
-  //       paidLeave,
-  //       unpaidLeave,
-  //       dayPresentPaid,
-  //       dayPresentUnpaid,
-  //       remoteWork,
-  //     };
-
-  //     await axios.post(
-  //       "http://localhost:8891/api/ats/157industries/save-daily-work",
-  //       formData
-  //     );
-
-  //     localStorage.removeItem(`stopwatchTime_${employeeId}`);
-  //     localStorage.removeItem(`dailyWorkData_${employeeId}`);
-  //     localStorage.removeItem("employeeId");
-
-  //     setTime({ hours: 0, minutes: 0, seconds: 0 });
-  //     setData({ archived: 0, pending: 10 });
-
-  //     console.log("Logged out successfully.");
-  //     navigate("/employee-login");
-  //   } catch (error) {
-  //     console.error("Error logging out:", error);
-  //   }
-  // };
-
-
   const handleLogoutLocal = async () => {
     try {
       const logoutTime = new Date().toLocaleTimeString("en-IN");

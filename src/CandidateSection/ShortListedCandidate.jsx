@@ -20,7 +20,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage}) => {
     const fetchShortListedData = async () => {  
         try {
             const response = await fetch(
-                `http://192.168.1.41:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
+                `http://localhost:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
             );
             const data = await response.json();
             setShortListedData(data);
@@ -92,6 +92,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage}) => {
                                 <th className="attendanceheading" >Holding Any Offer</th>
                                 <th className="attendanceheading" >Feedback</th>
                                 <th className="attendanceheading" >Final Status</th>
+                                
                                 <th className="attendanceheading" >Action</th>
                             </tr>
                         </thead>
