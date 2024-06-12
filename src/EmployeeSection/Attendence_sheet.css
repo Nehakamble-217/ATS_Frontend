@@ -16,6 +16,33 @@
   color: gray;
   z-index: 1;
 }
+/* callingList.css */
+
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-dropdowns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.filter-dropdown {
+  margin-right: 20px;
+}
+
+.filter-dropdown label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.filter-dropdown select {
+  width: 150px; /* Adjust as needed */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 
 .attendanceheading, .tabledata {
   border: 1px solid gray;

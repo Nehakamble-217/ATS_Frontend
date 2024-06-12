@@ -24,7 +24,7 @@ import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription"
 
-const EmpDashboard = ({userGroup}) => {
+const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
   const [addCandidate, setAddCandidate] = useState(false);
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
@@ -41,27 +41,17 @@ const EmpDashboard = ({userGroup}) => {
   const [showCallingTrackerForm, setShowCallingTrackerForm] = useState(false);
   const [showHome, setShowHome] = useState(false);
   const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
-  const [showShortlistedCandidateData,setShortlistedCandidateData] = useState(false)
-  const [addJobDescription,setAddJobDescription]=useState(false)
+  const [showShortlistedCandidateData, setShortlistedCandidateData] = useState(false);
+  const [addJobDescription, setAddJobDescription] = useState(false);
   const [showMasterSheet, setShowMasterSheet] = useState(false);
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
-
-
-  const [showShortListedCandidates, setShowShortListedCandidates] = useState(
-    false
-  );
-  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(
-    false
-  );
-
-  const [showShortListedNav,setShowShortListdNav]=useState(false)
-  
-
+  const [showShortListedCandidates, setShowShortListedCandidates] = useState(false);
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
+  const [showShortListedNav, setShowShortListdNav] = useState(false);
 
   const { employeeId } = useParams();
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
   const navigator = useNavigate();
-
 
   const gettingCandidateIdForUpdate = (id) => {
     setCandidateIdForUpdate(id);
@@ -77,18 +67,19 @@ const EmpDashboard = ({userGroup}) => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
 
-  const toggleShowShortListedCandidateData =() =>{
-    setShortlistedCandidateData(true)
-    setShowInterviewDate(false)
-  }
+  const toggleShowShortListedCandidateData = () => {
+    setShortlistedCandidateData(true);
+    setShowInterviewDate(false);
+    resetAllToggles();
+  };
 
   const viewUpdatedPage = () => {
     setShortlistedCandidateData(false);
     setShowUpdateCallingTracker(true);
   };
 
-  const funForUpdateSelfCalling = () => {
-    setUpdateSelfCalling(true);
+  const resetAllToggles = () => {
+    setUpdateSelfCalling(false);
     setAddCandidate(false);
     setShortListed(false);
     setSelectedCandidate(false);
@@ -101,290 +92,105 @@ const EmpDashboard = ({userGroup}) => {
     setShowHome(false);
     setShowCallingExcel(false);
     setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
+    setShowEmployeeMasterSheet(false);
+    setShowMasterSheet(false);
+    setAddJobDescription(false);
+    setShowShortListdNav(false);
+  };
+
+  const funForUpdateSelfCalling = () => {
+    resetAllToggles();
+    setUpdateSelfCalling(true);
   };
 
   const funForUpdateLineUp = () => {
+    resetAllToggles();
     setUpdateSelfCalling(true);
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingTrackerForm(false);
-    setShowHome(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleInterviewDate = () => {
-    setShowShortListdNav(!showShortListedNav)
-    // setShowInterviewDate(!showInterviewDate);
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingTrackerForm(false);
-    setShowHome(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-    setShowShortListedCandidates(false);
-    setShowUpdateCallingTracker(false);
-
+    resetAllToggles();
+    setShowShortListdNav(!showShortListedNav);
   };
 
   const toggleAllMasterSheet = () => {
+    resetAllToggles();
     setShowMasterSheet(!showMasterSheet);
-    setShowShortListdNav(false)
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-    setShowEmployeeMasterSheet(false);
-        
-
-  }
+  };
 
   const toggleEmployeeMasterSheet = () => {
+    resetAllToggles();
     setShowEmployeeMasterSheet(!showEmployeeMasterSheet);
-    setShowShortListdNav(false)
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-    setShowMasterSheet(false)
-  }
+  };
 
   const toggleCallingTrackerForm = () => {
+    resetAllToggles();
     setAddCandidate(!addCandidate);
-    setShowShortListdNav(false)
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleShortListed = () => {
+    resetAllToggles();
     setShortListed(!shortListed);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-    setShowUpdateCallingTracker(false);
-
   };
 
   const toggleSelectCandidate = () => {
+    resetAllToggles();
     setSelectedCandidate(!selectCandidate);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleHoldCandidate = () => {
+    resetAllToggles();
     setHoldCandidate(!holdCandidate);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-    setShowEmployeeMasterSheet(false);
-    setShowMasterSheet(false)
   };
 
   const toggleRejectedCandidate = () => {
+    resetAllToggles();
     setRejectedCandidate(!rejectedCandidate);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setShowCallingExcel(false);
-    setLineUp(false);
-    setShowCallingTrackerForm(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleJobDescription = () => {
+    resetAllToggles();
     setShowJobDiscriptions(!showJobDiscriptions);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setSelfCalling(false);
-    setLineUp(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
-        setAddJobDescription(false)
   };
 
   const toggleSelfCalling = () => {
+    resetAllToggles();
     setSelfCalling(!selfCalling);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setLineUp(false);
-    setUpdateSelfCalling(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggelLineUp = () => {
+    resetAllToggles();
     setLineUp(!lineUp);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setUpdateSelfCalling(false);
-    setShowCallingExcel(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleExcelCalling = () => {
+    resetAllToggles();
     setShowCallingExcel(!showCallingExcel);
-    setLineUp(false);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setUpdateSelfCalling(false);
-    setAttendanceSheet(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleAttendance = () => {
+    resetAllToggles();
     setAttendanceSheet(!attendancesheet);
-    setLineUp(false);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setUpdateSelfCalling(false);
-    setShowCallingExcel(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleHome = () => {
+    resetAllToggles();
     setShowHome(!showHome);
-    setAttendanceSheet(false);
-    setLineUp(false);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setUpdateSelfCalling(false);
-    setShowCallingExcel(false);
-     setShowEmployeeMasterSheet(false);
-        setShowMasterSheet(false)
   };
 
   const toggleShortListedCandidates = () => {
+    resetAllToggles();
     setShowShortListedCandidates(!showShortListedCandidates);
-    setShowShortListdNav(false)
   };
-  const toggleAddJobDescription=()=>{
-    setAddJobDescription( !addJobDescription);
-    setAttendanceSheet(false);
-    setLineUp(false);
-    setShowShortListdNav(false)
-    setAddCandidate(false);
-    setShortListed(false);
-    setSelectedCandidate(false);
-    setHoldCandidate(false);
-    setRejectedCandidate(false);
-    setShowJobDiscriptions(false);
-    setSelfCalling(false);
-    setUpdateSelfCalling(false);
-    setShowCallingExcel(false);
-    setShowEmployeeMasterSheet(false);
-    setShowMasterSheet(false)
-    setShowJobDiscriptions(false);
-  }  
+
+  const toggleAddJobDescription = () => {
+    resetAllToggles();
+    setAddJobDescription(!addJobDescription);
+  };
 
   const toggleUpdateCallingTracker = () => {
+    resetAllToggles();
     setShowUpdateCallingTracker(!showUpdateCallingTracker);
-    setShowShortListdNav(false)
-    setShowShortListedCandidates(false);
   };
 
   const handleUpdateComplete = () => {
@@ -392,11 +198,10 @@ const EmpDashboard = ({userGroup}) => {
     setSelfCalling(true); // Show CallingList again after update is complete
   };
 
-
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Sidebar 
-         userGroup={userGroup}
+        userGroup={userGroup}
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={() => setOpenSidebarToggle(!openSidebarToggle)}
         toggleSelfCalling={toggleSelfCalling}
@@ -414,13 +219,11 @@ const EmpDashboard = ({userGroup}) => {
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
-  
       />
 
       <div className="empDash-main-content">
         <div className="time-and-data">
-
-          <DailyWork employeeId={employeeId}  successfulDataAdditions={successfulDataAdditions} />
+          <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
         </div>
 
         <div style={{ paddingTop: "50px" }}>
@@ -430,14 +233,14 @@ const EmpDashboard = ({userGroup}) => {
         </div>
 
         <div>
-          {showShortListedNav &&(
-            <ShortlistedNavbar></ShortlistedNavbar>
+          {showShortListedNav && (
+            <ShortlistedNavbar />
           )}
         </div>
 
         <div>
           {showShortlistedCandidateData && (
-            <ShortListedCandidates     viewUpdatedPage={viewUpdatedPage}></ShortListedCandidates>
+            <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
           )}
         </div>
         
@@ -446,48 +249,65 @@ const EmpDashboard = ({userGroup}) => {
         </div>
 
         <div>
-          {showEmployeeMasterSheet && <EmployeeMasterSheet></EmployeeMasterSheet>}
+          {showEmployeeMasterSheet && <EmployeeMasterSheet />}
         </div>
         <div>
-          {showMasterSheet && <MasterSheet></MasterSheet>}
+          {showMasterSheet && <MasterSheet />}
         </div>
         
-
+        <div>
+          {attendancesheet && <Attendancesheet />}
+        </div>
 
         <div>
-          {showJobDiscriptions && <Home />}
+          {shortListed && <InterviewDates />}
         </div>
+        
         <div>
-          {setAddJobDescription && <AddJobDescription/>}
+          {selectCandidate && <SelectedCandidate />}
         </div>
+        
         <div>
-          {showUpdateCallingTracker && (
-            <UpdateCallingTracker
-              onComplete={handleUpdateComplete}
-              candidateId={candidateIdForUpdate}
-              employeeId={employeeId}
-            />
-          )}
+          {rejectedCandidate && <RejectedCandidate />}
         </div>
-
-       <div>
-          {addCandidate && (
-            <CallingTrackerForm
-              employeeId={parseInt(employeeId, 10)}
-              onDataAdditionSuccess={handleDataAdditionSuccess}
-            />
-          )}
+        
+        <div>
+          {holdCandidate && <HoldCandidate />}
         </div>
-
+        
         <div>
           {showCallingExcel && <CallingExcel />}
         </div>
-
-        {selectCandidate && <SelectedCandidate />}
-        {rejectedCandidate && <RejectedCandidate />}
-        {holdCandidate && <HoldCandidate />}
+        
         <div>
-          {attendancesheet && <Attendancesheet />}
+          {addCandidate && (
+            <CallingTrackerForm updateState={handleDataAdditionSuccess} />
+          )}
+        </div>
+
+        <div>
+          {updateSelfCalling && (
+            <UpdateCallingTracker candidateId={candidateIdForUpdate} />
+          )}
+        </div>
+
+        <div>
+          {addJobDescription && <AddJobDescription />}
+        </div>
+         <div>
+          {showJobDiscriptions && <Home />}
+        </div>
+
+        <div>
+          {showHome && <Home />}
+        </div>
+
+        <div>
+          {showShortListedCandidates && <ShortListedCandidates />}
+        </div>
+
+        <div>
+          {showUpdateCallingTracker && <UpdateCallingTracker candidateId={candidateIdForUpdate} />}
         </div>
       </div>
     </div>
