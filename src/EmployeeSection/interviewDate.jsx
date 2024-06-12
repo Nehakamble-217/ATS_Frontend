@@ -39,7 +39,11 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+
+
+        `http://192.168.1.43:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+
+
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -63,7 +67,11 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+
+
+        `http://192.168.1.43:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+
+
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -108,7 +116,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const updateInterviewStatus = async (candidateId, feedback) => {
     try {
       await fetch(
-        `http://localhost:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
+        `http://192.168.1.43:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
         {
           method: "PUT",
           headers: {
@@ -155,7 +163,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8891/api/ats/157industries/save-interview-response",
+
+        "http://192.168.1.43:8891/api/ats/157industries/save-interview-response", data,
+
         {
           method: "POST",
           headers: {

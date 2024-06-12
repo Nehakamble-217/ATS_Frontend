@@ -142,7 +142,7 @@ const CallingTrackerForm = ({
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.41:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.43:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -161,7 +161,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.41:8891/api/ats/157industries/company-list/${employeeId}`
+        `http://192.168.1.43:8891/api/ats/157industries/company-list/${employeeId}`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -211,7 +211,7 @@ const CallingTrackerForm = ({
       }
 
       await axios.post(
-        `http://192.168.1.41:8891/api/ats/157industries/${employeeId}/addCallingData`,
+        `http://192.168.1.43:8891/api/ats/157industries/${employeeId}/addCallingData`,
         dataToUpdate
       );
 
@@ -366,7 +366,7 @@ const CallingTrackerForm = ({
     if (name === 'requirementId') {
       try {
         const response = await axios.get(
-          `http://192.168.1.41:8891/api/ats/157industries/company-details/${employeeId}`
+          `http://192.168.1.43:8891/api/ats/157industries/company-details/${employeeId}`
         );
         const { requirementCompany, positions } = response.data;
         setCallingTracker((prevState) => ({
@@ -466,6 +466,7 @@ const CallingTrackerForm = ({
                     
                     onChange={handleChange}
                     className="form-control"
+                    required
                   />
                 </td>
                 <th scope="col">Candidate Email</th>
@@ -475,9 +476,11 @@ const CallingTrackerForm = ({
                   name="candidateEmail"
                   value={email}
                   onChange={handleChangeemail}
+
+
                   className={`form-control ${error ? 'is-invalid' : ''}`}
                 />
-                {error && <div className="invalid-feedback">{error}</div>}
+                
               </td>
               </tr>
               <tr>
@@ -512,13 +515,14 @@ const CallingTrackerForm = ({
                 </td>
               </tr>
               <tr>
-                <th scope="col">Source Name*</th>
+                <th scope="col">Source Name* </th>
                 <td>
                   <select
                     className="form-select"
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
+                    
                   >
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>

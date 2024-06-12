@@ -193,7 +193,7 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
       };
 
       await axios.post(
-        `"http://198.168.1.41:8891/api/ats/157industries/save-daily-work"`,
+        `"http://198.168.1.43:8891/api/ats/157industries/save-daily-work"`,
         formData
       );
 

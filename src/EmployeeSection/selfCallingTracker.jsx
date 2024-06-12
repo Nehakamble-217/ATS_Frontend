@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/callingList.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+// import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import UpdateCallingTracker from "./UpdateSelfCalling";
 
 const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortCriteria, setSortCriteria] = useState(null);
+const [sortOrder, setSortOrder] = useState("asc");
   const [callingList, setCallingList] = useState([]);
-  const [filteredCallingList, setFilteredCallingList] = useState([]);
 
-  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
 
+const [filteredCallingList, setFilteredCallingList] = useState([]);
+  const [showCallingForm, setShowCallingForm] = useState(false);
+  const [callingToUpdate, setCallingToUpdate] = useState(null);
 
   const [showSearchBar, setShowSearchBar] = useState(false); // New state variable for search bar visibility
   const { employeeId } = useParams();
@@ -20,93 +23,137 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
 
- 
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
 
   const navigator = useNavigate();
 
   useEffect(() => {
     fetch(`http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`)
-
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
-        setFilteredCallingList(data);
+       setFilteredCallingList(data); // Ensure data is an array
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
-
+  
   useEffect(() => {
     const filtered = callingList.filter((item) => {
-      const numberString = item.contactNumber ? item.contactNumber.toString() : "";
+      const searchTermLower = searchTerm.toLowerCase();
       return (
-        item.recruiterName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.candidateName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        numberString.includes(searchTerm) ||
-        item.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.callingFeedback.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        item.sourceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.requirementId.toLowerCase().includes(searchTerm.toLowerCase())
+        (item.date && item.date.toLowerCase().includes(searchTermLower)) ||
+        (item.recruiterName && item.recruiterName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateName && item.candidateName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateEmail && item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
+        (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
+        (item.alternateNumber && item.alternateNumber.toString().includes(searchTermLower)) ||
+        (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
+        (item.position && item.position.toLowerCase().includes(searchTermLower)) ||
+        (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
+        (item.requirementCompany && item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
+        (item.communicationRating && item.communicationRating.toLowerCase().includes(searchTermLower)) ||
+        (item.currentLocation && item.currentLocation.toLowerCase().includes(searchTermLower)) ||
+        (item.personalFeedback && item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.callingFeedback && item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.selectYesOrNo && item.selectYesOrNo.toLowerCase().includes(searchTermLower))
       );
     });
     setFilteredCallingList(filtered);
   }, [searchTerm, callingList]);
 
+
+
+
+
+
+const handleSort = (criteria) => {
+  if (criteria === sortCriteria) {
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  } else {
+    setSortCriteria(criteria);
+    setSortOrder("asc");
+  }
+};
+ useEffect(() => {
+    if (sortCriteria) {
+      const sortedList = [...filteredCallingList].sort((a, b) => {
+        const aValue = a[sortCriteria];
+        const bValue = b[sortCriteria];
+
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+        } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        } else {
+          return 0; // If data types do not match, do not change order
+        }
+      });
+      setFilteredCallingList(sortedList);
+    }
+  }, [sortCriteria, sortOrder]);
+
   const handleUpdate = (candidateId) => {
-    setSelectedCandidateId(candidateId);
-    setShowUpdateCallingTracker(true);
+    setSelectedCandidateId(candidateId); // Set candidateId for UpdateCallingTracker
+    setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
   };
 
   const handleUpdateSuccess = () => {
-    fetch(`http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`)
+
+    // Reload the calling list data and show the calling list table again
+    fetch(
+      `http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`
+    )
 
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
         setFilteredCallingList(data);
-        setShowUpdateCallingTracker(false);
+        setShowUpdateCallingTracker(false); 
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
+ const handleMouseOver = (event) => {
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector('.tooltip');
 
-  const handleMouseOver = (event) => {
-    const tooltip = event.currentTarget.querySelector('.tooltip');
     if (tooltip) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const tooltipWidth = tooltipRect.width;
-      const tooltipHeight = tooltipRect.height;
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
+      const isOverflowing = tableData.scrollWidth > tableData.clientWidth;
+      if (isOverflowing) {
+        tooltip.style.visibility = 'visible';
+        tooltip.style.opacity = '1';
 
-      let top = rect.top - tooltipHeight + 40; 
-      let left = rect.left + (rect.width - tooltipWidth) / 2; 
+        const tableDataRect = tableData.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
 
-    
-      if (top < 0) top = rect.bottom + 5; // below the cell
-      if (left < 0) left = 5; // align to the left edge
-      if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5; // align to the right edge
-
-      tooltip.style.top = `${top}px`;
-      tooltip.style.left = `${left}px`;
-      tooltip.classList.add('visible');
+        tooltip.style.top = `${tableDataRect.top - tooltipRect.height - 5}px`;
+        tooltip.style.left = `${tableDataRect.left}px`;
+      } else {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+      }
     }
   };
 
   const handleMouseOut = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
     if (tooltip) {
-      tooltip.classList.remove('visible');
+      tooltip.style.visibility = 'hidden';
+      tooltip.style.opacity = '0';
     }
   };
 
+
+  const getSortIcon = (criteria) => {
+    if (sortCriteria === criteria) {
+      return sortOrder === "asc" ? <i class="fa-solid fa-arrow-up"></i> : <i class="fa-solid fa-arrow-down"></i>;
+    }
+    return null;
+  };
+
   return (
-
-    <div className="calling-list-container ">
-    
-    {!showUpdateCallingTracker ? (
-
+    <div className="calling-list-container">
+      {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
           <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
@@ -128,15 +175,15 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
               <thead>
                 <tr className="attendancerows-head">
                   <th className='attendanceheading'>Sr No.</th>
-                  <th className='attendanceheading'>Date</th>
-                  <th className='attendanceheading'>Recruiter Name</th>
+                  <th className='attendanceheading'  onClick={() => handleSort("date")}>Date {getSortIcon("date")}</th>
+                  <th className='attendanceheading'  onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
                   <th className='attendanceheading'>Candidate Name</th>
                   <th className='attendanceheading'>Candidate Email</th>
                   <th className='attendanceheading'>Contact Number</th>
                   <th className='attendanceheading'>Alternate Number</th>
                   <th className='attendanceheading'>Source Name</th>
                   <th className='attendanceheading'>Position</th>
-                  <th className='attendanceheading'>Job Id</th>
+                  <th className='attendanceheading' onClick={() => handleSort("requirementId")}>Job Id {getSortIcon("requirementId")}</th>
                   <th className='attendanceheading'>Applying Company</th>
                   <th className='attendanceheading'>Communication Rating</th>
                   <th className='attendanceheading'>Current Location</th>
@@ -208,16 +255,15 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
             </table>
           </div>
         </>
+      )}
 
-        ) : (
-
-      //  {showUpdateCallingTracker && (
+       {showUpdateCallingTracker && (
         <UpdateCallingTracker
-        candidateId={selectedCandidateId}
-        employeeId={employeeId}
-        onSuccess={handleUpdateSuccess}
-        onCancel={() => setShowUpdateCallingTracker(false)}
-      />
+          candidateId={selectedCandidateId}
+          employeeId={employeeId}
+          onSuccess={handleUpdateSuccess}
+          onCancel={() => setShowUpdateCallingTracker(true)}
+        />
       )}
     </div>
   );

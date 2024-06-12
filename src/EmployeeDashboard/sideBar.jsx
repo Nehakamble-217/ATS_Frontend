@@ -20,8 +20,10 @@ function Sidebar({
   toggleInterviewDate,
   toggleAttendance,
   toggleAllMasterSheet,
+  toggleAddJobDescription,
   toggleEmployeeMasterSheet,
   handleLogout,
+   
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -32,6 +34,9 @@ function Sidebar({
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
+
+  const {userGroup}=useParams();
+  console.log(userGroup)
 
   useEffect(() => {
     if (!employeeId) {
@@ -81,11 +86,17 @@ function Sidebar({
     callback(e);
   };
 
+
+    console.log(userGroup)
   const isCandidateSectionActive = ['selfCalling', 'lineUp', 'shortListed', 'selectCandidate', 'holdCandidate', 'rejectedCandidate'].includes(activeButton);
+  const isJobDescriptionActive=["Jobdiscription","addJobDescription"].includes(activeButton)
 
   return (
+    <>
+     
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
-      <div className="clouds1"></div>
+     
+          <div className="clouds1"></div>
       <div className='head'></div>
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
@@ -177,12 +188,48 @@ function Sidebar({
 
               </ul>
             </li>
-            <li onClick={handleButtonClick('jobDescription', toggleJobDescription)} className={activeButton === 'jobDescription' ? 'active' : ''}>
+
+
+
+            <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
               <a href="#">
-                <i className="icon ph-bold ph-file-text"></i>
+                <i className="icon ph-bold ph-user"></i>
                 <span className="sidebar-text">Job Description</span>
+                <i className="arrow ph-bold ph-caret-down"></i>
+              </a>
+              <ul className={`sub-menu ${activeSubMenu === 'Jobdiscription' ? 'active' : ''}`}>
+                 <li onClick={handleButtonClick('jobDescription', toggleJobDescription)} className={activeButton === 'jobDescription' ? 'active' : ''}>
+              <a href="#">
+              <img src={Circle} style={{ width: "10px" }} alt="" />                
+               <span className="sidebar-text"> View Job Description</span>
               </a>
             </li>
+                <li onClick={handleButtonClick('addJobDescription', toggleAddJobDescription)} className={activeButton === 'addJobDescription' ? 'active' : ''}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Add JobDescription</span>
+                  </a>
+                </li>
+                
+
+                
+                
+               
+
+               
+                
+
+                
+
+                
+
+              </ul>
+            </li>
+
+
+
+
+           
             <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
                 <i className="icon ph-bold ph-chart-bar"></i>
@@ -287,14 +334,32 @@ function Sidebar({
                 <span className="sidebar-text">Note Pad</span>
               </a>
             </li>
+            <li >
+              <a href="#" >
+                <i className="icon ph-bold ph-sign-out"></i>
+                <span className="sidebar-text">Add Emp</span>
+              </a>
+            </li>
+            <li >
+              <a href="#" >
+                <i className="icon ph-bold ph-sign-out"></i>
+                <span className="sidebar-text">Add TeamLeader</span>
+              </a>
+            </li>
+            <li >
+              <a href="#" >
+                <i className="icon ph-bold ph-sign-out"></i>
+                <span className="sidebar-text">Add JD</span>
+              </a>
+            </li>
           </ul>
         </div>
 
-        <div className="sidebar-menu">
+        {/* <div className="sidebar-menu">
           <ul>
             
           </ul>
-        </div>
+        </div> */}
 
         <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
           <ul>
@@ -305,7 +370,15 @@ function Sidebar({
           </ul>
         </div>
       </div>
+     
+      
     </div>
+    
+  
+    
+
+
+    </>
   );
 }
 

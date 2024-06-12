@@ -6,10 +6,12 @@ import logo157 from "../LogoImages/157logo.jpeg";
 import { getPasswordFromDB } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
+import EmpDashboard from "../EmployeeDashboard/empDashboard";
 import "aos/dist/aos.css"
-import LoginImage from "../LogoImages/LoginImge.jpg"
+import LoginImage from "../LogoImages/LoginImge.jpg";
 
 const LoginSignup = ({ onLogin }) => {
+
     const [action, setAction] = useState("Login");
     const [employeeId, setEmployeeId] = useState("");
     const [password, setPassword] = useState("");
@@ -48,6 +50,7 @@ const LoginSignup = ({ onLogin }) => {
             setError("Error occurred. Please try again.");
         }
     };
+
 
     const dashboardLink = () => {
         navigate('/empDash/6');
@@ -872,10 +875,10 @@ const LoginSignup = ({ onLogin }) => {
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>
                 </div>
+            </div> 
+    </div>
 
-            </div>
-        </div>
-    );
+  );
 
 };
 

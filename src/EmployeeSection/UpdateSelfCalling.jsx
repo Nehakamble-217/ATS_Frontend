@@ -67,7 +67,11 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/company-list/${employeeId}`
+
+
+        `http://192.168.1.43:8891/api/ats/157industries/company-list/${employeeId}`
+
+
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -86,7 +90,11 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
 
   const fetchEmployeeName = async () => {
     try {
-      const response = await fetch(`http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`);
+
+      const response = await fetch(
+        `http://192.168.1.43:8891/api/ats/157industries/employeeName/${employeeId}`
+      );
+
       const data = await response.text();
       setRecruiterName(data);
     } catch (error) {
@@ -96,7 +104,10 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
 
   const fetchCandidateData = async () => {
     try {
-      const response = await fetch(`http://localhost:8891/api/ats/157industries/specific-data/${candidateId}`);
+      const response = await fetch(
+        `http://192.168.1.43:8891/api/ats/157industries/specific-data/${candidateId}`
+      );
+
       const data = await response.json();
       setCallingTracker(data);
     } catch (error) {
@@ -132,7 +143,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
       };
 
       const response = await fetch(
-        `http://localhost:8891/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.43:8891/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {
