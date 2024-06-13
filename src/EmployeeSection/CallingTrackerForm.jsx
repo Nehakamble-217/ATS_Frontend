@@ -385,11 +385,12 @@ const CallingTrackerForm = ({
     <div>
       <form onSubmit={handleSubmit}>
         <div className="maintable">
-          <table id="studTables" className="table  table-striped  text-center">
+          <table id="studTables" className="table  table-striped  text-center" >
             <tbody className="table-group-divider">
-              <tr id="table-row">
+              
+              <tr id="table-row" >
               <th scope="col" >Date & Time:</th>
-              <td style={{ display: "flex", alignItems: "center",justifyContent:"center",paddingTop:"14px"}}>
+              <td style={{ display: "flex", alignItems: "center",justifyContent:"center",paddingTop:"14px", }}>
               <input
                 type="text"
                 id="currentDate"
@@ -422,29 +423,11 @@ const CallingTrackerForm = ({
                   />
                 </td>
               </tr>
+              <tr></tr>
 
               <tr id="heading123">
-                <th> Full Adress</th>
-                <td>
-                  <input
-                    type="text"
-                    name="candidateName"
-                    value={callingTracker.candidateName}
-                    onChange={handleChange}
-                    className="form-control"
-                  />
-                </td>
-                <th scope="col">Relavent Exp</th>
-                <td>
-                <input
-                  type="email"
-                  name="relaventexp"
-                  value=""
-                  
-                  className={`form-control ${error ? 'is-invalid' : ''}`}
-                />
+                
                
-              </td>
               </tr>
 
               <div hidden>
@@ -493,7 +476,7 @@ const CallingTrackerForm = ({
                       handlePhoneNumberChange(value, "contactNumber")
                     }
                     defaultCountry="IN"
-                    maxLength={10}
+                    maxLength={11}
                     className="PhoneInputInput"
                     name="contactNumber"
                   />
@@ -508,7 +491,7 @@ const CallingTrackerForm = ({
                       handlePhoneNumberChange(value, "alternateNumber")
                     }
                     defaultCountry="IN"
-                    maxLength={10}
+                    maxLength={11}
                     className="PhoneInputInput"
                     name="alternateNumber"
                   />
@@ -615,16 +598,18 @@ const CallingTrackerForm = ({
             )}
           </td> 
 
-                <th scope="col">Communication Rating</th>
+          <th> Full Adress</th>
                 <td>
                   <input
                     type="text"
-                    name="communicationRating"
-                    value={callingTracker.communicationRating}
+                    name="fullAddress"
+                    value={callingTracker.fullAddress}
                     onChange={handleChange}
                     className="form-control"
                   />
                 </td>
+                
+                
               </tr>
 
               <tr>
@@ -883,6 +868,31 @@ const CallingTrackerForm = ({
               </div>
             </div>
           </td>
+          
+              </tr>
+              <tr>
+
+              <th scope="col">Relavent Exp</th>
+                <td>
+                <input
+                  type="email"
+                  name="relaventexp"
+                  value=""
+                  
+                  className={`form-control ${error ? 'is-invalid' : ''}`}
+                />
+               
+              </td>
+              <th scope="col">Communication Rating</th>
+                <td>
+                  <input
+                    type="text"
+                    name="communicationRating"
+                    value={callingTracker.communicationRating}
+                    onChange={handleChange}
+                    className="form-control"
+                  />
+                </td>
               </tr>
 
               <tr>
