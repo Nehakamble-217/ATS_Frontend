@@ -85,8 +85,6 @@ const CallingTrackerForm = ({
     totalExperienceMonths: '',
     currentsalarylakh: '',
     currentsalaryth: '',
-
-    
   };
 
   const [callingTracker, setCallingTracker] = useState(initialCallingTrackerState);
@@ -202,7 +200,7 @@ const CallingTrackerForm = ({
       let message = "";
 
       if (callingTracker.selectYesOrNo === "Interested") {
-        onDataAdditionSuccess();
+     
         dataToUpdate.lineUp = lineUpData;
         setSuccessfulDataAdditions(true);
         message = "In Calling & Line Up Data Added";

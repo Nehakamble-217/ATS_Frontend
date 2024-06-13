@@ -11,7 +11,6 @@ import "aos/dist/aos.css"
 import LoginImage from "../LogoImages/LoginImge.jpg";
 
 const LoginSignup = ({ onLogin }) => {
-
     const [action, setAction] = useState("Login");
     const [employeeId, setEmployeeId] = useState("");
     const [password, setPassword] = useState("");
@@ -20,8 +19,6 @@ const LoginSignup = ({ onLogin }) => {
     useEffect(() => {
         AOS.init({ duration: 3000 })
     }, [])
-
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         if (name === "employeeId") {
@@ -30,14 +27,12 @@ const LoginSignup = ({ onLogin }) => {
             setPassword(value);
         }
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             const response = await getPasswordFromDB(employeeId);
             const fetchedPassword = response.data;
             console.log(fetchedPassword + " emp password");
-
             if (fetchedPassword === password) {
                 localStorage.setItem("employeeId", employeeId);
                 navigate(`/empDash/${employeeId}`);
@@ -51,12 +46,9 @@ const LoginSignup = ({ onLogin }) => {
         }
     };
 
-
     const dashboardLink = () => {
         navigate('/empDash/6');
     };
-
-
     return (
         <div className="main-body" >
             <div className="hexagon-container ">

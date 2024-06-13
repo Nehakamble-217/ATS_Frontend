@@ -5,7 +5,6 @@ import RightTick from '../photos/greenTick.jpg'
 import './afterSelection.css'
 
 const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => {
-
   useEffect(() => {
     console.log("Received Props:", { candidateId, employeeId, requirementId });
   }, [candidateId, employeeId, requirementId]);

@@ -25,7 +25,7 @@ const SelectedCandidate = () => {
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
     }
-  };
+  };                             
 
   const viewPage = (candidateId, requirementId) => {
     setSelectedCandidateId(candidateId);
@@ -50,7 +50,6 @@ const SelectedCandidate = () => {
           <table className="attendance-table">
             <thead>
               <tr className='attendancerows-head'>
-                {/* Table headers */}
                 <th className='attendanceheading'>Sr No.</th>
                 <th className='attendanceheading'>Candidate Id.</th>
                 <th className='attendanceheading'>Date</th>

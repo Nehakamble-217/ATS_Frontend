@@ -1,11 +1,10 @@
-  import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/LineUpList.css";
 import UpdateCallingTracker from "./UpdateSelfCalling";
 
 const LineUpList = ({updateState,funForGettingCandidateId}) => {
   const [callingList, setCallingList] = useState([]);
-
   const { employeeId } = useParams(); 
   const employeeIdnew = parseInt(employeeId);
   console.log(employeeId);
@@ -21,7 +20,6 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeIdnew]);
-
   
   const handleUpdate = (candidateId) => {
     setSelectedCandidateId(candidateId);
@@ -34,9 +32,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
-
   };
-  
   
    const handleMouseOver = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
@@ -50,7 +46,6 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
 
       let top = rect.top - tooltipHeight + 40; // above the cell
       let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
-
 
       if (top < 0) top = rect.bottom + 5; // below the cell
       if (left < 0) left = 5; // align to the left edge
@@ -69,7 +64,6 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
     }
   };
 
-
   return (
     <div className="calling-list-container">
       
@@ -78,6 +72,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
       <div className="attendanceTableData">
         <h5 style={{color:"gray"}}>Line Up  List</h5>
         <table className="attendance-table">
+
           <thead>
             <tr className='attendancerows-head'>
               <th className='attendanceheading'>Sr No.</th>
@@ -106,6 +101,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
               <th className='attendanceheading'>Action</th>
             </tr>
           </thead>
+          
           <tbody>
             {callingList.map((item, index) => (
               <tr key={item.candidateId} className='attendancerows'>
