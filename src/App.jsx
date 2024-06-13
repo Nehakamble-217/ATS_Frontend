@@ -11,18 +11,21 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sidebar from "./EmployeeDashboard/sideBar";
 import AfterSelection from "./CandidateSection/afterSelection";
 import Attendance from "./EmployeeSection/Attendence_sheet";
+import AdminLogin from "./LoginPage/adminLogin";
 
 
 const App = () => {
+  
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/mainDashboard" element={<MainDashboard />} />
-          <Route path="/employee-login" element={<Login />} />
-          <Route path="/empDash/:employeeId" element={<EmpDashboard />} />
+          <Route path="/employee-login" element={<Login  />} />
+          <Route path="/empDash/:employeeId" element={<EmpDashboard   />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection/>}/>
+          <Route path="/admin-login" element={<AdminLogin></AdminLogin>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

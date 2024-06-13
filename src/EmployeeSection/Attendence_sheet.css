@@ -1,38 +1,56 @@
 .App-after {
   width: 100%;
   background-attachment: fixed;
-  height: 100vh;
-  overflow: hidden !important;
 }
 
 .attendance-table {
   width: 100%;
   border-collapse: collapse;
+  /* position: relative; */
 }
 
 .attendance-table thead th {
   position: sticky;
   top: 0;
-  background-color: #ffcb9b;
+  background-color: #ffcb9b; 
   color: gray;
   z-index: 1;
 }
-.attendanceheading {
-  border: 1px solid gray;
-  padding: 4px;
-  white-space: nowrap;
-  max-width: 200px;
-  height: 32px;
-  text-overflow: ellipsis;
+/* callingList.css */
+
+.filter-section {
+  margin-bottom: 20px;
 }
 
-.tabledata {
+.filter-dropdowns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.filter-dropdown {
+  margin-right: 20px;
+}
+
+.filter-dropdown label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.filter-dropdown select {
+  width: 150px; /* Adjust as needed */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+.attendanceheading, .tabledata {
   border: 1px solid gray;
-  padding: 1px;
+  padding: 5px;
   white-space: nowrap;
-  max-width: 200px;
-  height: 30px;
+  max-width: 200px; 
   text-overflow: ellipsis;
+  overflow: hidden; /* Ensure cell text is clipped if too long */
 }
 
 .tabledata:hover .tooltip {
@@ -40,22 +58,23 @@
   opacity: 1;
 }
 
-/* .tooltip {
+.tooltip {
   visibility: hidden;
-  background-color: #ffcb9b;
-  color: grey;
+  background-color: black;
+  color: #fff;
   text-align: center;
   border-radius: 5px;
   padding: 5px;
   position: absolute;
-  z-index: 1;
+  z-index: 2; /* Ensure tooltip appears above other elements */
   opacity: 0;
   transition: opacity 0.3s;
-  overflow: hidden;
-} */
+  white-space: nowrap; /* Prevent tooltip text from wrapping */
+  max-width: none; /* Ensure tooltip width adjusts to content */
+}
 
 .tooltiptext {
-  display:none;
+  display: inline-block;
 }
 
 .attendancerows-head {
@@ -70,39 +89,32 @@
   width: 100px;
 }
 
-.attendancerowsdata,
-.tabledata {
+.attendancerowsdata, .tabledata {
   text-align: center;
   font-size: 16px;
   border: 1px solid gray;
-  padding: 1px;
+  padding: 5px;
   overflow: hidden;
   max-width: 200px;
   text-overflow: clip;
-  visibility: visible;
 }
 
 .attendanceTableData::-webkit-scrollbar {
   display: none;
 }
+
 .attendanceTableData {
-  height: 85vh;
-  width: 100%;
+  height: 90vh;
   overflow-y: auto;
 }
 
 .tabledata {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* position: relative; */
+ }
+
+.tabledata .tooltip {
+  /* bottom: 100%;  */
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px; /* Adjust as needed to provide space between cell and tooltip */
 }
-
-.attendancerows:hover {
-  background-color: #f2f2f2;
-}
-
-html::-webkit-scrollbar{
-
-  display: none;
-}
-

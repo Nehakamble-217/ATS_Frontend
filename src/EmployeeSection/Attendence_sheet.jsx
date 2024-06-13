@@ -30,33 +30,32 @@ const Attendance = () => {
   }, [workId]);
 
   const handleMouseOver = (event) => {
-    const tooltip = event.currentTarget.querySelector('.tooltip');
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector('.tooltip');
+
     if (tooltip) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const tooltipWidth = tooltipRect.width;
-      const tooltipHeight = tooltipRect.height;
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
+      const isOverflowing = tableData.scrollWidth > tableData.clientWidth;
+      if (isOverflowing) {
+        tooltip.style.visibility = 'visible';
+        tooltip.style.opacity = '1';
 
-      let top = rect.top - tooltipHeight -5; // above the cell
-      let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
+        const tableDataRect = tableData.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
 
-      // Adjust if the tooltip is out of the viewport
-      if (top < 0) top = rect.bottom +5; // below the cell
-      if (left < 0) left = 5; // align to the left edge
-      if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5; // align to the right edge
-
-      tooltip.style.top = `${top}px`;
-      tooltip.style.left = `${left}px`;
-      tooltip.classList.add('visible');
+        tooltip.style.top = `${tableDataRect.top - tooltipRect.height - 5}px`;
+        tooltip.style.left = `${tableDataRect.left}px`;
+      } else {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+      }
     }
   };
 
   const handleMouseOut = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
     if (tooltip) {
-      tooltip.classList.remove('visible');
+      tooltip.style.visibility = 'hidden';
+      tooltip.style.opacity = '0';
     }
   };
 
@@ -95,7 +94,7 @@ const Attendance = () => {
             <tbody>
               {attendanceData.map((data) => (
                 <tr key={data.workId} className='attendancerows'>
-                  <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.date}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.date}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.date}</span>
                     </div>
@@ -105,27 +104,27 @@ const Attendance = () => {
                       <span className="tooltiptext">{data.loginTime}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.lateMark}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.lateMark}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.lateMark}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.logoutTime}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.logoutTime}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.logoutTime}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.leaveType}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.leaveType}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.leaveType}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.totalHoursWork}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.totalHoursWork}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.totalHoursWork}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.halfDay}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.halfDay}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.halfDay}</span>
                     </div>
@@ -145,12 +144,12 @@ const Attendance = () => {
                       <span className="tooltiptext">{data.holidayPaidLeave}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.holidayUnPaidLeave}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.holidayUnPaidLeave}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.holidayUnPaidLeave}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {data.remoteWork}
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{data.remoteWork}
                     <div className="tooltip">
                       <span className="tooltiptext">{data.remoteWork}</span>
                     </div>

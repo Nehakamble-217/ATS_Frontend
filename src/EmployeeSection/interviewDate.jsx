@@ -13,7 +13,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [interviewDates, setInterviewDates] = useState([]);
   const [showAllData, setShowAllData] = useState(false);
   const [noDataMessage, setNoDataMessage] = useState(false);
-
   const [feedbackOptions] = useState([
     "Shortlisted For Hr Round",
     "Shortlisted For Technical Round",
@@ -40,7 +39,11 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
+
+
         `http://192.168.1.43:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+
+
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -64,7 +67,11 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
+
+
         `http://192.168.1.43:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+
+
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -77,6 +84,32 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       setShowAllData(false);
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleMonthChange = async (activeStartDate) => {
+    if (activeStartDate) {
+      const month = activeStartDate.getMonth() + 1; // getMonth() is zero-based
+      const year = activeStartDate.getFullYear();
+      const monthString = `${year}-${month.toString().padStart(2, "0")}`;
+      console.log("Selected month:", monthString);
+
+      try {
+        const response = await fetch(
+          `http://localhost:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+        );
+        const data = await response.json();
+        if (data.length === 0) {
+          setNoDataMessage(true);
+          setInterviewData(null);
+        } else {
+          setInterviewData(data);
+          setNoDataMessage(false);
+        }
+        setShowAllData(true);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
   };
 
@@ -102,7 +135,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   };
 
   const handleFeedbackChange = async (candidateId, event) => {
-    const feedback = event.target.value;
+    const feedback = event.targe.value;
     await updateInterviewStatus(candidateId, feedback);
     await handleDateChange(selectedDate);
   };
@@ -113,7 +146,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     requirementId
   ) => {
     event.preventDefault();
-
     const interviewRound = event.target.querySelector('select[name="interviewRound"]').value;
     const interviewResponse = event.target.querySelector('select[name="interviewResponse"]').value;
     const responseUpdatedDate = event.target.querySelector('input[name="responseUpdatedDate"]').value;
@@ -131,7 +163,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
+
         "http://192.168.1.43:8891/api/ats/157industries/save-interview-response", data,
+
         {
           method: "POST",
           headers: {
@@ -202,6 +236,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <th className="attendanceheading">Total Experience</th>
                 <th className="attendanceheading">Any Offer Letter</th>
                 <th className="attendanceheading">Feedback</th>
+               < th className="attendanceheading" >View All Interview</th>
                 <th className="attendanceheading">Action</th>
               </tr>
             </thead>
@@ -244,9 +279,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                   <td className="tabledata">
                     <input
                       type="date"
-                      name="nextInterviewDate"
-                      className="form-control"
-                    />
+                     name ="nextInterviewDate"
+                    className="form-control"
+                      />
                   </td>
                   <td className="tabledata">{item.recruiterName}</td>
                   <td className="tabledata">{item.candidateName}</td>
@@ -271,6 +306,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                       <td className="tabledata">{item.lineUp.feedBack}</td>
                     </>
                   )}
+                   
+                  <td className="tabledata">
+                    view
+                  </td>
                   <td className="tabledata">
                     <i className="fa-solid fa-floppy-disk"></i>
                   </td>
@@ -283,16 +322,20 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     );
   };
 
-  const tileContent = ({ date }) => {
-    const tempdate = new Date(date);
-    tempdate.setHours(tempdate.getHours() + 10);
+  const tileContent = ({ date, view }) => {
+    if (view === "month") {
+      const tempdate = new Date(date);
+      tempdate.setHours(tempdate.getHours() + 10);
 
-    const formattedDate = tempdate.toISOString().split("T")[0];
+      const formattedDate = tempdate.toISOString().split("T")[0];
 
-    const isInterviewDate = interviewDates.includes(formattedDate);
+      const isInterviewDate = interviewDates.includes(formattedDate);
 
-    return isInterviewDate && <div className="highlighted-date"></div>;
+      return isInterviewDate && <div className="highlighted-date"></div>;
+
+    }
   };
+
 
   return (
     <div className="calendar-container">
@@ -301,21 +344,31 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
           <Calendar
             value={selectedDate}
             onChange={handleDateChange}
+            onActiveStartDateChange={({ activeStartDate, view }) =>
+              view === "month" && handleMonthChange(activeStartDate)
+            }
             tileContent={tileContent}
           />
         </div>
       </div>
 
       {!showAllData && interviewData && (
-        <div className="interview-table">
-          {renderInterviewTable()}
-        </div>
-      )}
-
-      {!showAllData && noDataMessage && (
-        <h3 style={{ color: "red" }}>No interviews scheduled on this date.</h3>
-      )}
+    <div className="interview-table">
+      {renderInterviewTable()}
     </div>
+  )}
+
+  {showAllData && (
+    <div className="interview-table">
+      {renderInterviewTable()}
+    </div>
+  )}
+
+  {!showAllData && noDataMessage && (
+    <h3 style={{ color: "red" }}>No interviews scheduled on this date.</h3>
+  )}
+</div>
+
   );
 };
 
