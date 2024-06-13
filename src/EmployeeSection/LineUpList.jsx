@@ -99,12 +99,12 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
         <div className="container-after1">
           <h5 style={{ color: "gray" }}>Line Up List</h5>
           <button className="select-button" onClick={toggleButtons}>Select</button>
-          {showButtons && (
+          {/* {showButtons && (
             <div className="button-group">
               <button className="select-all-button" onClick={selectAll}>Select All</button>
               <button className="share-button" onClick={openSharePopup}>Share</button>
             </div>
-          )}
+          )} */}
 
           <div className="attendanceTableData">
             <table className="attendance-table">

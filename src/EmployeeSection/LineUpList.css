@@ -4,7 +4,7 @@
 
 .attendanceTableData {
   position: relative;
-  padding-top: 50px; /* Ensure content doesn't overlap with the header */
+ 
 }
 
 .attendanceTableData h5 style {
