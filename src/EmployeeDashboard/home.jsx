@@ -335,6 +335,7 @@ const Jobdiscription = () => {
           5000-7000
           <hr /></div>
         </div>
+        
        
         <div className="job-details" >
           

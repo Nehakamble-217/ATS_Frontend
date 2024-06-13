@@ -1,11 +1,12 @@
 import React from 'react';
 import './addJobDescription.css';
+import JobDescriptionForm from './jobDescriptionForm';
 
 const addJobDescription = () => (
   <main className="job-desc">
     <section className="job-performance">
       <article><b>ADD JOB DESCRIPTION</b></article>
-      <div className="form-container">
+      <div className="form-container1">
         <div className="field-column">
           {renderFields([
             { label: "Field", type: "text", name: "field" },
@@ -35,9 +36,12 @@ const addJobDescription = () => (
           ])}
         </div>
       </div>
-      <div className="save">
-        <button className="apply">View More</button>
+      <div>
+      <JobDescriptionForm/>
       </div>
+      {/* <div className="save">
+        <button className="apply">View More</button>
+      </div> */}
     </section>
   </main>
 );

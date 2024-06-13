@@ -41,6 +41,60 @@
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  
+}
+
+/* Style the filter section */
+.filter-section {
+  margin-top: 20px;
+}
+
+/* Style the filter dropdowns */
+.filter-dropdown {
+  margin-bottom: 10px;
+}
+
+/* Style the dropdown button */
+.dropbtn {
+  background-color: #f9f9f9;
+  color: #555;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Style the dropdown options */
+.dropdown-content div {
+  padding: 0px 10px;
+  cursor: pointer;
+}
+
+/* Show the dropdown content when the dropdown button is clicked */
+.filter-dropdown:hover .dropdown-content {
+  display: block;
+  width: 100%;
+  z-index: 99999999999999999;
+}
+
+/* Style the checkbox input */
+.dropdown-content input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Style the checkbox label */
+.dropdown-content label {
+  cursor: pointer;
 }
 
 
