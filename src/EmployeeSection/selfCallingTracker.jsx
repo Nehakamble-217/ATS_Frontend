@@ -10,12 +10,16 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [sortCriteria, setSortCriteria] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [callingList, setCallingList] = useState([]);
-
+  const [showFilterSection, setShowFilterSection] = useState(false);
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
+<<<<<<< HEAD
 
+=======
+const [selectedRows, setSelectedRows] = useState([]);
+>>>>>>> 581aa6746d7f0964a4f25b8a477031585796db45
   const [showSearchBar, setShowSearchBar] = useState(false); 
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
@@ -36,14 +40,30 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
+<<<<<<< HEAD
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId'); 
     setFilterOptions(options);
   }, [filteredCallingList]);
+=======
+useEffect(() => {
+  console.log("Selected Filters:", selectedFilters);
+}, [selectedFilters]);
+>>>>>>> 581aa6746d7f0964a4f25b8a477031585796db45
 
-  useEffect(() => {
+useEffect(() => {
+  console.log("Filtered Calling List:", filteredCallingList);
+}, [filteredCallingList]);
+
+useEffect(() => {
+    const limitedOptions = ['date', 'recruiterName', 'position', 'requirementId'];
+    setFilterOptions(limitedOptions);
+  }, [callingList]);
+
+
+    useEffect(() => {
     filterData();
-  }, [selectedFilters]);
+  }, [selectedFilters, callingList]);
 
   useEffect(() => {
     const filtered = callingList.filter((item) => {
@@ -87,22 +107,41 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     }
   }, [sortCriteria, sortOrder]);
 
-  const handleFilterSelect = (option, value) => {
-    if (value === "") {
-      const { [option]: removedFilter, ...rest } = selectedFilters;
-      setSelectedFilters(rest);
-    } else {
-      setSelectedFilters({ ...selectedFilters, [option]: value });
-    }
-  };
 
-  const filterData = () => {
+    const filterData = () => {
     let filteredData = [...callingList];
-    Object.entries(selectedFilters).forEach(([option, value]) => {
-      filteredData = filteredData.filter(item => item[option].toString() === value);
+    Object.entries(selectedFilters).forEach(([option, values]) => {
+      if (values.length > 0) {
+        if (option === 'requirementId') {
+          filteredData = filteredData.filter(item => values.includes(item[option]?.toString()));
+        } else {
+          filteredData = filteredData.filter(item => values.some(value => item[option]?.toString().toLowerCase().includes(value.toLowerCase())));
+        }
+      }
     });
     setFilteredCallingList(filteredData);
   };
+
+ const handleFilterSelect = (option, value) => {
+    setSelectedFilters(prevFilters => {
+      const updatedFilters = { ...prevFilters };
+      if (!updatedFilters[option]) {
+        updatedFilters[option] = [];
+      }
+
+      const index = updatedFilters[option].indexOf(value);
+      if (index === -1) {
+        updatedFilters[option] = [...updatedFilters[option], value];
+      } else {
+        updatedFilters[option] = updatedFilters[option].filter(item => item !== value);
+      }
+
+      return updatedFilters;
+    });
+  };
+
+
+
 
   const handleSort = (criteria) => {
     if (criteria === sortCriteria) {
@@ -170,15 +209,45 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     return null;
   };
 
+   const toggleFilterSection = () => {
+    setShowFilterSection(!showFilterSection);
+  };
+
+  
+  const handleSelectAll = (event) => {
+    if (event.target.checked) {
+      const allRowIds = filteredCallingList.map(item => item.candidateId);
+      setSelectedRows(allRowIds);
+    } else {
+      setSelectedRows([]);
+    }
+  };
+
+  const handleSelectRow = (candidateId) => {
+    setSelectedRows(prevSelectedRows => {
+      if (prevSelectedRows.includes(candidateId)) {
+        return prevSelectedRows.filter(id => id !== candidateId);
+      } else {
+        return [...prevSelectedRows, candidateId];
+      }
+    });
+  };
+
+
+
+
+
+
   return (
-    <div className="calling-list-container">
+    <div className="App-after">
       {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
-
-            <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
-            <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
+<i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
+            <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
+            
+              <button onClick={toggleFilterSection}>Filter <i class="fa-solid fa-filter"></i></button>
           </div>
 
           {showSearchBar && (
@@ -191,26 +260,57 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           )}
-          <div className="filter-section">
-            <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
-            <div className="filter-dropdowns">
-              {filterOptions.map(option => (
-                <div key={option} className="filter-dropdown">
-                  <label htmlFor={option}>{option}</label>
-                  <select id={option} onChange={(e) => handleFilterSelect(option, e.target.value)}>
-                    <option value="">All</option>
-                    {[...new Set(callingList.map(item => item[option]))].map(value => (
-                      <option key={value} value={value}>{value}</option>
-                    ))}
-                  </select>
+        {showFilterSection && (
+  <div className="filter-section">
+    <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
+    <div className="filter-dropdowns">
+      {filterOptions.map(option => (
+        <div key={option} className="filter-dropdown">
+          {/* <label htmlFor={option}>{option}</label> */}
+          <div className="dropdown">
+            <button className="dropbtn">{option}</button>
+            <div className="dropdown-content">
+              <div key={`${option}-All`}>
+                <input
+                  type="checkbox"
+                  id={`${option}-All`}
+                  value="All"
+                  checked={!selectedFilters[option] || selectedFilters[option].length === 0}
+                  onChange={() => handleFilterSelect(option, "All")}
+                />
+                <label htmlFor={`${option}-All`}>All</label>
+              </div>
+              {[...new Set(callingList.map(item => item[option]))].map(value => (
+                <div key={value}>
+                  <input
+                    type="checkbox"
+                    id={`${option}-${value}`}
+                    value={value}
+                    checked={selectedFilters[option]?.includes(value) || false}
+                    onChange={() => handleFilterSelect(option, value)}
+                  />
+                  <label htmlFor={`${option}-${value}`}>{value}</label>
                 </div>
               ))}
             </div>
           </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
           <div className="attendanceTableData">
             <table className="selfcalling-table attendance-table">
               <thead>
                 <tr className="attendancerows-head">
+                  <th className='attendanceheading'>
+                    <input
+                      type="checkbox"
+                      onChange={handleSelectAll}
+                      checked={selectedRows.length === filteredCallingList.length}
+                    />
+                  </th>
                   <th className='attendanceheading'>Sr No.</th>
                   <th className='attendanceheading' onClick={() => handleSort("date")}>Date {getSortIcon("date")}</th>
                   <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
@@ -233,6 +333,13 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
               <tbody>
                 {filteredCallingList.map((item, index) => (
                   <tr key={item.candidateId} className="attendancerows">
+                    <td className='tabledata '>
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.includes(item.candidateId)}
+                        onChange={() => handleSelectRow(item.candidateId)}
+                      />
+                    </td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{index + 1}</td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.date}
                       <div className="tooltip">

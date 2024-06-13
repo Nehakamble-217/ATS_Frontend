@@ -234,9 +234,18 @@ const Jobdiscription = () => {
             5000-7000
             <hr /></div>
         </div>
+<<<<<<< HEAD
 
 
         <div className="job-details" style={{border:"1px solid black"}} >
+=======
+        
+       
+        <div className="job-details" >
+          
+          <>
+          
+>>>>>>> 581aa6746d7f0964a4f25b8a477031585796db45
             {[jobData, jobData2].map((job, index) => (
               <React.Fragment key={index}>
                 {(selectedCompany === null || job.company === selectedCompany) &&

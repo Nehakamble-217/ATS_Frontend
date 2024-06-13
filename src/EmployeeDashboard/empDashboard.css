@@ -22,10 +22,8 @@ body {
 .empDash-main-content {
   grid-column: 2 / 3;
   padding: 20px;
-  overflow-y: auto;
-  z-index: 0;
-  /* position: relative; */
-  z-index: 999;
+  overflow-y: auto;  /* position: relative; */
+  /* z-index: 99; */
 }
 
 .time-and-data .head {
