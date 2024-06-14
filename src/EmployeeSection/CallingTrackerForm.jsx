@@ -85,6 +85,7 @@ const CallingTrackerForm = ({
     totalExperienceMonths: '',
     currentsalarylakh: '',
     currentsalaryth: '',
+    
   };
 
   const [callingTracker, setCallingTracker] = useState(initialCallingTrackerState);
@@ -131,10 +132,10 @@ const CallingTrackerForm = ({
       setTime(`${hours}:${minutes}:${seconds}`);
     };
 
-    updateTimer(); // Initial call to set the timer immediately
-    const timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+    updateTimer(); 
+    const timerInterval = setInterval(updateTimer, 1000); 
 
-    return () => clearInterval(timerInterval); // Cleanup on component unmount
+    return () => clearInterval(timerInterval); 
   }, []);
 
   const fetchRecruiterName = async () => {
@@ -200,7 +201,7 @@ const CallingTrackerForm = ({
       let message = "";
 
       if (callingTracker.selectYesOrNo === "Interested") {
-     
+        onDataAdditionSuccess();
         dataToUpdate.lineUp = lineUpData;
         setSuccessfulDataAdditions(true);
         message = "In Calling & Line Up Data Added";
@@ -231,7 +232,7 @@ const CallingTrackerForm = ({
 
   const handleChangeemail = (event) => {
     setEmail(event.target.value);
-    setError(''); // Clear the error message when the user starts typing
+    setError(''); 
   };
 
   const handleSubmitemail = (event) => {
@@ -239,7 +240,7 @@ const CallingTrackerForm = ({
     if (!email) {
       setError('Email is mandatory');
     } else {
-      // Proceed to the next step
+
       alert('Form submitted successfully!');
     }
   };
@@ -299,22 +300,20 @@ const CallingTrackerForm = ({
     const today = new Date();
     const birthDate = new Date(value);
 
-    // Calculate age
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     const dayDiff = today.getDate() - birthDate.getDate();
 
-    // Adjust age if birth date hasn't occurred yet this year
+
     if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
       age--;
     }
 
-    // Ensure date is within the 18 to 60 years old range
     if (age >= 18 && age <= 60) {
       setLineUpData({ ...lineUpData, dateOfBirth: value });
     } else {
       alert('Date of birth must make the user between 18 and 60 years old.');
-      e.target.value = ''; // Reset the input if the date is invalid
+      e.target.value = ''; 
     }
   };
 
@@ -364,7 +363,7 @@ const CallingTrackerForm = ({
     if (name === 'requirementId') {
       try {
         const response = await axios.get(
-          `http://192.168.1.43:8891/api/ats/157industries/company-details/${employeeId}`
+            `http://192.168.1.43:8891/api/ats/157industries/company-details/${employeeId}`
         );
         const { requirementCompany, positions } = response.data;
         setCallingTracker((prevState) => ({
@@ -738,6 +737,9 @@ const CallingTrackerForm = ({
                 <option value="BCA">BCA</option>
                 <option value="MCA">MCA</option>
                 <option value="ITI">Other</option>
+                <option value= "Associate of Arts (AA)">Associate of Arts (AA)</option>
+<option value ="Associate of Science (AS)">Associate of Science (AS)</option>
+<option value= "Associate of Applied Science (AAS)">Associate of Applied Science (AAS)</option>
                
               </select>
             ) : (
@@ -877,7 +879,7 @@ const CallingTrackerForm = ({
                   name="relaventexp"
                   value=""
                   
-                  className={`form-control ${error ? 'is-invalid' : ''}`}
+                 
                 />
                
               </td>

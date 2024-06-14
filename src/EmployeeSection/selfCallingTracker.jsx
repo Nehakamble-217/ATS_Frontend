@@ -15,11 +15,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
-<<<<<<< HEAD
 
-=======
 const [selectedRows, setSelectedRows] = useState([]);
->>>>>>> 581aa6746d7f0964a4f25b8a477031585796db45
+
   const [showSearchBar, setShowSearchBar] = useState(false); 
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
@@ -40,16 +38,16 @@ const [selectedRows, setSelectedRows] = useState([]);
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
-<<<<<<< HEAD
+
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId'); 
     setFilterOptions(options);
   }, [filteredCallingList]);
-=======
+
 useEffect(() => {
   console.log("Selected Filters:", selectedFilters);
 }, [selectedFilters]);
->>>>>>> 581aa6746d7f0964a4f25b8a477031585796db45
+
 
 useEffect(() => {
   console.log("Filtered Calling List:", filteredCallingList);
