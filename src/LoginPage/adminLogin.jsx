@@ -1,15 +1,12 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
+import "aos/dist/aos.css"; // Add this line to include AOS styles
 
 const AdminLogin = ({ onLogin }) => {
     const [employeeId, setEmployeeId] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [jobRole, setJobRole] = useState("Admin");
     const [fetchedPassword, setFetchedPassword] = useState("");
-    const [fetchedConfirmPassword, setFetchedConfirmPassword] = useState("");
     const [fetchedJobRole, setFetchedJobRole] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -22,32 +19,32 @@ const AdminLogin = ({ onLogin }) => {
         const { name, value } = event.target;
         if (name === "employeeId") {
             setEmployeeId(value);
+            if (value) {
+                handleBlur(value);
+            }
         } else if (name === "password") {
             setPassword(value);
-        } else if (name === "confirmPassword") {
-            setConfirmPassword(value);
         }
     };
 
-    const handleBlur = async () => {
+    const handleBlur = async (empId) => {
         try {
-            const response = await fetch(`http://localhost:8891/api/ats/157industries/fetch-pass-on-role/${employeeId}`);
+            const response = await fetch(`http://localhost:8891/api/ats/157industries/fetch-pass-on-role/${empId}`);
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
-            const { password, confirmPassword, jobRole } = data;
+            
+            const [employeePassword, jobRole] = data.split(",");
 
-            setFetchedPassword(password);
-            setFetchedConfirmPassword(confirmPassword);
+            setFetchedPassword(employeePassword);
             setFetchedJobRole(jobRole);
 
             console.log("========================");
             console.log("Fetched Data: ");
-            console.log("employeeId: ", employeeId);
-            console.log("fetchedPassword: ", password);
-            console.log("fetchedConfirmPassword: ", confirmPassword);
+            console.log("employeeId: ", empId);
             console.log("fetchedJobRole: ", jobRole);
+            console.log("fetchedPassword: ", employeePassword);
         } catch (error) {
             console.error("Error fetching data:", error);
             setError("Error fetching data. Please try again later.");
@@ -58,10 +55,9 @@ const AdminLogin = ({ onLogin }) => {
         event.preventDefault();
         console.log("Entered Data: ");
         console.log("password: ", password);
-        console.log("confirmPassword: ", confirmPassword);
-        console.log("jobRole: ", jobRole);
+        console.log("jobRole: ", fetchedJobRole);
 
-        if (jobRole !== fetchedJobRole || password !== fetchedPassword || confirmPassword !== fetchedConfirmPassword) {
+        if (fetchedJobRole !== "Admin" || password !== fetchedPassword) {
             setError("Invalid credential details.");
             return;
         }
@@ -86,7 +82,6 @@ const AdminLogin = ({ onLogin }) => {
                                         name="employeeId"
                                         value={employeeId}
                                         onChange={handleChange}
-                                        onBlur={handleBlur}
                                         className="loginpage-form-control"
                                         placeholder="Enter Employee ID"
                                     />
@@ -103,18 +98,6 @@ const AdminLogin = ({ onLogin }) => {
                                         placeholder="Enter Password"
                                     />
                                 </div>
-                                <div className="input-groups">
-                                    <i className="fas fa-lock"></i>
-                                    <input
-                                        type="password"
-                                        id="loginpage-confirmPassword"
-                                        name="confirmPassword"
-                                        value={confirmPassword}
-                                        onChange={handleChange}
-                                        className="loginpage-form-control"
-                                        placeholder="Confirm Password"
-                                    />
-                                </div>
                                 <input className="form-control my-2 px-2" type="text" id="jobRole" value="Admin" readOnly />
                                 <div className="loginpage-error">{error}</div>
                                 <button className="login-button" type="submit" data-aos="fade-top">Login</button>
@@ -125,7 +108,90 @@ const AdminLogin = ({ onLogin }) => {
             </div>
         </div>
     );
-};
-
+};  
 export default AdminLogin;
 
+// import React, { useState } from 'react';
+
+// const EmployeeDetails = () => {
+//     const [empId, setEmpId] = useState('');
+//     const [jobRole, setJobRole] = useState('');
+//     const [employeePassword, setEmployeePassword] = useState('');
+//     const [enteredJobRole, setEnteredJobRole] = useState('');
+//     const [enteredPassword, setEnteredPassword] = useState('');
+//     const [validationMessage, setValidationMessage] = useState('');
+
+//     const fetchDetails = () => {
+//         const apiUrl = `http://192.168.1.43:8891/api/ats/157industries/fetch-pass-on-role/12`;
+        
+//         fetch(apiUrl)
+//             .then(response => response.json())
+//             .then(data => {
+//                 console.log(data);
+//                 setJobRole(data.jobRole);
+//                 setEmployeePassword(data.employeePassword);
+//             })
+//             .catch(error => console.error('Error fetching data:', error));
+//     };
+
+//     const validateCredentials = () => {
+//         const validateUrl = `http://localhost:8891/api/ats/157industries/validate-credentials`;
+        
+//         const enteredDetails = {
+//             id: empId,
+//             jobRole: enteredJobRole,
+//             employeePassword: enteredPassword
+//         };
+
+//         fetch(validateUrl, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(enteredDetails)
+//         })
+//             .then(response => response.text())
+//             .then(message => {
+//                 console.log(message);
+//                 setValidationMessage(message);
+//             })
+//             .catch(error => console.error('Error validating credentials:', error));
+//     };
+
+//     return (
+//         <div>
+//             <input
+//                 type="text"
+//                 placeholder="Enter Employee ID"
+//                 value={empId}
+//                 onChange={(e) => setEmpId(e.target.value)}
+//             />
+//             <button onClick={fetchDetails}>Fetch Details</button>
+            
+//             {jobRole && employeePassword && (
+//                 <div>
+//                     <h3>Job Role: {jobRole}</h3>
+//                     <h3>Employee Password: {employeePassword}</h3>
+
+//                     <input
+//                         type="text"
+//                         placeholder="Enter Job Role"
+//                         value={enteredJobRole}
+//                         onChange={(e) => setEnteredJobRole(e.target.value)}
+//                     />
+//                     <input
+//                         type="password"
+//                         placeholder="Enter Password"
+//                         value={enteredPassword}
+//                         onChange={(e) => setEnteredPassword(e.target.value)}
+//                     />
+//                     <button onClick={validateCredentials}>Validate Credentials</button>
+//                 </div>
+//             )}
+
+//             {validationMessage && <h3>{validationMessage}</h3>}
+//         </div>
+//     );
+// };
+
+// export default EmployeeDetails;

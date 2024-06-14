@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/callingList.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import UpdateCallingTracker from "./UpdateSelfCalling";
 
 const CallingList = ({ updateState, funForGettingCandidateId }) => {
@@ -16,7 +15,11 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
+<<<<<<< HEAD
+
+=======
 const [selectedRows, setSelectedRows] = useState([]);
+>>>>>>> 581aa6746d7f0964a4f25b8a477031585796db45
   const [showSearchBar, setShowSearchBar] = useState(false); 
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
@@ -32,14 +35,21 @@ const [selectedRows, setSelectedRows] = useState([]);
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
-        setFilteredCallingList(data); // Ensure data is an array
+        setFilteredCallingList(data); 
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
+<<<<<<< HEAD
+  useEffect(() => {
+    const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId'); 
+    setFilterOptions(options);
+  }, [filteredCallingList]);
+=======
 useEffect(() => {
   console.log("Selected Filters:", selectedFilters);
 }, [selectedFilters]);
+>>>>>>> 581aa6746d7f0964a4f25b8a477031585796db45
 
 useEffect(() => {
   console.log("Filtered Calling List:", filteredCallingList);
@@ -90,7 +100,7 @@ useEffect(() => {
         } else if (typeof aValue === 'string' && typeof bValue === 'string') {
           return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
         } else {
-          return 0; // If data types do not match, do not change order
+          return 0; 
         }
       });
       setFilteredCallingList(sortedList);
@@ -149,10 +159,8 @@ useEffect(() => {
 
  
   const handleUpdateSuccess = () => {
-
-    // Reload the calling list data and show the calling list table again
     fetch(
-      `http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://localhost:8891/api/ats/157industries/callingData/${employeeId}`
     )
 
       .then((response) => response.json())
