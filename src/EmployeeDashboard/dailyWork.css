@@ -98,13 +98,14 @@ animation: moveClouds 120s linear infinite;
   height: 35px;
   padding-left: 15px;
   padding-right: 15px;
-  width: 200px;
+  width: auto;
   font-size: 16px;
 }
 
 .loging-hr:hover{
   background-color: white;
   color: #ffcb9b;
+  border: 1px solid gray;
 }
 
 .daily-tr-btn {

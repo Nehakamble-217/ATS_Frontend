@@ -321,7 +321,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         <button className="loging-hr">
           <h6 hidden>Time: {currentTime}</h6>
           <h6 hidden>Date: {currentDate}</h6>
-          Loging Hr : {time.hours.toString().padStart(2, "0")}:
+          Login Hours : {time.hours.toString().padStart(2, "0")}:
           {time.minutes.toString().padStart(2, "0")}:
           {time.seconds.toString().padStart(2, "0")}
         </button>

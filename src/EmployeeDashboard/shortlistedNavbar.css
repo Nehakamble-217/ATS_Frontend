@@ -1,10 +1,13 @@
 .shortlisted-main-nav{
     height: 50px;
     width: 100%;
+     left: 242px;
+    /*right: 0%; */
+    position: fixed;
     background-color: #ffe5b5;
     border-top: 1px solid gray;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     justify-content: space-evenly;
 }
@@ -24,6 +27,7 @@
 
 .shortlisted-nav-middel{
     height: 100vh;
+    width: 100%;
 }
 
 .shortListed-btn-nav {

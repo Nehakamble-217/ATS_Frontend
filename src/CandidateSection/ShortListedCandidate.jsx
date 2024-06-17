@@ -69,7 +69,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage}) => {
     return (
         <div className="App-after">
             <div className="container-after1">
-                <h5 style={{ color: "gray", paddingTop: "5px" }}>Shortlisted List</h5>
+                {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Shortlisted List</h5> */}
                 <div className="attendanceTableData">
                     <table className=" attendance-table">
                         <thead >
