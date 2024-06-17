@@ -85,7 +85,7 @@ animation: moveClouds 60s linear infinite;
     text-align: center;
     cursor: pointer;
     transition: 0.4s ease-in-out;
-    color: #fcfbf9;
+    color: white;
     z-index: 2; /* Ensure the boxes are above the clouds */
 }
 
@@ -102,7 +102,7 @@ animation: moveClouds 60s linear infinite;
 .square-box:nth-child(3) {
     top: 60%;
     left: 30%;
-    background: #f2f2f2;
+    background: white;
     border: 5px solid #ffb281;
     color: #ffb281;
 }
@@ -110,13 +110,13 @@ animation: moveClouds 60s linear infinite;
 .square-box:nth-child(4) {
     top: 60%;
     left: 62%;
-    background: #f2f2f2;
+    background: white;
     border: 5px solid #ffb281;
     color: #ffb281;
 }
 
 .square-box:hover {
-    background: #f2f2f2;
+    background: white;
     color: #fec08e;
     border: 5px solid #ffb281;
     transform: scale(1.03);
@@ -165,17 +165,17 @@ animation: moveClouds 60s linear infinite;
     border-radius: 12px;
     border: 1px solid gray;
     cursor: pointer;
-    font-size: 12pt;
+    font-size: 16px;
     text-align: center;
     width: 100px;
     height: 40px;
     text-decoration: none;
-    backdrop-filter: blur(2px);
+    /* backdrop-filter: blur(2px); */
     transition: background-color 0.5s, color 0.5s, border-color 0.5s;
     overflow: hidden;
     position: relative;
     background-color: white;
-    color: #ffb281;
+    color: #ffcb9b;
 }
 
 .login:hover,
@@ -193,7 +193,7 @@ animation: moveClouds 60s linear infinite;
     left: 0;
     width: 50px;
     height: 100%;
-    background: #ffe5b5;
+    background: #ffcb9b;
     transform: skewX(45deg) translateX(150px);
     transition: transform 0.5s;
 }
@@ -206,7 +206,7 @@ animation: moveClouds 60s linear infinite;
 .login1 {
     background-color: #ffcb9b;
     color: white;
-    margin-left: 0; /* Ensure no margin-left is set */
+    margin-left: 0; 
 }
 
 .login1:hover {

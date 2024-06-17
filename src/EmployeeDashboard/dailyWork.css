@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   width: 100%;
   padding: 10px ;
-  border: 1px solid black;
+  border: 1px solid gray;
   position: relative;
 }
 .select{
@@ -52,25 +52,39 @@ animation: moveClouds 120s linear infinite;
   gap: 10px;
 }
 
-.timer-break-btn, .logout-btn {
+.timer-break-btn{
   font-size: 16px;
   cursor: pointer;
   border: 1px solid gray;
   border-radius: 15px;
   height: 35px;
   width: 90px;
-  background-color: white;
+  color: white;
+  background-color: #ffcb9b;
   transition: background-color 0.3s ease;
 }
 
 .timer-break-btn:hover, .logout-btn:hover {
-  background-color:#ffcb9b;
-  color: grey;
+  background-color:white;
+  border: 1px solid gray;
+  color: #ffcb9b;
 }
 
+.logout-btn:hover {
+  background-color:white;
+  border: 1px solid gray;
+  color: #ffcb9b;
+}
 .logout-btn {
+  
+  cursor: pointer;
+
+  border-Radius: 60%;
+  height: 30px;
+  width: 40px;
+ 
   background-color: #ffcb9b;
-  color: black;
+  
 }
 
 .loging-hr {
@@ -84,20 +98,21 @@ animation: moveClouds 120s linear infinite;
   height: 35px;
   padding-left: 15px;
   padding-right: 15px;
-  width: auto;
+  width: 200px;
   font-size: 16px;
 }
 
 .loging-hr:hover{
   background-color: white;
-  color: grey;
+  color: #ffcb9b;
 }
 
 .daily-tr-btn {
   border: 1px solid gray;
   border-radius: 15px;
-  background-color: white;
+  background-color: #ffcb9b;
   font-size: 16px;
+  color: white;
   height: 35px;
   width: auto;
   padding-left: 15px;
@@ -108,8 +123,10 @@ animation: moveClouds 120s linear infinite;
 }
 
 .daily-tr-btn:hover{
-  background-color: #ffcb9b;
-  color:grey ;
+  background-color: white;
+  color: #ffcb9b;
+  border: 1px solid gray;
+
 }
 
 .daily-timeanddate {
@@ -128,6 +145,7 @@ animation: moveClouds 120s linear infinite;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
+ 
 }
 
 .daily-timeanddate .head {
@@ -145,6 +163,8 @@ animation: moveClouds 120s linear infinite;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
+  
+
 }
 
 .show-daily-t-btn {
@@ -165,7 +185,7 @@ animation: moveClouds 120s linear infinite;
   }
 
   .show-daily-t-btn:hover {
-    background-color: #fb6f92;
+    background-color: #ffcb9b;
     color: white;
   }
 
