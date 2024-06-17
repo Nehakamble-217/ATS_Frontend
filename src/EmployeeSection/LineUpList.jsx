@@ -126,9 +126,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                       <span className="tooltiptext">{item.date}</span>
                     </div>
                   </td>
-
-              
-
+      
                   <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                     {item.candidateAddedTime || "-"}
                     <div className="tooltip">
