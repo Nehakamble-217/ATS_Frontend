@@ -15,6 +15,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
+  const [selectedCandidateId,setSelectedCandidateId] =useState();
 
 const [selectedRows, setSelectedRows] = useState([]);
 
@@ -29,7 +30,7 @@ const [selectedRows, setSelectedRows] = useState([]);
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.43:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://localhost:8891/api/ats/157industries/callingData/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -54,7 +55,7 @@ useEffect(() => {
 }, [filteredCallingList]);
 
 useEffect(() => {
-    const limitedOptions = ['date', 'recruiterName', 'position', 'requirementId'];
+    const limitedOptions = ['date', 'recruiterName', 'jobDesignation', 'requirementId'];
     setFilterOptions(limitedOptions);
   }, [callingList]);
 
@@ -74,7 +75,7 @@ useEffect(() => {
         (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
         (item.alternateNumber && item.alternateNumber.toString().includes(searchTermLower)) ||
         (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
-        (item.position && item.position.toLowerCase().includes(searchTermLower)) ||
+     //   (item.position && item.position.toLowerCase().includes(searchTermLower)) ||
         (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
         (item.requirementCompany && item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
         (item.communicationRating && item.communicationRating.toLowerCase().includes(searchTermLower)) ||
@@ -309,8 +310,10 @@ useEffect(() => {
                       checked={selectedRows.length === filteredCallingList.length}
                     />
                   </th>
+
                   <th className='attendanceheading'>Sr No.</th>
-                  <th className='attendanceheading' onClick={() => handleSort("date")}>Date {getSortIcon("date")}</th>
+                  <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
+                  <th className='attendanceheading'>Candidate Id</th>
                   <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
                   <th className='attendanceheading'>Candidate Name</th>
                   <th className='attendanceheading'>Candidate Email</th>
@@ -322,8 +325,9 @@ useEffect(() => {
                   <th className='attendanceheading'>Applying Company</th>
                   <th className='attendanceheading'>Communication Rating</th>
                   <th className='attendanceheading'>Current Location</th>
-                  <th className='attendanceheading'>PersonalFeedback</th>
+                  <th className='attendanceheading'>Full Address</th>
                   <th className='attendanceheading'>CallingFeedback</th>
+                  <th className='attendanceheading'>Candidate Incentive</th>
                   <th className='attendanceheading'>Interested / Eligible</th>
                   <th className='attendanceheading'>Action</th>
                 </tr>
@@ -338,12 +342,25 @@ useEffect(() => {
                         onChange={() => handleSelectRow(item.candidateId)}
                       />
                     </td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{index + 1}</td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.date}
+
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {index + 1}</td>
+                    
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {item.date} 
                       <div className="tooltip">
                         <span className="tooltiptext">{item.date}</span>
                       </div>
+                      <div className="tooltip">
+                        <span className="tooltiptext"> {item.candidateAddedTime}</span>
+                      </div>
+                      
                     </td>
+
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateId} 
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.candidateId} </span>
+                      </div>
+                    </td>
+
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.recruiterName}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.recruiterName} </span>
@@ -364,12 +381,12 @@ useEffect(() => {
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.sourceName} <div className="tooltip">
                       <span className="tooltiptext">{item.sourceName}</span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.position} <div className="tooltip">
-                      <span className="tooltiptext">{item.position}</span>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.jobDesignation} <div className="tooltip">
+                      <span className="tooltiptext">{item.jobDesignation}</span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementId} <div className="tooltip">
-                      <span className="tooltiptext">{item.requirementId}</span>
-                    </div></td>
+                      <span className="tooltiptext"> {item.requirementId} </span>
+                    </div> </td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementCompany} <div className="tooltip">
                       <span className="tooltiptext">{item.requirementCompany} </span>
                     </div></td>
@@ -379,11 +396,14 @@ useEffect(() => {
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
                       <span className="tooltiptext">{item.currentLocation} </span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.personalFeedback} <div className="tooltip">
-                      <span className="tooltiptext">{item.personalFeedback} </span>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.fullAddress} <div className="tooltip">
+                      <span className="tooltiptext">{item.fullAddress} </span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.callingFeedback} <div className="tooltip">
                       <span className="tooltiptext">{item.callingFeedback} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.incentive} <div className="tooltip">
+                      <span className="tooltiptext">{item.incentive} </span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.selectYesOrNo} <div className="tooltip">
                       <span className="tooltiptext">{item.selectYesOrNo} </span>

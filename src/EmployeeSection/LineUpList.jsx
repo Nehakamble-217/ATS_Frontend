@@ -15,7 +15,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.43:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://localhost:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -28,7 +28,7 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
 
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
-    fetch(`http://192.168.1.43:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://localhost:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -124,10 +124,10 @@ const LineUpList = ({updateState,funForGettingCandidateId}) => {
                       <span className="tooltiptext">{item.candidateName}</span>
                     </div>
                 </td>
-                <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.position}
+                <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.jobDesignation}
                 <div className="tooltip">
                       
-                      <span className="tooltiptext">{item.position}</span>
+                      <span className="tooltiptext">{item.jobDesignation}</span>
                     </div>
                 </td>
                 <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementCompany}

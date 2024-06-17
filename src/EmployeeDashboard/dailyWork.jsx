@@ -1,14 +1,21 @@
+
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../EmployeeDashboard/dailyWork.css";
-import Profile from "../LogoImages/ProfilePic.png";
-import logoutImg from '../photos/download.jpeg'
+import Profile from "../photos/profileImg.webp";
+import logoutImg from "../photos/download.jpeg";
+import { Modal, Button } from "react-bootstrap";
 
-const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
-  const employeeId = localStorage.getItem("employeeId") || 1234;
+const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
+  const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
-
+  const [employeeData, setEmployeeData] = useState({});
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [modalEmployeeData, setModalEmployeeData] = useState(null);
+  const [profileImageBase64, setProfileImageBase64] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+  
   const toggleDailyTBtn = () => {
     setShowDetails(!showDetails);
   };
@@ -46,9 +53,37 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchEmployeeData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8891/api/ats/157industries/employee-details/${employeeId}`
+        );
+        setEmployeeData(response.data);
+
+        const byteData = response.data.profileImage;
+        if (byteData) {
+          const blob = new Blob([byteData]);
+          const fileReader = new FileReader();
+          fileReader.onload = function (event) {
+            const base64Image = event.target.result;
+            setProfileImageBase64(base64Image);
+          };
+          fileReader.readAsDataURL(blob);
+        }
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeData();
+  }, [employeeId]);
+
+  useEffect(() => {
     const now = new Date();
     const timeString = now.toLocaleTimeString("en-IN");
-    const dateString = `${now.getDate().toString().padStart(2, "0")}/${(now.getMonth() + 1)
+    const dateString = `${now.getDate().toString().padStart(2, "0")}/${(
+      now.getMonth() + 1
+    )
       .toString()
       .padStart(2, "0")}/${now.getFullYear()}`;
     const dayOfWeek = now.getDay(); // 0 = Sunday, 6 = Saturday
@@ -109,7 +144,6 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
     return () => clearInterval(interval);
   }, [running, employeeId]);
 
-
   useEffect(() => {
     if (successfulDataAdditions > 0) {
       updateCount(successfulDataAdditions);
@@ -145,7 +179,7 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
     const breakStartTime = new Date().toLocaleTimeString("en-IN");
     setBreaks((prevBreaks) => [
       ...prevBreaks,
-      { breakStartTime, breakEndTime: null }
+      { breakStartTime, breakEndTime: null },
     ]);
   };
 
@@ -193,7 +227,7 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
       };
 
       await axios.post(
-        `"http://192.168.1.43:8891/api/ats/157industries/save-daily-work"`,
+        "http://localhost:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -217,7 +251,7 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
 
     let totalWorkTime = (logout - login) / 1000;
 
-    breaks.forEach(b => {
+    breaks.forEach((b) => {
       if (b.breakEndTime) {
         const breakStart = new Date(`01/01/2022 ${b.breakStartTime}`);
         const breakEnd = new Date(`01/01/2022 ${b.breakEndTime}`);
@@ -230,68 +264,139 @@ const DailyWork = ({ successfulDataAdditions,handleLogout }) => {
     const minutes = Math.floor((totalWorkTime % 3600) / 60);
     const seconds = Math.floor(totalWorkTime % 60);
 
-    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    const formattedTime = `${hours
+      .toString()
+      .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
     return formattedTime;
   };
 
+  const handleImageClick = () => {
+    setPopupVisible(true);
+    setModalEmployeeData(employeeData); 
+  };
+
+  const handleClosePopup = () => {
+    setPopupVisible(false);
+    setModalEmployeeData(null);
+  };
+
   return (
-
-     <div className="daily-timeanddate">
-
+    <div className="daily-timeanddate">
       <div className="head">
-        <div className="user-img">
-          <img src={Profile} alt="Profile" />
+
+        <div className="user-img" >
+          <img 
+            src={Profile}
+            alt="Profile"
+            onClick={() => setModalShow(true)}
+          />
         </div>
+
         <div className="user-details">
-          <p>Arshad Attar <br />1628</p>
+          <p>
+            {employeeData.employeeName} <br />
+            157{employeeId}
+          </p>
         </div>
       </div>
       <div className="all-daily-btns">
-        <div className={`daily-t-btn ${showDetails ? '' : 'hidden'}`}>
-          <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>Target : 10</button>
-          <button className="daily-tr-btn" style={{ color: data.archived <= 3 ? "red" : "green" }}>Archived : {data.archived}</button>
-          <button className="daily-tr-btn" style={{ color: data.pending < 7 ? "green" : "red" }}>Pending : {data.pending}</button>
+        <div className={`daily-t-btn ${showDetails ? "" : "hidden"}`}>
+          <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
+            Target : 10
+          </button>
+          <button
+            className="daily-tr-btn"
+            style={{
+              color: data.archived <= 3 ? "red" : "green",
+            }}
+          >
+            Archived : {data.archived}
+          </button>
+          <button
+            className="daily-tr-btn"
+            style={{ color: data.pending < 7 ? "green" : "red" }}
+          >
+            Pending : {data.pending}
+          </button>
         </div>
         <button className="loging-hr">
           <h6 hidden>Time: {currentTime}</h6>
           <h6 hidden>Date: {currentDate}</h6>
-          Loging Hr :  {time.hours.toString().padStart(2, "0")}:
+          Loging Hr : {time.hours.toString().padStart(2, "0")}:
           {time.minutes.toString().padStart(2, "0")}:
           {time.seconds.toString().padStart(2, "0")}
         </button>
         <div hidden>
-          <h6>Late Mark: {lateMark}</h6>
-          <h6>Leave Type: {leaveType}</h6>
-          <h6>Paid Leave: {paidLeave}</h6>
-          <h6>Unpaid Leave: {unpaidLeave}</h6>
-          <h6>Day Present Paid: {dayPresentPaid}</h6>
+          <h6>Late Mark         : {lateMark}</h6>
+          <h6>Leave Type        : {leaveType}</h6>
+          <h6>Paid Leave        : {paidLeave}</h6>
+          <h6>Unpaid Leave      : {unpaidLeave}</h6>
+          <h6>Day Present Paid  : {dayPresentPaid}</h6>
           <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
         </div>
-        {/* <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="remoteWork"></label>
-          <select className="select"
+        
+        <div hidden style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="remoteWork">Remote Work:</label>
+          <select
+            className="select"
             id="remoteWork"
-
             value={remoteWork}
             onChange={(e) => setRemoteWork(e.target.value)}
           >
-            <option >Select</option>
-            <option value="worko form Office">WFO</option>
+            <option>Select</option>
+            <option value="work from Office">WFO</option>
             <option value="Work from Home">WFH</option>
-            <option value="hybrid">hybrid</option>
-          </select >
-        </div> */}
-        <button className={running ? "timer-break-btn" : "timer-break-btn"} onClick={running ? handlePause : handleResume}>
+            <option value="hybrid">Hybrid</option>
+          </select>
+        </div>
+
+        <button
+          className={running ? "timer-break-btn" : "timer-break-btn"}
+          onClick={running ? handlePause : handleResume}
+        >
           {running ? "Pause" : "Resume"}
         </button>
-        <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>hide</button>
-        <img  onClick={handleLogoutLocal}   style={{ width: "30px",borderRadius:"60%" }} src="https://cdn-icons-png.flaticon.com/128/9208/9208320.png"/>
-         
-       
+        <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
+          {showDetails ? "Hide" : "Show"}
+        </button>
+        <img
+          onClick={handleLogoutLocal}
+          style={{ width: "30px", borderRadius: "60%" }}
+          src={logoutImg}
+          alt="Logout"
+        />
       </div>
+
+      <Modal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Employee Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Name           : {employeeData.employeeName}</p>
+          <p>Email          : {employeeData.employeeEmail}</p>
+          <p>Department     : {employeeData.department}</p>
+          <p>Contact Number : {employeeData.employeeNumber}</p>
+          <p>Gender         : {employeeData.gender}</p>
+          <p>Job Role       : {employeeData.jobRole}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setModalShow(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
 
 export default DailyWork;
+
+
+
+

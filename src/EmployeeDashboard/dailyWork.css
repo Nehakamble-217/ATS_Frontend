@@ -16,6 +16,7 @@
     border: 1px solid gray;
     border-radius: 15px;
 }
+
 .select:hover{
    background-color:#ffcb9b;
   color: grey;
@@ -86,6 +87,7 @@ animation: moveClouds 120s linear infinite;
   width: auto;
   font-size: 16px;
 }
+
 .loging-hr:hover{
   background-color: white;
   color: grey;
@@ -104,6 +106,7 @@ animation: moveClouds 120s linear infinite;
   justify-content: center;
   align-items: center;
 }
+
 .daily-tr-btn:hover{
   background-color: #ffcb9b;
   color:grey ;
@@ -128,7 +131,12 @@ animation: moveClouds 120s linear infinite;
 }
 
 .daily-timeanddate .head {
-  margin-left: 10px;
+  margin-left: 20px;
+  padding-top: 12px;
+}
+
+.user-details{
+  padding-top: 8px;
 }
 
 .daily-t-btn {
@@ -156,18 +164,6 @@ animation: moveClouds 120s linear infinite;
     display: none;
   }
 
-  /* .show-daily-t-btn {
-    display: block;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid gray;
-    border-radius: 15px;
-    height: 40px;
-    width: 150px;
-    background-color: white;
-    transition: background-color 0.3s ease;
-  } */
-
   .show-daily-t-btn:hover {
     background-color: #fb6f92;
     color: white;
@@ -178,7 +174,6 @@ animation: moveClouds 120s linear infinite;
   }
 }
 
-/* New media query added to show .show-daily-t-btn when width is below 1100px */
 @media (max-width: 1100px) {
    .show-daily-t-btn {
     display: block;
