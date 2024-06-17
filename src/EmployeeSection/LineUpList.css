@@ -4,7 +4,6 @@
 
 .attendanceTableData {
   position: relative;
- 
 }
 
 .attendanceTableData h5 style {
@@ -77,11 +76,10 @@
   padding: 8px;
   border: 1px solid #ddd;
   text-align: left;
+  align-items: center;
+  text-align: center;
 }
 
-.tabledata {
-  position: relative;
-}
 
 .tooltip {
   position: absolute;
