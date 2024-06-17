@@ -4,6 +4,7 @@ import ShortListedCandidates from '../CandidateSection/ShortListedCandidate';
 import InterviewDates from '../EmployeeSection/interviewDate';
 import UpdateCallingTracker from '../EmployeeSection/UpdateSelfCalling';
 import calendar from '../photos/calendar.png'
+import interviewDates from '../EmployeeSection/interviewDate';
 
 const ShortlistedNavbar = () => {
     const [activeComponent, setActiveComponent] = useState(null);

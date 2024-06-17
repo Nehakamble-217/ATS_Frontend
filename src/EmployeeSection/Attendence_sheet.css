@@ -162,9 +162,7 @@
   overflow-y: auto;
 }
 
-.tabledata {
-  /* position: relative; */
- }
+
 
 .tabledata .tooltip {
   /* bottom: 100%;  */

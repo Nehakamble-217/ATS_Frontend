@@ -10,6 +10,8 @@
     /* justify-content: center; */
     align-items: center;
     justify-content: space-evenly;
+    padding-left: 30px;
+    
 }
 
 .shortlisted-nav-left{
@@ -18,16 +20,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: left;
 }
 
 #calendar-icon-nav{
    font-size: 30px;
+   
+  
+   
+ 
 }
 
 .shortlisted-nav-middel{
     height: 100vh;
     width: 100%;
+    
 }
 
 .shortListed-btn-nav {
@@ -37,19 +44,23 @@
     font-size: 16px;
     height: 30px;
     width: auto;
+    color: #ffb281;
     padding-left: 15px;
     padding-right: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 50px;
+    margin-left: 500px;
 }
 
-.shortListed-btn-nav:hover{
+/* .shortListed-btn-nav:hover{
     background-color: #ffcb9b;
-    color: white;
-   box-shadow: 2px 2px 2px gray;
-}
+    color: white; 
+  
+}*/
 
 #shortListed-btn-nav-icon{
     width: 110px;
+    margin-right: 50px;
 }

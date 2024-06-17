@@ -75,11 +75,8 @@
   height: 40px;
 }
 
-button.react-calendar__tile.react-calendar__month-view__days__day{
+button.react-calendar__tile.react-calendar__month-view__days__day {
   color: gray;
-  box-shadow: 2px 1px 2px ;
+  box-shadow: 1px 1px 2px 1px gray;
   border-radius: 16px;
 }
-
-
-
