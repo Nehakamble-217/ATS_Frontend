@@ -77,7 +77,8 @@
 
 button.react-calendar__tile.react-calendar__month-view__days__day{
   color: gray;
-  box-shadow: ;
+  box-shadow: 2px 1px 2px ;
+  border-radius: 16px;
 }
 
 
