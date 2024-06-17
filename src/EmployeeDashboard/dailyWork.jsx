@@ -55,7 +55,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.36:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
 
@@ -225,7 +225,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       };
 
       await axios.post(
-        "http://localhost:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.36:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -306,14 +306,14 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           <button
             className="daily-tr-btn"
             style={{
-              color: data.archived <= 3 ? "red" : "green",
+              color: data.archived <= 3 ? "red" : "green",background:"#ffcb9b"
             }}
           >
             Archived : {data.archived}
           </button>
           <button
             className="daily-tr-btn"
-            style={{ color: data.pending < 7 ? "green" : "red" }}
+            style={{ color: data.pending < 7 ? "green" : "red" ,background:"#ffcb9b"}}
           >
             Pending : {data.pending}
           </button>
@@ -358,9 +358,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button>
-        <img
+        <img className="logout-btn"
           onClick={handleLogoutLocal}
-          style={{ width: "30px", borderRadius: "60%" }}
+          // style={{ width: "30px", borderRadius: "60%" }}
           src={logoutImg}
           alt="Logout"
         />
