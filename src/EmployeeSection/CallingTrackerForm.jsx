@@ -12,7 +12,7 @@ import "../EmployeeSection/CallingTrackerForm.css";
 
 const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const { employeeId } = useParams();
-  
+
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: '',
@@ -24,7 +24,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     requirementCompany: "",
     sourceName: "",
     contactNumber: "",
-    incentive:'',
+    incentive: '',
     alternateNumber: "",
     currentLocation: "",
     fullAddress: "",
@@ -43,7 +43,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     candidateName: "",
     candidateEmail: "",
     jobDesignation: "",
-    incentive:'',
+    incentive: '',
     requirementId: "",
     requirementCompany: "",
     sourceName: "",
@@ -87,6 +87,15 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
+  const [candidateName, setCandidateName] = useState();
+  const [contactNumber, setContactNumber] = useState();
+  const [sourceName, setSourceName] = useState();
+
+  const [errors, setErrors] = useState({
+    candidateName: "",
+    contactNumber: "",
+    sourceName: "",
+  });
 
   useEffect(() => {
     fetchRecruiterName();
@@ -182,13 +191,16 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
       const dataToUpdate = {
+        
         ...callingTracker,
         employee: {
           employeeId: parseInt(employeeId, 10),
         },
       };
+
       let message = "";
 
       if (callingTracker.selectYesOrNo === "Interested") {
@@ -216,6 +228,38 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       console.error("Error:", error);
     }
   };
+
+  const validateForm = () => {
+    let valid = true;
+    const errorsCopy = { ...errors };
+
+    if (!candidateName.trim()) {
+      errorsCopy.candidateName = "Please Enter candidateName";
+      valid = false;
+    } else {
+      errorsCopy.candidateName = "";
+    }
+
+    if (!contactNumber.trim()) {
+      errorsCopy.contactNumber = "Please Enter contactNumber";
+      valid = false;
+    } else {
+      errorsCopy.contactNumber = "";
+    }
+
+    if (!sourceName.trim()) {
+      errorsCopy.sourceName = "Please Enter sourceName";
+      valid = false;
+    } else {
+      errorsCopy.sourceName = "";
+    }
+
+    setErrors(errorsCopy);
+    return valid;
+
+  };
+
+
 
   const handleChangeemail = (event) => {
     setEmail(event.target.value);
@@ -356,14 +400,14 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
         requirementId: selectedRequirement.requirementId,
         jobDesignation: selectedRequirement.designation,
         requirementCompany: selectedRequirement.companyName,
-        incentive : selectedRequirement.incentive,
+        incentive: selectedRequirement.incentive,
       }));
       setLineUpData((prevState) => ({
         ...prevState,
         requirementId: selectedRequirement.requirementId,
         jobDesignation: selectedRequirement.designation,
         requirementCompany: selectedRequirement.companyName,
-        incentive : selectedRequirement.incentive,
+        incentive: selectedRequirement.incentive,
       }));
     } else {
       setCallingTracker((prevState) => ({
@@ -371,14 +415,14 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
         requirementId: value,
         jobDesignation: '',
         requirementCompany: '',
-        incentive : '',
+        incentive: '',
       }));
       setLineUpData((prevState) => ({
         ...prevState,
         requirementId: value,
         jobDesignation: '',
         requirementCompany: '',
-        incentive:'',
+        incentive: '',
       }));
     }
   };
@@ -441,12 +485,12 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
-
-                    onChange={handleChange}
-                    className="form-control"
-                    required
+                    className={`form-control ${errors.candidateName ? "is-invalid" : ""
+                      } `}
+                    onChange={(e) => setCandidateName(e.target.value)}
                   />
                 </td>
+
                 <th scope="col">Candidate Email</th>
                 <td>
                   <input
@@ -455,7 +499,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={callingTracker.candidateEmail}
                     onChange={handleChange}
                     className={`form-control ${error ? 'is-invalid' : ''}`}
-                    required
+
                   />
 
                 </td>
@@ -474,7 +518,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     defaultCountry="IN"
                     maxLength={11}
                     className="PhoneInputInput"
-
                     required
                   />
                 </td>
@@ -503,6 +546,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
+                    required
                   >
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
@@ -526,7 +570,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     name="requirementId"
                     value={callingTracker.requirementId}
                     onChange={handleRequirementChange}
-                    required
+
                   >
                     <option value="">Select Requirement</option>
                     {requirementOptions.map((option) => (
@@ -539,8 +583,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
               </tr>
               <tr>
                 <th scope="col">Applying For Position</th>
-                <td style={{display:"flex", justifyContent:"space-around"}}>
-                  <input style={{width:"260px"}}
+                <td style={{ display: "flex", justifyContent: "space-around" }}>
+                  <input style={{ width: "260px" }}
                     type="text"
                     id="jobDesignation"
                     name="jobDesignation"
@@ -548,9 +592,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={callingTracker.jobDesignation}
                     readOnly
                   />
-                   <input placeholder="Incentive" value={callingTracker.incentive} readOnly className="form-control" style={{width:"150px"}} type="text" />
+                  <input placeholder="Incentive" value={callingTracker.incentive} readOnly className="form-control" style={{ width: "150px" }} type="text" />
                 </td>
-               
+
 
                 <th scope="col">Applying Company Name</th>
                 <td>
@@ -612,6 +656,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <th>Calling Feedback</th>
                 <td>
                   <select
+                    required
                     className="form-select"
                     name="callingFeedback"
                     value={callingTracker.callingFeedback}
@@ -635,7 +680,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 </td>
                 <th>Candidate Interested</th>
                 <td>
+
                   <select
+                    required
                     className="form-select"
                     name="selectYesOrNo"
                     value={callingTracker.selectYesOrNo}
@@ -652,6 +699,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     <option value="Not Eligible But Interested">
                       Not Eligible But Intersted
                     </option>
+
                   </select>
                 </td>
               </tr>
