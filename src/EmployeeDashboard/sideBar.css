@@ -111,7 +111,8 @@ animation: moveClouds 60s linear infinite;
   flex: 1;
   margin-bottom: 1px;
   padding:5px 0px;
-  margin-top: -40px;
+  /* margin-top: -40px; */
+  margin-top: auto;
 }
 .sidebar-menu ul li {
   flex: 1;
@@ -119,6 +120,7 @@ animation: moveClouds 60s linear infinite;
   list-style: none;
   padding:5px 0px;
   margin-bottom: 1px;
+  margin-top: auto;
 }
 .sidebar-menu ul{
   padding-left: 0px !important;
@@ -177,7 +179,7 @@ animation: moveClouds 60s linear infinite;
 .sidebar-menu-btn {
   position: absolute;
   left: 13px;
-  top: 10%;
+  top:auto;
   margin-bottom: 5px;
   /* top: 3.5%; */
   width: 23px;
