@@ -24,7 +24,9 @@ table tr:nth-child(even) {
     background-color: white;
     border: 1px solid gray;
   }*/
-
+.attendance-table{
+  margin-top: 50px;
+}
   .shortlistedheading th{
     background-color: #ffcb9b;
     color: gray;
@@ -32,6 +34,7 @@ table tr:nth-child(even) {
     text-align: center;
     font-size: 16px;
     padding: 4px 15px;
+    font-weight: 100;
     border: 1px solid gray;
     
   }
