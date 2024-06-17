@@ -12,6 +12,7 @@ import "../EmployeeSection/CallingTrackerForm.css";
 
 const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const { employeeId } = useParams();
+  
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: '',

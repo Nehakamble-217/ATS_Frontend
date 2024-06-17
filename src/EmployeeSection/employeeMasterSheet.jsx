@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchEmployeeMasterSheet, fetchFile } from "../api/api"; // Adjust the path if needed
@@ -10,13 +11,14 @@ const EmployeeMasterSheet = () => {
     const [showModal, setShowModal] = useState(false);
     const [fileUrl, setFileUrl] = useState("");
 
+    const { employeeId } = useParams();
+
     useEffect(() => {
         fetchData();
     }, []);
 
     const fetchData = async () => {
         try {
-            const employeeId = 6; // Set your employeeId here
             const responseData = await fetchEmployeeMasterSheet(employeeId);
             setData(responseData);
             setError("");

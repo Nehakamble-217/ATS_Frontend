@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -86,8 +85,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     )
       .toString()
       .padStart(2, "0")}/${now.getFullYear()}`;
-    const dayOfWeek = now.getDay(); // 0 = Sunday, 6 = Saturday
-
+    const dayOfWeek = now.getDay();
     setCurrentTime(timeString);
     setCurrentDate(dateString);
     setLoginTime(timeString);
@@ -335,7 +333,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           <h6>Day Present Paid  : {dayPresentPaid}</h6>
           <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
         </div>
-        
+
         <div hidden style={{ display: "flex", flexDirection: "column" }}>
           <label htmlFor="remoteWork">Remote Work:</label>
           <select
