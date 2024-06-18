@@ -3,6 +3,7 @@ import '../EmployeeDashboard/sideBar.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { getEmployeeWorkData } from "../api/api";
 import Circle from "../LogoImages/circle.png";
+import logoutImg from "../photos/download.jpeg";
 import axios from 'axios';
 
 function Sidebar({
@@ -23,6 +24,8 @@ function Sidebar({
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
   handleLogout,
+  
+
    
 
 }) {
@@ -34,6 +37,7 @@ function Sidebar({
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
+  const [logoutTime, setLogoutTime] = useState(null);
 
   const {userGroup}=useParams();
   console.log(userGroup)
@@ -90,6 +94,41 @@ function Sidebar({
     console.log(userGroup)
   const isCandidateSectionActive = ['selfCalling', 'lineUp', 'shortListed', 'selectCandidate', 'holdCandidate', 'rejectedCandidate'].includes(activeButton);
   const isJobDescriptionActive=["Jobdiscription","addJobDescription"].includes(activeButton)
+
+
+
+  const handleLogoutLocal = async () => {
+    try {
+      const logoutTime = new Date().toLocaleTimeString("en-IN");
+      setLogoutTime(logoutTime);
+
+      const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
+
+      const now = new Date();
+      const day = now.getDate().toString().padStart(2, "0");
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const year = now.getFullYear();
+
+     
+
+      await axios.post(
+        "http://192.168.1.36:8891/api/ats/157industries/save-daily-work",
+        formData
+      );
+
+      localStorage.removeItem(`stopwatchTime_${employeeId}`);
+      localStorage.removeItem(`dailyWorkData_${employeeId}`);
+      localStorage.removeItem("employeeId");
+
+      setTime({ hours: 0, minutes: 0, seconds: 0 });
+      setData({ archived: 0, pending: 10 });
+
+      console.log("Logged out successfully.");
+      navigate("/employee-login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <>
@@ -333,10 +372,12 @@ function Sidebar({
               </a>
             </li>
             <li >
-              <a href="#" >
-                <i className="icon ph-bold ph-sign-out"></i>
-                <span className="sidebar-text">Logout</span>
-              </a>
+            <img className="logout-btn"
+          onClick={handleLogoutLocal}
+          // style={{ width: "30px", borderRadius: "60%" }}
+          src={logoutImg}
+          alt="Logout"
+        />
             </li>
 
           </ul>

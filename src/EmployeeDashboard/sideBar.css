@@ -202,6 +202,7 @@ animation: moveClouds 60s linear infinite;
 }
 .sidebar-menu-btn i {
   transition: all 0.3s;
+
 }
 .sidebar.active {
   width: 55px;
@@ -209,12 +210,16 @@ animation: moveClouds 60s linear infinite;
 }
 .sidebar.active .sidebar-menu-btn i {
   transform: rotate(360deg);
+  margin: 10px;
 }
 .sidebar.active .user-details {
   display: none;
+ 
+ 
 }
 .sidebar.active .sidebar-menu .title {
   text-align: center;
+  
 }
 .sidebar.active .sidebar-menu ul li .arrow {
   display: none;
@@ -224,6 +229,7 @@ animation: moveClouds 60s linear infinite;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 10px;
   
 }
 .sidebar.active .sidebar-menu > ul > li > a .sidebar-text {
