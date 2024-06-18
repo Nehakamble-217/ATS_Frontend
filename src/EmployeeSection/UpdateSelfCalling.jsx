@@ -141,7 +141,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
       };
 
       const response = await fetch(
-        `http://192.168.1.36:8891/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.40:8891/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {

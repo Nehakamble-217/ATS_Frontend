@@ -77,6 +77,55 @@
 
 button.react-calendar__tile.react-calendar__month-view__days__day {
   color: gray;
-  box-shadow: 1px 1px 2px 1px gray;
+  box-shadow: 1px 2px 3px 1px rgb(167, 164, 164);
   border-radius: 16px;
+}
+
+.calendar-div{
+  padding-top: 55px;
+}
+
+button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day{
+  background-color: #ffb281;
+}
+
+button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view__days__day{
+  background-color: #ffe5b5;
+}
+
+.calender-main-div{
+  display: flex;
+
+}
+
+#table-shortlisted{ 
+  height: 150px;
+
+}
+
+/* hitun Khalis Arshad Ne css dilyaa */
+
+#interviewDates-id{
+  margin-top: 20px;
+}
+.shortlist-table-div{
+  padding-top: 55px;
+  padding-left: 20px;
+  overflow-x: auto;
+}
+
+.interview-response-update{
+  display: flex;
+  gap: 50px ;
+}
+
+.shortlisted-submite-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.shortlisted-submite-btn button{
+  width: 150px;
 }

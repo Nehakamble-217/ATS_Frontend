@@ -13,37 +13,41 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [interviewDates, setInterviewDates] = useState([]);
   const [showAllData, setShowAllData] = useState(false);
   const [noDataMessage, setNoDataMessage] = useState(false);
-  const [feedbackOptions] = useState([
-    "Shortlisted For Hr Round",
-    "Shortlisted For Technical Round",
-    "Shortlisted For L1 Round",
-    "Shortlisted For L2 Round",
-    "Shortlisted For L3 Round",
-    "Selected",
-    "Rejected",
-    "No Show",
-    "Result Pending",
-    "Hold"
-  ]);
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [interviewResponses, setInterviewResponses] = useState([]);
+  const [showShortlistTable, setShowShortlistTable] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const [candidateId, setCandidateId] = useState('');
+  const [requirementId, setRequirementId] = useState('');
 
   const navigate = useNavigate();
   const { employeeId } = useParams();
   const employeeIdNew = parseInt(employeeId, 10);
-  console.log(employeeIdNew + " Interview ID");
-
+  console.log(employeeIdNew + " Interview Page Employe ID");
   useEffect(() => {
     fetchInterviewDates();
+
   }, []);
+
+
+  const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
+    try {
+      const response = await fetch(`http://192.168.1.40:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
+      console.log(candidateId + " --> candidateId 07");
+      console.log(employeeIdNew + " --> employeeId 08");
+      console.log(requirementId + " --> requirementId 09");
+      const data = await response.json();
+      setInterviewResponses(data);
+    } catch (error) {
+      console.error("Error fetching interview response:", error);
+    }
+  };
 
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-
-
-        `http://192.168.1.36:8891/api/ats/157industries/interview-date/${employeeIdNew}`
-
-
+        `http://192.168.1.40:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -54,7 +58,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
   const handleDateChange = async (date) => {
     setSelectedDate(date);
-
     if (!date) {
       return;
     }
@@ -67,11 +70,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-
-
-        `http://192.168.1.36:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
-
-
+        `http://192.168.1.40:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -89,14 +88,14 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
   const handleMonthChange = async (activeStartDate) => {
     if (activeStartDate) {
-      const month = activeStartDate.getMonth() + 1; // getMonth() is zero-based
+      const month = activeStartDate.getMonth() + 1;
       const year = activeStartDate.getFullYear();
       const monthString = `${year}-${month.toString().padStart(2, "0")}`;
       console.log("Selected month:", monthString);
 
       try {
         const response = await fetch(
-          `http:192.168.1.36:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://192.168.1.40:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -113,80 +112,71 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     }
   };
 
-  const updateInterviewStatus = async (candidateId, feedback) => {
-    try {
-      await fetch(
-        `http://192.168.1.36:8891/api/ats/157industries/update-interview-status?id=${candidateId}&status=${feedback}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      console.log("Interview status updated successfully");
-      setUpdateSuccess(true);
-      setTimeout(() => {
-        setUpdateSuccess(false);
-      }, 2000);
-    } catch (error) {
-      console.error("Error updating interview status:", error);
-    }
-  };
-
-  const handleFeedbackChange = async (candidateId, event) => {
-    const feedback = event.targe.value;
-    await updateInterviewStatus(candidateId, feedback);
-    await handleDateChange(selectedDate);
-  };
-
-  const handleInterviewResponseSubmit = async (
-    event,
-    candidateId,
-    requirementId
-  ) => {
+  const handleInterviewResponseSubmit = async (event) => {
     event.preventDefault();
+
+    console.log("Candidate ID:", event.target.querySelector('input[name="candidateId"]').value);
+    console.log("Requirement ID:", event.target.querySelector('input[name="requirementId"]').value);
+    console.log("Employee ID:", event.target.querySelector('input[name="employeeId"]').value);
+
     const interviewRound = event.target.querySelector('select[name="interviewRound"]').value;
     const interviewResponse = event.target.querySelector('select[name="interviewResponse"]').value;
     const responseUpdatedDate = event.target.querySelector('input[name="responseUpdatedDate"]').value;
     const nextInterviewDate = event.target.querySelector('input[name="nextInterviewDate"]').value;
+    const nextInterviewTiming = event.target.querySelector('input[name="nextInterviewTiming"]').value;
+    // const candidateId = event.target.querySelector('input[name="candidateId"]').value;
+    // const requirementId = event.target.querySelector('input[name="requirementId"]').value;
+    // const employeeId = event.target.querySelector('input[name="employeeId"]').value;
+
+    const candidateId = 28;
+    const requirementId = 22;
+    const employeeId = 6;
 
     const data = {
       interviewRound,
       interviewResponse,
       responseUpdatedDate,
       nextInterviewDate,
-      callingTracker: { candidateId },
-      requirementInfo: { requirementId },
-      employee: { employeeId: employeeIdNew }
+      nextInterviewTiming,
+      callingTracker: {
+        candidateId
+      },
+      requirementInfo: {
+        requirementId
+      },
+      employee: {
+        employeeId
+      }
     };
 
     try {
-      const response = await fetch(
-
-        "http://192.168.1.36:8891/api/ats/157industries/save-interview-response", data,
-
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        }
-      );
+      const response = await fetch("http://192.168.1.40:8891/api/ats/157industries/save-interview-response", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
       if (response.ok) {
+        setFormSubmitted(true);
         console.log("Interview response saved successfully");
-        setUpdateSuccess(true);
-        await handleDateChange(selectedDate);
+        setTimeout(() => {
+          setFormSubmitted(false);
+          setShowShortlistTable(false);
+        }, 3000); // Hide the table after 3 seconds
       } else {
-        console.error(
-          "Failed to save interview response:",
-          response.statusText
-        );
+        console.error("Failed to save interview response:", response.statusText);
       }
     } catch (error) {
       console.error("Error saving interview response:", error);
+
     }
+  };
+
+
+  const handleFeedbackChange = async (candidateId, event) => {
+    const feedback = event.targe.value;
+    await handleDateChange(selectedDate);
   };
 
   const renderInterviewTable = () => {
@@ -198,121 +188,219 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       );
     }
 
+
+    const handleMouseOver = (event) => {
+      const tooltip = event.currentTarget.querySelector('.tooltip');
+      if (tooltip) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const tooltipWidth = tooltipRect.width;
+        const tooltipHeight = tooltipRect.height;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        let top = rect.top - tooltipHeight + 40;
+        let left = rect.left + (rect.width - tooltipWidth) / 2;
+
+        if (top < 0) top = rect.bottom + 5;
+        if (left < 0) left = 5;
+        if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5;
+
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+        tooltip.classList.add('visible');
+      }
+    };
+
+    const handleMouseOut = (event) => {
+      const tooltip = event.currentTarget.querySelector('.tooltip');
+      if (tooltip) {
+        tooltip.classList.remove('visible');
+      }
+    };
+
+
     return (
       <div className="App-after">
-        {updateSuccess && (
-          <div className="alert alert-success" role="alert">
-            Status updated successfully!
-          </div>
-        )}
-        <div className="attendanceTableData">
-          <table className="attendance-table">
+        <div className="attendanceTableData" id="interview-table-scroll">
+          <table id="interviewDates-id" className="attendance-table">
             <thead>
               <tr className="attendancerows-head">
                 <th className="attendanceheading">Sr No.</th>
                 <th className="attendanceheading">candidate Id</th>
                 <th className="attendanceheading">Added Date</th>
                 <th className="attendanceheading">Interview Date</th>
-                <th className="attendanceheading">Interview Round</th>
-                <th className="attendanceheading">Interview Response</th>
-                <th className="attendanceheading">Response Update Date</th>
-                <th className="attendanceheading">Next Interview Date</th>
-                <th className="attendanceheading">Recruiter Name</th>
+                <th className="attendanceheading">Interview Time</th>
                 <th className="attendanceheading">Candidate Name</th>
-                <th className="attendanceheading">Position</th>
-                <th className="attendanceheading">Company Name</th>
-                <th className="attendanceheading">Contact Number</th>
-                <th className="attendanceheading">Alternate Number</th>
-                <th className="attendanceheading">Communication Rating</th>
-                <th className="attendanceheading">Personal Feedback</th>
-                <th className="attendanceheading">Calling Feedback</th>
-                <th className="attendanceheading">Interested</th>
                 <th className="attendanceheading">Candidate Email</th>
-                <th className="attendanceheading">Your Current Company</th>
+                <th className="attendanceheading">Job Id</th>
+                <th className="attendanceheading">Applying Position</th>
+                <th className="attendanceheading">Applying Compnay</th>
+                <th className="attendanceheading">Contact Number</th>
                 <th className="attendanceheading">Current Location</th>
+                <th className="attendanceheading">Current Company</th>
+                <th className="attendanceheading">Total Experience</th>
                 <th className="attendanceheading">Current CTC</th>
                 <th className="attendanceheading">Expected CTC</th>
                 <th className="attendanceheading">Notice Period</th>
-                <th className="attendanceheading">Total Experience</th>
                 <th className="attendanceheading">Any Offer Letter</th>
-                <th className="attendanceheading">Feedback</th>
-               < th className="attendanceheading" >View All Interview</th>
+                <th className="attendanceheading">Resume</th>
+                <th className="attendanceheading">Incentive</th>
+                <th className="attendanceheading">Last Interview Status</th>
                 <th className="attendanceheading">Action</th>
               </tr>
             </thead>
             <tbody>
               {interviewData.map((item, index) => (
-                <tr className="attendancerows" key={item.candidateId}>
-                  <td className="tabledata">{index + 1}</td>
-                  <td className="tabledata">{item.candidateId}</td>
-                  <td className="tabledata">{item.date}</td>
-                  <td className="tabledata">
-                    {item.lineUp ? item.lineUp.availabilityForInterview : ""}
+                <tr key={item.candidateId} className='attendancerows'>
+                  <td className='tabledata'>{index + 1}</td>
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.candidateId}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.candidateId}</span>
+                    </div>
                   </td>
-                  <td className="tabledata">
-                    <select name="interviewRound" defaultValue="">
-                      <option value="" disabled hidden>Select Round</option>
-                      <option value="Hr Round">Hr Round</option>
-                      <option value="Technical Round">Technical Round</option>
-                      <option value="L1 Round">L1 Round</option>
-                      <option value="L2 Round">L2 Round</option>
-                      <option value="L3 Round">L3 Round</option>
-                    </select>
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.date}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.date}</span>
+                    </div>
                   </td>
-                  <td className="tabledata">
-                    <select name="interviewResponse" defaultValue="">
-                      <option value="" disabled hidden>Select Response</option>
-                      {feedbackOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.lineUp.availabilityForInterview || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.lineUp.availabilityForInterview}</span>
+                    </div>
                   </td>
-                  <td className="tabledata">
-                    <input
-                      type="date"
-                      name="responseUpdatedDate"
-                      className="form-control"
-                    />
+
+
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.lineUp.interviewTime || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.lineUp.interviewTime}</span>
+                    </div>
                   </td>
-                  <td className="tabledata">
-                    <input
-                      type="date"
-                     name ="nextInterviewDate"
-                    className="form-control"
-                      />
+
+
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.candidateName}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.candidateName}</span>
+                    </div>
                   </td>
-                  <td className="tabledata">{item.recruiterName}</td>
-                  <td className="tabledata">{item.candidateName}</td>
-                  <td className="tabledata">{item.position}</td>
-                  <td className="tabledata">{item.requirementCompany}</td>
-                  <td className="tabledata">{item.contactNumber}</td>
-                  <td className="tabledata">{item.alternateNumber}</td>
-                  <td className="tabledata">{item.communicationRating}</td>
-                  <td className="tabledata">{item.personalFeedback}</td>
-                  <td className="tabledata">{item.callingFeedback}</td>
-                  <td className="tabledata">{item.selectYesOrNo}</td>
+
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.candidateEmail || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.candidateEmail}</span>
+                    </div>
+                  </td>
+
+
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.requirementId || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.requirementId}</span>
+                    </div>
+                  </td>
+
+
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.jobDesignation || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.jobDesignation}</span>
+                    </div>
+                  </td>
+
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.requirementCompany || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.requirementCompany}</span>
+                    </div>
+                  </td>
+
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.contactNumber || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.contactNumber}</span>
+                    </div>
+                  </td>
+                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    {item.currentLocation || "-"}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.currentLocation}</span>
+                    </div>
+                  </td>
                   {item.lineUp && (
                     <>
-                      <td className="tabledata">{item.lineUp.candidateEmail}</td>
-                      <td className="tabledata">{item.lineUp.companyName}</td>
-                      <td className="tabledata">{item.lineUp.currentLocation}</td>
-                      <td className="tabledata">{item.lineUp.currentCTC}</td>
-                      <td className="tabledata">{item.lineUp.expectedCTC}</td>
-                      <td className="tabledata">{item.lineUp.noticePeriod}</td>
-                      <td className="tabledata">{item.lineUp.totalExperience}</td>
-                      <td className="tabledata">{item.lineUp.holdingAnyOffer}</td>
-                      <td className="tabledata">{item.lineUp.feedBack}</td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.companyName || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.companyName}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.experienceYear || "0"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.experienceYear} </span>
+                        </div>
+                        Years
+                        {item.lineUp.experienceMonth || "0"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.experienceMonth}</span>
+                        </div>
+                        Months
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {`${item.lineUp.currentCTCLakh || 0} Lakh ${item.lineUp.currentCTCThousand || 0} Thousand`}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{`${item.lineUp.expectedCTCLakh || 0} Lakh ${item.lineUp.expectedCTCThousand || 0} Thousand`}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {`${item.lineUp.expectedCTCLakh || 0} Lakh ${item.lineUp.expectedCTCThousand || 0} Thousand`}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{`${item.lineUp.expectedCTCLakh || 0} Lakh ${item.lineUp.expectedCTCThousand || 0} Thousand`}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.noticePeriod || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.noticePeriod}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.holdingAnyOffer || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.holdingAnyOffer}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.resume || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.resume}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.incentive || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.incentive}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.finalStatus || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.finalStatus}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata'>
+                        <i onClick={() => { fetchAndUpdateInterviewResponse(item.candidateId, item.requirementId); setShowShortlistTable(!showShortlistTable); }}
+                          className="fa-regular fa-pen-to-square"></i>
+
+
+                      </td>
                     </>
                   )}
-                   
-                  <td className="tabledata">
-                    view
-                  </td>
-                  <td className="tabledata">
-                    <i className="fa-solid fa-floppy-disk"></i>
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -326,48 +414,139 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     if (view === "month") {
       const tempdate = new Date(date);
       tempdate.setHours(tempdate.getHours() + 10);
-
       const formattedDate = tempdate.toISOString().split("T")[0];
-
       const isInterviewDate = interviewDates.includes(formattedDate);
-
       return isInterviewDate && <div className="highlighted-date"></div>;
-
     }
   };
 
-
   return (
     <div className="calendar-container">
-      <div className="calendar">
-        <div className="calendar-div">
-          <Calendar
-            value={selectedDate}
-            onChange={handleDateChange}
-            onActiveStartDateChange={({ activeStartDate, view }) =>
-              view === "month" && handleMonthChange(activeStartDate)
-            }
-            tileContent={tileContent}
-          />
+
+      <div className="calender-main-div">
+        <div className="calendar">
+
+          <div className="calendar-div">
+            <Calendar
+              value={selectedDate}
+              onChange={handleDateChange}
+              onActiveStartDateChange={({ activeStartDate, view }) =>
+                view === "month" && handleMonthChange(activeStartDate)
+              }
+              tileContent={tileContent}
+            />
+          </div>
         </div>
+
+        {showShortlistTable && (
+          <div className="shortlist-table-div">
+            <div className="interview-response-update">
+              <h6>Response Update Table</h6>
+            </div>
+            <form onSubmit={handleInterviewResponseSubmit}>
+              <table id="table-shortlisted" className="table table-bordered">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>Sr No.</th>
+                    <th>Interview Round</th>
+                    <th>Interview Response</th>
+                    <th>Update Date</th>
+                    <th>Next interview Date</th>
+                    <th>Next interview Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {interviewResponses.map((response, index) => (
+                    <tr key={index}>
+                      <td >{index + 1}</td>
+                      <td >{response.interviewRound}</td>
+                      <td >{response.interviewResponse}</td>
+                      <td >{response.responseUpdatedDate}</td>
+                      <td >{response.nextInterviewDate}</td>
+                      <td >{response.nextInterviewTiming}</td>
+                    </tr>
+                  ))}
+                  <tr>
+
+                    <td>---></td>
+                    <td >
+                      <select
+                        name="interviewRound"
+                        required
+                      >
+                        <option value="">Select Interview</option>
+                        <option value="Hr Round">Hr Round</option>
+                        <option value="Technical Round">Technical Round</option>
+                        <option value="L1 Round"> L1 Round</option>
+                        <option value="L2 Round"> L2 Round</option>
+                        <option value="L3 Round"> L3 Round</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select
+                        name="interviewResponse"
+                        required
+                      >
+                        <option value="">Update Response</option>
+                        <option value="Shortlisted For Hr Round">Shortlisted For Hr Round</option>
+                        <option value="Shortlisted For Technical Round">Shortlisted For Technical Round</option>
+                        <option value="Shortlisted For L1 Round">Shortlisted For L1 Round</option>
+                        <option value="Shortlisted For L2 Round">Shortlisted For L2 Round</option>
+                        <option value="Shortlisted For L3 Round">Shortlisted For L3 Round</option>
+                        <option value="Selected">Selected</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Result Pending">Hold</option>
+                        <option value="Result Pending">Result Pending</option>
+                        <option value="No Show">No Show</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="date" name="responseUpdatedDate" />
+                    </td>
+                    <td>
+                      <input type="date" name="nextInterviewDate" />
+                    </td>
+                    <td>
+                      <input type="time" name="nextInterviewTiming" />
+                    </td>
+                    <td hidden>
+                      <input type="text" value={candidateId} name="candidateId" />
+                      <input type="text" value={requirementId} name="requirementId" />
+                      <input type="text" value={employeeIdNew} name="employeeId" />
+                    </td>
+
+                  </tr>
+
+                </tbody>
+              </table>
+              {formSubmitted && (
+                <div className="alert alert-success" role="alert">
+                  Interview Response Updated successfully!
+                </div>
+              )}
+              <div className="shortlisted-submite-btn">
+                <button type="submit">Update</button>
+                <button onClick={() => setShowShortlistTable(false)}>Close</button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
 
       {!showAllData && interviewData && (
-    <div className="interview-table">
-      {renderInterviewTable()}
+        <div className="interview-table">
+          {renderInterviewTable()}
+        </div>
+      )}
+      {showAllData && (
+        <div className="interview-table">
+          {renderInterviewTable()}
+        </div>
+      )}
+      {!showAllData && noDataMessage && (
+        <h3 style={{ color: "red" }}>No interviews scheduled on this date.</h3>
+      )}
     </div>
-  )}
-
-  {showAllData && (
-    <div className="interview-table">
-      {renderInterviewTable()}
-    </div>
-  )}
-
-  {!showAllData && noDataMessage && (
-    <h3 style={{ color: "red" }}>No interviews scheduled on this date.</h3>
-  )}
-</div>
 
   );
 };

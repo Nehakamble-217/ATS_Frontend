@@ -29,7 +29,7 @@ const AdminLogin = ({ onLogin }) => {
 
     const handleBlur = async (empId) => {
         try {
-            const response = await fetch(`http://localhost:8891/api/ats/157industries/fetch-pass-on-role/${empId}`);
+            const response = await fetch(`http://192.168.1.40:8891/api/ats/157industries/fetch-pass-on-role/${empId}`);
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }

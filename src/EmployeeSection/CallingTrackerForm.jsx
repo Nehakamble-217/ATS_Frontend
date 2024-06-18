@@ -9,6 +9,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
+//import '../EmployeeSection/tempArsh.css'
+
 
 const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const { employeeId } = useParams();
@@ -87,10 +89,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
-  const [candidateName, setCandidateName] = useState();
-  const [contactNumber, setContactNumber] = useState();
-  const [sourceName, setSourceName] = useState();
 
+  const [candidateName, setCandidateName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [sourceName, setSourceName] = useState('');
   const [errors, setErrors] = useState({
     candidateName: "",
     contactNumber: "",
@@ -127,16 +129,13 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
     updateTimer();
     const timerInterval = setInterval(updateTimer, 1000);
-
     return () => clearInterval(timerInterval);
   }, []);
-
-
 
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.36:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.40:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -156,7 +155,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.36:8891/api/ats/157industries/company-details`
+        `http://192.168.1.40:8891/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -189,12 +188,44 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     setLineUpData({ ...lineUpData, [name]: value });
   };
 
+
+  const validateForm = () => {
+    let valid = true;
+    const errorsCopy = { ...errors };
+
+    if (!candidateName.trim()) {
+      errorsCopy.candidateName = "Please enter candidate name";
+      valid = false;
+    } else {
+      errorsCopy.candidateName = "";
+    }
+
+    if (!contactNumber.trim()) {
+      errorsCopy.contactNumber = "Please enter contact number";
+      valid = false;
+    } else {
+      errorsCopy.contactNumber = "";
+    }
+
+    if (!sourceName.trim()) {
+      errorsCopy.sourceName = "Please select source name";
+      valid = false;
+    } else {
+      errorsCopy.sourceName = "";
+    }
+
+    setErrors(errorsCopy);
+    return valid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const dataToUpdate = {
-        
         ...callingTracker,
         employee: {
           employeeId: parseInt(employeeId, 10),
@@ -212,7 +243,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://192.168.1.36:8891/api/ats/157industries/${employeeId}/addCallingData`,
+        `http://192.168.1.40:8891/api/ats/157industries/${employeeId}/addCallingData`,
         dataToUpdate
       );
 
@@ -228,37 +259,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       console.error("Error:", error);
     }
   };
-
-  const validateForm = () => {
-    let valid = true;
-    const errorsCopy = { ...errors };
-
-    if (!candidateName.trim()) {
-      errorsCopy.candidateName = "Please Enter candidateName";
-      valid = false;
-    } else {
-      errorsCopy.candidateName = "";
-    }
-
-    if (!contactNumber.trim()) {
-      errorsCopy.contactNumber = "Please Enter contactNumber";
-      valid = false;
-    } else {
-      errorsCopy.contactNumber = "";
-    }
-
-    if (!sourceName.trim()) {
-      errorsCopy.sourceName = "Please Enter sourceName";
-      valid = false;
-    } else {
-      errorsCopy.sourceName = "";
-    }
-
-    setErrors(errorsCopy);
-    return valid;
-
-  };
-
 
 
   const handleChangeemail = (event) => {
@@ -485,10 +485,14 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
-                    className={`form-control ${errors.candidateName ? "is-invalid" : ""
-                      } `}
-                    onChange={(e) => setCandidateName(e.target.value)}
+                    className={`form-control ${errors.candidateName ? 'is-invalid' : ''}`}
+                    onChange={handleChange}
+                    required
                   />
+                  {errors.candidateName && (
+                    <div className="invalid-feedback">{errors.candidateName}</div>
+                  )}
+
                 </td>
 
                 <th scope="col">Candidate Email</th>
@@ -512,14 +516,17 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     placeholder="Enter phone number"
                     name="contactNumber"
                     value={callingTracker.contactNumber}
-                    onChange={(value) =>
-                      handlePhoneNumberChange(value, "contactNumber")
-                    }
+                    onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
+                    required
                     defaultCountry="IN"
                     maxLength={11}
-                    className="PhoneInputInput"
-                    required
+                    className={`form-control ${errors.contactNumber ? 'is-invalid' : ''}`}
+
                   />
+                  {errors.contactNumber && (
+                    <div className="invalid-feedback">{errors.contactNumber}</div>
+                  )}
+
                 </td>
 
                 <th scope="col">Alternate Number</th>
@@ -542,12 +549,14 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <th scope="col">Source Name* </th>
                 <td>
                   <select
-                    className="form-select"
+                    className={`form-control ${errors.sourceName ? 'is-invalid' : ''}`}
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
                     required
                   >
+
+
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
                     <option value="Naukri">Naukri</option>
@@ -559,6 +568,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     <option value="Friends">Friends</option>
                     <option value="others">others</option>
                   </select>
+                  {errors.sourceName && (
+                    <div className="invalid-feedback">{errors.sourceName}</div>
+                  )}
                 </td>
 
 

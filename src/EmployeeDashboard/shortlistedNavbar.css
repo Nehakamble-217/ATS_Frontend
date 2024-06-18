@@ -25,16 +25,11 @@
 
 #calendar-icon-nav{
    font-size: 30px;
-   
-  
-   
- 
 }
 
 .shortlisted-nav-middel{
     height: 100vh;
-    width: 100%;
-    
+    width: 100%;   
 }
 
 .shortListed-btn-nav {
@@ -54,13 +49,14 @@
     margin-left: 500px;
 }
 
-/* .shortListed-btn-nav:hover{
-    background-color: #ffcb9b;
-    color: white; 
-  
-}*/
 
 #shortListed-btn-nav-icon{
     width: 110px;
     margin-right: 50px;
+}
+
+/* arshad added below  css  */
+
+.show-shortlistedNav-div{
+    padding-top: 65px;
 }
