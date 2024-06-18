@@ -33,7 +33,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
     try {
-      const response = await fetch(`http://192.168.1.40:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
+      const response = await fetch(`http://localhost:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
       console.log(candidateId + " --> candidateId 07");
       console.log(employeeIdNew + " --> employeeId 08");
       console.log(requirementId + " --> requirementId 09");
@@ -47,7 +47,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://localhost:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -70,7 +70,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.40:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://localhost:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -95,7 +95,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://192.168.1.40:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://1localhost:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -150,7 +150,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     };
 
     try {
-      const response = await fetch("http://192.168.1.40:8891/api/ats/157industries/save-interview-response", {
+      const response = await fetch("http://localhost:8891/api/ats/157industries/save-interview-response", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

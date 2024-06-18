@@ -55,7 +55,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.40:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.33:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
 
