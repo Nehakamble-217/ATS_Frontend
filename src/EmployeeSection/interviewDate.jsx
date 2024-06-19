@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";za
+import "react-calendar/dist/Calendar.css";
 import "./interviewDate.css";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import UpdateCallingTracker from "./UpdateSelfCalling";
@@ -34,7 +34,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
     try {
 
-      const response = await fetch(`http://localhost:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
+      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
 
       console.log(candidateId + " --> candidateId 07");
       console.log(employeeIdNew + " --> employeeId 08");
@@ -50,7 +50,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     try {
       const response = await fetch(
 
-        `http://localhost:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://192.168.1.38:8891/api/ats/157industries/interview-date/${employeeIdNew}`
 
       );
       const data = await response.json();
@@ -75,7 +75,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     try {
       const response = await fetch(
 
-        `http://localhost:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://192.168.1.38:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
 
       );
       const data = await response.json();
@@ -101,7 +101,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://1localhost:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://192.168.1.38:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
 
         );
         const data = await response.json();
@@ -158,7 +158,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
 
-      const response = await fetch("http://localhost:8891/api/ats/157industries/save-interview-response", {
+      const response = await fetch("http://192.168.1.38:8891/api/ats/157industries/save-interview-response", {
 
         method: "POST",
         headers: {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import "../EmployeeSection/AddCandidate.css";
@@ -50,49 +49,29 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
     },
   });
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [recruiterName, setRecruiterName] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [requirementOptions, setRequirementOptions] = useState([]);
 
   useEffect(() => {
-    fetchEmployeeName();
-    fetchCandidateData();
-    fetchRequirementOptions();
+    const fetchData = async () => {
+      try {
+        const [employeeResponse, candidateResponse, requirementResponse] = await Promise.all([
+          axios.get(`http://192.168.1.33:8891/api/ats/157industries/employeeName/6`),
+          axios.get(`http://192.168.1.33:8891/api/ats/157industries/specific-data/28`),
+          axios.get(`http://192.168.1.33:8891/api/ats/157industries/company-details`)
+        ]);
+        setCallingTracker({
+          ...candidateResponse.data,
+          recruiterName: employeeResponse.data
+        });
+        setRequirementOptions(requirementResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [employeeId, candidateId]);
-
-  const fetchEmployeeName = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`
-      );
-      setRecruiterName(response.data);
-    } catch (error) {
-      console.error("Error fetching employee name:", error);
-    }
-  };
-
-  const fetchCandidateData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/specific-data/${candidateId}`
-      );
-      setCallingTracker(response.data);
-    } catch (error) {
-      console.error("Error fetching candidate data:", error);
-    }
-  };
-
-  const fetchRequirementOptions = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/company-details`
-      );
-      setRequirementOptions(response.data);
-    } catch (error) {
-      console.error("Error fetching requirement options:", error);
-    }
-  };
 
   const handlePhoneNumberChange = (value, name) => {
     setCallingTracker((prevState) => ({
@@ -143,11 +122,11 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
     try {
       const dataToUpdate = {
         ...callingTracker,
-        recruiterName: recruiterName,
+        recruiterName: callingTracker.recruiterName,
       };
 
       const response = await axios.post(
-        `http://localhost:8891/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.38:8891/api/ats/157industries/update-callingData/28`,
         dataToUpdate
       );
 
@@ -164,7 +143,6 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
       console.error("Error updating data:", error);
     }
   };
-
 
 
   return (
@@ -205,9 +183,9 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                   <input
                     type="text"
                     name="recruiterName"
-                    value={recruiterName}
+                    value={callingTracker.recruiterName}
                     readOnly
-                    onChange={handleChange}
+                   
                     className="form-control"
                   />
                 </td>
@@ -256,9 +234,7 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                     maxLength={12}
 
                   />
-
                 </td>
-
                 <th scope="col">Alternate Number</th>
                 <td>
                   <PhoneInput
@@ -301,34 +277,37 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                 <th scope="col">Job Id</th>
                 <td>
                   <select
-                    className="form-select mb-1"
+                    id="requirementId"
                     name="requirementId"
                     value={callingTracker.requirementId}
                     onChange={handleRequirementChange}
+                    className="form-control"
+                    style={{ height: "38px" }}
                   >
                      <option value="">Select Requirement</option>
-                    {requirementOptions.map((option) => (
-                      <option key={option.requirementId} value={option.requirementId}>
-                        {option.requirementId}
+                    {requirementOptions.map((requirement) => (
+                      <option key={requirement.requirementId} value={requirement.requirementId}>
+                        {requirement.requirementId}
                       </option>
                     ))}
+                
                   </select>
                 </td>
               </tr>
 
               <tr>
-                <th scope="col">Applying For Position</th>
+               
                 <th scope="col">Applying For Position</th>
                 <td style={{ display: "flex", justifyContent: "space-around" }}>
                   <input style={{ width: "260px" }}
                     type="text"
                     id="jobDesignation"
                     name="jobDesignation"
-                    className="form-control"
                     value={callingTracker.jobDesignation}
+                    onChange={handleChange}
                     readOnly
                   />
-                  <input placeholder="Incentive" value={callingTracker.incentive} readOnly className="form-control" style={{ width: "150px" }} type="text" />
+                  <input placeholder="Incentive"  name="incentive" value={callingTracker.incentive} readOnly className="form-control" style={{ width: "150px" }} type="text" />
                 </td>
 
 
@@ -344,11 +323,10 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                   />
                 </td>
               </tr>
-
               <tr>
                 <th>Current Location</th>
                 <td>
-                  {/* {!isOtherLocationSelected ? ( */}
+                  
                     <select
                       name="currentLocation"
                       value={callingTracker.currentLocation}
@@ -359,16 +337,7 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                       <option value="PCMC">PCMC</option>
                       <option value="Other">Other</option>
                     </select>
-                  {/* ) : (
-                    <input
-                      type="text"
-                      name="currentLocation"
-                      value={callingTracker.currentLocation}
-                      onChange={handleLocationInputChange}
-                      className="form-control"
-                      placeholder="Enter your location"
-                      required />
-                  )} */}
+
                 </td>
                 <th> Full Adress</th>
                 <td>
@@ -381,7 +350,6 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                 </td>
               </tr>
 
-              
               <tr>
                 <th>Calling Feedback</th>
                 <td>
@@ -475,7 +443,6 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
               <tr>
                 <th>Education</th>
                 <td>
-                
                     <select
                       name="lineUp.qualification"
                       value={callingTracker.lineUp.qualification}
@@ -702,7 +669,7 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                       <label htmlFor="experienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
                       <input
                         type="number"
-                        name="lineUp.experienceMonths"
+                        name="lineUp.experienceMonth"
                         value={callingTracker.lineUp.experienceMonth}
                         onChange={handleChange}
                         className="form-control"
@@ -725,7 +692,7 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                   <input
                     type="text"
                     name="lineUp.relevantExperience"
-                    value={callingTracker.lineUp.relevantExperience}
+                    value={callingTracker.lineUp?.relevantExperience}
                     onChange={handleChange}
                     className="form-control"
                   />

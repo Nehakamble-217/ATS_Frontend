@@ -135,7 +135,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.33:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -155,7 +155,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.33:8891/api/ats/157industries/company-details`
+        `http://192.168.1.38:8891/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -243,7 +243,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://192.168.1.33:8891/api/ats/157industries/${employeeId}/addCallingData`,
+        `http://192.168.1.38:8891/api/ats/157industries/${employeeId}/addCallingData`,
         dataToUpdate
       );
 
