@@ -1,6 +1,10 @@
 import axios from "axios";
 
+<<<<<<< HEAD
 //My New Changes 7:10
+=======
+
+>>>>>>> c9927aa601a1eaaeabfcb099942b2dda8b3b0947
 const API_BASE_URL = "http://192.168.1.38:8891/api/ats/157industries";
 
 export const getPasswordFromDB = (id) =>

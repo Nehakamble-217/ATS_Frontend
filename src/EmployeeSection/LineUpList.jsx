@@ -15,11 +15,14 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.40:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+
+    fetch(`http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeIdnew]);
+
 
   const handleUpdate = (candidateId) => {
     setSelectedCandidateId(candidateId);
@@ -28,11 +31,14 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
-    fetch(`http://192.168.1.40:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+
+    fetch(`http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+
       .then((response) => response.json())
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
   };
+
 
   const handleMouseOver = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
@@ -63,6 +69,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
       tooltip.classList.remove('visible');
     }
   };
+
 
   return (
     <div className="calling-list-container">
@@ -231,6 +238,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                       <span className="tooltiptext">{item.callingFeedback}</span>
                     </div>
                   </td>
+
 
                   <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                     {item.incentive || "-"}
