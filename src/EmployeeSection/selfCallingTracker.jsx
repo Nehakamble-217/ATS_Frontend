@@ -16,8 +16,11 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
 
-const [selectedRows, setSelectedRows] = useState([]);
-  const [showSearchBar, setShowSearchBar] = useState(false); 
+  const [selectedCandidateId, setSelectedCandidateId] = useState();
+
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeIdw + "emp @@@@ id");
@@ -28,31 +31,41 @@ const [selectedRows, setSelectedRows] = useState([]);
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.33:8891/api/ats/157industries/callingData/${employeeId}`)
+
+
+    fetch(`http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`)
+
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
-        setFilteredCallingList(data); 
+        setFilteredCallingList(data);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
+
+
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId'); 
+    const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId');
     setFilterOptions(options);
   }, [filteredCallingList]);
 
-useEffect(() => {
-  console.log("Filtered Calling List:", filteredCallingList);
-}, [filteredCallingList]);
+  useEffect(() => {
+    console.log("Selected Filters:", selectedFilters);
+  }, [selectedFilters]);
 
-useEffect(() => {
-    const limitedOptions = ['date', 'recruiterName', 'position', 'requirementId'];
+
+  useEffect(() => {
+    console.log("Filtered Calling List:", filteredCallingList);
+  }, [filteredCallingList]);
+
+  useEffect(() => {
+    const limitedOptions = ['date', 'recruiterName', 'jobDesignation', 'requirementId'];
     setFilterOptions(limitedOptions);
   }, [callingList]);
 
 
-    useEffect(() => {
+  useEffect(() => {
     filterData();
   }, [selectedFilters, callingList]);
 
@@ -67,7 +80,7 @@ useEffect(() => {
         (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
         (item.alternateNumber && item.alternateNumber.toString().includes(searchTermLower)) ||
         (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
-        (item.position && item.position.toLowerCase().includes(searchTermLower)) ||
+
         (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
         (item.requirementCompany && item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
         (item.communicationRating && item.communicationRating.toLowerCase().includes(searchTermLower)) ||
@@ -91,7 +104,7 @@ useEffect(() => {
         } else if (typeof aValue === 'string' && typeof bValue === 'string') {
           return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
         } else {
-          return 0; 
+          return 0;
         }
       });
       setFilteredCallingList(sortedList);
@@ -99,7 +112,7 @@ useEffect(() => {
   }, [sortCriteria, sortOrder]);
 
 
-    const filterData = () => {
+  const filterData = () => {
     let filteredData = [...callingList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
@@ -113,7 +126,7 @@ useEffect(() => {
     setFilteredCallingList(filteredData);
   };
 
- const handleFilterSelect = (option, value) => {
+  const handleFilterSelect = (option, value) => {
     setSelectedFilters(prevFilters => {
       const updatedFilters = { ...prevFilters };
       if (!updatedFilters[option]) {
@@ -148,17 +161,20 @@ useEffect(() => {
     setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
   };
 
- 
+
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.33:8891/api/ats/157industries/callingData/${employeeId}`
+
+
+      `http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`
+
     )
 
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
         setFilteredCallingList(data);
-        setShowUpdateCallingTracker(false); 
+        setShowUpdateCallingTracker(false);
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
@@ -200,11 +216,11 @@ useEffect(() => {
     return null;
   };
 
-   const toggleFilterSection = () => {
+  const toggleFilterSection = () => {
     setShowFilterSection(!showFilterSection);
   };
 
-  
+
   const handleSelectAll = (event) => {
     if (event.target.checked) {
       const allRowIds = filteredCallingList.map(item => item.candidateId);
@@ -234,11 +250,11 @@ useEffect(() => {
       {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
-<i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
+            <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
             <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
-            
-              <button onClick={toggleFilterSection}>Filter <i class="fa-solid fa-filter"></i></button>
+
+            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
 
           {showSearchBar && (
@@ -251,45 +267,45 @@ useEffect(() => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           )}
-        {showFilterSection && (
-  <div className="filter-section">
-    <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
-    <div className="filter-dropdowns">
-      {filterOptions.map(option => (
-        <div key={option} className="filter-dropdown">
-          {/* <label htmlFor={option}>{option}</label> */}
-          <div className="dropdown">
-            <button className="dropbtn">{option}</button>
-            <div className="dropdown-content">
-              <div key={`${option}-All`}>
-                <input
-                  type="checkbox"
-                  id={`${option}-All`}
-                  value="All"
-                  checked={!selectedFilters[option] || selectedFilters[option].length === 0}
-                  onChange={() => handleFilterSelect(option, "All")}
-                />
-                <label htmlFor={`${option}-All`}>All</label>
+          {showFilterSection && (
+            <div className="filter-section">
+              <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
+              <div className="filter-dropdowns">
+                {filterOptions.map(option => (
+                  <div key={option} className="filter-dropdown">
+                    {/* <label htmlFor={option}>{option}</label> */}
+                    <div className="dropdown">
+                      <button className="dropbtn">{option}</button>
+                      <div className="dropdown-content">
+                        <div key={`${option}-All`}>
+                          <input
+                            type="checkbox"
+                            id={`${option}-All`}
+                            value="All"
+                            checked={!selectedFilters[option] || selectedFilters[option].length === 0}
+                            onChange={() => handleFilterSelect(option, "All")}
+                          />
+                          <label htmlFor={`${option}-All`}>All</label>
+                        </div>
+                        {[...new Set(callingList.map(item => item[option]))].map(value => (
+                          <div key={value}>
+                            <input
+                              type="checkbox"
+                              id={`${option}-${value}`}
+                              value={value}
+                              checked={selectedFilters[option]?.includes(value) || false}
+                              onChange={() => handleFilterSelect(option, value)}
+                            />
+                            <label htmlFor={`${option}-${value}`}>{value}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              {[...new Set(callingList.map(item => item[option]))].map(value => (
-                <div key={value}>
-                  <input
-                    type="checkbox"
-                    id={`${option}-${value}`}
-                    value={value}
-                    checked={selectedFilters[option]?.includes(value) || false}
-                    onChange={() => handleFilterSelect(option, value)}
-                  />
-                  <label htmlFor={`${option}-${value}`}>{value}</label>
-                </div>
-              ))}
             </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
+          )}
 
           <div className="attendanceTableData">
             <table className="selfcalling-table attendance-table">
@@ -302,8 +318,10 @@ useEffect(() => {
                       checked={selectedRows.length === filteredCallingList.length}
                     />
                   </th>
+
                   <th className='attendanceheading'>Sr No.</th>
-                  <th className='attendanceheading' onClick={() => handleSort("date")}>Date {getSortIcon("date")}</th>
+                  <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
+                  <th className='attendanceheading'>Candidate Id</th>
                   <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
                   <th className='attendanceheading'>Candidate Name</th>
                   <th className='attendanceheading'>Candidate Email</th>
@@ -315,8 +333,9 @@ useEffect(() => {
                   <th className='attendanceheading'>Applying Company</th>
                   <th className='attendanceheading'>Communication Rating</th>
                   <th className='attendanceheading'>Current Location</th>
-                  <th className='attendanceheading'>PersonalFeedback</th>
+                  <th className='attendanceheading'>Full Address</th>
                   <th className='attendanceheading'>CallingFeedback</th>
+                  <th className='attendanceheading'>Candidate Incentive</th>
                   <th className='attendanceheading'>Interested / Eligible</th>
                   <th className='attendanceheading'>Action</th>
                 </tr>
@@ -331,12 +350,25 @@ useEffect(() => {
                         onChange={() => handleSelectRow(item.candidateId)}
                       />
                     </td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{index + 1}</td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.date}
+
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {index + 1}</td>
+
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {item.date}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.date}</span>
                       </div>
+                      <div className="tooltip">
+                        <span className="tooltiptext"> {item.candidateAddedTime}</span>
+                      </div>
+
                     </td>
+
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateId}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.candidateId} </span>
+                      </div>
+                    </td>
+
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.recruiterName}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.recruiterName} </span>
@@ -357,12 +389,12 @@ useEffect(() => {
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.sourceName} <div className="tooltip">
                       <span className="tooltiptext">{item.sourceName}</span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.position} <div className="tooltip">
-                      <span className="tooltiptext">{item.position}</span>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.jobDesignation} <div className="tooltip">
+                      <span className="tooltiptext">{item.jobDesignation}</span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementId} <div className="tooltip">
-                      <span className="tooltiptext">{item.requirementId}</span>
-                    </div></td>
+                      <span className="tooltiptext"> {item.requirementId} </span>
+                    </div> </td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementCompany} <div className="tooltip">
                       <span className="tooltiptext">{item.requirementCompany} </span>
                     </div></td>
@@ -372,17 +404,20 @@ useEffect(() => {
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
                       <span className="tooltiptext">{item.currentLocation} </span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.personalFeedback} <div className="tooltip">
-                      <span className="tooltiptext">{item.personalFeedback} </span>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.fullAddress} <div className="tooltip">
+                      <span className="tooltiptext">{item.fullAddress} </span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.callingFeedback} <div className="tooltip">
                       <span className="tooltiptext">{item.callingFeedback} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.incentive} <div className="tooltip">
+                      <span className="tooltiptext">{item.incentive} </span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.selectYesOrNo} <div className="tooltip">
                       <span className="tooltiptext">{item.selectYesOrNo} </span>
                     </div></td>
                     <td className="tabledata">
-                      <i onClick={() => handleUpdate(item.candidateId)} className="fa-regular fa-pen-to-square"></i>
+                      <i onClick={() => handleUpdate(item.candidateId,item.employeeId)} className="fa-regular fa-pen-to-square"></i>
                     </td>
                   </tr>
                 ))}

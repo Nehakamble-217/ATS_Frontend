@@ -172,6 +172,7 @@
     justify-content: center;
     padding-top: 50px;
     overflow: hidden;
+    height: 100vh;
 }
 
 .hexagon-container {
@@ -330,6 +331,7 @@
     justify-content: center;
     opacity: 0;
     animation: fadeIn 1.5s forwards;
+   
 }
 
 .right-panel h2 {
@@ -370,6 +372,7 @@
 
 .login-button,
 .dashboard-button {
+    
     width: 100%;
     padding: 10px;
     font-size: 1em;
@@ -404,6 +407,7 @@
     left: 15%;
     /* top: 15%; */
     margin: auto;
+    margin-top: 100px;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -455,6 +459,7 @@
     .right-panel {
         width: 100%;
         padding: 20px;
+        
     }
 
     .left-panel {

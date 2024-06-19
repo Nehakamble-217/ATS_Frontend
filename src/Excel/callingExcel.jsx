@@ -25,7 +25,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append('file', file);
 
     try {
-      await axios.post('http://192.168.1.43:8891/api/ats/157industries/uploadData', formData, {
+      await axios.post('http://192.168.1.38:8891/api/ats/157industries/uploadData', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

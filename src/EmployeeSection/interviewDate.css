@@ -1,84 +1,276 @@
 .react-datepicker-wrapper {
-    display: none;
-  }
-  
-  .custom-calendar .react-datepicker__month-container {
-    max-width: none;
-    width: 350px; 
-  }
-  
-  .custom-calendar .react-datepicker {
-    width: 100%;
-  }
-  
-  .custom-calendar .react-datepicker__header {
-    padding: 10px 0;
-  }
-  
-  .custom-calendar .react-datepicker__day {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    position: relative;
-  }
-  
-  .custom-calendar .react-datepicker__current-month {
-    font-size: 18px;
-  }
-  
-  .custom-calendar .react-datepicker__day--selected {
-    background-color: #fa668d;
-    color: #ffffff;
-  }
-  
-  .custom-calendar .react-datepicker__day--keyboard-selected {
-    background-color: rgba(32, 17, 252, 0.5);
-    color: #ffffff;
-  }
-  
-  
-  .highlighted-date {
-    position: relative;
-    width: 180%;
-    height: 100%;
-    right: 18px;
-    background-color: black;
-    top: 20%;
-  }
-  
-  
-  .react-calendar .react-calendar__tile--highlighted {
-    background-color: rgba(0, 128, 0, 0.1);
-    border-radius: 50%;
-  }
-  
-  .react-calendar .react-calendar__tile--note {
-    background-color: rgba(255, 0, 0, 0.2);
-  }
-  .abbr {
-    position: absolute !important;
-    z-index: 999 !important;
-  }
-  
-  .calendar{
-    display: flex;
-    flex-direction: row;
-  }
-  
-  #finalColumn{
-    width: 200px ;
-    background-color: #fa668d;
-  }
-  .calender-saveresponse{
-background-color:#ffe5ec;
-border: 2px solid white;
-border-radius: 15px;
-height: 40px;
-  }
+  display: none;
+}
 
-  /* .calling-table th{
-    /* background: linear-gradient(360deg, #fa668d, white); */
-    /* background-color: #ffbf94;
-    background: url("data:image/jpeg;base64,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");
-  } */
+.custom-calendar .react-datepicker__month-container {
+  max-width: none;
+  width: 350px;
+}
+
+.custom-calendar .react-datepicker {
+  width: 100%;
+}
+
+.custom-calendar .react-datepicker__header {
+  padding: 10px 0;
+}
+
+.custom-calendar .react-datepicker__day {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  position: relative;
+}
+
+.custom-calendar .react-datepicker__current-month {
+  font-size: 18px;
+}
+
+.custom-calendar .react-datepicker__day--selected {
+  background-color: #fa668d;
+}
+
+.custom-calendar .react-datepicker__day--keyboard-selected {
+  background-color: rgba(32, 17, 252, 0.5);
+  color: #ffffff;
+}
+
+.highlighted-date {
+  position: relative;
+  width: 180%;
+  height: 100%;
+  right: 18px;
+  background-color: black;
+  top: 20%;
+}
+
+.react-calendar .react-calendar__tile--highlighted {
+  background-color: rgba(0, 128, 0, 0.1);
+  border-radius: 50%;
+}
+
+.react-calendar .react-calendar__tile--note {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+.abbr {
+  position: absolute !important;
+  z-index: 999 !important;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: row;
+}
+
+#finalColumn {
+  width: 200px;
+  background-color: #fa668d;
+}
+
+.calender-saveresponse {
+  background-color: #ffe5ec;
+  border: 2px solid white;
+  border-radius: 15px;
+  height: 40px;
+  
+}
+
+button.react-calendar__tile.react-calendar__month-view__days__day {
+  color: gray;
+  box-shadow: 1px 2px 3px 1px rgb(167, 164, 164);
+  border-radius: 15px;
+  
+}
+
+.calendar-div{
+  padding-top: 55px;
+}
+
+button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day{
+  background-color: #ffb281;
+}
+
+button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view__days__day{
+  background-color: #ffe5b5;
+}
+
+.calender-main-div{
+  display: flex;
+
+}
+
+#table-shortlisted{ 
+  height: 150px;
+
+}
+
+/* hitun Khalis Arshad Ne css dilyaa */
+
+/* #interviewDates-id{
+  margin-top: 20px;
+  
+}
+.shortlist-table-div{
+  padding-top: 55px;
+  padding-left: 20px;
+  overflow-x: auto;
+
+}
+
+.interview-response-update{
+  display: flex;
+  gap: 50px ;
+}
+
+.shortlisted-submite-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border-radius: 15px;
+    height: 35px;
+   
+}
+
+.shortlisted-submite-btn button{
+  width: 150px;
+} */
+
+
+.shortlist-table-div {
+  margin-top: 20px;
+  padding-top: 30px;
+  padding-left: 10px;
+  padding-right: 20px; 
+  
+}
+
+.interview-response-update {
+  /* text-align: center; */
+  margin-bottom: 20px; 
+}
+
+.interview-response-update h6 {
+  color: gray;
+  margin-top: 5px;
+  margin-bottom: -15px;
+  font-size: 18px;
+  font-weight: bold; 
+}
+
+#table-shortlisted {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffcb9b;
+  margin-bottom: 2px;
+   
+  overflow: hidden; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+#table-shortlisted th,
+#table-shortlisted td {
+  padding: 12px; 
+  border: 1px solid gray; /* Darker border for better contrast */
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions for hover effects */
+}
+
+#table-shortlisted thead th {
+  color: black;
+  padding: 12px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+#table-shortlisted tbody td {
+  background-color: white;
+  color: gray;
+  text-align: center;
+  font-size: 16px;
+}
+
+#table-shortlisted tbody tr:hover td {
+  background-color: #f2f2f2; 
+  color: black; 
+}
+
+
+.shortlisted-submite-btn {
+  text-align: center; 
+  margin-top: 20px; 
+}
+
+.shortlisted-submite-btn button {
+  height: 35px;
+  border-radius: 15px;
+  padding: 0 20px;
+  margin: 5px;
+  margin-top: -10px; 
+  font-size: 16px;
+  margin-bottom: 10px;
+  background-color: #ffcb9b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.shortlisted-submite-btn button:hover {
+  background-color: white;
+  color: #ffcb9b;
+  transform: translateY(-2px); 
+}
+
+.shortlisted-submite-btn button:focus {
+  outline: none;
+}
+/* Table */
+#table-shortlisted {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table Header */
+#table-shortlisted thead {
+  background-color: gray; 
+  color: white;
+}
+
+/* Table Body */
+#table-shortlisted tbody {
+  background-color: white; 
+}
+
+/* Table Rows */
+#table-shortlisted tbody tr {
+  height: 10px; 
+}
+
+/* Table Cells */
+#table-shortlisted td, #table-shortlisted th {
+  padding: 6px; 
+  height: 20px;
+}
+
+/* Select Dropdown */
+#table-shortlisted select {
+  width: 100%;
+  height: 30px;
+  padding: 5px; 
+  /* border-radius: 15px;  */
+}
+
+/* Input Fields */
+#table-shortlisted input[type="date"], #table-shortlisted input[type="time"], #table-shortlisted input[type="text"] {
+  width: 100%;
+  height: 100%;
+  padding: 5px; 
+  /* border-radius: 15px; */
+}
+.highlighted-row {
+  background-color: red; /* or any other highlighting style */
+}

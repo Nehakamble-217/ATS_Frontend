@@ -102,6 +102,7 @@
   border: 1px solid gray;
   padding: 5px;
   white-space: nowrap;
+  color: gray;
   max-width: 200px; 
   text-overflow: ellipsis;
   overflow: hidden; /* Ensure cell text is clipped if too long */
@@ -146,6 +147,7 @@
 .attendancerowsdata, .tabledata {
   text-align: center;
   font-size: 16px;
+  color: gray;
   border: 1px solid gray;
   padding: 5px;
   overflow: hidden;
@@ -162,9 +164,7 @@
   overflow-y: auto;
 }
 
-.tabledata {
-  /* position: relative; */
- }
+
 
 .tabledata .tooltip {
   /* bottom: 100%;  */

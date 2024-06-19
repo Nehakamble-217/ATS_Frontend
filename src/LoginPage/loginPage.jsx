@@ -58,7 +58,7 @@ const LoginSignup = ({ onLogin }) => {
                             <img src={LoginImage} alt="Logo" className="logo" />
                         </div>
                         <div className="right-panel" data-aos="fade-left">
-                            <h2 >Login</h2>
+                            <h2 >Recruiter</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="input-groups" >
                                     <i className="fas fa-user"></i>
@@ -66,6 +66,7 @@ const LoginSignup = ({ onLogin }) => {
                                         type="text"
                                         id="loginpage-employeeId"
                                         name="employeeId"
+                                        placeholder="Username"
                                         value={employeeId}
                                         onChange={handleChange}
                                         className="loginpage-form-control"
@@ -77,6 +78,7 @@ const LoginSignup = ({ onLogin }) => {
                                         type="password"
                                         id="loginpage-password"
                                         name="password"
+                                        placeholder="Password"
                                         value={password}
                                         onChange={handleChange}
                                         className="loginpage-form-control"
@@ -112,7 +114,7 @@ const LoginSignup = ({ onLogin }) => {
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>
-                    <div class="hexagon"></div>
+                    <div className="hexagon"></div>
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>

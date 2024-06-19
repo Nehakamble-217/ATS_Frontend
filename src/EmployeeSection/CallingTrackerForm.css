@@ -1,14 +1,12 @@
 .maintable {
   height: 100%;
   border-collapse: collapse;
-
- 
 }
 
 
-#table-row{
+#table-row {
     background-color: #ffcb9b;
-    height: 10px !important;
+    height: 8px !important;
     padding: 0%;
     margin: 0%;
 }
@@ -114,6 +112,7 @@
   width: 200px;
   /* font-size:x-large; */
 }
+
 .buttons {
   display: flex;
   flex-direction: row;
@@ -131,8 +130,6 @@
   color: white;
   border-radius: 12px;
   border: 1px solid gray; /* Add border */
-  padding: 15px;
-  padding-bottom: 5px;
   cursor: pointer;
   font-size: 16px;
   text-align: center;
@@ -147,33 +144,26 @@
 .ctf-btn:hover{
   background-color: white;
   color:#ffcb9b ;
-  border-color: gray; 
-  transform: translateY(-20px); 
+  border: 1px solid gray; 
 }
 
 
  #uploadbtn2 {
-  height: 50px;
-  width: 220px;
-  margin-left: 100px;
-  font-weight: bold;
-  background-color: aquamarine;
-  padding: 6px;
-  border: 1px solid black;
+  margin-top: 23px;
+  background-color: #ffcb9b;
+  color: white;
+  border-radius: 12px;
+  border: 1px solid gray; /* Add border */
   cursor: pointer;
-  font-size: 18px;
-  border-radius: 10px;
-  margin: 20px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  font-size: 16px;
+  text-align: center;
+  width: 200px; /* Adjust width as needed */
+  height: 40px; 
+  backdrop-filter: blur(2px);
+  transition: 0.5s;
+  overflow: hidden;
 } 
 
-/* #uploadbtn2:hover {
-  color: darkgoldenrod;
-  background-color: lavender;
-  border: 1px solid black;
-} */
 
 .buttonDiv {
   display: flex;
@@ -240,10 +230,8 @@
   height: 300px;
   width: 500px;
 } */
-input{
-    height: 30px;
-    font-size: 16px;
-}
+
+
 .custom-datepicker-container {
   position: relative; /* Ensure proper positioning */
   display: inline-block; /* Display as inline-block */

@@ -9,102 +9,95 @@ import { FaCheckCircle } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
+//import '../EmployeeSection/tempArsh.css'
 
-const CallingTrackerForm = ({
-  initialData,
-  onDataAdditionSuccess,
-}) => {
 
+const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const { employeeId } = useParams();
 
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
-    time: "",
+    candidateAddedTime: '',
     recruiterName: "",
     candidateName: "",
     candidateEmail: "",
-    position: "",
+    jobDesignation: "",
     requirementId: "",
     requirementCompany: "",
     sourceName: "",
     contactNumber: "",
+    incentive: '',
     alternateNumber: "",
     currentLocation: "",
-    currentEducation:"",
+    fullAddress: "",
     communicationRating: "",
     selectYesOrNo: "No",
-    personalFeedback: "",
     callingFeedback: "",
-    totalExperienceYears: '',
-    totalExperienceMonths: '',
-    relaventExperience: '',
-    currentsalarylakh: '',
-    currentsalaryth: '',
     employee: {
-      employeeId: parseInt(employeeId, 10)
+      employeeId: parseInt(employeeId, 10),
     },
-    
   };
 
   const initialLineUpState = {
     date: new Date().toISOString().slice(0, 10),
-    time: "",
+    candidateAddedTime: '',
     recruiterName: "",
     candidateName: "",
     candidateEmail: "",
-    position: "",
+    jobDesignation: "",
+    incentive: '',
     requirementId: "",
     requirementCompany: "",
     sourceName: "",
     contactNumber: "",
     alternateNumber: "",
     currentLocation: "",
-    currentEducation:"",
     communicationRating: "",
-    personalFeedback: "",
     selectYesOrNo: "No",
     callingFeedback: "",
+    companyName: "",
+    experienceYear: '',
+    experienceMonth: '',
+    relevantExperience: "",
+    currentCTCLakh: '',
+    currentCTCThousand: '',
+    expectedCTCLakh: '',
+    expectedCTCThousand: '',
     dateOfBirth: "",
     gender: "",
     qualification: "",
     yearOfPassing: "",
-    totalExperience: "",
-    resume: "",
     extraCertification: "",
-    companyName: "",
-    currentCompany: "",
-    currentCTC: "",
-    expectedCTC: "",
-    noticePeriod: "",
-    holdingAnyOffer: "",
     feedBack: "",
-    availabilityForInterview: "",
+    holdingAnyOffer: "",
+    offerLetterMsg: "",
+    noticePeriod: "",
     msgForTeamLeader: "",
-    finalStatus: "",
+    availabilityForInterview: "",
     interviewTime: "",
-    totalExperienceYears: '',
-    totalExperienceMonths: '',
-    currentsalarylakh: '',
-    currentsalaryth: '',
+    finalStatus: "",
   };
 
   const [callingTracker, setCallingTracker] = useState(initialCallingTrackerState);
-  const [showLineUpForm, setShowLineUpForm] = useState(false);
   const [lineUpData, setLineUpData] = useState(initialLineUpState);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [resumeUploaded, setResumeUploaded] = useState(false);
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
   const [requirementOptions, setRequirementOptions] = useState([]);
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
-  const [time, setTime] = useState('');
+  const [candidateAddedTime, setCandidateAddedTime] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
-  const [isOtherEducationSelected,setIsOtherEducationSelected] = useState(false);
-  const [currentSalaryLakh, setCurrentSalaryLakh] = useState('');
-  const [currentSalaryThousand, setCurrentSalaryThousand] = useState('');
-  const [inputValue, setInputValue] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
+
+  const [candidateName, setCandidateName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [sourceName, setSourceName] = useState('');
+  const [errors, setErrors] = useState({
+    candidateName: "",
+    contactNumber: "",
+    sourceName: "",
+  });
 
   useEffect(() => {
     fetchRecruiterName();
@@ -129,19 +122,22 @@ const CallingTrackerForm = ({
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
-      setTime(`${hours}:${minutes}:${seconds}`);
+      const time = `${hours}:${minutes}:${seconds}`;
+      setCandidateAddedTime(time);
+      setCallingTracker(prevState => ({ ...prevState, candidateAddedTime: time }));
     };
 
-    updateTimer(); // Initial call to set the timer immediately
-    const timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
-
-    return () => clearInterval(timerInterval); // Cleanup on component unmount
+    updateTimer();
+    const timerInterval = setInterval(updateTimer, 1000);
+    return () => clearInterval(timerInterval);
   }, []);
 
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.43:8891/api/ats/157industries/employeeName/${employeeId}`
+
+        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
+
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -157,10 +153,13 @@ const CallingTrackerForm = ({
     }
   };
 
+
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.43:8891/api/ats/157industries/company-list/${employeeId}`
+
+        `http://192.168.1.38:8891/api/ats/157industries/company-details`
+
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -169,10 +168,14 @@ const CallingTrackerForm = ({
     }
   };
 
+
   const handleChange = (e) => {
     const { name, value } = e.target || e;
     if (name === "selectYesOrNo" && value === "No") {
       setLineUpData(initialLineUpState);
+
+    } else if (name === "selectYesOrNo" && value === "Interested") {
+      //setShowLineUpForm(true);
     }
     setCallingTracker({ ...callingTracker, [name]: value });
   };
@@ -189,8 +192,42 @@ const CallingTrackerForm = ({
     setLineUpData({ ...lineUpData, [name]: value });
   };
 
+
+  // const validateForm = () => {
+  //   let valid = true;
+  //   const errorsCopy = { ...errors };
+
+  //   if (!candidateName.trim()) {
+  //     errorsCopy.candidateName = "Please enter candidate name";
+  //     valid = false;
+  //   } else {
+  //     errorsCopy.candidateName = "";
+  //   }
+
+  //   if (!contactNumber.trim()) {
+  //     errorsCopy.contactNumber = "Please enter contact number";
+  //     valid = false;
+  //   } else {
+  //     errorsCopy.contactNumber = "";
+  //   }
+
+  //   if (!sourceName.trim()) {
+  //     errorsCopy.sourceName = "Please select source name";
+  //     valid = false;
+  //   } else {
+  //     errorsCopy.sourceName = "";
+  //   }
+
+  //   setErrors(errorsCopy);
+  //   return valid;
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const dataToUpdate = {
         ...callingTracker,
@@ -198,10 +235,10 @@ const CallingTrackerForm = ({
           employeeId: parseInt(employeeId, 10),
         },
       };
+
       let message = "";
 
       if (callingTracker.selectYesOrNo === "Interested") {
-     
         dataToUpdate.lineUp = lineUpData;
         setSuccessfulDataAdditions(true);
         message = "In Calling & Line Up Data Added";
@@ -210,7 +247,9 @@ const CallingTrackerForm = ({
       }
 
       await axios.post(
-        `http://192.168.1.43:8891/api/ats/157industries/${employeeId}/addCallingData`,
+
+        `http://192.168.1.38:8891/api/ats/157industries/${employeeId}/addCallingData`,
+
         dataToUpdate
       );
 
@@ -221,18 +260,16 @@ const CallingTrackerForm = ({
         setLineUpData(initialLineUpState);
         fetchRecruiterName();
         setSuccessfulDataAdditions(false);
-
-        console.log(message);
-        console.log("Data added successfully.");
       }, 3000);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+
   const handleChangeemail = (event) => {
     setEmail(event.target.value);
-    setError(''); // Clear the error message when the user starts typing
+    setError('');
   };
 
   const handleSubmitemail = (event) => {
@@ -240,7 +277,6 @@ const CallingTrackerForm = ({
     if (!email) {
       setError('Email is mandatory');
     } else {
-      // Proceed to the next step
       alert('Form submitted successfully!');
     }
   };
@@ -265,6 +301,7 @@ const CallingTrackerForm = ({
       setCallingTracker({ ...callingTracker, currentLocation: value });
     }
   };
+
   const handleLocationInputChange = (e) => {
     const { value } = e.target;
     setCallingTracker((prevState) => ({
@@ -288,6 +325,7 @@ const CallingTrackerForm = ({
       setCallingTracker({ ...callingTracker, currentEducation: value });
     }
   };
+
   const handleeducationInputChange = (e) => {
     const { value } = e.target;
     setCallingTracker((prevState) => ({
@@ -295,27 +333,25 @@ const CallingTrackerForm = ({
       currentEducation: value,
     }));
   };
+
   const handleDateChange = (e) => {
     const { value } = e.target;
     const today = new Date();
     const birthDate = new Date(value);
 
-    // Calculate age
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     const dayDiff = today.getDate() - birthDate.getDate();
 
-    // Adjust age if birth date hasn't occurred yet this year
     if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
       age--;
     }
 
-    // Ensure date is within the 18 to 60 years old range
     if (age >= 18 && age <= 60) {
       setLineUpData({ ...lineUpData, dateOfBirth: value });
     } else {
       alert('Date of birth must make the user between 18 and 60 years old.');
-      e.target.value = ''; // Reset the input if the date is invalid
+      e.target.value = '';
     }
   };
 
@@ -348,7 +384,7 @@ const CallingTrackerForm = ({
       });
     }
   };
-      
+
   const handleResumeFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -356,29 +392,46 @@ const CallingTrackerForm = ({
       setResumeUploaded(true);
     }
   };
-  
 
-  const handleChangecompany = async (e) => {
-    const { name, employeeId } = e.target;
-    setCallingTracker({ ...callingTracker, [name]: employeeId });
+  const handleRequirementChange = (e) => {
+    const { value } = e.target;
+    const selectedRequirement = requirementOptions.find(
+      (requirement) => requirement.requirementId === parseInt(value)
+    );
 
-    if (name === 'requirementId') {
-      try {
-        const response = await axios.get(
-          `http://192.168.1.43:8891/api/ats/157industries/company-details/${employeeId}`
-        );
-        const { requirementCompany, positions } = response.data;
-        setCallingTracker((prevState) => ({
-          ...prevState,
-          requirementCompany,
-          position: positions.length > 0 ? positions[0] : ''
-        }));
-      } catch (error) {
-        console.error("Error fetching company details:", error);
-      }
+    if (selectedRequirement) {
+      setCallingTracker((prevState) => ({
+        ...prevState,
+        requirementId: selectedRequirement.requirementId,
+        jobDesignation: selectedRequirement.designation,
+        requirementCompany: selectedRequirement.companyName,
+        incentive: selectedRequirement.incentive,
+      }));
+      setLineUpData((prevState) => ({
+        ...prevState,
+        requirementId: selectedRequirement.requirementId,
+        jobDesignation: selectedRequirement.designation,
+        requirementCompany: selectedRequirement.companyName,
+        incentive: selectedRequirement.incentive,
+      }));
+    } else {
+      setCallingTracker((prevState) => ({
+        ...prevState,
+        requirementId: value,
+        jobDesignation: '',
+        requirementCompany: '',
+        incentive: '',
+      }));
+      setLineUpData((prevState) => ({
+        ...prevState,
+        requirementId: value,
+        jobDesignation: '',
+        requirementCompany: '',
+        incentive: '',
+      }));
     }
   };
-  
+
 
   return (
     <div>
@@ -386,103 +439,110 @@ const CallingTrackerForm = ({
         <div className="maintable">
           <table id="studTables" className="table  table-striped  text-center" >
             <tbody className="table-group-divider">
-              
-              <tr id="table-row" >
-              <th scope="col" >Date & Time:</th>
-              <td style={{ display: "flex", alignItems: "center",justifyContent:"center",paddingTop:"14px", }}>
-              <input
-                type="text"
-                id="currentDate"
-                name="currentDate"
-                value={date}
-                className="form-control mb-2"
-                style={{ marginRight: "20px",width:"180px" }}
-                
-                readOnly
-              />
-              <input
-                type="text"
-                id="currentTimer"
-                name="currentTimer"
-                value={time}
-                className="form-control"
-                style={{ marginBottom: "9px",width:"180px" , marginRight:"30px",paddingLeft:"10px" }}
-                readOnly
-              />
-            </td>
+
+              <tr  >
+                <th scope="col" >Date & Time:</th>
+                <td style={{ display: "flex", alignItems: "center", justifyContent: "center",padding:"0%" }}>
+                  <input
+                    type="text"
+                    //id="currentDate"
+                    name="date"
+                    value={callingTracker.date}
+                    className="form-control mb-2"
+                    style={{ marginRight: "20px", width: "180px" }}
+                    readOnly
+                  />
+                  <input
+                    type="text"
+                    id="candidateAddedTime"
+                    name="candidateAddedTime"
+                    value={candidateAddedTime}
+                    className="form-control"
+                    style={{ marginBottom: "auto", width: "180px", marginRight: "30px", paddingLeft: "10px" }}
+                    readOnly
+                  />
+                </td>
                 <th >Recruiters Name</th>
                 <td>
                   <input
                     type="text"
                     name="recruiterName"
                     value={callingTracker.recruiterName}
-                    onChange={handleChange}
                     readOnly
+                    onChange={handleChange}
+
                     className="form-control"
                   />
                 </td>
               </tr>
+
              
+
 
           
               <div hidden>
-              <tr >
-                <th>Employee ID</th>
-                <td>
-                  <input type="text" name="employeeId" readOnly value={employeeId} />
-                </td>
-              </tr>
+
+                <input type="text" name="employeeId" readOnly value={employeeId} />
+
               </div>
 
-              <tr id="heading123">
+              <tr>
+
                 <th> Candidates Full Name* </th>
                 <td>
                   <input
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
-                    
+                    className={`form-control ${errors.candidateName ? 'is-invalid' : ''}`}
                     onChange={handleChange}
-                    className="form-control"
-                    required
+                    required={callingTracker.selectYesOrNo !== "Interested"}
                   />
+                  {errors.candidateName && (
+                    <div className="invalid-feedback">{errors.candidateName}</div>
+                  )}
+
                 </td>
+
                 <th scope="col">Candidate Email</th>
                 <td>
-                <input
-                  type="email"
-                  name="candidateEmail"
-                  value={email}
-                  onChange={handleChangeemail}
+                  <input
+                    type="email"
+                    name="candidateEmail"
+                    value={callingTracker.candidateEmail}
+                    onChange={handleChange}
+                    className={`form-control ${error ? 'is-invalid' : ''}`}
+                    // required
 
+                  />
 
-                  className={`form-control ${error ? 'is-invalid' : ''}`}
-                  required
-                />
-                
-              </td>
+                </td>
+
               </tr>
               <tr>
                 <th scope="col">Contact Number*</th>
                 <td>
                   <PhoneInput
                     placeholder="Enter phone number"
+                    name="contactNumber"
                     value={callingTracker.contactNumber}
-                    onChange={(value) =>
-                      handlePhoneNumberChange(value, "contactNumber")
-                    }
+                    onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
+                    required={callingTracker.selectYesOrNo !== "Interested"}
                     defaultCountry="IN"
                     maxLength={11}
-                    className="PhoneInputInput"
-                    name="contactNumber"
-                    required
+
                   />
+                  {errors.contactNumber && (
+                    <div className="invalid-feedback">{errors.contactNumber}</div>
+                  )}
+
                 </td>
 
                 <th scope="col">Alternate Number</th>
                 <td>
                   <PhoneInput
                     placeholder="Enter phone number"
+                    name="alternateNumber"
                     value={callingTracker.alternateNumber}
                     onChange={(value) =>
                       handlePhoneNumberChange(value, "alternateNumber")
@@ -490,7 +550,7 @@ const CallingTrackerForm = ({
                     defaultCountry="IN"
                     maxLength={11}
                     className="PhoneInputInput"
-                    name="alternateNumber"
+
                   />
                 </td>
               </tr>
@@ -498,12 +558,14 @@ const CallingTrackerForm = ({
                 <th scope="col">Source Name* </th>
                 <td>
                   <select
-                    className="form-select"
+                    className={`form-control ${errors.sourceName ? 'is-invalid' : ''}`}
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
-                    
+                    required={callingTracker.selectYesOrNo !== "Interested"}
                   >
+
+
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
                     <option value="Naukri">Naukri</option>
@@ -515,106 +577,110 @@ const CallingTrackerForm = ({
                     <option value="Friends">Friends</option>
                     <option value="others">others</option>
                   </select>
+                  {errors.sourceName && (
+                    <div className="invalid-feedback">{errors.sourceName}</div>
+                  )}
                 </td>
-                <th scope="col">Applying Company Id</th>
+
+
+                <th scope="col">Job Id</th>
                 <td>
                   <select
-                    className="form-select mb-1"
+                    className="form-control"
+                    id="requirementId"
                     name="requirementId"
                     value={callingTracker.requirementId}
-                    onChange={handleChangecompany}
+                    onChange={handleRequirementChange}
+                    required={callingTracker.selectYesOrNo === "Interested"}
+
                   >
-                    <option value="">Select ID</option>
+                    <option value="">Select Requirement</option>
                     {requirementOptions.map((option) => (
-                      <option key={option[0]} value={option[0]}>
-                        {option[0]}
+                      <option key={option.requirementId} value={option.requirementId}>
+                        {option.requirementId}
                       </option>
                     ))}
                   </select>
                 </td>
-
-                
               </tr>
-
               <tr>
-              <th scope="col">Applying For Position</th>
-                <td>
-                  <input
+                <th scope="col">Applying For Position</th>
+                <td style={{ display: "flex", justifyContent: "space-around" }}>
+                  <input style={{ width: "260px" }}
                     type="text"
-                    name="position"
-                    value={callingTracker.position}
-                    onChange={handleChangecompany}
+                    id="jobDesignation"
+                    name="jobDesignation"
                     className="form-control"
+                    value={callingTracker.jobDesignation}
+                    readOnly
                   />
+                  <input placeholder="Incentive" value={callingTracker.incentive} readOnly className="form-control" style={{ width: "150px" }} type="text" />
                 </td>
-                
+
 
                 <th scope="col">Applying Company Name</th>
                 <td>
-                  <select
-                    className="form-select"
-                   
+                  <input
+                    type="text"
+                    id="requirementCompany"
                     name="requirementCompany"
+                    className="form-control"
                     value={callingTracker.requirementCompany}
-                    onChange={handleChangecompany}
-                  >
-                    <option value="">Select Company</option>
-                    {requirementOptions.map((option) => (
-                      <option key={option.requirement_id} employeeId={option[1]}>
-                        {option[1]}
-                      </option>
-                    ))}
-                  </select>
+                    readOnly
+                  />
                 </td>
               </tr>
 
               <tr>
                 <th>Current Location</th>
                 <td>
-            {!isOtherLocationSelected ? (
-              <select
-                name="currentLocation"
-                value={callingTracker.currentLocation}
-                onChange={handleLocationChange}
-                className="form-control"
-              >
-                <option value="">Select Location</option>
-                <option value="Pune City">Pune City</option>
-                <option value="PCMC">PCMC</option>
-                <option value="Other">Other</option>
-                
-              </select>
-            ) : (
-              <input
-                type="text"
-                name="currentLocation"
-                value={callingTracker.currentLocation}
-                onChange={handleLocationInputChange}
-                className="form-control"
-                placeholder="Enter your location"
-                required
-              />
-            )}
-          </td> 
+                  {!isOtherLocationSelected ? (
+                    <select 
+                    required={callingTracker.selectYesOrNo === "Interested"}
+                      name="currentLocation"
+                      value={callingTracker.currentLocation}
+                      onChange={handleLocationChange}
+                      className="form-control"
+                    >
+                      <option value="">Select Location</option>
+                      <option value="Pune City">Pune City</option>
+                      <option value="PCMC">PCMC</option>
+                      <option value="Other">Other</option>
 
-          <th> Full Adress</th>
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      name="currentLocation"
+                      value={callingTracker.currentLocation}
+                      onChange={handleLocationInputChange}
+                      className="form-control"
+                      placeholder="Enter your location"
+                      required
+                    />
+                  )}
+                </td>
+
+                <th> Full Adress</th>
                 <td>
                   <input
                     type="text"
                     name="fullAddress"
                     value={callingTracker.fullAddress}
                     onChange={handleChange}
+                    required={callingTracker.selectYesOrNo === "Interested"}
                     className="form-control"
                   />
                 </td>
-                
-                
+
+
               </tr>
 
               <tr>
                 <th>Calling Feedback</th>
                 <td>
                   <select
+                    required={callingTracker.selectYesOrNo === "Interested"}
                     className="form-select"
                     name="callingFeedback"
                     value={callingTracker.callingFeedback}
@@ -638,7 +704,9 @@ const CallingTrackerForm = ({
                 </td>
                 <th>Candidate Interested</th>
                 <td>
+
                   <select
+                    required
                     className="form-select"
                     name="selectYesOrNo"
                     value={callingTracker.selectYesOrNo}
@@ -655,6 +723,7 @@ const CallingTrackerForm = ({
                     <option value="Not Eligible But Interested">
                       Not Eligible But Intersted
                     </option>
+
                   </select>
                 </td>
               </tr>
@@ -662,55 +731,57 @@ const CallingTrackerForm = ({
               <tr>
                 <th scope="col">Date Of Birth</th>
                 <td>
-            <input
-              type="date"
-              name="dateOfBirth"
-              value={lineUpData.dateOfBirth}
-              onChange={handleDateChange}
-              className="form-control"
-              required
-            />
-          </td>
+                  <input
+                    type="date"
+                    name="dateOfBirth"
+                    value={lineUpData.dateOfBirth}
+                    onChange={handleDateChange}
+                    className="form-control"
+                  />
+                </td>
 
                 <th scope="col">Gender</th>
-                <td>
+                <td style={{textAlign:"center"}}>
                   <div
                     className="main-gender"
-                    style={{ display: "flex", alignItems: "center" }}
+                    style={{ display: "flex", alignItems: "center",textAlign:"center" , gap:"10px"}}
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   >
+
+                    <input
+                      style={{  textAlign:"center"}}
+                      type="checkbox"
+                      name="male"
+                      value="male"
+                      className="gender" 
                     
-                      <input
-                      style={{paddingTop:"8px"}}
-                        type="checkbox"
-                        name="male"
-                        value="male"
-                        className="gender"
-                        checked={lineUpData.gender === "male"}
-                        onChange={(e) =>
-                          setLineUpData({
-                            ...lineUpData,
-                            gender: e.target.value,
-                          })
-                        }
-                      />
-                      <label className="px-2">
+                      checked={lineUpData.gender === "male"}
+                      onChange={(e) =>
+                        setLineUpData({
+                          ...lineUpData,
+                          gender: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="px-2">
                       Male
                     </label>
-                  
-                      <input
-                        type="checkbox"
-                        name="female"
-                        value="female"
-                        className="gender"
-                        checked={lineUpData.gender === "female"}
-                        onChange={(e) =>
-                          setLineUpData({
-                            ...lineUpData,
-                            gender: e.target.value,
-                          })
-                        }
-                      />
-                        <label className="px-2">
+
+                    <input
+                      type="checkbox"
+                      name="female"
+                      value="female"
+                      className="gender"
+                      style={{ paddingLeft: "auto" }}
+                      checked={lineUpData.gender === "female"}
+                      onChange={(e) =>
+                        setLineUpData({
+                          ...lineUpData,
+                          gender: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="px-2">
                       Female
                     </label>
                   </div>
@@ -718,192 +789,194 @@ const CallingTrackerForm = ({
               </tr>
 
               <tr>
-              <th>Education</th>
+                <th>Education</th>
                 <td>
-            {!isOtherEducationSelected ? (
-              <select
-                name="currentEducation"
-                value={callingTracker.currentEducation}
-                onChange={handleEducationChange}
-                className="form-control"
-              >
-                <option value="">__Select __</option>
-                <option value="Other">Other</option>
-                <option value="10th">10th</option>
-                <option value="12th">12 th</option>
-                <option value="ITI">ITI</option>
-                <option value="diploma in CS">Diploma in Computer science</option>
-                <option value="Degree In CS">BTech in Computer Science</option>
-                <option value="M-Tech In CS">MTech in Computer Science</option>
-                <option value="PhD ">PhD</option>
-                <option value="BSC">BSC in chemestry</option>
-                <option value="MSC">MSC </option>
-                <option value="BCA">BCA</option>
-                <option value="MCA">MCA</option>
-                <option value= "Associate of Arts (AA)">Associate of Arts (AA)</option>
-<option value ="Associate of Science (AS)">Associate of Science (AS)</option>
-<option value= "Associate of Applied Science (AAS)">Associate of Applied Science (AAS)</option>
-<option value="Associate of Fine Arts (AFA)">Associate of Fine Arts (AFA)</option>
-<option value="Associate of Business Administration (ABA)">Associate of Business Administration (ABA)</option>
-<option value="Associate of Engineering (AE)">Associate of Engineering (AE)</option>
-<option value="Associate of Nursing (AN)">Associate of Nursing (AN)</option>
-<option value="Associate of General Studies (AGS)">Associate of General Studies (AGS)</option>
-<option value="Associate of Occupational Studies (AOS)">Associate of Occupational Studies (AOS)</option>
-<option value="Associate of Information Technology (AIT)">Associate of Information Technology (AIT)</option>
-<option value="Bachelor's Degrees">Bachelor's Degrees</option>
-<option value="Bachelor of Arts (BA)">Bachelor of Arts (BA)</option>
-<option value="Bachelor of Science (BS)">Bachelor of Science (BS)</option>
-<option value="Bachelor of Fine Arts (BFA)">Bachelor of Fine Arts (BFA)</option>
-<option value="Bachelor of Business Administration (BBA)">Bachelor of Business Administration (BBA)</option>
-<option value="Bachelor of Engineering (BEng)">Bachelor of Engineering (BEng)</option>
-<option value="Bachelor of Technology (BTech)">Bachelor of Technology (BTech)</option>
-<option value="Bachelor of Education (BEd)">Bachelor of Education (BEd)</option>
-<option value="Bachelor of Nursing (BN)">Bachelor of Nursing (BN)</option>
-<option value="Bachelor of Social Work (BSW)">Bachelor of Social Work (BSW)</option>
-<option value="Bachelor of Music (BM)">Bachelor of Music (BM)</option>
-<option value="Bachelor of Architecture (BArch)">Bachelor of Architecture (BArch)</option>
-<option value="Bachelor of Science in Nursing (BSN)">Bachelor of Science in Nursing (BSN)</option>
-<option value="Bachelor of Computer Science (BCS)">Bachelor of Computer Science (BCS)</option>
-<option value="Bachelor of Laws (LLB)">Bachelor of Laws (LLB)</option>
-<option value="Bachelor of Medicine, Bachelor of Surgery (MBBS)">Bachelor of Medicine, Bachelor of Surgery (MBBS)</option>
-<option value="Bachelor of Dental Surgery (BDS)">Bachelor of Dental Surgery (BDS)</option>
-<option value="Bachelor of Pharmacy (BPharm)">Bachelor of Pharmacy (BPharm)</option>
-<option value="Bachelor of Public Health (BPH)">Bachelor of Public Health (BPH)</option>
-<option value="Bachelor of Environmental Science (BES)">Bachelor of Environmental Science (BES)</option>
-<option value="Bachelor of Communication (BComm)">Bachelor of Communication (BComm)</option>
-<option value="Bachelor of Information Technology (BIT)">Bachelor of Information Technology (BIT)</option>
-<option value="Bachelor of Science in Engineering (BSE)">Bachelor of Science in Engineering (BSE)</option>
-<option value="Bachelor of Business (BBus)">Bachelor of Business (BBus)</option>
-<option value="Bachelor of Design (BDes)">Bachelor of Design (BDes)</option>
-<option value="Bachelor of Journalism (BJ)">Bachelor of Journalism (BJ)</option>
-<option value="Bachelor of Applied Science (BAS)">Bachelor of Applied Science (BAS)</option>
-<option value="Bachelor of Agriculture (BAgri)">Bachelor of Agriculture (BAgri)</option>
-<option value="Bachelor of Veterinary Science (BVSc)">Bachelor of Veterinary Science (BVSc)</option>
-<option value="Bachelor of Physiotherapy (BPT)">Bachelor of Physiotherapy (BPT)</option>
-<option value="Master's Degrees">Master's Degrees</option>
-<option value="Master of Arts (MA)">Master of Arts (MA)</option>
-<option value="Master of Science (MS or MSc)">Master of Science (MS or MSc)</option>
-<option value="Master of Business Administration (MBA)">Master of Business Administration (MBA)</option>
-<option value="Master of Fine Arts (MFA)">Master of Fine Arts (MFA)</option>
-<option value="Master of Education (MEd)">Master of Education (MEd)</option>
-<option value="Master of Engineering (MEng)">Master of Engineering (MEng)</option>
-<option value="Master of Technology (MTech)">Master of Technology (MTech)</option>
-<option value="Master of Social Work (MSW)">Master of Social Work (MSW)</option>
-<option value="Master of Music (MM)">Master of Music (MM)</option>
-<option value="Master of Architecture (MArch)">Master of Architecture (MArch)</option>
-<option value="Master of Public Health (MPH)">Master of Public Health (MPH)</option>
-<option value="Master of Laws (LLM)">Master of Laws (LLM)</option>
-<option value="Master of Computer Applications (MCA)">Master of Computer Applications (MCA)</option>
-<option value="Master of Science in Nursing (MSN)">Master of Science in Nursing (MSN)</option>
-<option value="Master of Library Science (MLS)">Master of Library Science (MLS)</option>
-<option value="Master of Public Administration (MPA)">Master of Public Administration (MPA)</option>
-<option value="Master of Philosophy (MPhil)">Master of Philosophy (MPhil)</option>
-<option value="Master of Professional Studies (MPS)">Master of Professional Studies (MPS)</option>
-<option value="Master of Design (MDes)">Master of Design (MDes)</option>
-<option value="Master of Journalism (MJ)">Master of Journalism (MJ)</option>
-<option value="Master of Environmental Science (MES)">Master of Environmental Science (MES)</option>
-<option value="Master of Communication (MComm)">Master of Communication (MComm)</option>
-<option value="Master of International Business (MIB)">Master of International Business (MIB)</option>
-<option value="Master of Finance (MFin)">Master of Finance (MFin)</option>
-<option value="Master of Management (MMgt)">Master of Management (MMgt)</option>
-<option value="Master of Science in Engineering (MSE)">Master of Science in Engineering (MSE)</option>
-<option value="Master of Health Administration (MHA)">Master of Health Administration (MHA)</option>
-<option value="Master of Urban Planning (MUP)">Master of Urban Planning (MUP)</option>
-<option value="Master of Data Science (MDS)">Master of Data Science (MDS)</option>
-<option value="Doctoral Degrees">Doctoral Degrees</option>
-<option value="Doctor of Philosophy (PhD)">Doctor of Philosophy (PhD)</option>
-<option value="Doctor of Medicine (MD)">Doctor of Medicine (MD)</option>
-<option value="Doctor of Education (EdD)">Doctor of Education (EdD)</option>
-<option value="Doctor of Business Administration (DBA)">Doctor of Business Administration (DBA)</option>
-<option value="Doctor of Dental Surgery (DDS)">Doctor of Dental Surgery (DDS)</option>
-<option value="Doctor of Dental Medicine (DMD)">Doctor of Dental Medicine (DMD)</option>
-<option value="Doctor of Veterinary Medicine (DVM)">Doctor of Veterinary Medicine (DVM)</option>
-<option value="Doctor of Nursing Practice (DNP)">Doctor of Nursing Practice (DNP)</option>
-<option value="Doctor of Psychology (PsyD)">Doctor of Psychology (PsyD)</option>
-<option value="Juris Doctor (JD)">Juris Doctor (JD)</option>
-<option value="Doctor of Public Health (DrPH)">Doctor of Public Health (DrPH)</option>
-<option value="Doctor of Pharmacy (PharmD)">Doctor of Pharmacy (PharmD)</option>
-<option value="Doctor of Physical Therapy (DPT)">Doctor of Physical Therapy (DPT)</option>
-<option value="Doctor of Engineering (DEng or DScEng)">Doctor of Engineering (DEng or DScEng)</option>
-<option value="Doctor of Science (DSc)">Doctor of Science (DSc)</option>
-<option value="Doctor of Musical Arts (DMA)">Doctor of Musical Arts (DMA)</option>
-<option value="Doctor of Social Work (DSW)">Doctor of Social Work (DSW)</option>
-<option value="Doctor of Information Technology (DIT)">Doctor of Information Technology (DIT)</option>
-<option value="Doctor of Health Science (DHSc)">Doctor of Health Science (DHSc)</option>
-<option value="Doctor of Public Administration (DPA)">Doctor of Public Administration (DPA)</option>
-<option value="Diplomas and Certificates">Diplomas and Certificates</option>
-<option value="Diploma in Engineering">Diploma in Engineering</option>
-<option value="Diploma in Nursing">Diploma in Nursing</option>
-<option value="Diploma in Education">Diploma in Education</option>
-<option value="Diploma in Business Studies">Diploma in Business Studies</option>
-<option value="Diploma in Computer Applications">Diploma in Computer Applications</option>
-<option value="Diploma in Culinary Arts">Diploma in Culinary Arts</option>
-<option value="Diploma in Graphic Design">Diploma in Graphic Design</option>
-<option value="Diploma in Information Technology">Diploma in Information Technology</option>
-<option value="Diploma in Pharmacy">Diploma in Pharmacy</option>
-<option value="Diploma in Accounting">Diploma in Accounting</option>
-<option value="Diploma in Marketing">Diploma in Marketing</option>
-<option value="Diploma in Hospitality Management">Diploma in Hospitality Management</option>
-<option value="Diploma in Fashion Design">Diploma in Fashion Design</option>
-<option value="Diploma in Project Management">Diploma in Project Management</option>
-<option value="Diploma in Electrical Engineering">Diploma in Electrical Engineering</option>
-<option value="Diploma in Mechanical Engineering">Diploma in Mechanical Engineering</option>
-<option value="Diploma in Civil Engineering">Diploma in Civil Engineering</option>
-<option value="Diploma in Health Sciences">Diploma in Health Sciences</option>
-<option value="Diploma in Environmental Science">Diploma in Environmental Science</option>
-<option value="Diploma in Journalism">Diploma in Journalism</option>
-<option value="Diploma in Social Work">Diploma in Social Work</option>
-<option value="Diploma in Early Childhood Education">Diploma in Early Childhood Education</option>
-<option value="Diploma in Interior Design">Diploma in Interior Design</option>
-<option value="Diploma in Event Management">Diploma in Event Management</option>
-<option value="Diploma in Human Resource Management">Diploma in Human Resource Management</option>
-<option value="Diploma in Digital Marketing">Diploma in Digital Marketing</option>
-<option value="Diploma in Financial Management">Diploma in Financial Management</option>
-<option value="Diploma in Logistics and Supply Chain Management">Diploma in Logistics and Supply Chain Management</option>
-<option value="Diploma in Biotechnology">Diploma in Biotechnology</option>
-<option value="Diploma in Tourism Management">Diploma in Tourism Management</option>
-<option value="Diploma in Public Relations">Diploma in Public Relations</option>
-<option value="Diploma in Web Development">Diploma in Web Development</option>
-<option value="Diploma in Film and Television Production">Diploma in Film and Television Production</option>
-<option value="Diploma in Software Engineering">Diploma in Software Engineering</option>
-<option value="Diploma in Agriculture">Diploma in Agriculture</option>
-<option value="Diploma in Cybersecurity">Diploma in Cybersecurity</option>
-<option value="Diploma in Data Science">Diploma in Data Science</option>
-<option value="Diploma in Artificial Intelligence">Diploma in Artificial Intelligence</option>
-               
-              </select>
-            ) : (
-              <input
-                type="text"
-                name="education"
-                value={callingTracker.currentEducation}
-                onChange={handleeducationInputChange}
-                className="form-control"
-                placeholder="Enter your Education"
-              />
-            )}
-          </td> 
-                <th scope="col">Year Of Passing</th>
-                
-                  <td>
+                  {!isOtherEducationSelected ? (
+                    <select
+                      name="qualification"
+                      value={lineUpData.qualification}
+                      onChange={handleLineUpChange}
+                      className="form-control"
+                      required={callingTracker.selectYesOrNo === "Interested"}
+                    >
+                      <option value="">__Select __</option>
+                      <option value="Other">Other</option>
+                      <option value="10th">10th</option>
+                      <option value="12th">12 th</option>
+                      <option value="ITI">ITI</option>
+                      <option value="diploma in CS">Diploma in Computer science</option>
+                      <option value="Degree In CS">BTech in Computer Science</option>
+                      <option value="M-Tech In CS">MTech in Computer Science</option>
+                      <option value="PhD ">PhD</option>
+                      <option value="BSC">BSC in chemestry</option>
+                      <option value="MSC">MSC </option>
+                      <option value="BCA">BCA</option>
+                      <option value="MCA">MCA</option>
+                      <option value="Associate of Arts (AA)">Associate of Arts (AA)</option>
+                      <option value="Associate of Science (AS)">Associate of Science (AS)</option>
+                      <option value="Associate of Applied Science (AAS)">Associate of Applied Science (AAS)</option>
+                      <option value="Associate of Fine Arts (AFA)">Associate of Fine Arts (AFA)</option>
+                      <option value="Associate of Business Administration (ABA)">Associate of Business Administration (ABA)</option>
+                      <option value="Associate of Engineering (AE)">Associate of Engineering (AE)</option>
+                      <option value="Associate of Nursing (AN)">Associate of Nursing (AN)</option>
+                      <option value="Associate of General Studies (AGS)">Associate of General Studies (AGS)</option>
+                      <option value="Associate of Occupational Studies (AOS)">Associate of Occupational Studies (AOS)</option>
+                      <option value="Associate of Information Technology (AIT)">Associate of Information Technology (AIT)</option>
+                      <option value="Bachelor's Degrees">Bachelor's Degrees</option>
+                      <option value="Bachelor of Arts (BA)">Bachelor of Arts (BA)</option>
+                      <option value="Bachelor of Science (BS)">Bachelor of Science (BS)</option>
+                      <option value="Bachelor of Fine Arts (BFA)">Bachelor of Fine Arts (BFA)</option>
+                      <option value="Bachelor of Business Administration (BBA)">Bachelor of Business Administration (BBA)</option>
+                      <option value="Bachelor of Engineering (BEng)">Bachelor of Engineering (BEng)</option>
+                      <option value="Bachelor of Technology (BTech)">Bachelor of Technology (BTech)</option>
+                      <option value="Bachelor of Education (BEd)">Bachelor of Education (BEd)</option>
+                      <option value="Bachelor of Nursing (BN)">Bachelor of Nursing (BN)</option>
+                      <option value="Bachelor of Social Work (BSW)">Bachelor of Social Work (BSW)</option>
+                      <option value="Bachelor of Music (BM)">Bachelor of Music (BM)</option>
+                      <option value="Bachelor of Architecture (BArch)">Bachelor of Architecture (BArch)</option>
+                      <option value="Bachelor of Science in Nursing (BSN)">Bachelor of Science in Nursing (BSN)</option>
+                      <option value="Bachelor of Computer Science (BCS)">Bachelor of Computer Science (BCS)</option>
+                      <option value="Bachelor of Laws (LLB)">Bachelor of Laws (LLB)</option>
+                      <option value="Bachelor of Medicine, Bachelor of Surgery (MBBS)">Bachelor of Medicine, Bachelor of Surgery (MBBS)</option>
+                      <option value="Bachelor of Dental Surgery (BDS)">Bachelor of Dental Surgery (BDS)</option>
+                      <option value="Bachelor of Pharmacy (BPharm)">Bachelor of Pharmacy (BPharm)</option>
+                      <option value="Bachelor of Public Health (BPH)">Bachelor of Public Health (BPH)</option>
+                      <option value="Bachelor of Environmental Science (BES)">Bachelor of Environmental Science (BES)</option>
+                      <option value="Bachelor of Communication (BComm)">Bachelor of Communication (BComm)</option>
+                      <option value="Bachelor of Information Technology (BIT)">Bachelor of Information Technology (BIT)</option>
+                      <option value="Bachelor of Science in Engineering (BSE)">Bachelor of Science in Engineering (BSE)</option>
+                      <option value="Bachelor of Business (BBus)">Bachelor of Business (BBus)</option>
+                      <option value="Bachelor of Design (BDes)">Bachelor of Design (BDes)</option>
+                      <option value="Bachelor of Journalism (BJ)">Bachelor of Journalism (BJ)</option>
+                      <option value="Bachelor of Applied Science (BAS)">Bachelor of Applied Science (BAS)</option>
+                      <option value="Bachelor of Agriculture (BAgri)">Bachelor of Agriculture (BAgri)</option>
+                      <option value="Bachelor of Veterinary Science (BVSc)">Bachelor of Veterinary Science (BVSc)</option>
+                      <option value="Bachelor of Physiotherapy (BPT)">Bachelor of Physiotherapy (BPT)</option>
+                      <option value="Master's Degrees">Master's Degrees</option>
+                      <option value="Master of Arts (MA)">Master of Arts (MA)</option>
+                      <option value="Master of Science (MS or MSc)">Master of Science (MS or MSc)</option>
+                      <option value="Master of Business Administration (MBA)">Master of Business Administration (MBA)</option>
+                      <option value="Master of Fine Arts (MFA)">Master of Fine Arts (MFA)</option>
+                      <option value="Master of Education (MEd)">Master of Education (MEd)</option>
+                      <option value="Master of Engineering (MEng)">Master of Engineering (MEng)</option>
+                      <option value="Master of Technology (MTech)">Master of Technology (MTech)</option>
+                      <option value="Master of Social Work (MSW)">Master of Social Work (MSW)</option>
+                      <option value="Master of Music (MM)">Master of Music (MM)</option>
+                      <option value="Master of Architecture (MArch)">Master of Architecture (MArch)</option>
+                      <option value="Master of Public Health (MPH)">Master of Public Health (MPH)</option>
+                      <option value="Master of Laws (LLM)">Master of Laws (LLM)</option>
+                      <option value="Master of Computer Applications (MCA)">Master of Computer Applications (MCA)</option>
+                      <option value="Master of Science in Nursing (MSN)">Master of Science in Nursing (MSN)</option>
+                      <option value="Master of Library Science (MLS)">Master of Library Science (MLS)</option>
+                      <option value="Master of Public Administration (MPA)">Master of Public Administration (MPA)</option>
+                      <option value="Master of Philosophy (MPhil)">Master of Philosophy (MPhil)</option>
+                      <option value="Master of Professional Studies (MPS)">Master of Professional Studies (MPS)</option>
+                      <option value="Master of Design (MDes)">Master of Design (MDes)</option>
+                      <option value="Master of Journalism (MJ)">Master of Journalism (MJ)</option>
+                      <option value="Master of Environmental Science (MES)">Master of Environmental Science (MES)</option>
+                      <option value="Master of Communication (MComm)">Master of Communication (MComm)</option>
+                      <option value="Master of International Business (MIB)">Master of International Business (MIB)</option>
+                      <option value="Master of Finance (MFin)">Master of Finance (MFin)</option>
+                      <option value="Master of Management (MMgt)">Master of Management (MMgt)</option>
+                      <option value="Master of Science in Engineering (MSE)">Master of Science in Engineering (MSE)</option>
+                      <option value="Master of Health Administration (MHA)">Master of Health Administration (MHA)</option>
+                      <option value="Master of Urban Planning (MUP)">Master of Urban Planning (MUP)</option>
+                      <option value="Master of Data Science (MDS)">Master of Data Science (MDS)</option>
+                      <option value="Doctoral Degrees">Doctoral Degrees</option>
+                      <option value="Doctor of Philosophy (PhD)">Doctor of Philosophy (PhD)</option>
+                      <option value="Doctor of Medicine (MD)">Doctor of Medicine (MD)</option>
+                      <option value="Doctor of Education (EdD)">Doctor of Education (EdD)</option>
+                      <option value="Doctor of Business Administration (DBA)">Doctor of Business Administration (DBA)</option>
+                      <option value="Doctor of Dental Surgery (DDS)">Doctor of Dental Surgery (DDS)</option>
+                      <option value="Doctor of Dental Medicine (DMD)">Doctor of Dental Medicine (DMD)</option>
+                      <option value="Doctor of Veterinary Medicine (DVM)">Doctor of Veterinary Medicine (DVM)</option>
+                      <option value="Doctor of Nursing Practice (DNP)">Doctor of Nursing Practice (DNP)</option>
+                      <option value="Doctor of Psychology (PsyD)">Doctor of Psychology (PsyD)</option>
+                      <option value="Juris Doctor (JD)">Juris Doctor (JD)</option>
+                      <option value="Doctor of Public Health (DrPH)">Doctor of Public Health (DrPH)</option>
+                      <option value="Doctor of Pharmacy (PharmD)">Doctor of Pharmacy (PharmD)</option>
+                      <option value="Doctor of Physical Therapy (DPT)">Doctor of Physical Therapy (DPT)</option>
+                      <option value="Doctor of Engineering (DEng or DScEng)">Doctor of Engineering (DEng or DScEng)</option>
+                      <option value="Doctor of Science (DSc)">Doctor of Science (DSc)</option>
+                      <option value="Doctor of Musical Arts (DMA)">Doctor of Musical Arts (DMA)</option>
+                      <option value="Doctor of Social Work (DSW)">Doctor of Social Work (DSW)</option>
+                      <option value="Doctor of Information Technology (DIT)">Doctor of Information Technology (DIT)</option>
+                      <option value="Doctor of Health Science (DHSc)">Doctor of Health Science (DHSc)</option>
+                      <option value="Doctor of Public Administration (DPA)">Doctor of Public Administration (DPA)</option>
+                      <option value="Diplomas and Certificates">Diplomas and Certificates</option>
+                      <option value="Diploma in Engineering">Diploma in Engineering</option>
+                      <option value="Diploma in Nursing">Diploma in Nursing</option>
+                      <option value="Diploma in Education">Diploma in Education</option>
+                      <option value="Diploma in Business Studies">Diploma in Business Studies</option>
+                      <option value="Diploma in Computer Applications">Diploma in Computer Applications</option>
+                      <option value="Diploma in Culinary Arts">Diploma in Culinary Arts</option>
+                      <option value="Diploma in Graphic Design">Diploma in Graphic Design</option>
+                      <option value="Diploma in Information Technology">Diploma in Information Technology</option>
+                      <option value="Diploma in Pharmacy">Diploma in Pharmacy</option>
+                      <option value="Diploma in Accounting">Diploma in Accounting</option>
+                      <option value="Diploma in Marketing">Diploma in Marketing</option>
+                      <option value="Diploma in Hospitality Management">Diploma in Hospitality Management</option>
+                      <option value="Diploma in Fashion Design">Diploma in Fashion Design</option>
+                      <option value="Diploma in Project Management">Diploma in Project Management</option>
+                      <option value="Diploma in Electrical Engineering">Diploma in Electrical Engineering</option>
+                      <option value="Diploma in Mechanical Engineering">Diploma in Mechanical Engineering</option>
+                      <option value="Diploma in Civil Engineering">Diploma in Civil Engineering</option>
+                      <option value="Diploma in Health Sciences">Diploma in Health Sciences</option>
+                      <option value="Diploma in Environmental Science">Diploma in Environmental Science</option>
+                      <option value="Diploma in Journalism">Diploma in Journalism</option>
+                      <option value="Diploma in Social Work">Diploma in Social Work</option>
+                      <option value="Diploma in Early Childhood Education">Diploma in Early Childhood Education</option>
+                      <option value="Diploma in Interior Design">Diploma in Interior Design</option>
+                      <option value="Diploma in Event Management">Diploma in Event Management</option>
+                      <option value="Diploma in Human Resource Management">Diploma in Human Resource Management</option>
+                      <option value="Diploma in Digital Marketing">Diploma in Digital Marketing</option>
+                      <option value="Diploma in Financial Management">Diploma in Financial Management</option>
+                      <option value="Diploma in Logistics and Supply Chain Management">Diploma in Logistics and Supply Chain Management</option>
+                      <option value="Diploma in Biotechnology">Diploma in Biotechnology</option>
+                      <option value="Diploma in Tourism Management">Diploma in Tourism Management</option>
+                      <option value="Diploma in Public Relations">Diploma in Public Relations</option>
+                      <option value="Diploma in Web Development">Diploma in Web Development</option>
+                      <option value="Diploma in Film and Television Production">Diploma in Film and Television Production</option>
+                      <option value="Diploma in Software Engineering">Diploma in Software Engineering</option>
+                      <option value="Diploma in Agriculture">Diploma in Agriculture</option>
+                      <option value="Diploma in Cybersecurity">Diploma in Cybersecurity</option>
+                      <option value="Diploma in Data Science">Diploma in Data Science</option>
+                      <option value="Diploma in Artificial Intelligence">Diploma in Artificial Intelligence</option>
+
+                    </select>
+                  ) : (
                     <input
                       type="text"
-                      name="yearOfPassing" 
-                      value={lineUpData.yearOfPassing}
-                      onChange={(e) => {
+                      name="education"
+                      value={lineUpData.qualification}
+                      onChange={handleeducationInputChange}
+                      className="form-control"
+                      placeholder="Enter your Education"
+                    />
+                  )}
+                </td>
+                <th scope="col">Year Of Passing</th>
+
+                <td>
+                  <input
+                    type="text"
+                    name="yearOfPassing"
+                    value={lineUpData.yearOfPassing}
+                    required={callingTracker.selectYesOrNo === "Interested"}
+                    onChange={(e) => {
                       const value = e.target.value;
                       if (/^\d{0,4}$/.test(value)) {
-                      setLineUpData({
-                      ...lineUpData,
-                      yearOfPassing: value,
-                    
-                    });
-                  }
-                }}
-              className="form-control"
-            />
-          </td>
-        </tr>
+                        setLineUpData({
+                          ...lineUpData,
+                          yearOfPassing: value,
+
+                        });
+                      }
+                    }}
+                    className="form-control"
+                  />
+                </td>
+              </tr>
 
               <tr>
                 <th scope="col">
@@ -918,6 +991,7 @@ const CallingTrackerForm = ({
                     onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="form-control pt-1"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
@@ -925,8 +999,9 @@ const CallingTrackerForm = ({
                 <td>
                   <input
                     type="text"
-                    name="extraCerification"
+                    name="extraCertification"
                     value={lineUpData.extraCertification}
+
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -934,6 +1009,7 @@ const CallingTrackerForm = ({
                       })
                     }
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
               </tr>
@@ -952,201 +1028,209 @@ const CallingTrackerForm = ({
                       })
                     }
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
-                <th scope="col">Experince</th>
-                <td style={{ paddingLeft: '5px' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px',  padding: '5px' }}>
-                <label htmlFor="totalExperienceYears" style={{ marginRight: '5px', width: '50px' }}>Years:</label>
-                <input
-                  type="text"
-                  name="totalExperienceYears"
-                  value={lineUpData.totalExperienceYears}
-                  onChange={handleExperienceChange}
-                  className="form-control"
-                  placeholder=""
-                  maxLength="2"
-                  style={{ width: '50px',border:"1px solid gray" }}
-                />
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center',  padding: '5px' }}>
-                <label htmlFor="totalExperienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
-                <input
-                  type="number"
-                  name="totalExperienceMonths" 
-                  value={lineUpData.totalExperienceMonths}
-                  onChange={(e) => {
-                  const value = e.target.value;
-                  if (value === '' || (Number(value) >= 1 && Number(value) <= 12)) {
-                  setLineUpData({
-                  ...lineUpData,
-                  totalExperienceMonths: value,
-                  
-                  });
-                }
-              }}
-             className="form-control"
-            placeholder=""
-            maxLength="2"
-            style={{ width: '60px', border: '1px solid gray' }}
-            min="1"
-            max="12"
-            />
+                <th scope="col">Experience</th>
+                <td style={{ paddingLeft: '5px' }} >
+                  <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
+                      <label htmlFor="experienceYear" style={{ marginRight: '5px', width: '50px' }}>Years:</label>
+                      <input
+                        type="text"
+                        name="experienceYear"
+                        value={lineUpData.experienceYear}
+                        onChange={handleLineUpChange}
+                        className="form-control"
+                        placeholder=""
+                        maxLength="2"
+                        style={{ width: '50px', border: "1px solid gray" }}
+                      />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
+                      <label htmlFor="totalExperienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
+                      <input
+                        type="number"
+                        name="experienceMonth"
+                        value={lineUpData.experienceMonth}
+                        onChange={handleLineUpChange}
+                        className="form-control"
+                        placeholder=""
+                        maxLength="2"
+                        style={{ width: '60px', border: '1px solid gray' }}
+                        min="1"
+                        max="12"
+                      />
 
-              </div>
-            </div>
-          </td>
-          
+                    </div>
+                  </div>
+                </td>
+
               </tr>
               <tr>
 
-              <th scope="col">Relavent Experince</th>
+                <th scope="col">Relavent Experince</th>
                 <td>
-                <input
-                  type="text"
-                  name="relaventExperience"
-                  value={lineUpData.relaventExperience}
-                  onChange={handleChange}
-                  className="form-control"
-                 
-                />
-               
-              </td>
-              <th scope="col">Communication Rating</th>
+                  <input
+                    type="text"
+                    name="relevantExperience"
+                    value={lineUpData.relevantExperience}
+                    onChange={handleLineUpChange}
+                    className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
+
+                  />
+
+                </td>
+                <th scope="col">Communication Rating</th>
                 <td>
                   <input
                     type="text"
                     name="communicationRating"
                     value={callingTracker.communicationRating}
                     onChange={handleChange}
+
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
               </tr>
 
               <tr>
-            <th scope="col">Current CTC(LPA)</th>
-                
-          <td style={{ paddingLeft: '5px' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
-                <label htmlFor="currentsalarylakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
-                <input
-                  type="text"
-                  name="currentsalarylakh"
-                  onChange={handleLakhChange}
-                  className="form-control"
-                  placeholder=""
-                  maxLength="2"
-                  style={{ width: '60px', border: "1px solid gray" }}
-                  pattern="\d*"
-                />
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
-                <label htmlFor="currentsalaryth" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
-                <input
-                  type="text"
-                  name="currentsalaryth"
-                  // value={currentSalaryThousand}
-                  onChange={handleThousandChange}
-                  className="form-control"
-                  placeholder=""
-                  maxLength="2"
-                  style={{ width: '70px', border: "1px solid gray" }}
-                  pattern="\d*"
-                  inputMode="numeric"
-                />
-              </div>
-            </div>
-          </td>  
-              <th scope="col">Expected CTC(LPA)</th>
-              <td style={{ paddingLeft: '5px' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
-                <label htmlFor="currentsalarylakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
-                <input
-                  type="text"
-                  name="currentsalarylakh"
-                 
-                  onChange={handleLakhChange}
-                  className="form-control"
-                  placeholder=""
-                  maxLength="2"
-                  style={{ width: '60px', border: "1px solid gray" }}
-                  pattern="\d*" 
-                />
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
-                <label htmlFor="currentsalaryth" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
-                <input
-                  type="text"
-                  name="currentsalaryth"
-                  onChange={handleThousandChange}
-                  className="form-control"
-                  placeholder=""
-                  maxLength="2"
-                  style={{ width: '70px', border: "1px solid gray" }}
-                  pattern="\d*"
-                  inputMode="numeric"
-                />
-              </div>
-            </div>
-          </td>
-                </tr>
+                <th scope="col">Current CTC(LPA)</th>
+
+                <td style={{ paddingLeft: '5px' }} >
+                  <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
+                      <label htmlFor="currentCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
+                      <input
+                        type="text"
+                        name="currentCTCLakh"
+                        value={lineUpData.currentCTCLakh}
+                        onChange={handleLineUpChange}
+                        className="form-control"
+                        placeholder=""
+
+                        maxLength="2"
+                        style={{ width: '60px', border: "1px solid gray" }}
+                        pattern="\d*"
+                      />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
+                      <label htmlFor="currentCTCThousand" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
+                      <input
+                        type="text"
+                        name="currentCTCThousand"
+                        value={lineUpData.currentCTCThousand}
+                        onChange={handleLineUpChange}
+                        className="form-control"
+                        placeholder=""
+                        maxLength="2"
+                        style={{ width: '70px', border: "1px solid gray" }}
+                        pattern="\d*"
+                        inputMode="numeric"
+                      />
+                    </div>
+                  </div>
+                </td>
+                <th scope="col">Expected CTC(LPA)</th>
+                <td style={{ paddingLeft: '5px' }} >
+                  <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
+                      <label htmlFor="expectedCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
+                      <input
+                        type="text"
+                        name="expectedCTCLakh"
+                        value={lineUpData.expectedCTCLakh}
+                        onChange={handleLineUpChange}
+                        className="form-control"
+                        placeholder=""
+                        maxLength="2"
+                        style={{ width: '60px', border: "1px solid gray" }}
+                        pattern="\d*"
+                      />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
+                      <label htmlFor="expectedCTCThousand" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
+                      <input
+                        type="text"
+                        name="expectedCTCThousand"
+                        value={lineUpData.expectedCTCThousand}
+                        onChange={handleLineUpChange}
+                        className="form-control"
+                        placeholder=""
+                        maxLength="2"
+                        style={{ width: '70px', border: "1px solid gray" }}
+                        pattern="\d*"
+                        inputMode="numeric"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
 
               <tr>
                 <th scope="col">Notice Period(Days)</th>
-                <td>
-  <input
-    type="number"
-    name="noticePeriod"
-    value={lineUpData.noticePeriod}
-    onChange={(e) => {
-      const value = e.target.value;
-      if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
-        setLineUpData({
-          ...lineUpData,
-          noticePeriod: value,
-        });
-      }
-    }}
-    className="form-control"
-    min="0"
-    max="90"
-  />
-</td>
+                <td >
+                  <input
+                    type="text"
+                    name="noticePeriod"
+                    value={lineUpData.noticePeriod}
+                    onChange={handleLineUpChange}
+                    required={callingTracker.selectYesOrNo === "Interested"}
+                    // onChange={(e) => {
+                    //   const value = e.target.value;
+                    //   if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
+                    //     setLineUpData({
+                    //       ...lineUpData,
+                    //       noticePeriod: value,
+                    //     });
+                    //   }
+                    // }}
+                    className="form-control"
+                    min="0"
+                    max="90"
+                  />
+                </td>
 
                 <th scope="col">Holding Offer Letter</th>
-                <td><select type="text" name="finalStatus" 
-                value={lineUpData.holdingAnyOffer} 
-                onChange={(e) => setLineUpData({ ...lineUpData, holdingAnyOffer: e.target.value })} className="form-select" 
-                style={{ width: '150px', display: 'inline-block', marginRight: '10px' }}>
-                  <option value="">Select</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                <td>
+                  <select type="text"
+                    name="holdingAnyOffer"
+                    value={lineUpData.holdingAnyOffer} 
+                    required={callingTracker.selectYesOrNo === "Interested"}
+                    //onChange={handleLineUpChange}
+                    onChange={(e) => setLineUpData({ ...lineUpData, holdingAnyOffer: e.target.value })} className="form-select"
+                    style={{ width: '150px', display: 'inline-block', marginRight: '10px' }}>
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
                   </select>
-                  <input type="text" name="Holdingofferlatter" 
-                  value={lineUpData.holdingOfferInput} 
-                  onChange={(e) => setLineUpData({ ...lineUpData, holdingOfferInput: e.target.value })}
-                  style={{ width: '150px',height:"35px", display: 'inline-block', border: '1px solid #ccc', padding: '5px' }} />
-                  </td>
+                  <input type="text"
+                    name="offerLetterMsg"
+                    value={lineUpData.offerLetterMsg}
+                    // onChange={handleLineUpChange}
+                    onChange={(e) => setLineUpData({ ...lineUpData, offerLetterMsg: e.target.value })}
+                    style={{ width: '150px', height: "35px", display: 'inline-block', border: '1px solid #ccc', padding: '5px' }} />
+                </td>
 
               </tr>
 
               <tr>
-                <th scope="col">Recruiters Feedback</th>
+                <th scope="col">Recruiter's Feedback</th>
                 <td>
                   <input
                     type="text"
-              
+
                     name="feedBack"
                     value={lineUpData.feedBack}
+                    //onChange={handleLineUpChange}
                     onChange={(e) =>
                       setLineUpData({ ...lineUpData, feedBack: e.target.value })
                     }
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
@@ -1154,9 +1238,10 @@ const CallingTrackerForm = ({
                 <td>
                   <input
                     type="text"
-                 
+
                     name="msgForTeamLeader"
                     value={lineUpData.msgForTeamLeader}
+                    //onChange={handleLineUpChange}
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1169,11 +1254,12 @@ const CallingTrackerForm = ({
               </tr>
               <tr>
                 <th scope="col">Availability Of a Interview</th>
-                <td style={{ display: "flex", alignItems: "center",justifyContent:"center",paddingTop:"14px" }}>
+                <td style={{ display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "14px" }}>
                   <input
                     type="date"
                     name="availabilityForInterview"
                     value={lineUpData.availabilityForInterview}
+                    //onChange={handleLineUpChange}
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1187,6 +1273,7 @@ const CallingTrackerForm = ({
                     type="time"
                     name="interviewTime"
                     value={lineUpData.interviewTime}
+                    //onChange={handleLineUpChange}
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1207,10 +1294,10 @@ const CallingTrackerForm = ({
                       setLineUpData({
                         ...lineUpData,
                         finalStatus: e.target.value,
-                        required
                       })
                     }
                     className="form-select"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   >
                     <option value="">Select</option>
                     <option value="Interview schedule">Interview schedule</option>
@@ -1231,7 +1318,7 @@ const CallingTrackerForm = ({
 
         <div className="buttonDiv">
           {callingTracker.selectYesOrNo !== "Interested" && (
-            <button type="submit" className="ctf-btn" id="uploadbtn1">
+            <button type="submit" className="ctf-btn" >
               Add To Calling
             </button>
           )}
@@ -1246,10 +1333,19 @@ const CallingTrackerForm = ({
   );
 };
 
+// CallingTrackerForm.propTypes = {
+//   initialData: PropTypes.object,
+//   employeeId: PropTypes.string.isRequired,
+//   onDataAdditionSuccess: PropTypes.func.isRequired,
+// };
+
 CallingTrackerForm.propTypes = {
   initialData: PropTypes.object,
-  employeeId: PropTypes.string.isRequired,
   onDataAdditionSuccess: PropTypes.func.isRequired,
+};
+
+CallingTrackerForm.defaultProps = {
+  initialData: null,
 };
 
 export default CallingTrackerForm;
