@@ -4,12 +4,12 @@
 }
 
 
-#table-row {
+/* #table-row {
     background-color: #ffcb9b;
     height: 8px !important;
     padding: 0%;
     margin: 0%;
-}
+} */
 
 .update-page-head{
   width: 100%;
@@ -24,7 +24,7 @@
 
 #studTables {
   width: 100%;
-  height: 8px;
+  /* height: 8px; */
   border-collapse: collapse;
 }
 
@@ -36,6 +36,12 @@
   justify-content: center;
   flex-direction: row;
   border: 1px solid gray;
+  
+}
+
+#studTables tr{
+  height: 30px;
+
 }
 
 .tabledata{
@@ -46,7 +52,7 @@
 #studTables th {
   background-color: white;
   color: gray;
-  padding: 10px;
+  /* padding: 10px; */
  text-align: center;
  font-size: 16px;
   /* border-collapse: collapse; */
@@ -58,11 +64,41 @@
 } */
 
 #studTables input[type="text"] {
+  height: 30px;
   width: 100%;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 4px;
   box-sizing: border-box;   
+
 }
+
+#studTables input[type="email"] {
+  height: 30px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  box-sizing: border-box;   
+
+}
+#studTables input[type="select"] {
+  height: 30px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  box-sizing: border-box;   
+
+}
+
+#studTables .onlyselect input[type="select"]{
+  height: 50px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+ 
+
+}
+
+
 .header {
   text-align: center;
   margin-bottom: 20px;
