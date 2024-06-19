@@ -15,6 +15,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
+
   const [selectedCandidateId, setSelectedCandidateId] = useState();
 
   const [selectedRows, setSelectedRows] = useState([]);
@@ -30,7 +31,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
+
     fetch(`http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`)
+
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -38,6 +41,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
+
 
 
   useEffect(() => {
@@ -159,7 +163,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
+
       `http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`
+
     )
 
       .then((response) => response.json())

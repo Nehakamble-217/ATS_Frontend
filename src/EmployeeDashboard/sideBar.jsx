@@ -3,6 +3,7 @@ import '../EmployeeDashboard/sideBar.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { getEmployeeWorkData } from "../api/api";
 import Circle from "../LogoImages/circle.png";
+import logoutImg from "../photos/download.jpeg";
 import axios from 'axios';
 
 function Sidebar({
@@ -16,13 +17,14 @@ function Sidebar({
   toggleRejectedCandidate,
   toggleHoldCandidate,
   toggleExcelCalling,
+  toggelResumeData,
   toggleJobDescription,
   toggleInterviewDate,
   toggleAttendance,
   toggleAllMasterSheet,
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
-  handleLogoutLocal,
+
    
 
 }) {
@@ -34,6 +36,7 @@ function Sidebar({
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
+  const [logoutTime, setLogoutTime] = useState(null);
 
   const {userGroup}=useParams();
   console.log(userGroup)
@@ -91,12 +94,47 @@ function Sidebar({
   const isCandidateSectionActive = ['selfCalling', 'lineUp', 'shortListed', 'selectCandidate', 'holdCandidate', 'rejectedCandidate'].includes(activeButton);
   const isJobDescriptionActive=["Jobdiscription","addJobDescription"].includes(activeButton)
 
+
+
+  const handleLogoutLocal = async () => {
+    try {
+      const logoutTime = new Date().toLocaleTimeString("en-IN");
+      setLogoutTime(logoutTime);
+
+      const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
+
+      const now = new Date();
+      const day = now.getDate().toString().padStart(2, "0");
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const year = now.getFullYear();
+
+     
+
+      await axios.post(
+        "http://192.168.1.33:8891/api/ats/157industries/save-daily-work",
+        formData
+      );
+
+      localStorage.removeItem(`stopwatchTime_${employeeId}`);
+      localStorage.removeItem(`dailyWorkData_${employeeId}`);
+      localStorage.removeItem("employeeId");
+
+      setTime({ hours: 0, minutes: 0, seconds: 0 });
+      setData({ archived: 0, pending: 10 });
+
+      console.log("Logged out successfully.");
+      navigate("/employee-login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <>
      
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
      
-          <div className="clouds1"></div>
+          <div className="sidebar-clouds1"></div>
       <div className='head'></div>
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
@@ -261,6 +299,12 @@ function Sidebar({
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Offers Data</span>
+                  </a>
+                </li>
+                <li onClick={handleButtonClick('resumeData', toggelResumeData)} className={activeButton === 'resumeData' ? 'active' : ''}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Resume Data</span>
                   </a>
                 </li>
                 

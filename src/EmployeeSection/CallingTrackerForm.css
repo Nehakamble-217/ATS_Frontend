@@ -6,7 +6,7 @@
 
 #table-row {
     background-color: #ffcb9b;
-    height: 10px !important;
+    height: 8px !important;
     padding: 0%;
     margin: 0%;
 }
@@ -43,14 +43,14 @@
   align-items: center;
 }
 
-#studTables th {
+/* #studTables th {
   background-color: white;
   color: gray;
   padding: 10px;
- text-align: center;
+ text-align:left;
  font-size: 16px;
-  /* border-collapse: collapse; */
-}
+  
+} */
 /* #studTables th input {
   background-color: white;
   
@@ -181,16 +181,16 @@
   color: green;
 }
 
-#currentDate {
-  width: 75%;
-}
+
 
 #currentDate {
+  width: 75%;
   padding: 10px; 
   font-size: 16px; 
   border: 1px solid #ccc; 
   border-radius: 4px; 
-  box-sizing: border-box; }
+  box-sizing: border-box;
+ }
 
 /* .react-datepicker__input-container input {
   width: 300px; 
@@ -235,4 +235,20 @@
 .custom-datepicker-container {
   position: relative; /* Ensure proper positioning */
   display: inline-block; /* Display as inline-block */
+}
+#studTables th {
+  background-color: white;
+  color: gray;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+ 
+
+}
+
+#studTables td {
+  padding: 10px; /* Adjust padding as needed */
+  text-align: center;
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid gray; /* Ensure consistent border */
 }

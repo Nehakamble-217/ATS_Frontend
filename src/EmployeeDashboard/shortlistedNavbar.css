@@ -1,11 +1,11 @@
 .shortlisted-main-nav{
     height: 50px;
     width: 100%;
-     left: 242px;
+     left: auto;
     /*right: 0%; */
     position: fixed;
     background-color: #ffe5b5;
-    border-top: 1px solid gray;
+    border-top: 1px solid white;
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -45,9 +45,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
-    margin-left: 500px;
+    
+    margin-left: 450px;
 }
+
+.shortListed-btn-nav:hover {
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px;
+    height: 30px;
+    width: auto;
+    color: #ffb281;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-left: 450px;
+}
+
 
 
 #shortListed-btn-nav-icon{
