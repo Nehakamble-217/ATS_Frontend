@@ -178,7 +178,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
           <table id="studTables" className="table  table-striped  text-center">
             <tbody className="table-group-divider">
               <tr id="table-row">
-                <th scope="col">Added Date:</th>
+                <th scope="col">Data & Time</th>
                 <td>
                   <input
                     type="text"

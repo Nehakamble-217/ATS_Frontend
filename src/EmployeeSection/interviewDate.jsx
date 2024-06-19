@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";za
+import "react-calendar/dist/Calendar.css";
 import "./interviewDate.css";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import UpdateCallingTracker from "./UpdateSelfCalling";
@@ -33,21 +32,25 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
     try {
-      const response = await fetch(`http://192.168.1.33:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
-      console.log(candidateId + " --> candidateId 07");
-      console.log(employeeIdNew + " --> employeeId 08");
-      console.log(requirementId + " --> requirementId 09");
+      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/28/6/22`);
       const data = await response.json();
-      setInterviewResponses(data);
+      if (Array.isArray(data)) {
+        setInterviewResponses(data);
+      } else {
+        console.error("Invalid data received:", data);
+        setInterviewResponses([]); // Set to empty array or handle error state appropriately
+      }
     } catch (error) {
       console.error("Error fetching interview response:", error);
+      setInterviewResponses([]); // Set to empty array or handle error state appropriately
     }
   };
+  
 
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://192.168.1.38:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -70,7 +73,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://192.168.1.38:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -95,7 +98,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://192.168.1.33:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://192.168.1.38:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -150,7 +153,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     };
 
     try {
-      const response = await fetch("http://192.168.1.33:8891/api/ats/157industries/save-interview-response", {
+      const response = await fetch("http://192.168.1.38:8891/api/ats/157industries/save-interview-response", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -218,11 +221,17 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
         tooltip.classList.remove('visible');
       }
     };
-    const handleRowClick = (candidateId) => {
-      // Set the selected candidate ID when a row is clicked
+    const handleRowClick = (candidateId, requirementId) => {
       setCandidateId(candidateId);
+      setRequirementId(requirementId);
+      
+      // Immediately fetch and update interview response
+      fetchAndUpdateInterviewResponse(candidateId, requirementId);
+      
+      // Toggle the showShortlistTable state
+      setShowShortlistTable(true);
     };
-  
+    
     
 
 
@@ -457,8 +466,8 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     <th>Interview Round</th>
                     <th>Interview Response</th>
                     <th>Update Date</th>
-                    <th>Next Interview Date</th>
-                    <th>Next Interview Time</th>
+                    <th> Interview Date</th>
+                    <th> Interview Time</th>
                   </tr>
                 </thead>
                 <tbody>

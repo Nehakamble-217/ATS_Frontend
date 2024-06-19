@@ -143,11 +143,21 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   padding-top: 30px;
   padding-left: 10px;
   padding-right: 20px; 
+
   
 }
+/* .shortlist-table-div {
+  overflow-y: auto; 
+  max-height: 500px; 
+} */
+
+/* Optionally, add padding to improve appearance */
+.shortlist-table-div table {
+  padding: 10px;
+}
+
 
 .interview-response-update {
-  /* text-align: center; */
   margin-bottom: 20px; 
 }
 
@@ -164,7 +174,6 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   border-collapse: collapse;
   background-color: #ffcb9b;
   margin-bottom: 2px;
-   
   overflow: hidden; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
@@ -197,14 +206,14 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   color: black; 
 }
 
-
 .shortlisted-submite-btn {
   text-align: center; 
   margin-top: 20px; 
 }
 
 .shortlisted-submite-btn button {
-  height: 35px;
+  height: 30px;
+  width: auto;
   border-radius: 15px;
   padding: 0 20px;
   margin: 5px;
@@ -231,6 +240,7 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 /* Table */
 #table-shortlisted {
   width: 100%;
+  height: auto;
   border-collapse: collapse;
 }
 
@@ -249,6 +259,13 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 #table-shortlisted tbody tr {
   height: 10px; 
 }
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
 
 /* Table Cells */
 #table-shortlisted td, #table-shortlisted th {
@@ -256,21 +273,18 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   height: 20px;
 }
 
-/* Select Dropdown */
-#table-shortlisted select {
+#table-shortlisted select,
+#table-shortlisted input[type="date"],
+#table-shortlisted input[type="time"],
+#table-shortlisted input[type="text"] {
   width: 100%;
-  height: 100%;
-  padding: 5px; 
-  /* border-radius: 15px;  */
+  height: 30px;
+  padding: 5px;
+  
+  
 }
 
-/* Input Fields */
-#table-shortlisted input[type="date"], #table-shortlisted input[type="time"], #table-shortlisted input[type="text"] {
-  width: 100%;
-  height: 100%;
-  padding: 5px; 
-  /* border-radius: 15px; */
-}
 .highlighted-row {
-  background-color: red; /* or any other highlighting style */
+  background-color: #ffd8a8; /* or any other highlighting style */
 }
+

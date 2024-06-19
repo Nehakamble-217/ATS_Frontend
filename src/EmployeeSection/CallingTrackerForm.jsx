@@ -650,7 +650,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   )}
                 </td>
 
-                <th> Full Adress</th>
+                <th> Full Address</th>
                 <td>
                   <input
                     type="text"
@@ -1212,7 +1212,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   />
                 </td>
 
-                <th scope="col">Comment For Eevaluter/TL</th>
+                <th scope="col">Comment For Evalutor/TL</th>
                 <td>
                   <input
                     type="text"
