@@ -14,6 +14,7 @@ import RejectedCandidate from "../CandidateSection/rejectedCandidate";
 import HoldCandidate from "../CandidateSection/holdCandidate";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import CallingExcel from "../Excel/callingExcel";
+import ResumeData from "../ResumeData/resumedata";
 import Home from "../EmployeeDashboard/home";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
@@ -37,6 +38,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [holdCandidate, setHoldCandidate] = useState(false);
   const [updateSelfCalling, setUpdateSelfCalling] = useState(false);
   const [showCallingExcel, setShowCallingExcel] = useState(false);
+  const [showResumeData, setShowResumeData] = useState(false);
   const [showJobDiscriptions, setShowJobDiscriptions] = useState(false);
   const [showCallingTrackerForm, setShowCallingTrackerForm] = useState(false);
   const [showHome, setShowHome] = useState(false);
@@ -168,6 +170,11 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCallingExcel(!showCallingExcel);
   };
 
+  const toggelResumeData = () => {
+    resetAllToggles();
+    setShowResumeData(!showResumeData);
+  }
+
   const toggleAttendance = () => {
     resetAllToggles();
     setAttendanceSheet(!attendancesheet);
@@ -213,6 +220,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleRejectedCandidate={toggleRejectedCandidate}
         toggleHoldCandidate={toggleHoldCandidate}
         toggleExcelCalling={toggleExcelCalling}
+        toggleResumeData={toggelResumeData}
         toggleJobDescription={toggleJobDescription}
         toggleInterviewDate={toggleInterviewDate}
         toggleAllMasterSheet={toggleAllMasterSheet}
@@ -277,6 +285,10 @@ const EmpDashboard = ({ userGroup }) => {
         
         <div>
           {showCallingExcel && <CallingExcel />}
+        </div>
+
+        <div>
+          {showResumeData && <ResumeData/>}
         </div>
         
         <div>
