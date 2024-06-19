@@ -435,9 +435,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
           <table id="studTables" className="table  table-striped  text-center" >
             <tbody className="table-group-divider">
 
-              <tr id="table-row" >
+              <tr  >
                 <th scope="col" >Date & Time:</th>
-                <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <td style={{ display: "flex", alignItems: "center", justifyContent: "center",padding:"0%" }}>
                   <input
                     type="text"
                     //id="currentDate"
@@ -453,7 +453,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     name="candidateAddedTime"
                     value={candidateAddedTime}
                     className="form-control"
-                    style={{ marginBottom: "9px", width: "180px", marginRight: "30px", paddingLeft: "10px" }}
+                    style={{ marginBottom: "auto", width: "180px", marginRight: "30px", paddingLeft: "10px" }}
                     readOnly
                   />
                 </td>
@@ -477,7 +477,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
               </div>
 
-              <tr id="heading123">
+              <tr>
 
                 <th> Candidates Full Name* </th>
                 <td>
