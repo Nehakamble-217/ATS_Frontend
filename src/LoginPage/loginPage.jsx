@@ -114,7 +114,7 @@ const LoginSignup = ({ onLogin }) => {
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>
-                    <div class="hexagon"></div>
+                    <div className="hexagon"></div>
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>
                     <div class="hexagon"></div>

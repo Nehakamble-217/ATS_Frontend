@@ -135,7 +135,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.33:8891/api/ats/157industries/employeeName/${employeeId}`
+
+        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
+
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -155,7 +157,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.33:8891/api/ats/157industries/company-details`
+
+        `http://192.168.1.38:8891/api/ats/157industries/company-details`
+
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -243,7 +247,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://192.168.1.33:8891/api/ats/157industries/${employeeId}/addCallingData`,
+
+        `http://192.168.1.38:8891/api/ats/157industries/${employeeId}/addCallingData`,
+
         dataToUpdate
       );
 
@@ -387,7 +393,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     }
   };
 
-
   const handleRequirementChange = (e) => {
     const { value } = e.target;
     const selectedRequirement = requirementOptions.find(
@@ -521,7 +526,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     required={callingTracker.selectYesOrNo !== "Interested"}
                     defaultCountry="IN"
                     maxLength={11}
-                    
 
                   />
                   {errors.contactNumber && (
@@ -729,7 +733,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={lineUpData.dateOfBirth}
                     onChange={handleDateChange}
                     className="form-control"
-                    
                   />
                 </td>
 
@@ -955,7 +958,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     type="text"
                     name="yearOfPassing"
                     value={lineUpData.yearOfPassing}
-
                     required={callingTracker.selectYesOrNo === "Interested"}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -1284,7 +1286,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     type="text"
                     name="finalStatus"
                     value={lineUpData.finalStatus}
-                  
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1323,7 +1324,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
             </button>
           )}
         </div>
-
       </form>
     </div>
   );

@@ -21,7 +21,9 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const fetchRejectedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.33:8891/api/ats/157industries/rejected-candidate/${employeeId}`
+
+        `http://192.168.1.38:8891/api/ats/157industries/rejected-candidate/${employeeId}`
+
       );
       const data = await response.json();
       setShowRejectedData(data);
