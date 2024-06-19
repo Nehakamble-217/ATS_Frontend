@@ -112,7 +112,7 @@ function Sidebar({
      
 
       await axios.post(
-        "http://192.168.1.36:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.33:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -372,12 +372,10 @@ function Sidebar({
               </a>
             </li>
             <li >
-            <img className="logout-btn"
-          onClick={handleLogoutLocal}
-          // style={{ width: "30px", borderRadius: "60%" }}
-          src={logoutImg}
-          alt="Logout"
-        />
+              <a href="#" >
+                <i className="icon ph-bold ph-sign-out"></i>
+                <span className="sidebar-text">Logout</span>
+              </a>
             </li>
 
           </ul>

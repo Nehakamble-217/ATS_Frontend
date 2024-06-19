@@ -30,7 +30,7 @@ const [selectedRows, setSelectedRows] = useState([]);
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.36:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.33:8891/api/ats/157industries/callingData/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -159,7 +159,7 @@ useEffect(() => {
  
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.36:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.33:8891/api/ats/157industries/callingData/${employeeId}`
     )
 
       .then((response) => response.json())

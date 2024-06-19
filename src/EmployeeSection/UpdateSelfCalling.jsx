@@ -67,7 +67,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
       const response = await axios.get(
 
 
-        `http://192.168.1.36:8891/api/ats/157industries/company-list/${employeeId}`
+        `http://192.168.1.33:8891/api/ats/157industries/company-list/${employeeId}`
 
 
       );
@@ -90,7 +90,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
     try {
 
       const response = await fetch(
-        `http://192.168.1.36:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.33:8891/api/ats/157industries/employeeName/${employeeId}`
       );
 
       const data = await response.text();
@@ -103,7 +103,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.36:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.33:8891/api/ats/157industries/specific-data/${candidateId}`
       );
 
       const data = await response.json();
@@ -141,7 +141,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, employeeId, onSuccess,
       };
 
       const response = await fetch(
-        `http://192.168.1.36:8891/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.33:8891/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {

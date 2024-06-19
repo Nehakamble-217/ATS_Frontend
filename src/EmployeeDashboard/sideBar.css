@@ -27,12 +27,12 @@ body {
   height: 100vh; /* Full viewport height */
   /* overflow-y: auto; */
   padding-top: 80px !important;
-  width: 243px;
+  width: 245px;
   transition: width 0.3s;
   background-repeat:initial;
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  /* gap: 0px; */
   background-color: #ffe5b5;
   padding:0px;
   transition: width 0.8s;

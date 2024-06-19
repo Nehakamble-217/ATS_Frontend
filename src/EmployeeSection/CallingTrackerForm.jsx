@@ -9,6 +9,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
+//import '../EmployeeSection/tempArsh.css'
+
 
 const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const { employeeId } = useParams();
@@ -87,10 +89,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
-  const [candidateName, setCandidateName] = useState();
-  const [contactNumber, setContactNumber] = useState();
-  const [sourceName, setSourceName] = useState();
 
+  const [candidateName, setCandidateName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [sourceName, setSourceName] = useState('');
   const [errors, setErrors] = useState({
     candidateName: "",
     contactNumber: "",
@@ -127,16 +129,13 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
     updateTimer();
     const timerInterval = setInterval(updateTimer, 1000);
-
     return () => clearInterval(timerInterval);
   }, []);
-
-
 
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.36:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.33:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -156,7 +155,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.36:8891/api/ats/157industries/company-details`
+        `http://192.168.1.33:8891/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -189,12 +188,44 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     setLineUpData({ ...lineUpData, [name]: value });
   };
 
+
+  // const validateForm = () => {
+  //   let valid = true;
+  //   const errorsCopy = { ...errors };
+
+  //   if (!candidateName.trim()) {
+  //     errorsCopy.candidateName = "Please enter candidate name";
+  //     valid = false;
+  //   } else {
+  //     errorsCopy.candidateName = "";
+  //   }
+
+  //   if (!contactNumber.trim()) {
+  //     errorsCopy.contactNumber = "Please enter contact number";
+  //     valid = false;
+  //   } else {
+  //     errorsCopy.contactNumber = "";
+  //   }
+
+  //   if (!sourceName.trim()) {
+  //     errorsCopy.sourceName = "Please select source name";
+  //     valid = false;
+  //   } else {
+  //     errorsCopy.sourceName = "";
+  //   }
+
+  //   setErrors(errorsCopy);
+  //   return valid;
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const dataToUpdate = {
-        
         ...callingTracker,
         employee: {
           employeeId: parseInt(employeeId, 10),
@@ -212,7 +243,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://192.168.1.36:8891/api/ats/157industries/${employeeId}/addCallingData`,
+        `http://192.168.1.33:8891/api/ats/157industries/${employeeId}/addCallingData`,
         dataToUpdate
       );
 
@@ -228,37 +259,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       console.error("Error:", error);
     }
   };
-
-  const validateForm = () => {
-    let valid = true;
-    const errorsCopy = { ...errors };
-
-    if (!candidateName.trim()) {
-      errorsCopy.candidateName = "Please Enter candidateName";
-      valid = false;
-    } else {
-      errorsCopy.candidateName = "";
-    }
-
-    if (!contactNumber.trim()) {
-      errorsCopy.contactNumber = "Please Enter contactNumber";
-      valid = false;
-    } else {
-      errorsCopy.contactNumber = "";
-    }
-
-    if (!sourceName.trim()) {
-      errorsCopy.sourceName = "Please Enter sourceName";
-      valid = false;
-    } else {
-      errorsCopy.sourceName = "";
-    }
-
-    setErrors(errorsCopy);
-    return valid;
-
-  };
-
 
 
   const handleChangeemail = (event) => {
@@ -485,10 +485,14 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
-                    className={`form-control ${errors.candidateName ? "is-invalid" : ""
-                      } `}
-                    onChange={(e) => setCandidateName(e.target.value)}
+                    className={`form-control ${errors.candidateName ? 'is-invalid' : ''}`}
+                    onChange={handleChange}
+                    required={callingTracker.selectYesOrNo !== "Interested"}
                   />
+                  {errors.candidateName && (
+                    <div className="invalid-feedback">{errors.candidateName}</div>
+                  )}
+
                 </td>
 
                 <th scope="col">Candidate Email</th>
@@ -499,6 +503,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={callingTracker.candidateEmail}
                     onChange={handleChange}
                     className={`form-control ${error ? 'is-invalid' : ''}`}
+                    // required
 
                   />
 
@@ -512,14 +517,17 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     placeholder="Enter phone number"
                     name="contactNumber"
                     value={callingTracker.contactNumber}
-                    onChange={(value) =>
-                      handlePhoneNumberChange(value, "contactNumber")
-                    }
+                    onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
+                    required={callingTracker.selectYesOrNo !== "Interested"}
                     defaultCountry="IN"
                     maxLength={11}
-                    className="PhoneInputInput"
-                    required
+                    
+
                   />
+                  {errors.contactNumber && (
+                    <div className="invalid-feedback">{errors.contactNumber}</div>
+                  )}
+
                 </td>
 
                 <th scope="col">Alternate Number</th>
@@ -542,12 +550,14 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <th scope="col">Source Name* </th>
                 <td>
                   <select
-                    className="form-select"
+                    className={`form-control ${errors.sourceName ? 'is-invalid' : ''}`}
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
-                    required
+                    required={callingTracker.selectYesOrNo !== "Interested"}
                   >
+
+
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
                     <option value="Naukri">Naukri</option>
@@ -559,6 +569,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     <option value="Friends">Friends</option>
                     <option value="others">others</option>
                   </select>
+                  {errors.sourceName && (
+                    <div className="invalid-feedback">{errors.sourceName}</div>
+                  )}
                 </td>
 
 
@@ -570,6 +583,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     name="requirementId"
                     value={callingTracker.requirementId}
                     onChange={handleRequirementChange}
+                    required={callingTracker.selectYesOrNo === "Interested"}
 
                   >
                     <option value="">Select Requirement</option>
@@ -613,7 +627,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <th>Current Location</th>
                 <td>
                   {!isOtherLocationSelected ? (
-                    <select
+                    <select 
+                    required={callingTracker.selectYesOrNo === "Interested"}
                       name="currentLocation"
                       value={callingTracker.currentLocation}
                       onChange={handleLocationChange}
@@ -645,6 +660,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     name="fullAddress"
                     value={callingTracker.fullAddress}
                     onChange={handleChange}
+                    required={callingTracker.selectYesOrNo === "Interested"}
                     className="form-control"
                   />
                 </td>
@@ -656,7 +672,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <th>Calling Feedback</th>
                 <td>
                   <select
-                    required
+                    required={callingTracker.selectYesOrNo === "Interested"}
                     className="form-select"
                     name="callingFeedback"
                     value={callingTracker.callingFeedback}
@@ -713,23 +729,25 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={lineUpData.dateOfBirth}
                     onChange={handleDateChange}
                     className="form-control"
-                    required
+                    
                   />
                 </td>
 
                 <th scope="col">Gender</th>
-                <td>
+                <td style={{textAlign:"center"}}>
                   <div
                     className="main-gender"
-                    style={{ display: "flex", alignItems: "center" }}
+                    style={{ display: "flex", alignItems: "center",textAlign:"center" , gap:"10px"}}
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   >
 
                     <input
-                      style={{ paddingTop: "8px" }}
+                      style={{  textAlign:"center"}}
                       type="checkbox"
                       name="male"
                       value="male"
-                      className="gender"
+                      className="gender" 
+                    
                       checked={lineUpData.gender === "male"}
                       onChange={(e) =>
                         setLineUpData({
@@ -747,6 +765,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       name="female"
                       value="female"
                       className="gender"
+                      style={{ paddingLeft: "auto" }}
                       checked={lineUpData.gender === "female"}
                       onChange={(e) =>
                         setLineUpData({
@@ -771,6 +790,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       value={lineUpData.qualification}
                       onChange={handleLineUpChange}
                       className="form-control"
+                      required={callingTracker.selectYesOrNo === "Interested"}
                     >
                       <option value="">__Select __</option>
                       <option value="Other">Other</option>
@@ -936,7 +956,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     name="yearOfPassing"
                     value={lineUpData.yearOfPassing}
 
-                    required
+                    required={callingTracker.selectYesOrNo === "Interested"}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (/^\d{0,4}$/.test(value)) {
@@ -965,6 +985,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="form-control pt-1"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
@@ -982,6 +1003,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       })
                     }
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
               </tr>
@@ -1000,12 +1022,13 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       })
                     }
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
-                <th scope="col">Experince</th>
-                <td style={{ paddingLeft: '5px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                <th scope="col">Experience</th>
+                <td style={{ paddingLeft: '5px' }} >
+                  <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
                       <label htmlFor="experienceYear" style={{ marginRight: '5px', width: '50px' }}>Years:</label>
                       <input
@@ -1049,6 +1072,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={lineUpData.relevantExperience}
                     onChange={handleLineUpChange}
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
 
                   />
 
@@ -1062,6 +1086,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     onChange={handleChange}
 
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
               </tr>
@@ -1069,8 +1094,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
               <tr>
                 <th scope="col">Current CTC(LPA)</th>
 
-                <td style={{ paddingLeft: '5px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                <td style={{ paddingLeft: '5px' }} >
+                  <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
                       <label htmlFor="currentCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
                       <input
@@ -1104,8 +1129,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   </div>
                 </td>
                 <th scope="col">Expected CTC(LPA)</th>
-                <td style={{ paddingLeft: '5px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                <td style={{ paddingLeft: '5px' }} >
+                  <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
                       <label htmlFor="expectedCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
                       <input
@@ -1141,12 +1166,13 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
               <tr>
                 <th scope="col">Notice Period(Days)</th>
-                <td>
+                <td >
                   <input
                     type="text"
                     name="noticePeriod"
                     value={lineUpData.noticePeriod}
                     onChange={handleLineUpChange}
+                    required={callingTracker.selectYesOrNo === "Interested"}
                     // onChange={(e) => {
                     //   const value = e.target.value;
                     //   if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
@@ -1166,7 +1192,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <td>
                   <select type="text"
                     name="holdingAnyOffer"
-                    value={lineUpData.holdingAnyOffer}
+                    value={lineUpData.holdingAnyOffer} 
+                    required={callingTracker.selectYesOrNo === "Interested"}
                     //onChange={handleLineUpChange}
                     onChange={(e) => setLineUpData({ ...lineUpData, holdingAnyOffer: e.target.value })} className="form-select"
                     style={{ width: '150px', display: 'inline-block', marginRight: '10px' }}>
@@ -1185,7 +1212,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
               </tr>
 
               <tr>
-                <th scope="col">Recruiters Feedback</th>
+                <th scope="col">Recruiter's Feedback</th>
                 <td>
                   <input
                     type="text"
@@ -1197,6 +1224,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       setLineUpData({ ...lineUpData, feedBack: e.target.value })
                     }
                     className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
@@ -1256,7 +1284,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     type="text"
                     name="finalStatus"
                     value={lineUpData.finalStatus}
-                    required
+                  
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1264,6 +1292,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       })
                     }
                     className="form-select"
+                    required={callingTracker.selectYesOrNo === "Interested"}
                   >
                     <option value="">Select</option>
                     <option value="Interview schedule">Interview schedule</option>

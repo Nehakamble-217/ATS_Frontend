@@ -1,15 +1,15 @@
 .shortlisted-main-nav{
     height: 50px;
-    width: auto;
-     left: 242px;
+    width: 100%;
+     left: auto;
     /*right: 0%; */
-    position: absolute;
+    position: fixed;
     background-color: #ffe5b5;
-    border-top: 1px solid gray;
+    border-top: 1px solid white;
     display: flex;
     /* justify-content: center; */
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding-left: 30px;
     
 }
@@ -25,16 +25,11 @@
 
 #calendar-icon-nav{
    font-size: 30px;
-   
-  
-   
- 
 }
 
 .shortlisted-nav-middel{
     height: 100vh;
-    width: 100%;
-    
+    width: 100%;   
 }
 
 .shortListed-btn-nav {
@@ -50,22 +45,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
-    margin-left: auto;
+    
+    margin-left: 450px;
 }
 
-.shortListed-btn-nav-short-btn {
+.shortListed-btn-nav:hover {
     border: 1px solid gray;
     border-radius: 15px;
     background-color: white;
     font-size: 16px;
     height: 30px;
-
-
+    width: auto;
+    color: #ffb281;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-left: 450px;
 }
+
 
 
 #shortListed-btn-nav-icon{
     width: 110px;
     margin-right: 50px;
+}
+
+/* arshad added below  css  */
+
+.show-shortlistedNav-div{
+    padding-top: 65px;
 }
