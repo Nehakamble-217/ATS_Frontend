@@ -22,7 +22,7 @@ function Sidebar({
   toggleAllMasterSheet,
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
-  handleLogout,
+  handleLogoutLocal,
    
 
 }) {
@@ -332,7 +332,7 @@ function Sidebar({
                 <span className="sidebar-text">Add TeamLeader</span>
               </a>
             </li>
-            <li >
+            <li  onClick={handleLogoutLocal}>
               <a href="#" >
                 <i className="icon ph-bold ph-sign-out"></i>
                 <span className="sidebar-text">Logout</span>

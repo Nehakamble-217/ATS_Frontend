@@ -7,6 +7,22 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showHoldData, setShowHoldData] = useState([]);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
+  const [showFilterSection, setShowFilterSection] = useState(false);
+  const [filterOptions, setFilterOptions] = useState([]);
+    const [showSearchBar, setShowSearchBar] = useState(false);
+     const [searchTerm, setSearchTerm] = useState("");
+  const [sortCriteria, setSortCriteria] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [callingList, setCallingList] = useState([]);
+  const [filteredCallingList, setFilteredCallingList] = useState([]);
+  const [showCallingForm, setShowCallingForm] = useState(false);
+  const [callingToUpdate, setCallingToUpdate] = useState(null);
+  const [selectedFilters, setSelectedFilters] = useState({});
+
+  const [selectedRows, setSelectedRows] = useState([]);
+
+
+
 
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
@@ -17,6 +33,30 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     fetchHoldCandidateData();
   }, []);
 
+
+
+
+  useEffect(() => {
+    const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId');
+    setFilterOptions(options);
+  }, [filteredCallingList]);
+
+  useEffect(() => {
+    console.log("Selected Filters:", selectedFilters);
+  }, [selectedFilters]);
+
+
+  useEffect(() => {
+    console.log("Filtered Calling List:", filteredCallingList);
+  }, [filteredCallingList]);
+
+
+  useEffect(() => {
+    const limitedOptions = ['date', 'recruiterName', 'jobDesignation', 'requirementId'];
+    setFilterOptions(limitedOptions);
+  }, [callingList]);
+
+
   const fetchHoldCandidateData = async () => {
     try {
       const response = await fetch(
@@ -26,8 +66,101 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
       console.log(employeeId+"---> 777");
       const data = await response.json();
       setShowHoldData(data);
+      setFilteredCallingList(data);
+
     } catch (error) {
       console.error("Error fetching hold candidate data:", error);
+    }
+  };
+
+  useEffect(() => {
+    filterData();
+  }, [selectedFilters, callingList]);
+
+  useEffect(() => {
+    const filtered = callingList.filter((item) => {
+      const searchTermLower = searchTerm.toLowerCase();
+      return (
+        (item.date && item.date.toLowerCase().includes(searchTermLower)) ||
+        (item.recruiterName && item.recruiterName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateName && item.candidateName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateEmail && item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
+        (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
+        (item.alternateNumber && item.alternateNumber.toString().includes(searchTermLower)) ||
+        (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
+
+        (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
+        (item.requirementCompany && item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
+        (item.communicationRating && item.communicationRating.toLowerCase().includes(searchTermLower)) ||
+        (item.currentLocation && item.currentLocation.toLowerCase().includes(searchTermLower)) ||
+        (item.personalFeedback && item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.callingFeedback && item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.selectYesOrNo && item.selectYesOrNo.toLowerCase().includes(searchTermLower))
+      );
+    });
+    setFilteredCallingList(filtered);
+  }, [searchTerm, callingList]);
+
+  useEffect(() => {
+    if (sortCriteria) {
+      const sortedList = [...filteredCallingList].sort((a, b) => {
+        const aValue = a[sortCriteria];
+        const bValue = b[sortCriteria];
+
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+        } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        } else {
+          return 0;
+        }
+      });
+      setFilteredCallingList(sortedList);
+    }
+  }, [sortCriteria, sortOrder]);
+
+
+  const filterData = () => {
+    let filteredData = [...callingList];
+    Object.entries(selectedFilters).forEach(([option, values]) => {
+      if (values.length > 0) {
+        if (option === 'requirementId') {
+          filteredData = filteredData.filter(item => values.includes(item[option]?.toString()));
+        } else {
+          filteredData = filteredData.filter(item => values.some(value => item[option]?.toString().toLowerCase().includes(value.toLowerCase())));
+        }
+      }
+    });
+    setFilteredCallingList(filteredData);
+  };
+
+  const handleFilterSelect = (option, value) => {
+    setSelectedFilters(prevFilters => {
+      const updatedFilters = { ...prevFilters };
+      if (!updatedFilters[option]) {
+        updatedFilters[option] = [];
+      }
+
+      const index = updatedFilters[option].indexOf(value);
+      if (index === -1) {
+        updatedFilters[option] = [...updatedFilters[option], value];
+      } else {
+        updatedFilters[option] = updatedFilters[option].filter(item => item !== value);
+      }
+
+      return updatedFilters;
+    });
+  };
+
+
+
+
+  const handleSort = (criteria) => {
+    if (criteria === sortCriteria) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortCriteria(criteria);
+      setSortOrder("asc");
     }
   };
 
@@ -71,27 +204,125 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     }
   };
 
+  const toggleFilterSection = () => {
+    setShowFilterSection(!showFilterSection);
+  };
+
+  const getSortIcon = (criteria) => {
+    if (sortCriteria === criteria) {
+      return sortOrder === "asc" ? <i className="fa-solid fa-arrow-up"></i> : <i className="fa-solid fa-arrow-down"></i>;
+    }
+    return null;
+  };
+
+  
+  const handleSelectAll = (event) => {
+    if (event.target.checked) {
+      const allRowIds = filteredCallingList.map(item => item.candidateId);
+      setSelectedRows(allRowIds);
+    } else {
+      setSelectedRows([]);
+    }
+  };
+
+  const handleSelectRow = (candidateId) => {
+    setSelectedRows(prevSelectedRows => {
+      if (prevSelectedRows.includes(candidateId)) {
+        return prevSelectedRows.filter(id => id !== candidateId);
+      } else {
+        return [...prevSelectedRows, candidateId];
+      }
+    });
+  };
+
+
   return (
-    <div className="calling-list-container">
+    <div className="App-after">
       {!showUpdateCallingTracker ? (
+        <>
+         <div className="search">
+            <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
+              style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
+            <h5 style={{ color: "gray" }}>Hold Data  List</h5>
+
+            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+          </div>
+          {showSearchBar && (
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search here..."
+              value={searchTerm}
+              style={{ marginBottom: "10px" }}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          )}
+          {showFilterSection && (
+            <div className="filter-section">
+              <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
+              <div className="filter-dropdowns">
+                {filterOptions.map(option => (
+                  <div key={option} className="filter-dropdown">
+                    {/* <label htmlFor={option}>{option}</label> */}
+                    <div className="dropdown">
+                      <button className="dropbtn">{option}</button>
+                      <div className="dropdown-content">
+                        <div key={`${option}-All`}>
+                          <input
+                            type="checkbox"
+                            id={`${option}-All`}
+                            value="All"
+                            checked={!selectedFilters[option] || selectedFilters[option].length === 0}
+                            onChange={() => handleFilterSelect(option, "All")}
+                          />
+                          <label htmlFor={`${option}-All`}>All</label>
+                        </div>
+                        {[...new Set(callingList.map(item => item[option]))].map(value => (
+                          <div key={value}>
+                            <input
+                              type="checkbox"
+                              id={`${option}-${value}`}
+                              value={value}
+                              checked={selectedFilters[option]?.includes(value) || false}
+                              onChange={() => handleFilterSelect(option, value)}
+                            />
+                            <label htmlFor={`${option}-${value}`}>{value}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
         <div className="attendanceTableData">
-          <h5 style={{ color: "gray" }}>Hold Data  List</h5>
+ 
+          
+          
           <table className="attendance-table">
             <thead>
               <tr className='attendancerows-head'>
-
+                <th className='attendanceheading'>
+                    <input
+                      type="checkbox"
+                      onChange={handleSelectAll}
+                      checked={selectedRows.length === filteredCallingList.length}
+                    />
+                  </th>
                 <th className='attendanceheading'>Sr No.</th>
-                <th className='attendanceheading'>Date</th>
+                <th className='attendanceheading'  onClick={() => handleSort("date")}>Date</th>
                 <th className='attendanceheading'>Time</th>
                 <th className='attendanceheading'>Candidate Id</th>
-                <th className='attendanceheading'>Recruiter Name</th>
+                <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name</th>
                 <th className='attendanceheading'>Candidate Name</th>
                 <th className='attendanceheading'>Candidate Email</th>
                 <th className='attendanceheading'>Contact Number</th>
                 <th className='attendanceheading'>Alternate Number</th>
                 <th className='attendanceheading'>sourceName</th>
                 <th className='attendanceheading'>job Designation</th>
-                <th className='attendanceheading'>Job Id</th>
+                <th className='attendanceheading' onClick={() => handleSort("requirementId")}>Job Id</th>
                 <th className='attendanceheading'>Applying Company</th>
                 <th className='attendanceheading'>Communication Rating</th>
                 <th className='attendanceheading'>Current Location</th>
@@ -123,9 +354,16 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
               </tr>
             </thead>
             <tbody>
-              {showHoldData.map((item, index) => (
+              {filteredCallingList.map((item, index) => (
                 <tr key={item.candidateId} className='attendancerows'>
-                  <td className='tabledata'>{index + 1}</td>
+                  <td className='tabledata '>
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.includes(item.candidateId)}
+                        onChange={() => handleSelectRow(item.candidateId)}
+                      />
+                    </td>
+                  <td className='tabledata' >{index + 1}</td>
                   
                   <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                     {item.date}
@@ -410,6 +648,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
             </tbody>
           </table>
         </div>
+        </>
       ) : (
         <UpdateCallingTracker
           candidateId={selectedCandidateId}
@@ -417,6 +656,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
           onSuccess={handleUpdateSuccess}
           onCancel={() => setShowUpdateCallingTracker(false)}
         />
+        
       )}
     </div>
   );
