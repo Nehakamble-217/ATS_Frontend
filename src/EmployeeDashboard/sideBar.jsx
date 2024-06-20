@@ -134,7 +134,7 @@ function Sidebar({
 
       <div className={`sidebar ${isActive ? 'active' : ''}`}>
 
-        <div className="sidebar-clouds1"></div>
+        {/* <div className="sidebar-clouds1"></div> */}
         <div className='head'></div>
         <div className="sidebar-menu-btn" onClick={toggleSidebar}>
           <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
@@ -254,7 +254,7 @@ function Sidebar({
 
                 </ul>
               </li>
-              {/* <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
+              <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
                 <i className="icon ph-bold ph-chart-bar"></i>
                 <span className="sidebar-text">Employee Section</span>
@@ -275,7 +275,7 @@ function Sidebar({
                   </a>
                 </li>
               </ul>
-            </li> */}
+            </li>
               <li className={activeSubMenu === 'database' ? "active" : ""} onClick={toggleSubMenu('database')}>
                 <a href="#">
                   <i className="icon ph-bold ph-chart-bar"></i>
