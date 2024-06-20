@@ -1,11 +1,6 @@
 /* EmpDashboard.css */
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f5f9fc;
-  color: rgb(250, 39, 11);
-}
+
 
 .grid-container {
   display: grid;
@@ -114,6 +109,7 @@ body {
 .sidebar {
   background-color: #ffe5b5;
   transition: all 0.3s ease;
+  z-index: 999;
 }
 
 .empDash-main-content {
@@ -166,12 +162,13 @@ body {
     display: none;
   } */
 }
-.sidebar-open .empDash-main-content {
-  margin-left: 10px;
-}
+/* .sidebar-open .empDash-main-content {
+  margin-left: 1px;
+} */
 
 .sidebar-closed .empDash-main-content {
-  margin-left: 60px;
+  margin-left: 50px;
+  
 }
 
 /* Classes for toggling sidebar state */

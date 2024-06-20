@@ -6,6 +6,13 @@
 }
 
 
+#table-row {
+    background-color: #ffcb9b;
+    height: 8px !important;
+    padding: 0%;
+    margin: 0%;
+}
+
 .update-page-head{
   width: 100%;
   color: gray;
@@ -43,6 +50,22 @@
   text-align: center;
   align-items: center;
 }
+
+
+/* #studTables th {
+  background-color: white;
+  color: gray;
+  padding: 10px;
+ text-align:left;
+ font-size: 16px;
+  
+} */
+/* #studTables th input {
+  background-color: white;
+  
+  border-collapse: collapse;
+} */
+
 #studTables input[type="text"] {
   height: 30px;
   width: 100%;
@@ -178,6 +201,7 @@
 .upload-success-icons {
   color: green;
 }
+
 #currentDate {
   width: 75%;
   padding: 10px; 
@@ -234,7 +258,9 @@
   padding: 10px;
   text-align: center;
   font-size: 16px;
+
 }
+
 #studTables td {
   padding: 10px; /* Adjust padding as needed */
   text-align: center;

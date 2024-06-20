@@ -134,7 +134,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`
+
+        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
+
+
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -154,7 +157,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/company-details`
+
+
+        `http://192.168.1.38:8891/api/ats/157industries/company-details`
+
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -242,7 +248,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://localhost:8891/api/ats/157industries/${employeeId}/addCallingData`,
+
+        `http://192.168.1.38:8891/api/ats/157industries/${employeeId}/addCallingData`,
         dataToUpdate
       );
 
@@ -434,8 +441,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
             <tbody className="table-group-divider">
 
               <tr  >
+
                 <th scope="col" style={{ textAlign: "left" }} >Date & Time:</th>
                 <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: 'auto', padding: '5px' }}>
+
                   <input
                     type="text"
                     //id="currentDate"
@@ -470,9 +479,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
               </tr>
 
 
-
-
-
               <div hidden>
 
                 <input type="text" name="employeeId" readOnly value={employeeId} />
@@ -505,7 +511,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={callingTracker.candidateEmail}
                     onChange={handleChange}
                     className={`form-control ${error ? 'is-invalid' : ''}`}
-                  // required
 
                   />
 
@@ -557,6 +562,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     onChange={handleChange}
                     required={callingTracker.selectYesOrNo !== "Interested"}
                     style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1 }}
+
                   >
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
@@ -584,7 +590,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={callingTracker.requirementId}
                     onChange={handleRequirementChange}
                     required={callingTracker.selectYesOrNo === "Interested"}
+
                     style={{ height: "30px", width: "260px", alignItems: "center", lineHeight: 1 }}
+
 
 
                   >
@@ -641,8 +649,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <th>Current Location</th>
                 <td>
                   {!isOtherLocationSelected ? (
+
                     <select
                       required={callingTracker.selectYesOrNo === "Interested"}
+
                       name="currentLocation"
                       value={callingTracker.currentLocation}
                       onChange={handleLocationChange}
@@ -743,21 +753,25 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     value={lineUpData.dateOfBirth}
                     onChange={handleDateChange}
                     className="form-control"
+
                     style={{ height: "30px", width: "auto", alignItems: "center", lineHeight: 1 }}
 
                   />
                   <div
                     className="main-gender"
                     style={{ display: "flex", alignItems: "center", textAlign: "center", gap: "10px" }}
+
                     required={callingTracker.selectYesOrNo === "Interested"}
                   >
 
                     <input
+
                       style={{ textAlign: "center" }}
                       type="checkbox"
                       name="male"
                       value="male"
                       className="gender"
+
 
                       checked={lineUpData.gender === "male"}
                       onChange={(e) =>
@@ -806,7 +820,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       value={lineUpData.qualification}
                       onChange={handleLineUpChange}
                       className="form-control"
+
                       style={{ height: "30px", width: "260px", alignItems: "center", lineHeight: 1 }}
+
 
                       required={callingTracker.selectYesOrNo === "Interested"}
                     >
@@ -988,6 +1004,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   </div>
 
                 </td>
+
                 <th scope="col" >
                   Upload Resume
                   {/* {resumeUploaded && (
@@ -997,11 +1014,12 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <td style={{ display: "flex" }}>
                   <input
                     type="file"
-                  //  onChange={handleResumeFileChange}
+                    //  onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
-                   // className="form-control pt-1"
-                   // required={callingTracker.selectYesOrNo === "Interested"}
+                    // className="form-control pt-1"
+                    // required={callingTracker.selectYesOrNo === "Interested"}
                     style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1 }}
+
 
                   />
                   <input
@@ -1040,9 +1058,11 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 </td>
 
                 <th scope="col">Experience</th>
+
                 <td style={{ paddingLeft: '5px', paddingTop: "0%", paddingBottom: "1px" }} >
                   <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '8px', justifyContent: "center" }}>
+
                       <label htmlFor="experienceYear" style={{ marginRight: '5px', width: '50px' }}>Years:</label>
                       <input
                         type="text"
@@ -1132,9 +1152,11 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
               <tr>
                 <th scope="col">Current CTC(LPA)</th>
 
+
                 <td style={{ paddingLeft: '5px', paddingTop: "0%", paddingBottom: "1px" }} >
                   <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '8px', justifyContent: "center" }}>
+
                       <label htmlFor="currentCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
                       <input
                         type="text"
@@ -1166,10 +1188,12 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     </div>
                   </div>
                 </td>
+
                 <th scope="col" style={{ textAlign: "left" }}>Expected CTC(LPA)</th>
                 <td style={{ paddingLeft: '5px', paddingTop: "0%", paddingBottom: "1px" }} >
                   <div style={{ display: 'flex', alignItems: 'center' }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '8px', justifyContent: "center" }}>
+
                       <label htmlFor="expectedCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
                       <input
                         type="text"
@@ -1203,7 +1227,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
               </tr>
 
               <tr>
+
                 {/* <th scope="col" style={{textAlign:"left"}}>Notice Period(Days)</th>
+
                 <td >
                   <input
                     type="text"
@@ -1230,7 +1256,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 <td>
                   <select type="text"
                     name="holdingAnyOffer"
+
                     value={lineUpData.holdingAnyOffer}
+
                     required={callingTracker.selectYesOrNo === "Interested"}
                     //onChange={handleLineUpChange}
                     onChange={(e) => setLineUpData({ ...lineUpData, holdingAnyOffer: e.target.value })} className="form-select"
@@ -1249,8 +1277,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     style={{ height: "30px", width: '150px', display: 'inline-block', lineHeight: 1, border: '1px solid #ccc', padding: '5px' }}
                   />
                 </td>
+
                 <th scope="col">Recruiter's Feedback</th>
                 <td style={{ display: "flex" }}>
+
                   <input
                     type="text"
 
@@ -1263,6 +1293,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     className="form-control"
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
+
                   <input
                     type="text"
 
@@ -1355,7 +1386,9 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                       })
                     }
                     className="form-select"
+
                     style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1 }}
+
                     required={callingTracker.selectYesOrNo === "Interested"}
                   >
                     <option value="">Select</option>

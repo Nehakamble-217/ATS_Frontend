@@ -235,7 +235,11 @@ const Jobdiscription = () => {
             <hr /></div>
         </div>
 
-        <div className="job-details" style={{border:"1px solid black"}} >
+
+        
+       
+        <div className="job-details" >
+          
 
             {[jobData, jobData2].map((job, index) => (
               <React.Fragment key={index}>

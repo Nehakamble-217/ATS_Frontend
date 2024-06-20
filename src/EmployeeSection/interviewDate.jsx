@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
@@ -35,15 +34,19 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/28/6/22`);
 
-      console.log(candidateId + " --> candidateId 07");
-      console.log(employeeIdNew + " --> employeeId 08");
-      console.log(requirementId + " --> requirementId 09");
       const data = await response.json();
-      setInterviewResponses(data);
+      if (Array.isArray(data)) {
+        setInterviewResponses(data);
+      } else {
+        console.error("Invalid data received:", data);
+        setInterviewResponses([]); // Set to empty array or handle error state appropriately
+      }
     } catch (error) {
       console.error("Error fetching interview response:", error);
+      setInterviewResponses([]); // Set to empty array or handle error state appropriately
     }
   };
+  
 
   const fetchInterviewDates = async () => {
     try {
@@ -100,6 +103,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
+
           `http://192.168.1.38:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
 
         );
@@ -226,11 +230,17 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
         tooltip.classList.remove('visible');
       }
     };
-    const handleRowClick = (candidateId) => {
-      // Set the selected candidate ID when a row is clicked
+    const handleRowClick = (candidateId, requirementId) => {
       setCandidateId(candidateId);
+      setRequirementId(requirementId);
+      
+      // Immediately fetch and update interview response
+      fetchAndUpdateInterviewResponse(candidateId, requirementId);
+      
+      // Toggle the showShortlistTable state
+      setShowShortlistTable(true);
     };
-  
+    
     
 
 
@@ -465,8 +475,8 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     <th>Interview Round</th>
                     <th>Interview Response</th>
                     <th>Update Date</th>
-                    <th>Next Interview Date</th>
-                    <th>Next Interview Time</th>
+                    <th> Interview Date</th>
+                    <th> Interview Time</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -482,7 +492,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                   ))}
                   <tr>
 
+
                     <td></td>
+
                     <td >
                       <select
                         name="interviewRound"
