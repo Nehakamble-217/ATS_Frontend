@@ -292,3 +292,7 @@ z-index: -1;
 .sidebar-menu{
   padding-left: 10px;
 }
+
+.sidebar-text{
+  color: gray;
+}

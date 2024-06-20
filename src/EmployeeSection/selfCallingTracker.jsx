@@ -32,9 +32,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
-
     fetch(`http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`)
-
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -143,8 +141,6 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       return updatedFilters;
     });
   };
-
-
 
 
   const handleSort = (criteria) => {

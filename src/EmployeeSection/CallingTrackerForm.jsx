@@ -434,17 +434,14 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="maintable">
-          <table id="studTables" className="table  table-striped  text-center" >
+    <div >
+      <form  onSubmit={handleSubmit}>
+        <div className="maintable" style={{width:"80%"}}>
+          <table id="studTables"  className="table  table-striped  text-center" >
             <tbody className="table-group-divider">
-
               <tr  >
-
                 <th scope="col" style={{ textAlign: "left" }} >Date & Time:</th>
                 <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: 'auto', padding: '5px' }}>
-
                   <input
                     type="text"
                     //id="currentDate"
@@ -1294,21 +1291,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
 
-                  <input
-                    type="text"
-
-                    name="msgForTeamLeader"
-                    placeholder="comment For TL"
-                    value={lineUpData.msgForTeamLeader}
-                    //onChange={handleLineUpChange}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        msgForTeamLeader: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
+                  
                 </td>
 
 
@@ -1398,16 +1381,18 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   </select>
                   <input
                     type="text"
-                    placeholder="Feedback"
-                    name="feedBack"
-                    value={lineUpData.feedBack}
+
+                    name="msgForTeamLeader"
+                    placeholder="comment For TL"
+                    value={lineUpData.msgForTeamLeader}
                     //onChange={handleLineUpChange}
                     onChange={(e) =>
-                      setLineUpData({ ...lineUpData, feedBack: e.target.value })
+                      setLineUpData({
+                        ...lineUpData,
+                        msgForTeamLeader: e.target.value,
+                      })
                     }
                     className="form-control"
-                    style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1 }}
-                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
               </tr>
@@ -1421,18 +1406,19 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
           </div>
         )}
 
-        <div className="buttonDiv">
-          {callingTracker.selectYesOrNo !== "Interested" && (
-            <button type="submit" className="ctf-btn" >
-              Add To Calling
-            </button>
-          )}
-          {callingTracker.selectYesOrNo === "Interested" && (
-            <button type="submit" className="ctf-btn" id="uploadbtn2">
-              Add To LineUp
-            </button>
-          )}
-        </div>
+            <div className="buttonDiv">
+              {callingTracker.selectYesOrNo !== "Interested" && (
+                <button type="submit" className="ctf-btn" >
+                  Add To Calling
+                </button>
+              )}
+              {callingTracker.selectYesOrNo === "Interested" && (
+                <button type="submit" className="ctf-btn" id="uploadbtn2">
+                  Add To LineUp
+                </button>
+              )}
+            </div>
+
       </form>
     </div>
 

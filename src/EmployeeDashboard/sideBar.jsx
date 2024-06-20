@@ -24,6 +24,8 @@ function Sidebar({
   toggleAllMasterSheet,
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
+  handleLogout,
+  toggelAddRecruiter,
 
 
 
@@ -111,7 +113,7 @@ function Sidebar({
 
 
       await axios.post(
-        "http://192.168.1.33:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -134,10 +136,12 @@ function Sidebar({
 
       <div className={`sidebar ${isActive ? 'active' : ''}`}>
 
-        <div className="sidebar-clouds1"></div>
+        {/* <div className="sidebar-clouds1"></div> */}
         <div className='head'></div>
         <div className="sidebar-menu-btn" onClick={toggleSidebar}>
+          
           <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
+
         </div>
 
 
@@ -147,21 +151,24 @@ function Sidebar({
             <ul>
               <li onClick={handleButtonClick('interviewDate', toggleInterviewDate)} className={activeButton === 'interviewDate' ? 'active' : ''}>
                 <a href="#">
-                  <i className="icon ph-bold ph-house-simple"></i>
+                <i className='xyz-icon' class="fa-solid fa-user-check" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Shortlisted Candidate</span>
                 </a>
               </li>
               <li onClick={handleButtonClick('callingTrackerForm', toggleCallingTrackerForm)} className={activeButton === 'callingTrackerForm' ? 'active' : ''}>
                 <a href="#">
-                  <i className="icon ph-bold ph-house-simple"></i>
+                <i class="fa-solid fa-user-plus" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Add Candidate</span>
                 </a>
               </li>
               <li className={`${activeSubMenu === 'candidate' || isCandidateSectionActive ? 'active' : ''}`} onClick={toggleSubMenu('candidate')}>
                 <a href="#">
-                  <i className="icon ph-bold ph-user"></i>
+                <i class="fa-solid fa-users" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Candidate Section</span>
-                  <i className="arrow ph-bold ph-caret-down"></i>
+                  <i className="arrow ph-bold ph-caret-down" style={{color:"gray"}}></i>
                 </a>
                 <ul className={`sub-menu ${activeSubMenu === 'candidate' ? 'active' : ''}`}>
                   <li onClick={handleButtonClick('selfCalling', toggleSelfCalling)} className={activeButton === 'selfCalling' ? 'active' : ''}>
@@ -233,9 +240,10 @@ function Sidebar({
 
               <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
                 <a href="#">
-                  <i className="icon ph-bold ph-user"></i>
+                <i class="fa-solid fa-pen-to-square" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Job Description</span>
-                  <i className="arrow ph-bold ph-caret-down"></i>
+                  <i className="arrow ph-bold ph-caret-down" style={{color:"gray"}}></i>
                 </a>
                 <ul className={`sub-menu ${activeSubMenu === 'Jobdiscription' ? 'active' : ''}`}>
                   <li onClick={handleButtonClick('jobDescription', toggleJobDescription)} className={activeButton === 'jobDescription' ? 'active' : ''}>
@@ -254,7 +262,7 @@ function Sidebar({
 
                 </ul>
               </li>
-              {/* <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
+              <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
                 <i className="icon ph-bold ph-chart-bar"></i>
                 <span className="sidebar-text">Employee Section</span>
@@ -275,12 +283,13 @@ function Sidebar({
                   </a>
                 </li>
               </ul>
-            </li> */}
+            </li>
               <li className={activeSubMenu === 'database' ? "active" : ""} onClick={toggleSubMenu('database')}>
                 <a href="#">
-                  <i className="icon ph-bold ph-chart-bar"></i>
+                <i className="fa-solid fa-database" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Database</span>
-                  <i className="arrow ph-bold ph-caret-down"></i>
+                  <i className="arrow ph-bold ph-caret-down" style={{color:"gray"}}></i>
                 </a>
                 <ul className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === 'database' ? 'active' : ''}`}>
                   <li onClick={handleButtonClick('excelCalling', toggleExcelCalling)} className={activeButton === 'excelCalling' ? 'active' : ''}>
@@ -313,15 +322,17 @@ function Sidebar({
               </li>
               <li>
                 <a href="#">
-                  <i className="icon ph-bold ph-gear"></i>
+                <i class="fa-brands fa-rocketchat" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Chat Section</span>
                 </a>
               </li>
               <li className={activeSubMenu === 'portal' ? "active" : ""} onClick={toggleSubMenu('portal')}>
                 <a href="#">
-                  <i className="icon ph-bold ph-chart-bar"></i>
+                <i class="fa-brands fa-linkedin" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Portal</span>
-                  <i className="arrow ph-bold ph-caret-down"></i>
+                  <i className="arrow ph-bold ph-caret-down" style={{color:"gray"}}></i>
                 </a>
                 <ul className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === 'portal' ? 'active' : ''}`}>
                   <li>
@@ -360,28 +371,31 @@ function Sidebar({
               </li>
               <li >
                 <a href="#" >
-                  <i className="icon ph-bold ph-sign-out"></i>
+                <i class="fa-regular fa-clipboard" style={{color:"gray"}}></i>
+
                   <span className="sidebar-text">Note Pad</span>
                 </a>
               </li>
-              <li >
+              <li onClick={toggelAddRecruiter} >
                 <a href="#" >
-                  <i className="icon ph-bold ph-sign-out"></i>
-                  <span className="sidebar-text">Add Emp</span>
+                <i class="fa-solid fa-circle-user"  style={{color:"gray"}}></i>
+
+                  <span className="sidebar-text">Add Recruiter</span>
                 </a>
               </li>
               <li >
                 <a href="#" >
-                  <i className="icon ph-bold ph-sign-out"></i>
+                <i class="fa-solid fa-user-tie" style={{color:"gray"}}></i>
                   <span className="sidebar-text">Add TeamLeader</span>
                 </a>
               </li>
-              <li onClick={handleLogoutLocal}>
+              {/* <li onClick={handleLogoutLocal}>
                 <a href="#" >
-                  <i className="icon ph-bold ph-sign-out"></i>
+                <i class="fa-solid fa-power-off"></i>
+
                   <span className="sidebar-text">Logout</span>
                 </a>
-              </li>
+              </li> */}
 
             </ul>
           </div>
