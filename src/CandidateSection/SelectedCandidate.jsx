@@ -18,13 +18,9 @@ const SelectedCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-<<<<<<< HEAD
-        `http://192.168.1.38:8891/api/ats/157industries/selected-candidate/${employeeId}`
-=======
 
         `http://192.168.1.38:8891/api/ats/157industries/selected-candidate/${employeeId}`
 
->>>>>>> c9927aa601a1eaaeabfcb099942b2dda8b3b0947
       );
       const data = await response.json();
       setShortListedData(data);

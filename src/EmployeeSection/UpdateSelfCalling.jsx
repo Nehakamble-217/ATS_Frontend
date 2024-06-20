@@ -157,48 +157,48 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
           <table id="studTables" className="table  table-striped  text-center">
             <tbody className="table-group-divider">
 
-              <tr id="table-row">
-                <th scope="col">Data & Time</th>
-                <td>
-                  <input
-                    type="text"
-                    id="date"
-                    name="date"
-                    value={callingTracker.date}
-                    className="form-control"
-                    style={{ marginRight: "20px", width: "180px" }}
-                    readOnly
-                  />
-                  <input
-                    type="text"
-                    id="candidateAddedTime"
-                    name="candidateAddedTime"
-                    value={callingTracker.candidateAddedTime}
-                    className="form-control"
-                    style={{ marginBottom: "9px", width: "180px", marginRight: "30px", paddingLeft: "10px" }}
-                    readOnly
-                  />
-                </td>
+            <tr id="table-row">
+            <th scope="col">Data & Time</th>
+            <td>
+              <input
+                type="text"
+                id="date"
+                name="date"
+                value={callingTracker.date}
+                className="form-control"
+                style={{ marginRight: "20px", width: "180px" }}
+                readOnly
+              />
+              <input
+                type="text"
+                id="candidateAddedTime"
+                name="candidateAddedTime"
+                value={callingTracker.candidateAddedTime}
+                className="form-control"
+                style={{ marginBottom: "9px", width: "180px", marginRight: "30px", paddingLeft: "10px" }}
+                readOnly
+              />
+            </td>
 
                 <th>Recruiters Name</th>
-                <td>
-                  <input
-                    type="text"
-                    name="recruiterName"
-                    value={callingTracker.recruiterName}
-                    readOnly
-                   
-                    className="form-control"
-                  />
-                </td>
-              </tr>
+            <td>
+              <input
+                type="text"
+                name="recruiterName"
+                value={callingTracker.recruiterName}
+                readOnly
+               
+                className="form-control"
+              />
+            </td>
+          </tr>
 
-              <div hidden>
+          <div hidden>
 
-                <input type="text" name="employeeId" readOnly value={employeeId} />
+            <input type="text" name="employeeId" readOnly value={employeeId} />
 
-              </div>
-              <tr id="heading123">
+          </div>
+          <tr id="heading123">
 
                 <th> Candidates Full Name*</th>
                 <td>
@@ -341,7 +341,7 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                     </select>
 
                 </td>
-                <th> Full Adress</th>
+                <th> Full Address</th>
                 <td>
                   <input
                     type="text"
@@ -831,7 +831,7 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
                   />
                 </td>
 
-                <th scope="col">Comment For Eevaluter/TL</th>
+                <th scope="col">Comment For Evalutor/TL</th>
                 <td>
                   <input
                     type="text"
