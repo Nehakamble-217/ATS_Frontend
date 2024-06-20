@@ -15,6 +15,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
+
   const [selectedCandidateId, setSelectedCandidateId] = useState();
 
   const [selectedRows, setSelectedRows] = useState([]);
@@ -40,6 +41,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
+
 
 
   useEffect(() => {

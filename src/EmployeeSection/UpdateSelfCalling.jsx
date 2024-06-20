@@ -73,60 +73,14 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
     fetchData();
   }, [employeeId, candidateId]);
 
+
 // <<<<<<< HEAD
 //   const fetchRequirementOptions = async () => {
 //     try {
 //       const response = await axios.get(
 
 
-//         `http://192.168.1.33:8891/api/ats/157industries/company-list/${employeeId}`
 
-
-//       );
-//       const { data } = response;
-//       setRequirementOptions(data);
-//     } catch (error) {
-//       console.error("Error fetching requirement options:", error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (initialData) {
-//       setCallingTracker(initialData);
-//       setRecruiterName(initialData.recruiterName);
-//       setCandidateFetched(true);
-//     }
-//   }, [initialData]);
-
-//   const fetchEmployeeName = async () => {
-//     try {
-
-//       const response = await fetch(
-//         `http://192.168.1.33:8891/api/ats/157industries/employeeName/${employeeId}`
-//       );
-
-//       const data = await response.text();
-//       setRecruiterName(data);
-//     } catch (error) {
-//       console.error("Error fetching employee name:", error);
-//     }
-//   };
-
-//   const fetchCandidateData = async () => {
-//     try {
-//       const response = await fetch(
-//         `http://192.168.1.33:8891/api/ats/157industries/specific-data/${candidateId}`
-//       );
-
-//       const data = await response.json();
-//       setCallingTracker(data);
-//     } catch (error) {
-//       console.error("Error fetching candidate data:", error);
-//     }
-//   };
-
-// =======
-// >>>>>>> 3e51b7ca7eac65b9976a12357b83dbac1aec7f25
   const handlePhoneNumberChange = (value, name) => {
     setCallingTracker((prevState) => ({
       ...prevState,
@@ -183,7 +137,6 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
       const response = await axios.post(
         `http://192.168.1.38:8891/api/ats/157industries/update-callingData/28`,
         dataToUpdate
-
       );
 
       if (response.status === 200) {
@@ -212,7 +165,7 @@ const UpdateCallingTracker = ({ candidateId, employeeId, onSuccess, onCancel }) 
             <tbody className="table-group-divider">
 
               <tr id="table-row">
-                <th scope="col">Added Date:</th>
+                <th scope="col">Data & Time</th>
                 <td>
                   <input
                     type="text"

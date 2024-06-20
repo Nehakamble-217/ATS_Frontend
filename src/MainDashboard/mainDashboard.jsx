@@ -1,5 +1,6 @@
 import React from "react";
 import "./mainDashboard.css";
+import clouds from '../LogoImages/clouds.png';
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
 
   return (
     <div className="tejal">
-      <div className="clouds"></div>
+      <div className="main-clouds"></div>
       <div className="small-container"></div>
       <div className="small-container"></div>
       <div className="pricing-plan">
@@ -34,14 +35,14 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="square-box" onClick={loginLink}>
+        <div className="square-box" >
           <div className="content">
             <h1>Recruiters</h1>
-            <button className="login1" >Login</button>
+            <button className="login1" onClick={loginLink}>Login</button>
           </div>
         </div>
 
-        <div className="square-box" onClick={adminLoginLink}>
+        <div className="square-box" >
           <div className="content">
             <h1>Admin</h1>
             <button className="login1" onClick={adminLoginLink}>Login</button>

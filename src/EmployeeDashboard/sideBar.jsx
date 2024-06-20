@@ -17,6 +17,7 @@ function Sidebar({
   toggleRejectedCandidate,
   toggleHoldCandidate,
   toggleExcelCalling,
+  toggelResumeData,
   toggleJobDescription,
   toggleInterviewDate,
   toggleAttendance,
@@ -135,7 +136,7 @@ function Sidebar({
      
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
      
-          <div className="clouds1"></div>
+          <div className="sidebar-clouds1"></div>
       <div className='head'></div>
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
         <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
@@ -300,6 +301,12 @@ function Sidebar({
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Offers Data</span>
+                  </a>
+                </li>
+                <li onClick={handleButtonClick('resumeData', toggelResumeData)} className={activeButton === 'resumeData' ? 'active' : ''}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Resume Data</span>
                   </a>
                 </li>
                 

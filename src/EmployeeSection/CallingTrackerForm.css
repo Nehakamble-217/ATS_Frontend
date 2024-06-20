@@ -1,16 +1,14 @@
 .maintable {
   height: 100%;
   border-collapse: collapse;
+  display: flex;
 }
-
-
 /* #table-row {
     background-color: #ffcb9b;
     height: 8px !important;
     padding: 0%;
     margin: 0%;
 } */
-
 .update-page-head{
   width: 100%;
   color: gray;
@@ -20,14 +18,11 @@
   justify-content: center;
   padding-top: 10px;
 }
-
-
 #studTables {
   width: 100%;
   /* height: 8px; */
   border-collapse: collapse;
 }
-
 #studTables th,
 #studTables td {
   /* border: 1px solid black; */
@@ -41,28 +36,11 @@
 
 #studTables tr{
   height: 30px;
-
 }
-
 .tabledata{
   text-align: center;
   align-items: center;
 }
-
-#studTables th {
-  background-color: white;
-  color: gray;
-  /* padding: 10px; */
- text-align: center;
- font-size: 16px;
-  /* border-collapse: collapse; */
-}
-/* #studTables th input {
-  background-color: white;
-  
-  border-collapse: collapse;
-} */
-
 #studTables input[type="text"] {
   height: 30px;
   width: 100%;
@@ -86,19 +64,13 @@
   /* border: 1px solid #ccc; */
   border-radius: 4px;
   box-sizing: border-box;   
-
 }
-
 #studTables .onlyselect input[type="select"]{
   height: 50px;
   width: 100%;
   /* border: 1px solid #ccc; */
   border-radius: 4px;
- 
-
 }
-
-
 .header {
   text-align: center;
   margin-bottom: 20px;
@@ -131,8 +103,6 @@
   align-items: center;
   gap: 10px;
 }
-
-
 /* Optional: Adjust checkbox appearance */
 .gender-checkboxes input[type="checkbox"] {
   margin-right: 5px; /* Adjust spacing between checkbox and label */
@@ -158,8 +128,6 @@
   justify-content: space-around;
   /* tab-size: x-large; */
 }
-
-
 .ctf-btn{
   margin-top: 23px;
   background-color: #ffcb9b;
@@ -173,17 +141,13 @@
   height: 40px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
-  overflow: hidden;
-  
+  overflow: hidden; 
 }
-
 .ctf-btn:hover{
   background-color: white;
   color:#ffcb9b ;
   border: 1px solid gray; 
 }
-
-
  #uploadbtn2 {
   margin-top: 23px;
   background-color: #ffcb9b;
@@ -199,15 +163,11 @@
   transition: 0.5s;
   overflow: hidden;
 } 
-
-
 .buttonDiv {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-
 .upload-success-icon {
   color: green;
   margin-left: 10px;
@@ -216,17 +176,14 @@
 .upload-success-icons {
   color: green;
 }
-
 #currentDate {
   width: 75%;
-}
-
-#currentDate {
   padding: 10px; 
   font-size: 16px; 
   border: 1px solid #ccc; 
   border-radius: 4px; 
-  box-sizing: border-box; }
+  box-sizing: border-box;
+ }
 
 /* .react-datepicker__input-container input {
   width: 300px; 
@@ -266,9 +223,20 @@
   height: 300px;
   width: 500px;
 } */
-
-
 .custom-datepicker-container {
   position: relative; /* Ensure proper positioning */
   display: inline-block; /* Display as inline-block */
+}
+#studTables th {
+  background-color: white;
+  color: gray;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+}
+#studTables td {
+  padding: 10px; /* Adjust padding as needed */
+  text-align: center;
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid gray; /* Ensure consistent border */
 }

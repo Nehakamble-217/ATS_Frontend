@@ -23,6 +23,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeIdnew]);
 
+
   const handleUpdate = (candidateId) => {
     setSelectedCandidateId(candidateId);
     setShowUpdateCallingTracker(true);
@@ -37,6 +38,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
       .then((data) => setCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
   };
+
 
   const handleMouseOver = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
@@ -67,6 +69,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
       tooltip.classList.remove('visible');
     }
   };
+
 
   return (
     <div className="calling-list-container">
@@ -235,6 +238,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                       <span className="tooltiptext">{item.callingFeedback}</span>
                     </div>
                   </td>
+
 
                   <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                     {item.incentive || "-"}

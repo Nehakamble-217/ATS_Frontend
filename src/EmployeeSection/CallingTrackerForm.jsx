@@ -475,7 +475,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   />
                 </td>
               </tr>
-
               <div hidden>
 
                 <input type="text" name="employeeId" readOnly value={employeeId} />
@@ -672,7 +671,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   )}
                 </td>
 
-                <th> Full Adress</th>
+                <th> Full Address</th>
                 <td>
                   <input
                     type="text"
@@ -689,7 +688,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
               <tr>
                 <th>Calling Feedback</th>
-                <td>
+                <td style={{display:"flex"}}>
                   <select
                     required={callingTracker.selectYesOrNo === "Interested"}
                     className="form-select"
@@ -714,14 +713,11 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     <option value="Do not call again">Do not call again</option>
                     <option value="Other">Other</option>
                   </select>
-                </td>
-                <th>Candidate Interested</th>
-                <td>
-
                   <select
                     required
                     className="form-select"
                     name="selectYesOrNo"
+                    placeholder="Candidate Interested"
                     value={callingTracker.selectYesOrNo}
                     onChange={handleChange}
                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
@@ -741,9 +737,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
                   </select>
                 </td>
-              </tr>
-
-              <tr>
                 <th scope="col">Date Of Birth</th>
                 <td style={{display:"flex",gap:"5px"}}>
                   <input
@@ -800,6 +793,13 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   </div>
                 </td>
 
+                
+                
+                
+              </tr>
+
+              <tr>
+                
                 <th scope="col">Education</th>
                 <td style={{display:"flex" }}>
                   {!isOtherEducationSelected ? (
@@ -987,17 +987,16 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     className="form-control"
                     style={{width:"auto"}}
                   />
-
-                    </div>                </td>
-              </tr>
-              <tr>
-                <th scope="col">
+                    </div>  
+                    
+                                  </td>
+                                  <th scope="col" >
                   Upload Resume
                   {resumeUploaded && (
                     <FaCheckCircle className="upload-success-icon" />
                   )}
                 </th>
-                <td>
+                <td style={{display:"flex"}}>
                   <input
                     type="file"
                     onChange={handleResumeFileChange}
@@ -1007,13 +1006,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
 
                   />
-                </td>
-
-                <th>Any Extra Certification</th>
-                <td>
                   <input
                     type="text"
                     name="extraCertification"
+                    placeholder="Certification cource"
                     value={lineUpData.extraCertification}
 
                     onChange={(e) =>
@@ -1027,7 +1023,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   />
                 </td>
               </tr>
-
               <tr>
                 <th scope="col">Current Company</th>
                 <td>
@@ -1085,7 +1080,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
               <tr>
 
                 <th scope="col">Relavent Experince</th>
-                <td>
+                <td style={{display:"flex"}}>
                   <input
                     type="text"
                     name="relevantExperience"
@@ -1094,19 +1089,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     className="form-control"
                     required={callingTracker.selectYesOrNo === "Interested"}
 
-                  />
-
-                </td>
-                <th scope="col">Communication Rating</th>
-                <td style={{display:"flex"}}>
-                  <input
-                    type="text"
-                    name="communicationRating"
-                    value={callingTracker.communicationRating}
-                    onChange={handleChange}
-
-                    className="form-control"
-                    required={callingTracker.selectYesOrNo === "Interested"}
                   />
                   <div>
                   <input
@@ -1132,6 +1114,20 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   </div>
 
 
+
+                </td>
+                <th scope="col">Communication Rating</th>
+                <td >
+                  <input
+                    type="text"
+                    name="communicationRating"
+                    value={callingTracker.communicationRating}
+                    onChange={handleChange}
+
+                    className="form-control"
+                    required={callingTracker.selectYesOrNo === "Interested"}
+                  />
+                  
                 </td>
               </tr>
 
@@ -1255,11 +1251,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     style={{ height:"30px",width: '150px', display: 'inline-block',lineHeight:1, border: '1px solid #ccc', padding: '5px' }}
                      />
                 </td>
-                <th scope="col" style={{textAlign:"left"}}>Comment For Team Leader</th>
-                <td >
-                  
-                  
-                  <input
+                <th scope="col">Comment To TL </th>
+                <td>                  <input
                     type="text"
 
                     name="msgForTeamLeader"
@@ -1275,7 +1268,12 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     className="form-control"
                   />
                 </td>
+
+
+
               </tr>
+
+              
 
               {/* <tr>
                
