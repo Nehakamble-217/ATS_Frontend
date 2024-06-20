@@ -275,3 +275,10 @@ animation: moveClouds 60s linear infinite;
   list-style:decimal !important;
 }
 
+
+
+
+/* arshad added css here */
+.sidebar-menu{
+  padding-left: 10px;
+}

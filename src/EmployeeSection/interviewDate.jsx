@@ -27,14 +27,13 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   console.log(employeeIdNew + " Interview Page Employe ID");
   useEffect(() => {
     fetchInterviewDates();
-
   }, []);
 
 
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
     try {
 
-      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
+      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/28/6/22`);
 
       console.log(candidateId + " --> candidateId 07");
       console.log(employeeIdNew + " --> employeeId 08");
