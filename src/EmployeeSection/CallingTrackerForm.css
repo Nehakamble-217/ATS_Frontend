@@ -8,8 +8,6 @@
   max-width: 100%; /* Ensures it doesn't exceed the container width */
   padding: 10px;
   color: gray;
-  
-  
 }
 /* #table-row {
     background-color: #ffcb9b;
@@ -68,7 +66,6 @@
 .tabledata{
   text-align: center;
   align-items: center;
-
 }
 .studTables input[type="text"] {
   height: 30px;
@@ -78,7 +75,6 @@
   box-sizing: border-box;   
 
 }
-
 element.style{
   width: 100px;
 }
@@ -165,7 +161,7 @@ element.style{
   
   background-color: #ffcb9b;
   color: white;
-  border-radius: 12px;
+  border-radius: 15px;
   border: 1px solid gray; /* Add border */
   cursor: pointer;
   font-size: 16px;
@@ -175,18 +171,6 @@ element.style{
   backdrop-filter: blur(2px);
   transition: 0.5s;
   overflow: hidden; 
-}
-
-.ctf-btn {
-  background-color: #ffcb9b;
-  color: white;
-  border-radius: 15px;
-  border: 1px solid gray;
-  /* padding: 10px 20px; */
-  cursor: pointer;
-  font-size: 16px;
-  text-align: center;
-  transition: 0.5s;
 }
 .ctf-btn:hover{
   background-color: white;

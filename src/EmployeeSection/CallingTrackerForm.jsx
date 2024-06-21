@@ -157,7 +157,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-
         `http://192.168.1.38:8891/api/ats/157industries/company-details`
 
       );
@@ -247,7 +246,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-
         `http://192.168.1.38:8891/api/ats/157industries/${employeeId}/addCallingData`,
 
         dataToUpdate
@@ -439,7 +437,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
         <div className="maintable">
           <table className="table  table-striped  text-center studTables" >
             <tbody >
-
               <tr  >
                 <th scope="col" style={{color:"gray"}}>Date & Time:</th>
                 <td style={{ display: "flex"}}>
@@ -1260,6 +1257,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     className="form-control"
                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
                   />
+
                 </td>
 
 
@@ -1347,12 +1345,16 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                   </select>
                   <input
                     type="text"
-                    placeholder="Feedback"
-                    name="feedBack"
-                    value={lineUpData.feedBack}
+
+                    name="msgForTeamLeader"
+                    placeholder="comment For TL"
+                    value={lineUpData.msgForTeamLeader}
                     //onChange={handleLineUpChange}
                     onChange={(e) =>
-                      setLineUpData({ ...lineUpData, feedBack: e.target.value })
+                      setLineUpData({
+                        ...lineUpData,
+                        msgForTeamLeader: e.target.value,
+                      })
                     }
                     className="form-control"
                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
@@ -1369,7 +1371,6 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
             Data Added successfully!
           </div>
         )}
-
         <center>
         <div className="callingbutton">
           {callingTracker.selectYesOrNo !== "Interested" && (
@@ -1384,6 +1385,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
           )}
         </div>
         </center>
+
       </form>
     </div>
   );

@@ -93,12 +93,8 @@ const LoginSignup = ({ onLogin }) => {
                         </div>
                     </div>
                 </div>
-
-                 
-    </div>
-
+            </div>    
   );
-
 };
 
 export default LoginSignup;

@@ -441,6 +441,7 @@
 .login-button:hover,
 .dashboard-button:hover {
     background-color: white;
+    color: #ffcb9b;
     transform: translateY(-2px);
     color: #ffb281;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);

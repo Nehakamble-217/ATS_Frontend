@@ -55,9 +55,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-
           `http://192.168.1.38:8891/api/ats/157industries/employee-details/${employeeId}`
-
         );
         setEmployeeData(response.data);
 
@@ -227,10 +225,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       };
 
       await axios.post(
-
-
         "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
-
         formData
       );
 
@@ -286,10 +281,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
 
   return (
 
-
-     <div className="daily-timeanddate">
-            <div className="header-clouds"></div>
-
+    <div className="daily-timeanddate">
       <div className="head">
 
         <div className="user-img" >
@@ -367,12 +359,14 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button>
-        <img className="logout-btn"
-          onClick={handleLogoutLocal}
-          // style={{ width: "30px", borderRadius: "60%" }}
-          src={logoutImg}
+        {/* <img className="logout-btn" */}
+        <i class="fa-solid fa-power-off" style={{fontSize:"22px",color:"gray"}} onClick={handleLogoutLocal}></i>
+
+          
+          {/* // style={{ width: "30px", borderRadius: "60%" }} */}
+          {/* src={logoutImg}
           alt="Logout"
-        />
+        /> */}
       </div>
 
       <Modal
@@ -382,15 +376,15 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Employee Details</Modal.Title>
+          <Modal.Title style={{color:"gray"}}>Employee Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Name           : {employeeData.employeeName}</p>
-          <p>Email          : {employeeData.employeeEmail}</p>
-          <p>Department     : {employeeData.department}</p>
-          <p>Contact Number : {employeeData.employeeNumber}</p>
-          <p>Gender         : {employeeData.gender}</p>
-          <p>Job Role       : {employeeData.jobRole}</p>
+          <p style={{color:"gray"} }> Name           : {employeeData.employeeName}</p>
+          <p style={{color:"gray"}}>Email          : {employeeData.employeeEmail}</p>
+          <p style={{color:"gray"}}>Department     : {employeeData.department}</p>
+          <p style={{color:"gray"}}>Contact Number : {employeeData.employeeNumber}</p>
+          <p style={{color:"gray"}}>Gender         : {employeeData.gender}</p>
+          <p style={{color:"gray"}}>Job Role       : {employeeData.jobRole}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setModalShow(false)}>

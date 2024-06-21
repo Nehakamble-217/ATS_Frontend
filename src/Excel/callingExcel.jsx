@@ -12,7 +12,7 @@ const CallingExcel = ({ onClose }) => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setUploadSuccess(false);
-    setUploadError(null); 
+    setUploadError(null);
   };
 
   const handleUpload = async () => {
@@ -20,10 +20,8 @@ const CallingExcel = ({ onClose }) => {
       alert('Please select a file to upload.');
       return;
     }
-
     const formData = new FormData();
     formData.append('file', file);
-
     try {
       await axios.post('http://192.168.1.38:8891/api/ats/157industries/uploadData', formData, {
         headers: {
@@ -36,13 +34,11 @@ const CallingExcel = ({ onClose }) => {
       setUploadError('Error uploading file. Please try again.');
     }
   };
-
   const handleClose = () => {
     onClose();
   };
-
   return (
-    <div className="card" style={{width:"400px"}}>
+    <div className="card" style={{ width: "400px", border: "1px solid black" }}>
       <div className="card-header">
         <h5 className="card-title mb-0">Upload Excel File</h5>
       </div>
@@ -51,14 +47,14 @@ const CallingExcel = ({ onClose }) => {
           <input type="file" className="form-control" accept=".xls,.xlsx" onChange={handleFileChange} />
         </div>
         <div className="d-grid gap-2">
-          <button  onClick={handleUpload}>Upload</button>
+          <button onClick={handleUpload}>Upload</button>
           {uploadSuccess && (
             <center><h5 className="text-success mt-3">File Data added successfully!</h5></center>
           )}
           {uploadError && (
             <center><h5 className="text-danger mt-3">{uploadError}</h5></center>
           )}
-          <button  onClick={handleClose}>Close</button>
+          <button onClick={handleClose}>Close</button>
         </div>
       </div>
     </div>

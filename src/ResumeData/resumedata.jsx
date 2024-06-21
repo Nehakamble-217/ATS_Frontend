@@ -1,6 +1,5 @@
-// src/TableComponent.js
+
 import React from 'react';
-// import './TableComponent.css';
 import '../ResumeData/resumedata.css'
 
 const TableComponent = () => {
@@ -8,7 +7,6 @@ const TableComponent = () => {
     { id: 1, name: 'John Doe', contactnumber: 9876543228, alternatenumber: 9123456789, candidateemail: 'john@example.com', dob: '08-10-1999', education: 'MCA', ssc:'60%',hsc:'55%', graduation:'78%' , postgraduation:'79%', certification:'Yes' , currentcompany:'TCS',currentcompanydesignation:'Java Devloper', currentcompanyjobrole:'TL', currentcompanystartdate:'21-02-2023',currentcompanyenddate:'28-02-2024',lastcompany:'wipro',designation:'Senior Java Devloper',jobrole:'TL', startdate:'20-03-2021', enddate:'21-02-2023', currentlocation:'pune', address:'Hadapsar Pune', gender:'Male', industry:'IT' },
     { id: 2, name: 'Jane Smith', contactnumber: 9087654534, alternatenumber: 9123456789, candidateemail: 'jane@example.com', dob: '08-10-1999', education: 'MCA', ssc:'60%',hsc:'55%', graduation:'78%'  , postgraduation:'79%', certification:'Yes', currentcompany:'TCS',currentcompanydesignation:'Java Devloper', currentcompanyjobrole:'TL', currentcompanystartdate:'21-02-2023',currentcompanyenddate:'28-02-2024',lastcompany:'wipro',designation:'Senior Java Devloper', jobrole:'TL', startdate:'20-03-2021', enddate:'21-02-2023', currentlocation:'pune', address:'Hadapsar Pune', gender:'Male', industry:'IT'},
     { id: 3, name: 'Michael Brown', contactnumber: 9878765645,alternatenumber: 9123456789,  candidateemail: 'michael@example.com', dob: '08-10-1999', education: 'MCA', ssc:'60%' ,hsc:'55%', graduation:'78%' , postgraduation:'79%', certification:'Yes', currentcompany:'TCS',currentcompanydesignation:'Java Devloper', currentcompanyjobrole:'TL', currentcompanystartdate:'21-02-2023',currentcompanyenddate:'28-02-2024',lastcompany:'wipro',designation:'Senior Java Devloper',jobrole:'TL', startdate:'20-03-2021', enddate:'21-02-2023', currentlocation:'pune', address:'Hadapsar Pune', gender:'Male', industry:'IT' },
-    // Add more data as needed
   ];
 
   return (

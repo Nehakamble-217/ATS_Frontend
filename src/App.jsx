@@ -6,6 +6,7 @@ import EmpDashboard from "./EmployeeDashboard/empDashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AfterSelection from "./CandidateSection/afterSelection";
 import AdminLogin from "./LoginPage/adminLogin";
+import CandidateVerification from "./CandidateSection/candidateVerification";
 
 const App = () => {
   
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/empDash/:employeeId" element={<EmpDashboard   />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection/>}/>
           <Route path="/admin-login" element={<AdminLogin></AdminLogin>}></Route>
+          <Route path="/candidate/verify/" element={<CandidateVerification></CandidateVerification>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
