@@ -1,16 +1,20 @@
+
 .maintable {
-  height: 100%;
+  height: auto;
+  width: auto;
   border-collapse: collapse;
+  overflow-x: auto; /* Adds horizontal scroll if table is too wide */
+  margin: 0 auto; /* Center align if needed */
+  max-width: 100%; /* Ensures it doesn't exceed the container width */
+  padding: 10px;
+  color: gray;
 }
-
-
-#table-row {
+/* #table-row {
     background-color: #ffcb9b;
     height: 8px !important;
     padding: 0%;
     margin: 0%;
-}
-
+} */
 .update-page-head{
   width: 100%;
   color: gray;
@@ -20,48 +24,81 @@
   justify-content: center;
   padding-top: 10px;
 }
+.table th {
+  color: gray !important;
+  font-size: 18px;
 
-
-#studTables {
-  width: 100%;
-  height: 8px;
-  border-collapse: collapse;
+  /* font-weight: 400; */
 }
+.studTables  {
+  
+  /* height: 8px; */
+  border-collapse: collapse;
+ /* Set table width to 100% of its container */
+    max-width:100%; /* Limit the maximum width to 800px, adjust as needed */
+    margin: 0px; /* Center the table within the container */
+    border-collapse: collapse; /* Remove space between cells */
+    table-layout: fixed;
+    white-space: nowrap;
+    color: gray;
+    
 
-#studTables th,
-#studTables td {
+}
+.studTables th,
+.studTables td {
   /* border: 1px solid black; */
   /* padding: 8px; */
   align-items: center;
   justify-content: center;
   flex-direction: row;
   border: 1px solid gray;
+  white-space: nowrap;
+  color: gray;
+  text-align: left;
 }
-
+.studTables tr th{
+  height: 30px;
+  width: 190px !important;
+  white-space: nowrap;
+  text-align: justify;
+  
+}
 .tabledata{
   text-align: center;
   align-items: center;
 }
-
-#studTables th {
-  background-color: white;
-  color: gray;
-  padding: 10px;
- text-align: center;
- font-size: 16px;
-  /* border-collapse: collapse; */
-}
-/* #studTables th input {
-  background-color: white;
-  
-  border-collapse: collapse;
-} */
-
-#studTables input[type="text"] {
-  width: 100%;
-  border: 1px solid #ccc;
+.studTables input[type="text"] {
+  height: 30px;
+  /* width: 80px; */
+  /* border: 1px solid #ccc; */
   border-radius: 4px;
   box-sizing: border-box;   
+
+}
+element.style{
+  width: 100px;
+}
+
+.studTables input[type="email"] {
+  height: 30px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  box-sizing: border-box;   
+
+}
+.studTables input[type="select"] {
+  height: 30px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  box-sizing: border-box;   
+}
+.studTables .onlyselect input[type="select"]{
+  height: 50px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
 }
 .header {
   text-align: center;
@@ -70,7 +107,7 @@
 .form-group input[type="text"],
 .form-group select {
   width: 100%;
-  font-size: 10px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   
@@ -95,8 +132,6 @@
   align-items: center;
   gap: 10px;
 }
-
-
 /* Optional: Adjust checkbox appearance */
 .gender-checkboxes input[type="checkbox"] {
   margin-right: 5px; /* Adjust spacing between checkbox and label */
@@ -122,56 +157,46 @@
   justify-content: space-around;
   /* tab-size: x-large; */
 }
-
-
 .ctf-btn{
-  margin-top: 23px;
+  
   background-color: #ffcb9b;
   color: white;
-  border-radius: 12px;
+  border-radius: 15px;
   border: 1px solid gray; /* Add border */
   cursor: pointer;
   font-size: 16px;
   text-align: center;
-  width: 200px; /* Adjust width as needed */
-  height: 40px; 
+  width: auto; /* Adjust width as needed */
+  height: 30px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
-  overflow: hidden;
-  
+  overflow: hidden; 
 }
-
 .ctf-btn:hover{
   background-color: white;
   color:#ffcb9b ;
   border: 1px solid gray; 
 }
-
-
- #uploadbtn2 {
+ /* #uploadbtn2 {
   margin-top: 23px;
   background-color: #ffcb9b;
   color: white;
   border-radius: 12px;
-  border: 1px solid gray; /* Add border */
+  border: 1px solid gray; 
   cursor: pointer;
   font-size: 16px;
   text-align: center;
-  width: 200px; /* Adjust width as needed */
+  width: 200px; 
   height: 40px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
   overflow: hidden;
-} 
-
-
+}  */
 .buttonDiv {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-
 .upload-success-icon {
   color: green;
   margin-left: 10px;
@@ -180,17 +205,14 @@
 .upload-success-icons {
   color: green;
 }
-
 #currentDate {
   width: 75%;
-}
-
-#currentDate {
   padding: 10px; 
   font-size: 16px; 
   border: 1px solid #ccc; 
   border-radius: 4px; 
-  box-sizing: border-box; }
+  box-sizing: border-box;
+ }
 
 /* .react-datepicker__input-container input {
   width: 300px; 
@@ -198,12 +220,10 @@
 
 }
 
-
 .react-datepicker__calendar-container {
   width: 800px; 
  
 }
-
 
 .react-datepicker__day-name,
 .react-datepicker__day {
@@ -212,7 +232,6 @@
   line-height: 30px; 
   /
 }
-
 
 .react-datepicker__day--selected {
   background-color: #007bff; 
@@ -230,9 +249,20 @@
   height: 300px;
   width: 500px;
 } */
-
-
 .custom-datepicker-container {
   position: relative; /* Ensure proper positioning */
   display: inline-block; /* Display as inline-block */
+}
+.studTables th {
+  background-color: white;
+  color: gray;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+}
+.studTables td {
+  padding: 10px; /* Adjust padding as needed */
+  text-align: center;
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid gray; /* Ensure consistent border */
 }

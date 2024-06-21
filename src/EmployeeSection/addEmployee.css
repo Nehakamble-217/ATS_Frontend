@@ -1,5 +1,5 @@
 .form-container {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -155,21 +155,23 @@
   }
   
   .submit-button {
-    padding: 10px 20px;
-    background-color: #ffb281;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
+    height: 30px;
+    width: auto;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   
   }
   
   .submit-button:hover {
-    background-color: #f2f2f2;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-3px);
-    color: #ffb281;
+    color: #ffcb9b;
   }
   
   .buttons {
@@ -179,3 +181,47 @@
     margin-top: 20px;
   }
   
+
+  /* Arshad Added some css here for correction */
+  .password-input-container{
+    display: flex;
+  }
+
+  .employee-inputs {
+    font-size: 16px;
+  }
+
+  .show-pass-btn{
+    height: 30px;
+    width: auto;
+    background-color: #ffcb9b;
+    border-radius: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 5px;
+    margin-left: 8px;
+    border: 1px solid gray;
+  }
+
+  .add-employee-submit-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+
+  .submit-button-add-emp{
+    font-size: 16px;
+    border-radius: 15px;
+    width: 120px;
+    background-color: #ffb281;
+    color: white;
+    border: 1px solid gray;
+  }
+
+  .submit-button-add-emp:hover{
+    background-color: white;
+    color: #ffb281;
+  }

@@ -1,5 +1,6 @@
 /* header.css */
 
+
 .bigb{
     display: flex;
     justify-content: center;
@@ -133,6 +134,7 @@ background-size: cover;
 background-position: center;
 animation: moveclouds 30s linear infinite;
     z-index:999;
+
 }
 
 @keyframes moveclouds {

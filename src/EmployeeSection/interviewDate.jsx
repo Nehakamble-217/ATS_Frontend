@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
@@ -27,34 +26,33 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   console.log(employeeIdNew + " Interview Page Employe ID");
   useEffect(() => {
     fetchInterviewDates();
-
   }, []);
 
 
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
     try {
 
+      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/28/6/22`);
 
-      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
-
-
-      console.log(candidateId + " --> candidateId 07");
-      console.log(employeeIdNew + " --> employeeId 08");
-      console.log(requirementId + " --> requirementId 09");
       const data = await response.json();
-      setInterviewResponses(data);
+      if (Array.isArray(data)) {
+        setInterviewResponses(data);
+      } else {
+        console.error("Invalid data received:", data);
+        setInterviewResponses([]); // Set to empty array or handle error state appropriately
+      }
     } catch (error) {
       console.error("Error fetching interview response:", error);
+      setInterviewResponses([]); // Set to empty array or handle error state appropriately
     }
   };
+  
 
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
 
-
         `http://192.168.1.38:8891/api/ats/157industries/interview-date/${employeeIdNew}`
-
 
       );
       const data = await response.json();
@@ -79,9 +77,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     try {
       const response = await fetch(
 
-
         `http://192.168.1.38:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
-
 
       );
       const data = await response.json();
@@ -109,7 +105,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
         const response = await fetch(
 
           `http://192.168.1.38:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
-
 
         );
         const data = await response.json();
@@ -166,7 +161,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
 
-
       const response = await fetch("http://192.168.1.38:8891/api/ats/157industries/save-interview-response", {
 
         method: "POST",
@@ -207,40 +201,41 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     }
 
 
-    const handleMouseOver = (event) => {
-      const tooltip = event.currentTarget.querySelector('.tooltip');
-      if (tooltip) {
-        const rect = event.currentTarget.getBoundingClientRect();
-        const tooltipRect = tooltip.getBoundingClientRect();
-        const tooltipWidth = tooltipRect.width;
-        const tooltipHeight = tooltipRect.height;
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
+     const handleMouseOver = (event) => {
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector('.tooltip');
+    const tooltiptext = tableData.querySelector('.tooltiptext');
 
-        let top = rect.top - tooltipHeight + 40;
-        let left = rect.left + (rect.width - tooltipWidth) / 2;
-
-        if (top < 0) top = rect.bottom + 5;
-        if (left < 0) left = 5;
-        if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5;
-
-        tooltip.style.top = `${top}px`;
-        tooltip.style.left = `${left}px`;
-        tooltip.classList.add('visible');
+    if (tooltip && tooltiptext) {
+      const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
+      if (textOverflowing) {
+        const rect = tableData.getBoundingClientRect();
+        tooltip.style.top = `${rect.top - 10}px`;
+        tooltip.style.left = `${rect.left + rect.width / 100}px`;
+        tooltip.style.visibility = 'visible';
+      } else {
+        tooltip.style.visibility = 'hidden';
       }
-    };
+    }
+  };
 
-    const handleMouseOut = (event) => {
-      const tooltip = event.currentTarget.querySelector('.tooltip');
-      if (tooltip) {
-        tooltip.classList.remove('visible');
-      }
-    };
-    const handleRowClick = (candidateId) => {
-      // Set the selected candidate ID when a row is clicked
+  const handleMouseOut = (event) => {
+    const tooltip = event.currentTarget.querySelector('.tooltip');
+    if (tooltip) {
+      tooltip.style.visibility = 'hidden';
+    }
+  };
+    const handleRowClick = (candidateId, requirementId) => {
       setCandidateId(candidateId);
+      setRequirementId(requirementId);
+      
+      // Immediately fetch and update interview response
+      fetchAndUpdateInterviewResponse(candidateId, requirementId);
+      
+      // Toggle the showShortlistTable state
+      setShowShortlistTable(true);
     };
-  
+    
     
 
 
@@ -475,8 +470,8 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     <th>Interview Round</th>
                     <th>Interview Response</th>
                     <th>Update Date</th>
-                    <th>Next Interview Date</th>
-                    <th>Next Interview Time</th>
+                    <th> Interview Date</th>
+                    <th> Interview Time</th>
                   </tr>
                 </thead>
                 <tbody>

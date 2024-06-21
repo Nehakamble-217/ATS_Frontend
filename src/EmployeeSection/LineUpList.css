@@ -2,19 +2,8 @@
   position: relative;
 }
 
-.attendanceTableData {
-  position: relative;
-}
 
-.attendanceTableData h5 style {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: gray;
-  margin-left: -400px;
-  margin: 0;
-}
+
 
 .select-button {
   position: absolute;
@@ -62,43 +51,13 @@
   color: #ffcb9b;
 }
 
-.attendance-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.attendancerows-head {
-  background-color: #f2f2f2;
-}
-
-.attendanceheading,
-.tabledata {
-  padding: 8px;
-  border: 1px solid #ddd;
-  text-align: left;
-  align-items: center;
-  text-align: center;
-}
 
 
-.tooltip {
-  position: absolute;
-  display: none;
-  background-color: #333;
-  color: #fff;
-  padding: 5px;
-  border-radius: 3px;
-  font-size: 12px;
-}
 
-.tooltip.visible {
-  display: block;
-}
 
-.tooltiptext {
-  visibility: hidden;
-}
 
-.tabledata:hover .tooltip .tooltiptext {
-  visibility: visible;
-}
+
+
+
+
+

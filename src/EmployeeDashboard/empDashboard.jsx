@@ -15,7 +15,7 @@ import HoldCandidate from "../CandidateSection/holdCandidate";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import CallingExcel from "../Excel/callingExcel";
 import ResumeData from "../ResumeData/resumedata";
-import Home from "../EmployeeDashboard/home";
+import Home from "./JobList";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
 import Profile from "../LogoImages/ProfilePic.png";
@@ -24,6 +24,7 @@ import EmployeeMasterSheet from "../EmployeeSection/employeeMasterSheet";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription"
+import AddEmployee from "../EmployeeSection/addEmployee";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -50,6 +51,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showShortListedCandidates, setShowShortListedCandidates] = useState(false);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [showShortListedNav, setShowShortListdNav] = useState(false);
+  const [showAddEmployee,setShowAddEmployee] = useState(false)
 
   const { employeeId } = useParams();
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
@@ -59,6 +61,17 @@ const EmpDashboard = ({ userGroup }) => {
     setCandidateIdForUpdate(id);
     setUpdateSelfCalling(true);
     setSelfCalling(false); // Hide CallingList when showing UpdateCallingTracker
+  };
+
+  const toggelAddRecruiter = ()=> {
+    resetAllToggles();
+    setShowAddEmployee(!showAddEmployee)
+    
+  }
+
+  const toggleAddJobDescription = () => {
+    resetAllToggles();
+    setAddJobDescription(!addJobDescription);
   };
 
   const handleDataAdditionSuccess = () => {
@@ -98,6 +111,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowMasterSheet(false);
     setAddJobDescription(false);
     setShowShortListdNav(false);
+    setShowAddEmployee(false)
   };
 
   const funForUpdateSelfCalling = () => {
@@ -190,10 +204,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowShortListedCandidates(!showShortListedCandidates);
   };
 
-  const toggleAddJobDescription = () => {
-    resetAllToggles();
-    setAddJobDescription(!addJobDescription);
-  };
+
 
   const toggleUpdateCallingTracker = () => {
     resetAllToggles();
@@ -227,8 +238,9 @@ const EmpDashboard = ({ userGroup }) => {
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
+        toggelAddRecruiter={toggelAddRecruiter}
       />
-
+        
       <div className="empDash-main-content">
         <div className="time-and-data">
           <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
@@ -269,6 +281,10 @@ const EmpDashboard = ({ userGroup }) => {
 
         <div>
           {shortListed && <InterviewDates />}
+        </div>
+
+        <div>
+          { showAddEmployee && <AddEmployee/> }
         </div>
         
         <div>

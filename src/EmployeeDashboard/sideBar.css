@@ -286,3 +286,14 @@ z-index: -1;
   list-style:decimal !important;
 }
 
+
+
+
+/* arshad added css here */
+.sidebar-menu{
+  padding-left: 10px;
+}
+
+.sidebar-text{
+  color: gray;
+}
