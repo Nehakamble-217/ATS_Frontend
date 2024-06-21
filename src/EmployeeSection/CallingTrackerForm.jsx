@@ -438,8 +438,13 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
           <table className="table  table-striped  text-center studTables" >
             <tbody >
               <tr  >
-                <th scope="col" style={{color:"gray"}}>Date & Time:</th>
-                <td style={{ display: "flex"}}>
+
+
+                <th scope="col" style={{ textAlign: "left" }} >Date & Time:</th>
+                <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: 'auto', padding: '5px' }}>
+                  
+
+
                   <input
                     type="text"
                     //id="currentDate"

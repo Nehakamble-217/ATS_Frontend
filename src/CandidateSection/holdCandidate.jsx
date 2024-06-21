@@ -346,8 +346,8 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                 <th className='attendanceheading'>Availability For Interview</th>
                 <th className='attendanceheading'>Interview Time</th>
                 <th className='attendanceheading'>Final Status</th>
+                <th className='attendanceheading'>Reason for Hold</th>
                 <th className='attendanceheading'>Action</th>
-
               </tr>
             </thead>
             <tbody>
@@ -631,6 +631,12 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                         {item.lineUp.finalStatus || "-"}
                         <div className="tooltip">
                           <span className="tooltiptext">{item.lineUp.finalStatus}</span>
+                        </div>
+                      </td>
+                       <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.remarks || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.remarks || "-"}</span>
                         </div>
                       </td>
 
