@@ -53,18 +53,19 @@ body {
 .sidebar-clouds1 {
     position: absolute;
     /* top: -730px; */
-    top: -550px;
-    left: 0px;
+    top: -650px;
+    left: 0;
     width: 100%;
     height: 200%;
-    background: url('/src/LogoImages/clouds1.png') repeat-x;
+    /* background: url('/src/LogoImages/clouds1.png') repeat-x; */
+    background: url('/src/LogoImages/clouds.png') repeat-x;
 background-size: cover;    
 background-position: center;
-animation: moveClouds 10s linear infinite;
+/* animation: moveClouds 10s linear infinite; */
 z-index: -1;
 }
 
-@keyframes moveClouds {
+@keyframes moveClouds1 {
     0% {
         transform: translateX(0);
     }
@@ -291,4 +292,8 @@ z-index: -1;
 /* arshad added css here */
 .sidebar-menu{
   padding-left: 10px;
+}
+
+.sidebar-text{
+  color: gray;
 }

@@ -4,29 +4,34 @@ import React, { useState, useEffect } from "react";
 
 const UpdateCallingTracker = () => {
 
-  const [showAlert, setShowAlert] = useState(false);
-  const [requirementOptions, setRequirementOptions] = useState([]);
+  // const [showAlert, setShowAlert] = useState(false);
+  // const [requirementOptions, setRequirementOptions] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [employeeResponse, candidateResponse, requirementResponse] = await Promise.all([
-          axios.get(`http://192.168.1.33:8891/api/ats/157industries/employeeName/6`),
-          axios.get(`http://192.168.1.33:8891/api/ats/157industries/specific-data/28`),
-          axios.get(`http://192.168.1.33:8891/api/ats/157industries/company-details`)
-        ]);
-        setCallingTracker({
-          ...candidateResponse.data,
-          recruiterName: employeeResponse.data
-        });
-        setRequirementOptions(requirementResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const [employeeResponse, candidateResponse, requirementResponse] = await Promise.all([
+  //         axios.get(`http://192.168.1.33:8891/api/ats/157industries/employeeName/6`),
+  //         axios.get(`http://192.168.1.33:8891/api/ats/157industries/specific-data/28`),
+  //         axios.get(`http://192.168.1.33:8891/api/ats/157industries/company-details`)
+  //       ]);
+  //       setCallingTracker({
+  //         ...candidateResponse.data,
+  //         recruiterName: employeeResponse.data
+  //       });
+  //       setRequirementOptions(requirementResponse.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [employeeId, candidateId]);
+  //   fetchData();
+  // }, [employeeId, candidateId]);
+// <<<<<<< HEAD
+//   const fetchRequirementOptions = async () => {
+//     try {
+//       const response = await axios.get(
+
 
 
   const handlePhoneNumberChange = (value, name) => {
@@ -35,71 +40,76 @@ const UpdateCallingTracker = () => {
       [name]: value || "",
     }));
   };
+  // const handlePhoneNumberChange = (value, name) => {
+  //   setCallingTracker((prevState) => ({
+  //     ...prevState,
+  //     [name]: value || "",
+  //   }));
+  // };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   if (name.includes("lineUp")) {
+  //     setCallingTracker((prevState) => ({
+  //       ...prevState,
+  //       lineUp: { ...prevState.lineUp, [name.split(".")[1]]: value },
+  //     }));
+  //   } else {
+  //     setCallingTracker((prevState) => ({ ...prevState, [name]: value }));
+  //   }
+  // };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name.includes("lineUp")) {
-      setCallingTracker((prevState) => ({
-        ...prevState,
-        lineUp: { ...prevState.lineUp, [name.split(".")[1]]: value },
-      }));
-    } else {
-      setCallingTracker((prevState) => ({ ...prevState, [name]: value }));
-    }
-  };
+  // const handleRequirementChange = (e) => {
+  //   const { value } = e.target;
+  //   const selectedRequirement = requirementOptions.find(
+  //     (requirement) => requirement.requirementId === parseInt(value)
+  //   );
 
-  const handleRequirementChange = (e) => {
-    const { value } = e.target;
-    const selectedRequirement = requirementOptions.find(
-      (requirement) => requirement.requirementId === parseInt(value)
-    );
+  //   if (selectedRequirement) {
+  //     setCallingTracker((prevState) => ({
+  //       ...prevState,
+  //       requirementId: selectedRequirement.requirementId,
+  //       jobDesignation: selectedRequirement.designation,
+  //       requirementCompany: selectedRequirement.companyName,
+  //       incentive: selectedRequirement.incentive,
+  //     }));
+  //   } else {
+  //     setCallingTracker((prevState) => ({
+  //       ...prevState,
+  //       requirementId: value,
+  //       jobDesignation: "",
+  //       requirementCompany: "",
+  //       incentive: "",
+  //     }));
+  //   }
+  // };
 
-    if (selectedRequirement) {
-      setCallingTracker((prevState) => ({
-        ...prevState,
-        requirementId: selectedRequirement.requirementId,
-        jobDesignation: selectedRequirement.designation,
-        requirementCompany: selectedRequirement.companyName,
-        incentive: selectedRequirement.incentive,
-      }));
-    } else {
-      setCallingTracker((prevState) => ({
-        ...prevState,
-        requirementId: value,
-        jobDesignation: "",
-        requirementCompany: "",
-        incentive: "",
-      }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const dataToUpdate = {
-        ...callingTracker,
-        recruiterName: callingTracker.recruiterName,
-      };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const dataToUpdate = {
+  //       ...callingTracker,
+  //       recruiterName: callingTracker.recruiterName,
+  //     };
 
 
-      const response = await axios.post(
-        `http://192.168.1.38:8891/api/ats/157industries/update-callingData/28`,
-        dataToUpdate
-      );
+  //     const response = await axios.post(
+  //       `http://192.168.1.38:8891/api/ats/157industries/update-callingData/28`,
+  //       dataToUpdate
+  //     );
 
-      if (response.status === 200) {
-        setShowAlert(true);
-        setTimeout(() => {
-          setShowAlert(false);
-          onSuccess();
-        }, 1000);
-      } else {
-        console.error("Failed to update data");
-      }
-    } catch (error) {
-      console.error("Error updating data:", error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       setShowAlert(true);
+  //       setTimeout(() => {
+  //         setShowAlert(false);
+  //         onSuccess();
+  //       }, 1000);
+  //     } else {
+  //       console.error("Failed to update data");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating data:", error);
+  //   }
+  // };
 
 
 
@@ -118,7 +128,7 @@ const UpdateCallingTracker = () => {
                     type="text"
                     id="date"
                     name="date"
-                    value={callingTracker.date}
+                    //value={callingTracker.date}
                     className="form-control"
                     style={{ marginRight: "20px", width: "180px" }}
                     readOnly
@@ -127,7 +137,7 @@ const UpdateCallingTracker = () => {
                     type="text"
                     id="candidateAddedTime"
                     name="candidateAddedTime"
-                    value={callingTracker.candidateAddedTime}
+                   // value={callingTracker.candidateAddedTime}
                     className="form-control"
                     style={{ marginBottom: "9px", width: "180px", marginRight: "30px", paddingLeft: "10px" }}
                     readOnly
@@ -139,7 +149,7 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="recruiterName"
-                    value={callingTracker.recruiterName}
+                    //value={callingTracker.recruiterName}
                     readOnly
 
                     className="form-control"
@@ -149,7 +159,9 @@ const UpdateCallingTracker = () => {
 
               <div hidden>
 
-                <input type="text" name="employeeId" readOnly value={employeeId} />
+                <input type="text" name="employeeId" readOnly 
+                //value={employeeId} 
+                />
 
               </div>
               <tr id="heading123">
@@ -159,8 +171,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="candidateName"
-                    value={callingTracker.candidateName}
-                    onChange={handleChange}
+                   // value={callingTracker.candidateName}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -170,8 +182,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="email"
                     name="candidateEmail"
-                    value={callingTracker.candidateEmail}
-                    onChange={handleChange}
+                    //value={callingTracker.candidateEmail}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -180,27 +192,27 @@ const UpdateCallingTracker = () => {
               <tr>
                 <th scope="col">Contact Number*</th>
                 <td>
-                  <PhoneInput
+                  <input
                     placeholder="Enter phone number"
                     name="contactNumber"
-                    value={callingTracker.contactNumber}
-                    onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
+                  //  value={callingTracker.contactNumber}
+                   // onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
                     required
-                    defaultCountry="IN"
+                    //defaultCountry="IN"
                     maxLength={12}
 
                   />
                 </td>
                 <th scope="col">Alternate Number</th>
                 <td>
-                  <PhoneInput
+                  <input
                     placeholder="Enter phone number"
                     name="alternateNumber"
-                    value={callingTracker.alternateNumber}
-                    onChange={(value) =>
-                      handlePhoneNumberChange(value, "alternateNumber")
-                    }
-                    defaultCountry="IN"
+                   // value={callingTracker.alternateNumber}
+                    // onChange={(value) =>
+                    //   handlePhoneNumberChange(value, "alternateNumber")
+                    // }
+                    // defaultCountry="IN"
                     maxLength={11}
                     className="PhoneInputInput"
 
@@ -214,8 +226,8 @@ const UpdateCallingTracker = () => {
                   <select
                     className="form-select"
                     name="sourceName"
-                    value={callingTracker.sourceName}
-                    onChange={handleChange}
+                    // value={callingTracker.sourceName}
+                    // onChange={handleChange}
                   >
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
@@ -235,17 +247,17 @@ const UpdateCallingTracker = () => {
                   <select
                     id="requirementId"
                     name="requirementId"
-                    value={callingTracker.requirementId}
-                    onChange={handleRequirementChange}
+                    // value={callingTracker.requirementId}
+                    // onChange={handleRequirementChange}
                     className="form-control"
                     style={{ height: "38px" }}
                   >
                     <option value="">Select Requirement</option>
-                    {requirementOptions.map((requirement) => (
+                    {/* {requirementOptions.map((requirement) => (
                       <option key={requirement.requirementId} value={requirement.requirementId}>
                         {requirement.requirementId}
                       </option>
-                    ))}
+                    ))} */}
 
                   </select>
                 </td>
@@ -259,11 +271,12 @@ const UpdateCallingTracker = () => {
                     type="text"
                     id="jobDesignation"
                     name="jobDesignation"
-                    value={callingTracker.jobDesignation}
-                    onChange={handleChange}
+                    // value={callingTracker.jobDesignation}
+                    // onChange={handleChange}
                     readOnly
                   />
-                  <input placeholder="Incentive" name="incentive" value={callingTracker.incentive} readOnly className="form-control" style={{ width: "150px" }} type="text" />
+                  {/* //value={callingTracker.incentive}  */}
+                  <input placeholder="Incentive" name="incentive" readOnly className="form-control" style={{ width: "150px" }} type="text" />
                 </td>
 
 
@@ -274,8 +287,8 @@ const UpdateCallingTracker = () => {
                     id="requirementCompany"
                     name="requirementCompany"
                     className="form-control"
-                    value={callingTracker.requirementCompany}
-                    onChange={handleChange}
+                    // value={callingTracker.requirementCompany}
+                    // onChange={handleChange}
                   />
                 </td>
               </tr>
@@ -285,8 +298,8 @@ const UpdateCallingTracker = () => {
 
                   <select
                     name="currentLocation"
-                    value={callingTracker.currentLocation}
-                    onChange={handleChange}
+                    // value={callingTracker.currentLocation}
+                    // onChange={handleChange}
                     className="form-control">
                     <option value="">Select Location</option>
                     <option value="Pune City">Pune City</option>
@@ -300,8 +313,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="fullAddress"
-                    value={callingTracker.fullAddress}
-                    onChange={handleChange}
+                    // value={callingTracker.fullAddress}
+                    // onChange={handleChange}
                     className="form-control" />
                 </td>
               </tr>
@@ -312,8 +325,8 @@ const UpdateCallingTracker = () => {
                   <select
                     className="form-select"
                     name="callingFeedback"
-                    value={callingTracker.callingFeedback}
-                    onChange={handleChange}
+                    // value={callingTracker.callingFeedback}
+                    // onChange={handleChange}
                   >
                     <option value="">Select Feedback Type</option>
                     <option value="Call Done">Call Done</option>
@@ -336,8 +349,8 @@ const UpdateCallingTracker = () => {
                   <select
                     className="form-select"
                     name="selectYesOrNo"
-                    value={callingTracker.selectYesOrNo}
-                    onChange={handleChange}
+                    // value={callingTracker.selectYesOrNo}
+                    // onChange={handleChange}
                   >
                     <option value="">Select</option>
                     <option value="Interested">Interested</option>
@@ -360,8 +373,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="date"
                     name="lineUp.dateOfBirth"
-                    value={callingTracker.lineUp.dateOfBirth}
-                    onChange={handleChange}
+                    // value={callingTracker.lineUp.dateOfBirth}
+                    // onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -378,8 +391,8 @@ const UpdateCallingTracker = () => {
                       name="lineUp.gender"
                       value="male"
                       className="gender"
-                      checked={callingTracker.lineUp.gender === "male"}
-                      onChange={handleChange}
+                      // checked={callingTracker.lineUp.gender === "male"}
+                      // onChange={handleChange}
                     />
                     <label className="px-2">Male</label>
 
@@ -388,8 +401,8 @@ const UpdateCallingTracker = () => {
                       name="lineUp.gender"
                       value="female"
                       className="gender"
-                      checked={callingTracker.lineUp.gender === "female"}
-                      onChange={handleChange}
+                      // checked={callingTracker.lineUp.gender === "female"}
+                      // onChange={handleChange}
                     />
                     <label className="px-2">Female</label>
                   </div>
@@ -401,8 +414,8 @@ const UpdateCallingTracker = () => {
                 <td>
                   <select
                     name="lineUp.qualification"
-                    value={callingTracker.lineUp.qualification}
-                    onChange={handleChange}
+                    // value={callingTracker.lineUp.qualification}
+                    // onChange={handleChange}
                     className="form-control"
                   >
                     <option value="">__Select __</option>
@@ -558,7 +571,7 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.yearOfPassing"
-                    value={callingTracker.lineUp.yearOfPassing}
+                   // value={callingTracker.lineUp.yearOfPassing}
                     className="form-control"
                   />
                 </td>
@@ -585,8 +598,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.extraCertification"
-                    value={callingTracker.lineUp.extraCertification}
-                    onChange={handleChange}
+                  //  value={callingTracker.lineUp.extraCertification}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -598,8 +611,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.companyName"
-                    value={callingTracker.lineUp.companyName}
-                    onChange={handleChange}
+                    //value={callingTracker.lineUp.companyName}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -612,9 +625,9 @@ const UpdateCallingTracker = () => {
                       <input
                         type="text"
                         name="lineUp.experienceYear"
-                        value={callingTracker.lineUp.experienceYear}
+                       // value={callingTracker.lineUp.experienceYear}
 
-                        onChange={handleChange}
+                        //onChange={handleChange}
                         className="form-control"
                         placeholder=""
                         maxLength="2"
@@ -626,8 +639,8 @@ const UpdateCallingTracker = () => {
                       <input
                         type="number"
                         name="lineUp.experienceMonth"
-                        value={callingTracker.lineUp.experienceMonth}
-                        onChange={handleChange}
+                        //value={callingTracker.lineUp.experienceMonth}
+                       // onChange={handleChange}
                         className="form-control"
                         placeholder=""
                         maxLength="2"
@@ -648,8 +661,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.relevantExperience"
-                    value={callingTracker.lineUp?.relevantExperience}
-                    onChange={handleChange}
+                    //value={callingTracker.lineUp?.relevantExperience}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -658,8 +671,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.communicationRating"
-                    value={callingTracker.lineUp.communicationRating}
-                    onChange={handleChange}
+                    //value={callingTracker.lineUp.communicationRating}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -676,8 +689,8 @@ const UpdateCallingTracker = () => {
                       <input
                         type="text"
                         name="lineUp.currentCTCLakh"
-                        value={callingTracker.lineUp.currentCTCLakh}
-                        onChange={handleChange}
+                      //  value={callingTracker.lineUp.currentCTCLakh}
+                       // onChange={handleChange}
                         className="form-control"
                         placeholder=""
                         maxLength="2"
@@ -690,8 +703,8 @@ const UpdateCallingTracker = () => {
                       <input
                         type="text"
                         name="lineUp.currentCTCThousand"
-                        value={callingTracker.lineUp.currentCTCThousand}
-                        onChange={handleChange}
+                       // value={callingTracker.lineUp.currentCTCThousand}
+                       // onChange={handleChange}
                         className="form-control"
                         placeholder=""
                         maxLength="2"
@@ -711,8 +724,8 @@ const UpdateCallingTracker = () => {
                         type="text"
 
                         name="lineUp.expectedCTCLakh"
-                        value={callingTracker.lineUp.expectedCTCLakh}
-                        onChange={handleChange}
+                        //value={callingTracker.lineUp.expectedCTCLakh}
+                       // onChange={handleChange}
                         className="form-control"
                         placeholder=""
                         maxLength="2"
@@ -725,8 +738,8 @@ const UpdateCallingTracker = () => {
                       <input
                         type="text"
                         name="lineUp.expectedCTCThousand"
-                        value={callingTracker.lineUp.expectedCTCThousand}
-                        onChange={handleChange}
+                        //value={callingTracker.lineUp.expectedCTCThousand}
+                       // onChange={handleChange}
                         className="form-control"
                         placeholder=""
                         maxLength="2"
@@ -746,8 +759,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.noticePeriod"
-                    value={callingTracker.lineUp.noticePeriod}
-                    onChange={handleChange}
+                    //value={callingTracker.lineUp.noticePeriod}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -757,8 +770,8 @@ const UpdateCallingTracker = () => {
                 <td>
                   <select type="text"
                     name="lineUp.holdingAnyOffer"
-                    value={callingTracker.lineUp.holdingAnyOffer}
-                    onChange={handleChange} className="form-select"
+                   // value={callingTracker.lineUp.holdingAnyOffer}
+                   // onChange={handleChange} className="form-select"
                     style={{ width: '150px', display: 'inline-block', marginRight: '10px' }}>
                     <option value="">Select</option>
                     <option value="Yes">Yes</option>
@@ -766,8 +779,8 @@ const UpdateCallingTracker = () => {
                   </select>
                   <input type="text"
                     name="lineUp.holdingAnyOffer"
-                    value={callingTracker.lineUp.holdingAnyOffer}
-                    onChange={handleChange}
+                   // value={callingTracker.lineUp.holdingAnyOffer}
+                   // onChange={handleChange}
                     style={{ width: '150px', height: "35px", display: 'inline-block', border: '1px solid #ccc', padding: '5px' }} />
                 </td>
 
@@ -779,8 +792,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.feedBack"
-                    value={callingTracker.lineUp.feedBack}
-                    onChange={handleChange}
+                   // value={callingTracker.lineUp.feedBack}
+                   // onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -790,8 +803,8 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="lineUp.msgForTeamLeader"
-                    value={callingTracker.lineUp.msgForTeamLeader}
-                    onChange={handleChange}
+                    //value={callingTracker.lineUp.msgForTeamLeader}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -809,16 +822,16 @@ const UpdateCallingTracker = () => {
                   <input
                     type="date"
                     name="lineUp.availabilityForInterview"
-                    value={callingTracker.lineUp.availabilityForInterview}
-                    onChange={handleChange}
+                    //value={callingTracker.lineUp.availabilityForInterview}
+                    //onChange={handleChange}
                     className="form-control"
                     style={{ marginRight: "10px" }}
                   />
                   <input
                     type="time"
                     name="lineUp.interviewTime"
-                    value={callingTracker.lineUp.interviewTime}
-                    onChange={handleChange}
+                   // value={callingTracker.lineUp.interviewTime}
+                    //onChange={handleChange}
                     className="form-control"
                   />
                 </td>
@@ -828,8 +841,8 @@ const UpdateCallingTracker = () => {
                   <select
                     type="text"
                     name="lineUp.finalStatus"
-                    value={callingTracker.lineUp.finalStatus}
-                    onChange={handleChange}
+                    //value={callingTracker.lineUp.finalStatus}
+                    //onChange={handleChange}
                     className="form-select"
                   >
                     <option value="">Select</option>
@@ -848,11 +861,12 @@ const UpdateCallingTracker = () => {
 
 
           <center>
-            <div className="d-grid gap-2 col-3 max-auto" >
+            <div style={{display:"flex",alignItems:"center",justifyContent:"center",margin:"20px",gap:"20px"}}  >
               <button type="submit" className="loging-hr">
                 Update Data
               </button>
-              <button type="button" className="loging-hr" onClick={onCancel}>Cancel</button>
+              <button type="button" className="loging-hr" >Cancel</button>
+       
             </div>
           </center>
 

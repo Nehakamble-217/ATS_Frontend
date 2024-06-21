@@ -55,7 +55,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
+
           `http://192.168.1.38:8891/api/ats/157industries/employee-details/${employeeId}`
+
         );
         setEmployeeData(response.data);
 
@@ -225,7 +227,10 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       };
 
       await axios.post(
+
+
         "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
+
         formData
       );
 
@@ -280,7 +285,11 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
   };
 
   return (
-    <div className="daily-timeanddate">
+
+
+     <div className="daily-timeanddate">
+            <div className="header-clouds"></div>
+
       <div className="head">
 
         <div className="user-img" >
@@ -376,7 +385,10 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           <Modal.Title>Employee Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Name           : {employeeData.employeeName}</p>
+          <p>                <img src={Profile}alt="Profile" width={"150px"}/>
+          
+          Name           : {employeeData.employeeName}
+          </p>
           <p>Email          : {employeeData.employeeEmail}</p>
           <p>Department     : {employeeData.department}</p>
           <p>Contact Number : {employeeData.employeeNumber}</p>
