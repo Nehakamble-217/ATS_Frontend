@@ -204,34 +204,28 @@ useEffect(() => {
     setShowUpdateCallingTracker(true);
   };
 
-    const handleMouseOver = (event) => {
-    const tooltip = event.currentTarget.querySelector('.tooltip');
-    if (tooltip) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const tooltipWidth = tooltipRect.width;
-      const tooltipHeight = tooltipRect.height;
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
+   const handleMouseOver = (event) => {
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector('.tooltip');
+    const tooltiptext = tableData.querySelector('.tooltiptext');
 
-      let top = rect.top - tooltipHeight + 40; // above the cell
-      let left = rect.left + (rect.width - tooltipWidth) / 2; // centered horizontally
-
-      // Adjust if the tooltip is out of the viewport
-      if (top < 0) top = rect.bottom + 5; // below the cell
-      if (left < 0) left = 5; // align to the left edge
-      if (left + tooltipWidth > viewportWidth) left = viewportWidth - tooltipWidth - 5; // align to the right edge
-
-      tooltip.style.top = `${top}px`;
-      tooltip.style.left = `${left}px`;
-      tooltip.classList.add('visible');
+    if (tooltip && tooltiptext) {
+      const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
+      if (textOverflowing) {
+        const rect = tableData.getBoundingClientRect();
+        tooltip.style.top = `${rect.top - 10}px`;
+        tooltip.style.left = `${rect.left + rect.width / 100}px`;
+        tooltip.style.visibility = 'visible';
+      } else {
+        tooltip.style.visibility = 'hidden';
+      }
     }
   };
 
   const handleMouseOut = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
     if (tooltip) {
-      tooltip.classList.remove('visible');
+      tooltip.style.visibility = 'hidden';
     }
   };
 
