@@ -194,7 +194,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const renderInterviewTable = () => {
     if (!interviewData) {
       return (
-        <h3 style={{ color: "red" }}>
+        <h3 style={{ color: "#ffb281" , marginTop:"20px" }}>
           No data available for the selected date.
         </h3>
       );
@@ -565,7 +565,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
         </div>
       )}
       {!showAllData && noDataMessage && (
-        <h3 style={{ color: "red" }}>No interviews scheduled on this date.</h3>
+        <h3 style={{ color: "#ffb281" , marginTop:"20px" }}>No interviews scheduled on this date.</h3>
       )}
     </div>
 
