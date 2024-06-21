@@ -1,11 +1,6 @@
 /* EmpDashboard.css */
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f5f9fc;
-  color: rgb(250, 39, 11);
-}
+
 
 .grid-container {
   display: grid;
@@ -114,13 +109,14 @@ body {
 .sidebar {
   background-color: #ffe5b5;
   transition: all 0.3s ease;
+  z-index: 999;
 }
 
 .empDash-main-content {
   padding: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
- 
+ width: 100%;
 }
 
 .time-and-data .head {
