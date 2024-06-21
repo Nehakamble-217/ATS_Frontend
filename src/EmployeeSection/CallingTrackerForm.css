@@ -1,17 +1,32 @@
-.maintable {
-  height: 100%;
-  border-collapse: collapse;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 
-#table-row {
-    background-color: #ffcb9b;
-    height: 8px !important;
+
+.maintable {
+  height: auto;
+  width: auto;
+  border-collapse: collapse;
+  overflow-x: auto; /* Adds horizontal scroll if table is too wide */
+  margin: 0 auto; /* Center align if needed */
+  max-width: 100%; /* Ensures it doesn't exceed the container width */
+  padding: 10px;
+  color: gray;
+}
+
+
+/* #table-row {
+   
+    height: 10px !important;
     padding: 0%;
     margin: 0%;
-}
+} */
 
-.update-page-head{
+/* .update-page-head{
   width: 100%;
   color: gray;
   text-transform: uppercase;
@@ -19,19 +34,18 @@
   display: flex;
   justify-content: center;
   padding-top: 10px;
-}
+} */
 
 
-#studTables {
+/* #studTables {
   width: 100%;
   height: 8px;
   border-collapse: collapse;
-}
+} */
 
 #studTables th,
 #studTables td {
-  /* border: 1px solid black; */
-  /* padding: 8px; */
+ 
   align-items: center;
   justify-content: center;
   flex-direction: row;
@@ -43,14 +57,15 @@
   align-items: center;
 }
 
-/* #studTables th {
+#studTables th {
   background-color: white;
   color: gray;
   padding: 10px;
- text-align:left;
+ text-align: center;
  font-size: 16px;
-  
-} */
+ white-space: nowrap;
+  /* border-collapse: collapse; */
+}
 /* #studTables th input {
   background-color: white;
   
@@ -62,20 +77,19 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;   
-  height: 40px;
 }
-.header {
+/* .header {
   text-align: center;
   margin-bottom: 20px;
-}
-.form-group input[type="text"],
+} */
+/* .form-group input[type="text"],
 .form-group select {
   width: 100%;
   font-size: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   
-}
+} */
 
 .PhoneInputInput {
   width: 100%;
@@ -114,32 +128,48 @@
   /* font-size:x-large; */
 }
 
-.buttons {
+/* .buttons {
   display: flex;
   flex-direction: row;
   width: 100%;
   padding: 8px;
   margin: 20px; text-align: center;
   justify-content: space-around;
-  /* tab-size: x-large; */
-}
+ 
+} */
 
 
 .ctf-btn{
-  margin-top: 23px;
+  padding: 10px 20px; /* Adjust padding as needed */
+  /* margin-top: 23px; */
   background-color: #ffcb9b;
   color: white;
-  border-radius: 12px;
-  border: 1px solid gray; /* Add border */
+  border-radius: 15px;
+  border: 1px solid gray;
   cursor: pointer;
   font-size: 16px;
-  text-align: center;
-  width: 200px; /* Adjust width as needed */
+  text-align: center; /* Ensures the text is centered */
+  width: 200px; 
   height: 40px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
   overflow: hidden;
-  
+  display: inline-flex;
+  justify-content: center;
+
+}
+.ctf-btn {
+  padding: 10px 20px; /* Adjust padding as needed */
+  text-align: center; /* Ensures the text is centered */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Add border radius if needed */
+  background-color: #007bff; /* Adjust background color as needed */
+  color: white; /* Adjust text color as needed */
+  font-size: 16px; /* Adjust font size as needed */
+  cursor: pointer;
 }
 
 .ctf-btn:hover{
@@ -158,6 +188,7 @@
   cursor: pointer;
   font-size: 16px;
   text-align: center;
+  justify-content: center;
   width: 200px; /* Adjust width as needed */
   height: 40px; 
   backdrop-filter: blur(2px);
@@ -170,6 +201,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  
 }
 
 
@@ -182,16 +215,16 @@
   color: green;
 }
 
-
-
 #currentDate {
   width: 75%;
+}
+
+#currentDate {
   padding: 10px; 
   font-size: 16px; 
   border: 1px solid #ccc; 
   border-radius: 4px; 
-  box-sizing: border-box;
- }
+  box-sizing: border-box; }
 
 /* .react-datepicker__input-container input {
   width: 300px; 
@@ -233,23 +266,56 @@
 } */
 
 
-.custom-datepicker-container {
-  position: relative; /* Ensure proper positioning */
-  display: inline-block; /* Display as inline-block */
+/* .custom-datepicker-container {
+  position: relative; 
+  display: inline-block; 
 }
-#studTables th {
+input[name="contactNumber"] {
+  width: 100%;
+  height: 30px;
+  border: none !important;
+} */
+
+
+/* .d-grid {
+  display: grid;
+}
+
+.gap-2 {
+  gap: 0.5rem; 
+}
+
+.col-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.max-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loging-hr {
+  padding: 10px 20px;  
+  height: 50px;
+  font-size: 16px;  
+  font-weight: bold;
+  color: white;
+  background-color: #ffcb9b;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;  
+  width: auto;  
+  height: auto; 
+}
+
+.loging-hr:hover {
   background-color: white;
-  color: gray;
-  padding: 10px;
-  text-align: center;
-  font-size: 16px;
- 
-
+  color: #ffcb9b;
 }
 
-#studTables td {
-  padding: 10px; /* Adjust padding as needed */
-  text-align: center;
-  font-size: 16px; /* Adjust font size as needed */
-  border: 1px solid gray; /* Ensure consistent border */
-}
+.loging-hr:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+} */

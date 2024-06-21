@@ -1,3 +1,9 @@
+  /* .attendanceTableData{
+    position: fixed;
+    
+  }
+   */
+  
   .shortlistedheading th{
     background-color: #ffcb9b;
     color: gray;
@@ -30,3 +36,4 @@
 .shortlistedcandidate .tabledaterow:hover {
   background-color: #F2F2F2; 
 }
+/* today */

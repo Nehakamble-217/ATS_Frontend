@@ -26,7 +26,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   console.log(employeeIdNew + " Interview Page Employe ID");
   useEffect(() => {
     fetchInterviewDates();
-
   }, []);
 
 
