@@ -32,9 +32,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
-
     fetch(`http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`)
-
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -145,8 +143,6 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   };
 
 
-
-
   const handleSort = (criteria) => {
     if (criteria === sortCriteria) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -180,24 +176,20 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       .catch((error) => console.error("Error fetching data:", error));
   };
 
-  const handleMouseOver = (event) => {
+ const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector('.tooltip');
+    const tooltiptext = tableData.querySelector('.tooltiptext');
 
-    if (tooltip) {
-      const isOverflowing = tableData.scrollWidth > tableData.clientWidth;
-      if (isOverflowing) {
+    if (tooltip && tooltiptext) {
+      const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
+      if (textOverflowing) {
+        const rect = tableData.getBoundingClientRect();
+        tooltip.style.top = `${rect.top - 10}px`;
+        tooltip.style.left = `${rect.left + rect.width / 100}px`;
         tooltip.style.visibility = 'visible';
-        tooltip.style.opacity = '1';
-
-        const tableDataRect = tableData.getBoundingClientRect();
-        const tooltipRect = tooltip.getBoundingClientRect();
-
-        tooltip.style.top = `${tableDataRect.top - tooltipRect.height - 5}px`;
-        tooltip.style.left = `${tableDataRect.left}px`;
       } else {
         tooltip.style.visibility = 'hidden';
-        tooltip.style.opacity = '0';
       }
     }
   };
@@ -206,7 +198,6 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
     if (tooltip) {
       tooltip.style.visibility = 'hidden';
-      tooltip.style.opacity = '0';
     }
   };
 
@@ -335,7 +326,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                   <th className='attendanceheading'>Communication Rating</th>
                   <th className='attendanceheading'>Current Location</th>
                   <th className='attendanceheading'>Full Address</th>
-                  <th className='attendanceheading'>CallingFeedback</th>
+                  <th className='attendanceheading'>Calling Feedback</th>
                   <th className='attendanceheading'>Candidate Incentive</th>
                   <th className='attendanceheading'>Interested / Eligible</th>
                   <th className='attendanceheading'>Action</th>

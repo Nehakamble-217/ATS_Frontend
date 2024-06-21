@@ -110,7 +110,7 @@ const AddEmployee = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8891/api/ats/157industries/add-employee", {
+      const response = await fetch("http://192.168.1.38:8891/api/ats/157industries/add-employee", {
         method: "POST",
         body: formDataToSend,
       });
@@ -139,6 +139,11 @@ const AddEmployee = () => {
                 <div className="form-row">
                     <label>Employee Name:</label>
                     <input type="text" name="employeeName" className="employee-inputs" value={formData.employeeName} onChange={handleInputChange} />
+                </div>
+
+                <div className="form-row">
+                    <label>Date of Joining:</label>
+                    <input type="date" name="dateOfJoining" value={formData.dateOfJoining} onChange={handleInputChange} />
                 </div>
 
                 <div className="form-row">
@@ -179,10 +184,7 @@ const AddEmployee = () => {
                     {!passwordError && !passwordMatch && <div className="error-message">Password is incorrect</div>}
                 </div>
 
-                <div className="form-row">
-                    <label>Date of Joining:</label>
-                    <input type="date" name="dateOfJoining" value={formData.dateOfJoining} onChange={handleInputChange} />
-                </div>
+                
 
                 <div className="form-row">
                     <label>Designation:</label>
@@ -428,10 +430,10 @@ const AddEmployee = () => {
                     <input type="text" name="professionalPtNo" placeholder="Enter Professional PT Number" value={formData.professionalPtNo} onChange={handleInputChange} />
                 </div>
 
-                <div className="form-row">
+                {/* <div className="form-row">
                     <label>ESIC Number:</label>
                     <input type="text" name="esIcNo" placeholder="Enter ESIC Number" value={formData.esIcNo} onChange={handleInputChange} />
-                </div>
+                </div> */}
 
                 <div className="form-row">
                     <label>PF Number:</label>
@@ -439,7 +441,7 @@ const AddEmployee = () => {
                 </div>
 
                 <div className="add-employee-submit-div">
-                    <button type="submit" className="submit-button">Submit</button>
+                    <button type="submit" className="submit-button-add-emp">Submit</button>
                 </div>
             </form>
             {successMessage && <p>{successMessage}</p>}

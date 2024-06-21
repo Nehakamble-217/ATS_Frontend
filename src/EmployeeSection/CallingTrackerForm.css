@@ -1,14 +1,5 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
-}
-
-
-
 .maintable {
-  height: auto;
+  height: 100vh;
   width: auto;
   border-collapse: collapse;
   overflow-x: auto; /* Adds horizontal scroll if table is too wide */
@@ -17,16 +8,16 @@ body {
   padding: 10px;
   color: gray;
 }
-
-
 /* #table-row {
-   
-    height: 10px !important;
+    background-color: #ffcb9b;
+    height: 8px !important;
     padding: 0%;
     margin: 0%;
 } */
-
-/* .update-page-head{
+.maintable::-webkit-scrollbar{
+  display: none;
+}
+.update-page-head{
   width: 100%;
   color: gray;
   text-transform: uppercase;
@@ -34,62 +25,97 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 10px;
-} */
+}
+.table th {
+  color: gray !important;
+  font-size: 18px;
 
-
-/* #studTables {
-  width: 100%;
-  height: 8px;
+  /* font-weight: 400; */
+}
+.studTables  {
+  
+  /* height: 8px; */
   border-collapse: collapse;
-} */
+ /* Set table width to 100% of its container */
+    max-width:100%; /* Limit the maximum width to 800px, adjust as needed */
+    margin: 0px; /* Center the table within the container */
+    border-collapse: collapse; /* Remove space between cells */
+    table-layout: fixed;
+    white-space: nowrap;
+    color: gray;
+    
 
-#studTables th,
-#studTables td {
- 
+}
+.studTables th,
+.studTables td {
+  /* border: 1px solid black; */
+  /* padding: 8px; */
   align-items: center;
   justify-content: center;
   flex-direction: row;
   border: 1px solid gray;
-}
+  white-space: nowrap;
+  color: gray;
+  text-align: left;
+  white-space: nowrap; /* Prevent text wrapping */
 
+}
+.studTables tr th{
+  height: 30px;
+  width: 190px !important;
+  white-space: nowrap;
+  text-align: justify;
+  
+}
 .tabledata{
   text-align: center;
   align-items: center;
 }
+.studTables input[type="text"] {
+  height: 30px;
+  /* width: 80px; */
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  box-sizing: border-box;   
 
-#studTables th {
-  background-color: white;
-  color: gray;
-  padding: 10px;
- text-align: center;
- font-size: 16px;
- white-space: nowrap;
-  /* border-collapse: collapse; */
 }
-/* #studTables th input {
-  background-color: white;
-  
-  border-collapse: collapse;
-} */
+element.style{
+  width: 100px;
+}
 
-#studTables input[type="text"] {
+.studTables input[type="email"] {
+  height: 30px;
   width: 100%;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  box-sizing: border-box;   
+
+}
+.studTables input[type="select"] {
+  height: 30px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
   border-radius: 4px;
   box-sizing: border-box;   
 }
-/* .header {
+.studTables .onlyselect input[type="select"]{
+  height: 50px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+}
+.header {
   text-align: center;
   margin-bottom: 20px;
-} */
-/* .form-group input[type="text"],
+}
+.form-group input[type="text"],
 .form-group select {
   width: 100%;
-  font-size: 10px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   
-} */
+}
 
 .PhoneInputInput {
   width: 100%;
@@ -110,8 +136,6 @@ body {
   align-items: center;
   gap: 10px;
 }
-
-
 /* Optional: Adjust checkbox appearance */
 .gender-checkboxes input[type="checkbox"] {
   margin-right: 5px; /* Adjust spacing between checkbox and label */
@@ -128,84 +152,57 @@ body {
   /* font-size:x-large; */
 }
 
-/* .buttons {
+.buttons {
   display: flex;
   flex-direction: row;
   width: 100%;
   padding: 8px;
   margin: 20px; text-align: center;
   justify-content: space-around;
- 
-} */
-
-
+  /* tab-size: x-large; */
+}
 .ctf-btn{
-  padding: 10px 20px; /* Adjust padding as needed */
-  /* margin-top: 23px; */
+  
   background-color: #ffcb9b;
   color: white;
   border-radius: 15px;
-  border: 1px solid gray;
+  border: 1px solid gray; /* Add border */
   cursor: pointer;
   font-size: 16px;
-  text-align: center; /* Ensures the text is centered */
-  width: 200px; 
-  height: 40px; 
+  text-align: center;
+  width: auto; /* Adjust width as needed */
+  height: 30px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
-  overflow: hidden;
-  display: inline-flex;
-  justify-content: center;
-
-}
-.ctf-btn {
-  padding: 10px 20px; /* Adjust padding as needed */
-  text-align: center; /* Ensures the text is centered */
-  display: inline-flex;
+  overflow: hidden; 
+  display: flex;
   align-items: center;
-  justify-content: center;
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Add border radius if needed */
-  background-color: #007bff; /* Adjust background color as needed */
-  color: white; /* Adjust text color as needed */
-  font-size: 16px; /* Adjust font size as needed */
-  cursor: pointer;
 }
-
 .ctf-btn:hover{
   background-color: white;
   color:#ffcb9b ;
   border: 1px solid gray; 
 }
-
-
- #uploadbtn2 {
+ /* #uploadbtn2 {
   margin-top: 23px;
   background-color: #ffcb9b;
   color: white;
   border-radius: 12px;
-  border: 1px solid gray; /* Add border */
+  border: 1px solid gray; 
   cursor: pointer;
   font-size: 16px;
   text-align: center;
-  justify-content: center;
-  width: 200px; /* Adjust width as needed */
+  width: 200px; 
   height: 40px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
   overflow: hidden;
-} 
-
-
+}  */
 .buttonDiv {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  
 }
-
-
 .upload-success-icon {
   color: green;
   margin-left: 10px;
@@ -214,17 +211,14 @@ body {
 .upload-success-icons {
   color: green;
 }
-
 #currentDate {
   width: 75%;
-}
-
-#currentDate {
   padding: 10px; 
   font-size: 16px; 
   border: 1px solid #ccc; 
   border-radius: 4px; 
-  box-sizing: border-box; }
+  box-sizing: border-box;
+ }
 
 /* .react-datepicker__input-container input {
   width: 300px; 
@@ -232,12 +226,10 @@ body {
 
 }
 
-
 .react-datepicker__calendar-container {
   width: 800px; 
  
 }
-
 
 .react-datepicker__day-name,
 .react-datepicker__day {
@@ -246,7 +238,6 @@ body {
   line-height: 30px; 
   /
 }
-
 
 .react-datepicker__day--selected {
   background-color: #007bff; 
@@ -264,58 +255,20 @@ body {
   height: 300px;
   width: 500px;
 } */
-
-
-/* .custom-datepicker-container {
-  position: relative; 
-  display: inline-block; 
+.custom-datepicker-container {
+  position: relative; /* Ensure proper positioning */
+  display: inline-block; /* Display as inline-block */
 }
-input[name="contactNumber"] {
-  width: 100%;
-  height: 30px;
-  border: none !important;
-} */
-
-
-/* .d-grid {
-  display: grid;
-}
-
-.gap-2 {
-  gap: 0.5rem; 
-}
-
-.col-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.max-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.loging-hr {
-  padding: 10px 20px;  
-  height: 50px;
-  font-size: 16px;  
-  font-weight: bold;
-  color: white;
-  background-color: #ffcb9b;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: inline-block;  
-  width: auto;  
-  height: auto; 
-}
-
-.loging-hr:hover {
+.studTables th {
   background-color: white;
-  color: #ffcb9b;
+  color: gray;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
 }
-
-.loging-hr:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
-} */
+.studTables td {
+  padding: 10px; /* Adjust padding as needed */
+  text-align: center;
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid gray; /* Ensure consistent border */
+}

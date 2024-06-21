@@ -31,6 +31,7 @@
     height: 300%;
     background: url('/src/LogoImages/clouds1.png') repeat-x;
 background-size: cover;    
+
 background-position: center;
 animation: moveClouds 40s linear infinite;
     z-index: -1;
@@ -114,7 +115,7 @@ animation: moveClouds 40s linear infinite;
   background-color: #ffcb9b;
   font-size: 16px;
   color: white;
-  height: 35px;
+  height: 30px;
   width: auto;
   padding-left: 15px;
   padding-right: 15px;
@@ -156,6 +157,11 @@ animation: moveClouds 40s linear infinite;
 
 .user-details{
   padding-top: 8px;
+}
+.user-details p{
+  font-size: 18px;
+  color: gray;
+  font-weight: 400;
 }
 
 .daily-t-btn {

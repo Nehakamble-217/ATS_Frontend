@@ -127,7 +127,7 @@ const AddJobDescription = () => {
     <main className="job-desc">
       <section className="job-performance">
         <article><b>ADD JOB DESCRIPTION</b></article>
-        <form onSubmit={handleSubmit} className="form-container">
+        <form onSubmit={handleSubmit} >
           <div className="field-column">
             <div className="field">
               <label><b>Company Name: </b></label>

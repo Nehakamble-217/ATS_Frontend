@@ -15,7 +15,7 @@ import HoldCandidate from "../CandidateSection/holdCandidate";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import CallingExcel from "../Excel/callingExcel";
 import ResumeData from "../ResumeData/resumedata";
-import Home from "../EmployeeDashboard/home";
+import Home from "./JobList";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
 import Profile from "../LogoImages/ProfilePic.png";
@@ -240,7 +240,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleAddJobDescription={toggleAddJobDescription}
         toggelAddRecruiter={toggelAddRecruiter}
       />
-
+        
       <div className="empDash-main-content">
         <div className="time-and-data">
           <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
