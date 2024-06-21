@@ -1,4 +1,3 @@
-
 .maintable {
   height: auto;
   width: auto;
@@ -55,6 +54,8 @@
   white-space: nowrap;
   color: gray;
   text-align: left;
+  white-space: nowrap; /* Prevent text wrapping */
+
 }
 .studTables tr th{
   height: 30px;
@@ -170,7 +171,8 @@ element.style{
   height: 30px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
-  overflow: hidden; 
+  overflow: hidden;
+  line-height: 9px;
 }
 .ctf-btn:hover{
   background-color: white;
