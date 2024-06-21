@@ -361,8 +361,6 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         </button>
         {/* <img className="logout-btn" */}
         <i class="fa-solid fa-power-off" style={{fontSize:"22px",color:"gray"}} onClick={handleLogoutLocal}></i>
-
-          
           {/* // style={{ width: "30px", borderRadius: "60%" }} */}
           {/* src={logoutImg}
           alt="Logout"

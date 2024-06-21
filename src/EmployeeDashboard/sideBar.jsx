@@ -26,8 +26,7 @@ function Sidebar({
   toggleEmployeeMasterSheet,
   handleLogout,
   toggelAddRecruiter,
-
-
+  toggelDisplayNotPad,
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -236,8 +235,6 @@ function Sidebar({
                 </ul>
               </li>
 
-
-
               <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
                 <a href="#">
                 <i class="fa-solid fa-pen-to-square" style={{color:"gray"}}></i>
@@ -262,11 +259,12 @@ function Sidebar({
 
                 </ul>
               </li>
+              
               <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
-                <i className="icon ph-bold ph-chart-bar"></i>
+                <i className="icon ph-bold ph-chart-bar" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Employee Section</span>
-                <i className="arrow ph-bold ph-caret-down"></i>
+                <i className="arrow ph-bold ph-caret-down" ></i>
               </a>
               <ul className={`sub-menu sub-menu1 ${activeSubMenu === 'employee' ? 'active' : ''}`}>
                 <li>
@@ -369,10 +367,9 @@ function Sidebar({
                   </li>
                 </ul>
               </li>
-              <li >
+              <li onClick={toggelDisplayNotPad} >
                 <a href="#" >
                 <i class="fa-regular fa-clipboard" style={{color:"gray"}}></i>
-
                   <span className="sidebar-text">Note Pad</span>
                 </a>
               </li>
