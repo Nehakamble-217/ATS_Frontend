@@ -1,107 +1,95 @@
+/* header.css */
 
-/* //////////////////////////////////////////////////////////// */
+.bigb{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    position: relative; /* for page overflow */
+    overflow: hidden;
+}
+.Clint img, .main-homepage-Member img, .main-homepage-candidate img {
+    width: 100%; /* Adjusted for responsiveness */
+}
 
-/* General Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* background-color: #ffe5b5; */
-    /* z-index: 999999999999999; */
+
+
+.main-homepage-heading h1{
+      position: absolute;
+      left: 43%;
+      top: 10px;
+      font-size: 2vw; /* Responsive font size */
+      color: gray;
+      z-index: 999;
+      padding-top: 20px;
+
+
+}
+.main-homepage-heading {
+    text-align: center; /* Adjusted for center alignment */
+    /* padding: 20px 0; Adjusted for better spacing */
 }
 
 .main-homepage-main-div {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    /* background-color: #ffe5b5; */
+    background-color: #ffe5b5;
     /* padding: 20px; Added padding for better spacing */
     height: 100vh;
    width: 100%;
-   z-index: 99999;
+   position: relative;
+   overflow: hidden;
+   z-index: 9;  
+   /* bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb */
 }
 
-
-.main-homepage-main-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    background-color: #ffe5b5;
-    font-family: 'Arial', sans-serif;
-    position: relative;
-    overflow: hidden;
-}
-.newdiv{
-    text-align: center;
-    background-color: #ffe5b5;
-    top:10px;
-    color: #ffe5b5;
-}
-.newdiv1{
-    text-align: center;
-    background-color: #ffe5b5;
-    top:10px;
-    color: gray;
+.main-homepage-Member, .main-homepage-candidate {
+    flex: 1; /* Adjusted for equal distribution */
+    max-width: 50%; /* Adjusted to fit better on smaller screens */
+    /* margin: 10px; Added margin for better spacing */
+    height: 180vh;
+    margin-top: 0;
+    /* z-index: 299;  */
+    /* bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb */
 }
 
-
-
-.main-homepage-clouds {
-    position: absolute;
-    top:-350px;
-    left: 0;
-    width: 200%;
-    /* height: 1100px; */
-    height: 150%;
-    background: url('/src/LogoImages/clouds.png') repeat-x;
-background-size: cover;    
-background-position: center;
-animation: moveClouds 30s linear infinite;
-    z-index: -1;
-}
-
-@keyframes moveClouds {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .square-box {
-        width: 100%;
-        height: auto;
-        position: static;
-        margin-bottom: 20px;
-    }
-
-    .pricing-plan {
-        flex-direction: column;
-        align-items: center;
-        margin-left: 0;
-    }
-}
 .main-homepage-Member{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    /* background-color: #ffe5b5; */
-    margin-top: 0px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      flex-wrap: wrap;
+      /* background-color: #d2f3d2; */
+      background-color: #ffd8a8;
+      margin-top: 0px;
+
+}
+.main-homepage-candidate:hover,.main-homepage-Member:hover{
+    /* background-color:  #b9d9b9;; */
+    background-color: #ffcb9b;
+}
+.main-homepage-candidate{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+}
+.main-homepage-Member img, .main-homepage-candidate img {
+    width: 60%;
+    /* margin: auto; Reset margin */
 }
 
-.main-homepage-candidate{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+.main-homepage-Member h1, .main-homepage-candidate h1 {
+    text-align: center;
+    font-size: 2vw; /* Responsive font size */
+    /* color: rgb(59, 148, 230); */
+    color: gray;
+    font-weight: 500;
+    /* margin-top: 10px; Adjusted for smaller screens */
 }
+
 .btn {
     font-size: 1.5vw; /* Responsive font size */
     width: 50%; /* Adjusted for responsiveness */
@@ -109,47 +97,49 @@ animation: moveClouds 30s linear infinite;
     padding: 10px;
    
 }
+
+
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .main-homepage-Member, .main-homepage-candidate {
+        max-width: 100%; /* Adjusted for smaller screens */
+    }
+}
 .main-homepage-btn{
-    background-color: #ffcb9b;
     border: 1px solid gray;
     border-radius: 15px;
     font-size: 16px;
     color: gray;
     width: 200px;
-    height: 30px;
+    height: 50px;
+    background-color: #ffcb9b;
+    z-index: 999;
+
 }
 .main-homepage-btn:hover{
     background-color: white;
     color: #ffcb9b;
-
 }
-.main-homepage-Member, .main-homepage-candidate {
-    flex: 1; /* Adjusted for equal distribution */
-    max-width: 50%; /* Adjusted to fit better on smaller screens */
-    /* margin: 10px; Added margin for better spacing */
-    height: 170vh;
-    margin-top: 0;
-}
-.main-homepage-Member h1, .main-homepage-candidate h1 {
-    text-align: center;
-    font-size: 18px;
-    /* font-size: 2.5vw; Responsive font size */
-    color: gray;
-    /* font-weight: 300; */
-    /* margin-top: 10px; Adjusted for smaller screens */
-}
-.main-homepage-heading {
-    text-align: center; /* Adjusted for center alignment */
-    color: gray;
-    
-    /* background-color: #ffe5b5; */
-    /* padding: 20px 0; Adjusted for better spacing */
-    /* z-index: 99999; */
-}
-.main-homepage-heading h1 {
+.main-homepage-clouds {
     position: absolute;
-      left: 45%;
-      top: 10px;
-      font-size: 18px;
-    /* font-size: 3vw; Responsive font size */
+    top:-350px;
+    left: 0;
+    width: 200%;
+    /* height: 1100px; */
+    height: 143vh;
+    background: url('/src/LogoImages/clouds.png') repeat-x;
+background-size: cover;    
+background-position: center;
+animation: moveclouds 30s linear infinite;
+    z-index:999;
+}
+
+@keyframes moveclouds {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }

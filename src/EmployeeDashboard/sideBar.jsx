@@ -149,19 +149,20 @@ function Sidebar({
           <ul>
             <li onClick={handleButtonClick('interviewDate', toggleInterviewDate)} className={activeButton === 'interviewDate' ? 'active' : ''}>
               <a href="#">
-                <i className="icon ph-bold ph-house-simple"></i>
+                {/* <i className="icon ph-bold ph-house-simple"></i> */}
+                <i className='xyz-icon' class="fa-solid fa-user-check"></i>
                 <span className="sidebar-text">Shortlisted Candidate</span>
               </a>
             </li>
             <li onClick={handleButtonClick('callingTrackerForm', toggleCallingTrackerForm)} className={activeButton === 'callingTrackerForm' ? 'active' : ''}>
               <a href="#">
-                <i className="icon ph-bold ph-house-simple"></i>
+                <i class="fa-solid fa-user-plus"></i>
                 <span className="sidebar-text">Add Candidate</span>
               </a>
             </li>
             <li className={`${activeSubMenu === 'candidate' || isCandidateSectionActive ? 'active' : ''}`} onClick={toggleSubMenu('candidate')}>
               <a href="#">
-                <i className="icon ph-bold ph-user"></i>
+                <i class="fa-solid fa-users"></i>
                 <span className="sidebar-text">Candidate Section</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
@@ -235,7 +236,7 @@ function Sidebar({
 
             <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
               <a href="#">
-                <i className="icon ph-bold ph-user"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
                 <span className="sidebar-text">Job Description</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
@@ -280,7 +281,7 @@ function Sidebar({
             </li> */}
             <li className={activeSubMenu === 'database' ? "active" : ""} onClick={toggleSubMenu('database')}>
               <a href="#">
-                <i className="icon ph-bold ph-chart-bar"></i>
+                <i className="fa-solid fa-database"></i>
                 <span className="sidebar-text">Database</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
@@ -315,13 +316,15 @@ function Sidebar({
             </li>
             <li>
               <a href="#">
-                <i className="icon ph-bold ph-gear"></i>
+                {/* <i className="icon ph-bold ph-gear"></i> */}
+                <i class="fa-brands fa-rocketchat"></i>
                 <span className="sidebar-text">Chat Section</span>
               </a>
             </li>
             <li className={activeSubMenu === 'portal' ? "active" : ""} onClick={toggleSubMenu('portal')}>
               <a href="#">
-                <i className="icon ph-bold ph-chart-bar"></i>
+                {/* <i className="icon ph-bold ph-chart-bar"></i> */}
+                <i class="fa-brands fa-linkedin"></i>
                 <span className="sidebar-text">Portal</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
@@ -362,25 +365,29 @@ function Sidebar({
             </li>
             <li >
               <a href="#" >
-                <i className="icon ph-bold ph-sign-out"></i>
+                {/* <i className="icon ph-bold ph-sign-out"></i> */}
+                <i class="fa-regular fa-clipboard"></i>
                 <span className="sidebar-text">Note Pad</span>
               </a>
             </li>
             <li >
               <a href="#" >
-                <i className="icon ph-bold ph-sign-out"></i>
+                {/* <i className="icon ph-bold ph-sign-out"></i> */}
+                <i class="fa-solid fa-circle-user" ></i>
                 <span className="sidebar-text">Add Emp</span>
               </a>
             </li>
             <li >
               <a href="#" >
-                <i className="icon ph-bold ph-sign-out"></i>
+                {/* <i className="icon ph-bold ph-sign-out"></i> */}
+                <i class="fa-solid fa-user-tie"></i>
                 <span className="sidebar-text">Add TeamLeader</span>
               </a>
             </li>
             <li >
               <a href="#" >
-                <i className="icon ph-bold ph-sign-out"></i>
+                {/* <i className="icon ph-bold ph-sign-out"></i> */}
+                <i class="fa-solid fa-power-off"></i>
                 <span className="sidebar-text">Logout</span>
               </a>
             </li>

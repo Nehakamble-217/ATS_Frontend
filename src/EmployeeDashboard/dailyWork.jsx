@@ -385,7 +385,10 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           <Modal.Title>Employee Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Name           : {employeeData.employeeName}</p>
+          <p>                <img src={Profile}alt="Profile" width={"150px"}/>
+          
+          Name           : {employeeData.employeeName}
+          </p>
           <p>Email          : {employeeData.employeeEmail}</p>
           <p>Department     : {employeeData.department}</p>
           <p>Contact Number : {employeeData.employeeNumber}</p>

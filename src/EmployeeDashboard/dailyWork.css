@@ -29,11 +29,11 @@
     left: 0;
     width: 200%;
     height: 300%;
-    background: url('/src/LogoImages/clouds1.png') repeat-x;
+    background: url('/src/LogoImages/clouds.png') repeat-x;
 background-size: cover;    
 background-position: center;
 animation: moveClouds 40s linear infinite;
-    z-index: -1;
+    z-index:-1;
 }
 
 @keyframes moveClouds {
