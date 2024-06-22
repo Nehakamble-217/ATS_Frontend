@@ -70,4 +70,3 @@ export default HomePage;
 //   );
 // }
 
-// export default HomePage;

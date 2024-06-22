@@ -54,7 +54,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     try {
       const response = await fetch(
 
-        `http://192.168.1.38:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.37:8891/api/ats/157industries/specific-data/${candidateId}`
 
       );
       if (!response.ok) {

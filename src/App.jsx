@@ -6,8 +6,7 @@ import EmpDashboard from "./EmployeeDashboard/empDashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AfterSelection from "./CandidateSection/afterSelection";
 import AdminLogin from "./LoginPage/adminLogin";
-import CandidateVerification from "./CandidateSection/candidateVerification";
- 
+import CandidateVerification from "./CandidateSection/candidateVerification";  
 
 const App = () => {
 

@@ -51,8 +51,9 @@ const LoginSignup = ({ onLogin }) => {
     };
     return (
         <div className="main-body" >
-            <div className="hexagon-container ">
+           
                 <div className="main-login-container">
+                <div className="main-loginpage-clouds"></div>
                     <div className="container22">
                         <div className="left-panel" data-aos="fade-right">
                             <img src={LoginImage} alt="Logo" className="logo" />
@@ -86,16 +87,14 @@ const LoginSignup = ({ onLogin }) => {
                                 </div>
                                 <div className="loginpage-error">{error}</div>
                                 <button className="login-button" type="submit" data-aos="fade-top">Login</button>
+                                <center><span class="psw">Forgot password ?<a href="#"></a></span></center>
                                 <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-    );
-
+            </div>    
+  );
 };
 
 export default LoginSignup;

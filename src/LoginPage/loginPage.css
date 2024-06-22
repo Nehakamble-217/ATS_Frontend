@@ -158,12 +158,12 @@
 } */
 
 /* General Reset and Box Sizing */
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-}
+} */
 
 /* General Styles */
 .main-body {
@@ -173,12 +173,21 @@
     padding-top: 50px;
     overflow: hidden;
     height: 100vh;
+
+
+
+    
+
+    
+  
+    position: relative;
+   
 }
 
-.hexagon-container {
+/* .hexagon-container {
     position: relative;
     width: 100%;
-}
+} */
 
 .rows {
     display: inline-flex;
@@ -192,7 +201,7 @@
 .rows:nth-child(even) {
     margin-left: 2px;
 }
-
+/* 
 .hexagon {
     position: relative;
     width: 60px;
@@ -211,7 +220,7 @@
     50% {
         transform: scale(1.1);
     }
-}
+} */
 
 .input-groups i {
     position: absolute;
@@ -219,12 +228,12 @@
     left: 10px;
 }
 
-.hexagon:hover {
+/* .hexagon:hover {
     background-color: rgb(252, 250, 199);
     box-shadow: 20px 20px 20px rgb(252, 250, 199, 0.9);
-}
+} */
 
-.hexagon:after {
+/* .hexagon:after {
     content: " ";
     position: absolute;
     top: 4px;
@@ -242,7 +251,7 @@
     height: 100%;
     background-color: rgba(255, 255, 255, 0.03);
     z-index: 2;
-}
+} */
 
 .center-button {
     position: absolute;
@@ -271,6 +280,33 @@
     left: 32%;
     z-index: 5;
 }
+.psw{
+    font-size: 12px;
+}
+
+.main-loginpage-clouds {
+    position: absolute;
+    top:-350px;
+    left: 0;
+    width: 200%;
+    height: 1100px;
+    height: 150%;
+    background: url('/src/LogoImages/clouds.png') repeat-x;
+    background-size: cover;    
+    background-position: center;
+    animation: moveClouds 30s linear infinite;
+    z-index: 1;
+}
+
+@keyframes moveClouds {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
 
 .pricing-plan {
     display: flex;
@@ -295,7 +331,8 @@
 }
 
 .left-panel .logo {
-    max-width: 300px;
+    max-width: 320px;
+    margin-right: 50px;
     opacity: 0;
     animation: fadeIn 1.5s forwards;
     animation-delay: 0.5s;
@@ -344,8 +381,10 @@
 
 .input-groups {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    padding-left: -10px;
     opacity: 0;
+    gap: 30px;
     animation: slideIn 1s forwards 0.8s;
 }
 
@@ -353,35 +392,47 @@
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     border-radius: 15px;
-    padding-left: 30px;
+    padding-left: 40px;
+    align-items: center;
+    text-indent: 10px;
+    height: 30px;
 }
 
 .input-icon {
     position: absolute;
     left: 10px;
-    top: 50%;
+    top: auto;
+    bottom: auto;
     transform: translateY(-50%);
     pointer-events: none;
 }
 
-.input-icon i {
-    color: #ccc;
+
+
+.input-groups i {
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    /* color: gray; */
 }
 
 .login-button,
 .dashboard-button {
     
     width: 100%;
-    padding: 10px;
-    font-size: 1em;
+    /* padding: 10px;
+    padding-bottom: 20px; */
+    font-size: 18px;
+    height: 30px;
     color: white;
     background-color: #ffcb9b;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     margin-top: 10px;
+    text-align: center;
     transition: background-color 0.3s ease, transform 0.3s ease;
     opacity: 0;
     animation: slideIn 1s forwards 1.1s;
@@ -392,13 +443,16 @@
     background-color: white;
     color: #ffcb9b;
     transform: translateY(-2px);
+    color: #ffb281;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .container22 {
     display: flex;
-    width: 70%;
+    width: 65%;
     flex-wrap: wrap;
+    margin: auto;
+    height: 50%;
     background-color: white;
     border-radius: 15px;
     overflow: hidden;
@@ -413,9 +467,9 @@
 }
 
 /* Zoom in effect on hover */
-.container22:hover {
-    transform: scale(1.05); /* Adjust the scale value as needed */
-}
+/* .container22:hover {
+    transform: scale(1.05); 
+} */
 
 /* Media Queries */
 @media (max-width: 1000px) {
