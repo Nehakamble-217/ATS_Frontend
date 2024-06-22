@@ -174,9 +174,10 @@ element.style{
   height: 30px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
-  overflow: hidden; 
-  display: flex;
-  align-items: center;
+
+  overflow: hidden;
+  line-height: 9px;
+
 }
 .ctf-btn:hover{
   background-color: white;
