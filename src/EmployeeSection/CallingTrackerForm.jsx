@@ -9,9 +9,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
-//import '../EmployeeSection/tempArsh.css'
 
-//top
+
 const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const { employeeId } = useParams();
 
@@ -136,7 +135,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     try {
       const response = await axios.get(
 
-        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -157,7 +156,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:8891/api/ats/157industries/company-details`
+        `http://localhost:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -223,9 +222,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
+  
 
     try {
       const dataToUpdate = {
@@ -246,7 +243,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://192.168.1.38:8891/api/ats/157industries/${employeeId}/addCallingData`,
+        `http://localhost:8891/api/ats/157industries/calling-tracker`,
 
         dataToUpdate
       );
@@ -480,9 +477,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 </td>
               </tr>
               <div hidden>
-
-                <input type="text" name="employeeId" readOnly value={employeeId} />
-
+                <input type="text" name="employeeId" readOnly value={callingTracker.employee.employeeId} />
               </div>
 
               <tr>
@@ -999,7 +994,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="form-control pt-1"
-                    required={callingTracker.selectYesOrNo === "Interested"}
+                   // required={callingTracker.selectYesOrNo === "Interested"}
                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1, marginRight:"10px"}}
 
                   />

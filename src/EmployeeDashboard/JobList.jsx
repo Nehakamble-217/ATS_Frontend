@@ -558,7 +558,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
 
 useEffect(() => {
-    fetch("http://192.168.1.38:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://localhost:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -566,8 +566,6 @@ useEffect(() => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-
-
    
 
   const handleSearch = (event) => {
@@ -1230,7 +1228,7 @@ useEffect(() => {
       {jobDescriptions.map((item, index) => (
       <div className="job-listing"  key={index}>
       <div className="job-header">
-        <h2 className="job-title">{item.designation}</h2>
+        <h2 className="job-title">{item.designation} </h2>
         <div className="job-company">{item.companyName}</div>
       </div>
       <div className="job-details">
@@ -1251,11 +1249,20 @@ useEffect(() => {
           a day ago
         </div> */}
       </div>
+
+      
+      {/* Arshad Added this button to share edm  */} 
       <div className="job-actions">
         <button className='daily-tr-btn' onClick={()=>toggleJobDescription(index)}>View More</button>
+        <button className='daily-tr-btn' > EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button>
       </div>
+
+
+
     </div>
+    
         ))}
+        
     </div>
   
   )}
