@@ -438,7 +438,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
 
                 <th scope="col" style={{ textAlign: "left" }} >Date & Time:</th>
-                <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: 'auto', padding: '5px' }}>
+                <td style={{ display: "flex", alignItems: "center", justifyContent: "center",  }}>
                   
 
 
@@ -447,7 +447,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     //id="currentDate"
                     name="date"
                     value={callingTracker.date}
-                    className="form-control mb-2"
+                    className="form-control"
                     style={{height:"30px",width:"100px",alignItems:"center",lineHeight:1,marginRight:"10px"}}
                     readOnly
                   />
