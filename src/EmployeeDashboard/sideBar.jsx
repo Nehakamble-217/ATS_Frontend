@@ -343,6 +343,7 @@ function Sidebar({
               <a href="#">
                 {/* <i className="icon ph-bold ph-gear"></i> */}
                 <i class="fa-brands fa-rocketchat"></i>
+              
                 <span className="sidebar-text">Chat Section</span>
               </a>
             </li>

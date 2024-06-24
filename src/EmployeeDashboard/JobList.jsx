@@ -4,11 +4,6 @@ import { bottom } from '@popperjs/core';
 import ShareDescription from './shareDescription';
 import JobDescriptionEdm from '../JobDiscription/jobDescriptionEdm';
 
-
-
-
-
-
 const JobListing = () => {
  const [jobDescriptions, setJobDescriptions] = useState([]);
   const [selectedJobIndex, setSelectedJobIndex] = useState(-1); // Track which job description is selected
@@ -29,6 +24,7 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showJobRole,setShowJobRole]=useState(false);
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
 const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
+
 
 
 useEffect(() => {
