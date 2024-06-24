@@ -329,7 +329,7 @@ function Sidebar({
               </li>
               <li className={activeSubMenu === 'portal' ? "active" : ""} onClick={toggleSubMenu('portal')}>
                 <a href="#">
-                <i class="fa-brands fa-linkedin" style={{color:"gray"}}></i>
+                <i class="fa fa-th-list" style={{color:"gray"}}></i>
 
                   <span className="sidebar-text">Portal</span>
                   <i className="arrow ph-bold ph-caret-down" style={{color:"gray"}}></i>

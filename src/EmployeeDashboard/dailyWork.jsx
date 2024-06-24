@@ -353,6 +353,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         <button
           className={running ? "timer-break-btn" : "timer-break-btn"}
           onClick={running ? handlePause : handleResume}
+          style={{height:"30px"}}
         >
           {running ? "Pause" : "Resume"}
         </button>
