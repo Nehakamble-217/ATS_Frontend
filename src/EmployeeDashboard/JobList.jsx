@@ -23,6 +23,7 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showIndustry,setShowIndustry]=useState(false);
   const [showRoles,setShowRoles]=useState(false);
   const [showJobRole,setShowJobRole]=useState(false);
+
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
 const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);

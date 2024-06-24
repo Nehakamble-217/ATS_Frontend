@@ -27,7 +27,10 @@ import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription"
 import AddEmployee from "../EmployeeSection/addEmployee";
 import NotePad from "../notPad/notePad";
+import EmployeeProfileData from "../EmployeeSection/employeeProfileData"
+import AddResumes from "../ResumeData/addMultipleResumes";
 import ChatRoom from "../ChatRoom/chatRoom";
+
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -57,7 +60,10 @@ const EmpDashboard = ({ userGroup }) => {
   const [showShortListedNav, setShowShortListdNav] = useState(false);
   const [showAddEmployee,setShowAddEmployee] = useState(false)
   const [showNotePad,setShowNotePad] = useState(false)
+  const [showProfile,setShowProfile] = useState(false)
+  const [showAddedResumes,setShowAddedResumes] = useState(false)
   const [showChatRoom,setShowChatRoom]=useState(false)
+
 
   const { employeeId } = useParams();
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
@@ -131,6 +137,8 @@ const EmpDashboard = ({ userGroup }) => {
     setShowShortListdNav(false);
     setShowAddEmployee(false)
     setShowNotePad(false)
+    setShowProfile(false)
+    setShowAddedResumes(false)
     setIncentive(false);
   };
 
@@ -247,6 +255,16 @@ const EmpDashboard = ({ userGroup }) => {
   
   
 
+  const profilePageLink =()=>{
+    resetAllToggles();
+    setShowProfile(!showProfile)
+  }
+
+  const toggelAddResumes = () =>{
+    resetAllToggles();
+    setShowAddedResumes(!showAddedResumes);
+  }
+
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Sidebar 
@@ -272,17 +290,23 @@ const EmpDashboard = ({ userGroup }) => {
         toggelAddRecruiter={toggelAddRecruiter}
         toggelDisplayNotPad={toggelDisplayNotPad}
         toggelResumeData={toggelResumeData}
+        toggelAddResumes={toggelAddResumes}
         toggleChatRoom={toggleChatRoom}     
-
         toggleIncentive={toggleIncentive}
-        // togglelogout={togglelogout}
       />
         
       <div className="empDash-main-content">
         <div className="time-and-data">
-          <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
+          <DailyWork 
+          employeeId={employeeId} 
+          successfulDataAdditions={successfulDataAdditions} 
+          profilePageLink={profilePageLink}
+          />
         </div>
 
+    <div>
+      { showProfile && <EmployeeProfileData></EmployeeProfileData>}
+    </div>
         <div style={{ paddingTop: "50px" }}>
           {selfCalling && (
             <CallingList updateState={handleUpdateComplete} funForGettingCandidateId={gettingCandidateIdForUpdate} />
@@ -374,6 +398,10 @@ const EmpDashboard = ({ userGroup }) => {
 
         <div>
           {showHome && <Home />}
+        </div>
+
+        <div>
+          {showAddedResumes && <AddResumes></AddResumes>}
         </div>
 
         <div>
