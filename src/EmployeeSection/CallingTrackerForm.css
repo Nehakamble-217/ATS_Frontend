@@ -1,6 +1,5 @@
-
 .maintable {
-  height: auto;
+  height: 100vh;
   width: auto;
   border-collapse: collapse;
   overflow-x: auto; /* Adds horizontal scroll if table is too wide */
@@ -15,6 +14,9 @@
     padding: 0%;
     margin: 0%;
 } */
+.maintable::-webkit-scrollbar{
+  display: none;
+}
 .update-page-head{
   width: 100%;
   color: gray;
@@ -55,6 +57,8 @@
   white-space: nowrap;
   color: gray;
   text-align: left;
+  white-space: nowrap; /* Prevent text wrapping */
+
 }
 .studTables tr th{
   height: 30px;
@@ -170,7 +174,10 @@ element.style{
   height: 30px; 
   backdrop-filter: blur(2px);
   transition: 0.5s;
-  overflow: hidden; 
+
+  overflow: hidden;
+  line-height: 9px;
+
 }
 .ctf-btn:hover{
   background-color: white;

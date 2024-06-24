@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+import "../EmployeeSection/CallingTrackerForm.css"
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 
 const UpdateCallingTracker = () => {
@@ -11,9 +13,9 @@ const UpdateCallingTracker = () => {
   //   const fetchData = async () => {
   //     try {
   //       const [employeeResponse, candidateResponse, requirementResponse] = await Promise.all([
-  //         axios.get(`http://192.168.1.33:8891/api/ats/157industries/employeeName/6`),
-  //         axios.get(`http://192.168.1.33:8891/api/ats/157industries/specific-data/28`),
-  //         axios.get(`http://192.168.1.33:8891/api/ats/157industries/company-details`)
+  //         axios.get(http://192.168.1.33:8891/api/ats/157industries/employeeName/6),
+  //         axios.get(http://192.168.1.33:8891/api/ats/157industries/specific-data/28),
+  //         axios.get(http://192.168.1.33:8891/api/ats/157industries/company-details)
   //       ]);
   //       setCallingTracker({
   //         ...candidateResponse.data,
@@ -27,25 +29,15 @@ const UpdateCallingTracker = () => {
 
   //   fetchData();
   // }, [employeeId, candidateId]);
-// <<<<<<< HEAD
-//   const fetchRequirementOptions = async () => {
-//     try {
-//       const response = await axios.get(
 
 
-
-  const handlePhoneNumberChange = (value, name) => {
-    setCallingTracker((prevState) => ({
-      ...prevState,
-      [name]: value || "",
-    }));
-  };
   // const handlePhoneNumberChange = (value, name) => {
   //   setCallingTracker((prevState) => ({
   //     ...prevState,
   //     [name]: value || "",
   //   }));
   // };
+
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
   //   if (name.includes("lineUp")) {
@@ -93,7 +85,7 @@ const UpdateCallingTracker = () => {
 
 
   //     const response = await axios.post(
-  //       `http://192.168.1.38:8891/api/ats/157industries/update-callingData/28`,
+  //       http://192.168.1.38:8891/api/ats/157industries/update-callingData/28,
   //       dataToUpdate
   //     );
 
@@ -111,35 +103,37 @@ const UpdateCallingTracker = () => {
   //   }
   // };
 
-
+  const [value, setValue] = useState();
 
   return (
     <div>
 
-      <div>
+<div className="maintable">
         <form>
-          <table>
-            <tbody>
+        <table className="table  table-striped  text-center studTables" >
+        <tbody >
+        
+              <tr >
+              <th scope="col" style={{ textAlign: "left" }} >Date & Time:</th>
+              <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: "10px", padding: '5px' }}>
 
-              <tr id="table-row">
-                <th scope="col">Data & Time</th>
-                <td>
+                  
                   <input
                     type="text"
                     id="date"
                     name="date"
-                    //value={callingTracker.date}
-                    className="form-control"
-                    style={{ marginRight: "20px", width: "180px" }}
+                    className="form-control mb-2"
+                    style={{height:"30px",width:"100x",alignItems:"center",lineHeight:1, marginRight: "10px"}}
+
                     readOnly
                   />
                   <input
                     type="text"
                     id="candidateAddedTime"
                     name="candidateAddedTime"
-                   // value={callingTracker.candidateAddedTime}
+                    
                     className="form-control"
-                    style={{ marginBottom: "9px", width: "180px", marginRight: "30px", paddingLeft: "10px" }}
+                    style={{height:"30px"}}
                     readOnly
                   />
                 </td>
@@ -149,10 +143,11 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="recruiterName"
-                    //value={callingTracker.recruiterName}
                     readOnly
 
                     className="form-control"
+                    style={{height:"30px",width:"100px",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
                   />
                 </td>
               </tr>
@@ -160,7 +155,6 @@ const UpdateCallingTracker = () => {
               <div hidden>
 
                 <input type="text" name="employeeId" readOnly 
-                //value={employeeId} 
                 />
 
               </div>
@@ -171,9 +165,10 @@ const UpdateCallingTracker = () => {
                   <input
                     type="text"
                     name="candidateName"
-                   // value={callingTracker.candidateName}
-                    //onChange={handleChange}
+                  
                     className="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
                   />
                 </td>
 
@@ -182,9 +177,10 @@ const UpdateCallingTracker = () => {
                   <input
                     type="email"
                     name="candidateEmail"
-                    //value={callingTracker.candidateEmail}
-                    //onChange={handleChange}
+                    
                     className="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
                   />
                 </td>
               </tr>
@@ -192,42 +188,49 @@ const UpdateCallingTracker = () => {
               <tr>
                 <th scope="col">Contact Number*</th>
                 <td>
-                  <input
+                  <PhoneInput
                     placeholder="Enter phone number"
                     name="contactNumber"
-                  //  value={callingTracker.contactNumber}
-                   // onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
-                    required
-                    //defaultCountry="IN"
-                    maxLength={12}
+                    // value={callingTracker.contactNumber}
+                    onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
+                    // required={callingTracker.selectYesOrNo !== "Interested"}
+                    defaultCountry="IN"
+                    maxLength={11}
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
 
                   />
+                  {/* {errors.contactNumber && (
+                    <div className="invalid-feedback">{errors.contactNumber}</div>
+                  )} */}
+
                 </td>
-                <th scope="col">Alternate Number</th>
+
+                <th scope="col">Whatsapp Number</th>
                 <td>
-                  <input
+                  <PhoneInput
                     placeholder="Enter phone number"
                     name="alternateNumber"
-                   // value={callingTracker.alternateNumber}
-                    // onChange={(value) =>
-                    //   handlePhoneNumberChange(value, "alternateNumber")
-                    // }
-                    // defaultCountry="IN"
-                    maxLength={11}
+                    // value={callingTracker.alternateNumber}
+                    onChange={(value) =>
+                      handlePhoneNumberChange(value, "alternateNumber")
+                    }
+                    defaultCountry="IN"
+                    maxLength={10}
                     className="PhoneInputInput"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
 
                   />
                 </td>
               </tr>
-
               <tr>
                 <th scope="col">Source Name*</th>
-                <td>
+                <td className="onlyselect">
                   <select
                     className="form-select"
                     name="sourceName"
-                    // value={callingTracker.sourceName}
-                    // onChange={handleChange}
+                   
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
+
                   >
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
@@ -243,90 +246,87 @@ const UpdateCallingTracker = () => {
                 </td>
 
                 <th scope="col">Job Id</th>
-                <td>
+                <td style={{display:"flex"}}>
                   <select
+                  className="form-control"
+
                     id="requirementId"
                     name="requirementId"
-                    // value={callingTracker.requirementId}
-                    // onChange={handleRequirementChange}
-                    className="form-control"
-                    style={{ height: "38px" }}
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
+                   
                   >
                     <option value="">Select Requirement</option>
-                    {/* {requirementOptions.map((requirement) => (
-                      <option key={requirement.requirementId} value={requirement.requirementId}>
-                        {requirement.requirementId}
-                      </option>
-                    ))} */}
-
+                   
                   </select>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="company_name"
+                      id="requirementCompany"
+                      name="requirementCompany"
+                      className="form-control"
+                      style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
+                      readOnly
+                      />
+                  </div>
                 </td>
               </tr>
 
               <tr>
-
                 <th scope="col">Applying For Position</th>
-                <td style={{ display: "flex", justifyContent: "space-around" }}>
-                  <input style={{ width: "260px" }}
+                <td style={{ display: "flex"}}>
+                  <input 
                     type="text"
                     id="jobDesignation"
                     name="jobDesignation"
-                    // value={callingTracker.jobDesignation}
-                    // onChange={handleChange}
+                    className="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
                     readOnly
                   />
-                  {/* //value={callingTracker.incentive}  */}
-                  <input placeholder="Incentive" name="incentive" readOnly className="form-control" style={{ width: "150px" }} type="text" />
+                  <input placeholder="Incentive"  readOnly className="form-control" style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}} type="text" />
                 </td>
-
-
-                <th scope="col">Applying Company Name</th>
-                <td>
-                  <input
-                    type="text"
-                    id="requirementCompany"
-                    name="requirementCompany"
-                    className="form-control"
-                    // value={callingTracker.requirementCompany}
-                    // onChange={handleChange}
-                  />
-                </td>
-              </tr>
-              <tr>
                 <th>Current Location</th>
-                <td>
+                <td style={{ display: "flex", justifyContent: "space-around" }}>
+                    <select 
+                      name="currentLocation"
+                      
+                      className="form-control"
+                      style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
 
-                  <select
-                    name="currentLocation"
-                    // value={callingTracker.currentLocation}
-                    // onChange={handleChange}
-                    className="form-control">
-                    <option value="">Select Location</option>
-                    <option value="Pune City">Pune City</option>
-                    <option value="PCMC">PCMC</option>
-                    <option value="Other">Other</option>
-                  </select>
+                    >
+                      <option value="">Select Location</option>
+                      <option value="Pune City">Pune City</option>
+                      <option value="PCMC">PCMC</option>
+                      <option value="Other">Other</option>
 
-                </td>
-                <th> Full Adress</th>
-                <td>
+                    </select>
+                  
                   <input
                     type="text"
                     name="fullAddress"
-                    // value={callingTracker.fullAddress}
-                    // onChange={handleChange}
-                    className="form-control" />
+                    placeholder="Full Address"
+                    
+                    className="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+                  />
                 </td>
               </tr>
 
+
               <tr>
                 <th>Calling Feedback</th>
-                <td>
+                
+                <td style={{display:"flex"}}>
+                  
                   <select
                     className="form-select"
-                    name="callingFeedback"
-                    // value={callingTracker.callingFeedback}
-                    // onChange={handleChange}
+                  
+
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:0.8 }}
+
+                   
                   >
                     <option value="">Select Feedback Type</option>
                     <option value="Call Done">Call Done</option>
@@ -343,14 +343,13 @@ const UpdateCallingTracker = () => {
                     <option value="Do not call again">Do not call again</option>
                     <option value="Other">Other</option>
                   </select>
-                </td>
-                <th>Candidate Interested</th>
-                <td>
                   <select
                     className="form-select"
+
                     name="selectYesOrNo"
-                    // value={callingTracker.selectYesOrNo}
-                    // onChange={handleChange}
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:0.8,marginRight:"10px"}}
+
+                   
                   >
                     <option value="">Select</option>
                     <option value="Interested">Interested</option>
@@ -365,60 +364,69 @@ const UpdateCallingTracker = () => {
                     </option>
                   </select>
                 </td>
-              </tr>
+               
+           
 
-              <tr>
-                <th scope="col">Date Of Birth</th>
-                <td>
-                  <input
+           
+              <th scope="col"class="dob-header">Date Of Birth</th>
+              <td style={{display:"flex"}}>
+              <input
                     type="date"
-                    name="lineUp.dateOfBirth"
-                    // value={callingTracker.lineUp.dateOfBirth}
-                    // onChange={handleChange}
+                    name="dateOfBirth"
+                  
                     className="form-control"
-                  />
-                </td>
+                    style={{height:"30px",width:"150px",alignItems:"center",lineHeight:1}}
 
-                <th scope="col">Gender</th>
-                <td>
-                  <div
+                  />
+                <div
                     className="main-gender"
-                    style={{ display: "flex", alignItems: "center" }}
+                    style={{ display: "flex", alignItems: "center",textAlign:"center" , gap:"1px"}}
                   >
                     <input
-                      style={{ paddingTop: "8px" }}
-                      type="checkbox"
-                      name="lineUp.gender"
-                      value="male"
-                      className="gender"
-                      // checked={callingTracker.lineUp.gender === "male"}
-                      // onChange={handleChange}
-                    />
-                    <label className="px-2">Male</label>
 
+                  style={{ textAlign: "center" }}
+                  type="checkbox"
+                  name="male"
+                  value="male"
+                  className="gender"
+                 
+                    />
+                     <label className="px-2">
+                      Male
+                    </label>
                     <input
                       type="checkbox"
-                      name="lineUp.gender"
+                      name="female"
                       value="female"
                       className="gender"
-                      // checked={callingTracker.lineUp.gender === "female"}
-                      // onChange={handleChange}
+
+                      style={{ paddingLeft: "auto" }}
+                     
                     />
-                    <label className="px-2">Female</label>
+                    <label className="px-2">
+                      Female
+                    </label>
                   </div>
                 </td>
-              </tr>
 
+
+
+
+           </tr>
+                      
               <tr>
-                <th>Education</th>
-                <td>
-                  <select
-                    name="lineUp.qualification"
-                    // value={callingTracker.lineUp.qualification}
-                    // onChange={handleChange}
+              <th scope="col">Education</th>
+              <td style={{display:"flex" }}>
+             
+              <select
+                    name="qualification"
+                    
+                    
                     className="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
                   >
-                    <option value="">__Select __</option>
+                    <option value="">_Select _</option>
                     <option value="Other">Other</option>
                     <option value="10th">10th</option>
                     <option value="12th">12 th</option>
@@ -563,88 +571,81 @@ const UpdateCallingTracker = () => {
                     <option value="Diploma in Artificial Intelligence">Diploma in Artificial Intelligence</option>
 
                   </select>
-
+               
+                 
+              <div>
+                    <input
+                      type="text"
+                      name="yearOfPassing"
+                      placeholder="YOP"
+                    
+                     
+                      className="form-control"
+                      style={{height:"30px",width:"90px",alignItems:"center",lineHeight:1,marginRight: "5px"}}
+                      />
+                  </div>
                 </td>
-
-                <th scope="col">Year Of Passing</th>
-                <td>
-                  <input
-                    type="text"
-                    name="lineUp.yearOfPassing"
-                   // value={callingTracker.lineUp.yearOfPassing}
-                    className="form-control"
-                  />
-                </td>
-              </tr>
-
-              <tr>
-                <th scope="col">
+                <th scope="col" >
                   Upload Resume
-                  {/* {resumeUploaded && (
-                    <FaCheckCircle className="upload-success-icon" />
-                  )} */}
+                 
                 </th>
-                <td>
+                <td style={{display:"flex"}}>
                   <input
                     type="file"
-                    // onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
-                    className="form-control pt-1"
-                  />
-                </td>
+                     className="form-control pt-1"
+                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
 
-                <th>Any Extra Certification</th>
-                <td>
-                  <input
+
+                  />
+                   <input
                     type="text"
-                    name="lineUp.extraCertification"
-                  //  value={callingTracker.lineUp.extraCertification}
-                    //onChange={handleChange}
+                    name="extraCertification"
+                    placeholder="Certification cource"
+                   
                     className="form-control"
                   />
-                </td>
-              </tr>
-
-              <tr>
+                  </td>
+                  </tr>
+                  <tr>
                 <th scope="col">Current Company</th>
                 <td>
                   <input
                     type="text"
-                    name="lineUp.companyName"
-                    //value={callingTracker.lineUp.companyName}
-                    //onChange={handleChange}
+                    name="companyName"
+                   
                     className="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
                   />
                 </td>
+                <th scope="col">Experience</th>
 
-                <th scope="col">Experince</th>
-                <td style={{ paddingLeft: '5px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
-                      <label htmlFor="experienceYear" style={{ marginRight: '5px', width: '50px' }}>Years:</label>
+                <td style={{display:"flex"}} >
+                <div style={{ display: 'flex', alignItems: 'center', margin: 'auto',padding:"0px"  }} >
+                <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '0px' }}>
+
+                      <label htmlFor="experienceYear" style={{ marginRight: '5px', width: '40px' }}>Years:</label>
                       <input
                         type="text"
-                        name="lineUp.experienceYear"
-                       // value={callingTracker.lineUp.experienceYear}
-
-                        //onChange={handleChange}
+                        name="experienceYear"
+                      
                         className="form-control"
                         placeholder=""
                         maxLength="2"
-                        style={{ width: '50px', border: "1px solid gray" }}
+                        style={{ height:"30px",width: '60px', border: "1px solid gray", fontSize:"16px" }}
                       />
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
-                      <label htmlFor="experienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <label htmlFor="totalExperienceMonths" style={{ marginRight: '23px', width: '50px' }}>Months:</label>
                       <input
                         type="number"
-                        name="lineUp.experienceMonth"
-                        //value={callingTracker.lineUp.experienceMonth}
-                       // onChange={handleChange}
+                        name="experienceMonth"
+                        
                         className="form-control"
                         placeholder=""
                         maxLength="2"
-                        style={{ width: '60px', border: '1px solid gray' }}
+                        style={{ height:"30px",width: '60px', border: "1px solid gray", fontSize:"16px" }}
                         min="1"
                         max="12"
                       />
@@ -656,45 +657,64 @@ const UpdateCallingTracker = () => {
               </tr>
               <tr>
 
-                <th scope="col">Relavent Experince</th>
-                <td>
-                  <input
-                    type="text"
-                    name="lineUp.relevantExperience"
-                    //value={callingTracker.lineUp?.relevantExperience}
-                    //onChange={handleChange}
-                    className="form-control"
-                  />
-                </td>
+<th scope="col">Relavent Experince</th>
+<td style={{display:"flex"}}>
+<input
+    type="text"
+    name="relevantExperience"
+   
+    className="form-control"
+    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
+  />
+  <div>
+                    <input
+                      type="text"
+                      name="noticePeriod"
+                      placeholder="Notice Period"
+                     
+                     
+                      className="form-control"
+                      style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
+                      min="0"
+                      max="90"
+                    />
+                  </div> </td>
                 <th scope="col">Communication Rating</th>
-                <td>
+                <td >
                   <input
                     type="text"
-                    name="lineUp.communicationRating"
-                    //value={callingTracker.lineUp.communicationRating}
-                    //onChange={handleChange}
+                    name="communicationRating"
+                    
+
                     className="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
+                   
                   />
+
                 </td>
-              </tr>
-
-
+                </tr>
 
               <tr>
                 <th scope="col">Current CTC(LPA)</th>
-                <td style={{ paddingLeft: '5px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
+
+
+                <td style={{ display:"flex"}} >
+                <div style={{ display: 'flex', alignItems: 'center' }} >
+                <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '5px',justifyContent:"center" }}>
+
                       <label htmlFor="currentCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
                       <input
                         type="text"
-                        name="lineUp.currentCTCLakh"
-                      //  value={callingTracker.lineUp.currentCTCLakh}
-                       // onChange={handleChange}
+                        name="currentCTCLakh"
+                       
                         className="form-control"
                         placeholder=""
+
                         maxLength="2"
-                        style={{ width: '60px', border: "1px solid gray" }}
+                        style={{ height:"30px",width: '60px', border: "1px solid gray", fontSize:"16px" }}
                         pattern="\d*"
                       />
                     </div>
@@ -702,34 +722,32 @@ const UpdateCallingTracker = () => {
                       <label htmlFor="currentCTCThousand" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
                       <input
                         type="text"
-                        name="lineUp.currentCTCThousand"
-                       // value={callingTracker.lineUp.currentCTCThousand}
-                       // onChange={handleChange}
+                        name="currentCTCThousand"
+                       
                         className="form-control"
                         placeholder=""
                         maxLength="2"
-                        style={{ width: '70px', border: "1px solid gray" }}
+                        style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
                         pattern="\d*"
                         inputMode="numeric"
                       />
                     </div>
                   </div>
                 </td>
-                <th scope="col">Expected CTC(LPA)</th>
-                <td style={{ paddingLeft: '5px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px', padding: '5px' }}>
+                <th scope="col" style={{ textAlign: "left" }}>Expected CTC(LPA)</th>
+                <td style={{display:"flex"}} >
+                <div style={{ display: 'flex', alignItems: 'center' }} >
+                    <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '5px',justifyContent:"center" }}>
+
                       <label htmlFor="expectedCTCLakh" style={{ marginRight: '5px', width: '50px' }}>Lakh:</label>
                       <input
                         type="text"
-
-                        name="lineUp.expectedCTCLakh"
-                        //value={callingTracker.lineUp.expectedCTCLakh}
-                       // onChange={handleChange}
+                        name="expectedCTCLakh"
+                        
                         className="form-control"
                         placeholder=""
                         maxLength="2"
-                        style={{ width: '60px', border: "1px solid gray" }}
+                        style={{ width: '70px', border: "1px solid gray" }}
                         pattern="\d*"
                       />
                     </div>
@@ -737,9 +755,8 @@ const UpdateCallingTracker = () => {
                       <label htmlFor="expectedCTCThousand" style={{ marginRight: '40px', width: '50px' }}>Thousand:</label>
                       <input
                         type="text"
-                        name="lineUp.expectedCTCThousand"
-                        //value={callingTracker.lineUp.expectedCTCThousand}
-                       // onChange={handleChange}
+                        name="expectedCTCThousand"
+                        
                         className="form-control"
                         placeholder=""
                         maxLength="2"
@@ -751,125 +768,109 @@ const UpdateCallingTracker = () => {
                   </div>
                 </td>
               </tr>
-
-
               <tr>
-                <th scope="col">Notice Period(Days)</th>
-                <td>
-                  <input
-                    type="text"
-                    name="lineUp.noticePeriod"
-                    //value={callingTracker.lineUp.noticePeriod}
-                    //onChange={handleChange}
-                    className="form-control"
-                  />
-                </td>
-
-
-                <th scope="col">Holding Offer Letter</th>
+              <th scope="col" style={{ textAlign: "left" }}>Holding Offer Letter</th>
                 <td>
                   <select type="text"
-                    name="lineUp.holdingAnyOffer"
-                   // value={callingTracker.lineUp.holdingAnyOffer}
-                   // onChange={handleChange} className="form-select"
-                    style={{ width: '150px', display: 'inline-block', marginRight: '10px' }}>
-                    <option value="">Select</option>
+                    name="holdingAnyOffer"
+
+                    
+                    style={{height:"30px", width: '150px',lineHeight:1,display: 'inline-block', marginRight: '10px' }}
+
+
+                  >
+                     <option value="">Select</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                   </select>
                   <input type="text"
-                    name="lineUp.holdingAnyOffer"
-                   // value={callingTracker.lineUp.holdingAnyOffer}
-                   // onChange={handleChange}
-                    style={{ width: '150px', height: "35px", display: 'inline-block', border: '1px solid #ccc', padding: '5px' }} />
-                </td>
-
-              </tr>
-
-              <tr>
-                <th scope="col">Recruiters Feedback</th>
-                <td>
-                  <input
-                    type="text"
-                    name="lineUp.feedBack"
-                   // value={callingTracker.lineUp.feedBack}
-                   // onChange={handleChange}
-                    className="form-control"
+                    name="offerLetterMsg"
+                  
+                    style={{ height:"30px",width: '120px',lineHeight:1, border: '1px solid #ccc', padding: '5px' }}
                   />
                 </td>
 
-                <th scope="col">Comment For Eevaluter/TL</th>
-                <td>
+                <th scope="col">Comment For TL</th>
+                <td style={{ display: "flex" }}>
+
+                 
+
                   <input
                     type="text"
-                    name="lineUp.msgForTeamLeader"
-                    //value={callingTracker.lineUp.msgForTeamLeader}
-                    //onChange={handleChange}
+
+                    name="msgForTeamLeader"
+                    placeholder="comment For TL"
+                 
                     className="form-control"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th scope="col">Availability Of a Interview</th>
-                <td
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    paddingTop: "14px",
-                  }}
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+
+                    />
+                    </td>
+                  </tr>
+    
+                    
+                  <tr>
+                  <th scope="col" style={{textAlign:"left"}}>Availability of Interview</th>
+                  <td style={{ display: "flex" }}
                 >
                   <input
                     type="date"
-                    name="lineUp.availabilityForInterview"
-                    //value={callingTracker.lineUp.availabilityForInterview}
-                    //onChange={handleChange}
+                    name="availabilityForInterview"
+                   
+                   
                     className="form-control"
-                    style={{ marginRight: "10px" }}
+                    style={{height:"30px",width:"100px",alignItems:"center",lineHeight:1,marginRight: "10px"}}
                   />
                   <input
                     type="time"
-                    name="lineUp.interviewTime"
-                   // value={callingTracker.lineUp.interviewTime}
-                    //onChange={handleChange}
+                    name="interviewTime"
+                  
+                   
                     className="form-control"
-                  />
-                </td>
-
-                <th scope="col">Final Status</th>
-                <td>
-                  <select
+                    style={{height:"30px",alignItems:"center",lineHeight:1,marginLeft: "10px", whiteSpace:"nowrap"}}
+                    />
+                    </td>
+                    <th scope="col">Final Status</th>
+                    <td style={{display:"flex"}}> 
+                    <select
                     type="text"
-                    name="lineUp.finalStatus"
-                    //value={callingTracker.lineUp.finalStatus}
-                    //onChange={handleChange}
+                    name="finalStatus"
+                    
                     className="form-select"
+
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
+
                   >
                     <option value="">Select</option>
-                    <option value="Interview schedule">
-                      Interview schedule
-                    </option>
-                    <option value="Attending After Some time">
-                      Attending After Some time
-                    </option>
+                    <option value="Interview schedule">Interview schedule</option>
+                    <option value="Attending After Some time">Attending After Some time</option>
                     <option value="hold">hold</option>
                   </select>
+                  <input
+                    type="text"
+                    placeholder="Feedback"
+                    name="feedBack"
+                    Name="form-control"
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
+                  />
                 </td>
               </tr>
             </tbody>
           </table>
-
+           
 
           <center>
-            <div style={{display:"flex",alignItems:"center",justifyContent:"center",margin:"20px",gap:"20px"}}  >
-              <button type="submit" className="loging-hr">
+          <div className="buttonDiv">
+              
+            <button type="submit" className="ctf-btn" >
                 Update Data
+               
               </button>
-              <button type="button" className="loging-hr" >Cancel</button>
-       
+              <button type="submit" className="ctf-btn" >
+                Cancel
+            </button>
             </div>
           </center>
-
         </form>
       </div>
     </div>

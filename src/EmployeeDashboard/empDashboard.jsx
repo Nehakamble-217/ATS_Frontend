@@ -25,6 +25,7 @@ import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription"
 import AddEmployee from "../EmployeeSection/addEmployee";
+import NotePad from "../notPad/notePad";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -52,6 +53,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [showShortListedNav, setShowShortListdNav] = useState(false);
   const [showAddEmployee,setShowAddEmployee] = useState(false)
+  const [showNotePad,setShowNotePad] = useState(false)
 
   const { employeeId } = useParams();
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
@@ -60,13 +62,17 @@ const EmpDashboard = ({ userGroup }) => {
   const gettingCandidateIdForUpdate = (id) => {
     setCandidateIdForUpdate(id);
     setUpdateSelfCalling(true);
-    setSelfCalling(false); // Hide CallingList when showing UpdateCallingTracker
+    setSelfCalling(false); 
   };
 
   const toggelAddRecruiter = ()=> {
     resetAllToggles();
-    setShowAddEmployee(!showAddEmployee)
-    
+    setShowAddEmployee(!showAddEmployee) 
+  }
+
+  const toggelDisplayNotPad = () =>{
+    resetAllToggles();
+    setShowNotePad(!showNotePad)
   }
 
   const toggleAddJobDescription = () => {
@@ -112,6 +118,7 @@ const EmpDashboard = ({ userGroup }) => {
     setAddJobDescription(false);
     setShowShortListdNav(false);
     setShowAddEmployee(false)
+    setShowNotePad(false)
   };
 
   const funForUpdateSelfCalling = () => {
@@ -204,8 +211,6 @@ const EmpDashboard = ({ userGroup }) => {
     setShowShortListedCandidates(!showShortListedCandidates);
   };
 
-
-
   const toggleUpdateCallingTracker = () => {
     resetAllToggles();
     setShowUpdateCallingTracker(!showUpdateCallingTracker);
@@ -213,7 +218,7 @@ const EmpDashboard = ({ userGroup }) => {
 
   const handleUpdateComplete = () => {
     setShowUpdateCallingTracker(false);
-    setSelfCalling(true); // Show CallingList again after update is complete
+    setSelfCalling(true); 
   };
 
   return (
@@ -239,6 +244,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
         toggelAddRecruiter={toggelAddRecruiter}
+        toggelDisplayNotPad={toggelDisplayNotPad}
       />
         
       <div className="empDash-main-content">
@@ -305,6 +311,10 @@ const EmpDashboard = ({ userGroup }) => {
 
         <div>
           {showResumeData && <ResumeData/>}
+        </div>
+
+        <div>
+          {showNotePad && <NotePad/>}
         </div>
         
         <div>

@@ -1,0 +1,115 @@
+/* Page container styles */
+.page-container {
+    height: 100vh;
+    overflow: hidden; /* Hide scrollbar */
+  }
+  
+  /* Container styles */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Card styles */
+  .card {
+    margin-bottom: 20px;
+    background-color: #ffe5b5; /* Added background color */
+  }
+  
+  /* Data table styles */
+  .data-tabled {
+    width: 100vw;
+    margin-top: 20px;
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: none;
+  }
+  
+  .data-tabled .tabled th {
+    background-color: #ffcb9b; /* Add background color to main headings */
+    font-size: 16px;
+    height:32px;
+  }
+  
+  /* hide scrollbar but allow scrolling */
+  .data-tabled::-webkit-scrollbar {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+  }
+  .data-tabled::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+  
+  .data-tabled .tabled {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-tabled .tabled th,
+  .data-tabled .tabled td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid gray; /* Added border to all cells */
+    color: gray; /* Set row height */
+    font-size: 18px;
+    padding: 0px;
+  
+  }
+  
+  .data-tabled.tabled th.tabled-header {
+    background-color: #ffe5b5;
+  }
+  
+  .data-tabled .tabled tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  /* Button styles */
+  .card .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .card .button-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .card .button-wrapper button {
+    font-size: 16px;
+    width: 20vh;
+    height: 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffb281;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .card .button-wrapper button:hover {
+    background-color: white;
+    color: #ffb281;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card .button-wrapper button:active {
+    background-color: #ffb281;
+  }
+  
+  @media (max-width: 768px) {
+    .card .button-wrapper button {
+      font-size: 14px;
+      height:28px;
+    }
+  }
+  
