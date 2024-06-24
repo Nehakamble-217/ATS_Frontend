@@ -26,6 +26,7 @@ import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription"
 import AddEmployee from "../EmployeeSection/addEmployee";
 import NotePad from "../notPad/notePad";
+import ChatRoom from "../ChatRoom/chatRoom";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -54,6 +55,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showShortListedNav, setShowShortListdNav] = useState(false);
   const [showAddEmployee,setShowAddEmployee] = useState(false)
   const [showNotePad,setShowNotePad] = useState(false)
+  const [showChatRoom,setShowChatRoom]=useState(false)
 
   const { employeeId } = useParams();
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
@@ -210,6 +212,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowShortListedCandidates(!showShortListedCandidates);
   };
+  const toggleChatRoom=()=>{
+    resetAllToggles();
+    setShowChatRoom(!showChatRoom);
+  }
 
   const toggleUpdateCallingTracker = () => {
     resetAllToggles();
@@ -220,6 +226,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowUpdateCallingTracker(false);
     setSelfCalling(true); 
   };
+ 
 
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -246,7 +253,8 @@ const EmpDashboard = ({ userGroup }) => {
         toggelAddRecruiter={toggelAddRecruiter}
         toggelDisplayNotPad={toggelDisplayNotPad}
         toggelResumeData={toggelResumeData}
-      />
+        toggleChatRoom={toggleChatRoom}     
+         />
         
       <div className="empDash-main-content">
         <div className="time-and-data">
@@ -317,7 +325,9 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showNotePad && <NotePad/>}
         </div>
-        
+        <div>
+          {showChatRoom && <ChatRoom/>}
+        </div>
         <div>
           {addCandidate && (
             <CallingTrackerForm updateState={handleDataAdditionSuccess} />

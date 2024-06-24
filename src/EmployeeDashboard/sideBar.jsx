@@ -27,7 +27,7 @@ function Sidebar({
   handleLogout,
   toggelAddRecruiter,
   toggelDisplayNotPad,
-
+toggleChatRoom
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -314,7 +314,7 @@ function Sidebar({
               </ul>
               
             </li>
-            <li>
+            <li onClick={toggleChatRoom}>
               <a href="#">
                 {/* <i className="icon ph-bold ph-gear"></i> */}
                 <i class="fa-brands fa-rocketchat"></i>
