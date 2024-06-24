@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
       <div className="bigb">
-      <div className="main-homepage-heading">
+      {/* <div className="main-homepage-heading">
      <h1>Sky's The Limit</h1>
-      </div>
+      </div> */}
       <div className="main-homepage-clouds"></div>
 
     <div className="main-homepage-main-div">
@@ -17,13 +17,13 @@ const HomePage = () => {
       <div className="main-homepage-Member">
             {/* <img src={world} alt="" /> */}
             <h1>I'm a Member's</h1>
-            <Link to="/mainDashboard"><button className="main-homepage-btn">I want Candidate</button></Link>
+            <Link to="/mainDashboard"><button className="main-homepage-btn">I Want Candidate</button></Link>
       </div>
 
       <div className="main-homepage-candidate">
             {/* <img src={developerjob} alt="" /> */}
             <h1>Find Your Dream Job</h1>
-            <Link to="/subPage"><button className="main-homepage-btn">I want Job</button></Link>
+            <Link to="/subPage"><button className="main-homepage-btn">I Want Job</button></Link>
       </div>
 
     </div>

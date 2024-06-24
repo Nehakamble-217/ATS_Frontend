@@ -17,8 +17,8 @@ const Home = () => {
   return (
     <div className="tejal">
       <div className="main-clouds"></div>
-      <div className="small-container"></div>
-      <div className="small-container"></div>
+      {/* <div className="small-container"></div> */}
+      {/* <div className="small-container"></div> */}
       <div className="pricing-plan">
 
         <div className="square-box">

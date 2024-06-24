@@ -1,7 +1,6 @@
 /* header.css */
 
-
-.bigb{
+.bigb {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,26 +9,25 @@
     position: relative; /* for page overflow */
     overflow: hidden;
 }
-.Clint img, .main-homepage-Member img, .main-homepage-candidate img {
+
+.Clint img,
+.main-homepage-Member img,
+.main-homepage-candidate img {
     width: 100%; /* Adjusted for responsiveness */
 }
 
-
-
-.main-homepage-heading h1{
-      position: absolute;
-      left: 43%;
-      top: 10px;
-      font-size: 2vw; /* Responsive font size */
-      color: gray;
-      z-index: 999;
-      padding-top: 20px;
-
-
+.main-homepage-heading h1 {
+    position: absolute;
+    left: 43%;
+    top: 10px;
+    font-size: 18px; /* Responsive font size */
+    color: gray;
+    z-index: 999;
+    padding-top: 20px;
 }
+
 .main-homepage-heading {
     text-align: center; /* Adjusted for center alignment */
-    /* padding: 20px 0; Adjusted for better spacing */
 }
 
 .main-homepage-main-div {
@@ -37,104 +35,104 @@
     flex-wrap: wrap;
     justify-content: space-around;
     background-color: #ffe5b5;
-    /* padding: 20px; Added padding for better spacing */
     height: 100vh;
    width: 100%;
    position: relative;
    overflow: hidden;
    z-index: 9;  
+   
    /* bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb */
+
 }
 
-.main-homepage-Member, .main-homepage-candidate {
+.main-homepage-Member,
+.main-homepage-candidate {
     flex: 1; /* Adjusted for equal distribution */
     max-width: 50%; /* Adjusted to fit better on smaller screens */
-    /* margin: 10px; Added margin for better spacing */
     height: 180vh;
     margin-top: 0;
-    /* z-index: 299;  */
-    /* bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb */
-}
-
-.main-homepage-Member{
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      flex-wrap: wrap;
-      /* background-color: #d2f3d2; */
-      background-color: #ffd8a8;
-      margin-top: 0px;
-
-}
-.main-homepage-candidate:hover,.main-homepage-Member:hover{
-    /* background-color:  #b9d9b9;; */
-    background-color: #ffcb9b;
-}
-.main-homepage-candidate{
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-}
-.main-homepage-Member img, .main-homepage-candidate img {
-    width: 60%;
-    /* margin: auto; Reset margin */
-}
-
-.main-homepage-Member h1, .main-homepage-candidate h1 {
-    text-align: center;
-    font-size: 2vw; /* Responsive font size */
-    /* color: rgb(59, 148, 230); */
-    color: gray;
-    font-weight: 500;
-    /* margin-top: 10px; Adjusted for smaller screens */
-}
-
-.btn {
-    font-size: 1.5vw; /* Responsive font size */
-    width: 50%; /* Adjusted for responsiveness */
-    /* margin-top: 10px; Adjusted for smaller screens */
-    padding: 10px;
    
 }
 
+.main-homepage-Member {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #ffd8a8;
+    margin-top: 0px;
+}
 
+.main-homepage-candidate:hover,
+.main-homepage-Member:hover {
+    background-color: #ffcb9b;
+}
+
+.main-homepage-candidate {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main-homepage-Member img,
+.main-homepage-candidate img {
+    width: 60%;
+}
+
+.main-homepage-Member h1,
+.main-homepage-candidate h1 {
+    text-align: center;
+    font-size: 18px; /* Responsive font size */
+    color: gray;
+    font-weight: 500;
+}
+
+.btn {
+    font-size: 16px; /* Responsive font size */
+    width: 50%; /* Adjusted for responsiveness */
+    padding: 10px;
+}
 
 /* Media Queries */
 @media screen and (max-width: 768px) {
-    .main-homepage-Member, .main-homepage-candidate {
+    .main-homepage-Member,
+    .main-homepage-candidate {
         max-width: 100%; /* Adjusted for smaller screens */
     }
 }
-.main-homepage-btn{
+
+.main-homepage-btn {
     border: 1px solid gray;
     border-radius: 15px;
     font-size: 16px;
-    color: gray;
-    width: 200px;
-    height: 50px;
+    color: white;
+    width: auto;
+    height: 30px;
     background-color: #ffcb9b;
-    z-index: 999;
-
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 4; /* Adjusted z-index to be above clouds */
+    position: relative; /* Ensure position context for z-index */
 }
-.main-homepage-btn:hover{
+
+.main-homepage-btn:hover {
     background-color: white;
     color: #ffcb9b;
 }
+
 .main-homepage-clouds {
-    position: absolute;
-    top:-350px;
+    position: fixed;
+    top: -240px;
     left: 0;
     width: 200%;
-    /* height: 1100px; */
     height: 143vh;
     background: url('/src/LogoImages/clouds.png') repeat-x;
-background-size: cover;    
-background-position: center;
-animation: moveclouds 30s linear infinite;
-    z-index:999;
-
+    background-size: cover;
+    background-position: center;
+    animation: moveclouds 30s linear infinite;
+    z-index: 10; /* Adjusted z-index to be below other elements */
 }
 
 @keyframes moveclouds {

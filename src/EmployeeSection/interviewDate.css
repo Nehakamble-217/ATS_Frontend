@@ -45,9 +45,6 @@
   top: 20%;
 }
 
-/* .react-calendar{
-  position:static;
-} */
 .react-calendar .react-calendar__tile--highlighted {
   background-color: rgba(0, 128, 0, 0.1);
   border-radius: 50%;
@@ -59,6 +56,9 @@
 .abbr {
   position: absolute !important;
   z-index: 999 !important;
+}
+.fa-regular{
+  color: gray;
 }
 
 .calendar {

@@ -115,8 +115,8 @@ const UpdateCallingTracker = () => {
         
               <tr >
               <th scope="col" style={{ textAlign: "left" }} >Date & Time:</th>
-              <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: "10px", padding: '5px' }}>
-
+             
+                <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: "0px", padding: '5px' }}>
                   
                   <input
                     type="text"
@@ -276,19 +276,23 @@ const UpdateCallingTracker = () => {
 
               <tr>
                 <th scope="col">Applying For Position</th>
-                <td style={{ display: "flex"}}>
+                
+               <td style={{ display: "flex"}}> 
                   <input 
                     type="text"
                     id="jobDesignation"
                     name="jobDesignation"
                     className="form-control"
-                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}}
+                    style={{height:"30px",width:"100%",alignItems:"center",lineHeight:"1px",marginRight: "10px"}}
                     readOnly
                   />
-                  <input placeholder="Incentive"  readOnly className="form-control" style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1,marginRight: "10px"}} type="text" />
+                  <input placeholder="Incentive"  readOnly className="form-control" 
+                  style={{height:"30px",width:"100%",alignItems:"center",lineHeight:"1px",marginRight: "10px"}} type="text"
+                   />
                 </td>
                 <th>Current Location</th>
-                <td style={{ display: "flex", justifyContent: "space-around" }}>
+                
+                <td style={{ display: "flex", justifyContent: "space-around" }}> 
                     <select 
                       name="currentLocation"
                       
@@ -594,7 +598,7 @@ const UpdateCallingTracker = () => {
                     type="file"
                     accept=".pdf,.doc,.docx"
                      className="form-control pt-1"
-                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:1}}
+                     style={{height:"30px",width:"100%",alignItems:"center",lineHeight:"20px"}}
 
 
                   />
@@ -810,7 +814,7 @@ const UpdateCallingTracker = () => {
     
                     
                   <tr>
-                  <th scope="col" style={{textAlign:"left"}}>Availability of Interview</th>
+                  <th scope="col" style={{textAlign:"left"}}>Interview Date</th>
                   <td style={{ display: "flex" }}
                 >
                   <input
@@ -826,7 +830,7 @@ const UpdateCallingTracker = () => {
                     name="interviewTime"
                   
                    
-                    className="form-control"
+                    className="form-control input"
                     style={{height:"30px",alignItems:"center",lineHeight:1,marginLeft: "10px", whiteSpace:"nowrap"}}
                     />
                     </td>

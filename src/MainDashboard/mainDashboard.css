@@ -5,8 +5,6 @@
     box-sizing: border-box;
 }
 
-
-
 .tejal {
     display: flex;
     justify-content: center;
@@ -16,20 +14,19 @@
     font-family: 'Arial', sans-serif;
     position: relative;
     overflow: hidden;
+    /* flex-wrap: wrap; */
 }
 
 .main-clouds {
     position: absolute;
-    top:-350px;
+    top: -240px;
     left: 0;
     width: 200%;
-    /* height: 1100px; */
     height: 150%;
     background: url('/src/LogoImages/clouds.png') repeat-x;
-background-size: cover;    
-background-position: center;
-animation: moveClouds 60s linear infinite;
-    /* z-index: 99999; */
+    background-size: cover;
+    background-position: center;
+    animation: moveClouds 60s linear infinite;
 }
 
 @keyframes moveClouds {
@@ -39,22 +36,6 @@ animation: moveClouds 60s linear infinite;
     100% {
         transform: translateX(-50%);
     }
-}
-
-/* Small Containers */
-.small-container {
-    position: absolute;
-    width: 50%;
-    height: 400px;
-    background-color: #ffd8a8;
-}
-
-.small-container:first-child {
-    left: 0;
-}
-
-.small-container:last-child {
-    left: 80%;
 }
 
 /* Pricing Plan */
@@ -81,13 +62,13 @@ animation: moveClouds 60s linear infinite;
     box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1);
     background: linear-gradient(135deg, #ffe5b5, #ffd8a8, #ffcb9b, #fec08e, #ffb281);
     position: absolute;
-    width: 400px;
-    height: 250px;
+    width: 380px;
+    height: 210px;
     text-align: center;
     cursor: pointer;
     transition: 0.4s ease-in-out;
     color: white;
-    z-index: 2; /* Ensure the boxes are above the clouds */
+    z-index: 2; 
 }
 
 .square-box:first-child {
@@ -171,7 +152,6 @@ animation: moveClouds 60s linear infinite;
     width: 100px;
     height: 40px;
     text-decoration: none;
-    /* backdrop-filter: blur(2px); */
     transition: background-color 0.5s, color 0.5s, border-color 0.5s;
     overflow: hidden;
     position: relative;
@@ -217,7 +197,27 @@ animation: moveClouds 60s linear infinite;
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .square-box {
+        width: 350px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 992px) {
+    .square-box {
+        width: 300px;
+        height: 200px;
+    }
+}
+
 @media (max-width: 768px) {
+    .pricing-plan {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+    }
+
     .square-box {
         width: 100%;
         height: auto;
@@ -225,9 +225,32 @@ animation: moveClouds 60s linear infinite;
         margin-bottom: 20px;
     }
 
-    .pricing-plan {
-        flex-direction: column;
-        align-items: center;
-        margin-left: 0;
+    .square-box:first-child {
+        top: auto;
+        left: auto;
+    }
+
+    .square-box:nth-child(2) {
+        top: auto;
+        left: auto;
+    }
+
+    .square-box:nth-child(3) {
+        top: auto;
+        left: auto;
+    }
+
+    .square-box:nth-child(4) {
+        top: auto;
+        left: auto;
+    }
+
+    .square-box .content {
+        padding: 20px;
+    }
+
+    .square-box h1 {
+        font-size: 16pt;
+        margin-bottom: 20px;
     }
 }

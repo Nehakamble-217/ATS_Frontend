@@ -158,7 +158,13 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
+
+
+
       `http://192.168.1.34:8891/api/ats/157industries/callingData/${employeeId}`
+
+
+
     )
 
       .then((response) => response.json())
