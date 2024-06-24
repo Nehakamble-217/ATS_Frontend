@@ -4,11 +4,6 @@ import { bottom } from '@popperjs/core';
 import ShareDescription from './shareDescription';
 import JobDescriptionEdm from '../JobDiscription/jobDescriptionEdm';
 
-
-
-
-
-
 const JobListing = () => {
  const [jobDescriptions, setJobDescriptions] = useState([]);
   const [selectedJobIndex, setSelectedJobIndex] = useState(-1); // Track which job description is selected
@@ -31,6 +26,7 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
 const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
+
 
 
 useEffect(() => {
@@ -67,10 +63,6 @@ useEffect(() => {
     }
     setSelectedSalary(newSelectedSalary)
   }
-
-
-
-
  const handleCheckboxChange1 = (experience) => {
     const newSelectedExperiences = new Set(selectedExperience);
     if (newSelectedExperiences.has(experience)) {

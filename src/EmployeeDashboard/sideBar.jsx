@@ -12,6 +12,7 @@ function Sidebar({
   toggleSelfCalling,
   toggelLineUp,
   toggleCallingTrackerForm,
+  toggeladminsection,
   toggleShortListed,
   toggleSelectCandidate,
   toggleRejectedCandidate,
@@ -20,6 +21,7 @@ function Sidebar({
   toggelResumeData,
   toggleJobDescription,
   toggleInterviewDate,
+  toggleIncentive,
   toggleAttendance,
   toggleAllMasterSheet,
   toggleAddJobDescription,
@@ -39,7 +41,6 @@ toggleChatRoom
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
   const [logoutTime, setLogoutTime] = useState(null);
-
   const {userGroup}=useParams();
   console.log(userGroup)
 
@@ -95,6 +96,7 @@ toggleChatRoom
     console.log(userGroup)
   const isCandidateSectionActive = ['selfCalling', 'lineUp', 'shortListed', 'selectCandidate', 'holdCandidate', 'rejectedCandidate'].includes(activeButton);
   const isJobDescriptionActive=["Jobdiscription","addJobDescription"].includes(activeButton)
+  const isadminactive=["teamleader","addJobDescription"].includes(activeButton)
 
 
 
@@ -130,6 +132,7 @@ toggleChatRoom
       console.error("Error logging out:", error);
     }
   };
+
 
   return (
     <>
@@ -198,10 +201,7 @@ toggleChatRoom
                     <span className="sidebar-text">Hold Candidate</span>
                   </a>
                 </li>
-
-          
                 <li onClick={handleButtonClick('rejectedCandidate', toggleRejectedCandidate)} className={activeButton === 'rejectedCandidate' ? 'active' : ''}>
-
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Rejected Candidate</span>
@@ -251,11 +251,35 @@ toggleChatRoom
                     <span className="sidebar-text">Add JobDescription</span>
                   </a>
                 </li>
+
+                
+            <li className={`${activeSubMenu === 'admin-section' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('adminsection')}>
+              <a href="#">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span className="sidebar-text">ADmin Section</span>
+                <i className="arrow ph-bold ph-caret-down"></i>
+              </a>
+              <ul className={`sub-menu ${activeSubMenu === 'Jobdiscription' ? 'active' : ''}`}>
+                 <li onClick={handleButtonClick('adminsection', toggleJobDescription)} className={activeButton === 'admin-section' ? 'active' : ''}>
+              <a href="#">
+              <img src={Circle} style={{ width: "10px" }} alt="" />                
+               <span className="sidebar-text"> View Job Description</span>
+              </a>
+            </li>
+                <li onClick={handleButtonClick('addJobDescription', toggleAddJobDescription)} className={activeButton === 'addJobDescription' ? 'active' : ''}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Add JobDescription</span>
+                  </a>
+                </li>
                
 
               </ul>
             </li>
+               
 
+              </ul>
+            </li>
             <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
                 <i className="icon ph-bold ph-chart-bar" style={{color:"gray"}}></i>
@@ -263,13 +287,13 @@ toggleChatRoom
                 <i className="arrow ph-bold ph-caret-down" ></i>
               </a>
               <ul className={`sub-menu sub-menu1 ${activeSubMenu === 'employee' ? 'active' : ''}`}>
-                <li>
+                
+                <li onClick={handleButtonClick('incentive', toggleIncentive)} className={activeButton === 'incentive' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Intensive</span>
+                    <span className="sidebar-text">My Incentive </span>
                   </a>
                 </li>
-                
                 <li onClick={handleButtonClick('attendance', toggleAttendance)} className={activeButton === 'attendance' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
@@ -278,6 +302,7 @@ toggleChatRoom
                 </li>
               </ul>
             </li>
+            
 
             <li className={activeSubMenu === 'database' ? "active" : ""} onClick={toggleSubMenu('database')}>
               <a href="#">
@@ -318,6 +343,7 @@ toggleChatRoom
               <a href="#">
                 {/* <i className="icon ph-bold ph-gear"></i> */}
                 <i class="fa-brands fa-rocketchat"></i>
+              
                 <span className="sidebar-text">Chat Section</span>
               </a>
             </li>
