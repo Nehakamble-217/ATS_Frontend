@@ -27,11 +27,9 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showIndustry,setShowIndustry]=useState(false);
   const [showRoles,setShowRoles]=useState(false);
   const [showJobRole,setShowJobRole]=useState(false);
-<<<<<<< HEAD
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
 const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
-=======
->>>>>>> 6dc066173dd5f7da81a7dabf09e12a240687ed05
+
 
 useEffect(() => {
     fetch("http://192.168.1.34:8891/api/ats/157industries/all-job-descriptions")
@@ -58,10 +56,6 @@ useEffect(() => {
     }
     setSelectedSalary(newSelectedSalary)
   }
-
-
-
-
  const handleCheckboxChange1 = (experience) => {
     const newSelectedExperiences = new Set(selectedExperience);
     if (newSelectedExperiences.has(experience)) {

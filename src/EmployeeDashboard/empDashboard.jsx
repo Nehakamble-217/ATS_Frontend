@@ -7,6 +7,7 @@ import EmpTimeTracker from "./EmpTimeTracker";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 import { Outlet, useParams } from "react-router-dom";
 import DataComponent from "../EmployeeSection/DataComponent";
+import Incentive from "../EmployeeSection/Incentive";
 import Attendancesheet from '../EmployeeSection/Attendence_sheet';
 import InterviewDates from "../EmployeeSection/interviewDate";
 import SelectedCandidate from "../CandidateSection/SelectedCandidate";
@@ -33,6 +34,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
   const [attendancesheet, setAttendanceSheet] = useState(false);
+  const [incentive,setIncentive]=useState(false);
   const [lineUp, setLineUp] = useState(false);
   const [shortListed, setShortListed] = useState(false);
   const [selectCandidate, setSelectedCandidate] = useState(false);
@@ -63,40 +65,48 @@ const EmpDashboard = ({ userGroup }) => {
     setCandidateIdForUpdate(id);
     setUpdateSelfCalling(true);
     setSelfCalling(false); 
+    setIncentive(false);
   };
 
   const toggelAddRecruiter = ()=> {
     resetAllToggles();
     setShowAddEmployee(!showAddEmployee) 
+    setIncentive(false);
   }
 
   const toggelDisplayNotPad = () =>{
     resetAllToggles();
     setShowNotePad(!showNotePad)
+    setIncentive(false);
   }
 
   const toggleAddJobDescription = () => {
     resetAllToggles();
     setAddJobDescription(!addJobDescription);
+    setIncentive(false);
   };
 
   const handleDataAdditionSuccess = () => {
     setSuccessfulDataAdditions((prevCount) => prevCount + 1);
+    setIncentive(false);
   };
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
+    setIncentive(false);
   };
 
   const toggleShowShortListedCandidateData = () => {
     setShortlistedCandidateData(true);
     setShowInterviewDate(false);
     resetAllToggles();
+    setIncentive(false);
   };
 
   const viewUpdatedPage = () => {
     setShortlistedCandidateData(false);
     setShowUpdateCallingTracker(true);
+    setIncentive(false);
   };
 
   const resetAllToggles = () => {
@@ -119,6 +129,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowShortListdNav(false);
     setShowAddEmployee(false)
     setShowNotePad(false)
+    setIncentive(false);
   };
 
   const funForUpdateSelfCalling = () => {
@@ -201,6 +212,11 @@ const EmpDashboard = ({ userGroup }) => {
     setAttendanceSheet(!attendancesheet);
   };
 
+  const toggleIncentive = () =>{
+    resetAllToggles();
+    setIncentive(!incentive)
+  }
+
   const toggleHome = () => {
     resetAllToggles();
     setShowHome(!showHome);
@@ -220,6 +236,9 @@ const EmpDashboard = ({ userGroup }) => {
     setShowUpdateCallingTracker(false);
     setSelfCalling(true); 
   };
+
+  
+  
 
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -246,6 +265,8 @@ const EmpDashboard = ({ userGroup }) => {
         toggelAddRecruiter={toggelAddRecruiter}
         toggelDisplayNotPad={toggelDisplayNotPad}
         toggelResumeData={toggelResumeData}
+        toggleIncentive={toggleIncentive}
+        // togglelogout={togglelogout}
       />
         
       <div className="empDash-main-content">
@@ -280,6 +301,9 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
         <div>
           {showMasterSheet && <MasterSheet />}
+        </div>
+        <div>
+          {incentive && <Incentive/>}
         </div>
         
         <div>
