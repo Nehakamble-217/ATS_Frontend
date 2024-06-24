@@ -57,6 +57,9 @@
   position: absolute !important;
   z-index: 999 !important;
 }
+.fa-regular{
+  color: gray;
+}
 
 .calendar {
   display: flex;

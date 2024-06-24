@@ -16,6 +16,7 @@
     font-family: 'Arial', sans-serif;
     position: relative;
     overflow: hidden;
+    /* flex-wrap: wrap; */
 }
 
 .main-clouds {
