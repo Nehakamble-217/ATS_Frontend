@@ -17,9 +17,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
-
   const [selectedRows, setSelectedRows] = useState([]);
-
   const [showSearchBar, setShowSearchBar] = useState(false);
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
@@ -228,11 +226,6 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     });
   };
 
-
-
-
-
-
   return (
     <div className="App-after">
       {!showUpdateCallingTracker && !showCallingForm && (
@@ -387,10 +380,10 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementCompany} <div className="tooltip">
                       <span className="tooltiptext">{item.requirementCompany} </span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.communicationRating} <div className="tooltip">
+                    <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.communicationRating} <div className="tooltip">
                       <span className="tooltiptext">{item.communicationRating}</span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
+                    <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
                       <span className="tooltiptext">{item.currentLocation} </span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.fullAddress} <div className="tooltip">

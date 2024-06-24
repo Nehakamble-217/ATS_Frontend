@@ -27,11 +27,10 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showIndustry,setShowIndustry]=useState(false);
   const [showRoles,setShowRoles]=useState(false);
   const [showJobRole,setShowJobRole]=useState(false);
-<<<<<<< HEAD
+
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
-const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
-=======
->>>>>>> 6dc066173dd5f7da81a7dabf09e12a240687ed05
+  const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
+
 
 useEffect(() => {
     fetch("http://192.168.1.34:8891/api/ats/157industries/all-job-descriptions")
