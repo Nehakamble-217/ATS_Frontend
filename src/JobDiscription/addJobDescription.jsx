@@ -72,6 +72,7 @@ const AddJobDescription = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
       const response = await fetch('http://192.168.1.34:8891/api/ats/157industries/add-requirement', {
         method: 'POST',
         headers: {

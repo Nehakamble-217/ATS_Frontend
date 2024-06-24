@@ -245,6 +245,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleAddJobDescription={toggleAddJobDescription}
         toggelAddRecruiter={toggelAddRecruiter}
         toggelDisplayNotPad={toggelDisplayNotPad}
+        toggelResumeData={toggelResumeData}
       />
         
       <div className="empDash-main-content">
