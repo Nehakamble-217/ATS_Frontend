@@ -59,7 +59,7 @@ const NotePad = () => {
 
   const fetchNotePadData = async () => {
     try {
-      const response = await fetch('http://192.168.1.38:8891/api/ats/157industries/notesData');
+      const response = await fetch('http://192.168.1.34:8891/api/ats/157industries/notesData');
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -74,7 +74,7 @@ const NotePad = () => {
 
   const updateMessage = async (messageId) => {
     try {
-      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/updateNoteData/${messageId}`);
+      const response = await fetch(`http://192.168.1.34:8891/api/ats/157industries/updateNoteData/${messageId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -94,7 +94,7 @@ const NotePad = () => {
   if (!confirmed) return;
 
   try {
-    const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/deleteNoteData/${messageId}`, {
+    const response = await fetch(`http://192.168.1.34:8891/api/ats/157industries/deleteNoteData/${messageId}`, {
       method: "DELETE",
     });
     if (response.ok) {

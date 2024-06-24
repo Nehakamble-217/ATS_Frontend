@@ -20,10 +20,6 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const [selectedRows, setSelectedRows] = useState([]);
-
-
-
-
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
 
@@ -61,7 +57,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     try {
       const response = await fetch(
 
-        `http://192.168.1.38:8891/api/ats/157industries/hold-candidate/${employeeId}`
+        `http://192.168.1.34:8891/api/ats/157industries/hold-candidate/${employeeId}`
 
         
       );

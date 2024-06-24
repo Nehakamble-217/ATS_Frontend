@@ -113,7 +113,7 @@ function Sidebar({
      
 
       await axios.post(
-        "http://192.168.1.33:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -232,36 +232,6 @@ function Sidebar({
               </ul>
             </li>
 
-{/* <<<<<<< HEAD
-              <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
-                <a href="#">
-                <i class="fa-solid fa-pen-to-square" style={{color:"gray"}}></i>
-
-                  <span className="sidebar-text">Job Description</span>
-                  <i className="arrow ph-bold ph-caret-down" style={{color:"gray"}}></i>
-                </a>
-                <ul className={`sub-menu ${activeSubMenu === 'Jobdiscription' ? 'active' : ''}`}>
-                  <li onClick={handleButtonClick('jobDescription', toggleJobDescription)} className={activeButton === 'jobDescription' ? 'active' : ''}>
-                    <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
-                      <span className="sidebar-text"> View Job Description</span>
-                    </a>
-                  </li>
-                  <li onClick={handleButtonClick('addJobDescription', toggleAddJobDescription)} className={activeButton === 'addJobDescription' ? 'active' : ''}>
-                    <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
-                      <span className="sidebar-text">Add JobDescription</span>
-                    </a>
-                  </li>
-
-
-                </ul>
-              </li>
-              
-              <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
-======= */}
-
-
             <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
               <a href="#">
                 <i class="fa-solid fa-pen-to-square"></i>
@@ -285,8 +255,8 @@ function Sidebar({
 
               </ul>
             </li>
-            {/* <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
->>>>>>> 6513b0c8e69d8619c401f80f393504175c9a84ff
+
+            <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
                 <i className="icon ph-bold ph-chart-bar" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Employee Section</span>
@@ -307,7 +277,8 @@ function Sidebar({
                   </a>
                 </li>
               </ul>
-            </li> */}
+            </li>
+
             <li className={activeSubMenu === 'database' ? "active" : ""} onClick={toggleSubMenu('database')}>
               <a href="#">
                 <i className="fa-solid fa-database"></i>
