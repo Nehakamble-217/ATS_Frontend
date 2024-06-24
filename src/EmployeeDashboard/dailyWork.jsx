@@ -58,7 +58,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       try {
         const response = await axios.get(
 
-          `http://192.168.1.38:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.34:8891/api/ats/157industries/employee-details/${employeeId}`
 
         );
         setEmployeeData(response.data);
@@ -229,10 +229,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       };
 
       await axios.post(
-
-
-        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
-
+        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
         formData
       );
 

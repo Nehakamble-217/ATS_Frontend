@@ -32,7 +32,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
-    fetch(`http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.34:8891/api/ats/157industries/callingData/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -160,11 +160,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
-
-
-      `http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`
-
-
+      `http://192.168.1.34:8891/api/ats/157industries/callingData/${employeeId}`
     )
 
       .then((response) => response.json())
@@ -334,6 +330,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
               </thead>
               <tbody>
                 {filteredCallingList.map((item, index) => (
+
                   <tr key={item.candidateId} className="attendancerows">
                     <td className='tabledata '>
                       <input
