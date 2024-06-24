@@ -556,9 +556,8 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showRoles,setShowRoles]=useState(false);
   const [showJobRole,setShowJobRole]=useState(false);
 
-
 useEffect(() => {
-    fetch("http://localhost:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.34:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -566,7 +565,6 @@ useEffect(() => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-   
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);

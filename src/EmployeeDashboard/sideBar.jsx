@@ -113,7 +113,7 @@ function Sidebar({
      
 
       await axios.post(
-        "http://192.168.1.33:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
