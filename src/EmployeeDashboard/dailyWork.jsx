@@ -14,6 +14,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
   const [modalEmployeeData, setModalEmployeeData] = useState(null);
   const [profileImageBase64, setProfileImageBase64] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [showAllDailyBtns, setShowAllDailyBtns] = useState(true);
   
   const toggleDailyTBtn = () => {
     setShowDetails(!showDetails);
@@ -48,6 +49,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
   const [dayPresentPaid, setDayPresentPaid] = useState("No");
   const [dayPresentUnpaid, setDayPresentUnpaid] = useState("Yes");
   const [remoteWork, setRemoteWork] = useState("Select");
+  
 
   const navigate = useNavigate();
 
@@ -56,7 +58,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       try {
         const response = await axios.get(
 
-          `http://192.168.1.38:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.34:8891/api/ats/157industries/employee-details/${employeeId}`
 
         );
         setEmployeeData(response.data);
@@ -227,10 +229,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       };
 
       await axios.post(
-
-
-        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
-
+        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -283,6 +282,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     setPopupVisible(false);
     setModalEmployeeData(null);
   };
+  const toggleAllDailyBtns = () => {
+    setShowAllDailyBtns(!showAllDailyBtns);
+  };
 
   return (
 
@@ -307,8 +309,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           </p>
         </div>
       </div>
+  {showAllDailyBtns && ( 
       <div className="all-daily-btns">
-        <div className={`daily-t-btn ${showDetails ? "" : "hidden"}`}>
+        <div className="daily-t-btn">
           <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
             Target : 10
           </button>
@@ -364,9 +367,10 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         >
           {running ? "Pause" : "Resume"}
         </button>
-        <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
+        {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
-        </button>
+        </button> */}
+
         <img className="logout-btn"
           onClick={handleLogoutLocal}
           // style={{ width: "30px", borderRadius: "60%" }}
@@ -374,7 +378,14 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           alt="Logout"
         />
       </div>
-
+  )}
+   <button
+        className="toggle-all-daily-btns"
+        onClick={toggleAllDailyBtns}
+        // style={{ display: showAllDailyBtns ? "none" : "block" }}
+      >
+        {!showAllDailyBtns ? "show" : "hidden"} All Buttons
+      </button>
       <Modal
         show={modalShow}
         onHide={() => setModalShow(false)}
@@ -385,6 +396,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           <Modal.Title>Employee Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
           <p>                <img src={Profile}alt="Profile" width={"150px"}/>
           
           Name           : {employeeData.employeeName}

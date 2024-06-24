@@ -25,9 +25,9 @@ function Sidebar({
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
   handleLogout,
-  
+  toggelAddRecruiter,
+  toggelDisplayNotPad,
 
-   
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -113,7 +113,7 @@ function Sidebar({
      
 
       await axios.post(
-        "http://192.168.1.33:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -232,8 +232,6 @@ function Sidebar({
               </ul>
             </li>
 
-
-
             <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
               <a href="#">
                 <i class="fa-solid fa-pen-to-square"></i>
@@ -257,11 +255,12 @@ function Sidebar({
 
               </ul>
             </li>
-            {/* <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
+
+            <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
-                <i className="icon ph-bold ph-chart-bar"></i>
+                <i className="icon ph-bold ph-chart-bar" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Employee Section</span>
-                <i className="arrow ph-bold ph-caret-down"></i>
+                <i className="arrow ph-bold ph-caret-down" ></i>
               </a>
               <ul className={`sub-menu sub-menu1 ${activeSubMenu === 'employee' ? 'active' : ''}`}>
                 <li>
@@ -278,7 +277,8 @@ function Sidebar({
                   </a>
                 </li>
               </ul>
-            </li> */}
+            </li>
+
             <li className={activeSubMenu === 'database' ? "active" : ""} onClick={toggleSubMenu('database')}>
               <a href="#">
                 <i className="fa-solid fa-database"></i>
@@ -318,6 +318,7 @@ function Sidebar({
               <a href="#">
                 {/* <i className="icon ph-bold ph-gear"></i> */}
                 <i class="fa-brands fa-rocketchat"></i>
+              
                 <span className="sidebar-text">Chat Section</span>
               </a>
             </li>
@@ -363,18 +364,20 @@ function Sidebar({
                 </li>
               </ul>
             </li>
-            <li >
+
+            <li onClick={toggelDisplayNotPad} >
               <a href="#" >
-                {/* <i className="icon ph-bold ph-sign-out"></i> */}
+                
                 <i class="fa-regular fa-clipboard"></i>
                 <span className="sidebar-text">Note Pad</span>
               </a>
             </li>
-            <li >
+
+            <li onClick={toggelAddRecruiter}>
               <a href="#" >
                 {/* <i className="icon ph-bold ph-sign-out"></i> */}
                 <i class="fa-solid fa-circle-user" ></i>
-                <span className="sidebar-text">Add Emp</span>
+                <span className="sidebar-text">Add Recruiters</span>
               </a>
             </li>
             <li >

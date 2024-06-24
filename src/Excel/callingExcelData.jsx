@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/callingList.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import UpdateCallingTracker from "./UpdateSelfCalling";
+import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 
-const CallingList = ({ updateState, funForGettingCandidateId }) => {
+
+const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
   const [sortCriteria, setSortCriteria] = useState(null);
@@ -32,7 +33,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
-    fetch(`http://192.168.1.34:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.34:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -160,15 +161,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
-
-
-
-      `http://192.168.1.34:8891/api/ats/157industries/callingData/${employeeId}`
-
-
-
+      `http://192.168.1.34:8891/api/ats/157industries/calling-excel-data/${employeeId}`
     )
-
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -178,7 +172,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       .catch((error) => console.error("Error fetching data:", error));
   };
 
- const handleMouseOver = (event) => {
+
+  //arshad  chanhged some tool tip lines 
+  const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector('.tooltip');
     const tooltiptext = tableData.querySelector('.tooltiptext');
@@ -195,6 +191,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       }
     }
   };
+
+
 
   const handleMouseOut = (event) => {
     const tooltip = event.currentTarget.querySelector('.tooltip');
@@ -246,7 +244,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
           <div className="search">
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
-            <h5 style={{ color: "gray", paddingTop: "5px" }}>Calling List</h5>
+            <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5>
+        
 
             <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
@@ -302,6 +301,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
           )}
 
           <div className="attendanceTableData">
+            <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button>
             <table className="selfcalling-table attendance-table">
               <thead>
                 <tr className="attendancerows-head">
@@ -336,7 +336,6 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
               </thead>
               <tbody>
                 {filteredCallingList.map((item, index) => (
-
                   <tr key={item.candidateId} className="attendancerows">
                     <td className='tabledata '>
                       <input
@@ -434,4 +433,4 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   );
 };
 
-export default CallingList;
+export default CallingExcelList;

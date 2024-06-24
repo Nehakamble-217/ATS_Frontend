@@ -17,31 +17,29 @@ const TableComponent = () => {
             <th>Sr No</th>
             <th>Candidate Name</th>
             <th>Contact Number</th>
-            <th>Alternate Number</th>
-                   
-                   <th >Candidate Email</th>
-                   <th >DateOfBirth</th>
-                  
-                   <th >Education</th>
-                   <th >10th</th>
-                   <th >12th</th>
-                   <th >Graduation</th>
-                   <th >Post Graduation</th>
-                   <th >Certification</th>
-                   <th >Current Company</th>
-                   <th >Designation</th>
-                   <th >Job Role</th>
-                   <th >StartDate </th>
-                   <th >EndDate </th>
-                   <th >Last Company</th>
-                   <th >Designation</th>
-                   <th >Job Role</th>
-                   <th >StartDate </th>
-                   <th >EndDate </th>
-                   <th >Current Location</th>
-                   <th >Address</th>
-                   <th >Gender</th>
-                   <th >Industry</th>
+            <th>Alternate Number</th>   
+            <th >Candidate Email</th>
+             <th >DateOfBirth</th>
+             <th >Education</th>
+             <th >10th</th>
+             <th >12th</th>
+             <th >Graduation</th>
+             <th >Post Graduation</th>
+             <th >Certification</th>
+             <th >Current Company</th>
+             <th >Designation</th>
+             <th >Job Role</th>
+             <th >StartDate </th>
+             <th >EndDate </th>
+             <th >Last Company</th>
+             <th >Designation</th>
+             <th >Job Role</th>
+             <th >StartDate </th>
+             <th >EndDate </th>
+             <th >Current Location</th>
+             <th >Address</th>
+             <th >Gender</th>
+             <th >Industry</th>
           </tr>
         </thead>
         <tbody>

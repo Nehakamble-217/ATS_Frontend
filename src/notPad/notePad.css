@@ -1,0 +1,82 @@
+.note-container {
+  height: 80vh;
+  width: 100% !important;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.note-pad-text {
+  border: 1px solid black;
+  width: 1000px;
+  height: 120px;
+  margin-top: 30px;
+  padding-top: 8px;
+  padding-left: 5px;
+}
+
+.note-form-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.note-submit-btn {
+  width: auto;
+  height: 30px;
+  border-radius: 15px;
+  margin-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.notePadData {
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid black;
+  height: 400px;
+  overflow-y: scroll !important;
+}
+
+.table-heading-rows {
+  position: sticky;
+  top: 0px;
+}
+
+.note-pad-msg{
+    width: 300px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
