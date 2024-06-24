@@ -25,7 +25,7 @@ const ChatRoom = () => {
 
     
     const connect = () => {
-        let Sock = new SockJS('http://localhost:1414/ws');
+        let Sock = new SockJS('http://localhost:8891/ws');
         stompClient = over(Sock);
         stompClient.connect({}, onConnected, onError);
     }
@@ -131,7 +131,7 @@ const sendValue = () => {
 
     
     
-    fetch('http://localhost:1414/upload', {
+    fetch('http://localhost:8891/upload', {
         method: 'POST',
         body: formData
     })
