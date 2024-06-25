@@ -131,7 +131,7 @@ const sendValue = () => {
 
     
     
-    fetch('http://localhost:8891/upload', {
+    fetch('http://192.168.1.38:8891/upload', {
         method: 'POST',
         body: formData
     })

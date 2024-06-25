@@ -134,7 +134,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     try {
       const response = await axios.get(
 
-        `http://192.168.1.34:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -155,7 +155,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.34:8891/api/ats/157industries/company-details`
+        `http://192.168.1.38:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -242,7 +242,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://192.168.1.34:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.38:8891/api/ats/157industries/calling-tracker`,
 
         dataToUpdate
       );

@@ -110,7 +110,7 @@ const AddEmployee = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.34:8891/api/ats/157industries/add-employee", {
+      const response = await fetch("http://192.168.1.38:8891/api/ats/157industries/add-employee", {
         method: "POST",
         body: formDataToSend,
       });

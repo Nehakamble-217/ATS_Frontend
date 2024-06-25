@@ -21,7 +21,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage}) => {
         try {
             const response = await fetch(
 
-                `http://192.168.1.34:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
+                `http://192.168.1.38:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
             );
             const data = await response.json();
             setShortListedData(data);
