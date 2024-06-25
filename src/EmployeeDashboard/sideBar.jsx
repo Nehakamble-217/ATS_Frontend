@@ -95,7 +95,7 @@ function Sidebar({
   };
 
 
-    console.log(userGroup)
+  console.log(userGroup)
   const isCandidateSectionActive = ['selfCalling', 'lineUp', 'shortListed', 'selectCandidate', 'holdCandidate', 'rejectedCandidate'].includes(activeButton);
   const isJobDescriptionActive=["Jobdiscription","addJobDescription"].includes(activeButton)
   const isadminactive=["teamleader","addJobDescription"].includes(activeButton)
@@ -113,8 +113,6 @@ function Sidebar({
       const day = now.getDate().toString().padStart(2, "0");
       const month = (now.getMonth() + 1).toString().padStart(2, "0");
       const year = now.getFullYear();
-
-     
 
       await axios.post(
         "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
@@ -134,6 +132,10 @@ function Sidebar({
       console.error("Error logging out:", error);
     }
   };
+
+  const tempLogout = ()=>{
+    navigator('/employee-login')
+  }
 
 
   return (
@@ -278,6 +280,7 @@ function Sidebar({
                 <i className="arrow ph-bold ph-caret-down" ></i>
               </a>
               <ul className={`sub-menu sub-menu1 ${activeSubMenu === 'admin-section' ? 'active' : ''}`}>
+
                 <li>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
@@ -291,6 +294,21 @@ function Sidebar({
                     <span className="sidebar-text">All Master Sheet</span>
                   </a>
                 </li>
+
+                <li onClick={toggelAddRecruiter}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Add Recruiters</span>
+                  </a>
+                </li>
+
+                <li onClick={toggelAddRecruiter}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Add Team Leadrs</span>
+                  </a>
+                </li>
+
               </ul>
             </li>
 
@@ -395,21 +413,7 @@ function Sidebar({
               </a>
             </li>
 
-            <li onClick={toggelAddRecruiter}>
-              <a href="#" >
-                {/* <i className="icon ph-bold ph-sign-out"></i> */}
-                <i class="fa-solid fa-circle-user" style={{color:"gray"}} ></i>
-                <span className="sidebar-text">Add Recruiters</span>
-              </a>
-            </li>
-            <li >
-              <a href="#" >
-                {/* <i className="icon ph-bold ph-sign-out"></i> */}
-                <i class="fa-solid fa-user-tie" style={{color:"gray"}}></i>
-                <span className="sidebar-text">Add TeamLeader</span>
-              </a>
-            </li>
-            <li >
+            <li onClick={tempLogout} >
               <a href="#" >
                 {/* <i className="icon ph-bold ph-sign-out"></i> */}
                 <i class="fa-solid fa-power-off" style={{color:"gray"}}></i>
