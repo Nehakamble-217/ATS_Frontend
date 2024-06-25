@@ -4,7 +4,7 @@ import { RWebShare } from "react-web-share";
 
 const ShareLink = ({toggleResumeLink}) => {
   return (
-    <div>
+    <div style={{display:"flex",alignItems:"center",justifyContent:"space-around"}}>
      <RWebShare
         data={{
           
@@ -12,10 +12,11 @@ const ShareLink = ({toggleResumeLink}) => {
          
         }}
         onClick={() => alert("shared successfully!")}
+       
       >
-        <button>Share 🔗</button>
+        <button className='daily-tr-btn'>Share 🔗</button>
       </RWebShare>
-     <button onClick={toggleResumeLink}>View</button>
+     <button  className='daily-tr-btn' onClick={toggleResumeLink}>View</button>
     
     </div>
   )

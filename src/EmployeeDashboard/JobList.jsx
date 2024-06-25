@@ -549,10 +549,10 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
               <i class="fa-solid fa-indian-rupee-sign"></i>
          {item.incentive}
         </div>
-        <div className="job-posted">
+        {/* <div className="job-posted">
           <i className="fas fa-clock"></i>
           {item.fild}
-        </div>
+        </div> */}
       </div>
 
       
