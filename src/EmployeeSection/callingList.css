@@ -22,7 +22,7 @@ body {
   color:grey;
   padding: 7px 6px;
   margin: 2px 20px;
-}
+}           
 
 
   .calling-table {
@@ -48,23 +48,6 @@ body {
     padding: 4px;
   }
   
-  /* .calling-table tr:nth-child(even) {
-    background-color: #ffcb9b;
-  } */
-  
-  /* .table-container_forselfcalling tr:hover {
-    background-color: #f2f2f2;
-  } */
-  
-  /* .table-container_forselfcalling {
-    max-width: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    color: gray;
-    font-size: 18px;
-  } */
-  
  
   .table-container_forselfcalling select {
     width: 100%;
@@ -88,18 +71,17 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     /* max-width: 200px;  */
-    background-color: white;
-   
+    background-color: white; 
   }
-  /* .table-container_forselfcalling td{
 
-  } */
+  
    
   
 
  
   
   
+
   body::-webkit-scrollbar {
     width: 0;
   }
@@ -107,6 +89,7 @@ body {
   body {
     scrollbar-width: none;
   }
+
   
 
   /* .calling-table td:hover, */
@@ -165,3 +148,4 @@ align-items: flex-start;
     justify-content: center;
     align-items: center;
 } */
+

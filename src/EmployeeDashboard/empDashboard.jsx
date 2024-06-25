@@ -7,6 +7,7 @@ import EmpTimeTracker from "./EmpTimeTracker";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 import { Outlet, useParams } from "react-router-dom";
 import DataComponent from "../EmployeeSection/DataComponent";
+import Incentive from "../EmployeeSection/Incentive";
 import Attendancesheet from '../EmployeeSection/Attendence_sheet';
 import InterviewDates from "../EmployeeSection/interviewDate";
 import SelectedCandidate from "../CandidateSection/SelectedCandidate";
@@ -25,6 +26,11 @@ import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription"
 import AddEmployee from "../EmployeeSection/addEmployee";
+import NotePad from "../notPad/notePad";
+import EmployeeProfileData from "../EmployeeSection/employeeProfileData"
+import AddResumes from "../ResumeData/addMultipleResumes";
+import ChatRoom from "../ChatRoom/chatRoom";
+
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -32,6 +38,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
   const [attendancesheet, setAttendanceSheet] = useState(false);
+  const [incentive,setIncentive]=useState(false);
   const [lineUp, setLineUp] = useState(false);
   const [shortListed, setShortListed] = useState(false);
   const [selectCandidate, setSelectedCandidate] = useState(false);
@@ -52,6 +59,11 @@ const EmpDashboard = ({ userGroup }) => {
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [showShortListedNav, setShowShortListdNav] = useState(false);
   const [showAddEmployee,setShowAddEmployee] = useState(false)
+  const [showNotePad,setShowNotePad] = useState(false)
+  const [showProfile,setShowProfile] = useState(false)
+  const [showAddedResumes,setShowAddedResumes] = useState(false)
+  const [showChatRoom,setShowChatRoom]=useState(false)
+
 
   const { employeeId } = useParams();
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
@@ -60,37 +72,49 @@ const EmpDashboard = ({ userGroup }) => {
   const gettingCandidateIdForUpdate = (id) => {
     setCandidateIdForUpdate(id);
     setUpdateSelfCalling(true);
-    setSelfCalling(false); // Hide CallingList when showing UpdateCallingTracker
+    setSelfCalling(false); 
+    setIncentive(false);
   };
 
   const toggelAddRecruiter = ()=> {
     resetAllToggles();
-    setShowAddEmployee(!showAddEmployee)
-    
+    setShowAddEmployee(!showAddEmployee) 
+    setIncentive(false);
+  }
+
+  const toggelDisplayNotPad = () =>{
+    resetAllToggles();
+    setShowNotePad(!showNotePad)
+    setIncentive(false);
   }
 
   const toggleAddJobDescription = () => {
     resetAllToggles();
     setAddJobDescription(!addJobDescription);
+    setIncentive(false);
   };
 
   const handleDataAdditionSuccess = () => {
     setSuccessfulDataAdditions((prevCount) => prevCount + 1);
+    setIncentive(false);
   };
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
+    setIncentive(false);
   };
 
   const toggleShowShortListedCandidateData = () => {
     setShortlistedCandidateData(true);
     setShowInterviewDate(false);
     resetAllToggles();
+    setIncentive(false);
   };
 
   const viewUpdatedPage = () => {
     setShortlistedCandidateData(false);
     setShowUpdateCallingTracker(true);
+    setIncentive(false);
   };
 
   const resetAllToggles = () => {
@@ -112,6 +136,10 @@ const EmpDashboard = ({ userGroup }) => {
     setAddJobDescription(false);
     setShowShortListdNav(false);
     setShowAddEmployee(false)
+    setShowNotePad(false)
+    setShowProfile(false)
+    setShowAddedResumes(false)
+    setIncentive(false);
   };
 
   const funForUpdateSelfCalling = () => {
@@ -194,6 +222,11 @@ const EmpDashboard = ({ userGroup }) => {
     setAttendanceSheet(!attendancesheet);
   };
 
+  const toggleIncentive = () =>{
+    resetAllToggles();
+    setIncentive(!incentive)
+  }
+
   const toggleHome = () => {
     resetAllToggles();
     setShowHome(!showHome);
@@ -203,8 +236,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowShortListedCandidates(!showShortListedCandidates);
   };
-
-
+  const toggleChatRoom=()=>{
+    resetAllToggles();
+    setShowChatRoom(!showChatRoom);
+  }
 
   const toggleUpdateCallingTracker = () => {
     resetAllToggles();
@@ -213,8 +248,22 @@ const EmpDashboard = ({ userGroup }) => {
 
   const handleUpdateComplete = () => {
     setShowUpdateCallingTracker(false);
-    setSelfCalling(true); // Show CallingList again after update is complete
+    setSelfCalling(true); 
   };
+ 
+
+  
+  
+
+  const profilePageLink =()=>{
+    resetAllToggles();
+    setShowProfile(!showProfile)
+  }
+
+  const toggelAddResumes = () =>{
+    resetAllToggles();
+    setShowAddedResumes(!showAddedResumes);
+  }
 
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -239,13 +288,25 @@ const EmpDashboard = ({ userGroup }) => {
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
         toggelAddRecruiter={toggelAddRecruiter}
+        toggelDisplayNotPad={toggelDisplayNotPad}
+        toggelResumeData={toggelResumeData}
+        toggelAddResumes={toggelAddResumes}
+        toggleChatRoom={toggleChatRoom}     
+        toggleIncentive={toggleIncentive}
       />
         
       <div className="empDash-main-content">
         <div className="time-and-data">
-          <DailyWork employeeId={employeeId} successfulDataAdditions={successfulDataAdditions} />
+          <DailyWork 
+          employeeId={employeeId} 
+          successfulDataAdditions={successfulDataAdditions} 
+          profilePageLink={profilePageLink}
+          />
         </div>
 
+    <div>
+      { showProfile && <EmployeeProfileData></EmployeeProfileData>}
+    </div>
         <div style={{ paddingTop: "50px" }}>
           {selfCalling && (
             <CallingList updateState={handleUpdateComplete} funForGettingCandidateId={gettingCandidateIdForUpdate} />
@@ -273,6 +334,9 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
         <div>
           {showMasterSheet && <MasterSheet />}
+        </div>
+        <div>
+          {incentive && <Incentive/>}
         </div>
         
         <div>
@@ -306,7 +370,13 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showResumeData && <ResumeData/>}
         </div>
-        
+
+        <div>
+          {showNotePad && <NotePad/>}
+        </div>
+        <div>
+          {showChatRoom && <ChatRoom/>}
+        </div>
         <div>
           {addCandidate && (
             <CallingTrackerForm updateState={handleDataAdditionSuccess} />
@@ -328,6 +398,10 @@ const EmpDashboard = ({ userGroup }) => {
 
         <div>
           {showHome && <Home />}
+        </div>
+
+        <div>
+          {showAddedResumes && <AddResumes></AddResumes>}
         </div>
 
         <div>

@@ -30,11 +30,11 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
+
     fetch(`http://192.168.1.35:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
             .then((data) =>setFilteredCallingList(data))
-
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeIdnew]);
 
@@ -72,7 +72,9 @@ useEffect(() => {
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
 
+
     fetch(`http://192.168.1.35:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+
 
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -339,7 +341,7 @@ useEffect(() => {
                 <th className='attendanceheading'>Msg For TeamLeader</th>
                 <th className='attendanceheading'>Availability For Interview</th>
                 <th className='attendanceheading'>Interview Time</th>
-                <th className='attendanceheading'>Final Status</th>
+                <th className='attendanceheading'>Interview Status</th>
                 <th className='attendanceheading'>Action</th>
 
               </tr>

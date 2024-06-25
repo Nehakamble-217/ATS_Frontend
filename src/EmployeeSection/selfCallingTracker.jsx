@@ -454,9 +454,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
-
   const [selectedRows, setSelectedRows] = useState([]);
-
   const [showSearchBar, setShowSearchBar] = useState(false);
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
@@ -472,7 +470,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
+
     fetch(`http://192.168.1.35:8891/api/ats/157industries/callingData/${employeeId}`)
+
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -598,7 +598,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
+
       `http://192.168.1.35:8891/api/ats/157industries/callingData/${employeeId}`
+
     )
 
       .then((response) => response.json())
@@ -668,11 +670,6 @@ setShowselectedFilters(!showselectedFilters);
       }
     });
   };
-
-
-
-
-
 
   return (
     <div className="App-after">
@@ -814,10 +811,10 @@ setShowselectedFilters(!showselectedFilters);
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementCompany} <div className="tooltip">
                       <span className="tooltiptext">{item.requirementCompany} </span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.communicationRating} <div className="tooltip">
+                    <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.communicationRating} <div className="tooltip">
                       <span className="tooltiptext">{item.communicationRating}</span>
                     </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
+                    <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
                       <span className="tooltiptext">{item.currentLocation} </span>
                     </div></td>
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.fullAddress} <div className="tooltip">

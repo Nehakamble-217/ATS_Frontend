@@ -1,0 +1,40 @@
+
+/* Styling for the alert */
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+
+  .d-grid {
+    display: grid;
+  }
+  
+ 
+  
+  .max-auto {
+    margin: auto;
+    max-width: 300px; /* Adjust as necessary */
+  }
+  
+  /* Styling the buttons */
+  .loging-hr {
+    background-color: #ffcb9b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .loging-hr:hover {
+    background-color: white;
+    color: #ffcb9b;
+  }
+  

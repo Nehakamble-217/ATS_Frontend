@@ -59,7 +59,9 @@ useEffect(() => {
     try {
       const response = await fetch(
 
-        `http://192.168.1.34:8891/api/ats/157industries/rejected-candidate/${employeeId}`
+
+        `http://192.168.1.35:8891/api/ats/157industries/rejected-candidate/${employeeId}`
+
 
       );
       const data = await response.json();
@@ -339,6 +341,7 @@ useEffect(() => {
                 <th className='attendanceheading'>Availability For Interview</th>
                 <th className='attendanceheading'>Interview Time</th>
                 <th className='attendanceheading'>Final Status</th>
+                <th className='attendanceheading'>Reason For Reject</th>
                 <th className='attendanceheading'>Action</th>
 
               </tr>
@@ -624,6 +627,12 @@ useEffect(() => {
                         {item.lineUp.finalStatus || "-"}
                         <div className="tooltip">
                           <span className="tooltiptext">{item.lineUp.finalStatus}</span>
+                        </div>
+                      </td>
+                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {item.lineUp.remark || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.lineUp.remark}</span>
                         </div>
                       </td>
 

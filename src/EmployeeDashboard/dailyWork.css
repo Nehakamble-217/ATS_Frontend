@@ -58,7 +58,7 @@ animation: moveClouds 40s linear infinite;
   cursor: pointer;
   border: 1px solid gray;
   border-radius: 15px;
-  height: 35px;
+  height: 30px;
   width: 90px;
   color: white;
   background-color: #ffcb9b;
@@ -99,7 +99,7 @@ animation: moveClouds 40s linear infinite;
   height: 30px;
   padding-left: 15px;
   padding-right: 15px;
-  width: auto;
+  width: 220px;
   font-size: 16px;
 }
 
@@ -186,7 +186,7 @@ animation: moveClouds 40s linear infinite;
   flex-direction: column;
 }
 
-@media (min-width: 1100px) {
+/* @media (min-width: 1100px) {
   .daily-t-btn {
     display: none;
   }
@@ -199,9 +199,9 @@ animation: moveClouds 40s linear infinite;
   .daily-t-btn.hidden {
     display: flex;
   }
-}
+} */
 
-@media (max-width: 1100px) {
+/* @media (max-width: 1100px) {
    .show-daily-t-btn {
     display: block;
     font-size: 16px;
@@ -212,5 +212,49 @@ animation: moveClouds 40s linear infinite;
     width: 150px;
     background-color: white;
     transition: background-color 0.3s ease;
+  }
+} */
+ 
+.toggle-all-daily-btns {
+  display: none;
+}
+@media (max-width: 950px) {
+  .all-daily-btns {
+    display: block;
+  }
+
+  .show-daily-t-btn {
+    display: block;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 15px;
+    height: 40px;
+    width: 150px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+    margin: 10px auto;
+    text-align: center;
+  }
+
+  .toggle-all-daily-btns {
+    display: block;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 15px;
+    height: 30px;
+    width: 150px;
+    background-color: #ffcb9b;
+    color: white;
+    transition: background-color 0.3s ease;
+    margin: 10px auto;
+    text-align: center;
+  }
+
+  .toggle-all-daily-btns:hover {
+    background-color: white;
+    color: #ffcb9b;
+    border: 1px solid gray;
   }
 }

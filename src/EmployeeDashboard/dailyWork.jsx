@@ -6,7 +6,7 @@ import Profile from "../photos/profileImg.webp";
 import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
 
-const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
+function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink }) {
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
@@ -14,6 +14,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
   const [modalEmployeeData, setModalEmployeeData] = useState(null);
   const [profileImageBase64, setProfileImageBase64] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [showAllDailyBtns, setShowAllDailyBtns] = useState(true);
   
   const toggleDailyTBtn = () => {
     setShowDetails(!showDetails);
@@ -48,6 +49,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
   const [dayPresentPaid, setDayPresentPaid] = useState("No");
   const [dayPresentUnpaid, setDayPresentUnpaid] = useState("Yes");
   const [remoteWork, setRemoteWork] = useState("Select");
+  
 
   const navigate = useNavigate();
 
@@ -56,7 +58,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       try {
         const response = await axios.get(
 
+
           `http://192.168.1.35:8891/api/ats/157industries/employee-details/${employeeId}`
+
 
         );
         setEmployeeData(response.data);
@@ -229,9 +233,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
       await axios.post(
 
 
-        "http://192.168.1.35:8891/api/ats/157industries/save-daily-work",
 
-        formData
+        "http://192.168.1.35:8891/api/ats/157industries/save-daily-work",
+      formData
       );
 
       localStorage.removeItem(`stopwatchTime_${employeeId}`);
@@ -283,6 +287,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
     setPopupVisible(false);
     setModalEmployeeData(null);
   };
+  const toggleAllDailyBtns = () => {
+    setShowAllDailyBtns(!showAllDailyBtns);
+  };
 
   return (
 
@@ -296,7 +303,7 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           <img 
             src={Profile}
             alt="Profile"
-            onClick={() => setModalShow(true)}
+            onClick={profilePageLink}
           />
         </div>
 
@@ -307,8 +314,9 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           </p>
         </div>
       </div>
+  {showAllDailyBtns && ( 
       <div className="all-daily-btns">
-        <div className={`daily-t-btn ${showDetails ? "" : "hidden"}`}>
+        <div className="daily-t-btn">
           <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
             Target : 10
           </button>
@@ -361,12 +369,14 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         <button
           className={running ? "timer-break-btn" : "timer-break-btn"}
           onClick={running ? handlePause : handleResume}
+          style={{height:"30px"}}
         >
           {running ? "Pause" : "Resume"}
         </button>
-        <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
+        {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
-        </button>
+        </button> */}
+
         <img className="logout-btn"
           onClick={handleLogoutLocal}
           // style={{ width: "30px", borderRadius: "60%" }}
@@ -374,8 +384,17 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
           alt="Logout"
         />
       </div>
+  )}
 
-      <Modal
+   <button
+        className="toggle-all-daily-btns"
+        onClick={toggleAllDailyBtns}
+        // style={{ display: showAllDailyBtns ? "none" : "block" }}
+      >
+        {!showAllDailyBtns ? "show" : "hidden"} All Buttons
+      </button>
+
+      {/* <Modal
         show={modalShow}
         onHide={() => setModalShow(false)}
         backdrop="static"
@@ -386,7 +405,6 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
         </Modal.Header>
         <Modal.Body>
           <p>                <img src={Profile}alt="Profile" width={"150px"}/>
-          
           Name           : {employeeData.employeeName}
           </p>
           <p>Email          : {employeeData.employeeEmail}</p>
@@ -400,7 +418,8 @@ const DailyWork = ({ successfulDataAdditions, handleLogout }) => {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
+
     </div>
   );
 };

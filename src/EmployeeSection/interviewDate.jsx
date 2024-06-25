@@ -24,36 +24,31 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const { employeeId } = useParams();
   const employeeIdNew = parseInt(employeeId, 10);
   console.log(employeeIdNew + " Interview Page Employe ID");
+  
   useEffect(() => {
     fetchInterviewDates();
   }, []);
 
-
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
     try {
-
-      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/interview-response/28/6/22`);
-
+      const response = await fetch(`http://192.168.1.34:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
       const data = await response.json();
       if (Array.isArray(data)) {
         setInterviewResponses(data);
       } else {
         console.error("Invalid data received:", data);
-        setInterviewResponses([]); // Set to empty array or handle error state appropriately
+        setInterviewResponses([]); 
       }
     } catch (error) {
       console.error("Error fetching interview response:", error);
-      setInterviewResponses([]); // Set to empty array or handle error state appropriately
+      setInterviewResponses([]); 
     }
   };
-  
 
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-
-        `http://192.168.1.38:8891/api/ats/157industries/interview-date/${employeeIdNew}`
-
+        `http://192.168.1.34:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -76,9 +71,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-
-        `http://192.168.1.38:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
-
+        `http://192.168.1.34:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -103,9 +96,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-
-          `http://192.168.1.38:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
-
+          `http://192.168.1.34:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -122,26 +113,16 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     }
   };
 
+
   const handleInterviewResponseSubmit = async (event) => {
     event.preventDefault();
-
-    console.log("Candidate ID:", event.target.querySelector('input[name="candidateId"]').value);
-    console.log("Requirement ID:", event.target.querySelector('input[name="requirementId"]').value);
-    console.log("Employee ID:", event.target.querySelector('input[name="employeeId"]').value);
-
+  
     const interviewRound = event.target.querySelector('select[name="interviewRound"]').value;
     const interviewResponse = event.target.querySelector('select[name="interviewResponse"]').value;
     const responseUpdatedDate = event.target.querySelector('input[name="responseUpdatedDate"]').value;
     const nextInterviewDate = event.target.querySelector('input[name="nextInterviewDate"]').value;
     const nextInterviewTiming = event.target.querySelector('input[name="nextInterviewTiming"]').value;
-    // const candidateId = event.target.querySelector('input[name="candidateId"]').value;
-    // const requirementId = event.target.querySelector('input[name="requirementId"]').value;
-    // const employeeId = event.target.querySelector('input[name="employeeId"]').value;
-
-    const candidateId = 28;
-    const requirementId = 22;
-    const employeeId = 6;
-
+  
     const data = {
       interviewRound,
       interviewResponse,
@@ -152,17 +133,15 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
         candidateId
       },
       requirementInfo: {
-        requirementId
+        requirementId 
       },
       employee: {
-        employeeId
+        employeeId: employeeIdNew
       }
     };
-
+  
     try {
-
-      const response = await fetch("http://192.168.1.38:8891/api/ats/157industries/save-interview-response", {
-
+      const response = await fetch("http://192.168.1.34:8891/api/ats/157industries/save-interview-response", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -175,64 +154,61 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
         setTimeout(() => {
           setFormSubmitted(false);
           setShowShortlistTable(false);
-        }, 3000); // Hide the table after 3 seconds
+        }, 2000); 
       } else {
         console.error("Failed to save interview response:", response.statusText);
       }
     } catch (error) {
       console.error("Error saving interview response:", error);
-
     }
   };
 
+  
 
   const handleFeedbackChange = async (candidateId, event) => {
-    const feedback = event.targe.value;
+    const feedback = event.target.value;
     await handleDateChange(selectedDate);
   };
 
   const renderInterviewTable = () => {
     if (!interviewData) {
       return (
-        <h3 style={{ color: "#ffb281" , marginTop:"20px" }}>
+        <h3 style={{ color: "#ffb281", marginTop: "20px" }}>
           No data available for the selected date.
         </h3>
       );
     }
 
+    const handleMouseOver = (event) => {
+      const tableData = event.currentTarget;
+      const tooltip = tableData.querySelector('.tooltip');
+      const tooltiptext = tableData.querySelector('.tooltiptext');
 
-     const handleMouseOver = (event) => {
-    const tableData = event.currentTarget;
-    const tooltip = tableData.querySelector('.tooltip');
-    const tooltiptext = tableData.querySelector('.tooltiptext');
+      if (tooltip && tooltiptext) {
+        const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
+        if (textOverflowing) {
+          const rect = tableData.getBoundingClientRect();
+          tooltip.style.top = `${rect.top - 10}px`;
+          tooltip.style.left = `${rect.left + rect.width / 100}px`;
+          tooltip.style.visibility = 'visible';
+        } else {
+          tooltip.style.visibility = 'hidden';
+        }
+      }
+    };
 
-    if (tooltip && tooltiptext) {
-      const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
-      if (textOverflowing) {
-        const rect = tableData.getBoundingClientRect();
-        tooltip.style.top = `${rect.top - 10}px`;
-        tooltip.style.left = `${rect.left + rect.width / 100}px`;
-        tooltip.style.visibility = 'visible';
-      } else {
+    const handleMouseOut = (event) => {
+      const tooltip = event.currentTarget.querySelector('.tooltip');
+      if (tooltip) {
         tooltip.style.visibility = 'hidden';
       }
-    }
-  };
+    };
 
-  const handleMouseOut = (event) => {
-    const tooltip = event.currentTarget.querySelector('.tooltip');
-    if (tooltip) {
-      tooltip.style.visibility = 'hidden';
-    }
-  };
-    const handleRowClick = (candidateId, requirementId) => {
+
+    const handleRowClick = async (candidateId, requirementId) => {
       setCandidateId(candidateId);
       setRequirementId(requirementId);
-      
-      // Immediately fetch and update interview response
-      fetchAndUpdateInterviewResponse(candidateId, requirementId);
-      
-      // Toggle the showShortlistTable state
+      await fetchAndUpdateInterviewResponse(candidateId, requirementId);
       setShowShortlistTable(true);
     };
     
@@ -265,13 +241,13 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <th className="attendanceheading">Any Offer Letter</th>
                 <th className="attendanceheading">Resume</th>
                 <th className="attendanceheading">Incentive</th>
-                <th className="attendanceheading">Last Interview Status</th>
+                <th className="attendanceheading">Interview Status</th>
                 <th className="attendanceheading">Action</th>
               </tr>
             </thead>
             <tbody>
               {interviewData.map((item, index) => (
-              <tr key={item.candidateId} className={item.candidateId === candidateId ? 'highlighted-row' : 'attendancerows'} onClick={() => handleRowClick(item.candidateId)}>
+                <tr key={item.candidateId} className={item.candidateId === candidateId ? 'highlighted-row' : 'attendancerows'} onClick={() => handleRowClick(item.candidateId, item.requirementId)}>
                   <td className='tabledata'>{index + 1}</td>
                   <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                     {item.candidateId}
@@ -467,10 +443,11 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <thead className="thead-dark">
                   <tr>
                     <th>No</th>
+                    <th>Interview Date</th>
                     <th>Interview Round</th>
                     <th>Interview Response</th>
                     <th>Update Date</th>
-                    <th> Interview Date</th>
+                    <th>Next Interview Date</th>
                     <th> Interview Time</th>
                   </tr>
                 </thead>
@@ -478,6 +455,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                   {interviewResponses.map((response, index) => (
                     <tr key={index}>
                       <td >{index + 1}</td>
+                      <td></td>
                       <td >{response.interviewRound}</td>
                       <td >{response.interviewResponse}</td>
                       <td >{response.responseUpdatedDate}</td>
@@ -489,6 +467,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
 
                     <td></td>
+                    <td>
+                     <p>take date by defult</p>
+                    </td>
 
                     <td >
                       <select
@@ -530,12 +511,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     <td>
                       <input type="time" name="nextInterviewTiming" />
                     </td>
-                    <td hidden>
-                      <input type="text" value={candidateId} name="candidateId" />
-                      <input type="text" value={requirementId} name="requirementId" />
-                      <input type="text" value={employeeIdNew} name="employeeId" />
-                    </td>
-
                   </tr>
 
                 </tbody>

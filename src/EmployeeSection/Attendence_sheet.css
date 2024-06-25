@@ -126,7 +126,7 @@
   border: 1px solid gray;
   padding: 4px;
   white-space: nowrap;
-  max-width: 450px;
+  width: 350px;
   height: 32px;
   text-overflow: ellipsis;
 }

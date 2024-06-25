@@ -20,6 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: left;
 }
 
@@ -28,7 +29,7 @@
 }
 
 .shortlisted-nav-middel{
-    height: 100vh;
+    height: 80vh;
     width: 100%;   
 }
 
