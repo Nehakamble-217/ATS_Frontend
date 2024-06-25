@@ -58,8 +58,8 @@ useEffect(() => {
   const fetchRejectedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.35:8891/api/ats/157industries/rejected-candidate/${employeeId}`
-      );
+        `http://192.168.1.38:8891/api/ats/157industries/rejected-candidate/${employeeId}`
+ );
       const data = await response.json();
       setShowRejectedData(data);
        setFilteredCallingList(data);
@@ -237,7 +237,7 @@ useEffect(() => {
           <h5 style={{ color: "gray" }}>Rejected Data </h5>
 
 
-            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+            <button className="rejectedCan-filter-btn" onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
           {showSearchBar && (
             <input

@@ -5,7 +5,8 @@
     box-sizing: border-box;
 }
 
-.tejal {
+.mainDashboard-div {
+
     display: flex;
     justify-content: center;
     align-items: center;

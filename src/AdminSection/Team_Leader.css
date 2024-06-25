@@ -1,0 +1,158 @@
+/* Team_Leader.css */
+
+/* Overall container */
+.AppsTL {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Selection container */
+.selection-containerTL {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Dropdown container */
+.custom-dropdownTL {
+  position: relative;
+  width: 300px;
+  margin-right: 20px;
+}
+
+.dropdown-headerTL {
+  background-color: #f0f0f0;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-bodyTL {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.search-inputTL {
+  width: calc(100% - 20px);
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+}
+
+.select-all-buttonTL {
+  background-color: #ffcb9b;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.team-leadersTL {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.team-leaderTL {
+  margin-bottom: 10px;
+}
+
+.team-leaderTL label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.recruitersTL {
+  margin-left: 20px;
+}
+
+.recruitersTL label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Options section */
+.options-section {
+  width: 100%;
+}
+
+.options-listTL {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.options-category {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.category-header {
+  background-color: #ffcb9b;
+  color: #fff;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.option-itemTL {
+  margin-bottom: 5px;
+}
+
+.option-dropdown {
+  width: 100%;
+  height: 150px;
+  border: 1px solid #ccc;
+}
+
+.assignoptionbtn {
+  background-color: #ffcb9b;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 15px;
+}
+.assignoptionbtn:hover {
+  background-color: white;
+  color: #ffcb9b;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 15px;
+}
+
+/* Assignments table */
+
+
+.all_assignbtn,
+.remove_assignbtn {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Dropdown icon */
+.dropdown-icon {
+  font-size: 12px;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg);
+}

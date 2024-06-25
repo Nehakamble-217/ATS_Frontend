@@ -12,13 +12,14 @@ function CandidateVerification() {
 
     useEffect(() => {
         console.log(location);
-        axios.get(`http://192.168.1.35:8891/api/ats/157industries/verify${location.search}`);
+        axios.get(`http://192.168.1.38:8891/api/ats/157industries/verify${location.search}`);
+
     }, [location.search]);
 
     useEffect(() => {
         axios
             .get(
-                `http://192.168.1.35:8891/api/ats/157industries/verify/${location.search.split("email=")[1]
+                `http://192.168.1.38:8891/api/ats/157industries/verify/${location.search.split("email=")[1]
                 }`
             )
             .then((resolve) => {

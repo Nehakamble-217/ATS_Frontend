@@ -194,6 +194,7 @@ const AddEmployee = () => {
         }
       );
       if (response) {
+
         setSuccessMessage("Employee Data Added Successfully.");
       } else {
         setSuccessMessage(data.message || "Failed to add employee data.");
