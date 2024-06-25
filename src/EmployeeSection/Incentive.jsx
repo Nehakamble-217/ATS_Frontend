@@ -7,7 +7,7 @@ const Incentive = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://192.168.1.34:8891/api/ats/157industries/fetch-incentive/6');
+        const response = await fetch('http://192.168.1.35:8891/api/ats/157industries/fetch-incentive/6');
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
