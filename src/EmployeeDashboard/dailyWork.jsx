@@ -57,7 +57,12 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
+
+
+
           `http://192.168.1.35:8891/api/ats/157industries/employee-details/${employeeId}`
+
+
         );
         setEmployeeData(response.data);
 
@@ -227,8 +232,11 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
       };
 
       await axios.post(
+
+
         "http://192.168.1.35:8891/api/ats/157industries/save-daily-work",
-        formData
+      formData
+
       );
 
       localStorage.removeItem(`stopwatchTime_${employeeId}`);

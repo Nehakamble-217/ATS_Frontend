@@ -30,6 +30,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
+
     fetch(`http://192.168.1.35:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
@@ -71,7 +72,11 @@ useEffect(() => {
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
 
+
+
     fetch(`http://192.168.1.35:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+
+
 
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -239,7 +244,7 @@ useEffect(() => {
           <h5 style={{ color: "gray" }}>Line Up List</h5>
 
 
-            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+            <button className="lineUp-Filter-btn" onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
           {showSearchBar && (
             <input
