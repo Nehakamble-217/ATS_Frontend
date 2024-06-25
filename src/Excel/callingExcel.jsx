@@ -68,7 +68,7 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 import CallingExcelList from './callingExcelData';
-
+import "./callingExcel.css";
 const CallingExcel = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [uploadError, setUploadError] = useState(null);
@@ -92,7 +92,7 @@ const CallingExcel = ({ onClose }) => {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      await axios.post(`http://192.168.1.34:8891/api/ats/157industries/uploadData/${employeeId}`, formData, {
+      await axios.post(`http://192.168.1.38:8891/api/ats/157industries/uploadData/${employeeId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -115,7 +115,7 @@ const CallingExcel = ({ onClose }) => {
 
   return (
     <div>
-      <div className="card" style={{ width: "400px", border: "1px solid black" }}>
+      <div className="card" style={{ width: "400px", border: "1px solid gray",marginLeft:"30%" }}>
         <div className="card-header">
           <h5 className="card-title mb-0">Upload Excel File</h5>
         </div>
@@ -130,9 +130,11 @@ const CallingExcel = ({ onClose }) => {
             />
           </div>
           <div className="d-grid gap-2">
-            <button onClick={handleUpload}>Upload</button>
+           
+            <button onClick={handleUpload}>
+              Upload</button>
             {uploadSuccess && (
-              <center><h5 className="text-success mt-3">File Data added successfully!</h5></center>
+              <center><h5 className="text-success mt-3">File data added successfully!</h5></center>
             )}
             {uploadError && (
               <center><h5 className="text-danger mt-3">{uploadError}</h5></center>

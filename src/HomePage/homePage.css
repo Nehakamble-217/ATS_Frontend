@@ -133,7 +133,7 @@ overflow: hidden;
     background-size: cover;
     background-position: center;
     animation: moveclouds 30s linear infinite;
-    z-index: 1; /* Adjusted z-index to be below other elements */
+    z-index: 4; /* Adjusted z-index to be below other elements */
 }
 
 @keyframes moveclouds {
