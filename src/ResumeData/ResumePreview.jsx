@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-const ResumePreview = forwardRef(({ data } ,ref) => {
+const ResumePreview = forwardRef(({ data } ref) => {
   if (!data) {
     return null; 
   }
