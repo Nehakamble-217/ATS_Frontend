@@ -94,6 +94,7 @@ body {
   /* .table-container_forselfcalling td{
 
   } */
+   
   
 
  
@@ -113,3 +114,54 @@ body {
     background-color: #ffe5b5 ; 
     color: gray;
   } */
+
+
+  /* /////////////////////////////////_______Ajhar Tamboli Started work from here...... _____________________///////////////////*/
+  .callingList-filter-btn{
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px;
+    color: #ffcb9b;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  }
+  .selfcalling-filter-value{
+    display: flex;
+   }
+  .selfcalling-filter-option{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+  }
+
+  .filter-options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Optional: Adds space between buttons */
+  }
+
+/* .callingList-filter-btn:hover{
+  border: 1px solid gray;
+
+} */
+/* .dropbtn{
+  border: 1px solid gray ;
+    border-radius: 15px;
+    background-color: #ffcb9b ;
+    font-size: 16px ;
+    color: white ;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */

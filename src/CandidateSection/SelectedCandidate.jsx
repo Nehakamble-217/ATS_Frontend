@@ -51,7 +51,7 @@ useEffect(() => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/selected-candidate/${employeeId}`
+        `http://192.168.1.34:8891/api/ats/157industries/selected-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -237,7 +237,7 @@ useEffect(() => {
        <h5 style={{color:"grey"}}>Selected Candidates 16</h5>
 
 
-            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+            <button className="selectedCan-filter-btn" onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
           {showSearchBar && (
             <input

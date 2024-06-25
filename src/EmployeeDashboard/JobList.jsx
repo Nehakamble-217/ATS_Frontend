@@ -8,7 +8,7 @@ const [selectedCities, setSelectedCities] = useState([]);
 const [showViewMore,setShowViewMore]=useState(false);
 
 useEffect(() => {
-    fetch("http://192.168.1.38:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.34:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
