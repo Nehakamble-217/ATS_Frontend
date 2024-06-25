@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import "./chatRoom.css";
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
+import { useParams } from 'react-router-dom';
 
 var stompClient = null;
 const ChatRoom = () => {
@@ -15,35 +16,63 @@ const ChatRoom = () => {
         message: '',
         file: null
     });
+      const { employeeId } = useParams();
+
     
     useEffect(() => {
         console.log(userData);
     }, [userData]);
 
+    useEffect(() => {
+        fetchUsername();
+    }, []);
+
+    const fetchUsername = async () => {
+    try {
+        // Replace with the actual endpoint to fetch the username
+        const response = await fetch(`http://192.168.1.35:8891/api/ats/157industries/employeeName/${employeeId}`);
+        let result;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            result = await response.json();
+        } else {
+            result = await response.text();
+        }
+
+        const username = result.employeeName || result; // Adjust depending on the response structure
+
+        setUserData(prevUserData => ({
+            ...prevUserData,
+            username: username
+        }));
+        connect(username);
+    } catch (error) {
+        console.error('Failed to fetch username:', error);
+    }
+};
 
 
 
     
-    const connect = () => {
+    const connect = (username) => {
         let Sock = new SockJS('http://localhost:8891/ws');
         stompClient = over(Sock);
-        stompClient.connect({}, onConnected, onError);
-    }
+ stompClient.connect({}, () => onConnected(username), onError);    }
 
-    const onConnected = () => {
+    const onConnected = (username) => {
         setUserData(prevUserData => ({
             ...prevUserData,
             connected: true
         }));
         stompClient.subscribe('/chatroom/public', onMessageReceived);
-        stompClient.subscribe('/user/'+userData.username+'/private', onPrivateMessage);
-        userJoin();
+        stompClient.subscribe('/user/' + username + '/private', onPrivateMessage);
+        userJoin(username);
     }
 
-    const userJoin = () => {
+    const userJoin = (username) => {
         var chatMessage = {
-            senderName: userData.username,
-            status:"JOIN"
+            senderName: username,
+            status: "JOIN"    
         };
         stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
     }
@@ -198,12 +227,12 @@ const sendValue = () => {
         <div className="container">
             {userData.connected ?
                 <div className="chat-box">
-                    <div className="member-list">
+                     <div className="member-list">
                         <ul>
                             <div><h1>{userData.username} Chat Room</h1></div>
-                            <li onClick={() => {setTab("CHATROOM")}} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
+                            <li onClick={() => { setTab("CHATROOM") }} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
                             {[...privateChats.keys()].map((name, index) => (
-                                <li onClick={() => {setTab(name)}} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
+                                <li onClick={() => { setTab(name) }} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
                             ))}
                         </ul>
                     </div>
@@ -255,18 +284,9 @@ const sendValue = () => {
                     </div>}
                 </div>
                 :
+                
                 <div className="register">
-                    <input
-                        id="user-name"
-                        placeholder="Enter your name"
-                        name="userName"
-                        value={userData.username}
-                        onChange={handleUsername}
-                        margin="normal"
-                      />
-                      <button type="button" onClick={registerUser}>
-                            connect
-                      </button> 
+                    <p>Connecting...</p>
                 </div>
             }
         </div>

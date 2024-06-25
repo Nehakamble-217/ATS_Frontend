@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
       <div className="bigb">
-      {/* <div className="main-homepage-heading">
+      <div className="main-homepage-heading">
      <h1>Sky's The Limit</h1>
-      </div> */}
-      <div className="main-homepage-clouds"></div>
+      </div>
+      
 
     <div className="main-homepage-main-div">
-
+<div className="main-homepage-clouds"></div>
       <div className="main-homepage-Member">
             {/* <img src={world} alt="" /> */}
             <h1>I'm a Member's</h1>
@@ -69,4 +69,3 @@ export default HomePage;
 //     </>
 //   );
 // }
-

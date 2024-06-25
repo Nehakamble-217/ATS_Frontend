@@ -13,6 +13,7 @@ function CandidateVerification() {
     useEffect(() => {
         console.log(location);
         axios.get(`http://192.168.1.38:8891/api/ats/157industries/verify${location.search}`);
+
     }, [location.search]);
 
     useEffect(() => {

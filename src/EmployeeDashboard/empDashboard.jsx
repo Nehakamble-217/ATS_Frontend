@@ -31,6 +31,8 @@ import EmployeeProfileData from "../EmployeeSection/employeeProfileData"
 import AddResumes from "../ResumeData/addMultipleResumes";
 import ChatRoom from "../ChatRoom/chatRoom";
 import Team_Leader from "../AdminSection/Team_Leader";
+import ShareLink from "../ResumeData/shareLink";
+import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 
 
 const EmpDashboard = ({ userGroup }) => {
@@ -65,6 +67,8 @@ const EmpDashboard = ({ userGroup }) => {
   const [showAddedResumes,setShowAddedResumes] = useState(false)
   const [showChatRoom,setShowChatRoom]=useState(false)
   const[assignColumns,setAssignColumns]=useState(false)
+  const [showShareLink,setShowShareLink]=useState(false)
+  const [resumeLink,setResumeLink]=useState(false)
 
 
   const { employeeId } = useParams();
@@ -143,6 +147,9 @@ const EmpDashboard = ({ userGroup }) => {
     setShowAddedResumes(false)
     setIncentive(false);
     setAssignColumns(false);
+    setShowChatRoom(false);
+    setShowShareLink(false);
+    setResumeLink(false)
   };
 
   const funForUpdateSelfCalling = () => {
@@ -239,6 +246,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowHome(!showHome);
   };
+  const toggleResumeLink=()=>{
+    resetAllToggles()
+    setResumeLink(!resumeLink)
+  }
 
   const toggleShortListedCandidates = () => {
     resetAllToggles();
@@ -248,7 +259,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowChatRoom(!showChatRoom);
   }
-
+  const toggleShareLink=()=>{
+    resetAllToggles();
+    setShowShareLink(!showShareLink);
+  }
   const toggleUpdateCallingTracker = () => {
     resetAllToggles();
     setShowUpdateCallingTracker(!showUpdateCallingTracker);
@@ -302,6 +316,8 @@ const EmpDashboard = ({ userGroup }) => {
         toggleChatRoom={toggleChatRoom}     
         toggleIncentive={toggleIncentive}
         toggleAssigncolumns={toggleAssigncolumns}
+        toggleShareLink={toggleShareLink}
+
       />
         
       <div className="empDash-main-content">
@@ -386,6 +402,10 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showChatRoom && <ChatRoom/>}
         </div>
+        <div>
+          {showShareLink && <ShareLink toggleResumeLink={toggleResumeLink}/>}
+        </div>
+        {resumeLink && <CandidateResumeLink/> }
         <div>
           {addCandidate && (
             <CallingTrackerForm updateState={handleDataAdditionSuccess} />

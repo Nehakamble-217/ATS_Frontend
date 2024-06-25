@@ -237,7 +237,7 @@ useEffect(() => {
        <h5 style={{color:"grey"}}>Selected Candidates 16</h5>
 
 
-            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+            <button className="selectedCan-filter-btn" onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
           {showSearchBar && (
             <input

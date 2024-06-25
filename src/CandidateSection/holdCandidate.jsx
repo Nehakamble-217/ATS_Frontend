@@ -56,7 +56,6 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const fetchHoldCandidateData = async () => {
     try {
       const response = await fetch(
-
         `http://192.168.1.38:8891/api/ats/157industries/hold-candidate/${employeeId}`
 
         
@@ -238,7 +237,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
             <h5 style={{ color: "gray" }}>Hold Data  List</h5>
 
-            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+            <button className="holdCan-filter-btn" onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
           {showSearchBar && (
             <input

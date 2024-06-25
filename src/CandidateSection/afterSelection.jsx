@@ -56,6 +56,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
         `http://192.168.1.38:8891/api/ats/157industries/specific-data/${candidateId}`
 
+
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -75,6 +76,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
       const response = await fetch(
 
         `http://192.168.1.38:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+
 
       );
       if (!response.ok) {
@@ -179,7 +181,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
-
         "http://192.168.1.38:8891/api/ats/157industries/add-after-selection",
 
         {
@@ -240,7 +241,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
-
         "http://192.168.1.38:8891/api/ats/157industries/save-join-data",
 
         {

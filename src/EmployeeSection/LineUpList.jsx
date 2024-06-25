@@ -29,7 +29,6 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-
     fetch(`http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
@@ -239,7 +238,7 @@ useEffect(() => {
           <h5 style={{ color: "gray" }}>Line Up List</h5>
 
 
-            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+            <button className="lineUp-Filter-btn" onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
           </div>
           {showSearchBar && (
             <input

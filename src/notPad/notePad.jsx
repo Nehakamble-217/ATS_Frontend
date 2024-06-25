@@ -28,6 +28,7 @@ const NotePad = () => {
     };
     try {
       let url = editMessageId ? `http://192.168.1.38:8891/api/ats/157industries/updateNoteData/${editMessageId}` : 'http://192.168.1.38:8891/api/ats/157industries/notes';
+
       const response = await fetch(url, {
         method: editMessageId ? "PUT" : "POST",
         headers: {
@@ -56,6 +57,7 @@ const NotePad = () => {
   const fetchNotePadData = async () => {
     try {
       const response = await fetch('http://192.168.1.38:8891/api/ats/157industries/notesData');
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

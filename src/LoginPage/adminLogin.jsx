@@ -29,7 +29,6 @@ const AdminLogin = ({ onLogin }) => {
 
     const handleBlur = async (empId) => {
         try {
-
             const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/fetch-pass-on-role/${empId}`);
 
             if (!response.ok) {

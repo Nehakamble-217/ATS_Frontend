@@ -38,14 +38,27 @@
 }
 
 /* Style the dropdown button */
-.dropbtn {
-  background-color: #f9f9f9;
-  color: #555;
-  padding: 10px;
-  font-size: 14px;
-  border: none;
+.dropbtn { 
   cursor: pointer;
+  border: 1px solid gray ;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px ;
+    color: #ffcb9b;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* .dropbtn:hover{
+  background-color: white;
+
+  border: 1px solid gray;
+} */
 
 /* Style the dropdown content (hidden by default) */
 .dropdown-content {

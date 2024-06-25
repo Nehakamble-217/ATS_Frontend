@@ -20,6 +20,7 @@ const {employeeId} = useParams();
 
   useEffect(() => {
     fetch("http://192.168.1.38:8891/api/ats/157industries/employee-details/34")
+
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure

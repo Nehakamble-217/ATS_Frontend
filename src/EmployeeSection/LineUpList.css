@@ -50,7 +50,21 @@
   background-color: white;
   color: #ffcb9b;
 }
-
+.lineUp-Filter-btn{
+  border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px;
+    color: #ffcb9b;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
 
 
 
