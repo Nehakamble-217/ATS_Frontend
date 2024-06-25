@@ -14,8 +14,8 @@ const AddResumes = () => {
         for (let i = 0; i < selectedFiles.length; i++) {
             formData.append('files', selectedFiles[i]);
         }
+        axios.post('http://192.168.1.38:8082/api/resumes/upload', formData)
 
-        axios.post('http://localhost:8082/api/resumes/upload', formData)
             .then(response => {
                 console.log(response.data);
             })

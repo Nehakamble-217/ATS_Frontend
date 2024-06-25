@@ -31,7 +31,7 @@ const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
 
 
 useEffect(() => {
-    fetch("http://192.168.1.34:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.38:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -549,10 +549,10 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
               <i class="fa-solid fa-indian-rupee-sign"></i>
          {item.incentive}
         </div>
-        <div className="job-posted">
+        {/* <div className="job-posted">
           <i className="fas fa-clock"></i>
           {item.fild}
-        </div>
+        </div> */}
       </div>
 
       
