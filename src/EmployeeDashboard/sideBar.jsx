@@ -170,7 +170,7 @@ function Sidebar({
             <li className={`${activeSubMenu === 'candidate' || isCandidateSectionActive ? 'active' : ''}`} onClick={toggleSubMenu('candidate')}>
               <a href="#">
                 <i class="fa-solid fa-users" style={{color:"gray"}}></i>
-                <span className="sidebar-text" style={{color:"gray"}} >Candidate Section</span>
+                <span className="sidebar-text" style={{color:"gray"}} >Candidate's Section</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
               <ul className={`sub-menu ${activeSubMenu === 'candidate' ? 'active' : ''}`}>
