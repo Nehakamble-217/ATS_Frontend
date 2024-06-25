@@ -473,6 +473,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
     fetch(`http://192.168.1.35:8891/api/ats/157industries/callingData/${employeeId}`)
 
+
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -600,6 +601,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     fetch(
 
       `http://192.168.1.35:8891/api/ats/157industries/callingData/${employeeId}`
+
 
     )
 

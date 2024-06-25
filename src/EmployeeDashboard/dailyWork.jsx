@@ -59,6 +59,7 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
         const response = await axios.get(
 
 
+
           `http://192.168.1.35:8891/api/ats/157industries/employee-details/${employeeId}`
 
 
@@ -233,9 +234,9 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
       await axios.post(
 
 
-
         "http://192.168.1.35:8891/api/ats/157industries/save-daily-work",
       formData
+
       );
 
       localStorage.removeItem(`stopwatchTime_${employeeId}`);
@@ -373,16 +374,18 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
         >
           {running ? "Pause" : "Resume"}
         </button>
+
+        {/* Dont Remove this 2 comment ...Arshad */}
         {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
-
-        <img className="logout-btn"
+        {/* <img className="logout-btn"
           onClick={handleLogoutLocal}
           // style={{ width: "30px", borderRadius: "60%" }}
           src={logoutImg}
           alt="Logout"
-        />
+        /> */}
+
       </div>
   )}
 
@@ -393,32 +396,6 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
       >
         {!showAllDailyBtns ? "show" : "hidden"} All Buttons
       </button>
-
-      {/* <Modal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Employee Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>                <img src={Profile}alt="Profile" width={"150px"}/>
-          Name           : {employeeData.employeeName}
-          </p>
-          <p>Email          : {employeeData.employeeEmail}</p>
-          <p>Department     : {employeeData.department}</p>
-          <p>Contact Number : {employeeData.employeeNumber}</p>
-          <p>Gender         : {employeeData.gender}</p>
-          <p>Job Role       : {employeeData.jobRole}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setModalShow(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
 
     </div>
   );

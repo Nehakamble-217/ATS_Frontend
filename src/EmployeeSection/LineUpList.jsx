@@ -73,7 +73,9 @@ useEffect(() => {
     setShowUpdateCallingTracker(false);
 
 
+
     fetch(`http://192.168.1.35:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+
 
 
       .then((response) => response.json())

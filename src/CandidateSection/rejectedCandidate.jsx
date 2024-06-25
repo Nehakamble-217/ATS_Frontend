@@ -63,6 +63,7 @@ useEffect(() => {
         `http://192.168.1.35:8891/api/ats/157industries/rejected-candidate/${employeeId}`
 
 
+
       );
       const data = await response.json();
       setShowRejectedData(data);
