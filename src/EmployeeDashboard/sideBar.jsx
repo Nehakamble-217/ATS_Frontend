@@ -30,7 +30,8 @@ function Sidebar({
   toggelAddRecruiter,
   toggelDisplayNotPad,
   toggelAddResumes,
-  toggleChatRoom
+  toggleChatRoom,
+  toggleAssigncolumns,
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -114,7 +115,7 @@ function Sidebar({
       const year = now.getFullYear();
 
       await axios.post(
-        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -280,7 +281,7 @@ function Sidebar({
               </a>
               <ul className={`sub-menu sub-menu1 ${activeSubMenu === 'admin-section' ? 'active' : ''}`}>
 
-                <li>
+              <li onClick={toggleAssigncolumns}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Assign Columns</span>
