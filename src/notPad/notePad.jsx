@@ -12,9 +12,6 @@ const NotePad = () => {
   useEffect(() => {
     fetchNotePadData();
   }, []);
-
-
-
   const { employeeId } = useParams();
 
   const Date1 = new Date().toISOString().slice(0,10);
@@ -29,9 +26,8 @@ const NotePad = () => {
       message,
       timeDate
     };
-
     try {
-      let url = editMessageId ? `http://192.168.1.38:8891/api/ats/157industries/updateNoteData/${editMessageId}` : 'http://192.168.1.38:8891/api/ats/157industries/notes';
+      let url = editMessageId ? `http://192.168.1.34:8891/api/ats/157industries/updateNoteData/${editMessageId}` : 'http://192.168.1.34:8891/api/ats/157industries/notes';
       const response = await fetch(url, {
         method: editMessageId ? "PUT" : "POST",
         headers: {

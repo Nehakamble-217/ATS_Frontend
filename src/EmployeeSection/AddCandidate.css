@@ -9,8 +9,7 @@
     border: 1px solid transparent;
     border-radius: 0.25rem;
   }
-  
-  /* Centering and styling the container */
+
   .d-grid {
     display: grid;
   }

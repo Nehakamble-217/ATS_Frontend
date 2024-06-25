@@ -13,6 +13,7 @@ const [searchTerm, setSearchTerm] = useState('');
   const [selectedIndustry,setSelectedIndustry]=useState(new Set());
   const [selectedRole,setSleectedRole]=useState(new Set());
   const [selectedSalary,setSelectedSalary]=useState(new Set());
+  const [selectedIncentive,setSelectedIncentive]=useState(new Set());
   const [showViewMore,setShowViewMore]=useState(false);
   const [showCityFilter,setShowCityFilter]=useState(false)
   const [showExperience,setShowExperience]=useState(false)
@@ -22,8 +23,10 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showIndustry,setShowIndustry]=useState(false);
   const [showRoles,setShowRoles]=useState(false);
   const [showJobRole,setShowJobRole]=useState(false);
+
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
 const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
+  const [selectedRequirementId, setSelectedRequirementId] = useState(null);
 
 
 
@@ -42,6 +45,15 @@ useEffect(() => {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
+  const handleCheckboxChange3=(incentive)=>{
+ const newSelectedIncentive=new Set(selectedIncentive);
+    if(newSelectedIncentive.has(incentive)){
+      newSelectedIncentive.delete(incentive);
+    }else{
+      newSelectedIncentive.add(incentive);
+    }
+    setSelectedIncentive(newSelectedIncentive)
+  }
 
   const handleCheckboxChange2=(salary)=>{
  const newSelectedSalary=new Set(selectedSalary);
@@ -80,10 +92,13 @@ useEffect(() => {
     console.log(Array.from(selectedExperience))
     console.log(Array.from(selectedIndustry));
     console.log(Array.from(selectedRole));
+    console.log(Array.from(selectedIncentive))
+
     const filtered = jobDescriptions.filter(job =>
       selectedCities.has(job.location) ||
       selectedExperience.has(job.experience)||
-      selectedSalary.has(job.salary)
+      selectedSalary.has(job.salary)||
+      selectedIncentive.has(job.incentive)
     );
     setFilteredJobDescriptions(filtered);
     setShowCityFilter(false);
@@ -98,12 +113,15 @@ useEffect(() => {
      setShowIndustry(false)
      setShowRoles(false)
      setShowJobRole(false)
-      setShowSalary(false)
+     setShowSalary(false)
   };
 
   const handleReset = () => {
      setSelectedCities(new Set());
     setSelectedIndustry(new Set());
+    setSelectedIncentive(new Set());
+    setSelectedExperience(new Set());
+    setSelectedSalary(new Set());
     // setSelectedRole(new Set());
     setSearchTerm('');
     setFilteredJobDescriptions(jobDescriptions);
@@ -127,13 +145,9 @@ useEffect(() => {
   //   roles.name.toLowerCase().includes(searchTerm.toLowerCase())
   // )
   
-  const toggleJobDescription = (index) => {
+  const toggleJobDescription = (requirementId) => {
     setShowViewMore(true);
-    if (selectedJobIndex === index) {
-      setSelectedJobIndex(-1); // Toggle off if already selected
-    } else {
-      setSelectedJobIndex(index); // Toggle on for the selected index
-    }
+    setSelectedRequirementId(selectedRequirementId === requirementId ? null : requirementId);
   };
 
 
@@ -216,6 +230,7 @@ useEffect(() => {
   const uniqueCities = Array.from(new Set(filteredCities.map((job) => job.location)));
   const uniqueExperiences = Array.from(new Set(jobDescriptions.map((job) => job.experience)));
 const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)));
+const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incentive)));
 
   return (
     <>
@@ -372,70 +387,27 @@ const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)
       </button>
         {showIncentive && (
        <div className='city-filter' >
-      
-      <div className='optionDiv'>
-          <div >
+      {/* <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleSearch}
+        style={{ width: '100%', padding: '5px' }}
+      /> */}
+      <div className='optionDiv' >
+        {uniqueIncentive.map((incentive) => (
+          <div key={incentive}>
             <label>
               <input
                 type="checkbox"
-                
+                checked={selectedIncentive.has(incentive)}
+                onChange={() => handleCheckboxChange3(incentive)}
               />
-             <i class="fa-solid fa-indian-rupee-sign"></i>
-             <span> 0 - 10 Thousand</span>
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              {incentive}
             </label>
           </div>
-          <div >
-            <label>
-              <input
-                type="checkbox"
-                
-              />
-             <i class="fa-solid fa-indian-rupee-sign"></i>
-             <span>  10 Thousand - 20 Thousand</span>
-            </label>
-          </div>
-          <div >
-            <label>
-              <input
-                type="checkbox"
-                
-              />
-             <i class="fa-solid fa-indian-rupee-sign"></i>
-             <span>  20 Thousand - 30 Thousand</span>
-            </label>
-          </div>
-          <div >
-            <label>
-              <input
-                type="checkbox"
-                
-              />
-             <i class="fa-solid fa-indian-rupee-sign"></i>
-             <span>  40 Thousand - 50 Thousand</span>
-            </label>
-          </div>
-          
-          
-          
-          <div >
-            <label>
-              <input
-                type="checkbox"
-                
-              />
-             <i class="fa-solid fa-indian-rupee-sign"></i>
-             <span>  50 Thousand -*</span>
-            </label>
-          </div>
-          <div >
-            <label>
-              <input
-                type="checkbox"
-                
-              />
-             <span>  Not Specified</span>
-            </label>
-          </div>
+        ))}
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px',boxShadow:' 0 -4px 5px rgba(0, 0, 0, .05)',
     padding: '10px 24px'}}>
@@ -573,17 +545,21 @@ const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)
           <i className="fas fa-tags"></i>
          {item.skills}
         </div>
-        {/* <div className="job-posted">
+         <div className="job-incentive">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+         {item.incentive}
+        </div>
+        <div className="job-posted">
           <i className="fas fa-clock"></i>
-          a day ago
-        </div> */}
+          {item.fild}
+        </div>
       </div>
 
       
       {/* Arshad Added this button to share edm  */} 
       <div className="job-actions">
-        <button className='daily-tr-btn' onClick={()=>toggleJobDescription(index)}>View More</button>
-        <button className='daily-tr-btn' onClick={()=>toggleEdm(index)}> EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button>
+        <button className='daily-tr-btns' onClick={() => toggleJobDescription(item.requirementId)}>View More</button>
+        {/* <button className='daily-tr-btn' onClick={()=>toggleEdm(index)}> EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button> */}
       </div>
 
 
@@ -598,21 +574,22 @@ const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)
 
 
   {showViewMore && (
+    
         <main className="name">
-          {selectedJobIndex !== -1 && (
+         {selectedRequirementId === requirementId && (
             <section className="overview">
               <div className="scroll-container">
                 <div className="info">
                   <div className="info-title">Position Overview</div>
                   <div className="info-value">
-                    {jobDescriptions[selectedJobIndex]?.positionOverview?.overview || "N/A"}
+                    {jobDescriptions[selectedRequirementId]?.positionOverview?.overview || "N/A"}
                   </div>
                 </div>
                 <div className="info">
                   <div className="info-title">Responsibilities</div>
                   <div className="info-value">
                     <ul>
-                      {jobDescriptions[selectedJobIndex]?.responsibilities?.map((responsibility, idx) => (
+                      {jobDescriptions[selectedRequirementId]?.responsibilities?.map((responsibility, idx) => (
                         <li key={idx}>{responsibility.responsibilitiesMsg}</li>
                       )) || "N/A"}
                     </ul>
@@ -622,7 +599,7 @@ const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)
                   <div className="info-title">Requirements</div>
                   <div className="info-value">
                     <ul>
-                      {jobDescriptions[selectedJobIndex]?.jobRequirements?.map((jobRequirement, idx) => (
+                      {jobDescriptions[selectedRequirementId]?.jobRequirements?.map((jobRequirement, idx) => (
                         <li key={idx}>{jobRequirement.jobRequirementMsg}</li>
                       )) || "N/A"}
                     </ul>
@@ -632,7 +609,7 @@ const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)
                   <div className="info-title">Preferred Qualifications</div>
                   <div className="info-value">
                     <ul>
-                      {jobDescriptions[selectedJobIndex]?.preferredQualifications?.map((qualification, idx) => (
+                      {jobDescriptions[selectedRequirementId]?.preferredQualifications?.map((qualification, idx) => (
                         <li key={idx}>{qualification.preferredQualificationMsg}</li>
                       )) || "N/A"}
                     </ul>
@@ -653,29 +630,29 @@ const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)
                 <button onClick={handleclose} className='daily-tr-btn'>Close</button>
               </div>
             </span>
-            {selectedJobIndex !== -1 && (
+            {selectedRequirementId === item.requirementId && (
               <div className="names">
-                <p><b>Field : </b>{jobDescriptions[selectedJobIndex]?.field || "N/A"}</p>
-                <p><b>Location :</b>{jobDescriptions[selectedJobIndex]?.location || "N/A"}</p>
-                <p><b>Salary :</b> {jobDescriptions[selectedJobIndex]?.salary || "N/A"}</p>
-                <p><b>Designation :</b>{jobDescriptions[selectedJobIndex]?.designation || "N/A"}</p>
-                <p><b>Educational Qualifications :</b>{jobDescriptions[selectedJobIndex]?.qualification || "N/A"}</p>
-                <p><b>Experience :</b>{jobDescriptions[selectedJobIndex]?.experience || "N/A"}</p>
-                <p><b>Key Skills :</b>{jobDescriptions[selectedJobIndex]?.skills || "N/A"}</p>
-                <p><b>Company Link :</b><a href={jobDescriptions[selectedJobIndex]?.companyLink || "#"}>Website</a></p>
-                <p><b>Shifts : </b>{jobDescriptions[selectedJobIndex]?.shift || "N/A"}</p>
-                <p><b>Week Off's : </b>{jobDescriptions[selectedJobIndex]?.weekOff || "N/A"}</p>
-                <p><b>Notice Period :</b> {jobDescriptions[selectedJobIndex]?.noticePeriod || "N/A"}</p>
-                <p><b>Job Role : </b>{jobDescriptions[selectedJobIndex]?.jobRole || "N/A"}</p>
-                <p><b>Job Type : </b>{jobDescriptions[selectedJobIndex]?.job_type || "N/A"}</p>
+                <p><b>Field : </b>{jobDescriptions[selectedRequirementId]?.field || "N/A"}</p>
+                <p><b>Location :</b>{jobDescriptions[selectedRequirementId]?.location || "N/A"}</p>
+                <p><b>Salary :</b> {jobDescriptions[selectedRequirementId]?.salary || "N/A"}</p>
+                <p><b>Designation :</b>{jobDescriptions[selectedRequirementId]?.designation || "N/A"}</p>
+                <p><b>Educational Qualifications :</b>{jobDescriptions[selectedRequirementId]?.qualification || "N/A"}</p>
+                <p><b>Experience :</b>{jobDescriptions[selectedRequirementId]?.experience || "N/A"}</p>
+                <p><b>Key Skills :</b>{jobDescriptions[selectedRequirementId]?.skills || "N/A"}</p>
+                <p><b>Company Link :</b><a href={jobDescriptions[selectedRequirementId]?.companyLink || "#"}>Website</a></p>
+                <p><b>Shifts : </b>{jobDescriptions[selectedRequirementId]?.shift || "N/A"}</p>
+                <p><b>Week Off's : </b>{jobDescriptions[selectedRequirementId]?.weekOff || "N/A"}</p>
+                <p><b>Notice Period :</b> {jobDescriptions[selectedRequirementId]?.noticePeriod || "N/A"}</p>
+                <p><b>Job Role : </b>{jobDescriptions[selectedRequirementId]?.jobRole || "N/A"}</p>
+                <p><b>Job Type : </b>{jobDescriptions[selectedRequirementId]?.job_type || "N/A"}</p>
                 <p><b>Perks:</b>
-                  {jobDescriptions[selectedJobIndex]?.perks || "N/A"}
+                  {jobDescriptions[selectedRequirementId]?.perks || "N/A"}
                 </p>
-                <p><b>Incentives For Recruiters : </b>{jobDescriptions[selectedJobIndex]?.incentive || "N/A"}</p>
-                <p><b>Reporting Hierarchy : </b>{jobDescriptions[selectedJobIndex]?.reportingHierarchy || "N/A"}</p>
-                <p><b>Number of Positions : </b>{jobDescriptions[selectedJobIndex]?.position || "N/A"}</p>
-                <p><b>Documentation : </b>{jobDescriptions[selectedJobIndex]?.documentation || "N/A"}</p>
-                <p><b>Gender : </b>{jobDescriptions[selectedJobIndex]?.gender || "N/A"}</p>
+                <p><b>Incentives For Recruiters : </b>{jobDescriptions[selectedRequirementId]?.incentive || "N/A"}</p>
+                <p><b>Reporting Hierarchy : </b>{jobDescriptions[selectedRequirementId]?.reportingHierarchy || "N/A"}</p>
+                <p><b>Number of Positions : </b>{jobDescriptions[selectedRequirementId]?.position || "N/A"}</p>
+                <p><b>Documentation : </b>{jobDescriptions[selectedRequirementId]?.documentation || "N/A"}</p>
+                <p><b>Gender : </b>{jobDescriptions[selectedRequirementId]?.gender || "N/A"}</p>
               </div>
             )}
           </section>
@@ -683,11 +660,11 @@ const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)
  )}
  {showJobDescriptionShare && (
         <>
-          <ShareDescription Descriptions={jobDescriptions[selectedJobIndex]} />
+          <ShareDescription Descriptions={jobDescriptions[selectedRequirementId]} />
         </>
       )}
       {showJobDescriptionEdm && (
-        <JobDescriptionEdm Descriptions={jobDescriptions[selectedJobIndex]}/>
+        <JobDescriptionEdm Descriptions={jobDescriptions[selectedRequirementId]}/>
       )}
 
     </>
