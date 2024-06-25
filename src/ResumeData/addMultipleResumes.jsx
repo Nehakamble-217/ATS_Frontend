@@ -14,14 +14,13 @@ const AddResumes = () => {
             formData.append('files', selectedFiles[i]);
         }
 
-        axios.post('http://localhost:8082/api/resumes/upload', formData)
+        axios.post('http://192.168.1.35:8891/api/ats/157industries/add-resume-data', formData)
             .then(response => {
                 console.log(response.data);
                 
             })
             .catch(error => {
                 console.error('Error uploading files: ', error);
-                
             });
     };
 

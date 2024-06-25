@@ -3,7 +3,29 @@
     
   }
    */
-  
+   .attendanceTableHeader{
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      gap: 15px;
+      position: sticky;
+      left: 5px;
+      margin-bottom: 10px;
+   }
+   .attendanceTableHeader button{
+    font-size: 16px;
+    border-radius: 15px;
+    /* width: 120px; */
+    padding: 0 10px;
+    background-color: #ffb281;
+    color: white;
+    border: 1px solid gray;
+    transition: background-color 0.3s, color 0.3s;
+   }
+   .attendanceTableHeader button:hover{
+      background-color: white;
+      color: #ffb281;
+   }
   .shortlistedheading th{
     background-color: #ffcb9b;
     color: gray;

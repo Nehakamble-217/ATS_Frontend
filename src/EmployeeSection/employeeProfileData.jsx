@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData =() => {
+const EmployeeProfileData = () => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [profileImage, setProfileImage] = useState(null);
   const [pdfSrc, setPdfSrc] = useState(null);
   const [employeeData, setEmployeeData] = useState(null);
-const {employeeId} = useParams();
+  const { employeeId } = useParams();
 
   const viewMoreProfile = (e) => {
     e.preventDefault();
@@ -19,7 +19,9 @@ const {employeeId} = useParams();
   };
 
   useEffect(() => {
-    fetch("http://192.168.1.35:8891/api/ats/157industries/employee-details/34")
+    fetch(
+      `http://192.168.1.38:8891/api/ats/157industries/employee-details/${employeeId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -77,7 +79,7 @@ const {employeeId} = useParams();
 
   if (viewMoreProfileShow)
     return (
-      <div className="employee-profile-main-div"> 
+      <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
             <div className="profile-back-button">
@@ -193,7 +195,6 @@ const {employeeId} = useParams();
             </div>
 
             <div className="employee-profile-scrollsection">
-            
               <div className="employee-profile-emergency-education-details">
                 <div className="employee-profile-emergency-details">
                   <h1>
@@ -480,5 +481,5 @@ const {employeeId} = useParams();
       )}
     </div>
   );
-}
+};
 export default EmployeeProfileData;

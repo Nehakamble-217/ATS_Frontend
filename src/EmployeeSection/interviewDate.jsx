@@ -443,7 +443,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <thead className="thead-dark">
                   <tr>
                     <th>No</th>
-                    <th>Interview Date</th>
+                
                     <th>Interview Round</th>
                     <th>Interview Response</th>
                     <th>Update Date</th>
@@ -467,9 +467,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
 
                     <td></td>
-                    <td>
-                     <p>take date by defult</p>
-                    </td>
+                    
 
                     <td >
                       <select
