@@ -29,7 +29,8 @@ function Sidebar({
   handleLogout,
   toggelAddRecruiter,
   toggelDisplayNotPad,
-
+  toggelAddResumes,
+  toggleChatRoom
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -153,20 +154,20 @@ function Sidebar({
             <li onClick={handleButtonClick('interviewDate', toggleInterviewDate)} className={activeButton === 'interviewDate' ? 'active' : ''}>
               <a href="#">
                 {/* <i className="icon ph-bold ph-house-simple"></i> */}
-                <i className='xyz-icon' class="fa-solid fa-user-check"></i>
+                <i className='xyz-icon' class="fa-solid fa-user-check" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Shortlisted Candidate</span>
               </a>
             </li>
             <li onClick={handleButtonClick('callingTrackerForm', toggleCallingTrackerForm)} className={activeButton === 'callingTrackerForm' ? 'active' : ''}>
               <a href="#">
-                <i class="fa-solid fa-user-plus"></i>
+                <i class="fa-solid fa-user-plus" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Add Candidate</span>
               </a>
             </li>
             <li className={`${activeSubMenu === 'candidate' || isCandidateSectionActive ? 'active' : ''}`} onClick={toggleSubMenu('candidate')}>
               <a href="#">
-                <i class="fa-solid fa-users"></i>
-                <span className="sidebar-text">Candidate Section</span>
+                <i class="fa-solid fa-users" style={{color:"gray"}}></i>
+                <span className="sidebar-text" style={{color:"gray"}} >Candidate Section</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
               <ul className={`sub-menu ${activeSubMenu === 'candidate' ? 'active' : ''}`}>
@@ -221,20 +222,12 @@ function Sidebar({
                     <span className="sidebar-text">Employee Sheet</span>
                   </a>
                 </li>
-
-                <li onClick={toggleAllMasterSheet}>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">All Master Sheet</span>
-                  </a>
-                </li>
-
               </ul>
             </li>
 
             <li className={`${activeSubMenu === 'Jobdiscription' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('Jobdiscription')}>
               <a href="#">
-                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-pen-to-square" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Job Description</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
@@ -244,40 +237,13 @@ function Sidebar({
               <img src={Circle} style={{ width: "10px" }} alt="" />                
                <span className="sidebar-text"> View Job Description</span>
               </a>
-            </li>
+             </li>
                 <li onClick={handleButtonClick('addJobDescription', toggleAddJobDescription)} className={activeButton === 'addJobDescription' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Add JobDescription</span>
                   </a>
                 </li>
-
-                
-            <li className={`${activeSubMenu === 'admin-section' || isJobDescriptionActive ? 'active' : ''}`} onClick={toggleSubMenu('adminsection')}>
-              <a href="#">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <span className="sidebar-text">ADmin Section</span>
-                <i className="arrow ph-bold ph-caret-down"></i>
-              </a>
-              <ul className={`sub-menu ${activeSubMenu === 'Jobdiscription' ? 'active' : ''}`}>
-                 <li onClick={handleButtonClick('adminsection', toggleJobDescription)} className={activeButton === 'admin-section' ? 'active' : ''}>
-              <a href="#">
-              <img src={Circle} style={{ width: "10px" }} alt="" />                
-               <span className="sidebar-text"> View Job Description</span>
-              </a>
-            </li>
-                <li onClick={handleButtonClick('addJobDescription', toggleAddJobDescription)} className={activeButton === 'addJobDescription' ? 'active' : ''}>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Add JobDescription</span>
-                  </a>
-                </li>
-               
-
-              </ul>
-            </li>
-               
-
               </ul>
             </li>
             <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
@@ -304,9 +270,32 @@ function Sidebar({
             </li>
             
 
+            <li className={activeSubMenu === 'admin-section' ? "active" : ""} onClick={toggleSubMenu('admin-section')}>
+              <a href="#">
+                <i className="icon ph-bold ph-chart-bar" style={{color:"gray"}}></i>
+                <span className="sidebar-text">Admin Section</span>
+                <i className="arrow ph-bold ph-caret-down" ></i>
+              </a>
+              <ul className={`sub-menu sub-menu1 ${activeSubMenu === 'admin-section' ? 'active' : ''}`}>
+                <li>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Assign Columns</span>
+                  </a>
+                </li>
+                
+                <li onClick={toggleAllMasterSheet}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">All Master Sheet</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
             <li className={activeSubMenu === 'database' ? "active" : ""} onClick={toggleSubMenu('database')}>
               <a href="#">
-                <i className="fa-solid fa-database"></i>
+                <i className="fa-solid fa-database" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Database</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
@@ -335,22 +324,29 @@ function Sidebar({
                     <span className="sidebar-text">Resume Data</span>
                   </a>
                 </li>
+
+                <li onClick={toggelAddResumes}>
+                  <a href="#">
+                    <img src={Circle} style={{ width: "10px" }} alt="" />
+                    <span className="sidebar-text">Add Resumes</span>
+                  </a>
+                </li>
                 
               </ul>
               
             </li>
-            <li>
+            <li onClick={toggleChatRoom}>
               <a href="#">
                 {/* <i className="icon ph-bold ph-gear"></i> */}
-                <i class="fa-brands fa-rocketchat"></i>
-              
+                <i class="fa-brands fa-rocketchat" style={{color:"gray"}}></i>
+
                 <span className="sidebar-text">Chat Section</span>
               </a>
             </li>
             <li className={activeSubMenu === 'portal' ? "active" : ""} onClick={toggleSubMenu('portal')}>
               <a href="#">
                 {/* <i className="icon ph-bold ph-chart-bar"></i> */}
-                <i class="fa-brands fa-linkedin"></i>
+                <i class="fa-brands fa-linkedin" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Portal</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
@@ -393,7 +389,7 @@ function Sidebar({
             <li onClick={toggelDisplayNotPad} >
               <a href="#" >
                 
-                <i class="fa-regular fa-clipboard"></i>
+                <i class="fa-regular fa-clipboard" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Note Pad</span>
               </a>
             </li>
@@ -401,21 +397,21 @@ function Sidebar({
             <li onClick={toggelAddRecruiter}>
               <a href="#" >
                 {/* <i className="icon ph-bold ph-sign-out"></i> */}
-                <i class="fa-solid fa-circle-user" ></i>
+                <i class="fa-solid fa-circle-user" style={{color:"gray"}} ></i>
                 <span className="sidebar-text">Add Recruiters</span>
               </a>
             </li>
             <li >
               <a href="#" >
                 {/* <i className="icon ph-bold ph-sign-out"></i> */}
-                <i class="fa-solid fa-user-tie"></i>
+                <i class="fa-solid fa-user-tie" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Add TeamLeader</span>
               </a>
             </li>
             <li >
               <a href="#" >
                 {/* <i className="icon ph-bold ph-sign-out"></i> */}
-                <i class="fa-solid fa-power-off"></i>
+                <i class="fa-solid fa-power-off" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Logout</span>
               </a>
             </li>
@@ -431,21 +427,10 @@ function Sidebar({
 
         <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
           <ul>
-            
-
-            
-
           </ul>
         </div>
       </div>
-     
-      
     </div>
-    
-  
-    
-
-
     </>
   );
 }
