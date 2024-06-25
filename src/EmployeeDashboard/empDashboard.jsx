@@ -30,6 +30,7 @@ import NotePad from "../notPad/notePad";
 import EmployeeProfileData from "../EmployeeSection/employeeProfileData"
 import AddResumes from "../ResumeData/addMultipleResumes";
 import ChatRoom from "../ChatRoom/chatRoom";
+import Team_Leader from "../AdminSection/Team_Leader";
 import ShareLink from "../ResumeData/shareLink";
 import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 
@@ -65,6 +66,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showProfile,setShowProfile] = useState(false)
   const [showAddedResumes,setShowAddedResumes] = useState(false)
   const [showChatRoom,setShowChatRoom]=useState(false)
+  const[assignColumns,setAssignColumns]=useState(false)
   const [showShareLink,setShowShareLink]=useState(false)
   const [resumeLink,setResumeLink]=useState(false)
 
@@ -144,6 +146,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowProfile(false)
     setShowAddedResumes(false)
     setIncentive(false);
+    setAssignColumns(false);
     setShowChatRoom(false);
     setShowShareLink(false);
     setResumeLink(false)
@@ -235,6 +238,11 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(!incentive)
   }
 
+  const toggleAssigncolumns = ()=>{
+    resetAllToggles();
+   setAssignColumns(!assignColumns)
+  }
+
   const toggleHome = () => {
     resetAllToggles();
     setShowHome(!showHome);
@@ -308,7 +316,9 @@ const EmpDashboard = ({ userGroup }) => {
         toggelAddResumes={toggelAddResumes}
         toggleChatRoom={toggleChatRoom}     
         toggleIncentive={toggleIncentive}
+        toggleAssigncolumns={toggleAssigncolumns}
         toggleShareLink={toggleShareLink}
+
       />
         
       <div className="empDash-main-content">
@@ -430,6 +440,9 @@ const EmpDashboard = ({ userGroup }) => {
 
         <div>
           {showUpdateCallingTracker && <UpdateCallingTracker candidateId={candidateIdForUpdate} />}
+        </div>
+        <div>
+          {assignColumns && <Team_Leader/>}
         </div>
       </div>
     </div>
