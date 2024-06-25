@@ -20,6 +20,24 @@ const ChatRoom = () => {
         console.log(userData);
     }, [userData]);
 
+    useEffect(() => {
+        fetchUsername();
+    }, []);
+
+    const fetchUsername = async () => {
+        try {
+            // Replace with the actual endpoint to fetch the username
+            const response = await fetch('http://localhost:8891/getUsername');
+            const result = await response.json();
+            setUserData(prevUserData => ({
+                ...prevUserData,
+                username: result.username
+            }));
+            connect(result.username);
+        } catch (error) {
+            console.error('Failed to fetch username:', error);
+        }
+    };
 
 
 
