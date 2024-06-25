@@ -53,9 +53,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-
         `http://192.168.1.38:8891/api/ats/157industries/specific-data/${candidateId}`
-
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -73,9 +71,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-
         `http://192.168.1.38:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
-
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -124,7 +120,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
       setOfferLetterReceived("");
     }
   };
-
+  
   const handleOfferLetterReceivedChange = (e) => {
     const received = e.target.value;
     setOfferLetterReceived(received);
@@ -159,8 +155,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     const reason = e.target.value;
     setInactiveReason(reason);
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -29,7 +29,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://localhost:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
             .then((data) =>setFilteredCallingList(data))
@@ -70,7 +70,7 @@ useEffect(() => {
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
 
-    fetch(`http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://localhost:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
       .then((data) => setCallingList(data))
