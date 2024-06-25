@@ -30,7 +30,7 @@ const ChatRoom = () => {
     const fetchUsername = async () => {
     try {
         // Replace with the actual endpoint to fetch the username
-        const response = await fetch(`http://192.168.1.35:8891/api/ats/157industries/employeeName/${employeeId}`);
+        const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`);
         let result;
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
@@ -57,7 +57,7 @@ const ChatRoom = () => {
     const connect = (username) => {
         let Sock = new SockJS('http://localhost:8891/ws');
         stompClient = over(Sock);
- stompClient.connect({}, () => onConnected(username), onError);    }
+ stompClient.connect({}, () => onConnected(username), onError);}
 
     const onConnected = (username) => {
         setUserData(prevUserData => ({
@@ -87,14 +87,12 @@ const ChatRoom = () => {
                 }
                 break;
             case "MESSAGE":
-                publicChats.push(payloadData);
-                setPublicChats([...publicChats]);
+                setPublicChats(prevChats => [...prevChats, payloadData]);
                 break;
            case "FILE":
             if (payloadData.senderName !== userData.username) {
         // Add file message to public chats only if sender is not the current user
-               publicChats.push(payloadData);
-               setPublicChats([...publicChats]);
+                setPublicChats(prevChats => [...prevChats, payloadData]);
             }
             break;
         }
@@ -134,77 +132,68 @@ const ChatRoom = () => {
         }));
     }
 
-const sendValue = () => {
-    console.log("Sending value...");
-    console.log("Message:", userData.message);
-    console.log("File:", userData.file);
-      if (stompClient) {
-            if (userData.message.trim() !== "") {
-                const messageData = {
+ const sendValue = () => {
+        if (userData.message.trim() !== "") {
+            sendMessage();
+        } else if (userData.file) {
+            uploadFile();
+        }
+    };
+    
+    const sendMessage = () => {
+        const messageData = {
+            senderName: userData.username,
+            message: userData.message,
+            status: "MESSAGE"
+        };
+        stompClient.send("/app/message", {}, JSON.stringify(messageData));
+        setUserData(prevUserData => ({
+            ...prevUserData,
+            message: ""
+        }));
+    };
+
+    const uploadFile = () => {
+        const formData = new FormData();
+        formData.append('file', userData.file);
+        formData.append('senderName', userData.username);
+
+        fetch('http://localhost:8891/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('File uploaded successfully');
+                
+                const fileMessageData = {
                     senderName: userData.username,
-                    message: userData.message,
-                    status: "MESSAGE"
+                    fileName: userData.file.name,
+                    fileUrl: URL.createObjectURL(userData.file),
+                    status: "FILE"
                 };
-                stompClient.send("/app/message", {}, JSON.stringify(messageData));
+                stompClient.send("/app/message", {}, JSON.stringify(fileMessageData));
+
                 setUserData(prevUserData => ({
                     ...prevUserData,
-                    message: ""
+                    file: null
                 }));
-            }}
-    if (stompClient && userData.file ) {
-    // Upload the file to the server
-    const formData = new FormData();
-    formData.append('file', userData.file);
-    formData.append('senderName', userData.username);
-    formData.append("message",userData.message)
-
-    
-    
-    fetch('http://localhost:8891/upload', {
-        method: 'POST',
-        body: formData
-    })
-    
-    
-    .then(response => {
-        if (response.ok) {
-            // File uploaded successfully
-            console.log('File uploaded successfully');
-            
-            // Send the file message to the appropriate destination
-            const fileMessageData = {
-                senderName: userData.username,
-                fileName: userData.file.name,
-                fileUrl: URL.createObjectURL(userData.file),
-                status: "FILE"
-            };
-            stompClient.send("/app/message", {}, JSON.stringify(fileMessageData));
-
-            // Clear the file input and update UI
-            setUserData(prevUserData => ({
-                ...prevUserData,
-                file: null
-            }));
-            setPublicChats(prevChats => [
-    ...prevChats,
-    {
-        senderName: userData.username,
-        fileName: userData.file.name,
-        fileUrl: URL.createObjectURL(userData.file) // Use the fileUrl from state
-    }
-    
-]);
-        } else {
-            console.error('Failed to upload file');
-        }
-    })
-    .catch(error => {
-        console.error('Error uploading file:', error);
-    });
-}
-
-}
-
+                setPublicChats(prevChats => [
+                    ...prevChats,
+                    {
+                        senderName: userData.username,
+                        fileName: userData.file.name,
+                        fileUrl: URL.createObjectURL(userData.file)
+                    }
+                ]);
+            } else {
+                console.error('Failed to upload file');
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+    };
 
 
     const handleUsername = (event) => {

@@ -147,6 +147,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowChatRoom(false);
     setShowShareLink(false);
     setResumeLink(false)
+    setShowResumeData(false)
   };
 
   const funForUpdateSelfCalling = () => {
