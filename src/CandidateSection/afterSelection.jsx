@@ -54,7 +54,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     try {
       const response = await fetch(
 
-        `http://192.168.1.38:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.39:8891/api/ats/157industries/specific-data/${candidateId}`
 
 
       );
@@ -75,7 +75,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     try {
       const response = await fetch(
 
-        `http://192.168.1.38:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+        `http://192.168.1.39:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
 
 
       );
@@ -181,7 +181,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
-        "http://192.168.1.38:8891/api/ats/157industries/add-after-selection",
+        "http://192.168.1.39:8891/api/ats/157industries/add-after-selection",
 
         {
           method: "POST",
@@ -241,7 +241,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
-        "http://192.168.1.38:8891/api/ats/157industries/save-join-data",
+        "http://192.168.1.39:8891/api/ats/157industries/save-join-data",
 
         {
           method: "POST",

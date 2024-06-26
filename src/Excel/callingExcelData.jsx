@@ -35,7 +35,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   useEffect(() => {
 
-    fetch(`http://192.168.1.38:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
 
 
       .then((response) => response.json())
@@ -165,7 +165,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`
 
     )
       .then((response) => response.json())

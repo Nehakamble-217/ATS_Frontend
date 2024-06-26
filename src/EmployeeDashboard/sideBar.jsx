@@ -31,6 +31,7 @@ function Sidebar({
   toggelDisplayNotPad,
   toggelAddResumes,
   toggleChatRoom,
+  toggleShareLink,
   toggleAssigncolumns,
 
 }) {
@@ -331,10 +332,10 @@ function Sidebar({
                     <span className="sidebar-text">Line Up Data</span>
                   </a>
                 </li>
-                <li>
+                <li onClick={toggleShareLink}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Offers Data</span>
+                    <span className="sidebar-text">Share Resume Link</span>
                   </a>
                 </li>
                 <li onClick={handleButtonClick('resumeData', toggelResumeData)} className={activeButton === 'resumeData' ? 'active' : ''}>
@@ -343,6 +344,7 @@ function Sidebar({
                     <span className="sidebar-text">Resume Data</span>
                   </a>
                 </li>
+
 
                 <li onClick={toggelAddResumes}>
                   <a href="#">
