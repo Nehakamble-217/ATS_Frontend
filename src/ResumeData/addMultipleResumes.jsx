@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './AddResumes.css'; // Import the CSS file
 
 const AddResumes = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -17,7 +18,6 @@ const AddResumes = () => {
 
             .then(response => {
                 console.log(response.data);
-                
             })
             .catch(error => {
                 console.error('Error uploading files: ', error);
@@ -25,18 +25,18 @@ const AddResumes = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <div className="bg-white p-6 rounded-lg shadow-lg flex justify-center items-center flex-col">
-                <h2 className="text-2xl font-bold text-gray-500 mb-4">Upload Resume</h2>
+        <div className="main-container">
+            <div className="upload-container">
+                <h2 className="upload-title">Upload Resume</h2>
                 <input
                     type="file"
                     multiple
                     onChange={handleFileChange}
-                    className="mb-4 p-2 border border-gray-300 rounded"
+                    className="file-input"
                 />
                 <button
                     onClick={handleUpload}
-                    className="bg-[#ffcb9b] text-white p-2 rounded hover:bg-white hover:text-[#ffcb9b] shadow-sm transition"
+                    className="upload-button"
                 >
                     Upload
                 </button>

@@ -39,7 +39,7 @@ const MasterSheet = () => {
             setFilteredList(data)
             setError("");
         } catch (error) {
-            setError("Error fetching data.");
+            setError("Error fetching data 😒.");
         }
     };
 
@@ -48,14 +48,14 @@ const MasterSheet = () => {
             const fileURL = await fetchResumeFile(fileUrl);
             window.open(fileURL);
         } catch (error) {
-            console.error("Error fetching file:", error);
+            console.error("Error fetching file 😒:", error);
         }
     };
 
     return (
         <div className="App-after">
             <h5 style={{color:"gray",paddingTop:"5px"}}> Master Sheet</h5>
-            {error && <div className="alert alert-danger">{error}</div>}
+            {error && <div className="alert alert-danger" style={{color:"red", width:"500px",background:"white",border:"none"}}>{error}</div>}
             <input
             type="text"
             className="form-control"
