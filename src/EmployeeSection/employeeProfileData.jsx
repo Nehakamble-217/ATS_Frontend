@@ -20,7 +20,7 @@ const EmployeeProfileData = () => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/employee-details/${employeeId}`
+      `http://192.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -94,7 +94,7 @@ const EmployeeProfileData = () => {
                 <div className="employee-profile-details">
                   <img src={profileImage} />
                   <p className="m-0">
-                    <b>Name: {employeeData.employeeName}</b>
+                    <b>Name: {employeeData?.employeeName}</b>
                   </p>
                   <p className="m-0">
                     <b>Designation: {employeeData.designation}</b>
@@ -435,6 +435,7 @@ const EmployeeProfileData = () => {
               gap: "10px",
               alignItems: "center",
               backgroundColor: "#f2f2f2",
+              color: "gray",
             }}
           >
             <div>
@@ -454,7 +455,12 @@ const EmployeeProfileData = () => {
             </div>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-            <button className="close-profile-popup-btn">Close</button>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="close-profile-popup-btn"
+            >
+              Close
+            </button>
             <button
               onClick={viewMoreProfile}
               className="display-more-profile-btn"
@@ -472,10 +478,12 @@ const EmployeeProfileData = () => {
             <div>Loading...</div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary">Close</Button>
-            <Button onClick={viewMoreProfile} variant="primary">
-              More
-            </Button>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="close-profile-popup-btn"
+            >
+              Close
+            </button>
           </Modal.Footer>
         </Modal.Dialog>
       )}

@@ -721,7 +721,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchEmployeeNameAndID = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
+        `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
       );
       const data = await response.json();
       setFetchEmployeeNameID(data);
@@ -733,7 +733,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
+        `http://192.168.1.39:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -779,11 +779,6 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     }
   };
 
-  const handleShortlistedShare = (e) => {
-    e.preventDefault();
-    setShowShareButton(false);
-  };
-
   const handleSelectAll = () => {
     if (allSelected) {
       setSelectedRows([]);
@@ -811,10 +806,9 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     }
   };
 
-  console.log(selectedEmployeeId);
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.38:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -838,7 +832,6 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 
         // Handle success response
         console.log("Candidates forwarded successfully!");
-        window.location.reload();
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
 
         // Optionally, you can fetch updated data after successful submission
@@ -857,13 +850,32 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
           <div className="attendanceTableHeader">
             <h6 style={{ color: "gray" }}>ShortListed Candidate Data </h6>
             {showShareButton ? (
-              <button onClick={handleShortlistedShare}>Share</button>
+              <button
+                className="shortlistedcan-share-btn"
+                onClick={() => setShowShareButton(false)}
+              >
+                Share
+              </button>
             ) : (
               <div style={{ display: "flex", gap: "5px" }}>
-                <button onClick={handleSelectAll}>
+                <button
+                  className="shortlistedcan-share-close-btn"
+                  onClick={() => setShowShareButton(true)}
+                >
+                  Close
+                </button>
+                <button
+                  className="shortlistedcan-share-select-btn"
+                  onClick={handleSelectAll}
+                >
                   {allSelected ? "Deselect All" : "Select All"}
                 </button>
-                <button onClick={forwardSelectedCandidate}>Forward</button>
+                <button
+                  className="shortlistedcan-forward-btn"
+                  onClick={forwardSelectedCandidate}
+                >
+                  Forward
+                </button>
               </div>
             )}
           </div>
@@ -1146,6 +1158,11 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 <Modal.Dialog
                   style={{
                     width: "500px",
+                    height: "800px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: "100px",
                   }}
                 >
                   <Modal.Header
@@ -1155,9 +1172,9 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   </Modal.Header>
                   <Modal.Body
                     style={{
-                      display: "flex",
+                      display: "grid",
                       gap: "10px",
-                      flexDirection: "column",
+                      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                       backgroundColor: "#f2f2f2",
                     }}
                   >
@@ -1166,7 +1183,11 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                         <div
                           key={`${item[0]}`}
                           className=""
-                          style={{ display: "flex", gap: "20px" }}
+                          style={{
+                            display: "flex",
+                            gap: "20px",
+                            columnSpan: "span 1 / span 1",
+                          }}
                         >
                           <input
                             type="radio"
@@ -1185,13 +1206,13 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
                     <button
                       onClick={handleShare}
-                      className="close-profile-popup-btn"
+                      className="shortlistedcan-share-forward-popup-btn"
                     >
                       Share
                     </button>
                     <button
                       onClick={() => setShowForwardPopup(false)}
-                      className="close-profile-popup-btn"
+                      className="shortlistedcan-close-forward-popup-btn"
                     >
                       Close
                     </button>

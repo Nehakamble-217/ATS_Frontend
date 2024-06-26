@@ -51,6 +51,22 @@
   /* .summary {
     margin-top: 20px;
   } */
-  
-  
-  
+  .rejectedcan-Filter-btn,.rejectedcan-share-btn,.rejectedcan-share-close-btn,
+.rejectedcan-share-select-btn,.rejectedcan-forward-btn
+,.rejectedcan-share-forward-popup-btn,.rejectedcan-close-forward-popup-btn{
+  font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.rejectedcan-Filter-btn:hover,.rejectedcan-share-close-btn:hover,.rejectedcan-share-btn:hover,.rejectedcan-share-select-btn:hover,.rejectedcan-forward-btn:hover,.rejectedcan-share-forward-popup-btn:hover,.rejectedcan-close-forward-popup-btn:hover{
+  background-color: white;
+    color: #ffcb9b;
+    opacity: 0.8;
+}

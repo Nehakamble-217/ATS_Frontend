@@ -9,6 +9,7 @@ import AdminLogin from "./LoginPage/adminLogin";
 import CandidateVerification from "./CandidateSection/candidateVerification";  
 
 import Home from "../src/MainDashboard/mainDashboard";
+import CandidateResumeLink from "./ResumeData/candidateResumeLink";
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/follow-up/:candidateId" element={<AfterSelection />} />
           <Route path="/admin-login" element={<AdminLogin></AdminLogin>}></Route>
           <Route path="api/ats/157industries/verify" element={<CandidateVerification></CandidateVerification>}></Route>
+          <Route path="/shareResumeLink" element={<CandidateResumeLink/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

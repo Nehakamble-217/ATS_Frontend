@@ -58,4 +58,24 @@
 .shortlistedcandidate .tabledaterow:hover {
   background-color: #F2F2F2; 
 }
+.shortlistedcan-share-btn,
+.shortlistedcan-share-close-btn,
+.shortlistedcan-share-select-btn,.shortlistedcan-forward-btn
+,.shortlistedcan-share-forward-popup-btn,.shortlistedcan-close-forward-popup-btn{
+font-size: 16px;
+  border-radius: 15px;
+  height: 30px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: #ffcb9b;
+  border: 1px solid gray;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.shortlistedcan-share-btn:hover,.shortlistedcan-share-select-btn:hover,.shortlistedcan-forward-btn:hover,.shortlistedcan-share-forward-popup-btn:hover,.shortlistedcan-close-forward-popup-btn:hover,.shortlistedcan-share-close-btn:hover{
+background-color: white;
+  color: #ffcb9b;
+  opacity: 0.8;
+}
 /* today */

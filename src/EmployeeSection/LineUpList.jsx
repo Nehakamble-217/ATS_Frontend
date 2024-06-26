@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/LineUpList.css";
 import UpdateCallingTracker from "./UpdateSelfCalling";
+import Modal from "react-bootstrap/Modal";
 
 const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [callingList, setCallingList] = useState([]);
@@ -14,7 +15,6 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
 
   const [shortListedData, setShortListedData] = useState([]);
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showFilterSection, setShowFilterSection] = useState(false);
@@ -25,18 +25,38 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
 
+  const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
+  const [showShareButton, setShowShareButton] = useState(true);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
+  const [showForwardPopup, setShowForwardPopup] = useState(false);
 
   const navigator = useNavigate();
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`
+      `http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`
     )
       .then((response) => response.json())
       .then((data) => setFilteredCallingList(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeIdnew]);
+
+  useEffect(() => {
+    const fetchEmployeeNameAndID = async () => {
+      try {
+        const response = await fetch(
+          `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
+        );
+        const data = await response.json();
+        setFetchEmployeeNameID(data);
+      } catch (error) {
+        console.error("Error fetching shortlisted data:", error);
+      }
+    };
+    fetchEmployeeNameAndID();
+  }, []);
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter(
@@ -70,9 +90,8 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
-
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`
+      `http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -237,14 +256,19 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     return null;
   };
 
-  const handleSelectAll = (event) => {
-    if (event.target.checked) {
+  const handleShortlistedShare = (e) => {
+    e.preventDefault();
+    setShowShareButton(false);
+  };
+
+  const handleSelectAll = () => {
+    if (allSelected) {
+      setSelectedRows([]);
+    } else {
       const allRowIds = filteredCallingList.map((item) => item.candidateId);
       setSelectedRows(allRowIds);
-      console.log(allRowIds);
-    } else {
-      setSelectedRows([]);
     }
+    setAllSelected(!allSelected);
   };
 
   const handleSelectRow = (candidateId) => {
@@ -255,6 +279,50 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
         return [...prevSelectedRows, candidateId];
       }
     });
+  };
+
+  const forwardSelectedCandidate = (e) => {
+    e.preventDefault();
+    if (selectedRows.length > 0) {
+      setShowForwardPopup(true);
+    }
+  };
+
+  const handleShare = async () => {
+    if (selectedEmployeeId && selectedRows.length > 0) {
+      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+
+      const requestData = {
+        employeeId: selectedEmployeeId,
+        candidateIds: selectedRows,
+      };
+
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // Add any additional headers as needed
+        },
+        body: JSON.stringify(requestData),
+      };
+
+      try {
+        const response = await fetch(url, requestOptions);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Handle success response
+        console.log("Candidates forwarded successfully!");
+        setShowForwardPopup(false); // Close the modal or handle any further UI updates
+
+        // Optionally, you can fetch updated data after successful submission
+        // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
+      } catch (error) {
+        console.error("Error while forwarding candidates:", error);
+        // Handle error scenarios or show error messages to the user
+      }
+    }
   };
 
   return (
@@ -269,9 +337,51 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
             ></i>
             <h5 style={{ color: "gray" }}>Line Up List</h5>
 
-            <button onClick={toggleFilterSection}>
-              Filter <i className="fa-solid fa-filter"></i>
-            </button>
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "10px",
+              }}
+            >
+              {showShareButton ? (
+                <button
+                  className="lineUp-share-btn"
+                  onClick={() => setShowShareButton(false)}
+                >
+                  Share
+                </button>
+              ) : (
+                <div style={{ display: "flex", gap: "5px" }}>
+                  <button
+                    className="lineUp-share-close-btn"
+                    onClick={() => setShowShareButton(true)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="lineUp-share-select-btn"
+                    onClick={handleSelectAll}
+                  >
+                    {allSelected ? "Deselect All" : "Select All"}
+                  </button>
+                  <button
+                    className="lineUp-forward-btn"
+                    onClick={forwardSelectedCandidate}
+                  >
+                    Forward
+                  </button>
+                </div>
+              )}
+              <button
+                className="lineUp-Filter-btn"
+                onClick={toggleFilterSection}
+              >
+                Filter <i className="fa-solid fa-filter"></i>
+              </button>
+            </div>
           </div>
           {showSearchBar && (
             <input
@@ -336,15 +446,18 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
             <table className="attendance-table">
               <thead>
                 <tr className="attendancerows-head">
-                  <th className="attendanceheading">
-                    <input
-                      type="checkbox"
-                      onChange={handleSelectAll}
-                      checked={
-                        selectedRows.length === filteredCallingList.length
-                      }
-                    />
-                  </th>
+                  {!showShareButton ? (
+                    <th className="attendanceheading">
+                      <input
+                        type="checkbox"
+                        onChange={handleSelectAll}
+                        checked={
+                          selectedRows.length === filteredCallingList.length
+                        }
+                        name="selectAll"
+                      />
+                    </th>
+                  ) : null}
                   <th className="attendanceheading">Sr No.</th>
                   <th
                     className="attendanceheading"
@@ -406,13 +519,15 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
               <tbody>
                 {filteredCallingList.map((item, index) => (
                   <tr key={item.candidateId} className="attendancerows">
-                    <td className="tabledata ">
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.includes(item.candidateId)}
-                        onChange={() => handleSelectRow(item.candidateId)}
-                      />
-                    </td>
+                    {!showShareButton ? (
+                      <td className="tabledata">
+                        <input
+                          type="checkbox"
+                          checked={selectedRows.includes(item.candidateId)}
+                          onChange={() => handleSelectRow(item.candidateId)}
+                        />
+                      </td>
+                    ) : null}
                     <td className="tabledata">{index + 1}</td>
 
                     <td
@@ -916,6 +1031,85 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                 ))}
               </tbody>
             </table>
+            {showForwardPopup ? (
+              <>
+                <div
+                  className="modal show bg-black bg-opacity-50"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "fixed",
+                    width: "100%",
+                    height: "100vh",
+                  }}
+                >
+                  <Modal.Dialog
+                    style={{
+                      width: "500px",
+                      height: "800px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginTop: "100px",
+                    }}
+                  >
+                    <Modal.Header
+                      style={{ fontSize: "18px", backgroundColor: "#f2f2f2" }}
+                    >
+                      Forward To
+                    </Modal.Header>
+                    <Modal.Body
+                      style={{
+                        display: "grid",
+                        gap: "10px",
+                        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                        backgroundColor: "#f2f2f2",
+                      }}
+                    >
+                      {fetchEmployeeNameID.map((item) => (
+                        <>
+                          <div
+                            key={`${item[0]}`}
+                            className=""
+                            style={{
+                              display: "flex",
+                              gap: "20px",
+                              columnSpan: "span 1 / span 1",
+                            }}
+                          >
+                            <input
+                              type="radio"
+                              id={`${item[0]}`}
+                              name="forward"
+                              value={`${item[0]}`}
+                              onChange={(e) =>
+                                setSelectedEmployeeId(e.target.value)
+                              }
+                            />
+                            <label htmlFor={`${item[0]}`}>{item[1]}</label>
+                          </div>
+                        </>
+                      ))}
+                    </Modal.Body>
+                    <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
+                      <button
+                        onClick={handleShare}
+                        className="lineUp-share-forward-popup-btn"
+                      >
+                        Share
+                      </button>
+                      <button
+                        onClick={() => setShowForwardPopup(false)}
+                        className="lineUp-close-forward-popup-btn"
+                      >
+                        Close
+                      </button>
+                    </Modal.Footer>
+                  </Modal.Dialog>
+                </div>
+              </>
+            ) : null}
           </div>
         </>
       ) : (

@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,CSSProperties} from 'react';
 import "./chatRoom.css";
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
+import { useParams } from 'react-router-dom';
+import HashLoader
+ from "react-spinners/HashLoader";
 
-var stompClient = null;
+
+let stompClient = null;
 const ChatRoom = () => {
     const [privateChats, setPrivateChats] = useState(new Map());     
     const [publicChats, setPublicChats] = useState([]); 
+      let [color, setColor] = useState("#ffcb9b");
+
     const [tab, setTab] = useState("CHATROOM");
     const [userData, setUserData] = useState({
         username: '',
@@ -15,35 +21,60 @@ const ChatRoom = () => {
         message: '',
         file: null
     });
-    
+    const { employeeId } = useParams();
+
     useEffect(() => {
-        console.log(userData);
-    }, [userData]);
+        fetchUsername();
+    }, []);
 
+    useEffect(() => {
+        if (userData.username && !userData.connected) {
+            connect(userData.username);
+        }
+    }, [userData.username]);
 
+    const fetchUsername = async () => {
+        try {
+            const response = await fetch(`http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`);
+            let result;
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                result = await response.json();
+            } else {
+                result = await response.text();
+            }
 
+            const username = result.employeeName || result; // Adjust depending on the response structure
 
-    
-    const connect = () => {
+            setUserData(prevUserData => ({
+                ...prevUserData,
+                username: username
+            }));
+        } catch (error) {
+            console.error('Failed to fetch username:', error);
+        }
+    };
+
+    const connect = (username) => {
         let Sock = new SockJS('http://localhost:8891/ws');
         stompClient = over(Sock);
-        stompClient.connect({}, onConnected, onError);
+        stompClient.connect({}, () => onConnected(username), onError);
     }
 
-    const onConnected = () => {
+    const onConnected = (username) => {
         setUserData(prevUserData => ({
             ...prevUserData,
             connected: true
         }));
         stompClient.subscribe('/chatroom/public', onMessageReceived);
-        stompClient.subscribe('/user/'+userData.username+'/private', onPrivateMessage);
-        userJoin();
+        stompClient.subscribe('/user/' + username + '/private', onPrivateMessage);
+        userJoin(username);
     }
 
-    const userJoin = () => {
+    const userJoin = (username) => {
         var chatMessage = {
-            senderName: userData.username,
-            status:"JOIN"
+            senderName: username,
+            status: "JOIN"    
         };
         stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
     }
@@ -58,16 +89,15 @@ const ChatRoom = () => {
                 }
                 break;
             case "MESSAGE":
-                publicChats.push(payloadData);
-                setPublicChats([...publicChats]);
+                setPublicChats(prevChats => [...prevChats, payloadData]);
                 break;
-           case "FILE":
-            if (payloadData.senderName !== userData.username) {
-        // Add file message to public chats only if sender is not the current user
-               publicChats.push(payloadData);
-               setPublicChats([...publicChats]);
-            }
-            break;
+            case "FILE":
+                if (payloadData.senderName !== userData.username) {
+                    setPublicChats(prevChats => [...prevChats, payloadData]);
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -78,9 +108,9 @@ const ChatRoom = () => {
             privateChats.get(payloadData.senderName).push(payloadData);
             setPrivateChats(new Map(privateChats));
         }else{
-            let list =[];
+            let list = [];
             list.push(payloadData);
-            privateChats.set(payloadData.senderName,list);
+            privateChats.set(payloadData.senderName, list);
             setPrivateChats(new Map(privateChats));
         }
     }
@@ -105,105 +135,84 @@ const ChatRoom = () => {
         }));
     }
 
-const sendValue = () => {
-    console.log("Sending value...");
-    console.log("Message:", userData.message);
-    console.log("File:", userData.file);
-      if (stompClient) {
-            if (userData.message.trim() !== "") {
-                const messageData = {
-                    senderName: userData.username,
-                    message: userData.message,
-                    status: "MESSAGE"
-                };
-                stompClient.send("/app/message", {}, JSON.stringify(messageData));
-                setUserData(prevUserData => ({
-                    ...prevUserData,
-                    message: ""
-                }));
-            }}
-    if (stompClient && userData.file ) {
-    // Upload the file to the server
-    const formData = new FormData();
-    formData.append('file', userData.file);
-    formData.append('senderName', userData.username);
-    formData.append("message",userData.message)
-
-    
-    
-    fetch('http://localhost:8891/upload', {
-        method: 'POST',
-        body: formData
-    })
-    
-    
-    .then(response => {
-        if (response.ok) {
-            // File uploaded successfully
-            console.log('File uploaded successfully');
-            
-            // Send the file message to the appropriate destination
-            const fileMessageData = {
-                senderName: userData.username,
-                fileName: userData.file.name,
-                fileUrl: URL.createObjectURL(userData.file),
-                status: "FILE"
-            };
-            stompClient.send("/app/message", {}, JSON.stringify(fileMessageData));
-
-            // Clear the file input and update UI
-            setUserData(prevUserData => ({
-                ...prevUserData,
-                file: null
-            }));
-            setPublicChats(prevChats => [
-    ...prevChats,
-    {
-        senderName: userData.username,
-        fileName: userData.file.name,
-        fileUrl: URL.createObjectURL(userData.file) // Use the fileUrl from state
-    }
-    
-]);
-        } else {
-            console.error('Failed to upload file');
+    const sendValue = () => {
+        if (userData.message.trim() !== "") {
+            sendMessage();
         }
-    })
-    .catch(error => {
-        console.error('Error uploading file:', error);
-    });
-}
+        if(userData.file) {
+            uploadFile();
+        }
+    };
 
-}
-
-
-
-    const handleUsername = (event) => {
-        const {value} = event.target;
+    const sendMessage = () => {
+        const messageData = {
+            senderName: userData.username,
+            message: userData.message,
+            status: "MESSAGE"
+        };
+        stompClient.send("/app/message", {}, JSON.stringify(messageData));
         setUserData(prevUserData => ({
             ...prevUserData,
-            username: value
+            message: ""
         }));
-    }
+    };
+
+    const uploadFile = () => {
+        const formData = new FormData();
+        formData.append('file', userData.file);
+        formData.append('senderName', userData.username);
+
+        fetch('http://localhost:8891/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('File uploaded successfully');
+
+                const fileMessageData = {
+                    senderName: userData.username,
+                    fileName: userData.file.name,
+                    fileUrl: URL.createObjectURL(userData.file),
+                    status: "FILE"
+                };
+                stompClient.send("/app/message", {}, JSON.stringify(fileMessageData));
+
+                setUserData(prevUserData => ({
+                    ...prevUserData,
+                    file: null
+                }));
+                setPublicChats(prevChats => [
+                    ...prevChats,
+                    {
+                        senderName: userData.username,
+                        fileName: userData.file.name,
+                        fileUrl: URL.createObjectURL(userData.file)
+                    }
+                ]);
+            } else {
+                console.error('Failed to upload file');
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+    };
 
     const openFile = (fileUrl) => {
         window.open(fileUrl, '_blank');
-    }
-
-    const registerUser = () => {
-        connect();
     }
 
     return (
         <div className="container">
             {userData.connected ?
                 <div className="chat-box">
-                    <div className="member-list">
+                     <div className="member-list">
                         <ul>
-                            <div><h1>{userData.username} Chat Room</h1></div>
-                            <li onClick={() => {setTab("CHATROOM")}} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
+                            <div><h4 className='fetchUsername'>{userData.username} Chat Room</h4></div>
+                            <li onClick={() => { setTab("CHATROOM") }} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
                             {[...privateChats.keys()].map((name, index) => (
-                                <li onClick={() => {setTab(name)}} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
+                                <li onClick={() => { setTab(name) }} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
                             ))}
                         </ul>
                     </div>
@@ -255,18 +264,9 @@ const sendValue = () => {
                     </div>}
                 </div>
                 :
-                <div className="register">
-                    <input
-                        id="user-name"
-                        placeholder="Enter your name"
-                        name="userName"
-                        value={userData.username}
-                        onChange={handleUsername}
-                        margin="normal"
-                      />
-                      <button type="button" onClick={registerUser}>
-                            connect
-                      </button> 
+                <div className='register'>
+                    <HashLoader
+	 color={color}  aria-label="Loading Spinner" data-testid="loader"/>
                 </div>
             }
         </div>

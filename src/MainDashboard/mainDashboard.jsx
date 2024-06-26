@@ -15,7 +15,7 @@ const Home = () => {
   }
 
   return (
-    <div className="tejal">
+    <div className="mainDashboard-div">
       <div className="main-clouds"></div>
       {/* <div className="small-container"></div> */}
       {/* <div className="small-container"></div> */}
@@ -24,14 +24,14 @@ const Home = () => {
         <div className="square-box">
           <div className="content">
             <h1>Client</h1>
-            <button className="login">Login</button>
+            <button className="login1">Login</button>
           </div>
         </div>
 
         <div className="square-box">
           <div className="content">
             <h1>Applicant</h1>
-            <button className="login">Login</button>
+            <button className="login1">Login</button>
           </div>
         </div>
 

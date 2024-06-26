@@ -29,7 +29,7 @@ const JobListing = () => {
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
 
   useEffect(() => {
-    fetch("http://192.168.1.35:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.39:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -687,7 +687,6 @@ const JobListing = () => {
           ))}
         </div>
       )}
-
       {showViewMore && (
         <main className="name">
           {selectedRequirementId === requirementId && (
