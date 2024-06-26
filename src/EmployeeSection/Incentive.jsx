@@ -7,7 +7,8 @@ const Incentive = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://192.168.1.35:8891/api/ats/157industries/fetch-incentive/6');
+        const response = await fetch('http://192.168.1.39:8891/api/ats/157industries/fetch-incentive/6');
+
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -92,6 +93,7 @@ const Incentive = () => {
           <th className='attendanceheading'>Candidate Incentive</th>
           <th className='attendanceheading'>Candidate Status</th>
           <th className='attendanceheading'>Your Incentive</th>
+          <th className='attendanceheading'>Incentive Received/Not</th>
         </tr>
       </thead>
       <tbody>
@@ -108,18 +110,19 @@ const Incentive = () => {
             <td className='tabledata'>{row.incentive}</td>
             <td className='tabledata'>{row.activeStatus}</td>
             <td className='tabledata'>{row.yourIncentives}</td>
+            <td className='tabledata'>{row.Incentive_Received_Not}</td>
           </tr>
         ))}
         <tr className='attendancerows'>
-          <td colSpan="8" style={{ textAlign: "left" }} className='tabledata'>Grant Total Incentives</td>
+          <td colSpan="9" style={{ textAlign: "left" }} className='tabledata'>Grant Total Incentives</td>
           <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'>{grantTotalIncentives}</td>
         </tr>
         <tr className="total-row">
-          <td colSpan="8" style={{ textAlign: "left" }} className='tabledata'>Grant Total Loss Incentives</td>
+          <td colSpan="9" style={{ textAlign: "left" }} className='tabledata'>Grant Total Loss Incentives</td>
           <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'>{grantTotalLossIncentives}</td>
         </tr>
         <tr className="total-row">
-          <td colSpan="8" style={{ textAlign: "left" }} className='tabledata'>Grant Total Your Incentives</td>
+          <td colSpan="9" style={{ textAlign: "left" }} className='tabledata'>Grant Total Your Incentives</td>
           <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'>{grantTotalYourIncentives}</td>
         </tr>
       </tbody>
