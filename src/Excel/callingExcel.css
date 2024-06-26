@@ -15,6 +15,7 @@
   .card {
     margin-bottom: 20px;
     background-color: #ffe5b5; /* Added background color */
+    color: gray;
   }
   
   /* Data table styles */
@@ -26,12 +27,15 @@
     overflow-x: auto;
     white-space: nowrap;
     padding: none;
+    color: gray;
   }
   
   .data-tabled .tabled th {
     background-color: #ffcb9b; /* Add background color to main headings */
     font-size: 16px;
     height:32px;
+    color: gray;
+    
   }
   
   /* hide scrollbar but allow scrolling */
@@ -57,6 +61,7 @@
     color: gray; /* Set row height */
     font-size: 18px;
     padding: 0px;
+    color: gray;
   
   }
   
@@ -79,8 +84,82 @@
     display: flex;
     justify-content: center;
   }
+ /* Grid container for buttons */
+ .d-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.d-grid button {
+  background: #ffcb9b;
+  border: none;
+  height: 30px;
+  width: auto; /* Adjust width as needed */
+  border-radius: 15px;
+  color: white;
+  padding: 0 20px; /* Adjust padding for text alignment */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-grid button:hover {
+  background: white;
+  color: #ffcb9b;
+}
+
+.text-success {
+  color: gray !important;
+  font-size: 16px;
+  margin-top: 0px;
+
+}
+
+.text-danger {
+  color: gray !important;
+  font-size: 16px;
   
-  .card .button-wrapper button {
+}
+
+.mt-3 {
+  margin-top: 0rem !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-body {
+    padding: 15px;
+  }
+
+  .form-control {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  
+}
+.form-control[type=file]:not(:disabled):not([readonly]) {
+  cursor: pointer;
+  color: gray;
+}
+  .form-control[type=text] {
+    cursor: pointer;
+    color: gray;
+  }
+  /* .card .button-wrapper button {
     font-size: 16px;
     width: 20vh;
     height: 30px;
@@ -112,4 +191,20 @@
       height:28px;
     }
   }
-  
+   */
+   /* callingDataExcel */
+   /* callingList.css */
+
+.filter-heading {
+  border-radius: 15px;
+  color: gray; /* Text color */
+  padding-top: 5px; /* Top padding */
+  margin-bottom: 10px; /* Bottom margin for spacing */
+}
+/* callingList.css */
+
+
+
+
+
+

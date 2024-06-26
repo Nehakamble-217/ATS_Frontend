@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 const Incentive = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const {employeeId} =useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://192.168.1.38:8891/api/ats/157industries/fetch-incentive/6');
-
-
+        const response = await fetch(`http://192.168.1.39:8891/api/ats/157industries/fetch-incentive/${employeeId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const fetchedData = await response.json();
-
-        // Adjust data for active candidates
         const adjustedData = fetchedData.map(row => {
           if (row.activeStatus === 'Active') {
             return { ...row, yourIncentives: row.incentive };

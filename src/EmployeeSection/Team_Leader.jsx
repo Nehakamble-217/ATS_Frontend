@@ -306,9 +306,7 @@ function getClassForCategory(category) {
                   <button onClick={() => handleUpdateClick(assignee)} className='all_assignbtn'>
                     Update
                   </button>
-                  <button onClick={() => handleRemoveClick(assignee)} className='remove_assignbtn'>
-                    Remove
-                  </button>
+                 
                 </td>
               </tr>
             ))}

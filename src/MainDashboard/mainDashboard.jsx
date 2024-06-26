@@ -24,14 +24,14 @@ const Home = () => {
         <div className="square-box">
           <div className="content">
             <h1>Client</h1>
-            <button className="login">Login</button>
+            <button className="login1">Login</button>
           </div>
         </div>
 
         <div className="square-box">
           <div className="content">
             <h1>Applicant</h1>
-            <button className="login">Login</button>
+            <button className="login1">Login</button>
           </div>
         </div>
 

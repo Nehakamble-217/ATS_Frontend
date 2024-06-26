@@ -30,7 +30,8 @@ function Sidebar({
   toggelAddRecruiter,
   toggelDisplayNotPad,
   toggelAddResumes,
-  toggleChatRoom
+  toggleChatRoom,
+  toggleAssigncolumns,
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -114,7 +115,7 @@ function Sidebar({
       const year = now.getFullYear();
 
       await axios.post(
-        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -169,7 +170,7 @@ function Sidebar({
             <li className={`${activeSubMenu === 'candidate' || isCandidateSectionActive ? 'active' : ''}`} onClick={toggleSubMenu('candidate')}>
               <a href="#">
                 <i class="fa-solid fa-users" style={{color:"gray"}}></i>
-                <span className="sidebar-text" style={{color:"gray"}} >Candidate Section</span>
+                <span className="sidebar-text" style={{color:"gray"}} >Candidate's Section</span>
                 <i className="arrow ph-bold ph-caret-down"></i>
               </a>
               <ul className={`sub-menu ${activeSubMenu === 'candidate' ? 'active' : ''}`}>
@@ -211,12 +212,14 @@ function Sidebar({
                   </a>
                 </li>
 
-                <li>
+{/* ---------Arshad Comment this changes dont uncomment-------------- */}
+                {/* <li>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Self Offer Work</span>
                   </a>
-                </li>
+                </li> */}
+{/* ---------Arshad Comment this changes dont uncomment-------------- */}
 
                 <li onClick={toggleEmployeeMasterSheet}>
                   <a href="#">
@@ -280,7 +283,7 @@ function Sidebar({
               </a>
               <ul className={`sub-menu sub-menu1 ${activeSubMenu === 'admin-section' ? 'active' : ''}`}>
 
-                <li>
+              <li onClick={toggleAssigncolumns}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Assign Columns</span>
@@ -330,12 +333,16 @@ function Sidebar({
                     <span className="sidebar-text">Line Up Data</span>
                   </a>
                 </li>
-                <li>
+
+{/* ---------Arshad Comment this changes dont uncomment-------------- */}
+                {/* <li>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Offers Data</span>
                   </a>
-                </li>
+                </li> */}
+{/* ---------Arshad Comment this changes dont uncomment-------------- */}
+
                 <li onClick={handleButtonClick('resumeData', toggelResumeData)} className={activeButton === 'resumeData' ? 'active' : ''}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
@@ -438,14 +445,9 @@ function Sidebar({
           </ul>
         </div>
       </div>
-     
+  
       
     </div>
-    
-  
-    
-
-
     </>
   );
 }
