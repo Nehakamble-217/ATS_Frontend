@@ -31,6 +31,7 @@ function Sidebar({
   toggelDisplayNotPad,
   toggelAddResumes,
   toggleChatRoom,
+  toggleShareLink,
   toggleAssigncolumns,
 }) {
   const [workData, setWorkData] = useState([]);

@@ -3,6 +3,7 @@ import "../EmployeeDashboard/JobList.css";
 import { bottom } from "@popperjs/core";
 import ShareDescription from "./shareDescription";
 import JobDescriptionEdm from "../JobDiscription/jobDescriptionEdm";
+import jobDiscriptions from "../employeeComponents/jobDiscriptions";
 
 const JobListing = () => {
   const [jobDescriptions, setJobDescriptions] = useState([]);
@@ -20,10 +21,10 @@ const JobListing = () => {
   const [showSalary, setShowSalary] = useState(false);
   const [showIncentive, setShowIncentive] = useState(false);
   const [showJobDescriptionShare, setShowJobDescriptionShare] = useState(false);
+
   const [showIndustry, setShowIndustry] = useState(false);
   const [showRoles, setShowRoles] = useState(false);
   const [showJobRole, setShowJobRole] = useState(false);
-
   const [showJobDescriptionEdm, setShowJobDescriptionEdm] = useState(false);
   const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
@@ -144,6 +145,7 @@ const JobListing = () => {
 
   const toggleJobDescription = (requirementId) => {
     setShowViewMore(true);
+
     setSelectedRequirementId(
       selectedRequirementId === requirementId ? null : requirementId
     );
@@ -687,6 +689,7 @@ const JobListing = () => {
           ))}
         </div>
       )}
+
       {showViewMore && (
         <main className="name">
           {selectedRequirementId === requirementId && (
@@ -759,96 +762,92 @@ const JobListing = () => {
                 </button>
               </div>
             </span>
-            {selectedRequirementId === item.requirementId && (
-              <div className="names">
-                <p>
-                  <b>Field : </b>
-                  {jobDescriptions[selectedRequirementId]?.field || "N/A"}
-                </p>
-                <p>
-                  <b>Location :</b>
-                  {jobDescriptions[selectedRequirementId]?.location || "N/A"}
-                </p>
-                <p>
-                  <b>Salary :</b>{" "}
-                  {jobDescriptions[selectedRequirementId]?.salary || "N/A"}
-                </p>
-                <p>
-                  <b>Designation :</b>
-                  {jobDescriptions[selectedRequirementId]?.designation || "N/A"}
-                </p>
-                <p>
-                  <b>Educational Qualifications :</b>
-                  {jobDescriptions[selectedRequirementId]?.qualification ||
-                    "N/A"}
-                </p>
-                <p>
-                  <b>Experience :</b>
-                  {jobDescriptions[selectedRequirementId]?.experience || "N/A"}
-                </p>
-                <p>
-                  <b>Key Skills :</b>
-                  {jobDescriptions[selectedRequirementId]?.skills || "N/A"}
-                </p>
-                <p>
-                  <b>Company Link :</b>
-                  <a
-                    href={
-                      jobDescriptions[selectedRequirementId]?.companyLink || "#"
-                    }
-                  >
-                    Website
-                  </a>
-                </p>
-                <p>
-                  <b>Shifts : </b>
-                  {jobDescriptions[selectedRequirementId]?.shift || "N/A"}
-                </p>
-                <p>
-                  <b>Week Off's : </b>
-                  {jobDescriptions[selectedRequirementId]?.weekOff || "N/A"}
-                </p>
-                <p>
-                  <b>Notice Period :</b>{" "}
-                  {jobDescriptions[selectedRequirementId]?.noticePeriod ||
-                    "N/A"}
-                </p>
-                <p>
-                  <b>Job Role : </b>
-                  {jobDescriptions[selectedRequirementId]?.jobRole || "N/A"}
-                </p>
-                <p>
-                  <b>Job Type : </b>
-                  {jobDescriptions[selectedRequirementId]?.job_type || "N/A"}
-                </p>
-                <p>
-                  <b>Perks:</b>
-                  {jobDescriptions[selectedRequirementId]?.perks || "N/A"}
-                </p>
-                <p>
-                  <b>Incentives For Recruiters : </b>
-                  {jobDescriptions[selectedRequirementId]?.incentive || "N/A"}
-                </p>
-                <p>
-                  <b>Reporting Hierarchy : </b>
-                  {jobDescriptions[selectedRequirementId]?.reportingHierarchy ||
-                    "N/A"}
-                </p>
-                <p>
-                  <b>Number of Positions : </b>
-                  {jobDescriptions[selectedRequirementId]?.position || "N/A"}
-                </p>
-                <p>
-                  <b>Documentation : </b>
-                  {jobDescriptions[selectedRequirementId]?.documentation ||
-                    "N/A"}
-                </p>
-                <p>
-                  <b>Gender : </b>
-                  {jobDescriptions[selectedRequirementId]?.gender || "N/A"}
-                </p>
-              </div>
-            )}
+            <div className="names">
+              <p>
+                <b>Field : </b>
+                {jobDescriptions[selectedRequirementId]?.field || "N/A"}
+              </p>
+              <p>
+                <b>Location :</b>
+                {jobDescriptions[selectedRequirementId]?.location || "N/A"}
+              </p>
+              <p>
+                <b>Salary :</b>{" "}
+                {jobDescriptions[selectedRequirementId]?.salary || "N/A"}
+              </p>
+              <p>
+                <b>Designation :</b>
+                {jobDescriptions[selectedRequirementId]?.designation || "N/A"}
+              </p>
+              <p>
+                <b>Educational Qualifications :</b>
+                {jobDescriptions[selectedRequirementId]?.qualification || "N/A"}
+              </p>
+              <p>
+                <b>Experience :</b>
+                {jobDescriptions[selectedRequirementId]?.experience || "N/A"}
+              </p>
+              <p>
+                <b>Key Skills :</b>
+                {jobDescriptions[selectedRequirementId]?.skills || "N/A"}
+              </p>
+              <p>
+                <b>Company Link :</b>
+                <a
+                  href={
+                    jobDescriptions[selectedRequirementId]?.companyLink || "#"
+                  }
+                >
+                  Website
+                </a>
+              </p>
+              <p>
+                <b>Shifts : </b>
+                {jobDescriptions[selectedRequirementId]?.shift || "N/A"}
+              </p>
+              <p>
+                <b>Week Off's : </b>
+                {jobDescriptions[selectedRequirementId]?.weekOff || "N/A"}
+              </p>
+              <p>
+                <b>Notice Period :</b>{" "}
+                {jobDescriptions[selectedRequirementId]?.noticePeriod || "N/A"}
+              </p>
+              <p>
+                <b>Job Role : </b>
+                {jobDescriptions[selectedRequirementId]?.jobRole || "N/A"}
+              </p>
+              <p>
+                <b>Job Type : </b>
+                {jobDescriptions[selectedRequirementId]?.job_type || "N/A"}
+              </p>
+              <p>
+                <b>Perks:</b>
+
+                {jobDescriptions[selectedRequirementId]?.perks || "N/A"}
+              </p>
+              <p>
+                <b>Incentives For Recruiters : </b>
+                {jobDescriptions[selectedRequirementId]?.incentive || "N/A"}
+              </p>
+              <p>
+                <b>Reporting Hierarchy : </b>
+                {jobDescriptions[selectedRequirementId]?.reportingHierarchy ||
+                  "N/A"}
+              </p>
+              <p>
+                <b>Number of Positions : </b>
+                {jobDescriptions[selectedRequirementId]?.position || "N/A"}
+              </p>
+              <p>
+                <b>Documentation : </b>
+                {jobDescriptions[selectedRequirementId]?.documentation || "N/A"}
+              </p>
+              <p>
+                <b>Gender : </b>
+                {jobDescriptions[selectedRequirementId]?.gender || "N/A"}
+              </p>
+            </div>
           </section>
         </main>
       )}

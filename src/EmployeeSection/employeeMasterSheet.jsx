@@ -74,11 +74,6 @@ const EmployeeMasterSheet = () => {
     }
   };
 
-  const handleShortlistedShare = (e) => {
-    e.preventDefault();
-    setShowShareButton(false);
-  };
-
   const handleSelectAll = () => {
     if (allSelected) {
       setSelectedRows([]);
@@ -156,9 +151,10 @@ const EmployeeMasterSheet = () => {
         <h5 style={{ color: "gray" }}>Employee Master Sheet</h5>
 
         {showShareButton ? (
-          <button onClick={handleShortlistedShare}>Share</button>
+          <button onClick={() => setShowShareButton(false)}>Share</button>
         ) : (
           <div style={{ display: "flex", gap: "5px" }}>
+            <button onClick={() => setShowShareButton(true)}>Close</button>
             <button onClick={handleSelectAll}>
               {allSelected ? "Deselect All" : "Select All"}
             </button>
