@@ -9,6 +9,7 @@ import AdminLogin from "./LoginPage/adminLogin";
 import CandidateVerification from "./CandidateSection/candidateVerification";  
 
 import Home from "../src/MainDashboard/mainDashboard";
+import ForgotPasswordForm from "./LoginPage/ForgotPasswordForm";
 
 const App = () => {
 
@@ -18,7 +19,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/mainDashboard" element={<MainDashboard />} />
-          <Route path="/employee-login" element={<Login />} />
+          <Route path="/employee-login/:userType" element={<Login />} />
+          <Route path="/forgotPassword" element={<ForgotPasswordForm/>}/>
           <Route path="/empDash/:employeeId" element={<EmpDashboard />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection />} />
           <Route path="/admin-login" element={<AdminLogin></AdminLogin>}></Route>
