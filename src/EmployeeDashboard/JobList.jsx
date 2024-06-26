@@ -3,6 +3,7 @@ import "../EmployeeDashboard/JobList.css"
 import { bottom } from '@popperjs/core';
 import ShareDescription from './shareDescription';
 import JobDescriptionEdm from '../JobDiscription/jobDescriptionEdm';
+import jobDiscriptions from '../employeeComponents/jobDiscriptions';
 
 const JobListing = () => {
  const [jobDescriptions, setJobDescriptions] = useState([]);
@@ -23,7 +24,6 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showIndustry,setShowIndustry]=useState(false);
   const [showRoles,setShowRoles]=useState(false);
   const [showJobRole,setShowJobRole]=useState(false);
-
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
 const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
@@ -31,7 +31,7 @@ const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
 
 
 useEffect(() => {
-    fetch("http://192.168.1.38:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.39:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -147,9 +147,8 @@ useEffect(() => {
   
   const toggleJobDescription = (requirementId) => {
     setShowViewMore(true);
-    setSelectedRequirementId(selectedRequirementId === requirementId ? null : requirementId);
+    setSelectedRequirementId(requirementId === selectedRequirementId ? null : requirementId);
   };
-
 
   const handleclose =()=>{
     setShowViewMore(false);
@@ -553,6 +552,10 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
           <i className="fas fa-clock"></i>
           {item.fild}
         </div> */}
+         <div className="job-posted">
+          <i className="fas fa-clock"></i>
+          {item.requirementId}
+        </div>
       </div>
 
       
@@ -573,10 +576,9 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
   )}
 
 
-  {showViewMore && (
+  {showViewMore && selectedRequirementId === jobDiscriptions.requirementId &&(
     
         <main className="name">
-         {selectedRequirementId === requirementId && (
             <section className="overview">
               <div className="scroll-container">
                 <div className="info">
@@ -617,7 +619,7 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
                 </div>
               </div>
             </section>
-          )}
+          
           <section className="job-performance1">
             <span>
               <article>
@@ -630,8 +632,8 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
                 <button onClick={handleclose} className='daily-tr-btn'>Close</button>
               </div>
             </span>
-            {selectedRequirementId === item.requirementId && (
               <div className="names">
+                <p><b>Id : </b>{jobDescriptions[selectedRequirementId]?.requirementId || "N/A"}</p>
                 <p><b>Field : </b>{jobDescriptions[selectedRequirementId]?.field || "N/A"}</p>
                 <p><b>Location :</b>{jobDescriptions[selectedRequirementId]?.location || "N/A"}</p>
                 <p><b>Salary :</b> {jobDescriptions[selectedRequirementId]?.salary || "N/A"}</p>
@@ -654,7 +656,6 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
                 <p><b>Documentation : </b>{jobDescriptions[selectedRequirementId]?.documentation || "N/A"}</p>
                 <p><b>Gender : </b>{jobDescriptions[selectedRequirementId]?.gender || "N/A"}</p>
               </div>
-            )}
           </section>
         </main>
  )}

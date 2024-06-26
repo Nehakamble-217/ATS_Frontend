@@ -19,7 +19,7 @@ const {employeeId} = useParams();
   };
 
   useEffect(() => {
-    fetch("http://192.168.1.38:8891/api/ats/157industries/employee-details/34")
+    fetch("http://192.168.1.39:8891/api/ats/157industries/employee-details/34")
 
       .then((response) => response.json())
       .then((data) => {

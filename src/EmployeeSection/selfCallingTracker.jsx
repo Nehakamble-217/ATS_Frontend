@@ -438,9 +438,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/callingList.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UpdateCallingTracker from "./UpdateSelfCalling";
+import HashLoader from "react-spinners/HashLoader";
 
 const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [searchTerm, setSearchTerm] = useState("");
+   let [color, setColor] = useState("#ffcb9b");
   const [filterOptions, setFilterOptions] = useState([]);
   const [sortCriteria, setSortCriteria] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -451,6 +453,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
+    const [loading, setLoading] = useState(true); // Add loading state
+
   
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
@@ -469,13 +473,20 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
 
   useEffect(() => {
-    fetch(`http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
         setFilteredCallingList(data);
+        setLoading(false);
+      
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        // alert("Failed to Fetch")
+        setLoading(false);
+
+      });
   }, [employeeId]);
 
 
@@ -669,6 +680,13 @@ setShowselectedFilters(!showselectedFilters);
 
   return (
     <div className="App-after">
+       {loading ? (
+       <div className='register'>
+                    <HashLoader
+	 color={color}  aria-label="Loading Spinner" data-testid="loader"/>
+                </div>
+      ) : (
+        <>
       {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
@@ -844,6 +862,8 @@ setShowselectedFilters(!showselectedFilters);
           onCancel={() => setShowUpdateCallingTracker(true)}
         />
       )}
+      </>
+    )}
     </div>
   );
 };

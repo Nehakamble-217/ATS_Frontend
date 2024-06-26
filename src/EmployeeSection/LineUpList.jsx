@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/LineUpList.css";
 import UpdateCallingTracker from "./UpdateSelfCalling";
+import HashLoader from "react-spinners/HashLoader";
+
 
 const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [callingList, setCallingList] = useState([]);
@@ -11,7 +13,8 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
-  
+     let [color, setColor] = useState("#ffcb9b");
+
   const [shortListedData, setShortListedData] = useState([]);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
@@ -23,17 +26,24 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
+      const [loading, setLoading] = useState(true); // Add loading state
+
 
   const [selectedRows, setSelectedRows] = useState([]);
 
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
-            .then((data) =>setFilteredCallingList(data))
-      .catch((error) => console.error("Error fetching data:", error));
+            .then((data) =>{setFilteredCallingList(data)
+              setLoading(false);
+            })
+      .catch((error) => {console.error("Error fetching data:", error)
+        // alert("Error For fetching")
+        setLoading(false)
+      });
   }, [employeeIdnew]);
 
 
@@ -70,7 +80,7 @@ useEffect(() => {
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
 
-    fetch(`http://192.168.1.38:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -230,6 +240,13 @@ useEffect(() => {
 
   return (
     <div className="calling-list-container">
+       {loading ? (
+       <div className='register'>
+                    <HashLoader
+	 color={color}  aria-label="Loading Spinner" data-testid="loader"/>
+                </div>
+      ) : (
+      <>
       {!showUpdateCallingTracker ? (
         <>
         <div className="search">
@@ -646,6 +663,8 @@ useEffect(() => {
           onSuccess={handleUpdateSuccess}
           onCancel={() => setShowUpdateCallingTracker(false)}
         />
+      )}
+      </>
       )}
     </div>
   );
