@@ -6,7 +6,7 @@ import Profile from "../photos/profileImg.webp";
 import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
 
-function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink }) {
+function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
@@ -15,7 +15,7 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
   const [profileImageBase64, setProfileImageBase64] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [showAllDailyBtns, setShowAllDailyBtns] = useState(true);
-  
+
   const toggleDailyTBtn = () => {
     setShowDetails(!showDetails);
   };
@@ -29,9 +29,7 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
 
   const getStoredData = () => {
     const storedData = localStorage.getItem(`dailyWorkData_${employeeId}`);
-    return storedData
-      ? JSON.parse(storedData)
-      : { archived: 0, pending: 10 };
+    return storedData ? JSON.parse(storedData) : { archived: 0, pending: 10 };
   };
 
   const [time, setTime] = useState(getStoredTime());
@@ -49,7 +47,7 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
   const [dayPresentPaid, setDayPresentPaid] = useState("No");
   const [dayPresentUnpaid, setDayPresentUnpaid] = useState("Yes");
   const [remoteWork, setRemoteWork] = useState("Select");
-  
+  const [profileImage, setProfileImage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -60,16 +58,24 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
           `http://192.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
+        if (response.data.profileImage) {
+          // Convert byte code to Uint8Array
+          const byteCharacters = atob(response.data.profileImage);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
 
-        const byteData = response.data.profileImage;
-        if (byteData) {
-          const blob = new Blob([byteData]);
-          const fileReader = new FileReader();
-          fileReader.onload = function (event) {
-            const base64Image = event.target.result;
-            setProfileImageBase64(base64Image);
-          };
-          fileReader.readAsDataURL(blob);
+          // Create a Blob from the byte array
+          const blob = new Blob([byteArray], { type: "image/jpeg" });
+
+          // Create a URL for the Blob and set it as the image source
+          const url = URL.createObjectURL(blob);
+          setProfileImage(url);
+
+          // Clean up the URL object when the component unmounts
+          return () => URL.revokeObjectURL(url);
         }
       } catch (error) {
         console.error("Error fetching employee details:", error);
@@ -229,7 +235,6 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
       await axios.post(
         "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
         formData
-
       );
 
       localStorage.removeItem(`stopwatchTime_${employeeId}`);
@@ -265,16 +270,16 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
     const minutes = Math.floor((totalWorkTime % 3600) / 60);
     const seconds = Math.floor(totalWorkTime % 60);
 
-    const formattedTime = `${hours
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
     return formattedTime;
   };
 
   const handleImageClick = () => {
     setPopupVisible(true);
-    setModalEmployeeData(employeeData); 
+    setModalEmployeeData(employeeData);
   };
 
   const handleClosePopup = () => {
@@ -286,19 +291,12 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
   };
 
   return (
-
-
-     <div className="daily-timeanddate">
-            <div className="header-clouds"></div>
+    <div className="daily-timeanddate">
+      <div className="header-clouds"></div>
 
       <div className="head">
-
-        <div className="user-img" >
-          <img 
-            src={Profile}
-            alt="Profile"
-            onClick={profilePageLink}
-          />
+        <div className="user-img">
+          <img src={profileImage} alt="Profile" onClick={profilePageLink} />
         </div>
 
         <div className="user-details">
@@ -308,94 +306,92 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
           </p>
         </div>
       </div>
-  {showAllDailyBtns && ( 
-      <div className="all-daily-btns">
-        <div className="daily-t-btn">
-          <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
-            Target : 10
+      {showAllDailyBtns && (
+        <div className="all-daily-btns">
+          <div className="daily-t-btn">
+            <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
+              Target : 10
+            </button>
+            <button
+              className="daily-tr-btn"
+              style={{
+                color: data.archived <= 3 ? "red" : "green",
+                background: "#ffcb9b",
+              }}
+            >
+              Archived : {data.archived}
+            </button>
+            <button
+              className="daily-tr-btn"
+              style={{
+                color: data.pending < 7 ? "green" : "red",
+                background: "#ffcb9b",
+              }}
+            >
+              Pending : {data.pending}
+            </button>
+          </div>
+          <button className="loging-hr">
+            <h6 hidden>Time: {currentTime}</h6>
+            <h6 hidden>Date: {currentDate}</h6>
+            Login Hours : {time.hours.toString().padStart(2, "0")}:
+            {time.minutes.toString().padStart(2, "0")}:
+            {time.seconds.toString().padStart(2, "0")}
           </button>
+          <div hidden>
+            <h6>Late Mark : {lateMark}</h6>
+            <h6>Leave Type : {leaveType}</h6>
+            <h6>Paid Leave : {paidLeave}</h6>
+            <h6>Unpaid Leave : {unpaidLeave}</h6>
+            <h6>Day Present Paid : {dayPresentPaid}</h6>
+            <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
+          </div>
+
+          <div hidden style={{ display: "flex", flexDirection: "column" }}>
+            <label htmlFor="remoteWork">Remote Work:</label>
+            <select
+              className="select"
+              id="remoteWork"
+              value={remoteWork}
+              onChange={(e) => setRemoteWork(e.target.value)}
+            >
+              <option>Select</option>
+              <option value="work from Office">WFO</option>
+              <option value="Work from Home">WFH</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+
           <button
-            className="daily-tr-btn"
-            style={{
-              color: data.archived <= 3 ? "red" : "green",background:"#ffcb9b"
-            }}
+            className={running ? "timer-break-btn" : "timer-break-btn"}
+            onClick={running ? handlePause : handleResume}
+            style={{ height: "30px" }}
           >
-            Archived : {data.archived}
+            {running ? "Pause" : "Resume"}
           </button>
-          <button
-            className="daily-tr-btn"
-            style={{ color: data.pending < 7 ? "green" : "red" ,background:"#ffcb9b"}}
-          >
-            Pending : {data.pending}
-          </button>
-        </div>
-        <button className="loging-hr">
-          <h6 hidden>Time: {currentTime}</h6>
-          <h6 hidden>Date: {currentDate}</h6>
-          Login Hours : {time.hours.toString().padStart(2, "0")}:
-          {time.minutes.toString().padStart(2, "0")}:
-          {time.seconds.toString().padStart(2, "0")}
-        </button>
-        <div hidden>
-          <h6>Late Mark         : {lateMark}</h6>
-          <h6>Leave Type        : {leaveType}</h6>
-          <h6>Paid Leave        : {paidLeave}</h6>
-          <h6>Unpaid Leave      : {unpaidLeave}</h6>
-          <h6>Day Present Paid  : {dayPresentPaid}</h6>
-          <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
-        </div>
 
-        <div hidden style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="remoteWork">Remote Work:</label>
-          <select
-            className="select"
-            id="remoteWork"
-            value={remoteWork}
-            onChange={(e) => setRemoteWork(e.target.value)}
-          >
-            <option>Select</option>
-            <option value="work from Office">WFO</option>
-            <option value="Work from Home">WFH</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
-        </div>
-
-        <button
-          className={running ? "timer-break-btn" : "timer-break-btn"}
-          onClick={running ? handlePause : handleResume}
-          style={{height:"30px"}}
-        >
-          {running ? "Pause" : "Resume"}
-        </button>
-
-        {/* Dont Remove this 2 comment ...Arshad */}
-        {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
+          {/* Dont Remove this 2 comment ...Arshad */}
+          {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
-        {/* <img className="logout-btn"
+          {/* <img className="logout-btn"
           onClick={handleLogoutLocal}
           // style={{ width: "30px", borderRadius: "60%" }}
           src={logoutImg}
           alt="Logout"
         /> */}
+        </div>
+      )}
 
-      </div>
-  )}
-
-   <button
+      <button
         className="toggle-all-daily-btns"
         onClick={toggleAllDailyBtns}
         // style={{ display: showAllDailyBtns ? "none" : "block" }}
       >
         {!showAllDailyBtns ? "show" : "hidden"} All Buttons
       </button>
-
     </div>
   );
-};
+}
 
 export default DailyWork;
-
-
-
-
