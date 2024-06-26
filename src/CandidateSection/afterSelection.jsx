@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import RightTick from '../photos/greenTick.jpg'
-import './afterSelection.css'
+import RightTick from "../photos/greenTick.jpg";
+import "./afterSelection.css";
 
-const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => {
+const AfterSelection = ({
+  candidateId,
+  employeeId,
+  requirementId,
+  onReturn,
+}) => {
   useEffect(() => {
     console.log("Received Props:", { candidateId, employeeId, requirementId });
   }, [candidateId, employeeId, requirementId]);
@@ -40,7 +45,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
   const [reasonForRejectionOfferLetter, setReasonForRejectionOfferLetter] =
     useState("");
   const [reasonForNotJoin, setReasonForNotJoin] = useState("");
-  
+
   useEffect(() => {
     const fetchData = async () => {
       await fetchCandidateData();
@@ -173,7 +178,10 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2209b7e44898777add755ed2ffb6d019040307a8
         "http://192.168.1.39:8891/api/ats/157industries/add-after-selection",
 
         {
@@ -205,7 +213,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
     }
   };
 
-
   const JoininghandleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -234,7 +241,10 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
 
     try {
       const response = await fetch(
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2209b7e44898777add755ed2ffb6d019040307a8
         "http://192.168.1.39:8891/api/ats/157industries/save-join-data",
 
         {
@@ -259,18 +269,18 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
       console.log("Response received:", result);
 
       if (
-        (typeof result === "string" && result.includes("Data Added successfully")) ||
+        (typeof result === "string" &&
+          result.includes("Data Added successfully")) ||
         (result && result.success)
       ) {
-      onReturn(); 
-    } else {
-      throw new Error("Unexpected response format or error status");
+        onReturn();
+      } else {
+        throw new Error("Unexpected response format or error status");
+      }
+    } catch (error) {
+      console.error("Failed to submit form:", error);
     }
-  } catch (error) {
-    console.error("Failed to submit form:", error);
-  }
-};
-
+  };
 
   return (
     <div>
@@ -307,9 +317,13 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   value={mailReceived}
                   onChange={handleMailReceivedChange}
                 >
-                  <option value="" >Select Option</option>
-                  <option className="as-nofilechosen" value="received">Received</option>
-                  <option className="as-nofilechosen" value="notReceived">Not Received</option>
+                  <option value="">Select Option</option>
+                  <option className="as-nofilechosen" value="received">
+                    Received
+                  </option>
+                  <option className="as-nofilechosen" value="notReceived">
+                    Not Received
+                  </option>
                 </select>
               </div>
 
@@ -318,11 +332,10 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                   <hr />
                   <div className="after-document-fisrt">
                     <div className="after-document-files">
-                      
-                        <label htmlFor="adharCard" className="after-label">
-                          Aadhar Card:
-                        </label>
-                    
+                      <label htmlFor="adharCard" className="after-label">
+                        Aadhar Card:
+                      </label>
+
                       <input
                         type="file"
                         className="after-file-input"
@@ -364,10 +377,7 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                     </div>
 
                     <div className="after-document-files">
-                      <label
-                        htmlFor="degreeMarksheet"
-                        className="after-label"
-                      >
+                      <label htmlFor="degreeMarksheet" className="after-label">
                         Driving License:
                       </label>
                       <input
@@ -453,106 +463,104 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                         </span>
                       )}
                     </div>
-
                   </div>
 
                   <div className="after-document-fisrt">
-                  <div className="after-mail-div">
-                <div className="after-lable-div">
-                  <label
-                    htmlFor="offerLetterAccepted"
-                    className="after-label"
-                  >
-                    Offer Letter Accepted:
-                  </label>
-                </div>
-
-                <select
-                  id="offerLetterAccepted"
-                  className="after-select"
-                  value={offerLetterAccepted}
-                  onChange={handleOfferLetterAcceptedChange}
-                >
-                  <option value="">Select Option</option>
-                  <option value="accepted">Yes</option>
-                  <option value="notAccepted">No</option>
-                </select>
-              </div>
-
-              <div className="after-mail-div">
-                <div className="after-lable-div">
-                  <label htmlFor="joinStatus" className="after-label">
-                    Joining Status:
-                  </label>
-                </div>
-
-                <select
-                  id="joinStatus"
-                  className="after-select"
-                  value={joinStatus}
-                  onChange={handleJoinStatusChange}
-                >
-                  <option value="">Select Option</option>
-                  <option value="join">Join</option>
-                  <option value="drop">Drop</option>
-                  <option value="hold">Hold</option>
-                  <option value="toJoin">To Join</option>
-                </select>
-              </div>
-                  <div className="after-mail-div">
-                <div className="after-lable-div">
-                  <label
-                    htmlFor="offerLetterReceived"
-                    className="after-label"
-                  >
-                    Offer Letter Received:
-                  </label>
-                </div>
-
-                <select
-                  id="offerLetterReceived"
-                  className="after-select"
-                  value={offerLetterReceived}
-                  onChange={handleOfferLetterReceivedChange}
-                >
-                  <option value="">Select Option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
-                    
                     <div className="after-mail-div">
-                <div className="after-lable-div">
-                  <label className="after-label">
-                    Reason for Not Accepting:
-                  </label>
-                </div>
+                      <div className="after-lable-div">
+                        <label
+                          htmlFor="offerLetterAccepted"
+                          className="after-label"
+                        >
+                          Offer Letter Accepted:
+                        </label>
+                      </div>
 
-                <input
-                  type="text"
-                  className="after-input"
-                  id="joinReason"
-                  value={joinReason}
-                  onChange={(e) => setJoinReason(e.target.value)}
-                />
-              </div>
+                      <select
+                        id="offerLetterAccepted"
+                        className="after-select"
+                        value={offerLetterAccepted}
+                        onChange={handleOfferLetterAcceptedChange}
+                      >
+                        <option value="">Select Option</option>
+                        <option value="accepted">Yes</option>
+                        <option value="notAccepted">No</option>
+                      </select>
+                    </div>
 
+                    <div className="after-mail-div">
+                      <div className="after-lable-div">
+                        <label htmlFor="joinStatus" className="after-label">
+                          Joining Status:
+                        </label>
+                      </div>
 
-              <div className="after-mail-div">
-                <div className="after-lable-div">
-                  <label htmlFor="joinDate" className="after-label">
-                    Join Date:
-                  </label>
-                </div>
+                      <select
+                        id="joinStatus"
+                        className="after-select"
+                        value={joinStatus}
+                        onChange={handleJoinStatusChange}
+                      >
+                        <option value="">Select Option</option>
+                        <option value="join">Join</option>
+                        <option value="drop">Drop</option>
+                        <option value="hold">Hold</option>
+                        <option value="toJoin">To Join</option>
+                      </select>
+                    </div>
+                    <div className="after-mail-div">
+                      <div className="after-lable-div">
+                        <label
+                          htmlFor="offerLetterReceived"
+                          className="after-label"
+                        >
+                          Offer Letter Received:
+                        </label>
+                      </div>
 
-                <input
-                  type="date"
-                  className="after-input"
-                  id="joinDate"
-                  value={joinDate}
-                  onChange={(e) => setJoinDate(e.target.value)}
-                />
-              </div>
+                      <select
+                        id="offerLetterReceived"
+                        className="after-select"
+                        value={offerLetterReceived}
+                        onChange={handleOfferLetterReceivedChange}
+                      >
+                        <option value="">Select Option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                    </div>
+
+                    <div className="after-mail-div">
+                      <div className="after-lable-div">
+                        <label className="after-label">
+                          Reason for Not Accepting:
+                        </label>
+                      </div>
+
+                      <input
+                        type="text"
+                        className="after-input"
+                        id="joinReason"
+                        value={joinReason}
+                        onChange={(e) => setJoinReason(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="after-mail-div">
+                      <div className="after-lable-div">
+                        <label htmlFor="joinDate" className="after-label">
+                          Join Date:
+                        </label>
+                      </div>
+
+                      <input
+                        type="date"
+                        className="after-input"
+                        id="joinDate"
+                        value={joinDate}
+                        onChange={(e) => setJoinDate(e.target.value)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -576,12 +584,11 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                 Update Candidate
               </button>
               {showJoinSuccessMessage && (
-        <div className="alert alert-success" role="alert">
-          Data Added Successfully!
-        </div>
-      )}
+                <div className="alert alert-success" role="alert">
+                  Data Added Successfully!
+                </div>
+              )}
             </form>
-
           </div>
         ) : (
           <div>
@@ -669,7 +676,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
             </div>
             <div className="form-select-div">
               <form onSubmit={handleSubmit}>
-
                 <div className="after-mail-div">
                   <label style={{ paddingTop: "5px" }} className="after-label">
                     Active Status :
@@ -787,7 +793,6 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                 )}
 
                 {activeStatus === "Inactive" && (
-
                   <div className="after-mail-div">
                     <div className="active-resone">
                       <label className="after-label">Reason :</label>
@@ -795,7 +800,9 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                     <select
                       name="inactiveReason"
                       id="inactiveReason"
-                      style={{ width: inactiveReason === 'Other' ? '150px' : '400px' }}
+                      style={{
+                        width: inactiveReason === "Other" ? "150px" : "400px",
+                      }}
                       className="after-select"
                       value={inactiveReason}
                       onChange={handleInactiveReasonChange}
@@ -808,19 +815,18 @@ const AfterSelection = ({ candidateId, employeeId, requirementId,onReturn }) => 
                       <option value="Other">Other</option>
                     </select>
 
-                    {inactiveReason === 'Other' && (
-                      <div style={{ paddingLeft: '10px' }}>
+                    {inactiveReason === "Other" && (
+                      <div style={{ paddingLeft: "10px" }}>
                         <input
                           type="text"
                           placeholder="Enter reason"
                           value={otherReason}
-                          style={{ width: '350px' }}
+                          style={{ width: "350px" }}
                           onChange={(e) => setOtherReason(e.target.value)}
                         />
                       </div>
                     )}
                   </div>
-
                 )}
 
                 <center>

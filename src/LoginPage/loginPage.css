@@ -65,6 +65,10 @@
 .left-panel {
     width: 50%;
     padding: 20px;
+    flex: 1;
+    transition: all 0.5s ease-in-out;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     position: relative;
     opacity: 0;
@@ -77,6 +81,20 @@
     opacity: 0;
     animation: fadeIn 1.5s forwards;
     animation-delay: 0.5s;
+}
+
+/* for adjust forgot password form */
+.full-width {
+    flex-direction: column;
+}
+.full-width-panel {
+    width: 100%;
+    padding: 5px 0px;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .right-panel {
@@ -93,6 +111,7 @@
 
 .right-panel h2 {
     font-size: 2em;
+    text-align: center;
     color: #ffcb9b;
     margin-bottom: 30px;
     opacity: 0;
@@ -162,9 +181,27 @@
     color: #ffb281;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
+/* Hover styles for buttons */
+.button-hover {
+    background-color: #ffcb9b;
+    color: white;
+    border-radius: 30px;
+    border: 1px solid #f2f2f2;
+    padding: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .button-hover:hover {
+    background-color: white;
+    color: #ffcb9b;
+  }
+  
 
 .psw {
+    margin-top: 2px;
     font-size: 12px;
+    cursor: pointer;
 }
 
 @keyframes fadeIn {

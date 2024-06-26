@@ -23,18 +23,17 @@
 }
 
 
-.header-clouds{
-    position: absolute;
-      top: -140px;
-    left: 0;
-    width: 200%;
-    height: 300%;
-    background: url('/src/LogoImages/clouds.png') repeat-x;
-background-size: cover;    
-
-background-position: center;
-animation: moveClouds 40s linear infinite;
-    z-index:-1;
+.header-clouds {
+  position: fixed;
+  top: -130px;
+  left: 0;
+  width: 200%;
+  height: 206px;
+  background: url(/src/LogoImages/clouds.png) repeat-x;
+  background-size: cover;
+  background-position: center;
+  animation: moveClouds 40s linear infinite;
+  z-index: -1;
 }
 
 @keyframes moveClouds {

@@ -12,7 +12,13 @@ const Attendance = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+<<<<<<< HEAD
         const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/employee-attendance/6`);
+=======
+        const response = await fetch(`http://192.168.1.39:8891/api/ats/157industries/employee-attendance/6`);
+
+
+>>>>>>> 2209b7e44898777add755ed2ffb6d019040307a8
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

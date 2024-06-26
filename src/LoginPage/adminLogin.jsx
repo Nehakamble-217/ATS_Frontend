@@ -4,112 +4,126 @@ import AOS from "aos";
 import "aos/dist/aos.css"; // Add this line to include AOS styles
 
 const AdminLogin = ({ onLogin }) => {
-    const [employeeId, setEmployeeId] = useState("");
-    const [password, setPassword] = useState("");
-    const [fetchedPassword, setFetchedPassword] = useState("");
-    const [fetchedJobRole, setFetchedJobRole] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+  const [employeeId, setEmployeeId] = useState("");
+  const [password, setPassword] = useState("");
+  const [fetchedPassword, setFetchedPassword] = useState("");
+  const [fetchedJobRole, setFetchedJobRole] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        AOS.init({ duration: 3000 });
-    }, []);
+  useEffect(() => {
+    AOS.init({ duration: 3000 });
+  }, []);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        if (name === "employeeId") {
-            setEmployeeId(value);
-            if (value) {
-                handleBlur(value);
-            }
-        } else if (name === "password") {
-            setPassword(value);
-        }
-    };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "employeeId") {
+      setEmployeeId(value);
+      if (value) {
+        handleBlur(value);
+      }
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
 
-    const handleBlur = async (empId) => {
-        try {
-            const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/fetch-pass-on-role/${empId}`);
+  const handleBlur = async (empId) => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.39:8891/api/ats/157industries/fetch-pass-on-role/${empId}`
+      );
 
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-            
-            const [employeePassword, jobRole] = data.split(",");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
 
-            setFetchedPassword(employeePassword);
-            setFetchedJobRole(jobRole);
+      const [employeePassword, jobRole] = data.split(",");
 
-            console.log("========================");
-            console.log("Fetched Data: ");
-            console.log("employeeId: ", empId);
-            console.log("fetchedJobRole: ", jobRole);
-            console.log("fetchedPassword: ", employeePassword);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            setError("Error fetching data. Please try again later.");
-        }
-    };
+      setFetchedPassword(employeePassword);
+      setFetchedJobRole(jobRole);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("Entered Data: ");
-        console.log("password: ", password);
-        console.log("jobRole: ", fetchedJobRole);
+      console.log("========================");
+      console.log("Fetched Data: ");
+      console.log("employeeId: ", empId);
+      console.log("fetchedJobRole: ", jobRole);
+      console.log("fetchedPassword: ", employeePassword);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("Error fetching data. Please try again later.");
+    }
+  };
 
-        if (fetchedJobRole !== "Admin" || password !== fetchedPassword) {
-            setError("Invalid credential details.");
-            return;
-        }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Entered Data: ");
+    console.log("password: ", password);
+    console.log("jobRole: ", fetchedJobRole);
 
-        navigate(`/empDash/${employeeId}`);
-        onLogin();
-    };
+    if (fetchedJobRole !== "Admin" || password !== fetchedPassword) {
+      setError("Invalid credential details.");
+      return;
+    }
 
-    return (
+    navigate(`/empDash/${employeeId}`);
+    onLogin();
+  };
+
+  return (
+    <div>
+      <div>
         <div>
-            <div>
-                <div>
-                    <div>
-                        <div className="right-panel" data-aos="fade-left">
-                            <h2>Admin Login</h2>
-                            <form onSubmit={handleSubmit}>
-                                <div className="input-groups">
-                                    <i className="fas fa-user"></i>
-                                    <input
-                                        type="text"
-                                        id="loginpage-employeeId"
-                                        name="employeeId"
-                                        value={employeeId}
-                                        onChange={handleChange}
-                                        className="loginpage-form-control"
-                                        placeholder="Enter Employee ID"
-                                    />
-                                </div>
-                                <div className="input-groups">
-                                    <i className="fas fa-lock"></i>
-                                    <input
-                                        type="password"
-                                        id="loginpage-password"
-                                        name="password"
-                                        value={password}
-                                        onChange={handleChange}
-                                        className="loginpage-form-control"
-                                        placeholder="Enter Password"
-                                    />
-                                </div>
-                                <input className="form-control my-2 px-2" type="text" id="jobRole" value="Admin" readOnly />
-                                <div className="loginpage-error">{error}</div>
-                                <button className="login-button" type="submit" data-aos="fade-top">Login</button>
-                            </form>
-                        </div>
-                    </div>
+          <div>
+            <div className="right-panel" data-aos="fade-left">
+              <h2>Admin Login</h2>
+              <form onSubmit={handleSubmit}>
+                <div className="input-groups">
+                  <i className="fas fa-user"></i>
+                  <input
+                    type="text"
+                    id="loginpage-employeeId"
+                    name="employeeId"
+                    value={employeeId}
+                    onChange={handleChange}
+                    className="loginpage-form-control"
+                    placeholder="Enter Employee ID"
+                  />
                 </div>
+                <div className="input-groups">
+                  <i className="fas fa-lock"></i>
+                  <input
+                    type="password"
+                    id="loginpage-password"
+                    name="password"
+                    value={password}
+                    onChange={handleChange}
+                    className="loginpage-form-control"
+                    placeholder="Enter Password"
+                  />
+                </div>
+                <input
+                  className="form-control my-2 px-2"
+                  type="text"
+                  id="jobRole"
+                  value="Admin"
+                  readOnly
+                />
+                <div className="loginpage-error">{error}</div>
+                <button
+                  className="login-button"
+                  type="submit"
+                  data-aos="fade-top"
+                >
+                  Login
+                </button>
+              </form>
             </div>
+          </div>
         </div>
-    );
-};  
+      </div>
+    </div>
+  );
+};
 export default AdminLogin;
 
 // import React, { useState } from 'react';
@@ -124,7 +138,7 @@ export default AdminLogin;
 
 //     const fetchDetails = () => {
 //         const apiUrl = `http://192.168.1.43:8891/api/ats/157industries/fetch-pass-on-role/12`;
-        
+
 //         fetch(apiUrl)
 //             .then(response => response.json())
 //             .then(data => {
@@ -137,7 +151,7 @@ export default AdminLogin;
 
 //     const validateCredentials = () => {
 //         const validateUrl = `http://localhost:8891/api/ats/157industries/validate-credentials`;
-        
+
 //         const enteredDetails = {
 //             id: empId,
 //             jobRole: enteredJobRole,
@@ -168,7 +182,7 @@ export default AdminLogin;
 //                 onChange={(e) => setEmpId(e.target.value)}
 //             />
 //             <button onClick={fetchDetails}>Fetch Details</button>
-            
+
 //             {jobRole && employeePassword && (
 //                 <div>
 //                     <h3>Job Role: {jobRole}</h3>
