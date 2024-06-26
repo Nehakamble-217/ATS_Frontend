@@ -1,6 +1,19 @@
 /* Global Styles */
 
-
+.daily-tr-btns{
+   border: 1px solid gray;
+  border-radius: 15px;
+  background-color: #ffcb9b;
+  font-size: 16px;
+  color: white;
+  height: 30px;
+  width: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .white-Btn{
   border: 1px solid gray;
   border-radius: 15px;
@@ -15,10 +28,10 @@
   justify-content: center;
   align-items: center;
 }
-.white-Btn:hover{
+/* .white-Btn:hover{
   background-color: #ffcb9b;
   color: white;
-}
+} */
 .name {
   font-family: Arial, sans-serif;
   margin: 0px;
@@ -357,13 +370,13 @@ h4 {
     background-color: #ffcb9b;
     border: none;
     color: white; /* Initial color of the text */
-    padding: 10px 20px;
+    padding: 0px 10px;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     border-radius: 15px;
     font-size: 16px;
-    height: 40px;
+    height: 30px;
   }
   
   .search-button span {
@@ -383,8 +396,7 @@ h4 {
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
-  min-height: 200px;
-  max-height: 400px;
+ height: 220px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -420,13 +432,17 @@ h4 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .job-location,
 .job-experience,
 .job-skills,
 .job-posted {
+
+  width: 70%;
+  height: 25px;
+  overflow: hidden;
   margin-right: 20px;
   margin-bottom: 10px;
 }
@@ -440,9 +456,6 @@ h4 {
   color: #666;
 }
 
-.job-actions {
-  text-align: right;
-}
 
 
 
@@ -531,4 +544,19 @@ max-height: 300px;
 .city-filter button[style*="background-color: #6a0dad;"] {
   background-color: #6a0dad;
   color: white;
+}
+
+
+
+/* Arshad Started  css  from here */
+
+.job-actions {
+  justify-content: right;
+  display: flex;
+  gap: 5px;
+}
+
+#edm-share-icon{
+  color: gray;
+  padding-left: 5px;
 }

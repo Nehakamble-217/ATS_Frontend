@@ -1,0 +1,178 @@
+.employee-profile-main-div{
+  background-color: #ffe5b5;
+}
+.display-more-profile-btn,.close-profile-popup-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 15px;
+  /* margin-top: 15px; */
+  border-color: black;
+  background-color: #ffb281;
+  /* box-shadow: 0 0 5px #000000; */
+  color: white;
+  cursor: pointer;
+  border-radius: 15px;
+  font-size: 16px;
+  height: 30px;
+  width: auto;
+  /* vertical-align: middle; */
+    /* box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);/ */
+  border: 1px solid #ccc;
+}
+.display-more-profile-btn:hover,.close-profile-popup-btn:hover {
+    background-color: white;
+    color: #ffcb9b;
+    border: #f2f2f2;
+  }
+.employee-profile-section{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    /* height: 100vh; */
+    
+    padding: 15px;
+    gap: 20px;
+}
+.profile-back-button{
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: end;
+
+}
+.profile-back-button button{
+    /* margin: 5px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 15px;
+  /* margin-top: 15px; */
+  border-color: black;
+  background-color: #ffb281;
+  /* box-shadow: 0 0 5px #000000; */
+  color: white;
+  cursor: pointer;
+  border-radius: 15px;
+  font-size: 16px;
+  height: 30px;
+  width: auto;
+  /* vertical-align: middle; */
+    /* box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);/ */
+  border: 1px solid #ccc;
+}
+
+.profile-back-button button:hover {
+    background-color: white;
+    color: #ffcb9b;
+    border: #f2f2f2;
+  }
+.employee-profile-staticsection{
+    grid-column: span 1;
+    padding: 0 20px;
+    /* border-radius: 15px; */
+    display: flex;
+    /* margin: 0 auto; */
+    /* align-items: start; */
+    flex-direction: column;
+    /* overflow-y:auto */
+    /* position: fixed; */
+}
+/* .employee-profile-static{
+    position: sticky;
+    top: 10px;
+    overflow-y: auto;
+   
+    background-color: #f2f2f2;
+    padding: 15px 30px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow-y: auto;
+  max-height: 100vh; 
+} */
+.employee-profile-static{
+    position: fixed;
+    height: 550px;
+    width: 400px;
+    margin: 0 auto;
+    /* position: sticky;
+  top: 10px; */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  background-color: #f2f2f2;
+  padding: 15px 30px;
+  margin: 0 auto;
+  border-radius: 15px;
+  max-height: 100vh; 
+}
+.employee-profile-static::-webkit-scrollbar ,.employee-profile-scrollsection::-webkit-scrollbar{
+    width: 0px; /* Width of the scrollbar */
+  }
+  
+  .employee-profile-static::-webkit-scrollbar-track ,.employee-profile-scrollsection::-webkit-scrollbar-track{
+    background: transparent; /* Track color (background of the scrollbar) */
+  }
+  
+  .employee-profile-static::-webkit-scrollbar-thumb, .employee-profile-scrollsection::-webkit-scrollbar-thumb{
+    background-color: #ccc; /* Color of the scrollbar thumb */
+    border-radius: 5px; /* Rounded corners of the thumb */
+  }
+
+
+.employee-profile-scrollsection{
+    grid-column: span 2;
+    /* background-color: aquamarine; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+    overflow-y: auto; /* Enable scrolling */
+    /* max-height: 100vh; Limit the height and enable scrolling */
+}
+.employee-profile-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    color: gray;
+    margin-bottom: 15px;
+}
+.employee-profile-details img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.employee-profile-basic-details{
+    color: gray;
+}
+.employee-profile-document-social-details,
+.employee-profile-interview-traning-details,
+.employee-profile-induction-message-details,
+.employee-profile-emergency-education-details,
+.employee-profile-previouscompany-reportingmanager-details{
+    /* .employee-profile-current-last-company-details */
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 15px;   
+    color: gray;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.employee-profile-document-social-details h1,
+.employee-profile-previouscompany-details h1,
+.employee-profile-interview-details h1,
+.employee-profile-traning-details h1,
+.employee-profile-induction-details h1,
+.employee-profile-message-details h1,
+.employee-profile-emergency-details h1,
+.employee-profile-education-details h1,
+.employee-profile-reportingmanager-details h1{
+    font-size: 18px;
+}
+
+.employee-profile-main-div{
+  margin-top: 60px;
+}

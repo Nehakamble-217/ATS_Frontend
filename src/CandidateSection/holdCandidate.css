@@ -63,3 +63,22 @@
 } */
 
 
+.holdCan-Filter-btn,.hold-share-btn,.hold-share-close-btn,
+.hold-share-select-btn,.hold-forward-btn
+,.hold-share-forward-popup-btn,.hold-close-forward-popup-btn{
+  font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.holdCan-Filter-btn:hover,.hold-share-close-btn:hover,.hold-share-btn:hover,.hold-share-select-btn:hover,.hold-forward-btn:hover,.hold-share-forward-popup-btn:hover,.hold-close-forward-popup-btn:hover{
+  background-color: white;
+    color: #ffcb9b;
+    opacity: 0.8;
+}

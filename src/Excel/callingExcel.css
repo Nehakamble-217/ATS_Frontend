@@ -1,0 +1,210 @@
+/* Page container styles */
+.page-container {
+    height: 100vh;
+    overflow: hidden; /* Hide scrollbar */
+  }
+  
+  /* Container styles */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Card styles */
+  .card {
+    margin-bottom: 20px;
+    background-color: #ffe5b5; /* Added background color */
+    color: gray;
+  }
+  
+  /* Data table styles */
+  .data-tabled {
+    width: 100vw;
+    margin-top: 20px;
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: none;
+    color: gray;
+  }
+  
+  .data-tabled .tabled th {
+    background-color: #ffcb9b; /* Add background color to main headings */
+    font-size: 16px;
+    height:32px;
+    color: gray;
+    
+  }
+  
+  /* hide scrollbar but allow scrolling */
+  .data-tabled::-webkit-scrollbar {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+  }
+  .data-tabled::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+  
+  .data-tabled .tabled {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-tabled .tabled th,
+  .data-tabled .tabled td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid gray; /* Added border to all cells */
+    color: gray; /* Set row height */
+    font-size: 18px;
+    padding: 0px;
+    color: gray;
+  
+  }
+  
+  .data-tabled.tabled th.tabled-header {
+    background-color: #ffe5b5;
+  }
+  
+  .data-tabled .tabled tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  /* Button styles */
+  .card .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .card .button-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+ /* Grid container for buttons */
+ .d-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.d-grid button {
+  background: #ffcb9b;
+  border: none;
+  height: 30px;
+  width: auto; /* Adjust width as needed */
+  border-radius: 15px;
+  color: white;
+  padding: 0 20px; /* Adjust padding for text alignment */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-grid button:hover {
+  background: white;
+  color: #ffcb9b;
+}
+
+.text-success {
+  color: gray !important;
+  font-size: 16px;
+  margin-top: 0px;
+
+}
+
+.text-danger {
+  color: gray !important;
+  font-size: 16px;
+  
+}
+
+.mt-3 {
+  margin-top: 0rem !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-body {
+    padding: 15px;
+  }
+
+  .form-control {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  
+}
+.form-control[type=file]:not(:disabled):not([readonly]) {
+  cursor: pointer;
+  color: gray;
+}
+  .form-control[type=text] {
+    cursor: pointer;
+    color: gray;
+  }
+  /* .card .button-wrapper button {
+    font-size: 16px;
+    width: 20vh;
+    height: 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffb281;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .card .button-wrapper button:hover {
+    background-color: white;
+    color: #ffb281;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card .button-wrapper button:active {
+    background-color: #ffb281;
+  }
+  
+  @media (max-width: 768px) {
+    .card .button-wrapper button {
+      font-size: 14px;
+      height:28px;
+    }
+  }
+   */
+   /* callingDataExcel */
+   /* callingList.css */
+
+.filter-heading {
+  border-radius: 15px;
+  color: gray; /* Text color */
+  padding-top: 5px; /* Top padding */
+  margin-bottom: 10px; /* Bottom margin for spacing */
+}
+/* callingList.css */
+
+
+
+
+
+

@@ -22,7 +22,7 @@ body {
   color:grey;
   padding: 7px 6px;
   margin: 2px 20px;
-}
+}           
 
 
   .calling-table {
@@ -48,23 +48,6 @@ body {
     padding: 4px;
   }
   
-  /* .calling-table tr:nth-child(even) {
-    background-color: #ffcb9b;
-  } */
-  
-  /* .table-container_forselfcalling tr:hover {
-    background-color: #f2f2f2;
-  } */
-  
-  /* .table-container_forselfcalling {
-    max-width: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    color: gray;
-    font-size: 18px;
-  } */
-  
  
   .table-container_forselfcalling select {
     width: 100%;
@@ -88,17 +71,17 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     /* max-width: 200px;  */
-    background-color: white;
-   
+    background-color: white; 
   }
-  /* .table-container_forselfcalling td{
 
-  } */
+  
+   
   
 
  
   
   
+
   body::-webkit-scrollbar {
     width: 0;
   }
@@ -106,6 +89,7 @@ body {
   body {
     scrollbar-width: none;
   }
+
   
 
   /* .calling-table td:hover, */
@@ -113,3 +97,74 @@ body {
     background-color: #ffe5b5 ; 
     color: gray;
   } */
+
+
+  /* /////////////////////////////////_______Ajhar Tamboli Started work from here...... _____________________///////////////////*/
+  /* .callingList-filter-btn{
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px;
+    color: #ffcb9b;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  } */
+  .selfcalling-filter-value{
+    display: flex;
+   }
+  .selfcalling-filter-option{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+  }
+
+  .filter-options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Optional: Adds space between buttons */
+  }
+
+/* .callingList-filter-btn:hover{
+  border: 1px solid gray;
+
+} */
+/* .dropbtn{
+  border: 1px solid gray ;
+    border-radius: 15px;
+    background-color: #ffcb9b ;
+    font-size: 16px ;
+    color: white ;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.callingList-Filter-btn,.callingList-share-btn,.callingList-share-close-btn
+.callingList-share-select-btn,.callingList-forward-btn
+,.callingList-share-forward-popup-btn,.callingList-close-forward-popup-btn{
+  font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.callingList-Filter-btn:hover,.callingList-share-close-btn:hover,.callingList-share-btn:hover,.callingList-share-select-btn:hover,.callingList-forward-btn:hover,.callingList-share-forward-popup-btn:hover,.callingList-close-forward-popup-btn:hover{
+  background-color: white;
+    color: #ffcb9b;
+    opacity: 0.8;
+}

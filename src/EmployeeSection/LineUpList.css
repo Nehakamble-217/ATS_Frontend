@@ -50,13 +50,25 @@
   background-color: white;
   color: #ffcb9b;
 }
-
-
-
-
-
-
-
+.lineUp-Filter-btn,.lineUp-share-btn,.lineUp-share-close-btn,
+.lineUp-share-select-btn,.lineUp-forward-btn
+,.lineUp-share-forward-popup-btn,.lineUp-close-forward-popup-btn{
+  font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.lineUp-Filter-btn:hover,.lineUp-share-close-btn:hover,.lineUp-share-btn:hover,.lineUp-share-select-btn:hover,.lineUp-forward-btn:hover,.lineUp-share-forward-popup-btn:hover,.lineUp-close-forward-popup-btn:hover{
+  background-color: white;
+    color: #ffcb9b;
+    opacity: 0.8;
+}
 
 
 
