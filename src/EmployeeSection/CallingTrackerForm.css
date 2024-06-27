@@ -1,5 +1,5 @@
 .maintable {
-  height: auto; /* Allow height to adjust based on content */
+  height: 100%; /* Allow height to adjust based on content */
   width: auto; /* Allow width to adjust based on content */
   border-collapse: collapse;
   overflow-x: auto; /* Adds horizontal scroll if table is too wide */
