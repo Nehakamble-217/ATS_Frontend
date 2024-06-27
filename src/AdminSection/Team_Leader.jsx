@@ -1,5 +1,3 @@
-
-
 import React, { useState, useMemo, useCallback } from 'react';
 import './Team_Leader.css';
 
@@ -13,6 +11,7 @@ function Accesstable() {
   const [assignments, setAssignments] = useState({});
   const [allSelected, setAllSelected] = useState(false);
   const [editRecruiter, setEditRecruiter] = useState(null);
+  const [openCategory, setOpenCategory] = useState(null);  // New state for open category
 
   const teamLeaders = useMemo(() => [
     { label: 'Team Leader 1', recruiters: 
@@ -62,11 +61,6 @@ function Accesstable() {
         { label: 'Job ID', category: 'Most Important Assign' },
         { label: 'Current Company Location', category: 'Most Important Assign' },
       ], []);
-    
-
-  // const handleMainAdminChange = useCallback((event) => {
-  //   setSelectedMainAdmin(event.target.value);
-  // }, []);
 
   const handleRecruiterChange = useCallback((event) => {
     const { value, checked } = event.target;
@@ -134,6 +128,10 @@ function Accesstable() {
     return grouped;
   }, {}), [options]);
 
+  const toggleCategoryDropdown = (category) => {
+    setOpenCategory((prev) => (prev === category ? null : category));
+  };
+
   const toggleSelectAll = useCallback(() => {
     if (allSelected) {
       setSelectedRecruiters((prev) =>
@@ -164,42 +162,27 @@ function Accesstable() {
     setAssignments(updatedAssignments);
   };
 
-
-
-
-function getClassForCategory(category) {
-  switch (category) {
-    case 'Common Assign':
-      return 'common-assign';
-    case 'Important Assign':
-      return 'important-assign';
-    case 'Most Important Assign':
-      return 'most-important-assign';
-    default:
-      return '';
+  function getClassForCategory(category) {
+    switch (category) {
+      case 'Common Assign':
+        return 'common-assign';
+      case 'Important Assign':
+        return 'important-assign';
+      case 'Most Important Assign':
+        return 'most-important-assign';
+      default:
+        return '';
+    }
   }
-}
-
-
 
   return (
     <div className="AppsTL">
       <div className="selection-containerTL">
         <div className="hierarchy-sectionTL">
-          {/* <div className="dropdown">
-            <label htmlFor="mainAdminDropdown">Admin:</label>
-            <select id="mainAdminDropdown" value={selectedMainAdmin || ''} onChange={handleMainAdminChange}>
-              <option value="" disabled>Select Team Leader</option>
-              {teamLeaders.map((leader, index) => (
-                <option key={index} value={leader.label}>{leader.label}</option>
-              ))}
-            </select>
-          </div> */}
           <div className="custom-dropdownTL">
-          {/* <label htmlFor="mainAdminDropdown">Admin:</label> */}
             <div className="dropdown-headerTL" onClick={toggleDropdown}>
               {selectedRecruiters.length === 0
-                ? 'Select Team Leaders'
+                ? 'Select Team Leaders or Recruiters'
                 : `${selectedRecruiters.length} Recruiter(s) selected`}
               <span className={`dropdown-icon ${dropdownOpen ? 'open' : ''}`}>&#9660;</span>
             </div>
@@ -217,10 +200,11 @@ function getClassForCategory(category) {
                 </button>
                 <div className="team-leadersTL">
                   {teamLeaders.map((leader, index) => (
-                    <div key={index} className="team-leaderTL">
+                    <div key={index} className="team-leader-itemTL">
                       <label>
                         <input
                           type="radio"
+                          name="teamLeader"
                           value={leader.label}
                           checked={selectedTeamLeader === leader.label}
                           onChange={() => setSelectedTeamLeader(leader.label)}
@@ -251,76 +235,82 @@ function getClassForCategory(category) {
         </div>
 
         <div className="options-section">
-          {/* <h3>Give permissions: <hr /></h3> */}
-          
-
-
-<div className="options-listTL">
-  {Object.keys(groupedOptions).map((category, index) => (
-    <div key={index} className={`options-category ${category.replace(/\s+/g, '-').toLowerCase()}`}>
-      <div className={`category-header ${getClassForCategory(category)}`}>{category}</div>
-      {groupedOptions[category].map((option, optIndex) => (
-        <label key={optIndex} className="option-itemTL">
-          <input
-            type="checkbox"
-            value={option.label}
-            checked={selectedOptions.includes(option.label)}
-            onChange={handleOptionChange}
-          />
-          {option.label}
-        </label>
-      ))}
-    </div>
-  ))}
-</div>
-          <center><button
+          <div className="options-listTL">
+            {Object.keys(groupedOptions).map((category, index) => (
+              <div key={index} className={`options-category ${category.replace(/\s+/g, '-').toLowerCase()}`}>
+                <div
+                  className={`category-header ${getClassForCategory(category)}`}
+                  onClick={() => toggleCategoryDropdown(category)}
+                >
+                  {category}
+                  <span className={`dropdown-icon ${openCategory === category ? 'open' : ''}`}>&#9660;</span>
+                </div>
+                {openCategory === category && (
+                  <div className="category-options">
+                    {groupedOptions[category].map((option, optIndex) => (
+                      <label key={optIndex} className="option-itemTL">
+                        <input
+                          type="checkbox"
+                          value={option.label}
+                          checked={selectedOptions.includes(option.label)}
+                          onChange={handleOptionChange}
+                        />
+                        {option.label}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <button
             onClick={assignOptionsToRecruiters}
             disabled={selectedOptions.length === 0 ||
               (selectedRecruiters.length === 0 && !selectedTeamLeader && !selectedMainAdmin)} className='assignoptionbtn'
           >
             {editRecruiter ? 'Update Options' : 'Assign Options'}
-          </button></center>
+          </button>
         </div>
       </div>
       <div className="assignments-tableTL">
-        {/* <h4>Assigned Options</h4> */}
         <center>
-        <div className='container-after1'>
+          <div className='container-after1'>
             <div className='attendanceTableData'>
-            <table className="attendance-table">
-          <thead>
-            <tr className='attendancerows-head'>
-              <th className='attendanceheading'>Assignee</th>
-              <th className='attendanceheading'>Common Assign</th>
-              <th className='attendanceheading'>Important Assign</th>
-              <th className='attendanceheading'>Most Important Assign</th>
-              <th className='attendanceheading'>Actions</th>
-            </tr >
-          </thead>
-          <tbody>
-            {Object.keys(assignments).map((assignee, index) => (
-              <tr key={index} className='attendancerows'>
-                <td className='tabledata'>{assignee}</td>
-                <td className='tabledata'>{assignments[assignee]['Common Assign'].length}</td>
-                <td className='tabledata'>{assignments[assignee]['Important Assign'].length}</td>
-                <td className='tabledata'>{assignments[assignee]['Most Important Assign'].length}</td>
-                <td className='tabledata'>
-                  <button onClick={() => handleUpdateClick(assignee)} className='all_assignbtn'>
-                    Update
-                  </button>
-                  <button onClick={() => handleRemoveClick(assignee)} className='remove_assignbtn'>
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              <table className="attendance-table">
+                <thead>
+                  <tr className='attendancerows-head'>
+                    <th className='attendanceheading'>Assignee</th>
+                    <th className='attendanceheading'>Common Assign</th>
+                    <th className='attendanceheading'>Important Assign</th>
+                    <th className='attendanceheading'>Most Important Assign</th>
+                    <th className='attendanceheading'>Actions</th>
+                  </tr >
+                </thead>
+                <tbody>
+                  {Object.keys(assignments).map((assignee, index) => (
+                    <tr key={index} className='attendancerows'>
+                      <td className='tabledata'>{assignee}</td>
+                      <td className='tabledata'>{assignments[assignee]['Common Assign'].length}</td>
+                      <td className='tabledata'>{assignments[assignee]['Important Assign'].length}</td>
+                      <td className='tabledata'>{assignments[assignee]['Most Important Assign'].length}</td>
+                      <td className='tabledata'>
+                        <button onClick={() => handleUpdateClick(assignee)} className='all_assignbtn'>
+                          Update
+                        </button>
+                        {/* <button onClick={() => handleRemoveClick(assignee)} className='remove_assignbtn'>
+                          Remove
+                        </button> */}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-        </div>
+          </div>
         </center>
       </div>
     </div>
   );
 }
+
 export default Accesstable;

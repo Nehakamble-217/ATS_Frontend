@@ -35,7 +35,7 @@ const ChatRoom = () => {
 
     const fetchUsername = async () => {
         try {
-            const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`);
+            const response = await fetch(`http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`);
             let result;
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.includes('application/json')) {
@@ -56,7 +56,7 @@ const ChatRoom = () => {
     };
 
     const connect = (username) => {
-        let Sock = new SockJS('http://localhost:8891/ws');
+        let Sock = new SockJS('http://192.168.1.43:8891/ws');
         stompClient = over(Sock);
         stompClient.connect({}, () => onConnected(username), onError);
     }
@@ -162,7 +162,7 @@ const ChatRoom = () => {
         formData.append('file', userData.file);
         formData.append('senderName', userData.username);
 
-        fetch('http://localhost:8891/upload', {
+        fetch('http://192.168.1.43:8891/upload', {
             method: 'POST',
             body: formData
         })
@@ -204,15 +204,15 @@ const ChatRoom = () => {
     }
 
     return (
-        <div className="container">
+<div className="container">
             {userData.connected ?
                 <div className="chat-box">
-                     <div className="member-list">
+                    <div className="member-list">
                         <ul>
-                            <div><h4 className='fetchUsername'>{userData.username} Chat Room</h4></div>
-                            <li onClick={() => { setTab("CHATROOM") }} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
+                            <div><h1>{userData.username} Chat Room</h1></div>
+                            <li onClick={() => {setTab("CHATROOM")}} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
                             {[...privateChats.keys()].map((name, index) => (
-                                <li onClick={() => { setTab(name) }} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
+                                <li onClick={() => {setTab(name)}} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
                             ))}
                         </ul>
                     </div>
@@ -226,6 +226,7 @@ const ChatRoom = () => {
                                     ) : (
                                         <div className="file-data">
                                             <p>File: {chat.fileName}</p>
+                                            <img src={chat.fileUrl} alt=""  style={{width:"100%",height:"200px"}}/>
                                             <button onClick={() => openFile(chat.fileUrl)}>Open File</button>
                                         </div>
                                     )}

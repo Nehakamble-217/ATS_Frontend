@@ -51,19 +51,22 @@
   /* .summary {
     margin-top: 20px;
   } */
-  .rejectedCan-filter-btn{
-    border: 1px solid gray;
+  .rejectedcan-Filter-btn,.rejectedcan-share-btn,.rejectedcan-share-close-btn,
+.rejectedcan-share-select-btn,.rejectedcan-forward-btn
+,.rejectedcan-share-forward-popup-btn,.rejectedcan-close-forward-popup-btn{
+  font-size: 16px;
     border-radius: 15px;
-    background-color: white;
-    font-size: 16px;
-    color: #ffcb9b;
     height: 30px;
-    width: auto;
+    color: white;
     padding-left: 15px;
     padding-right: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.rejectedcan-Filter-btn:hover,.rejectedcan-share-close-btn:hover,.rejectedcan-share-btn:hover,.rejectedcan-share-select-btn:hover,.rejectedcan-forward-btn:hover,.rejectedcan-share-forward-popup-btn:hover,.rejectedcan-close-forward-popup-btn:hover{
+  background-color: white;
+    color: #ffcb9b;
+    opacity: 0.8;
+}

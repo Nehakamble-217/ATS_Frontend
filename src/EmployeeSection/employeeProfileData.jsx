@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData =() => {
+const EmployeeProfileData = () => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [profileImage, setProfileImage] = useState(null);
   const [pdfSrc, setPdfSrc] = useState(null);
   const [employeeData, setEmployeeData] = useState(null);
-const {employeeId} = useParams();
+  const { employeeId } = useParams();
 
   const viewMoreProfile = (e) => {
     e.preventDefault();
@@ -19,8 +19,9 @@ const {employeeId} = useParams();
   };
 
   useEffect(() => {
-    fetch("http://192.168.1.38:8891/api/ats/157industries/employee-details/34")
-
+    fetch(
+      `http://192.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -78,7 +79,7 @@ const {employeeId} = useParams();
 
   if (viewMoreProfileShow)
     return (
-      <div className="employee-profile-main-div"> 
+      <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
             <div className="profile-back-button">
@@ -93,7 +94,7 @@ const {employeeId} = useParams();
                 <div className="employee-profile-details">
                   <img src={profileImage} />
                   <p className="m-0">
-                    <b>Name: {employeeData.employeeName}</b>
+                    <b>Name: {employeeData?.employeeName}</b>
                   </p>
                   <p className="m-0">
                     <b>Designation: {employeeData.designation}</b>
@@ -194,7 +195,6 @@ const {employeeId} = useParams();
             </div>
 
             <div className="employee-profile-scrollsection">
-            
               <div className="employee-profile-emergency-education-details">
                 <div className="employee-profile-emergency-details">
                   <h1>
@@ -435,6 +435,7 @@ const {employeeId} = useParams();
               gap: "10px",
               alignItems: "center",
               backgroundColor: "#f2f2f2",
+              color: "gray",
             }}
           >
             <div>
@@ -454,7 +455,12 @@ const {employeeId} = useParams();
             </div>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-            <button className="close-profile-popup-btn">Close</button>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="close-profile-popup-btn"
+            >
+              Close
+            </button>
             <button
               onClick={viewMoreProfile}
               className="display-more-profile-btn"
@@ -472,14 +478,16 @@ const {employeeId} = useParams();
             <div>Loading...</div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary">Close</Button>
-            <Button onClick={viewMoreProfile} variant="primary">
-              More
-            </Button>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="close-profile-popup-btn"
+            >
+              Close
+            </button>
           </Modal.Footer>
         </Modal.Dialog>
       )}
     </div>
   );
-}
+};
 export default EmployeeProfileData;
