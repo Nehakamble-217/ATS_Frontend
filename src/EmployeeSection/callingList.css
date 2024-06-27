@@ -100,7 +100,7 @@ body {
 
 
   /* /////////////////////////////////_______Ajhar Tamboli Started work from here...... _____________________///////////////////*/
-  .callingList-filter-btn{
+  /* .callingList-filter-btn{
     border: 1px solid gray;
     border-radius: 15px;
     background-color: white;
@@ -114,7 +114,7 @@ body {
     justify-content: space-between;
     align-items: center;
     
-  }
+  } */
   .selfcalling-filter-value{
     display: flex;
    }
@@ -149,3 +149,22 @@ align-items: flex-start;
     align-items: center;
 } */
 
+.callingList-Filter-btn,.callingList-share-btn,.callingList-share-close-btn
+.callingList-share-select-btn,.callingList-forward-btn
+,.callingList-share-forward-popup-btn,.callingList-close-forward-popup-btn{
+  font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.callingList-Filter-btn:hover,.callingList-share-close-btn:hover,.callingList-share-btn:hover,.callingList-share-select-btn:hover,.callingList-forward-btn:hover,.callingList-share-forward-popup-btn:hover,.callingList-close-forward-popup-btn:hover{
+  background-color: white;
+    color: #ffcb9b;
+    opacity: 0.8;
+}

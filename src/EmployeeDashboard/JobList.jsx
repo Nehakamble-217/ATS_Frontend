@@ -585,7 +585,7 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
   )}
 
 
-   {showViewMore && (
+   {showViewMore  (
         <>
           <main className="name">
             {selectedRequirementId && (
