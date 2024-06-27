@@ -471,6 +471,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     "selectYesOrNo",
   ];
 
+
   useEffect(() => {
     fetch(
       `http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`
@@ -920,22 +921,15 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                       <th className="attendanceheading">Alternate Number</th>
                       <th className="attendanceheading">Source Name</th>
                       <th className="attendanceheading">Position</th>
-                      <th
-                        className="attendanceheading"
-                        onClick={() => handleSort("requirementId")}
-                      >
-                        Job Id {getSortIcon("requirementId")}
+                      <th className="attendanceheading"onClick={() => handleSort("requirementId")}>Job Id {getSortIcon("requirementId")}
                       </th>
                       <th className="attendanceheading">Applying Company</th>
-                      <th className="attendanceheading">
-                        Communication Rating
-                      </th>
+                      <th className="attendanceheading">Communication Rating</th>
                       <th className="attendanceheading">Current Location</th>
                       <th className="attendanceheading">Full Address</th>
                       <th className="attendanceheading">Calling Feedback</th>
                       <th className="attendanceheading">Candidate Incentive</th>
-                      <th className="attendanceheading">
-                        Interested / Eligible
+                      <th className="attendanceheading">Interested / Eligible
                       </th>
                       <th className="attendanceheading">Action</th>
                     </tr>
@@ -1280,6 +1274,35 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
               onCancel={() => setShowUpdateCallingTracker(true)}
             />
           )}
+          {showFilterSection && (
+          <div className="filter-section">
+            <h3>Filter Options</h3>
+            <div className="filter-options-container">
+            {filterOptions.map((option) => {
+              const uniqueValues = Array.from(new Set(callingList.map((item) => item[option]))).slice(0, 5);
+              return (
+                <div key={option} className="selfcalling-filter-option">
+                  <button className="callingList-filter-btn" onClick={toggleselectedFilters}>{option}</button>
+                  {showselectedFilters &&(
+                    <>
+                  {uniqueValues.map((value) => (
+                    <label key={value} className="selfcalling-filter-value">
+                      <input
+                        type="checkbox"
+                        checked={selectedFilters[option]?.includes(value) || false}
+                        onChange={() => handleFilterSelect(option, value)}
+                      />
+                      {value}
+                    </label>
+                  ))}
+                  </>
+                )}
+                </div>
+              );
+            })}
+            </div>
+          </div>
+        )}
         </>
       )}
     </div>
