@@ -139,6 +139,25 @@ function Sidebar({
   }
 
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 980) {
+        setIsActive(false);
+      } else {
+        setIsActive(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (window.innerWidth <= 980) {
+      setIsActive(false);
+    }
+  }, []);
+
   return (
     <>
      

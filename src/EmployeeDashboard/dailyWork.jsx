@@ -289,7 +289,7 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
 
 
      <div className="daily-timeanddate">
-            <div className="header-clouds"></div>
+            {/* <div className="header-clouds"></div> */}
 
       <div className="head">
 

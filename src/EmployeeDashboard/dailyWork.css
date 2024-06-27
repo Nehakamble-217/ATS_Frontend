@@ -99,7 +99,7 @@ animation: moveClouds 40s linear infinite;
   height: 30px;
   padding-left: 15px;
   padding-right: 15px;
-  width: 220px;
+  width: auto;
   font-size: 16px;
 }
 
@@ -214,11 +214,10 @@ animation: moveClouds 40s linear infinite;
     transition: background-color 0.3s ease;
   }
 } */
- 
 .toggle-all-daily-btns {
   display: none;
 }
-@media (max-width: 950px) {
+@media (max-width: 1050px) {
   .all-daily-btns {
     display: block;
   }
@@ -239,12 +238,12 @@ animation: moveClouds 40s linear infinite;
 
   .toggle-all-daily-btns {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     border: 1px solid gray;
     border-radius: 15px;
     height: 30px;
-    width: 150px;
+    width: 120px;
     background-color: #ffcb9b;
     color: white;
     transition: background-color 0.3s ease;
