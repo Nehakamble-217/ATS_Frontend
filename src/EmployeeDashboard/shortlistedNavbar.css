@@ -9,7 +9,7 @@
     display: flex;
     /* justify-content: center; */
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     padding-left: 30px;
     
 }
@@ -18,10 +18,10 @@
     height: 60px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    /* */
     align-items: center;
     flex-wrap: wrap;
-    justify-content: left;
+    /* justify-content: left; */
 }
 
 #calendar-icon-nav{

@@ -1182,7 +1182,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                 {showForwardPopup ? (
                   <>
                     <div
-                      className="modal show bg-black bg-opacity-50"
+                      className="bg-black bg-opacity-50 modal show"
                       style={{
                         display: "flex",
                         justifyContent: "center",

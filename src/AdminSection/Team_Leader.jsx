@@ -184,7 +184,7 @@ function Accesstable() {
               {selectedRecruiters.length === 0
                 ? 'Select Team Leaders or Recruiters'
                 : `${selectedRecruiters.length} Recruiter(s) selected`}
-              <span className={`dropdown-icon ${dropdownOpen ? 'open' : ''}`}>&#9660;</span>
+              <span className={`dropdown-icon_open ${dropdownOpen ? 'open' : ''}`}>&#9660;</span>
             </div>
             {dropdownOpen && (
               <div className="dropdown-bodyTL">

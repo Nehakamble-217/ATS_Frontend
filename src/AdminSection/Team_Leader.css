@@ -25,12 +25,16 @@
 }
 
 .dropdown-headerTL {
-  background-color: #f0f0f0;
+  background-color: white;
   padding: 10px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 15px;
+ 
 }
 
 .dropdown-bodyTL {
@@ -91,6 +95,7 @@
   display: flex;
   margin-top: 20px;
   flex-direction: column;
+  margin-top: 30px;
 }
 
 .options-listTL {
@@ -100,44 +105,60 @@
   margin-bottom: 20px;
   flex-direction: column;
   gap: 20px;
+  
 }
 
 .options-category {
   display: flex;
   flex-direction: row;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   text-align: center;
+  border: 1px solid gray;
+  border-radius: 15px;
+  
+ 
+  height: 30px;
 }
 .options-category.common-assign {
   display: flex;
   flex-direction: column;
-  width: 190px;
+  width: 70%;
   cursor: pointer;
-  background-color: rgb(192, 245, 227);
+  background-color: #ffcb9b;
+  color: white;
+  border: 1px solid gray;
+  border-radius: 15px;
+ text-align: center;
 }
 
 .options-category.important-assign {
   display: flex;
   flex-direction: column;
-  width: 190px;
+  width: 70%;
   cursor: pointer;
-  background-color: antiquewhite;
+  color: white;
+  background-color: #ffcb9b;
+  text-align: center;
   
 }
 
 .options-category.most-important-assign {
   display: flex;
   flex-direction: column;
-  width: 190px;
+  width: 70%;
   cursor: pointer;
-  background-color: rgb(240, 185, 185);
+  color: white;
+  background-color: #ffcb9b;
+  text-align: center;
 }
 
-.category-header {
+.category-headerTL {
   background-color: #ffcb9b;
   color: white;
-  
-  border-radius: 5px;
+  border-radius: 15px;
+  text-align: center;
+
+
 
 }
 
@@ -165,6 +186,12 @@
   width: 150px;
  
 }
+
+.hierarchy-sectionTL{
+  height: 30px;
+  color: #ffcb9b;
+
+}
 .assignoptionbtn:hover {
   background-color: white;
   color: #ffcb9b;
@@ -190,11 +217,18 @@
 .dropdown-icon {
   display: flex;
   font-size: 16px;
-  color: gray;
+  color: white;
   flex-direction: column;
   float:right;
+  margin-right: 10px;
   
 }
+.dropdown-icon_open {
+  display: flex;
+  font-size: 16px;
+  color: #Ffcb9b;
+  flex-direction: column;
+  float: right;}
 
 
 
