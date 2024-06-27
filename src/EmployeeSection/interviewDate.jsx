@@ -425,7 +425,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       <div className="calender-main-div">
         <div className="calendar">
-
           <div className="calendar-div">
             <Calendar
               value={selectedDate}
@@ -437,7 +436,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
             />
           </div>
         </div>
-6
         {showShortlistTable && (
           <div className="shortlist-table-div">
             <div className="interview-response-update">

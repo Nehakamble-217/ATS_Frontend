@@ -269,7 +269,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate('/empDash/6');
+    navigate('/empDash/40');
   };
 
   return (

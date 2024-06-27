@@ -60,7 +60,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
   const [showShortListedCandidates, setShowShortListedCandidates] = useState(false);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
-  const [showShortListedNav, setShowShortListdNav] = useState(false);
+  const [showShortListedNav, setShowShortListdNav] = useState(true);
   const [showAddEmployee,setShowAddEmployee] = useState(false)
   const [showNotePad,setShowNotePad] = useState(false)
   const [showProfile,setShowProfile] = useState(false)
@@ -284,14 +284,14 @@ const EmpDashboard = ({ userGroup }) => {
     setSelfCalling(true); 
   };
  
-
-  
-  
-
-  const profilePageLink =()=>{
+  const profilePageLink = () => {
     resetAllToggles();
-    setShowProfile(!showProfile)
-  }
+    setShowProfile(!showProfile);
+  };
+
+  const handleCloseProfile = () => {
+    setShowProfile(false);
+  };
 
   const toggelAddResumes = () =>{
     resetAllToggles();
@@ -299,7 +299,15 @@ const EmpDashboard = ({ userGroup }) => {
   }
 
   return (
-    <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
+    <div className="w-full relative">
+      <div className="time-and-data">
+          <DailyWork 
+          employeeId={employeeId} 
+          successfulDataAdditions={successfulDataAdditions} 
+          profilePageLink={profilePageLink}
+          />
+        </div>
+        <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Sidebar 
         userGroup={userGroup}
         openSidebarToggle={openSidebarToggle}
@@ -345,11 +353,12 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
 
     <div>
-      { showProfile && <EmployeeProfileData></EmployeeProfileData>}
+      { showProfile && <EmployeeProfileData onClose={handleCloseProfile}></EmployeeProfileData>}
     </div>
         <div style={{ paddingTop: "50px" }}>
           {selfCalling && (
-            <CallingList updateState={handleUpdateComplete} funForGettingCandidateId={gettingCandidateIdForUpdate} />
+            <CallingList updateState={handleUpdateComplete} 
+            funForGettingCandidateId={gettingCandidateIdForUpdate} />
           )}
         </div>
 
@@ -461,6 +470,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {assignColumns && <Team_Leader/>}
         </div>
+      </div>
       </div>
     </div>
   );

@@ -2,22 +2,22 @@
 
 
 
-.grid-container {
+/* .grid-container {
   display: grid;
   grid-template-columns: 240px 1fr;
   height: auto;
-}
+} */
 
-.sidebar {
+/* .sidebar {
   grid-column: 1 / 2;
-   background-color: #ffe5b5;
+   background-color: #ffe5b5; */
    /* z-index: 999; */
-}
+/* } */
 
 .empDash-main-content {
   grid-column: 2 / 3;
   padding: 20px;
-  overflow-y: auto;  /* position: relative; */
+  overflow-y: auto;  position: relative;
   /* z-index: 99; */
 }
 
@@ -76,7 +76,7 @@
 }
 
 /* Media queries for responsiveness */
-@media screen and (max-width: 992px) {
+/* @media screen and (max-width: 992px) {
   .grid-container {
     grid-template-columns:1fr;
     
@@ -93,7 +93,7 @@
   .header-left {
     display: none;
   }
-}
+} */
 
 
 /* EmpDashboard.css */
@@ -104,16 +104,22 @@
   display: grid;
   grid-template-columns: 240px 1fr;
   transition: all 0.3s ease;
+  height: auto;
 }
 
 .sidebar {
+  position: absolute;
+  top: 70px;
   background-color: #ffe5b5;
   transition: all 0.3s ease;
   z-index: 999;
 }
 
 .empDash-main-content {
-  padding: 20px;
+
+  padding: 20px 10px;
+
+  padding-top: 35px;
   overflow: hidden;
   transition: all 0.3s ease;
  /* width: 100%; */
@@ -135,7 +141,7 @@
   padding: 0;
   margin: 0;
   width: 100%;
-  height:auto;
+  height:80px;
   display: flex;
   justify-content: space-between;
   background-color: #ffe5b5;
@@ -154,8 +160,14 @@
 /* Responsive layout */
 @media screen and (max-width: 992px) {
   .grid-container {
-    grid-template-columns: 1fr;
     grid-template-rows: auto;
+  }
+  .empDash-main-content{
+    padding-top: 36px;
+    padding-left: 65px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+   
   }
 
   /* .sidebar {

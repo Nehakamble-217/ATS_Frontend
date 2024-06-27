@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 // import "../EmployeeSection/callingList.css";
-// import "./callingExcel.css";
+import "./callingExcel.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
-import './ButtonStyles.css'; // Import the CSS file
+
 
 
 const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
@@ -243,7 +243,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
 
   return (
-    <div className="App-after">
+    <div className="App-after1">
       {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
@@ -252,26 +252,19 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
 
 
-            <button onClick={toggleFilterSection}
-              style={{
-                fontSize: "16px", borderRadius: "15px", height: "30px", color: "#ffcb9b", paddingLeft: "15px",
-                paddingRight: "15px", background: "white", border: "1px solid gray"
-              }}
-            >
-              Filter <i className="fa-solid fa-filter"></i>
-            </button>
-
+            <button onClick={toggleFilterSection} 
+            style={{ fontSize: "16px", borderRadius: "15px", height: "30px",color:"#ffcb9b" ,paddingLeft:"15px",
+              paddingRight:"15px",background:"white", border: "1px solid gray",position:"sticky"}}
+              >
+  Filter <i className="fa-solid fa-filter"></i>
+</button> 
+       
           </div>
-          <div style={{ dispaly: 'flex', textAlign: 'right' }}>
-            <button onClick={onCloseTable}
-            // style={{ fontSize: '16px',borderRadius: '15px',height: '30px',color: 'white',  
-            //  paddingLeft: '15px', paddingRight:"15px" ,background: '#ffcb9b', border: '1px solid gray'     
-            // }}
-            >
-
-              Close
-            </button>
-          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+  <button onClick={onCloseTable} className="close-button">
+    Close
+  </button>
+</div>
 
 
           {showSearchBar && (
