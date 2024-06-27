@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddResumes.css'; // Import the CSS file
 
-const AddResumes = () => {
+const AddResumes = ({ show }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const handleFileChange = (event) => {
@@ -15,7 +15,6 @@ const AddResumes = () => {
             formData.append('files', selectedFiles[i]);
         }
         axios.post('http://192.168.1.38:8082/api/resumes/upload', formData)
-
             .then(response => {
                 console.log(response.data);
             })
@@ -24,8 +23,12 @@ const AddResumes = () => {
             });
     };
 
+    if (show) { // Conditionally render based on the show prop
+        return null; // Return null if show is true (to hide component)
+    }
+
     return (
-        <div className="main-container">
+        <div className="main-container" style={{ width: "400px" }}>
             <div className="upload-container">
                 <h2 className="upload-title">Upload Resume</h2>
                 <input
