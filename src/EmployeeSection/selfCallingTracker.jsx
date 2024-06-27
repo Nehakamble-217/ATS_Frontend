@@ -471,6 +471,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     "selectYesOrNo",
   ];
 
+
   useEffect(() => {
     fetch(
       `http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`
