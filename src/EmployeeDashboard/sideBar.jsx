@@ -172,7 +172,7 @@ function Sidebar({
                     class="fa-solid fa-user-check"
                     style={{ color: "gray" }}
                   ></i>
-                  <span className="sidebar-text">Shortlisted Candidate</span>
+                  <span className="sidebar-text">Shortlisted </span>
                 </a>
               </li>
               <li
@@ -203,7 +203,7 @@ function Sidebar({
                 <a href="#">
                   <i class="fa-solid fa-users" style={{ color: "gray" }}></i>
                   <span className="sidebar-text" style={{ color: "gray" }}>
-                    Candidate Section
+                   Find Candidate
                   </span>
                   <i className="arrow ph-bold ph-caret-down"></i>
                 </a>
@@ -230,7 +230,7 @@ function Sidebar({
                   >
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">LineUp Tracker</span>
+                      <span className="sidebar-text">Lineup Tracker</span>
                     </a>
                   </li>
 
@@ -290,17 +290,17 @@ function Sidebar({
                     </a>
                   </li>
 
-                  <li style={{marginLeft: "10px"}}>
+                  {/* <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <img src={Circle} style={{ width: "10px" }} alt="" /> 
                       <span className="sidebar-text">Self Offer Work</span>
                     </a>
-                  </li>
+                  </li> */}
 
                   <li onClick={toggleEmployeeMasterSheet} style={{marginLeft: "10px"}}>
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Employee Sheet</span>
+                      <span className="sidebar-text">Master Tracker</span>
                     </a>
                   </li>
                 </ul>
@@ -340,7 +340,7 @@ function Sidebar({
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">
                         {" "}
-                        View Job Description
+                        View Job Descriptions
                       </span>
                     </a>
                   </li>
@@ -355,7 +355,7 @@ function Sidebar({
                   >
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Add JobDescription</span>
+                      <span className="sidebar-text">Add Job Description</span>
                     </a>
                   </li>
                 </ul>

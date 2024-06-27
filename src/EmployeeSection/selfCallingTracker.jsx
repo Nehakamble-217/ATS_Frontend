@@ -786,7 +786,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                   style={{ margin: "10px", width: "auto", fontSize: "15px" }}
                 ></i>
                 <h5 style={{ color: "gray", paddingTop: "5px" }}>
-                  Calling List
+                  Calling Tracker
                 </h5>
 
                 <div
@@ -901,35 +901,35 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                           />
                         </th>
                       ) : null}
-                      <th className="attendanceheading">Sr No.</th>
+                      <th className="attendanceheading">No.</th>
                       <th
                         className="attendanceheading"
                         onClick={() => handleSort("date")}
                       >
                         Date & Time {getSortIcon("date")}
                       </th>
-                      <th className="attendanceheading">Candidate Id</th>
+                      <th className="attendanceheading">Candidate's Id</th>
                       <th
                         className="attendanceheading"
                         onClick={() => handleSort("recruiterName")}
                       >
-                        Recruiter Name {getSortIcon("recruiterName")}
+                        Recruiter's Name {getSortIcon("recruiterName")}
                       </th>
-                      <th className="attendanceheading">Candidate Name</th>
-                      <th className="attendanceheading">Candidate Email</th>
+                      <th className="attendanceheading">Candidate's Name</th>
+                      <th className="attendanceheading">Candidate's Email</th>
                       <th className="attendanceheading">Contact Number</th>
-                      <th className="attendanceheading">Alternate Number</th>
+                      <th className="attendanceheading">Whatsapp Number</th>
                       <th className="attendanceheading">Source Name</th>
-                      <th className="attendanceheading">Position</th>
+                      <th className="attendanceheading">Disignation</th>
                       <th className="attendanceheading"onClick={() => handleSort("requirementId")}>Job Id {getSortIcon("requirementId")}
                       </th>
                       <th className="attendanceheading">Applying Company</th>
                       <th className="attendanceheading">Communication Rating</th>
                       <th className="attendanceheading">Current Location</th>
                       <th className="attendanceheading">Full Address</th>
-                      <th className="attendanceheading">Calling Feedback</th>
-                      <th className="attendanceheading">Candidate Incentive</th>
-                      <th className="attendanceheading">Interested / Eligible
+                      <th className="attendanceheading">Calling Remark</th>
+                      <th className="attendanceheading">Recruiter's Incentive</th>
+                      <th className="attendanceheading">Interested and Eligible
                       </th>
                       <th className="attendanceheading">Action</th>
                     </tr>
