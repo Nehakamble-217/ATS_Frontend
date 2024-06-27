@@ -178,12 +178,7 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-<<<<<<< HEAD
-
-=======
->>>>>>> 2209b7e44898777add755ed2ffb6d019040307a8
         "http://192.168.1.39:8891/api/ats/157industries/add-after-selection",
-
         {
           method: "POST",
           headers: {
@@ -241,12 +236,7 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-<<<<<<< HEAD
-
-=======
->>>>>>> 2209b7e44898777add755ed2ffb6d019040307a8
         "http://192.168.1.39:8891/api/ats/157industries/save-join-data",
-
         {
           method: "POST",
           body: formData,
