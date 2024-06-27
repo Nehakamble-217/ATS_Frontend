@@ -7,10 +7,11 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
+  
   font-size: 16px;
 }
 body {
-  background-color: #dbe2f4;
+  background-color: #dbe2f4; 
   font-size: 16px;
 }
 /* .container {
@@ -59,8 +60,9 @@ body {
     height: 200%;
     /* background: url('/src/LogoImages/clouds1.png') repeat-x; */
     background: url('/src/LogoImages/clouds.png') repeat-x;
-background-size: cover;    
-background-position: center;
+
+    background-size: cover;    
+    background-position: center;
 /* animation: moveClouds 10s linear infinite; */
 z-index: -1;
 }
@@ -80,7 +82,7 @@ z-index: -1;
 .sidebar .head {
   display: flex;
   /* position: fixed; */
-  width: 140px;
+  width: 24px;
   height: 24px;
   /* gap: 10px; */
  font-size: 18px;
@@ -115,6 +117,8 @@ z-index: -1;
   font-weight: 500;
 }
 .nav {
+  position: absolute;
+  top: 45px;
   flex: 1;
   margin-bottom: 1px;
   padding:5px 0px;
@@ -197,7 +201,7 @@ z-index: -1;
 .sidebar-menu-btn {
   position: absolute;
   left: 13px;
-  top:auto;
+  top:17px;
   margin-bottom: 5px;
   /* top: 3.5%; */
   width: 23px;
@@ -223,7 +227,7 @@ z-index: -1;
 
 }
 .sidebar.active {
-  width: 55px;
+  width: 50px;
   height: 100vh;
 }
 .sidebar.active .sidebar-menu-btn i {
@@ -327,3 +331,10 @@ z-index: -1;
 .sidebar .arrow {
   color: gray;
 }
+
+/* Add this CSS to your existing sidebar.css */
+@media screen and (min-width: 980px) {
+
+  
+}
+

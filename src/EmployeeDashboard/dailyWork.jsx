@@ -291,8 +291,11 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
   };
 
   return (
-    <div className="daily-timeanddate">
-      <div className="header-clouds"></div>
+
+
+     <div className="daily-timeanddate">
+            {/* <div className="header-clouds"></div> */}
+
 
       <div className="head">
         <div className="user-img">

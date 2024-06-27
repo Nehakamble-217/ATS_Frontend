@@ -688,6 +688,10 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 </td>
               </tr>
 
+
+
+{/* From Here */}
+
               <tr>
                 <th style={{color:"gray"}}>Calling Remark</th>
                 <td style={{display:"flex"}}>
@@ -806,7 +810,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
 
                       required={callingTracker.selectYesOrNo === "Interested"}
                     >
-                      <option value="">__Select __</option>
+                      <option value="">Select</option>
                       <option value="Other">Other</option>
                       <option value="10th">10th</option>
                       <option value="12th">12 th</option>
@@ -987,15 +991,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     </div>  
                     
                       </td>
-
               </tr>
-
-
-
               <tr>
-              
-
-
                   <th style={{color:"gray"}}>Recruiters Input</th>
   <td>
     <input
@@ -1209,9 +1206,8 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                     required={callingTracker.selectYesOrNo === "Interested"}
                     //onChange={handleLineUpChange}
                     onChange={(e) => setLineUpData({ ...lineUpData, holdingAnyOffer: e.target.value })} className="form-select"
-                    style={{height:"30px", width: '90px',lineHeight:1,display: 'inline-block', marginRight: '10px' }}
+                    style={{height:"30px", width: '90px',lineHeight:1,display: 'inline-block', marginRight: '10px' }}>
 
->g
                     <option value="">Select</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
@@ -1368,7 +1364,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
           </div>
         )}
         <center>
-        <div className="callingbutton">
+        <div className="buttonDiv">
           {callingTracker.selectYesOrNo !== "Interested" && (
             <button type="submit" className="ctf-btn" >
               Add To Calling
