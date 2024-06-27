@@ -70,7 +70,7 @@
   }
 .employee-profile-staticsection{
     grid-column: span 1;
-    padding: 0 20px;
+    /* padding: 0 20px; */
     /* border-radius: 15px; */
     display: flex;
     /* margin: 0 auto; */
@@ -94,7 +94,7 @@
 .employee-profile-static{
     position: fixed;
     height: 550px;
-    width: 400px;
+    width: 350px;
     margin: 0 auto;
     /* position: sticky;
   top: 10px; */

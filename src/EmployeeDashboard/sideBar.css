@@ -128,11 +128,16 @@ z-index: -1;
 .sidebar-menu ul li {
   flex: 1;
   position: relative;
-  list-style: none;
+  list-style-type:disc;
+  color: gray;
   padding:1px 0px;
   margin-bottom: 1px;
   margin-top: auto;
+
+  
+
 }
+
 .sidebar-menu ul{
   padding-left: 0px !important;
 }
@@ -150,13 +155,19 @@ z-index: -1;
 }
 .sidebar-menu ul li > a:hover,
 .sidebar-menu ul li.active > a {
-  color: #000;
+  color: gray;
 /* padding: 7px; */
   background-color: #ffd8a8;
 }
+.sidebar-menu ul li a ul li{
+  margin-left: 30px;
+
+}
+
 
 .sidebar-menu ul li .icon {
   font-size: 18px;
+  color: gray;
 }
 .sidebar-menu ul li .sidebar-text {
   flex: 1;
@@ -206,7 +217,7 @@ z-index: -1;
 }
 .sidebar-menu-btn:hover i {
   
-  color: #000;
+  color: gray;
   border: 1px solid black;
   border-radius: 8px;
   background-color: #fff;

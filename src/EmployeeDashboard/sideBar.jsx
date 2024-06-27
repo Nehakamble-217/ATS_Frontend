@@ -191,7 +191,7 @@ function Sidebar({
                     class="fa-solid fa-user-check"
                     style={{ color: "gray" }}
                   ></i>
-                  <span className="sidebar-text">Shortlisted Candidate</span>
+                  <span className="sidebar-text">Shortlisted </span>
                 </a>
               </li>
               <li
@@ -222,7 +222,7 @@ function Sidebar({
                 <a href="#">
                   <i class="fa-solid fa-users" style={{ color: "gray" }}></i>
                   <span className="sidebar-text" style={{ color: "gray" }}>
-                    Candidate Section
+                   Find Candidate
                   </span>
                   <i className="arrow ph-bold ph-caret-down"></i>
                 </a>
@@ -231,7 +231,7 @@ function Sidebar({
                     activeSubMenu === "candidate" ? "active" : ""
                   }`}
                 >
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick(
                       "selfCalling",
                       toggleSelfCalling
@@ -239,21 +239,21 @@ function Sidebar({
                     className={activeButton === "selfCalling" ? "active" : ""}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Calling Tracker</span>
                     </a>
                   </li>
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick("lineUp", toggelLineUp)}
                     className={activeButton === "lineUp" ? "active" : ""}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
-                      <span className="sidebar-text">LineUp Tracker</span>
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span className="sidebar-text">Lineup Tracker</span>
                     </a>
                   </li>
 
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     hidden
                     onClick={handleButtonClick(
                       "shortListed",
@@ -262,13 +262,13 @@ function Sidebar({
                     className={activeButton === "shortListed" ? "active" : ""}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">
                         Shortlisted Candidate
                       </span>
                     </a>
                   </li>
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick(
                       "selectCandidate",
                       toggleSelectCandidate
@@ -278,11 +278,11 @@ function Sidebar({
                     }
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Selected Candidate</span>
                     </a>
                   </li>
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick(
                       "holdCandidate",
                       toggleHoldCandidate
@@ -290,11 +290,11 @@ function Sidebar({
                     className={activeButton === "holdCandidate" ? "active" : ""}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Hold Candidate</span>
                     </a>
                   </li>
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick(
                       "rejectedCandidate",
                       toggleRejectedCandidate
@@ -304,22 +304,22 @@ function Sidebar({
                     }
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Rejected Candidate</span>
                     </a>
                   </li>
 
-                  <li>
+                  {/* <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      <img src={Circle} style={{ width: "10px" }} alt="" /> 
                       <span className="sidebar-text">Self Offer Work</span>
                     </a>
-                  </li>
+                  </li> */}
 
-                  <li onClick={toggleEmployeeMasterSheet}>
+                  <li onClick={toggleEmployeeMasterSheet} style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
-                      <span className="sidebar-text">Employee Sheet</span>
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span className="sidebar-text">Master Tracker</span>
                     </a>
                   </li>
                 </ul>
@@ -346,7 +346,7 @@ function Sidebar({
                     activeSubMenu === "Jobdiscription" ? "active" : ""
                   }`}
                 >
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick(
                       "jobDescription",
                       toggleJobDescription
@@ -356,15 +356,15 @@ function Sidebar({
                     }
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">
                         {" "}
-                        View Job Description
+                        View Job Descriptions
                       </span>
                     </a>
                   </li>
-                  <li
-                    onClick={handleButtonClick(
+                  <li style={{marginLeft: "10px"}}
+                     onClick={handleButtonClick(
                       "addJobDescription",
                       toggleAddJobDescription
                     )}
@@ -373,15 +373,16 @@ function Sidebar({
                     }
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
-                      <span className="sidebar-text">Add JobDescription</span>
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span className="sidebar-text">Add Job Description</span>
                     </a>
                   </li>
                 </ul>
               </li>
               <li
-                className={activeSubMenu === "employee" ? "active" : ""}
+                className={activeSubMenu === "addJobDescription" ? "active" : ""}
                 onClick={toggleSubMenu("employee")}
+                
               >
                 <a href="#">
                   <i
@@ -396,21 +397,21 @@ function Sidebar({
                     activeSubMenu === "employee" ? "active" : ""
                   }`}
                 >
-                  <li
+                  < li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick("incentive", toggleIncentive)}
                     className={activeButton === "incentive" ? "active" : ""}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">My Incentive </span>
                     </a>
                   </li>
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick("attendance", toggleAttendance)}
                     className={activeButton === "attendance" ? "active" : ""}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">My Attendance </span>
                     </a>
                   </li>
@@ -418,7 +419,7 @@ function Sidebar({
               </li>
 
               <li
-                className={activeSubMenu === "admin-section" ? "active" : ""}
+                className={activeButton === "admin-section" ? "active" : ""}
                 onClick={toggleSubMenu("admin-section")}
               >
                 <a href="#">
@@ -434,30 +435,30 @@ function Sidebar({
                     activeSubMenu === "admin-section" ? "active" : ""
                   }`}
                 >
-                  <li onClick={toggleAssigncolumns}>
+                  <li onClick={toggleAssigncolumns} style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Assign Columns</span>
                     </a>
                   </li>
 
-                  <li onClick={toggleAllMasterSheet}>
+                  <li onClick={toggleAllMasterSheet} style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">All Master Sheet</span>
                     </a>
                   </li>
 
-                  <li onClick={toggelAddRecruiter}>
+                  <li onClick={toggelAddRecruiter} style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Add Recruiters</span>
                     </a>
                   </li>
 
-                  <li onClick={toggelAddRecruiter}>
+                  <li onClick={toggelAddRecruiter} style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Add Team Leadrs</span>
                     </a>
                   </li>
@@ -487,43 +488,44 @@ function Sidebar({
                       toggleExcelCalling
                     )}
                     className={activeButton === "excelCalling" ? "active" : ""}
+                    style={{marginLeft: "10px"}}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Calling Data</span>
                     </a>
                   </li>
-                  <li>
+                  <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Line Up Data</span>
                     </a>
                   </li>
-                  <li>
+                  <li  style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Offers Data</span>
                     </a>
                   </li>
-                  <li
+                  <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick("resumeData", toggelResumeData)}
                     className={activeButton === "resumeData" ? "active" : ""}
                   >
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Resume Data</span>
                     </a>
                   </li>
 
-                  <li onClick={toggelAddResumes}>
+                  <li onClick={toggelAddResumes} style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span className="sidebar-text">Add Resumes</span>
                     </a>
                   </li>
                 </ul>
               </li>
-              <li onClick={toggleChatRoom}>
+              <li onClick={toggleChatRoom} >
                 <a href="#">
                   {/* <i className="icon ph-bold ph-gear"></i> */}
                   <i
@@ -552,9 +554,9 @@ function Sidebar({
                     activeSubMenu === "portal" ? "active" : ""
                   }`}
                 >
-                  <li>
+                  <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span
                         className="sidebar-text"
                         onClick={openNaukriPlatform}
@@ -563,9 +565,9 @@ function Sidebar({
                       </span>
                     </a>
                   </li>
-                  <li>
+                  <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span
                         className="sidebar-text"
                         onClick={openLinkedinPlatform}
@@ -574,9 +576,9 @@ function Sidebar({
                       </span>
                     </a>
                   </li>
-                  <li>
+                  <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span
                         className="sidebar-text"
                         onClick={openTimesPlatform}
@@ -585,9 +587,9 @@ function Sidebar({
                       </span>
                     </a>
                   </li>
-                  <li>
+                  <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      <img src={Circle} style={{ width: "10px" }} alt="" />
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                       <span
                         className="sidebar-text"
                         onClick={openIndeedPlatform}
@@ -599,7 +601,7 @@ function Sidebar({
                 </ul>
               </li>
 
-              <li onClick={toggelDisplayNotPad}>
+              <li onClick={toggelDisplayNotPad} >
                 <a href="#">
                   <i
                     class="fa-regular fa-clipboard"

@@ -31,7 +31,7 @@ const ShortlistedNavbar = () => {
                         className="fa-regular fa-calendar"
                     ></i>
                     <button className='shortListed-btn-nav' onClick={toggleShortlistedData}>
-                        ShortListed Candidate
+                        ShortListed 
                     </button>
                 </div>
             </div>

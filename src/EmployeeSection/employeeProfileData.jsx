@@ -83,10 +83,10 @@ const EmployeeProfileData = () => {
         <main className="employee-profile-main">
           <section className="employee-profile-section">
             <div className="profile-back-button">
-              <button onClick={goBackToDashBoard}>
+              {/* <button onClick={goBackToDashBoard}>
                 Back To Dashboard
                 <i className="fas fa-times"></i>
-              </button>
+              </button> */}
             </div>
             {/* Employee personal Information and current company information */}
             <div className="employee-profile-staticsection">

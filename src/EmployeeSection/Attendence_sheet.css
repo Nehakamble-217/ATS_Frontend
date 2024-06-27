@@ -121,22 +121,31 @@
   background-color: #ffcb9b;
   color: gray;
   z-index: 1;
+  height: 30px;
+  white-space: nowrap;
+  color: gray;
+  max-width: auto !important;
+  font-size: 16px;
+  font-weight: 500;
 }
 .attendanceheading {
   border: 1px solid gray;
   padding: 4px;
   white-space: nowrap;
-  width: 350px;
-  height: 32px;
-  text-overflow: ellipsis;
+  width: auto !important;
+  height: 30px;
+  
+  /* text-overflow: ellipsis; */
 }
 .tabledata {
-  white-space: nowrap;
+  
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
-  padding: 8px;
+  padding: 2px;
+  max-width: 50px;
   border: 1px solid #ddd;
+  /* width: auto; */
 }
 .tooltip {
   visibility: hidden;
@@ -144,11 +153,15 @@
   color: #000;
   text-align: center;
   border-radius: 5px;
-  padding: 5px;
+  /* padding: 5px; */
   position: fixed;  /* Use fixed positioning */
   z-index: 1000;
   opacity: 0;
   transition: opacity 0.3s;
+  text-overflow: clip;
+  visibility: visible;
+  /* white-space: nowrap; */
+  /* width: 200px; */
 }
 
 
@@ -166,16 +179,17 @@
 .attendancerows-head {
   background-color: #ffcb9b;
   color: gray;
-  font-weight: 100;
+  /* font-weight: 100; */
   text-align: center;
   font-size: 18px;
   border: 1px solid gray;
-  padding: 10px 15px;
-  text-overflow: clip;
-  width: 100px;
+  max-width: 300px ;
+  /* padding: 10px 15px; */
+  /* text-overflow: clip; */
+  /* width: 100px; */
 }
 
-.attendancerowsdata,
+/* .attendancerowsdata,
 .tabledata {
   text-align: center;
   font-size: 16px;
@@ -185,7 +199,7 @@
   max-width: 200px;
   text-overflow: clip;
   visibility: visible;
-}
+} */
 
 .attendanceTableData::-webkit-scrollbar {
   display: none;
@@ -195,7 +209,9 @@
   width: 100%;
   overflow-y: auto;
 }
-
+.attendancerows{
+  height: 30px;
+}
 
 
 .attendancerows:hover {

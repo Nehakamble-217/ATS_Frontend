@@ -226,6 +226,7 @@ const ChatRoom = () => {
                                     ) : (
                                         <div className="file-data">
                                             <p>File: {chat.fileName}</p>
+
                                             <img src={chat.fileUrl} alt=""  style={{width:"100%",height:"200px"}}/>
                                             <button onClick={() => openFile(chat.fileUrl)}>Open File</button>
                                         </div>

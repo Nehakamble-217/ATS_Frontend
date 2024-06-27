@@ -13,22 +13,28 @@
     background-color: #ffe5b5;
     border-top: 1px solid white;
     display: flex; */
-    /* justify-content: center; */
-    /* align-items: center;
-    justify-content: space-evenly;
-    padding-left: 30px; */
+    /* justify-content: center; 
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+
     
 }
 .shortlisted-nav-left{
     height: 100%;
     width: 100%;
     display: flex;
+    /* */
+    align-items: center;
+    flex-wrap: wrap;
+    /* justify-content: left; */
     justify-content: space-between;
     align-items: center;
     padding: 5px;
 }
 .fa-calendar{
     cursor: pointer;
+
 }
 
 #calendar-icon-nav{

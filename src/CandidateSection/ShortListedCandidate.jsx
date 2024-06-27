@@ -1132,7 +1132,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
                     <button
-                      className="btn btn-primary btn-sm"
+                      
                       onClick={() => handleUpdate(item.candidateId)}
                     >
                       Update
@@ -1145,7 +1145,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
           {showForwardPopup ? (
             <>
               <div
-                className="modal show bg-black bg-opacity-50"
+                className="bg-black bg-opacity-50 modal show"
                 style={{
                   display: "flex",
                   justifyContent: "center",
