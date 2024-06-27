@@ -426,7 +426,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       <div className="calender-main-div">
         <div className="calendar">
-
           <div className="calendar-div">
             <Calendar
               value={selectedDate}
