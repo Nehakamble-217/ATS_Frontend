@@ -204,15 +204,15 @@ const ChatRoom = () => {
     }
 
     return (
-        <div className="container">
+<div className="container">
             {userData.connected ?
                 <div className="chat-box">
-                     <div className="member-list">
+                    <div className="member-list">
                         <ul>
-                            <div><h4 className='fetchUsername'>{userData.username} Chat Room</h4></div>
-                            <li onClick={() => { setTab("CHATROOM") }} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
+                            <div><h1>{userData.username} Chat Room</h1></div>
+                            <li onClick={() => {setTab("CHATROOM")}} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
                             {[...privateChats.keys()].map((name, index) => (
-                                <li onClick={() => { setTab(name) }} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
+                                <li onClick={() => {setTab(name)}} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
                             ))}
                         </ul>
                     </div>
@@ -226,6 +226,7 @@ const ChatRoom = () => {
                                     ) : (
                                         <div className="file-data">
                                             <p>File: {chat.fileName}</p>
+                                            <img src={chat.fileUrl} alt=""  style={{width:"100%",height:"200px"}}/>
                                             <button onClick={() => openFile(chat.fileUrl)}>Open File</button>
                                         </div>
                                     )}

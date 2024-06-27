@@ -60,7 +60,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
   const [showShortListedCandidates, setShowShortListedCandidates] = useState(false);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
-  const [showShortListedNav, setShowShortListdNav] = useState(false);
+  const [showShortListedNav, setShowShortListdNav] = useState(true);
   const [showAddEmployee,setShowAddEmployee] = useState(false)
   const [showNotePad,setShowNotePad] = useState(false)
   const [showProfile,setShowProfile] = useState(false)
@@ -289,7 +289,15 @@ const EmpDashboard = ({ userGroup }) => {
   }
 
   return (
-    <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
+    <div className="w-full relative">
+      <div className="time-and-data">
+          <DailyWork 
+          employeeId={employeeId} 
+          successfulDataAdditions={successfulDataAdditions} 
+          profilePageLink={profilePageLink}
+          />
+        </div>
+        <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Sidebar 
         userGroup={userGroup}
         openSidebarToggle={openSidebarToggle}
@@ -320,16 +328,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleShareLink={toggleShareLink}
 
       />
-        
-      <div className="empDash-main-content">
-        <div className="time-and-data">
-          <DailyWork 
-          employeeId={employeeId} 
-          successfulDataAdditions={successfulDataAdditions} 
-          profilePageLink={profilePageLink}
-          />
-        </div>
-
+    <div className="empDash-main-content">
     <div>
       { showProfile && <EmployeeProfileData></EmployeeProfileData>}
     </div>
@@ -444,6 +443,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {assignColumns && <Team_Leader/>}
         </div>
+      </div>
       </div>
     </div>
   );
