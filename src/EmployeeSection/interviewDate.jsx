@@ -437,7 +437,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
             />
           </div>
         </div>
-6
         {showShortlistTable && (
           <div className="shortlist-table-div">
             <div className="interview-response-update">
