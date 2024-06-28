@@ -892,15 +892,15 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                     />
                   </th>
                 ) : null}
-                <th className="attendanceheading">Sr No.</th>
+                <th className="attendanceheading"> No.</th>
                 <th className="attendanceheading">Date</th>
                 <th className="attendanceheading">Time</th>
-                <th className="attendanceheading">Candidate Id</th>
-                <th className="attendanceheading">Recruiter Name</th>
-                <th className="attendanceheading">Candidate Name</th>
-                <th className="attendanceheading">Candidate Email</th>
+                <th className="attendanceheading">Candidate's Id</th>
+                <th className="attendanceheading">Recruiter's Name</th>
+                <th className="attendanceheading">Candidate's Name</th>
+                <th className="attendanceheading">Candidate's Email</th>
                 <th className="attendanceheading">Contact Number</th>
-                <th className="attendanceheading">Alternate Number</th>
+                <th className="attendanceheading">Whatsapp Number</th>
                 <th className="attendanceheading">Source Name</th>
                 <th className="attendanceheading">Job Designation</th>
                 <th className="attendanceheading">Job Id</th>
