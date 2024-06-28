@@ -7,11 +7,10 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
-  
   font-size: 16px;
 }
 body {
-  background-color: #dbe2f4; 
+  background-color: #dbe2f4;
   font-size: 16px;
 }
 /* .container {
@@ -60,9 +59,8 @@ body {
     height: 200%;
     /* background: url('/src/LogoImages/clouds1.png') repeat-x; */
     background: url('/src/LogoImages/clouds.png') repeat-x;
-
-    background-size: cover;    
-    background-position: center;
+background-size: cover;    
+background-position: center;
 /* animation: moveClouds 10s linear infinite; */
 z-index: -1;
 }
@@ -82,7 +80,7 @@ z-index: -1;
 .sidebar .head {
   display: flex;
   /* position: fixed; */
-  width: 24px;
+  width: 140px;
   height: 24px;
   /* gap: 10px; */
  font-size: 18px;
@@ -117,8 +115,6 @@ z-index: -1;
   font-weight: 500;
 }
 .nav {
-  position: absolute;
-  top: 45px;
   flex: 1;
   margin-bottom: 1px;
   padding:5px 0px;
@@ -128,12 +124,18 @@ z-index: -1;
 .sidebar-menu ul li {
   flex: 1;
   position: relative;
-  list-style: none;
+  list-style-type:disc;
+  color: gray;
   padding:1px 0px;
   margin-bottom: 1px;
   margin-top: auto;
+
+  
+
 }
+
 .sidebar-menu ul{
+  padding-top: 35px;
   padding-left: 0px !important;
 }
 
@@ -141,7 +143,7 @@ z-index: -1;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 16px;
+  font-size: 10px;
   color: rgb(63, 58, 58);
   text-decoration: none;
   padding:  5px;
@@ -150,13 +152,19 @@ z-index: -1;
 }
 .sidebar-menu ul li > a:hover,
 .sidebar-menu ul li.active > a {
-  color: #000;
+  color: gray;
 /* padding: 7px; */
   background-color: #ffd8a8;
 }
+.sidebar-menu ul li a ul li{
+  margin-left: 30px;
+
+}
+
 
 .sidebar-menu ul li .icon {
   font-size: 18px;
+  color: gray;
 }
 .sidebar-menu ul li .sidebar-text {
   flex: 1;
@@ -190,7 +198,7 @@ z-index: -1;
 .sidebar-menu-btn {
   position: absolute;
   left: 13px;
-  top:17px;
+  top:100px;
   margin-bottom: 5px;
   /* top: 3.5%; */
   width: 23px;
@@ -206,7 +214,7 @@ z-index: -1;
 }
 .sidebar-menu-btn:hover i {
   
-  color: #000;
+  color: gray;
   border: 1px solid black;
   border-radius: 8px;
   background-color: #fff;
@@ -216,7 +224,7 @@ z-index: -1;
 
 }
 .sidebar.active {
-  width: 50px;
+  width: 55px;
   height: 100vh;
 }
 .sidebar.active .sidebar-menu-btn i {
@@ -320,10 +328,3 @@ z-index: -1;
 .sidebar .arrow {
   color: gray;
 }
-
-/* Add this CSS to your existing sidebar.css */
-@media screen and (min-width: 980px) {
-
-  
-}
-

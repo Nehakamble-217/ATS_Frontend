@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AfterSelection from "./CandidateSection/afterSelection";
 import AdminLogin from "./LoginPage/adminLogin";
 import CandidateVerification from "./CandidateSection/candidateVerification";  
-
 import Home from "../src/MainDashboard/mainDashboard";
 import ForgotPasswordForm from "./LoginPage/ForgotPasswordForm";
 

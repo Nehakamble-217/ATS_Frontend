@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 // import "../EmployeeSection/callingList.css";
-// import "./callingExcel.css";
+import "./callingExcel.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
-import './ButtonStyles.css'; // Import the CSS file
+
 
 
 const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
@@ -243,30 +243,25 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
 
   return (
-    <div className="App-after">
+    <div className="App-after1">
       {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
-        
+
 
             <button onClick={toggleFilterSection} 
             style={{ fontSize: "16px", borderRadius: "15px", height: "30px",color:"#ffcb9b" ,paddingLeft:"15px",
-              paddingRight:"15px",background:"white", border: "1px solid gray"}}
+              paddingRight:"15px",background:"white", border: "1px solid gray",position:"sticky"}}
               >
   Filter <i className="fa-solid fa-filter"></i>
 </button> 
        
           </div>
-          <div style={{ dispaly:'flex',textAlign: 'right' }}>           
-  <button onClick={onCloseTable} 
-  // style={{ fontSize: '16px',borderRadius: '15px',height: '30px',color: 'white',  
-  //  paddingLeft: '15px', paddingRight:"15px" ,background: '#ffcb9b', border: '1px solid gray'     
-  // }}
-  >
-     
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+  <button onClick={onCloseTable} className="close-button">
     Close
   </button>
 </div>
@@ -285,12 +280,12 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
           {showFilterSection && (
             <div className="filter-section">
               <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
-              
-              <div className="filter-dropdowns">
-                
-              {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
 
-                
+              <div className="filter-dropdowns">
+
+                {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
+
+
                 {filterOptions.map(option => (
                   <div key={option} className="filter-dropdown">
                     {/* <label htmlFor={option}>{option}</label> */}
@@ -438,7 +433,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
                       <span className="tooltiptext">{item.selectYesOrNo} </span>
                     </div></td>
                     <td className="tabledata">
-                      <i onClick={() => handleUpdate(item.candidateId,item.employeeId)} className="fa-regular fa-pen-to-square"></i>
+                      <i onClick={() => handleUpdate(item.candidateId, item.employeeId)} className="fa-regular fa-pen-to-square"></i>
                     </td>
                   </tr>
                 ))}
