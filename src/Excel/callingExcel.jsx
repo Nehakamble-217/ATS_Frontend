@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useParams } from "react-router-dom";
 import CallingExcelList from './callingExcelData';
 import "./callingExcel.css";
+import AddResumes from '../ResumeData/addMultipleResumes';
+
 const CallingExcel = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [uploadError, setUploadError] = useState(null);
@@ -29,6 +31,8 @@ const CallingExcel = ({ onClose }) => {
       await axios.post(`http://192.168.1.39:8891/api/ats/157industries/uploadData/${employeeId}`, formData, {
 
 
+
+
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -50,58 +54,49 @@ const CallingExcel = ({ onClose }) => {
   };
 
   return (
-    <div>
-      <div className="card" style={{ width: "400px", border: "1px solid gray",marginLeft:"30%" }}>
-        <div className="card-header">
-          <h5 className="card-title mb-0">Upload Excel File</h5>
-        </div>
-        <div className="card-body">
-          <div className="mb-3">
-            <input 
-              type="file" 
-              className="form-control" 
-              accept=".xls,.xlsx" 
-              onChange={handleFileChange} 
-              ref={fileInputRef} // Attach the ref to the file input
-            />
+    <div style={{display:"flex",alignItems:"center",
+      justifyContent:"space-around",flexWrap:"wrap"}}>
+      {!showTable && ( // Render upload form and card if showTable is false
+        <div className="card fixed-card" style={{ 
+        width: "400px", border: "1px solid gray"}}>
+          <div className="card-header">
+            <h5 className="card-title mb-0">Upload Excel File</h5>
           </div>
-          <div className="d-grid gap-2">
-           
-            <button onClick={handleUpload}>
-              Upload</button>
-            {uploadSuccess && (
-              <center><h5 className="text-success mt-3">File data added successfully!</h5></center>
-            )}
-            {uploadError && (
-              <center><h5 className="text-danger mt-3">{uploadError}</h5></center>
-            )}
-            <button onClick={handleClose}>Close</button>
+          <div className="card-body">
+            <div className="mb-3">
+              <input 
+                type="file" 
+                className="form-control" 
+                accept=".xls,.xlsx" 
+                onChange={handleFileChange} 
+                ref={fileInputRef} // Attach the ref to the file input
+              />
+            </div>
+            <div className="d-grid gap-2">
+              <button onClick={handleUpload}>Upload</button>
+              {uploadSuccess && (
+                <center><h5 className="text-success mt-3">File data added successfully!</h5></center>
+              )}
+              {uploadError && (
+                <center><h5 className="text-danger mt-3">{uploadError}</h5></center>
+              )}
+              <button onClick={handleClose}>Close</button>
+            </div>
           </div>
         </div>
-      </div>
-      {showTable && (
-        <div style={{ marginTop: "20px" }}>
+      )}
+
+      {showTable && ( // Render table only if showTable is true
+        <div>
           <CallingExcelList onCloseTable={() => setShowTable(false)} />
         </div>
       )}
+
+      <div>
+        <AddResumes show={showTable} /> {/* Pass show prop to AddResumes */}
+      </div>
     </div>
   );
 };
 
 export default CallingExcel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

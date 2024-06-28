@@ -72,7 +72,11 @@ const EmpDashboard = ({ userGroup }) => {
 
 
   const { employeeId } = useParams();
+  const [successCount, setSuccessCount] = useState(0);
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
+  const [archived, setArchived] = useState(0);
+  const [pending, setPending] = useState(0);
+
   const navigator = useNavigate();
 
   const gettingCandidateIdForUpdate = (id) => {
@@ -80,6 +84,11 @@ const EmpDashboard = ({ userGroup }) => {
     setUpdateSelfCalling(true);
     setSelfCalling(false); 
     setIncentive(false);
+  };
+
+  const updateCount = () => {
+    setSuccessCount((prevCount) => prevCount + 1);
+    setArchived((prevCount) => prevCount + 1);
   };
 
   const toggelAddRecruiter = ()=> {
@@ -102,7 +111,8 @@ const EmpDashboard = ({ userGroup }) => {
 
   const handleDataAdditionSuccess = () => {
     setSuccessfulDataAdditions((prevCount) => prevCount + 1);
-    setIncentive(false);
+    setArchived((prevArchived) => prevArchived + 1);
+    setPending((prevPending) => prevPending - 1);
   };
 
   const OpenSidebar = () => {
@@ -274,14 +284,14 @@ const EmpDashboard = ({ userGroup }) => {
     setSelfCalling(true); 
   };
  
-
-  
-  
-
-  const profilePageLink =()=>{
+  const profilePageLink = () => {
     resetAllToggles();
-    setShowProfile(!showProfile)
-  }
+    setShowProfile(!showProfile);
+  };
+
+  const handleCloseProfile = () => {
+    setShowProfile(false);
+  };
 
   const toggelAddResumes = () =>{
     resetAllToggles();
@@ -325,17 +335,23 @@ const EmpDashboard = ({ userGroup }) => {
         <div className="time-and-data">
           <DailyWork 
           employeeId={employeeId} 
-          successfulDataAdditions={successfulDataAdditions} 
+
           profilePageLink={profilePageLink}
+          successCount={successCount}
+          successfulDataAdditions={successfulDataAdditions}
+          archived={archived}
+          pending={pending}
+          handleDataAdditionSuccess={handleDataAdditionSuccess}
           />
         </div>
 
     <div>
-      { showProfile && <EmployeeProfileData></EmployeeProfileData>}
+      { showProfile && <EmployeeProfileData onClose={handleCloseProfile}></EmployeeProfileData>}
     </div>
         <div style={{ paddingTop: "50px" }}>
           {selfCalling && (
-            <CallingList updateState={handleUpdateComplete} funForGettingCandidateId={gettingCandidateIdForUpdate} />
+            <CallingList updateState={handleUpdateComplete} 
+            funForGettingCandidateId={gettingCandidateIdForUpdate} />
           )}
         </div>
 
@@ -409,7 +425,10 @@ const EmpDashboard = ({ userGroup }) => {
         {resumeLink && <CandidateResumeLink/> }
         <div>
           {addCandidate && (
-            <CallingTrackerForm updateState={handleDataAdditionSuccess} />
+            <CallingTrackerForm 
+            handleDataAdditionSuccess={handleDataAdditionSuccess}
+            updateCount={updateCount}
+            />
           )}
         </div>
 

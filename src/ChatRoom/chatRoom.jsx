@@ -56,7 +56,7 @@ const ChatRoom = () => {
     };
 
     const connect = (username) => {
-        let Sock = new SockJS('http://192.168.1.43:8891/ws');
+        let Sock = new SockJS('http://192.168.1.39:8891/ws');
         stompClient = over(Sock);
         stompClient.connect({}, () => onConnected(username), onError);
     }
@@ -162,7 +162,8 @@ const ChatRoom = () => {
         formData.append('file', userData.file);
         formData.append('senderName', userData.username);
 
-        fetch('http://192.168.1.43:8891/upload', {
+        fetch('http://192.168.1.39:8891/upload', {
+
             method: 'POST',
             body: formData
         })
@@ -226,6 +227,7 @@ const ChatRoom = () => {
                                     ) : (
                                         <div className="file-data">
                                             <p>File: {chat.fileName}</p>
+
                                             <img src={chat.fileUrl} alt=""  style={{width:"100%",height:"200px"}}/>
                                             <button onClick={() => openFile(chat.fileUrl)}>Open File</button>
                                         </div>
@@ -267,7 +269,8 @@ const ChatRoom = () => {
                 :
                 <div className='register'>
                     <HashLoader
-	 color={color}  aria-label="Loading Spinner" data-testid="loader"/>
+	 color={color}  
+     aria-label="Loading Spinner" data-testid="loader"/>
                 </div>
             }
         </div>

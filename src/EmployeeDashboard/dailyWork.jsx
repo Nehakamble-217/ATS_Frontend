@@ -5,8 +5,9 @@ import "../EmployeeDashboard/dailyWork.css";
 import Profile from "../photos/profileImg.webp";
 import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
+import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 
-function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
+function DailyWork({ successCount, successfulDataAdditions, archived, pending, handleDataAdditionSuccess, profilePageLink }) {
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
@@ -55,26 +56,19 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://localhost:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
         if (response.data.profileImage) {
-          // Convert byte code to Uint8Array
           const byteCharacters = atob(response.data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
           for (let i = 0; i < byteCharacters.length; i++) {
             byteNumbers[i] = byteCharacters.charCodeAt(i);
           }
           const byteArray = new Uint8Array(byteNumbers);
-
-          // Create a Blob from the byte array
           const blob = new Blob([byteArray], { type: "image/jpeg" });
-
-          // Create a URL for the Blob and set it as the image source
           const url = URL.createObjectURL(blob);
           setProfileImage(url);
-
-          // Clean up the URL object when the component unmounts
           return () => URL.revokeObjectURL(url);
         }
       } catch (error) {
@@ -84,6 +78,7 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
 
     fetchEmployeeData();
   }, [employeeId]);
+
 
   useEffect(() => {
     const now = new Date();
@@ -99,7 +94,7 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
     setLoginTime(timeString);
 
     const loginHour = now.getHours();
-    if (loginHour >= 10) {
+    if (loginHour >= 7) {
       setLateMark("Yes");
     }
 
@@ -117,9 +112,9 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
       const now = new Date();
       setCurrentTime(now.toLocaleTimeString("en-IN"));
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
+
 
   useEffect(() => {
     let interval;
@@ -129,13 +124,11 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
           const newSeconds = prevTime.seconds + 1;
           const newMinutes = prevTime.minutes + Math.floor(newSeconds / 60);
           const newHours = prevTime.hours + Math.floor(newMinutes / 60);
-
           const updatedTime = {
             hours: newHours % 24,
             minutes: newMinutes % 60,
             seconds: newSeconds % 60,
           };
-
           localStorage.setItem(
             `stopwatchTime_${employeeId}`,
             JSON.stringify(updatedTime)
@@ -150,17 +143,11 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
     return () => clearInterval(interval);
   }, [running, employeeId]);
 
-  useEffect(() => {
-    if (successfulDataAdditions > 0) {
-      updateCount(successfulDataAdditions);
-    }
-  }, [successfulDataAdditions]);
-
-  const updateCount = () => {
+  const updateCount = (archivedIncrement, pendingDecrement) => {
     setData((prevData) => {
       const updatedData = {
-        archived: prevData.archived + 1,
-        pending: prevData.pending - 1,
+        archived: prevData.archived + archivedIncrement,
+        pending: prevData.pending - pendingDecrement,
       };
 
       if (updatedData.archived >= 3) {
@@ -179,6 +166,8 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
       return updatedData;
     });
   };
+
+
 
   const handlePause = () => {
     setRunning(false);
@@ -233,7 +222,7 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
       };
 
       await axios.post(
-        "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
+        "http://localhost:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -245,7 +234,8 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
       setData({ archived: 0, pending: 10 });
 
       console.log("Logged out successfully.");
-      navigate("/employee-login");
+
+      navigate("/employee-login/recruiter");
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -378,18 +368,17 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
           {showDetails ? "Hide" : "Show"}
         </button> */}
           {/* <img className="logout-btn"
-          onClick={handleLogoutLocal}
-          // style={{ width: "30px", borderRadius: "60%" }}
-          src={logoutImg}
-          alt="Logout"
-        /> */}
+            onClick={handleLogoutLocal}
+            // style={{ width: "30px", borderRadius: "60%" }}
+            src={logoutImg}
+            alt="Logout"
+          /> */}
         </div>
       )}
 
       <button
         className="toggle-all-daily-btns"
         onClick={toggleAllDailyBtns}
-        // style={{ display: showAllDailyBtns ? "none" : "block" }}
       >
         {!showAllDailyBtns ? "show" : "hidden"} All Buttons
       </button>
