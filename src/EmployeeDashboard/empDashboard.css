@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: 240px 1fr;
   height: auto;
+  
 }
 
 .sidebar {
@@ -78,8 +79,7 @@
 /* Media queries for responsiveness */
 @media screen and (max-width: 992px) {
   .grid-container {
-    grid-template-columns:1fr;
-    
+    grid-template-columns:240px 1fr;
     grid-template-rows: auto;
     grid-template-areas:
       'header'
@@ -96,13 +96,14 @@
 }
 
 
+
 /* EmpDashboard.css */
 
 
 
-.grid-container {
+/* .grid-container {
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 1fr;
   transition: all 0.3s ease;
 }
 
@@ -110,15 +111,15 @@
   background-color: #ffe5b5;
   transition: all 0.3s ease;
   z-index: 999;
-}
+} */
 
-.empDash-main-content {
+/* .empDash-main-content {
   padding: 20px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; */
  /* width: 100%; */
-}
-
+/* } */
+/* 
 .time-and-data .head {
   display: flex;
   gap: 10px;
@@ -143,7 +144,7 @@
   top: 0;
   left: 0;
   z-index: 1000;
-}
+} */
 
 .user-img img {
   width: 50px;
@@ -152,16 +153,16 @@
 }
 
 /* Responsive layout */
-@media screen and (max-width: 992px) {
+/* @media screen and (max-width: 992px) {
   .grid-container {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-  }
+  } */
 
   /* .sidebar {
     display: none;
   } */
-}
+/* } */
 /* .sidebar-open .empDash-main-content {
   margin-left: 1px;
 } */

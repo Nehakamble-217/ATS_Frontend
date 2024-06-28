@@ -331,7 +331,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
               onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
-            <h5 style={{ color: "gray" }}>Hold Data List</h5>
+            <h5 style={{ color: "gray" }}>Hold Candidates</h5>
             <div
               style={{
                 display: "flex",
@@ -454,7 +454,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                       />
                     </th>
                   ) : null}
-                  <th className="attendanceheading">Sr No.</th>
+                  <th className="attendanceheading">No.</th>
                   <th
                     className="attendanceheading"
                     onClick={() => handleSort("date")}
@@ -462,19 +462,19 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                     Date
                   </th>
                   <th className="attendanceheading">Time</th>
-                  <th className="attendanceheading">Candidate Id</th>
+                  <th className="attendanceheading">Candidate's Id</th>
                   <th
                     className="attendanceheading"
                     onClick={() => handleSort("recruiterName")}
                   >
-                    Recruiter Name
+                    Recruiter's Name
                   </th>
-                  <th className="attendanceheading">Candidate Name</th>
-                  <th className="attendanceheading">Candidate Email</th>
+                  <th className="attendanceheading">Candidate's Name</th>
+                  <th className="attendanceheading">Candidate's Email</th>
                   <th className="attendanceheading">Contact Number</th>
-                  <th className="attendanceheading">Alternate Number</th>
-                  <th className="attendanceheading">sourceName</th>
-                  <th className="attendanceheading">job Designation</th>
+                  <th className="attendanceheading">Whatsapp Number</th>
+                  <th className="attendanceheading">Source Name</th>
+                  <th className="attendanceheading">Job Designation</th>
                   <th
                     className="attendanceheading"
                     onClick={() => handleSort("requirementId")}
@@ -486,11 +486,11 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                   <th className="attendanceheading">Current Location</th>
                   <th className="attendanceheading">Full Address</th>
                   <th className="attendanceheading">Calling Feedback</th>
-                  <th className="attendanceheading">Incentive</th>
-                  <th className="attendanceheading">Interseed or Not</th>
+                  <th className="attendanceheading">Recruiter's Incentive</th>
+                  <th className="attendanceheading">Interested or Not</th>
                   <th className="attendanceheading">Current Company</th>
                   <th className="attendanceheading">Total Experience</th>
-                  <th className="attendanceheading">relevantExperience</th>
+                  <th className="attendanceheading">Relevant Experience</th>
                   <th className="attendanceheading">Current CTC</th>
                   <th className="attendanceheading">Expected CTC</th>
                   <th className="attendanceheading">Date Of Birth</th>
@@ -498,12 +498,12 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                   <th className="attendanceheading">Qualification</th>
                   <th className="attendanceheading">Year Of Passing</th>
                   <th className="attendanceheading">Extra Certification</th>
-                  <th className="attendanceheading">Feed Back</th>
-                  <th className="attendanceheading">Holding Any Offer</th>
-                  <th className="attendanceheading">Offer Letter Msg</th>
+                  <th className="attendanceheading">Calling Remark</th>
+                  <th className="attendanceheading">Holding any offer</th>
+                  <th className="attendanceheading">Offer Letter Message</th>
                   <th className="attendanceheading">Resume</th>
                   <th className="attendanceheading">NoticePeriod</th>
-                  <th className="attendanceheading">Msg For TeamLeader</th>
+                  <th className="attendanceheading">Message For Team Leader</th>
                   <th className="attendanceheading">
                     Availability For Interview
                   </th>
@@ -1043,7 +1043,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
             {showForwardPopup ? (
               <>
                 <div
-                  className="modal show bg-black bg-opacity-50"
+                  className="bg-black bg-opacity-50 modal show"
                   style={{
                     display: "flex",
                     justifyContent: "center",

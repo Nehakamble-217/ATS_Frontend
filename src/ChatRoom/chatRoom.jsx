@@ -210,7 +210,7 @@ const ChatRoom = () => {
           <div className="member-list">
             <ul>
               <div>
-                <h4 className="fetchUsername">{userData.username} Chat Room</h4>
+                <h1>{userData.username} Chat Room</h1>
               </div>
               <li
                 onClick={() => {
@@ -251,6 +251,12 @@ const ChatRoom = () => {
                     ) : (
                       <div className="file-data">
                         <p>File: {chat.fileName}</p>
+
+                        <img
+                          src={chat.fileUrl}
+                          alt=""
+                          style={{ width: "100%", height: "200px" }}
+                        />
                         <button onClick={() => openFile(chat.fileUrl)}>
                           Open File
                         </button>

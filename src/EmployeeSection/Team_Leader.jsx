@@ -185,7 +185,7 @@ function getClassForCategory(category) {
   return (
     <div className="Apps">
       <div className="selection-container">
-        <div className="hierarchy-section">
+        <div className="hierarchy-sectionTL">
           {/* <div className="dropdown">
             <label htmlFor="mainAdminDropdown">Admin:</label>
             <select id="mainAdminDropdown" value={selectedMainAdmin || ''} onChange={handleMainAdminChange}>
