@@ -129,8 +129,7 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   
 }
 .shortlist-table-div{
-  padding-top: 55px;
-  padding-left: 20px;
+  width: 100%;
   overflow-x: auto;
 
 }
