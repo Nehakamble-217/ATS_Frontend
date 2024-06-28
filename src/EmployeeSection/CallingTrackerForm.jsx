@@ -89,7 +89,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState("");
+
   const [candidateName, setCandidateName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [sourceName, setSourceName] = useState('');
@@ -139,7 +139,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
     try {
       const response = await axios.get(
 
-        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -160,7 +160,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:8891/api/ats/157industries/company-details`
+        `http://192.168.1.39:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -249,7 +249,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
       }
 
       await axios.post(
-        `http://192.168.1.38:8891/api/ats/157industries/${employeeId}/addCallingData`,
+        `http://192.168.1.39:8891/api/ats/157industries/${employeeId}/addCallingData`,
 
         dataToUpdate
       );
@@ -724,15 +724,15 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 </td>
                
                 <th scope="col" style={{color:"gray"}}>Date Of Birth</th>
-                    <td style={{display:"flex"}} >
+                    <td style={{display:"flex" ,placeholder:"DD/MM/YYYY"}} >
                   <input
                     type="date"
                     name="dateOfBirth"
-                   
+                    placeholder="dd/mm/yyyy" 
                     value={lineUpData.dateOfBirth}
                     onChange={handleDateChange}
                     className="form-control"
-                    style={{height:"30px",width:"150px",alignItems:"center",lineHeight:1,marginRight:"0px",padding:"0px",placeholder:"DD/MM/YYYY"}}
+                    style={{height:"30px",width:"150px",alignItems:"center",lineHeight:1,marginRight:"0px",padding:"0px"}}
 
                   />
                   <div

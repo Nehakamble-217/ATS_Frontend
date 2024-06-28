@@ -210,7 +210,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       }
     };
 
-
     const handleRowClick = async (candidateId, requirementId) => {
       setCandidateId(candidateId);
       setRequirementId(requirementId);

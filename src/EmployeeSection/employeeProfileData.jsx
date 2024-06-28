@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData = () => {
+const EmployeeProfileData = ({onClose}) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,26 +24,20 @@ const EmployeeProfileData = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); // Log the fetched data to inspect its structure
+        console.log(data); 
         setEmployeeData(data);
         if (data.profileImage) {
-          // Convert byte code to Uint8Array
+
           const byteCharacters = atob(data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
           for (let i = 0; i < byteCharacters.length; i++) {
             byteNumbers[i] = byteCharacters.charCodeAt(i);
           }
           const byteArray = new Uint8Array(byteNumbers);
-
-          // Create a Blob from the byte array
           const blob = new Blob([byteArray], { type: "image/jpeg" });
 
-          // Create a URL for the Blob and set it as the image source
           const url = URL.createObjectURL(blob);
           setProfileImage(url);
-
-          // Clean up the URL object when the component unmounts
-          // return () => URL.revokeObjectURL(url);
         }
         if (data.resumeFile) {
           const byteCharacters = atob(data.resumeFile);
@@ -53,15 +47,12 @@ const EmployeeProfileData = () => {
           }
           const byteArray = new Uint8Array(byteNumbers);
 
-          // Create a Blob from the byte array
           const blob = new Blob([byteArray], { type: "application/pdf" });
 
-          // Create a URL for the Blob and set it as the file source
           const url = URL.createObjectURL(blob);
           setPdfSrc(url);
           console.log(url);
 
-          // Clean up the URL object when the component unmounts
           return () => URL.revokeObjectURL(url);
         }
         return () => URL.revokeObjectURL(url);
@@ -77,16 +68,22 @@ const EmployeeProfileData = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const closeAllModalsAndClosePage = () => {
+    setIsModalOpen(false);
+    setViewMoreProfileShow(false);
+    window.close(); // Closes the current window
+  };
+
   if (viewMoreProfileShow)
     return (
       <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
             <div className="profile-back-button">
-              {/* <button onClick={goBackToDashBoard}>
-                Back To Dashboard
+              <button onClick={onClose}>
+                Close
                 <i className="fas fa-times"></i>
-              </button> */}
+              </button>
             </div>
             {/* Employee personal Information and current company information */}
             <div className="employee-profile-staticsection">
@@ -366,7 +363,7 @@ const EmployeeProfileData = () => {
         {isModalOpen && (
           <>
             <div
-              className="modal show bg-black bg-opacity-50"
+              className="bg-black bg-opacity-50 modal show"
               style={{
                 display: "flex",
                 position: "fixed",
@@ -407,7 +404,7 @@ const EmployeeProfileData = () => {
 
   return (
     <div
-      className="modal show bg-black bg-opacity-50"
+      className="bg-black bg-opacity-50 modal show"
       style={{
         display: "flex",
         justifyContent: "center",
@@ -427,7 +424,7 @@ const EmployeeProfileData = () => {
           <Modal.Header
             style={{ fontSize: "18px", backgroundColor: "#f2f2f2" }}
           >
-            Profile
+            Employee Profile
           </Modal.Header>
           <Modal.Body
             style={{
@@ -456,10 +453,10 @@ const EmployeeProfileData = () => {
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
             <button
-              onClick={() => setIsModalOpen(false)}
+            onClick={onClose}
               className="close-profile-popup-btn"
             >
-              Close
+              Close 
             </button>
             <button
               onClick={viewMoreProfile}

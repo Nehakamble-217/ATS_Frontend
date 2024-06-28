@@ -97,7 +97,7 @@
 //           name="emailId"
 //           value={formData.emailId}
 //           onChange={handleChange}
-//           className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+//           className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
 //           required
 //         />
 //         {step === 1 && (
@@ -109,7 +109,7 @@
 //                 name="empId"
 //                 value={formData.empId}
 //                 onChange={handleChange}
-//                 className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+//                 className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
 //               />
 //             </div>
 //             <div>
@@ -119,7 +119,7 @@
 //                 name="empName"
 //                 value={formData.empName}
 //                 onChange={handleChange}
-//                 className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+//                 className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
 //               />
 //             </div>
 //             {/* <div>
@@ -129,13 +129,13 @@
 //                 name="jobRole"
 //                 value={formData.jobRole}
 //                 onChange={handleChange}
-//                 className="w-full px-3 py-1 border text-gray-500 outline-orange-300 border-gray-300 rounded-md shadow-sm"
+//                 className="w-full px-3 py-1 text-gray-500 border border-gray-300 rounded-md shadow-sm outline-orange-300"
 //               />
 //             </div> */}
-//             {error && <p className="col-span-2 text-red-500 text-sm mt-2">{error}</p>}
-//             {message && <p className="col-span-2 text-green-500 text-sm mt-2">{message}</p>}
-//             <div className="col-span-2 w-full flex justify-center items-center">
-//               <button onClick={handleSendOtp} className="button-hover mt-1">
+//             {error && <p className="col-span-2 mt-2 text-sm text-red-500">{error}</p>}
+//             {message && <p className="col-span-2 mt-2 text-sm text-green-500">{message}</p>}
+//             <div className="flex items-center justify-center w-full col-span-2">
+//               <button onClick={handleSendOtp} className="mt-1 button-hover">
 //                 Send OTP
 //               </button>
 //             </div>
@@ -151,12 +151,12 @@
 //                 name="otp"
 //                 value={formData.otp}
 //                 onChange={handleChange}
-//                 className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+//                 className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
 //               />
-//               {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+//               {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 //             </div>
-//             <div className="w-full flex justify-center items-center">
-//               <button onClick={handleVerifyOtp} className="button-hover mt-1">
+//             <div className="flex items-center justify-center w-full">
+//               <button onClick={handleVerifyOtp} className="mt-1 button-hover">
 //                 Verify OTP
 //               </button>
 //             </div>
@@ -173,7 +173,7 @@
 //                   name="password"
 //                   value={formData.password}
 //                   onChange={handleChange}
-//                   className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+//                   className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
 //                 />
 //                 <button type="button" onClick={toggleShowPassword} className="absolute inset-y-0 right-0 px-3 py-1">
 //                   {showPassword ? "Hide" : "Show"}
@@ -188,18 +188,18 @@
 //                   name="confirmPassword"
 //                   value={formData.confirmPassword}
 //                   onChange={handleChange}
-//                   className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+//                   className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
 //                 />
-//                 <button type="button" onClick={toggleShowConfirmPassword} className="absolute inset-y-0 right-0 px-3 py-1 flex items-center">
+//                 <button type="button" onClick={toggleShowConfirmPassword} className="absolute inset-y-0 right-0 flex items-center px-3 py-1">
 //                   {showConfirmPassword ? "Hide" : "Show"}
 //                 </button>
 //               </div>
 //               <div>
-//                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+//                 {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 //               </div>
 //             </div>
-//             <div className="w-full flex justify-center items-center">
-//               <button onClick={handleResetPassword} className="button-hover mt-1">
+//             <div className="flex items-center justify-center w-full">
+//               <button onClick={handleResetPassword} className="mt-1 button-hover">
 //                 Reset Password
 //               </button>
 //             </div>
@@ -246,7 +246,7 @@ const ForgotPasswordForm = ({ userType }) => {
   const handleSendOtp = async () => {
     try {
       console.log(formData);
-      await axios.post('http://localhost:8081/api/auth/forgot-password', null, { params: { emailId: formData.emailId, jobRole: formData.jobRole } });
+      await axios.post('http://:8081/api192.168.1.39/auth/forgot-password', null, { params: { emailId: formData.emailId, jobRole: formData.jobRole } });
       setOtpSent(true);
       setMessage('OTP sent! Please check your email.');
       setTimeout(() => {
@@ -261,7 +261,7 @@ const ForgotPasswordForm = ({ userType }) => {
 
   const handleVerifyOtp = async () => {
     try {
-      await axios.post('http://localhost:8081/api/auth/validate-otp', null, { params: { emailId: formData.emailId, otp: formData.otp } });
+      await axios.post('http://192.168.1.39:8081/api/auth/validate-otp', null, { params: { emailId: formData.emailId, otp: formData.otp } });
       setStep(3);
     } catch (error) {
       console.error('Error verifying OTP:', error);
@@ -276,7 +276,7 @@ const ForgotPasswordForm = ({ userType }) => {
         return;
       }
 
-      await axios.post('http://localhost:8081/api/auth/reset-password', null, { params: { empId: formData.empId, password: formData.password, emailId: formData.emailId } });
+      await axios.post('http://192.168.1.39:8081/api/auth/reset-password', null, { params: { empId: formData.empId, password: formData.password, emailId: formData.emailId } });
       setError('');
       setStep(1);
       setOtpSent(false);
@@ -314,7 +314,7 @@ const ForgotPasswordForm = ({ userType }) => {
             name="emailId"
             value={formData.emailId}
             onChange={handleChange}
-            className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+            className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
             required
           />
           {step === 1 && (
@@ -326,7 +326,7 @@ const ForgotPasswordForm = ({ userType }) => {
                   name="empId"
                   value={formData.empId}
                   onChange={handleChange}
-                  className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+                  className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
                 />
               </div>
               <div>
@@ -336,13 +336,13 @@ const ForgotPasswordForm = ({ userType }) => {
                   name="empName"
                   value={formData.empName}
                   onChange={handleChange}
-                  className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+                  className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
                 />
               </div>
-              {error && <p className="col-span-2 text-red-500 text-sm mt-2">{error}</p>}
-              {message && <p className="col-span-2 text-green-500 text-sm mt-2">{message}</p>}
-              <div className="col-span-2 w-full flex justify-center items-center">
-                <button onClick={handleSendOtp} className="button-hover mt-1">
+              {error && <p className="col-span-2 mt-2 text-sm text-red-500">{error}</p>}
+              {message && <p className="col-span-2 mt-2 text-sm text-green-500">{message}</p>}
+              <div className="flex items-center justify-center w-full col-span-2">
+                <button onClick={handleSendOtp} className="mt-1 button-hover">
                   Send OTP
                 </button>
               </div>
@@ -358,12 +358,12 @@ const ForgotPasswordForm = ({ userType }) => {
                   name="otp"
                   value={formData.otp}
                   onChange={handleChange}
-                  className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+                  className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
                 />
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
               </div>
-              <div className="w-full flex justify-center items-center">
-                <button onClick={handleVerifyOtp} className="button-hover mt-1">
+              <div className="flex items-center justify-center w-full">
+                <button onClick={handleVerifyOtp} className="mt-1 button-hover">
                   Verify OTP
                 </button>
               </div>
@@ -380,7 +380,7 @@ const ForgotPasswordForm = ({ userType }) => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+                    className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
                   />
                   <button type="button" onClick={toggleShowPassword} className="absolute inset-y-0 right-0 px-3 py-1">
                     {showPassword ? "Hide" : "Show"}
@@ -395,18 +395,18 @@ const ForgotPasswordForm = ({ userType }) => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="w-full px-3 py-1 border border-gray-300 outline-orange-300 rounded-md shadow-sm"
+                    className="w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm outline-orange-300"
                   />
-                  <button type="button" onClick={toggleShowConfirmPassword} className="absolute inset-y-0 right-0 px-3 py-1 flex items-center">
+                  <button type="button" onClick={toggleShowConfirmPassword} className="absolute inset-y-0 right-0 flex items-center px-3 py-1">
                     {showConfirmPassword ? "Hide" : "Show"}
                   </button>
                 </div>
                 <div>
-                  {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                  {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
                 </div>
               </div>
-              <div className="w-full flex justify-center items-center">
-                <button onClick={handleResetPassword} className="button-hover mt-1">
+              <div className="flex items-center justify-center w-full">
+                <button onClick={handleResetPassword} className="mt-1 button-hover">
                   Reset Password
                 </button>
               </div>

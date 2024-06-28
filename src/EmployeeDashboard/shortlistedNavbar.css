@@ -16,15 +16,16 @@
     /* justify-content: center; 
     align-items: center;
     justify-content: space-between;
-    padding-left: 30px;
-
-    
+    padding-left: 30px;*/
+   
 }
+
+/* ----------------------------------------------- */
+/* Arshad Chenged This Code, ( Ha Code Thevaa) */
 .shortlisted-nav-left{
     height: 100%;
     width: 100%;
     display: flex;
-    /* */
     align-items: center;
     flex-wrap: wrap;
     /* justify-content: left; */
@@ -32,6 +33,12 @@
     align-items: center;
     padding: 5px;
 }
+
+/* ----------------------------------------------- */
+
+
+
+
 .fa-calendar{
     cursor: pointer;
 
