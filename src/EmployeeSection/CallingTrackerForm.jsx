@@ -139,7 +139,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -160,7 +160,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/company-details`
+        `http://192.168.1.39:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -216,7 +216,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
       }
 
       await axios.post(
-        `http://localhost:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.39:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
 
@@ -964,13 +964,13 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
               </tr>
               <tr>
 
-                <th style={{ color: "gray" }}>Recruiters Input</th>
+                <th style={{ color: "gray" }}>Current Company</th>
                 <td>
                   <input
                     type="text"
                     name="currentcompany"
                     placeholder="Current Company"
-                    value={lineUpData.extraCertification}
+                    value={lineUpData.currentcompany}
                     style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1 }}
                     onChange={(e) =>
                       setLineUpData({
