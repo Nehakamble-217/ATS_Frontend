@@ -220,3 +220,11 @@ strong {
   color: gray; /* Set font color to gray */
 }
 
+
+
+@media screen and (max-width:300px) {
+  
+  .studTables tbody tr{
+    width: 100%;
+  }
+}

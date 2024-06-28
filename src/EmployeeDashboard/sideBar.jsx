@@ -136,14 +136,14 @@ function Sidebar({
       setData({ archived: 0, pending: 10 });
 
       console.log("Logged out successfully.");
-      navigate("/employee-login");
+      navigator("/employee-login/recruiter");
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
 
   const tempLogout = () => {
-    navigator("/employee-login");
+    navigator("/employee-login/recruiter");
   };
 
   return (

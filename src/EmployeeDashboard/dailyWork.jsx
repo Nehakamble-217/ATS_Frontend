@@ -16,6 +16,10 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
   const [modalShow, setModalShow] = useState(false);
   const [showAllDailyBtns, setShowAllDailyBtns] = useState(true);
 
+  const [loginDetailsSaved, setLoginDetailsSaved] = useState(false);
+  const [showAlreadyLoggedInMessage, setShowAlreadyLoggedInMessage] =
+    useState(false);
+
   const toggleDailyTBtn = () => {
     setShowDetails(!showDetails);
   };
@@ -85,6 +89,42 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
     fetchEmployeeData();
   }, [employeeId]);
 
+  // useEffect(() => {
+  //   const now = new Date();
+  //   const timeString = now.toLocaleTimeString("en-IN");
+  //   const dateString = `${now.getDate().toString().padStart(2, "0")}/${(
+  //     now.getMonth() + 1
+  //   )
+  //     .toString()
+  //     .padStart(2, "0")}/${now.getFullYear()}`;
+  //   const dayOfWeek = now.getDay();
+  //   setCurrentTime(timeString);
+  //   setCurrentDate(dateString);
+  //   setLoginTime(timeString);
+
+  //   const loginHour = now.getHours();
+  //   if (loginHour >= 10) {
+  //     setLateMark("Yes");
+  //   }
+
+  //   if (dayOfWeek === 0) {
+  //     setLeaveType("Unpaid Leave");
+  //     setPaidLeave(0);
+  //     setUnpaidLeave(1);
+  //   } else {
+  //     setLeaveType("");
+  //     setPaidLeave(1);
+  //     setUnpaidLeave(0);
+  //   }
+
+  //   const timer = setInterval(() => {
+  //     const now = new Date();
+  //     setCurrentTime(now.toLocaleTimeString("en-IN"));
+  //   }, 1000);
+
+  //   return () => clearInterval(timer);
+  // }, []);
+
   useEffect(() => {
     const now = new Date();
     const timeString = now.toLocaleTimeString("en-IN");
@@ -120,6 +160,205 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
 
     return () => clearInterval(timer);
   }, []);
+  // console.log(lateMark);
+
+  useEffect(() => {
+    const storedLoginDetailsSaved = localStorage.getItem(
+      `loginDetailsSaved_${employeeId}`
+    );
+    if (storedLoginDetailsSaved === "true") {
+      setLoginDetailsSaved(true);
+    }
+
+    let executed = false;
+
+    const saveLoginDetails = async () => {
+      if (loginDetailsSaved) {
+        console.log("Login details already saved.");
+        return; // Exit early if login details are already saved
+      }
+
+      try {
+        const now = new Date();
+        const day = now.getDate().toString().padStart(2, "0");
+        const month = (now.getMonth() + 1).toString().padStart(2, "0");
+        const year = now.getFullYear();
+        const formData = {
+          employeeId,
+          date: `${day}/${month}/${year}`,
+          loginTime: now.toLocaleTimeString("en-IN"),
+          lateMark,
+          leaveType,
+          paidLeave,
+          unpaidLeave,
+          dailyTarget: data.pending + data.archived,
+          dailyArchived: data.archived,
+          dailyPending: data.pending,
+        };
+
+        await axios.post(
+          "http://localhost:8082/api/ats/157industries/save-daily-work",
+          formData
+        );
+
+        console.log("Login details saved successfully.");
+        localStorage.setItem(
+          `loginDetailsSaved_${employeeId}`,
+          JSON.stringify(true)
+        );
+        localStorage.setItem(
+          `loginTimeSaved_${employeeId}`,
+          JSON.stringify(loginTime)
+        );
+        setLoginDetailsSaved(true);
+        setShowAlreadyLoggedInMessage(true); // Show the message after saving
+      } catch (error) {
+        console.error("Error saving login details:", error);
+      }
+    };
+    if (!executed && loginTime && lateMark !== null && leaveType !== null) {
+      saveLoginDetails();
+      executed = true;
+    }
+  }, [lateMark, leaveType, paidLeave, unpaidLeave, loginTime, data]);
+
+  const calculateTotalHoursWork = (
+    loginTime,
+    logoutTime = null,
+    breaks = []
+  ) => {
+    try {
+      console.log(`Login Time: ${loginTime}`);
+      console.log(`Logout Time: ${logoutTime}`);
+      console.log(`Breaks: ${JSON.stringify(breaks)}`);
+
+      // Create Date objects for today with the given times
+      const today = new Date();
+      const login = new Date(today.toDateString() + " " + loginTime);
+      const logout = logoutTime
+        ? new Date(today.toDateString() + " " + logoutTime)
+        : new Date(); // Use current date and time
+
+      console.log(`Login Date: ${login}`);
+      console.log(`Logout Date: ${logout}`);
+
+      // Calculate total work time in seconds
+      let totalWorkTime = (logout - login) / 1000;
+
+      console.log(`Initial Total Work Time (seconds): ${totalWorkTime}`);
+
+      // Calculate total break duration in seconds
+      let totalBreakDuration = 0;
+      if (breaks && breaks.length > 0) {
+        breaks.forEach((b) => {
+          if (b.breakEndTime) {
+            const breakStart = new Date(
+              today.toDateString() + " " + b.breakStartTime
+            );
+            const breakEnd = new Date(
+              today.toDateString() + " " + b.breakEndTime
+            );
+            const breakDuration = (breakEnd - breakStart) / 1000;
+            totalBreakDuration += breakDuration;
+
+            console.log(`Break Start: ${breakStart}`);
+            console.log(`Break End: ${breakEnd}`);
+            console.log(`Break Duration (seconds): ${breakDuration}`);
+          }
+        });
+      }
+
+      console.log(`Total Break Duration (seconds): ${totalBreakDuration}`);
+
+      // Subtract break durations from total work time
+      totalWorkTime -= totalBreakDuration;
+
+      console.log(`Adjusted Total Work Time (seconds): ${totalWorkTime}`);
+
+      // Handle negative total work time by setting it to 0
+      if (totalWorkTime < 0) {
+        totalWorkTime = 0;
+      }
+
+      // Convert total work time from seconds to hours, minutes, seconds
+      const hours = Math.floor(totalWorkTime / 3600);
+      const minutes = Math.floor((totalWorkTime % 3600) / 60);
+      const seconds = Math.floor(totalWorkTime % 60);
+
+      // Format the time into HH:mm:ss
+      const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+      console.log(`Total work time: ${formattedTime}`);
+      return formattedTime;
+    } catch (error) {
+      console.error("Error in calculateTotalHoursWork:", error);
+      return "00:00:00";
+    }
+  };
+  useEffect(() => {
+    console.log("successfulDataAdditions", successfulDataAdditions);  
+  }, []);
+  const updateDailyWorkLog = async () => {
+    try {
+      const totalHoursWork = calculateTotalHoursWork(
+        localStorage.getItem(`loginTimeSaved_${employeeId}`),
+        logoutTime,
+        null
+      );
+
+      const now = new Date();
+      const day = now.getDate().toString().padStart(2, "0");
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const year = now.getFullYear();
+
+      const formData = {
+        employeeId,
+        date: `${year}-${month}-${day}`,
+        loginTime,
+        logoutTime: currentTime,
+        totalHoursWork,
+        dailyHours: breaks,
+        lateMark,
+        leaveType,
+        paidLeave,
+        unpaidLeave,
+        dayPresentPaid,
+        dayPresentUnpaid,
+        remoteWork,
+        dailyTarget: data.pending + data.archived,
+        dailyArchived: data.archived,
+        dailyPending: data.pending,
+      };
+
+      await axios.put(
+        `http://localhost:8082/api/ats/157industries/update-daily-work/987`,
+        formData
+      );
+      console.log("Daily work data updated successfully.");
+    } catch (error) {
+      console.error("Error updating daily work data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(updateDailyWorkLog, 60000); // 1 minute interval
+
+    return () => clearInterval(interval);
+  }, [
+    loginTime,
+    logoutTime,
+    breaks,
+    lateMark,
+    leaveType,
+    paidLeave,
+    unpaidLeave,
+    dayPresentPaid,
+    dayPresentUnpaid,
+    remoteWork,
+    data,
+  ]);
 
   useEffect(() => {
     let interval;
@@ -233,7 +472,7 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
       };
 
       await axios.post(
-        "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
+        "http://localhost:8082/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -249,32 +488,6 @@ function DailyWork({ successfulDataAdditions, handleLogout, profilePageLink }) {
     } catch (error) {
       console.error("Error logging out:", error);
     }
-  };
-
-  const calculateTotalHoursWork = (loginTime, logoutTime) => {
-    const login = new Date(`01/01/2022 ${loginTime}`);
-    const logout = new Date(`01/01/2022 ${logoutTime}`);
-
-    let totalWorkTime = (logout - login) / 1000;
-
-    breaks.forEach((b) => {
-      if (b.breakEndTime) {
-        const breakStart = new Date(`01/01/2022 ${b.breakStartTime}`);
-        const breakEnd = new Date(`01/01/2022 ${b.breakEndTime}`);
-        const breakDuration = (breakEnd - breakStart) / 1000;
-        totalWorkTime -= breakDuration;
-      }
-    });
-
-    const hours = Math.floor(totalWorkTime / 3600);
-    const minutes = Math.floor((totalWorkTime % 3600) / 60);
-    const seconds = Math.floor(totalWorkTime % 60);
-
-    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
-    return formattedTime;
   };
 
   const handleImageClick = () => {
