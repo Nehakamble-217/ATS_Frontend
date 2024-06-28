@@ -164,7 +164,7 @@
   }
   .empDash-main-content{
     padding-top: 36px;
-    padding-left: 65px;
+    /* padding-left: 65px; */
     overflow: hidden;
     transition: all 0.3s ease;
    
