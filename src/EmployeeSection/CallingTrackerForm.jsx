@@ -89,7 +89,7 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
-
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [candidateName, setCandidateName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [sourceName, setSourceName] = useState('');
@@ -724,14 +724,15 @@ const CallingTrackerForm = ({ initialData, onDataAdditionSuccess }) => {
                 </td>
                
                 <th scope="col" style={{color:"gray"}}>Date Of Birth</th>
-                    <td style={{display:"flex" ,placeholder:"DD/MM/YYYY"}} >
+                    <td style={{display:"flex"}} >
                   <input
                     type="date"
                     name="dateOfBirth"
+                   
                     value={lineUpData.dateOfBirth}
                     onChange={handleDateChange}
                     className="form-control"
-                    style={{height:"30px",width:"150px",alignItems:"center",lineHeight:1,marginRight:"0px",padding:"0px"}}
+                    style={{height:"30px",width:"150px",alignItems:"center",lineHeight:1,marginRight:"0px",padding:"0px",placeholder:"DD/MM/YYYY"}}
 
                   />
                   <div
