@@ -3,9 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 // import "../EmployeeSection/callingList.css";
 import "./callingExcel.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
-
-
+import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 
 const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,10 +18,10 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
-
   const [selectedRows, setSelectedRows] = useState([]);
-
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeIdw + "emp @@@@ id");
@@ -35,9 +33,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   useEffect(() => {
 
-    fetch(`http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
-
-
+    fetch(`http://localhost:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -45,8 +41,6 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
-
-
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId');
@@ -157,15 +151,14 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
     }
   };
 
-  const handleUpdate = (candidateId) => {
-    setSelectedCandidateId(candidateId); // Set candidateId for UpdateCallingTracker
-    setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
+  const handleUpdate = (candidateData) => {
+    setSelectedCandidate(candidateData); // Set candidate data for CallingTrackerForm
   };
 
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://localhost:8891/api/ats/157industries/calling-excel-data/${employeeId}`
 
     )
       .then((response) => response.json())
@@ -178,7 +171,6 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
   };
 
 
-  //arshad  chanhged some tool tip lines 
   const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector('.tooltip');
@@ -244,7 +236,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   return (
     <div className="App-after1">
-      {!showUpdateCallingTracker && !showCallingForm && (
+      {!selectedCandidate && (
         <>
           <div className="search">
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
@@ -252,19 +244,21 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
 
 
-            <button onClick={toggleFilterSection} 
-            style={{ fontSize: "16px", borderRadius: "15px", height: "30px",color:"#ffcb9b" ,paddingLeft:"15px",
-              paddingRight:"15px",background:"white", border: "1px solid gray",position:"sticky"}}
-              >
-  Filter <i className="fa-solid fa-filter"></i>
-</button> 
-       
+            <button onClick={toggleFilterSection}
+              style={{
+                fontSize: "16px", borderRadius: "15px", height: "30px", color: "#ffcb9b", paddingLeft: "15px",
+                paddingRight: "15px", background: "white", border: "1px solid gray", position: "sticky"
+              }}
+            >
+              Filter <i className="fa-solid fa-filter"></i>
+            </button>
+
           </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-  <button onClick={onCloseTable} className="close-button">
-    Close
-  </button>
-</div>
+          <div style={{ display: 'flex' }}>
+            <button onClick={onCloseTable} className="close-button">
+              Close
+            </button>
+          </div>
 
 
           {showSearchBar && (
@@ -433,7 +427,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
                       <span className="tooltiptext">{item.selectYesOrNo} </span>
                     </div></td>
                     <td className="tabledata">
-                      <i onClick={() => handleUpdate(item.candidateId, item.employeeId)} className="fa-regular fa-pen-to-square"></i>
+                      <i onClick={() => handleUpdate(item.candidateId)} className="fa-regular fa-pen-to-square"></i>
                     </td>
                   </tr>
                 ))}
@@ -443,14 +437,14 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
         </>
       )}
 
-      {showUpdateCallingTracker && (
-        <UpdateCallingTracker
-          candidateId={selectedCandidateId}
-          employeeId={employeeId}
-          onSuccess={handleUpdateSuccess}
-          onCancel={() => setShowUpdateCallingTracker(true)}
+      {selectedCandidate &&  (
+        <CallingTrackerForm
+        candidateData={selectedCandidate}
+        onClose={() => setSelectedCandidate(null)}
+        onSuccess={handleUpdateSuccess}
         />
       )}
+      
     </div>
   );
 };

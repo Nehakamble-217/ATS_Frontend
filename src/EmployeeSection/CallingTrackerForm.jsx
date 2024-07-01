@@ -10,9 +10,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
 
-const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCount }) => {
-  const { employeeId } = useParams();
+const CallingTrackerForm = ({ 
+  initialData,
+  handleDataAdditionSuccess,
+  updateCount, 
+  candidateData,
+  onClose,
+  onSuccess }) => {
 
+  const { employeeId } = useParams();
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: '',
@@ -87,7 +93,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
-
+  const [formData, setFormData] = useState();
   const [candidateName, setCandidateName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [sourceName, setSourceName] = useState('');
@@ -116,6 +122,21 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
     }
   }, [initialData]);
 
+
+// ------------------------------------------------------------
+
+useEffect(() => {
+  if (candidateData) {
+    setFormData(candidateData);
+    setCallingTracker({
+      ...initialCallingTrackerState,
+      ...candidateData,
+    });
+  }
+}, [candidateData]);
+
+// -------------------------------------------------------------------------
+
   useEffect(() => {
     const updateTimer = () => {
       const now = new Date();
@@ -136,7 +157,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -157,7 +178,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/company-details`
+        `http://localhost:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -213,13 +234,14 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
       }
 
       await axios.post(
-        `http://192.168.1.39:8891/api/ats/157industries/calling-tracker`,
+        `http://localhost:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
 
       setFormSubmitted(true);
       handleDataAdditionSuccess();
       updateCount();
+      onSuccess();
       setTimeout(() => {
         setFormSubmitted(false);
         setCallingTracker(initialCallingTrackerState);
@@ -1323,8 +1345,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
           </table>
         </div>
 
-
-
         {formSubmitted && (
           <div className="alert alert-success" role="alert">
             Data Added successfully!
@@ -1353,7 +1373,11 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
 
 CallingTrackerForm.propTypes = {
   initialData: PropTypes.object,
-  onDataAdditionSuccess: PropTypes.func.isRequired,
+  handleDataAdditionSuccess: PropTypes.func.isRequired,
+  updateCount: PropTypes.func.isRequired,
+  candidateData: PropTypes.object,
+  onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
 
 CallingTrackerForm.defaultProps = {

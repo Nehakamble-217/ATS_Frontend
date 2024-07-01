@@ -28,11 +28,7 @@ const CallingExcel = ({ onClose }) => {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      await axios.post(`http://192.168.1.39:8891/api/ats/157industries/uploadData/${employeeId}`, formData, {
-
-
-
-
+      await axios.post(`http://localhost:8891/api/ats/157industries/uploadData/${employeeId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -49,26 +45,34 @@ const CallingExcel = ({ onClose }) => {
     }
   };
 
+
+  const handleView = () => {
+    setShowTable(true);
+  };
+
   const handleClose = () => {
     onClose();
   };
 
   return (
-    <div style={{display:"flex",alignItems:"center",
-      justifyContent:"space-around",flexWrap:"wrap"}}>
+    <div style={{
+      display: "flex", alignItems: "center",
+      justifyContent: "space-around", flexWrap: "wrap"
+    }}>
       {!showTable && ( // Render upload form and card if showTable is false
-        <div className="card fixed-card" style={{ 
-        width: "400px", border: "1px solid gray"}}>
+        <div className="card fixed-card" style={{
+          width: "400px", border: "1px solid gray"
+        }}>
           <div className="card-header">
             <h5 className="card-title mb-0">Upload Excel File</h5>
           </div>
           <div className="card-body">
             <div className="mb-3">
-              <input 
-                type="file" 
-                className="form-control" 
-                accept=".xls,.xlsx" 
-                onChange={handleFileChange} 
+              <input
+                type="file"
+                className="form-control"
+                accept=".xls,.xlsx"
+                onChange={handleFileChange}
                 ref={fileInputRef} // Attach the ref to the file input
               />
             </div>
@@ -80,6 +84,7 @@ const CallingExcel = ({ onClose }) => {
               {uploadError && (
                 <center><h5 className="text-danger mt-3">{uploadError}</h5></center>
               )}
+              <button onClick={handleView}>View</button>
               <button onClick={handleClose}>Close</button>
             </div>
           </div>

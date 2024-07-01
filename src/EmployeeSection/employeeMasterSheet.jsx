@@ -28,7 +28,7 @@ const EmployeeMasterSheet = () => {
   const fetchEmployeeNameAndID = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
+        `http://localhost:8891/api/ats/157industries/names-and-ids`
       );
       const data = await response.json();
       setFetchEmployeeNameID(data);
