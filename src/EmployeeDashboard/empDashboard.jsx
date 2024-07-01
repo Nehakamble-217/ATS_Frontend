@@ -80,6 +80,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
   const [archived, setArchived] = useState(0);
   const [pending, setPending] = useState(0);
+  const [id,setId] = useState(0);
 
   const navigator = useNavigate();
 
@@ -298,6 +299,14 @@ const EmpDashboard = ({ userGroup }) => {
   const handleCloseProfile = () => {
     setShowProfile(false);
   };
+  
+  const handleUpdate = (id)=>{
+    setId(id);
+    setAddCandidate(!addCandidate);
+    setShowResumeData(false)
+
+    
+  }
 
   const toggelAddResumes = () =>{
     resetAllToggles();
@@ -313,6 +322,7 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowLineupExcelList(!showLineupExcelList)
   }
+  
 
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -436,7 +446,7 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
 
         <div>
-          {showResumeData && <ResumeData/>}
+          {showResumeData && <ResumeData handleUpdate={handleUpdate} />}
         </div>
 
         <div>

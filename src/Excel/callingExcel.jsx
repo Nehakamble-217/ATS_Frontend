@@ -107,7 +107,7 @@ const CallingExcel = ({ onClose }) => {
     }}>
       {!showTable && ( 
         <div className="card fixed-card" style={{
-          width: "400px", border: "1px solid gray"
+          width: "350px", border: "1px solid gray"
         }}>
           <div className="card-header">
             <h5 className="mb-0 card-title">Upload Calling Excel </h5>
@@ -139,7 +139,7 @@ const CallingExcel = ({ onClose }) => {
 
       <div>
       <div className="card fixed-card" style={{
-          width: "400px", border: "1px solid gray"
+          width: "350px", border: "1px solid gray"
         }}>
           <div className="card-header">
             <h5 className="mb-0 card-title">Upload LineUp Excel </h5>
@@ -170,7 +170,7 @@ const CallingExcel = ({ onClose }) => {
 
       <div>
 
-      <div className="main-container" style={{ width: "400px" }}>
+      <div className="main-container" style={{ width: "350px" }}>
             <div className="upload-container">
                 <h2 className="upload-title">Upload Resume</h2>
                 <input

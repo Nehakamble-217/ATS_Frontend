@@ -238,11 +238,12 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
     <div className="App-after1">
       {!selectedCandidate && (
         <>
+     
           <div className="search">
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
-
+            <h1>Excel Calling Data</h1>
 
             <button onClick={toggleFilterSection}
               style={{
@@ -254,13 +255,11 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
             </button>
 
           </div>
-          <div style={{ display: 'flex' }}>
+          {/* <div style={{ display: 'flex' }}>
             <button onClick={onCloseTable} className="close-button">
               Close
             </button>
-          </div>
-
-
+          </div> */}
           {showSearchBar && (
             <input
               type="text"
@@ -321,13 +320,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
             <table className="selfcalling-table attendance-table">
               <thead>
                 <tr className="attendancerows-head">
-                  <th className='attendanceheading'>
-                    <input
-                      type="checkbox"
-                      onChange={handleSelectAll}
-                      checked={selectedRows.length === filteredCallingList.length}
-                    />
-                  </th>
+                 
 
                   <th className='attendanceheading'>Sr No.</th>
                   <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
@@ -353,26 +346,12 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
               <tbody>
                 {filteredCallingList.map((item, index) => (
                   <tr key={item.candidateId} className="attendancerows">
-                    <td className='tabledata '>
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.includes(item.candidateId)}
-                        onChange={() => handleSelectRow(item.candidateId)}
-                      />
-                    </td>
-
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {index + 1}</td>
-
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {item.date}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.date}</span>
                       </div>
-                      <div className="tooltip">
-                        <span className="tooltiptext"> {item.candidateAddedTime}</span>
-                      </div>
-
-                    </td>
-
+                      </td>
                     <td hidden className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateId}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.candidateId} </span>
