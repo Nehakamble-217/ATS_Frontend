@@ -222,7 +222,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
       };
 
       await axios.post(
-        "http://localhost:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
         formData
       );
 

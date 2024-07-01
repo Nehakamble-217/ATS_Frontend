@@ -119,8 +119,8 @@ const NotePad = () => {
       const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
       if (textOverflowing) {
         const rect = tableData.getBoundingClientRect();
-        tooltip.style.top =10 //${rect.top - 10}px;
-        tooltip.style.left =10 //${rect.left + rect.width / 100}px;
+        tooltip.style.top = `${rect.top - 10}px`;
+        tooltip.style.left = `${rect.left + rect.width / 100}px`;
         tooltip.style.visibility = 'visible';
       } else {
         tooltip.style.visibility = 'hidden';
