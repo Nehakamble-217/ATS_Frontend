@@ -14,7 +14,8 @@ const AddResumes = ({ show }) => {
         for (let i = 0; i < selectedFiles.length; i++) {
             formData.append('files', selectedFiles[i]);
         }
-        axios.post('http://192.168.1.42:8891/api/ats/157industries/add-multiple-resume', formData)
+        axios.post('http://192.168.1.42:8891/api/ats/157industries/add-resume-data', formData)
+
 
 
             .then(response => {

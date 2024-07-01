@@ -110,7 +110,7 @@ const CallingExcel = ({ onClose }) => {
           width: "400px", border: "1px solid gray"
         }}>
           <div className="card-header">
-            <h5 className="card-title mb-0">Upload Calling Excel </h5>
+            <h5 className="mb-0 card-title">Upload Calling Excel </h5>
           </div>
           <div className="card-body">
             <div className="mb-3">
@@ -122,13 +122,13 @@ const CallingExcel = ({ onClose }) => {
                 ref={fileInputRef} 
               />
             </div>
-            <div className="d-grid gap-2">
+            <div className="gap-2 d-grid">
               <button onClick={handleUpload}>Upload</button>
               {uploadSuccess && (
-                <center><h5 className="text-success mt-3">File data added successfully!</h5></center>
+                <center><h5 className="mt-3 text-success">File data added successfully!</h5></center>
               )}
               {uploadError && (
-                <center><h5 className="text-danger mt-3">{uploadError}</h5></center>
+                <center><h5 className="mt-3 text-danger">{uploadError}</h5></center>
               )}
               <button onClick={handleView}>View</button>
 
@@ -142,7 +142,7 @@ const CallingExcel = ({ onClose }) => {
           width: "400px", border: "1px solid gray"
         }}>
           <div className="card-header">
-            <h5 className="card-title mb-0">Upload LineUp Excel </h5>
+            <h5 className="mb-0 card-title">Upload LineUp Excel </h5>
           </div>
           <div className="card-body">
             <div className="mb-3">
@@ -154,13 +154,13 @@ const CallingExcel = ({ onClose }) => {
                 ref={fileInputRef} 
               />
             </div>
-            <div className="d-grid gap-2">
+            <div className="gap-2 d-grid">
               <button onClick={handleUploadLineupFile}>Upload</button>
               {uploadSuccess && (
-                <center><h5 className="text-success mt-3">File data added successfully!</h5></center>
+                <center><h5 className="mt-3 text-success">File data added successfully!</h5></center>
               )}
               {uploadError && (
-                <center><h5 className="text-danger mt-3">{uploadError}</h5></center>
+                <center><h5 className="mt-3 text-danger">{uploadError}</h5></center>
               )}
               <button onClick={handleView}>View</button>
             </div>

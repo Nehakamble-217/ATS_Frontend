@@ -246,7 +246,7 @@ const ForgotPasswordForm = ({ userType }) => {
   const handleSendOtp = async () => {
     try {
       console.log(formData);
-      await axios.post('http://:8081/api192.168.1.39/auth/forgot-password', null, { params: { emailId: formData.emailId, jobRole: formData.jobRole } });
+      await axios.post('http://:8081/api192.168.1.42/auth/forgot-password', null, { params: { emailId: formData.emailId, jobRole: formData.jobRole } });
       setOtpSent(true);
       setMessage('OTP sent! Please check your email.');
       setTimeout(() => {
@@ -261,7 +261,7 @@ const ForgotPasswordForm = ({ userType }) => {
 
   const handleVerifyOtp = async () => {
     try {
-      await axios.post('http://192.168.1.39:8081/api/auth/validate-otp', null, { params: { emailId: formData.emailId, otp: formData.otp } });
+      await axios.post('http://192.168.1.42:8081/api/auth/validate-otp', null, { params: { emailId: formData.emailId, otp: formData.otp } });
       setStep(3);
     } catch (error) {
       console.error('Error verifying OTP:', error);
@@ -276,7 +276,7 @@ const ForgotPasswordForm = ({ userType }) => {
         return;
       }
 
-      await axios.post('http://192.168.1.39:8081/api/auth/reset-password', null, { params: { empId: formData.empId, password: formData.password, emailId: formData.emailId } });
+      await axios.post('http://192.168.1.42:8081/api/auth/reset-password', null, { params: { empId: formData.empId, password: formData.password, emailId: formData.emailId } });
       setError('');
       setStep(1);
       setOtpSent(false);

@@ -466,13 +466,9 @@ useEffect(() => {
                 </td>
               </tr>
               <div hidden>
-
                 <input type="text" name="employeeId" readOnly value={callingTracker.employee.employeeId} />
-
               </div>
-
               <tr>
-
                 <th style={{ color: "gray" }}>Candidate's Full Name*</th>
                 <td>
                   <input
