@@ -57,7 +57,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     try {
       const response = await fetch(
 
-        `http://192.168.1.35:8891/api/ats/157industries/hold-candidate/${employeeId}`
+        `http://192.168.1.39:8891/api/ats/157industries/hold-candidate/${employeeId}`
 
         
       );
@@ -341,7 +341,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                 <th className='attendanceheading'>Msg For TeamLeader</th>
                 <th className='attendanceheading'>Availability For Interview</th>
                 <th className='attendanceheading'>Interview Time</th>
-                <th className='attendanceheading'>Final Status</th>
+                <th className='attendanceheading'>Interview Status</th>
                 <th className='attendanceheading'>Reason for Hold</th>
                 <th className='attendanceheading'>Action</th>
               </tr>

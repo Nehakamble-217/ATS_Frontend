@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 
-const API_BASE_URL = "http://192.168.1.35:8891/api/ats/157industries";
+const API_BASE_URL = "http://192.168.1.39:8891/api/ats/157industries";
 
 
 

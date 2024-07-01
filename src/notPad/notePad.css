@@ -7,7 +7,7 @@
 }
 
 .note-pad-text {
-  border: 1px solid black;
+  border: 1px solid gray;
   width: 1000px;
   height: 120px;
   margin-top: 30px;
@@ -22,17 +22,25 @@
 }
 
 .note-submit-btn {
-  width: auto;
-  height: 30px;
-  border-radius: 15px;
   margin-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+
+  border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 16px;
+    color: #ffcb9b;
+    height: 30px;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .notePadData {
   margin-top: 10px;
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid gray;
   height: 400px;
   overflow-y: scroll !important;
 }
@@ -48,10 +56,11 @@
 
 .modal {
   display: none;
+  align-items: center;
   position: fixed;
   z-index: 1;
   left: 0;
-  top: 0;
+  top: 60px;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -61,8 +70,10 @@
 
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
+  /* margin: 5% auto; */
+  margin: 50px;
+  width: fit-content;
+  padding: 100px ;
   border: 1px solid #888; 
 }
 
@@ -71,11 +82,12 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
+  left: 100px;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: red;
   text-decoration: none;
   cursor: pointer;
 }

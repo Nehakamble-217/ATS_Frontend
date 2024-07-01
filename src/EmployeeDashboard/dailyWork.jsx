@@ -60,7 +60,7 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
 
 
 
-          `http://192.168.1.35:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
 
 
         );
@@ -234,7 +234,7 @@ function DailyWork  ({ successfulDataAdditions, handleLogout, profilePageLink })
       await axios.post(
 
 
-        "http://192.168.1.35:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
       formData
 
       );

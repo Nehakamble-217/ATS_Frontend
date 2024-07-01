@@ -471,7 +471,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   useEffect(() => {
 
 
-    fetch(`http://192.168.1.35:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`)
 
 
       .then((response) => response.json())
@@ -600,7 +600,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const handleUpdateSuccess = () => {
     fetch(
 
-      `http://192.168.1.35:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`
 
 
     )

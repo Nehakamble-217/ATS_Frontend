@@ -200,13 +200,13 @@ z-index: -1;
   border: 1px solid #ffb281;
   background-color: #fff;
 }
-.sidebar-menu-btn:hover i {
+/* .sidebar-menu-btn:hover i {
   
   color: #000;
   border: 1px solid black;
   border-radius: 8px;
   background-color: #fff;
-}
+} */
 .sidebar-menu-btn i {
   transition: all 0.3s;
 
@@ -216,7 +216,7 @@ z-index: -1;
   height: 100vh;
 }
 .sidebar.active .sidebar-menu-btn i {
-  transform: rotate(360deg);
+  transform: rotate(180deg);
   margin: 10px;
 }
 .sidebar.active .user-details {

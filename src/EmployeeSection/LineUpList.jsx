@@ -31,7 +31,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   useEffect(() => {
 
 
-    fetch(`http://192.168.1.35:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
       .then((response) => response.json())
             .then((data) =>setFilteredCallingList(data))
@@ -74,7 +74,7 @@ useEffect(() => {
 
 
 
-    fetch(`http://192.168.1.35:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
 
 
 

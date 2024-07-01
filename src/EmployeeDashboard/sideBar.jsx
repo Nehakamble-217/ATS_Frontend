@@ -114,7 +114,7 @@ function Sidebar({
       const year = now.getFullYear();
 
       await axios.post(
-        "http://192.168.1.34:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -144,8 +144,11 @@ function Sidebar({
      
           <div className="sidebar-clouds1"></div>
       <div className='head'></div>
+      {/* <i class="fa-solid fa-less-than"></i> */}
       <div className="sidebar-menu-btn" onClick={toggleSidebar}>
-        <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
+      <i class="fa-solid fa-chevron-left"></i>
+        {/* <i className={`"fa-solid fa-less-than"${isActive ? 'right' : 'left'}`}></i> */}
+        
       </div>
       
 
@@ -221,7 +224,7 @@ function Sidebar({
                 <li onClick={toggleEmployeeMasterSheet}>
                   <a href="#">
                     <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Employee Sheet</span>
+                    <span className="sidebar-text">Master Sheet</span>
                   </a>
                 </li>
               </ul>
@@ -250,7 +253,8 @@ function Sidebar({
             </li>
             <li className={activeSubMenu === 'employee' ? "active" : ""} onClick={toggleSubMenu('employee')}>
               <a href="#">
-                <i className="icon ph-bold ph-chart-bar" style={{color:"gray"}}></i>
+              {/* <i class="fa-solid fa-users-gear"></i> */}
+                <i className="fa-solid fa-users-gear" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Employee Section</span>
                 <i className="arrow ph-bold ph-caret-down" ></i>
               </a>
@@ -274,7 +278,7 @@ function Sidebar({
 
             <li className={activeSubMenu === 'admin-section' ? "active" : ""} onClick={toggleSubMenu('admin-section')}>
               <a href="#">
-                <i className="icon ph-bold ph-chart-bar" style={{color:"gray"}}></i>
+                <i className="fa-solid fa-desktop" style={{color:"gray"}}></i>
                 <span className="sidebar-text">Admin Section</span>
                 <i className="arrow ph-bold ph-caret-down" ></i>
               </a>
