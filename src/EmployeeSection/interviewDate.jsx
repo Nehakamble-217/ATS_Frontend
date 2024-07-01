@@ -215,6 +215,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       setRequirementId(requirementId);
       await fetchAndUpdateInterviewResponse(candidateId, requirementId);
       setShowShortlistTable(true);
+      
     };
     
     

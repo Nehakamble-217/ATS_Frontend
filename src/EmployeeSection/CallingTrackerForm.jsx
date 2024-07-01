@@ -404,14 +404,13 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
 
 
   return (
-    <div>
+    <div className="max-w-full">
       <form onSubmit={handleSubmit}>
         <div className="maintable">
-          <table className="table text-center table-striped studTables" >
-            <tbody >
-              <tr  >
-
-                <th scope="col" style={{ textAlign: "center", color: "gray" }} >Date & Time:</th>
+          <table className="table text-center table-striped studTables " >
+            <tbody>
+              <tr>
+                <th scope="col"  style={{ textAlign: "center", color: "gray" }} >Date & Time:</th>
                 <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: 'auto', padding: '8px' }}>
                   <input
                     type="text"
@@ -419,7 +418,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                     name="date"
                     value={callingTracker.date}
                     className="form-control"
-                    style={{ height: "30px", width: "100px", display: "flex", alignItems: "center", lineHeight: 1, marginRight: "10px" }}
+                    style={{ height: "30px", width: "50%", display: "flex", alignItems: "center", lineHeight: 1, marginRight: "10px" }}
                     readOnly
                   />
                   <input
@@ -428,13 +427,13 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                     name="candidateAddedTime"
                     value={candidateAddedTime}
                     className="form-control"
-                    style={{ height: "30px", width: "100px", alignItems: "center", lineHeight: 1, marginLeft: "10px" }}
+                    style={{ height: "30px", width: "50%", alignItems: "center", lineHeight: 1, marginLeft: "10px" }}
 
                     readOnly
                   />
                 </td>
-                <th style={{ color: "gray" }} >Recruiter </th>
-                <td>
+                <th  style={{ color: "gray" }} >Recruiter </th>
+                <td >
                   <input
                     type="text"
                     name="recruiterName"
@@ -452,9 +451,8 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                 <input type="text" name="employeeId" readOnly value={callingTracker.employee.employeeId} />
 
               </div>
-
               <tr>
-
+              
                 <th style={{ color: "gray" }}>Candidate's Full Name*</th>
                 <td>
                   <input
