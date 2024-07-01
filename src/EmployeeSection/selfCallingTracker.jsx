@@ -344,6 +344,11 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       }
     }
   };
+  // neha
+  // selfcalling tracker form and employee master sheet
+  // After share btn click ->close ,select-all, and forword btn 
+  // 01/07/2024
+    
 
   return (
     <div className="App-after">
@@ -380,7 +385,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                 >
                   {showShareButton ? (
                     <button
-                      className="callingList-share-btn"
+                      className="lineUp-share-btn"
                       onClick={() => setShowShareButton(false)}
                     >
                       Share
@@ -388,19 +393,19 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                   ) : (
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
-                        className="callingList-share-close-btn"
+                        className="lineUp-share-btn"
                         onClick={() => setShowShareButton(true)}
                       >
                         Close
                       </button>
                       <button
-                        className="callingList-share-select-btn"
+                        className="lineUp-share-btn"
                         onClick={handleSelectAll}
                       >
                         {allSelected ? "Deselect All" : "Select All"}
                       </button>
                       <button
-                        className="callingList-forward-btn"
+                        className="lineUp-share-btn"
                         onClick={forwardSelectedCandidate}
                       >
                         Forward
@@ -408,7 +413,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                     </div>
                   )}
                   <button
-                    className="callingList-filter-btn"
+                    className="lineUp-share-btn"
                     onClick={toggleFilterSection}
                   >
                     Filter <i className="fa-solid fa-filter"></i>

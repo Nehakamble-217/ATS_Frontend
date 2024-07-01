@@ -284,7 +284,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
 
 
      <div className="daily-timeanddate">
-            {/* <div className="header-clouds"></div> */}
+            <div className="header-clouds"></div>
 
 
       <div className="head">
