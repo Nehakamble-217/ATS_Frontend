@@ -13,6 +13,7 @@ import ForgotPasswordForm from "./LoginPage/ForgotPasswordForm";
 import CandidateResumeLink from "./ResumeData/candidateResumeLink";
 
 
+
 const App = () => {
 
   return (

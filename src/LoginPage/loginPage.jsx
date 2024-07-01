@@ -48,7 +48,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate('/empDash/40');
+    navigate('/empDash/6');
   };
 
   return (

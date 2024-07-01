@@ -933,18 +933,17 @@ useEffect(() => {
                       <option value="Diploma in Cybersecurity">Diploma in Cybersecurity</option>
                       <option value="Diploma in Data Science">Diploma in Data Science</option>
                       <option value="Diploma in Artificial Intelligence">Diploma in Artificial Intelligence</option>
-
                     </select>
-                  ) : (
-                    <input
-                      type="text"
-                      name="education"
-                      value={lineUpData.qualification}
-                      onChange={handleeducationInputChange}
-                      className="form-control"
-                      placeholder="Enter your Education"
-                    />
-                  )}
+                    ) : (
+                      <input
+                        type="text"
+                        name="education"
+                        value={lineUpData.qualification}
+                        onChange={handleeducationInputChange}
+                        className="form-control"
+                        placeholder="Enter your Education"
+                      />
+                    )}
 
                   <div>
                     <input type="text"
@@ -971,7 +970,10 @@ useEffect(() => {
                   </div>
 
                 </td>
+
               </tr>
+
+
               <tr>
 
                 <th style={{ color: "gray" }}>Current Company</th>
@@ -1029,8 +1031,6 @@ useEffect(() => {
                   </div>
                 </td>
               </tr>
-
-
 
 
               <tr >

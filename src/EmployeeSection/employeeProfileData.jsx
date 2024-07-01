@@ -21,6 +21,7 @@ const EmployeeProfileData = ({onClose}) => {
   useEffect(() => {
     fetch(
       `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
+
     )
       .then((response) => response.json())
       .then((data) => {

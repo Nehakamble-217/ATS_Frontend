@@ -281,12 +281,8 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
   };
 
   return (
-
-
      <div className="daily-timeanddate">
             <div className="header-clouds"></div>
-
-
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
@@ -367,6 +363,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
           {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
+
           {/* <img className="logout-btn"
             onClick={handleLogoutLocal}
             // style={{ width: "30px", borderRadius: "60%" }}

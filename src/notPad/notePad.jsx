@@ -29,6 +29,7 @@ const NotePad = () => {
     };
     try {
       let url = editMessageId ? `http://192.168.1.42":8891/api/ats/157industries/updateNoteData/${editMessageId}` : 'http://192.168.1.39:8891/api/ats/157industries/notes';
+
       const response = await fetch(url, {
         method: editMessageId ? "PUT" : "POST",
         headers: {
