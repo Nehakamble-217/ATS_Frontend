@@ -49,7 +49,7 @@
         transform: translateX(-50%);
     }
 }
-
+/* for adjust with screen size fixed height */
 .container22 {
     display: flex;
     width: 65%;
