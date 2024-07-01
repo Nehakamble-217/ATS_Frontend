@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
+
 const EmployeeProfileData = ({onClose}) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,8 +21,7 @@ const EmployeeProfileData = ({onClose}) => {
 
   useEffect(() => {
     fetch(
-
-      `http://198.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
+      `http://192.168.1.42:8891/api/ats/157industries/employee-details/6`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -80,12 +80,12 @@ const EmployeeProfileData = ({onClose}) => {
       <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
-            <div className="profile-back-button">
+            {/* <div className="profile-back-button">
               <button onClick={onClose}>
                 Close
                 <i className="fas fa-times"></i>
               </button>
-            </div>
+            </div> */}
             {/* Employee personal Information and current company information */}
             <div className="employee-profile-staticsection">
               <div className="employee-profile-static">
@@ -193,7 +193,23 @@ const EmployeeProfileData = ({onClose}) => {
             </div>
 
             <div className="employee-profile-scrollsection">
+        
+           
+
               <div className="employee-profile-emergency-education-details">
+
+              
+              {/* Prachi EmployeeProfile 1/07 line no 205 to 210  */}
+
+              <div className="profile-back-button">
+              <button onClick={onClose}>
+                Close
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+            
+                {/*End Prachi EmployeeProfile 1/07 line no 205 to 210  */}
+
                 <div className="employee-profile-emergency-details">
                   <h1>
                     <b>Emergency Details</b>

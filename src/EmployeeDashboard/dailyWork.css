@@ -211,30 +211,17 @@
     transition: background-color 0.3s ease;
   }
 } */
-.toggle-all-daily-btns {
-  display: none;
-}
-@media (max-width: 1050px) {
-  .all-daily-btns {
-    display: block;
-  }
 
-  .show-daily-t-btn {
-    display: block;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid gray;
-    border-radius: 15px;
-    height: 40px;
-    width: 150px;
-    background-color: white;
-    transition: background-color 0.3s ease;
-    margin: 10px auto;
-    text-align: center;
+@media (max-width: 1040px) {
+  .all-daily-btns {
+    display: none;
   }
 
   .toggle-all-daily-btns {
     display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     font-size: 14px;
     cursor: pointer;
     border: 1px solid gray;
@@ -244,7 +231,6 @@
     background-color: #ffcb9b;
     color: white;
     transition: background-color 0.3s ease;
-    margin: 10px auto;
     text-align: center;
   }
 
@@ -252,5 +238,15 @@
     background-color: white;
     color: #ffcb9b;
     border: 1px solid gray;
+  }
+}
+
+@media (min-width: 1041px) {
+  .all-daily-btns {
+    display: flex;
+  }
+
+  .toggle-all-daily-btns {
+    display: none;
   }
 }
