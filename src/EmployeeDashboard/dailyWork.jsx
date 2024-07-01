@@ -280,6 +280,10 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
     setShowAllDailyBtns(!showAllDailyBtns);
   };
 
+  const handleToggleAllDailyBtns = () => {
+    setShowAllDailyBtns(!showAllDailyBtns);
+  };
+
   return (
      <div className="daily-timeanddate">
             <div className="header-clouds"></div>
@@ -295,8 +299,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
           </p>
         </div>
       </div>
-      {showAllDailyBtns && (
-        <div className="all-daily-btns">
+        <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
           <div className="daily-t-btn">
             <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
               Target : 10
@@ -371,13 +374,9 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
             alt="Logout"
           /> */}
         </div>
-      )}
 
-      <button
-        className="toggle-all-daily-btns"
-        onClick={toggleAllDailyBtns}
-      >
-        {!showAllDailyBtns ? "show" : "hidden"} All Buttons
+     <button className="toggle-all-daily-btns" onClick={handleToggleAllDailyBtns}>
+        {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
       </button>
     </div>
   );
