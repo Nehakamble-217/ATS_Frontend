@@ -157,7 +157,7 @@ useEffect(() => {
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.42:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -178,7 +178,7 @@ useEffect(() => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/company-details`
+        `http://192.168.1.42:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -234,7 +234,7 @@ useEffect(() => {
       }
 
       await axios.post(
-        `http://localhost:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.42:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
 
@@ -473,7 +473,7 @@ useEffect(() => {
 
               <tr>
 
-                <th style={{ color: "gray" }}>Candidate's Full Name* </th>
+                <th style={{ color: "gray" }}>Candidate's Full Name*</th>
                 <td>
                   <input
                     type="text"
@@ -530,7 +530,7 @@ useEffect(() => {
 
 
 
-                <th scope="col" style={{ color: "gray" }}>Whatsapp Number</th>
+                <th scope="col" style={{ color: "gray"}}>Whatsapp Number</th>
 
                 <td>
                   <input
@@ -600,6 +600,7 @@ useEffect(() => {
                 </td>
               </tr>
               <tr>
+                
                 <th scope="col" style={{ color: "gray" }}>Applying For Position</th>
                 <td style={{ display: "flex" }}>
                   <input
@@ -936,18 +937,17 @@ useEffect(() => {
                       <option value="Diploma in Cybersecurity">Diploma in Cybersecurity</option>
                       <option value="Diploma in Data Science">Diploma in Data Science</option>
                       <option value="Diploma in Artificial Intelligence">Diploma in Artificial Intelligence</option>
-
                     </select>
-                  ) : (
-                    <input
-                      type="text"
-                      name="education"
-                      value={lineUpData.qualification}
-                      onChange={handleeducationInputChange}
-                      className="form-control"
-                      placeholder="Enter your Education"
-                    />
-                  )}
+                    ) : (
+                      <input
+                        type="text"
+                        name="education"
+                        value={lineUpData.qualification}
+                        onChange={handleeducationInputChange}
+                        className="form-control"
+                        placeholder="Enter your Education"
+                      />
+                    )}
 
                   <div>
                     <input type="text"
@@ -974,7 +974,10 @@ useEffect(() => {
                   </div>
 
                 </td>
+
               </tr>
+
+
               <tr>
 
                 <th style={{ color: "gray" }}>Current Company</th>
@@ -995,11 +998,13 @@ useEffect(() => {
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
+
+                
                 <th scope="col" style={{ color: "gray" }}>Total Experience </th>
                 <td style={{ display: "flex", padding: "10px" }} >
                   <div style={{ display: 'flex', alignItems: 'center', margin: 'auto', padding: "0px" }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '0px' }}>
-                      <label htmlFor="experienceYear" style={{ marginRight: '5px', width: '40px', color: "Gray" }}>Years:</label>
+                      <label htmlFor="experienceYear" style={{ marginRight: '20px', width: '30px', color: "Gray" }}>Years:</label>
                       <input
                         type="text"
                         name="experienceYear"
@@ -1030,8 +1035,6 @@ useEffect(() => {
                   </div>
                 </td>
               </tr>
-
-
 
 
               <tr >
@@ -1108,7 +1111,7 @@ useEffect(() => {
                       />
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
-                      <label htmlFor="currentCTCThousand" style={{ marginRight: '40px', width: '40px', color: "gray" }}>Thousand:</label>
+                      <label htmlFor="currentCTCThousand" style={{ marginRight: '40px', width: '45px', color: "gray" }}>Thousand:</label>
                       <input
                         type="text"
                         name="currentCTCThousand"
@@ -1142,7 +1145,7 @@ useEffect(() => {
                       />
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
-                      <label htmlFor="expectedCTCThousand" style={{ marginRight: '40px', width: '40px', color: "gray" }}>Thousand:</label>
+                      <label htmlFor="expectedCTCThousand" style={{ marginRight: '40px', width: '45px', color: "gray" }}>Thousand:</label>
                       <input
                         type="text"
                         name="expectedCTCThousand"
@@ -1184,6 +1187,7 @@ useEffect(() => {
                   />
                 </td> */}
 
+
                 <th scope="col" style={{ textAlign: "center", color: "gray" }}>Holding Offer Letter</th>
                 <td>
                   <select type="text"
@@ -1208,6 +1212,11 @@ useEffect(() => {
                     style={{ height: "30px", width: '150px', lineHeight: 1, border: '1px solid #ccc', padding: '5px' }}
                   />
                 </td>
+
+
+
+
+
                 <th scope="col" style={{ color: "gray" }}>Comment For TL</th>
                 <td >
 

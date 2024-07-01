@@ -1,4 +1,3 @@
-
 /* callingList.css */
 
 .filter-section {
@@ -8,7 +7,6 @@
 .filter-dropdowns {
   display: flex;
   flex-wrap: wrap;
-  
 }
 
 .filter-dropdown {
@@ -25,7 +23,6 @@
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  
 }
 
 /* Style the filter section */
@@ -39,20 +36,20 @@
 }
 
 /* Style the dropdown button */
-.dropbtn { 
+.dropbtn {
   cursor: pointer;
-  border: 1px solid gray ;
-    border-radius: 15px;
-    background-color: white;
-    font-size: 16px ;
-    color: #ffcb9b;
-    height: 30px;
-    width: auto;
-    padding-left: 15px;
-    padding-right: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border: 1px solid gray;
+  border-radius: 15px;
+  background-color: white;
+  font-size: 16px;
+  color: #ffcb9b;
+  height: 30px;
+  width: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* .dropbtn:hover{
@@ -67,7 +64,7 @@
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -94,11 +91,11 @@
   cursor: pointer;
 }
 
-
 .App-after {
   width: 100%;
   background-attachment: fixed;
-  height: 95vh;
+
+  height: auto;
   overflow: hidden !important;
 }
 
@@ -126,11 +123,10 @@
   white-space: nowrap;
   width: auto !important;
   height: 30px;
-  
+
   /* text-overflow: ellipsis; */
 }
 .tabledata {
-  
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
@@ -146,7 +142,7 @@
   text-align: center;
   border-radius: 5px;
   /* padding: 5px; */
-  position: fixed;  /* Use fixed positioning */
+  position: fixed; /* Use fixed positioning */
   z-index: 1000;
   opacity: 0;
   transition: opacity 0.3s;
@@ -155,7 +151,6 @@
   /* white-space: nowrap; */
   /* width: 200px; */
 }
-
 
 .tabledata:hover .tooltip {
   visibility: visible;
@@ -166,8 +161,6 @@
   white-space: nowrap;
 }
 
-
-  
 .attendancerows-head {
   background-color: #ffcb9b;
   color: gray;
@@ -175,7 +168,7 @@
   text-align: center;
   font-size: 18px;
   border: 1px solid gray;
-  max-width: 300px ;
+  max-width: 300px;
   /* padding: 10px 15px; */
   /* text-overflow: clip; */
   /* width: 100px; */
@@ -201,16 +194,14 @@
   width: 100%;
   overflow-y: auto;
 }
-.attendancerows{
+.attendancerows {
   height: 30px;
 }
-
 
 .attendancerows:hover {
   background-color: #f2f2f2;
 }
 
-html::-webkit-scrollbar{
+html::-webkit-scrollbar {
   display: none;
 }
-

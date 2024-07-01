@@ -56,7 +56,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
         if (response.data.profileImage) {
@@ -222,7 +222,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
       };
 
       await axios.post(
-        "http://localhost:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -364,12 +364,12 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
           {showDetails ? "Hide" : "Show"}
         </button> */}
 
-          <img className="logout-btn"
+          {/* <img className="logout-btn"
             onClick={handleLogoutLocal}
             // style={{ width: "30px", borderRadius: "60%" }}
             src={logoutImg}
             alt="Logout"
-          />
+          /> */}
         </div>
       )}
 

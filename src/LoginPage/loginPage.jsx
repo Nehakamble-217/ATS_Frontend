@@ -286,7 +286,7 @@ const LoginSignup = ({ onLogin }) => {
             {showForgotPassword ? (
               <ForgotPasswordForm userType={userType} />
             ) : (
-              <form onSubmit={handleSubmit} className="rigth-panel-loginForm">
+              <form onSubmit={handleSubmit}>
                 <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2> {/* Display the userType */}
                 <div className="input-groups">
                   <i className="fas fa-user"></i>

@@ -32,6 +32,8 @@ function Sidebar({
   toggelAddResumes,
   toggleChatRoom,
   toggleAssigncolumns,
+  toggeExcelCallingData,
+  toggelExcelLineup,
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -115,7 +117,7 @@ function Sidebar({
       const year = now.getFullYear();
 
       await axios.post(
-        "http://localhost:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -459,22 +461,22 @@ function Sidebar({
                   >
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Calling Data</span>
+                      <span className="sidebar-text">Upload Files</span>
                     </a>
                   </li>
-                  <li style={{marginLeft: "10px"}}>
+                  <li onClick={toggeExcelCallingData} style={{marginLeft: "10px"}}>
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Line Up Data</span>
+                      <span className="sidebar-text">Excel Calling Data</span>
                     </a>
                   </li>
 
-                  {/* <li  style={{marginLeft: "10px"}}>
-                    <a href="#"> */}
+                   <li  onClick={toggelExcelLineup} style={{marginLeft: "10px"}}>
+                    <a href="#"> 
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      {/* <span className="sidebar-text">Offers Data</span>
+                       <span className="sidebar-text">Excel Lineup Data</span>
                     </a>
-                  </li> */}
+                  </li> 
                   
                   <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick("resumeData", toggelResumeData)}
@@ -486,10 +488,9 @@ function Sidebar({
                     </a>
                   </li>
 
-                  <li onClick={toggelAddResumes} style={{marginLeft: "10px"}}>
+                  <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Add Resumes</span>
+                      <span className="sidebar-text">Send Link</span>
                     </a>
                   </li>
 

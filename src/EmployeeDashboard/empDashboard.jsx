@@ -33,6 +33,8 @@ import ChatRoom from "../ChatRoom/chatRoom";
 import Team_Leader from "../AdminSection/Team_Leader";
 import ShareLink from "../ResumeData/shareLink";
 import CandidateResumeLink from "../ResumeData/candidateResumeLink";
+import CallingExcelList from "../Excel/callingExcelData";
+import LineupExcelData from "../Excel/lineupExcelData";
 
 
 const EmpDashboard = ({ userGroup }) => {
@@ -69,6 +71,8 @@ const EmpDashboard = ({ userGroup }) => {
   const[assignColumns,setAssignColumns]=useState(false)
   const [showShareLink,setShowShareLink]=useState(false)
   const [resumeLink,setResumeLink]=useState(false)
+  const [showCallingExcelList,setShowCallingExcelList]=useState(false)
+  const [showLineupExcelList,setShowLineupExcelList] = useState(false)
 
 
   const { employeeId } = useParams();
@@ -161,6 +165,8 @@ const EmpDashboard = ({ userGroup }) => {
     setShowShareLink(false);
     setResumeLink(false)
     setShowResumeData(false)
+    setShowCallingExcelList(false)
+    setShowLineupExcelList(false)
   };
 
   const funForUpdateSelfCalling = () => {
@@ -298,6 +304,16 @@ const EmpDashboard = ({ userGroup }) => {
     setShowAddedResumes(!showAddedResumes);
   }
 
+  const toggeExcelCallingData = () =>{
+    resetAllToggles();
+    setShowCallingExcelList(!showCallingExcelList)
+  }
+
+  const toggelExcelLineup = () =>{
+    resetAllToggles();
+    setShowLineupExcelList(!showLineupExcelList)
+  }
+
   return (
     <div className={`grid-container ${openSidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Sidebar 
@@ -328,6 +344,8 @@ const EmpDashboard = ({ userGroup }) => {
         toggleIncentive={toggleIncentive}
         toggleAssigncolumns={toggleAssigncolumns}
         toggleShareLink={toggleShareLink}
+        toggeExcelCallingData={toggeExcelCallingData}
+        toggelExcelLineup={toggelExcelLineup}
 
       />
         
@@ -385,6 +403,12 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
 
         <div>
+          {
+            showCallingExcelList && <CallingExcelList></CallingExcelList>
+          }
+        </div>
+
+        <div>
           {shortListed && <InterviewDates />}
         </div>
 
@@ -406,6 +430,9 @@ const EmpDashboard = ({ userGroup }) => {
         
         <div>
           {showCallingExcel && <CallingExcel />}
+        </div>
+        <div>
+          {showLineupExcelList && <LineupExcelData></LineupExcelData>}
         </div>
 
         <div>

@@ -33,7 +33,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   useEffect(() => {
 
-    fetch(`http://localhost:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
+    fetch(`http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -158,7 +158,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://localhost:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`
 
     )
       .then((response) => response.json())
@@ -331,7 +331,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
                   <th className='attendanceheading'>Sr No.</th>
                   <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
-                  <th className='attendanceheading'>Candidate Id</th>
+                  <th hidden className='attendanceheading'>Candidate Id</th>
                   <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
                   <th className='attendanceheading'>Candidate Name</th>
                   <th className='attendanceheading'>Candidate Email</th>
@@ -373,7 +373,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
                     </td>
 
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateId}
+                    <td hidden className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateId}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.candidateId} </span>
                       </div>
