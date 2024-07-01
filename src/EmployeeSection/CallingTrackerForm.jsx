@@ -139,7 +139,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -160,7 +160,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8891/api/ats/157industries/company-details`
+        `http://192.168.1.39:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -216,7 +216,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
       }
 
       await axios.post(
-        `http://localhost:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.39:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
 
@@ -455,7 +455,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
 
               <tr>
 
-                <th style={{ color: "gray" }}>Candidate's Full Name* </th>
+                <th style={{ color: "gray" }}>Candidate's Full Name*</th>
                 <td>
                   <input
                     type="text"
@@ -515,7 +515,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
 
 
 
-                <th scope="col" style={{ color: "gray" }}>Whatsapp Number</th>
+                <th scope="col" style={{ color: "gray"}}>Whatsapp Number</th>
 
                 <td>
                   <input
@@ -587,6 +587,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                 </td>
               </tr>
               <tr>
+                
                 <th scope="col" style={{ color: "gray" }}>Applying For Position</th>
                 <td style={{ display: "flex" }}>
                   <input
@@ -964,13 +965,13 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
               </tr>
               <tr>
 
-                <th style={{ color: "gray" }}>Recruiters Input</th>
+                <th style={{ color: "gray" }}>Current Company</th>
                 <td>
                   <input
                     type="text"
                     name="currentcompany"
                     placeholder="Current Company"
-                    value={lineUpData.extraCertification}
+                    value={lineUpData.currentcompany}
                     style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1 }}
                     onChange={(e) =>
                       setLineUpData({
@@ -982,11 +983,13 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
+
+                
                 <th scope="col" style={{ color: "gray" }}>Total Experience </th>
                 <td style={{ display: "flex", padding: "10px" }} >
                   <div style={{ display: 'flex', alignItems: 'center', margin: 'auto', padding: "0px" }} required={callingTracker.selectYesOrNo === "Interested"}>
                     <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto', padding: '0px' }}>
-                      <label htmlFor="experienceYear" style={{ marginRight: '5px', width: '40px', color: "Gray" }}>Years:</label>
+                      <label htmlFor="experienceYear" style={{ marginRight: '20px', width: '30px', color: "Gray" }}>Years:</label>
                       <input
                         type="text"
                         name="experienceYear"
@@ -1095,7 +1098,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                       />
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
-                      <label htmlFor="currentCTCThousand" style={{ marginRight: '40px', width: '40px', color: "gray" }}>Thousand:</label>
+                      <label htmlFor="currentCTCThousand" style={{ marginRight: '40px', width: '45px', color: "gray" }}>Thousand:</label>
                       <input
                         type="text"
                         name="currentCTCThousand"
@@ -1129,7 +1132,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                       />
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', padding: '5px' }}>
-                      <label htmlFor="expectedCTCThousand" style={{ marginRight: '40px', width: '40px', color: "gray" }}>Thousand:</label>
+                      <label htmlFor="expectedCTCThousand" style={{ marginRight: '40px', width: '45px', color: "gray" }}>Thousand:</label>
                       <input
                         type="text"
                         name="expectedCTCThousand"
@@ -1171,6 +1174,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                   />
                 </td> */}
 
+
                 <th scope="col" style={{ textAlign: "center", color: "gray" }}>Holding Offer Letter</th>
                 <td>
                   <select type="text"
@@ -1195,6 +1199,11 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                     style={{ height: "30px", width: '150px', lineHeight: 1, border: '1px solid #ccc', padding: '5px' }}
                   />
                 </td>
+
+
+
+
+
                 <th scope="col" style={{ color: "gray" }}>Comment For TL</th>
                 <td >
 

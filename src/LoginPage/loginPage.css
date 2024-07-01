@@ -53,6 +53,7 @@
 .container22 {
     display: flex;
     width: 65%;
+    height: 50%;
     flex-wrap: wrap;
     background-color: white;
     border-radius: 15px;
@@ -64,20 +65,21 @@
 
 .left-panel {
     width: 50%;
-    padding: 20px;
-    flex: 1;
+    height: 100%;
+    /* padding: 20px; */
+    display: flex;
     transition: all 0.5s ease-in-out;
     justify-content: center;
     align-items: center;
     text-align: center;
-    position: relative;
+    /* position: relative; */
     opacity: 0;
     animation: fadeIn 1.5s forwards;
 }
 
 .left-panel .logo {
-    max-width: 320px;
-    margin-right: 50px;
+    width: 250px;
+    height: 250px;
     opacity: 0;
     animation: fadeIn 1.5s forwards;
     animation-delay: 0.5s;
@@ -99,6 +101,7 @@
 
 .right-panel {
     width: 50%;
+    height: 100%;
     background-color: #f2f2f2;
     padding: 40px;
     display: flex;
@@ -110,10 +113,10 @@
 }
 
 .right-panel h2 {
-    font-size: 2em;
+    font-size: 1.5rem;
     text-align: center;
     color: #ffcb9b;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     opacity: 0;
     animation: slideIn 1s forwards 0.5s;
 }
@@ -121,9 +124,8 @@
 .input-groups {
     position: relative;
     margin-bottom: 10px;
-    padding-left: -10px;
+    /* padding-left: -10px; */
     opacity: 0;
-    gap: 30px;
     animation: slideIn 1s forwards 0.8s;
 }
 
@@ -133,7 +135,7 @@
     font-size: 16px;
     border: 1px solid gray;
     border-radius: 15px;
-    padding-left: 40px;
+    padding-left: 35px;
     align-items: center;
     text-indent: 10px;
     height: 30px;
@@ -214,11 +216,11 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
     .container22 {
         width: 90%;
     }
-}
+} */
 
 @media (max-width: 666px) {
     .container22 {
