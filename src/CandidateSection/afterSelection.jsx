@@ -587,7 +587,7 @@ const AfterSelection = ({
                 <div className="candidate-selectdata">
                   <table
                     id="studTables"
-                    className="table  table-striped  text-center"
+                    className="table text-center table-striped"
                   >
                     <tbody className="table-group-divider">
                       <tr id="table-row">

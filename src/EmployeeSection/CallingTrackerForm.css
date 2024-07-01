@@ -1,3 +1,4 @@
+/* og */
 .maintable {
   height: 100%; /* Allow height to adjust based on content */
   width: auto; /* Allow width to adjust based on content */
@@ -217,10 +218,8 @@
 /* Set color of bold fonts to gray */
 b,
 strong {
-  color: gray; /* Set font color to gray */
+  color: gray; /* Set font color to gray */
 }
-
-
 
 @media screen and (max-width:300px) {
   

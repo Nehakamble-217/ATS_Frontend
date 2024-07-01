@@ -587,8 +587,8 @@ function DailyWork({
         remoteWork,
       };
 
-      await axios.put(
-        `http://localhost:8082/api/ats/157industries/update-daily-work/${fetchWorkId}`,
+      await axios.post(
+        `http://192.168.1.42:8891/api/ats/157industries/update-daily-work/${fetchWorkId}`,
         formData
       );
 
@@ -699,10 +699,13 @@ function DailyWork({
     setShowAllDailyBtns(!showAllDailyBtns);
   };
 
+  const handleToggleAllDailyBtns = () => {
+    setShowAllDailyBtns(!showAllDailyBtns);
+  };
+
   return (
     <div className="daily-timeanddate">
-      {/* <div className="header-clouds"></div> */}
-
+      <div className="header-clouds"></div>
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
@@ -715,85 +718,87 @@ function DailyWork({
           </p>
         </div>
       </div>
-      {showAllDailyBtns && (
-        <div className="all-daily-btns">
-          <div className="daily-t-btn">
-            <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
-              Target : 10
-            </button>
-            <button
-              className="daily-tr-btn"
-              style={{
-                color: data.archived <= 3 ? "red" : "green",
-                background: "#ffcb9b",
-              }}
-            >
-              Archived : {data.archived}
-            </button>
-            <button
-              className="daily-tr-btn"
-              style={{
-                color: data.pending < 7 ? "green" : "red",
-                background: "#ffcb9b",
-              }}
-            >
-              Pending : {data.pending}
-            </button>
-          </div>
-          <button className="loging-hr">
-            <h6 hidden>Time: {currentTime}</h6>
-            <h6 hidden>Date: {currentDate}</h6>
-            Login Hours : {time.hours.toString().padStart(2, "0")}:
-            {time.minutes.toString().padStart(2, "0")}:
-            {time.seconds.toString().padStart(2, "0")}
+      <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
+        <div className="daily-t-btn">
+          <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
+            Target : 10
           </button>
-          <div hidden>
-            <h6>Late Mark : {lateMark}</h6>
-            <h6>Leave Type : {leaveType}</h6>
-            <h6>Paid Leave : {paidLeave}</h6>
-            <h6>Unpaid Leave : {unpaidLeave}</h6>
-            <h6>Day Present Paid : {dayPresentPaid}</h6>
-            <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
-          </div>
-
-          <div hidden style={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="remoteWork">Remote Work:</label>
-            <select
-              className="select"
-              id="remoteWork"
-              value={remoteWork}
-              onChange={(e) => setRemoteWork(e.target.value)}
-            >
-              <option>Select</option>
-              <option value="work from Office">WFO</option>
-              <option value="Work from Home">WFH</option>
-              <option value="hybrid">Hybrid</option>
-            </select>
-          </div>
-
           <button
-            className={running ? "timer-break-btn" : "timer-break-btn"}
-            onClick={running ? handlePause : handleResume}
-            style={{ height: "30px" }}
+            className="daily-tr-btn"
+            style={{
+              color: data.archived <= 3 ? "red" : "green",
+              background: "#ffcb9b",
+            }}
           >
-            {running ? "Pause" : "Resume"}
+            Archived : {data.archived}
           </button>
+          <button
+            className="daily-tr-btn"
+            style={{
+              color: data.pending < 7 ? "green" : "red",
+              background: "#ffcb9b",
+            }}
+          >
+            Pending : {data.pending}
+          </button>
+        </div>
+        <button className="loging-hr">
+          <h6 hidden>Time: {currentTime}</h6>
+          <h6 hidden>Date: {currentDate}</h6>
+          Login Hours : {time.hours.toString().padStart(2, "0")}:
+          {time.minutes.toString().padStart(2, "0")}:
+          {time.seconds.toString().padStart(2, "0")}
+        </button>
+        <div hidden>
+          <h6>Late Mark : {lateMark}</h6>
+          <h6>Leave Type : {leaveType}</h6>
+          <h6>Paid Leave : {paidLeave}</h6>
+          <h6>Unpaid Leave : {unpaidLeave}</h6>
+          <h6>Day Present Paid : {dayPresentPaid}</h6>
+          <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
+        </div>
 
-          {/* Dont Remove this 2 comment ...Arshad */}
-          {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
+        <div hidden style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="remoteWork">Remote Work:</label>
+          <select
+            className="select"
+            id="remoteWork"
+            value={remoteWork}
+            onChange={(e) => setRemoteWork(e.target.value)}
+          >
+            <option>Select</option>
+            <option value="work from Office">WFO</option>
+            <option value="Work from Home">WFH</option>
+            <option value="hybrid">Hybrid</option>
+          </select>
+        </div>
+
+        <button
+          className={running ? "timer-break-btn" : "timer-break-btn"}
+          onClick={running ? handlePause : handleResume}
+          style={{ height: "30px" }}
+        >
+          {running ? "Pause" : "Resume"}
+        </button>
+
+        {/* Dont Remove this 2 comment ...Arshad */}
+        {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
-          {/* <img className="logout-btn"
+
+        {/* <img className="logout-btn"
             onClick={handleLogoutLocal}
             // style={{ width: "30px", borderRadius: "60%" }}
             src={logoutImg}
             alt="Logout"
           /> */}
-        </div>
-      )}
+      </div>
 
-      <button className="toggle-all-daily-btns" onClick={toggleAllDailyBtns}>
-        {!showAllDailyBtns ? "show" : "hidden"} All Buttons
+      <button
+        className="toggle-all-daily-btns"
+        onClick={handleToggleAllDailyBtns}
+      >
+        {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
       </button>
     </div>
   );

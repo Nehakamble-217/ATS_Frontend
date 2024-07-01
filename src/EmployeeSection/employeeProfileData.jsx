@@ -78,12 +78,12 @@ const EmployeeProfileData = ({ onClose }) => {
       <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
-            <div className="profile-back-button">
+            {/* <div className="profile-back-button">
               <button onClick={onClose}>
                 Close
                 <i className="fas fa-times"></i>
               </button>
-            </div>
+            </div> */}
             {/* Employee personal Information and current company information */}
             <div className="employee-profile-staticsection">
               <div className="employee-profile-static">
@@ -192,6 +192,17 @@ const EmployeeProfileData = ({ onClose }) => {
 
             <div className="employee-profile-scrollsection">
               <div className="employee-profile-emergency-education-details">
+                {/* Prachi EmployeeProfile 1/07 line no 205 to 210  */}
+
+                <div className="profile-back-button">
+                  <button onClick={onClose}>
+                    Close
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+
+                {/*End Prachi EmployeeProfile 1/07 line no 205 to 210  */}
+
                 <div className="employee-profile-emergency-details">
                   <h1>
                     <b>Emergency Details</b>
@@ -362,7 +373,7 @@ const EmployeeProfileData = ({ onClose }) => {
         {isModalOpen && (
           <>
             <div
-              className="modal show bg-black bg-opacity-50"
+              className="bg-black bg-opacity-50 modal show"
               style={{
                 display: "flex",
                 position: "fixed",
@@ -403,7 +414,7 @@ const EmployeeProfileData = ({ onClose }) => {
 
   return (
     <div
-      className="modal show bg-black bg-opacity-50"
+      className="bg-black bg-opacity-50 modal show"
       style={{
         display: "flex",
         justifyContent: "center",
@@ -451,12 +462,15 @@ const EmployeeProfileData = ({ onClose }) => {
             </div>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-            <button onClick={onClose} className="close-profile-popup-btn">
+            <button
+              onClick={onClose}
+              className="close-profile-popup-btn  white-Btn"
+            >
               Close
             </button>
             <button
               onClick={viewMoreProfile}
-              className="display-more-profile-btn"
+              className="display-more-profile-btn daily-tr-btn"
             >
               More
             </button>

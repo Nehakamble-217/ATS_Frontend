@@ -33,6 +33,8 @@ import ChatRoom from "../ChatRoom/chatRoom";
 import Team_Leader from "../AdminSection/Team_Leader";
 import ShareLink from "../ResumeData/shareLink";
 import CandidateResumeLink from "../ResumeData/candidateResumeLink";
+import CallingExcelList from "../Excel/callingExcelData";
+import LineupExcelData from "../Excel/lineupExcelData";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -71,6 +73,8 @@ const EmpDashboard = ({ userGroup }) => {
   const [assignColumns, setAssignColumns] = useState(false);
   const [showShareLink, setShowShareLink] = useState(false);
   const [resumeLink, setResumeLink] = useState(false);
+  const [showCallingExcelList, setShowCallingExcelList] = useState(false);
+  const [showLineupExcelList, setShowLineupExcelList] = useState(false);
 
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
@@ -91,6 +95,8 @@ const EmpDashboard = ({ userGroup }) => {
     setSuccessfulDataAdditions(false);
   }, [successfulDataAdditions]);
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions End LineNo:-93 Date:-01/07
+
+  const [id, setId] = useState(0);
 
   const navigator = useNavigate();
 
@@ -176,8 +182,11 @@ const EmpDashboard = ({ userGroup }) => {
     setAssignColumns(false);
     setShowChatRoom(false);
     setShowShareLink(false);
+
     setResumeLink(false);
     setShowResumeData(false);
+    setShowCallingExcelList(false);
+    setShowLineupExcelList(false);
   };
 
   const funForUpdateSelfCalling = () => {
@@ -310,9 +319,25 @@ const EmpDashboard = ({ userGroup }) => {
     setShowProfile(false);
   };
 
+  const handleUpdate = (id) => {
+    setId(id);
+    setAddCandidate(!addCandidate);
+    setShowResumeData(false);
+  };
+
   const toggelAddResumes = () => {
     resetAllToggles();
     setShowAddedResumes(!showAddedResumes);
+  };
+
+  const toggeExcelCallingData = () => {
+    resetAllToggles();
+    setShowCallingExcelList(!showCallingExcelList);
+  };
+
+  const toggelExcelLineup = () => {
+    resetAllToggles();
+    setShowLineupExcelList(!showLineupExcelList);
   };
 
   return (
@@ -350,6 +375,8 @@ const EmpDashboard = ({ userGroup }) => {
         toggleAssigncolumns={toggleAssigncolumns}
         toggleShareLink={toggleShareLink}
         onLogout={handleLogoutTime}
+        toggeExcelCallingData={toggeExcelCallingData}
+        toggelExcelLineup={toggelExcelLineup}
       />
 
       <div className="empDash-main-content">
@@ -363,7 +390,6 @@ const EmpDashboard = ({ userGroup }) => {
             logoutTimestamp={logoutTimestamp}
           />
         </div>
-
         <div>
           {showProfile && (
             <EmployeeProfileData
@@ -379,15 +405,12 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-
         <div>{showShortListedNav && <ShortlistedNavbar />}</div>
-
         <div>
           {showShortlistedCandidateData && (
             <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
           )}
         </div>
-
         <div>
           {lineUp && (
             <LineUpList
@@ -396,27 +419,30 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
         <div>{showMasterSheet && <MasterSheet />}</div>
         <div>{incentive && <Incentive />}</div>
-
         <div>{attendancesheet && <Attendancesheet />}</div>
-
         <div>{shortListed && <InterviewDates />}</div>
-
+        <div>
+          {showCallingExcelList && <CallingExcelList></CallingExcelList>}
+        </div>
+        <div>{shortListed && <InterviewDates />}</div>
         <div>{showAddEmployee && <AddEmployee />}</div>
-
         <div>{selectCandidate && <SelectedCandidate />}</div>
-
         <div>{rejectedCandidate && <RejectedCandidate />}</div>
-
         <div>{holdCandidate && <HoldCandidate />}</div>
-
         <div>{showCallingExcel && <CallingExcel />}</div>
-
+        <div>{showLineupExcelList && <LineupExcelData></LineupExcelData>}</div>
+        <div>
+          {showResumeData && <ResumeData handleUpdate={handleUpdate} />}
+        </div>
+        <div>{showAddEmployee && <AddEmployee />}</div>
+        <div>{selectCandidate && <SelectedCandidate />}</div>
+        <div>{rejectedCandidate && <RejectedCandidate />}</div>
+        <div>{holdCandidate && <HoldCandidate />}</div>
+        <div>{showCallingExcel && <CallingExcel />}</div>
         <div>{showResumeData && <ResumeData />}</div>
-
         <div>{showNotePad && <NotePad />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
         <div>
@@ -430,22 +456,16 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-
         <div>
           {updateSelfCalling && (
             <UpdateCallingTracker candidateId={candidateIdForUpdate} />
           )}
         </div>
-
         <div>{addJobDescription && <AddJobDescription />}</div>
         <div>{showJobDiscriptions && <Home />}</div>
-
         <div>{showHome && <Home />}</div>
-
         <div>{showAddedResumes && <AddResumes></AddResumes>}</div>
-
         <div>{showShortListedCandidates && <ShortListedCandidates />}</div>
-
         <div>
           {showUpdateCallingTracker && (
             <UpdateCallingTracker candidateId={candidateIdForUpdate} />

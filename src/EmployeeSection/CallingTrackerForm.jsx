@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
@@ -12,7 +12,6 @@ import "../EmployeeSection/CallingTrackerForm.css";
 
 const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const { employeeId } = useParams();
-
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: "",
@@ -90,7 +89,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] =
     useState(false);
-
+  const [formData, setFormData] = useState();
   const [candidateName, setCandidateName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [sourceName, setSourceName] = useState("");
@@ -99,7 +98,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     contactNumber: "",
     sourceName: "",
   });
-
   useEffect(() => {
     fetchRecruiterName();
     fetchRequirementOptions();
@@ -116,6 +114,20 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
       }
     }
   }, [initialData]);
+
+  // ------------------------------------------------------------
+
+  useEffect(() => {
+    if (candidateData) {
+      setFormData(candidateData);
+      setCallingTracker({
+        ...initialCallingTrackerState,
+        ...candidateData,
+      });
+    }
+  }, [candidateData]);
+
+  // -------------------------------------------------------------------------
 
   useEffect(() => {
     const updateTimer = () => {
@@ -211,7 +223,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
       }
 
       const response = await axios.post(
-        `http://localhost:8082/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.42:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
@@ -486,9 +498,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                   value={callingTracker.employee.employeeId}
                 />
               </div>
-
               <tr>
-                <th style={{ color: "gray" }}>Candidate's Full Name* </th>
+                <th style={{ color: "gray" }}>Candidate's Full Name*</th>
                 <td>
                   <input
                     type="text"
@@ -539,6 +550,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                 <th scope="col" style={{ color: "gray" }}>
                   Contact Number*
                 </th>
+
                 <td>
                   <PhoneInput
                     placeholder="Enter phone number"
@@ -1356,6 +1368,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                   </div>
                 </td>
               </tr>
+
               <tr>
                 <th style={{ color: "gray" }}>Current Company</th>
 
@@ -1381,6 +1394,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
+
                 <th scope="col" style={{ color: "gray" }}>
                   Total Experience{" "}
                 </th>
@@ -1405,8 +1419,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                       <label
                         htmlFor="experienceYear"
                         style={{
-                          marginRight: "5px",
-                          width: "40px",
+                          marginRight: "20px",
+                          width: "30px",
                           color: "Gray",
                         }}
                       >
@@ -1593,7 +1607,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                         htmlFor="currentCTCThousand"
                         style={{
                           marginRight: "40px",
-                          width: "40px",
+                          width: "45px",
                           color: "gray",
                         }}
                       >
@@ -1674,7 +1688,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                         htmlFor="expectedCTCThousand"
                         style={{
                           marginRight: "40px",
-                          width: "40px",
+                          width: "45px",
                           color: "gray",
                         }}
                       >
@@ -1777,6 +1791,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     }}
                   />
                 </td>
+
                 <th scope="col" style={{ color: "gray" }}>
                   Comment For TL
                 </th>
@@ -1966,7 +1981,11 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
 CallingTrackerForm.propTypes = {
   initialData: PropTypes.object,
-  onDataAdditionSuccess: PropTypes.func.isRequired,
+  handleDataAdditionSuccess: PropTypes.func.isRequired,
+  updateCount: PropTypes.func.isRequired,
+  candidateData: PropTypes.object,
+  onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
 
 CallingTrackerForm.defaultProps = {

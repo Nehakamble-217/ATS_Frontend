@@ -90,6 +90,13 @@ body {
     scrollbar-width: none;
   }
 
+  .fa-solid{
+    color: white;
+  }
+  .fa-solid:hover{
+    color:#ffcb9b;
+  }
+
   
 
   /* .calling-table td:hover, */

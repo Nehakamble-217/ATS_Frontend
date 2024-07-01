@@ -33,6 +33,8 @@ function Sidebar({
   toggelAddResumes,
   toggleChatRoom,
   toggleAssigncolumns,
+  toggeExcelCallingData,
+  toggelExcelLineup,
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -135,12 +137,10 @@ function Sidebar({
   //     setTime({ hours: 0, minutes: 0, seconds: 0 });
   //     setData({ archived: 0, pending: 10 });
 
-  //     console.log("Logged out successfully.");
-  //     navigator("/employee-login/recruiter");
-  //   } catch (error) {
-  //     console.error("Error logging out:", error);
-  //   }
-  // };
+  // await axios.post(
+  //   "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
+  //   formData
+  // );
 
   const handleLogoutLocal = () => {
     const logoutTime = new Date().toLocaleTimeString("en-IN");
@@ -151,25 +151,6 @@ function Sidebar({
   const tempLogout = () => {
     navigator("/employee-login/recruiter");
   };
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 980) {
-        setIsActive(false);
-      } else {
-        setIsActive(true);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (window.innerWidth <= 980) {
-      setIsActive(false);
-    }
-  }, []);
 
   return (
     <>
@@ -537,22 +518,29 @@ function Sidebar({
                   >
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Calling Data</span>
-                    </a>
-                  </li>
-                  <li style={{ marginLeft: "10px" }}>
-                    <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Line Up Data</span>
+                      <span className="sidebar-text">Upload Files</span>
                     </a>
                   </li>
 
-                  {/* <li  style={{marginLeft: "10px"}}>
-                    <a href="#"> */}
-                  {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                  {/* <span className="sidebar-text">Offers Data</span>
+                  <li
+                    onClick={toggeExcelCallingData}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    <a href="#">
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span className="sidebar-text">Excel Calling Data</span>
                     </a>
-                  </li> */}
+                  </li>
+
+                  <li
+                    onClick={toggelExcelLineup}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    <a href="#">
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span className="sidebar-text">Excel Lineup Data</span>
+                    </a>
+                  </li>
 
                   <li
                     style={{ marginLeft: "10px" }}
@@ -565,10 +553,9 @@ function Sidebar({
                     </a>
                   </li>
 
-                  <li onClick={toggelAddResumes} style={{ marginLeft: "10px" }}>
+                  <li style={{ marginLeft: "10px" }}>
                     <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Add Resumes</span>
+                      <span className="sidebar-text">Send Link</span>
                     </a>
                   </li>
                 </ul>

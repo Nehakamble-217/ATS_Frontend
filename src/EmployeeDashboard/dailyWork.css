@@ -151,12 +151,10 @@
 
 .daily-timeanddate .head {
   margin-left: 20px;
-  padding-top: 12px;
+  /* padding-top: 12px; */
 }
 
-.user-details{
-  padding-top: 8px;
-}
+
 .user-details p{
   font-size: 18px;
   color: gray;
@@ -213,12 +211,47 @@
     transition: background-color 0.3s ease;
   }
 } */
+
 .toggle-all-daily-btns {
   display: none;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 15px;
+  height: 30px;
+  width: 120px;
+  background-color: #ffcb9b;
+  color: white;
+  transition: background-color 0.3s ease;
+  margin: 10px auto;
+  text-align: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
-@media (max-width: 1050px) {
+
+.toggle-all-daily-btns:hover {
+  background-color: white;
+  color: #ffcb9b;
+  border: 1px solid gray;
+}
+@media (min-width: 1000px) {
+.all-daily-btns{
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+}
+
+@media (max-width: 947px) {
   .all-daily-btns {
-    display: block;
+    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .show-daily-t-btn {
@@ -237,22 +270,5 @@
 
   .toggle-all-daily-btns {
     display: block;
-    font-size: 14px;
-    cursor: pointer;
-    border: 1px solid gray;
-    border-radius: 15px;
-    height: 30px;
-    width: 120px;
-    background-color: #ffcb9b;
-    color: white;
-    transition: background-color 0.3s ease;
-    margin: 10px auto;
-    text-align: center;
-  }
-
-  .toggle-all-daily-btns:hover {
-    background-color: white;
-    color: #ffcb9b;
-    border: 1px solid gray;
   }
 }

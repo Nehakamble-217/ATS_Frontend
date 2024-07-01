@@ -32,7 +32,7 @@
   color: grey;
   font-size: 18px;
   /* padding-left: 30px; */
-  padding-top: 30px;
+  /* padding-top: 30px; */
   font-weight: bold;
   /* padding-bottom: 20px; */
   /* background-color: #ffb07c; */
@@ -157,7 +157,12 @@
   .grid-container {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-  } */
+  }
+  .empDash-main-content{
+    padding-top: 36px;
+    /* padding-left: 65px; */
+ 
+
 
   /* .sidebar {
     display: none;

@@ -102,7 +102,7 @@ const AdminLogin = ({ onLogin }) => {
                   />
                 </div>
                 <input
-                  className="form-control my-2 px-2"
+                  className="px-2 my-2 form-control"
                   type="text"
                   id="jobRole"
                   value="Admin"
