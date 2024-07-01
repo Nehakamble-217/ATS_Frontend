@@ -7,6 +7,7 @@ import logoutImg from "../photos/download.jpeg";
 import axios from "axios";
 
 function Sidebar({
+  onLogout,
   openSidebarToggle,
   OpenSidebar,
   toggleSelfCalling,
@@ -41,7 +42,7 @@ function Sidebar({
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
-  const [logoutTime, setLogoutTime] = useState(null);
+  // const [logoutTime, setLogoutTime] = useState(null);
   const { userGroup } = useParams();
   console.log(userGroup);
 
@@ -110,40 +111,47 @@ function Sidebar({
     activeButton
   );
 
-  const handleLogoutLocal = async () => {
-    try {
-      const logoutTime = new Date().toLocaleTimeString("en-IN");
-      setLogoutTime(logoutTime);
+  // const handleLogoutLocal = async () => {
+  //   try {
+  //     const logoutTime = new Date().toLocaleTimeString("en-IN");
+  //     setLogoutTime(logoutTime);
 
-      const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
+  //     const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
 
-      const now = new Date();
-      const day = now.getDate().toString().padStart(2, "0");
-      const month = (now.getMonth() + 1).toString().padStart(2, "0");
-      const year = now.getFullYear();
+  //     const now = new Date();
+  //     const day = now.getDate().toString().padStart(2, "0");
+  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  //     const year = now.getFullYear();
 
-      await axios.post(
-        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
-        formData
-      );
+  //     await axios.post(
+  //       "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
+  //       formData
+  //     );
 
-      localStorage.removeItem(`stopwatchTime_${employeeId}`);
-      localStorage.removeItem(`dailyWorkData_${employeeId}`);
-      localStorage.removeItem("employeeId");
+  //     localStorage.removeItem(`stopwatchTime_${employeeId}`);
+  //     localStorage.removeItem(`dailyWorkData_${employeeId}`);
+  //     localStorage.removeItem("employeeId");
 
-      setTime({ hours: 0, minutes: 0, seconds: 0 });
-      setData({ archived: 0, pending: 10 });
+  //     setTime({ hours: 0, minutes: 0, seconds: 0 });
+  //     setData({ archived: 0, pending: 10 });
 
-      console.log("Logged out successfully.");
-      navigator("/employee-login/recruiter");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
+  //     console.log("Logged out successfully.");
+  //     navigator("/employee-login/recruiter");
+  //   } catch (error) {
+  //     console.error("Error logging out:", error);
+  //   }
+  // };
+
+  const handleLogoutLocal = () => {
+    const logoutTime = new Date().toLocaleTimeString("en-IN");
+    onLogout(logoutTime);
+    // navigator("/employee-login/recruiter");
   };
 
   const tempLogout = () => {
     navigator("/employee-login/recruiter");
   };
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 980) {
@@ -652,7 +660,7 @@ function Sidebar({
                 </a>
               </li>
 
-              <li onClick={tempLogout}>
+              <li onClick={handleLogoutLocal}>
                 <a href="#">
                   {/* <i className="icon ph-bold ph-sign-out"></i> */}
                   <i

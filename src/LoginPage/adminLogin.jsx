@@ -30,7 +30,7 @@ const AdminLogin = ({ onLogin }) => {
   const handleBlur = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/fetch-pass-on-role/${empId}`
+        `http://192.168.1.42:8891/api/ats/157industries/fetch-pass-on-role/${empId}`
       );
 
       if (!response.ok) {

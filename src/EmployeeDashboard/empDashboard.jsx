@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../EmployeeDashboard/sideBar";
 import CallingList from "../EmployeeSection/selfCallingTracker";
 import LineUpList from "../EmployeeSection/LineUpList";
@@ -74,9 +74,23 @@ const EmpDashboard = ({ userGroup }) => {
 
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
-  const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
-  const [archived, setArchived] = useState(0);
   const [pending, setPending] = useState(0);
+  const [archived, setArchived] = useState(0);
+
+  //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
+  const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
+  const [logoutTimestamp, setLogoutTimestamp] = useState(null);
+
+  const handleLogoutTime = (timestamp) => {
+    setLogoutTimestamp(timestamp);
+  };
+  const handleSuccessfulDataAdditions = (check) => {
+    setSuccessfulDataAdditions(check);
+  };
+  useEffect(() => {
+    setSuccessfulDataAdditions(false);
+  }, [successfulDataAdditions]);
+  //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions End LineNo:-93 Date:-01/07
 
   const navigator = useNavigate();
 
@@ -87,10 +101,10 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(false);
   };
 
-  const updateCount = () => {
-    setSuccessCount((prevCount) => prevCount + 1);
-    setArchived((prevCount) => prevCount + 1);
-  };
+  // const updateCount = () => {
+  //   setSuccessCount((prevCount) => prevCount + 1);
+  //   setArchived((prevCount) => prevCount + 1);
+  // };
 
   const toggelAddRecruiter = () => {
     resetAllToggles();
@@ -110,11 +124,13 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(false);
   };
 
-  const handleDataAdditionSuccess = () => {
-    setSuccessfulDataAdditions((prevCount) => prevCount + 1);
-    setArchived((prevArchived) => prevArchived + 1);
-    setPending((prevPending) => prevPending - 1);
-  };
+  // const handleDataAdditionSuccess = () => {
+  //   if (successfulDataAdditions > 0) {
+  //     setSuccessfulDataAdditions((prevCount) => prevCount + 1);
+  //     setArchived((prevArchived) => prevArchived + 1);
+  //     setPending((prevPending) => prevPending - 1);
+  //   }
+  // };
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -333,6 +349,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleIncentive={toggleIncentive}
         toggleAssigncolumns={toggleAssigncolumns}
         toggleShareLink={toggleShareLink}
+        onLogout={handleLogoutTime}
       />
 
       <div className="empDash-main-content">
@@ -342,9 +359,8 @@ const EmpDashboard = ({ userGroup }) => {
             profilePageLink={profilePageLink}
             successCount={successCount}
             successfulDataAdditions={successfulDataAdditions}
-            archived={archived}
-            pending={pending}
-            handleDataAdditionSuccess={handleDataAdditionSuccess}
+            // handleDataAdditionSuccess={handleDataAdditionSuccess}
+            logoutTimestamp={logoutTimestamp}
           />
         </div>
 
@@ -410,8 +426,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {addCandidate && (
             <CallingTrackerForm
-              handleDataAdditionSuccess={handleDataAdditionSuccess}
-              updateCount={updateCount}
+              onsuccessfulDataAdditions={handleSuccessfulDataAdditions}
             />
           )}
         </div>

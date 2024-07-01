@@ -73,7 +73,7 @@ const ResumeForm = ({ formData, onChange }) => {
     e.preventDefault();
     console.log(JSON.stringify(formData));
     try {
-      const response = await fetch("http://192.168.1.39:8080/api/resume", {
+      const response = await fetch("http://192.168.1.42:8080/api/resume", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

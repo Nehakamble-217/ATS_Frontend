@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData = ({onClose}) => {
+const EmployeeProfileData = ({ onClose }) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,14 +20,13 @@ const EmployeeProfileData = ({onClose}) => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:8891/api/ats/157industries/employee-details/${employeeId}`
+      `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); 
+        console.log(data);
         setEmployeeData(data);
         if (data.profileImage) {
-
           const byteCharacters = atob(data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
           for (let i = 0; i < byteCharacters.length; i++) {
@@ -452,11 +451,8 @@ const EmployeeProfileData = ({onClose}) => {
             </div>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-            <button
-            onClick={onClose}
-              className="close-profile-popup-btn"
-            >
-              Close 
+            <button onClick={onClose} className="close-profile-popup-btn">
+              Close
             </button>
             <button
               onClick={viewMoreProfile}

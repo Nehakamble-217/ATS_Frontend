@@ -10,11 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
 
-const CallingTrackerForm = ({
-  initialData,
-  handleDataAdditionSuccess,
-  updateCount,
-}) => {
+const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const { employeeId } = useParams();
 
   const initialCallingTrackerState = {
@@ -143,7 +139,7 @@ const CallingTrackerForm = ({
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.42:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -162,7 +158,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/company-details`
+        `http://192.168.1.42:8891/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -208,25 +204,31 @@ const CallingTrackerForm = ({
 
       if (callingTracker.selectYesOrNo === "Interested") {
         dataToUpdate.lineUp = lineUpData;
+
         message = "In Calling & Line Up Data Added";
       } else {
         message = "Only Calling data added";
       }
 
-      await axios.post(
-        `http://localhost:8802/api/ats/157industries/calling-tracker`,
+      const response = await axios.post(
+        `http://localhost:8082/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
+      //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
+      if (response.data.body.lineUp != null) {
+        onsuccessfulDataAdditions(true);
+      } else {
+        onsuccessfulDataAdditions(false);
+      }
+      //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions End LineNo:-223 Date:-01/07
 
       setFormSubmitted(true);
-      handleDataAdditionSuccess();
-      updateCount();
+      // handleDataAdditionSuccess();
       setTimeout(() => {
         setFormSubmitted(false);
         setCallingTracker(initialCallingTrackerState);
         setLineUpData(initialLineUpState);
         fetchRecruiterName();
-        setSuccessfulDataAdditions(0);
       }, 3000);
     } catch (error) {
       console.error("Error:", error);
@@ -529,7 +531,7 @@ const CallingTrackerForm = ({
                       lineHeight: 1,
                       marginRight: "10px",
                     }}
-                    // required
+                    required
                   />
                 </td>
               </tr>
@@ -1355,13 +1357,14 @@ const CallingTrackerForm = ({
                 </td>
               </tr>
               <tr>
-                <th style={{ color: "gray" }}>Recruiters Input</th>
+                <th style={{ color: "gray" }}>Current Company</th>
+
                 <td>
                   <input
                     type="text"
                     name="currentcompany"
                     placeholder="Current Company"
-                    value={lineUpData.extraCertification}
+                    value={lineUpData.currentcompany}
                     style={{
                       height: "30px",
                       width: "100%",

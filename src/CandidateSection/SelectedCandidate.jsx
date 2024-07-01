@@ -59,7 +59,7 @@ const SelectedCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/selected-candidate/${employeeId}`
+        `http://192.168.1.42:8891/api/ats/157industries/selected-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -77,7 +77,7 @@ const SelectedCandidate = () => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.42:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -283,7 +283,7 @@ const SelectedCandidate = () => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.42:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
