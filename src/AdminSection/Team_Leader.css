@@ -97,125 +97,7 @@
   
   
   
-  
-  .App-after {
-    width: 100%;
-    background-attachment: fixed;
-    height: 92vh;
-    overflow: hidden !important;
-  }
-  
-  .attendance-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .attendance-table thead th {
-    position: sticky;
-    top: 0;
-    background-color: #ffcb9b;
-    color: gray;
-    z-index: 1;
-    height: 30px;
-    white-space: nowrap;
-    color: gray;
-    max-width: auto !important;
-    font-size: 16px;
-    font-weight: 500;
-  }
-  .attendanceheading {
-    border: 1px solid gray;
-    padding: 4px;
-    white-space: nowrap;
-    width: auto !important;
-    height: 30px;
-    
-    /* text-overflow: ellipsis; */
-  }
-  .tabledata {
-    
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: relative;
-    padding: 2px;
-    max-width: 50px;
-    border: 1px solid #ddd;
-    /* width: auto; */
-  }
-  .tooltip {
-    visibility: hidden;
-    background-color: #ffcb9b;
-    color: #000;
-    text-align: center;
-    border-radius: 5px;
-    /* padding: 5px; */
-    position: fixed;  /* Use fixed positioning */
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s;
-    text-overflow: clip;
-    visibility: visible;
-    /* white-space: nowrap; */
-    /* width: 200px; */
-  }
-  
-  
-  .tabledata:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .tooltiptext {
-    white-space: nowrap;
-  }
-  
-  
-    
-  .attendancerows-head {
-    background-color: #ffcb9b;
-    color: gray;
-    /* font-weight: 100; */
-    text-align: center;
-    font-size: 18px;
-    border: 1px solid gray;
-    max-width: 300px ;
-    /* padding: 10px 15px; */
-    /* text-overflow: clip; */
-    /* width: 100px; */
-  }
-  
-  /* .attendancerowsdata,
-  .tabledata {
-    text-align: center;
-    font-size: 16px;
-    border: 1px solid gray;
-    padding: 1px;
-    overflow: hidden;
-    max-width: 200px;
-    text-overflow: clip;
-    visibility: visible;
-  } */
-  
-  .attendanceTableData::-webkit-scrollbar {
-    display: none;
-  }
-  .attendanceTableData {
-    height: 85vh;
-    width: 80%;   
-    overflow-y: auto;
-  }
-  .attendancerows{
-    height: 30px;
-  }
-  
-  
-  .attendancerows:hover {
-    background-color: #f2f2f2;
-  }
-  
-  html::-webkit-scrollbar{
-    display: none;
-  }
+
 
 
 
@@ -427,7 +309,7 @@
   
   }
 /* Prachi ChatSection 28/06 line no 431 to 449 */
-  input[type="checkbox" i] {
+  .checkbox-teamleader-assign input[type="checkbox" i] {
     height: 25px;
     width: 25px;
    margin-right: 22px;
@@ -435,7 +317,7 @@
     margin-bottom: 5px;
   }
 
-  input[type="radio" i] {
+  .radio-teamleader-assign input[type="radio" i] {
     height: 20px;
     width: 20px;
    margin-right: 9px;

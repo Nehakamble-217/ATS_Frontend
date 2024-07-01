@@ -22,6 +22,7 @@ const EmployeeProfileData = ({onClose}) => {
   useEffect(() => {
     fetch(
       `http://192.168.1.42:8891/api/ats/157industries/employee-details/6`
+
     )
       .then((response) => response.json())
       .then((data) => {
@@ -380,7 +381,7 @@ const EmployeeProfileData = ({onClose}) => {
         {isModalOpen && (
           <>
             <div
-              className="modal show bg-black bg-opacity-50"
+              className="bg-black bg-opacity-50 modal show"
               style={{
                 display: "flex",
                 position: "fixed",
@@ -421,7 +422,7 @@ const EmployeeProfileData = ({onClose}) => {
 
   return (
     <div
-      className="modal show bg-black bg-opacity-50"
+      className="bg-black bg-opacity-50 modal show"
       style={{
         display: "flex",
         justifyContent: "center",

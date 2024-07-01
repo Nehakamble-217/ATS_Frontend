@@ -56,7 +56,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
         if (response.data.profileImage) {
@@ -222,7 +222,8 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
       };
 
       await axios.post(
-        "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
+
         formData
       );
 
@@ -281,12 +282,8 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
   };
 
   return (
-
-
      <div className="daily-timeanddate">
             <div className="header-clouds"></div>
-
-
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
@@ -367,6 +364,7 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
           {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
+
           {/* <img className="logout-btn"
             onClick={handleLogoutLocal}
             // style={{ width: "30px", borderRadius: "60%" }}

@@ -269,7 +269,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate('/empDash/40');
+    navigate('/empDash/6');
   };
 
   return (
@@ -326,7 +326,6 @@ const LoginSignup = ({ onLogin }) => {
     </div>
   );
 };
-
 export default LoginSignup;
 
 
