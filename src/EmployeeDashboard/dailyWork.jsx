@@ -281,12 +281,8 @@ function DailyWork({ successCount, successfulDataAdditions, archived, pending, h
   };
 
   return (
-
-
      <div className="daily-timeanddate">
             <div className="header-clouds"></div>
-
-
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />

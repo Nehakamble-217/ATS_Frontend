@@ -8,6 +8,7 @@
 .filter-dropdowns {
   display: flex;
   flex-wrap: wrap;
+  
 }
 
 .filter-dropdown {

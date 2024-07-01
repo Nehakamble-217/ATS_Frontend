@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
@@ -97,9 +97,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
     sourceName: "",
 
   });
-
-
-
 
 
   useEffect(() => {
@@ -219,7 +216,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
         `http://192.168.1.39:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
-
 
       setFormSubmitted(true);
       handleDataAdditionSuccess();
@@ -490,16 +486,13 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
 
               </tr>
               <tr>
-
-
-
                 <th scope="col" style={{ color: "gray" }}>Contact Number*</th>
                 <td>
                   <PhoneInput
                     placeholder="Enter phone number"
                     name="contactNumber"
                     value={callingTracker.contactNumber}
-                    onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
+                    onChange={handleChange}
                     required={callingTracker.selectYesOrNo !== "Interested"}
                     defaultCountry="IN"
                     maxLength={11}
@@ -572,8 +565,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                     onChange={handleRequirementChange}
                     required={callingTracker.selectYesOrNo === "Interested"}
                     style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1, marginRight: "10px" }}
-
-
                   >
                     <option value="">Select Job Id</option>
                     {requirementOptions.map((option) => (

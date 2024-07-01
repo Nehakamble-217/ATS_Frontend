@@ -335,7 +335,6 @@ const EmpDashboard = ({ userGroup }) => {
         <div className="time-and-data">
           <DailyWork 
           employeeId={employeeId} 
-
           profilePageLink={profilePageLink}
           successCount={successCount}
           successfulDataAdditions={successfulDataAdditions}
@@ -434,7 +433,8 @@ const EmpDashboard = ({ userGroup }) => {
 
         <div>
           {updateSelfCalling && (
-            <UpdateCallingTracker candidateId={candidateIdForUpdate} />
+            <UpdateCallingTracker 
+            candidateId={candidateIdForUpdate} />
           )}
         </div>
 
