@@ -472,13 +472,13 @@ const EmployeeProfileData = ({onClose}) => {
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
             <button
             onClick={onClose}
-              className="close-profile-popup-btn"
+              className="close-profile-popup-btn  white-Btn"
             >
               Close 
             </button>
             <button
               onClick={viewMoreProfile}
-              className="display-more-profile-btn"
+              className="display-more-profile-btn daily-tr-btn"
             >
               More
             </button>
