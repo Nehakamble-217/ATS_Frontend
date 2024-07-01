@@ -263,6 +263,7 @@ function Accesstable() {
               </div>
             ))}
           </div>
+          <div className='assignOptionBtnCss'>
           <button
             onClick={assignOptionsToRecruiters}
             disabled={selectedOptions.length === 0 ||
@@ -270,12 +271,13 @@ function Accesstable() {
           >
             {editRecruiter ? 'Update Options' : 'Assign Options'}
           </button>
+          </div>
         </div>
       </div>
       <div className="assignments-tableTL">
         <center>
           <div className='container-after1'>
-            <div className='attendanceTableData'>
+            <div className='attendanceTableData1'>
               <table className="attendance-table">
                 <thead>
                   <tr className='attendancerows-head'>

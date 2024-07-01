@@ -26,7 +26,7 @@ const JobListing = () => {
   const [showJobRole,setShowJobRole]=useState(false);
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
   const [filteredJobDescriptions, setFilteredJobDescriptions] = useState(jobDescriptions);
-  const [selectedRequirementId, setSelectedRequirementId] = useState('');
+  const [selectedRequirementId, setSelectedRequirementId] = useState(null);
 
 
 
@@ -41,13 +41,6 @@ useEffect(() => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-
-       useEffect(() => {
-    if (selectedRequirementId) {
-      console.log(selectedRequirementId + "   selected.. re-initialized once");
-    }
-  }, [selectedRequirementId]);
-  
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -94,6 +87,7 @@ useEffect(() => {
   };
 
   const handleApply = () => {
+    // Logic for applying the selected cities
     console.log(Array.from(selectedCities));
     console.log(Array.from(selectedExperience))
     console.log(Array.from(selectedIndustry));
@@ -155,13 +149,17 @@ useEffect(() => {
 
 
   const toggleJobDescription = (requirementId) => {
-    console.log(requirementId + " fetched...");
-    setSelectedRequirementId(requirementId +"  re-initialize values");
+   const requirementId1=parseInt(requirementId)
+    setSelectedRequirementId(requirementId1);
     setShowViewMore(true);
+        console.log(requirementId + " fetched...");
+
   };
 
+  
 
-
+   
+  
 
 
 
@@ -585,10 +583,11 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
   )}
 
 
-   {showViewMore  (
+   {showViewMore &&  (
         <>
+        <h1>{selectedRequirementId}</h1>
           <main className="name">
-            {selectedRequirementId && (
+            {selectedRequirementId !== null &&(
               <section className="overview">
                 <div className="scroll-container">
                   <div className="info">
@@ -642,7 +641,7 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
                   <button onClick={handleclose} className='daily-tr-btn'>Close</button>
                 </div>
               </span>
-              {selectedRequirementId && (
+              {selectedRequirementId  !== null && (
                 <div className="names">
                   <p><b>Id : </b>{jobDescriptions[selectedRequirementId]?.requirementId || "N/A"}</p>
                   <p><b>Field : </b>{jobDescriptions[selectedRequirementId]?.field || "N/A"}</p>

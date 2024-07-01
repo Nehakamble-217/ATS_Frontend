@@ -157,7 +157,12 @@
   .grid-container {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-  } */
+  }
+  .empDash-main-content{
+    padding-top: 36px;
+    /* padding-left: 65px; */
+ 
+
 
   /* .sidebar {
     display: none;
