@@ -701,7 +701,9 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
-
+  const [showFilterSection, setShowFilterSection] = useState(false);
+  const [showselectedFilters, setShowselectedFilters] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
@@ -842,42 +844,128 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       }
     }
   };
+  const toggleFilterSection = () => {
+    setShowFilterSection(!showFilterSection);
+  };
+  const toggleselectedFilters = () => {
+    setShowselectedFilters(!showselectedFilters);
+  };
+
 
   return (
     <div className="calling-list-container">
       {!showUpdateCallingTracker ? (
         <div className="attendanceTableData">
-          <div className="attendanceTableHeader">
-            <h6 style={{ color: "gray" }}>ShortListed Candidate Data </h6>
-            {showShareButton ? (
-              <button
-                className="shortlistedcan-share-btn"
-                onClick={() => setShowShareButton(false)}
-              >
-                Share
-              </button>
-            ) : (
-              <div style={{ display: "flex", gap: "5px" }}>
-                <button
-                  className="shortlistedcan-share-close-btn"
-                  onClick={() => setShowShareButton(true)}
+          <div className="search">
+                <i
+                  className="fa-solid fa-magnifying-glass"
+                  onClick={() => setShowSearchBar(!showSearchBar)}
+                  style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+                ></i>
+                <h5 style={{ color: "gray", paddingTop: "5px" }}>
+                  Shortlisted Candidate
+                </h5>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "10px",
+                  }}
                 >
-                  Close
-                </button>
-                <button
-                  className="shortlistedcan-share-select-btn"
-                  onClick={handleSelectAll}
-                >
-                  {allSelected ? "Deselect All" : "Select All"}
-                </button>
-                <button
-                  className="shortlistedcan-forward-btn"
-                  onClick={forwardSelectedCandidate}
-                >
-                  Forward
-                </button>
+                  {showShareButton ? (
+                    <button
+                      className="callingList-share-btn"
+                      onClick={() => setShowShareButton(false)}
+                    >
+                      Share
+                    </button>
+                  ) : (
+                    <div style={{ display: "flex", gap: "5px" }}>
+                      <button
+                        className="callingList-share-close-btn"
+                        onClick={() => setShowShareButton(true)}
+                      >
+                        Close
+                      </button>
+                      <button
+                        className="callingList-share-select-btn"
+                        onClick={handleSelectAll}
+                      >
+                        {allSelected ? "Deselect All" : "Select All"}
+                      </button>
+                      <button
+                        className="callingList-forward-btn"
+                        onClick={forwardSelectedCandidate}
+                      >
+                        Forward
+                      </button>
+                    </div>
+                  )}
+                  <button
+                    className="callingList-filter-btn"
+                    onClick={toggleFilterSection}
+                  >
+                    Filter <i className="fa-solid fa-filter"></i>
+                  </button>
+                </div>
               </div>
-            )}
+
+              {showSearchBar && (
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search here..."
+                  value={searchTerm}
+                  style={{ marginBottom: "10px" }}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              )}
+              {showFilterSection && (
+                <div className="filter-section">
+                  <h3>Filter Options</h3>
+                  <div className="filter-options-container">
+                    {filterOptions.map((option) => {
+                      const uniqueValues = Array.from(
+                        new Set(callingList.map((item) => item[option]))
+                      ).slice(0, 5);
+                      return (
+                        <div key={option} className="selfcalling-filter-option">
+                          <button
+                            className="callingList-filter-btn"
+                            onClick={toggleselectedFilters}
+                          >
+                            {option}
+                          </button>
+                          {uniqueValues.map((value) => (
+                            <label
+                              key={value}
+                              className="selfcalling-filter-value"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={
+                                  selectedFilters[option]?.includes(value) ||
+                                  false
+                                }
+                                onChange={() =>
+                                  handleFilterSelect(option, value)
+                                }
+                              />
+                              {value}
+                            </label>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+          <div className="attendanceTableHeader">
+         
           </div>
           <table id="shortlisted-table-id" className="attendance-table">
             <thead>
@@ -908,9 +996,9 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 <th className="attendanceheading">Communication Rating</th>
                 <th className="attendanceheading">Current Location</th>
                 <th className="attendanceheading">Full Address</th>
-                <th className="attendanceheading">Calling Feedback</th>
-                <th className="attendanceheading">Incentive</th>
-                <th className="attendanceheading">Interseed or Not</th>
+                <th className="attendanceheading">Calling Remark</th>
+                <th className="attendanceheading">Recruiter's Incentive</th>
+                <th className="attendanceheading">Interested or Not</th>
                 <th className="attendanceheading">Current Company</th>
                 <th className="attendanceheading">Total Experience</th>
                 <th className="attendanceheading">Relevant Experience</th>
@@ -918,18 +1006,16 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 <th className="attendanceheading">Expected CTC</th>
                 <th className="attendanceheading">Date Of Birth</th>
                 <th className="attendanceheading">Gender</th>
-                <th className="attendanceheading">Qualification</th>
+                <th className="attendanceheading">Education</th>
                 <th className="attendanceheading">Year Of Passing</th>
-                <th className="attendanceheading">Extra Certification</th>
-                <th className="attendanceheading">Feedback</th>
+                <th className="attendanceheading">Call Summary</th>{/* call summary */}
+                {/* <th className="attendanceheading">Feedback</th> */}
                 <th className="attendanceheading">Holding Any Offer</th>
-                <th className="attendanceheading">Offer Letter Msg</th>
-                <th className="attendanceheading">Resume</th>
+                <th className="attendanceheading">Offer Letter Message</th>
+                <th className="attendanceheading">Upload Resume</th>
                 <th className="attendanceheading">Notice Period</th>
-                <th className="attendanceheading">Msg For Team Leader</th>
-                <th className="attendanceheading">
-                  Availability For Interview
-                </th>
+                <th className="attendanceheading">Message For Team Leader</th>
+                <th className="attendanceheading">Interview Slot</th>
                 <th className="attendanceheading">Interview Time</th>
                 <th className="attendanceheading">Final Status</th>
                 <th className="attendanceheading">Action</th>
@@ -963,7 +1049,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                    {item.candidateAddedTime || "-"}
+                    {item.candidateAddedTime}
                     <div className="tooltip">
                       <span className="tooltiptext">
                         {item.candidateAddedTime}
@@ -1121,7 +1207,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.qualification}</td>
                   <td className="tabledata">{item.yearOfPassing}</td>
                   <td className="tabledata">{item.extraCertification}</td>
-                  <td className="tabledata">{item.feedback}</td>
+                  {/* <td className="tabledata">{item.feedback}</td> */}
                   <td className="tabledata">{item.holdingAnyOffer}</td>
                   <td className="tabledata">{item.offerLetterMsg}</td>
                   <td className="tabledata">{item.resume}</td>

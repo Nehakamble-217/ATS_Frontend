@@ -11,6 +11,15 @@
       position: sticky;
       left: 5px;
       margin-bottom: 10px;
+      
+   }
+   .shorttext{
+    align-items: center;
+   }
+
+   .attendanceTableHeader h6{
+    text-align: center;
+
    }
    .attendanceTableHeader button{
     font-size: 16px;

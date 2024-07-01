@@ -326,7 +326,6 @@ const LoginSignup = ({ onLogin }) => {
     </div>
   );
 };
-
 export default LoginSignup;
 
 
