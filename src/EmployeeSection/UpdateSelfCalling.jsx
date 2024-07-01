@@ -5,118 +5,14 @@ import "react-phone-number-input/style.css";
 //import "../EmployeeSection/UpdateSelfCalling.css"
 
 const UpdateCallingTracker = () => {
-
-  // const [showAlert, setShowAlert] = useState(false);
-  // const [requirementOptions, setRequirementOptions] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const [employeeResponse, candidateResponse, requirementResponse] = await Promise.all([
-  //         axios.get(http://192.168.1.33:8891/api/ats/157industries/employeeName/6),
-  //         axios.get(http://192.168.1.33:8891/api/ats/157industries/specific-data/28),
-  //         axios.get(http://192.168.1.33:8891/api/ats/157industries/company-details)
-  //       ]);
-  //       setCallingTracker({
-  //         ...candidateResponse.data,
-  //         recruiterName: employeeResponse.data
-  //       });
-  //       setRequirementOptions(requirementResponse.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [employeeId, candidateId]);
-
-
-  // const handlePhoneNumberChange = (value, name) => {
-  //   setCallingTracker((prevState) => ({
-  //     ...prevState,
-  //     [name]: value || "",
-  //   }));
-  // };
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   if (name.includes("lineUp")) {
-  //     setCallingTracker((prevState) => ({
-  //       ...prevState,
-  //       lineUp: { ...prevState.lineUp, [name.split(".")[1]]: value },
-  //     }));
-  //   } else {
-  //     setCallingTracker((prevState) => ({ ...prevState, [name]: value }));
-  //   }
-  // };
-
-  // const handleRequirementChange = (e) => {
-  //   const { value } = e.target;
-  //   const selectedRequirement = requirementOptions.find(
-  //     (requirement) => requirement.requirementId === parseInt(value)
-  //   );
-
-  //   if (selectedRequirement) {
-  //     setCallingTracker((prevState) => ({
-  //       ...prevState,
-  //       requirementId: selectedRequirement.requirementId,
-  //       jobDesignation: selectedRequirement.designation,
-  //       requirementCompany: selectedRequirement.companyName,
-  //       incentive: selectedRequirement.incentive,
-  //     }));
-  //   } else {
-  //     setCallingTracker((prevState) => ({
-  //       ...prevState,
-  //       requirementId: value,
-  //       jobDesignation: "",
-  //       requirementCompany: "",
-  //       incentive: "",
-  //     }));
-  //   }
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const dataToUpdate = {
-  //       ...callingTracker,
-  //       recruiterName: callingTracker.recruiterName,
-  //     };
-
-
-  //     const response = await axios.post(
-  //       http://192.168.1.38:8891/api/ats/157industries/update-callingData/28,
-  //       dataToUpdate
-  //     );
-
-  //     if (response.status === 200) {
-  //       setShowAlert(true);
-  //       setTimeout(() => {
-  //         setShowAlert(false);
-  //         onSuccess();
-  //       }, 1000);
-  //     } else {
-  //       console.error("Failed to update data");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating data:", error);
-  //   }
-  // };
-
   const [value, setValue] = useState();
-
-
-
-
-
-  
   return (
     <div  >
 
 
         <form>
         <div className="maintable">
-        <table className="table  table-striped  text-center studTables" >
+        <table className="table text-center table-striped studTables" >
         <tbody >
         
               <tr >

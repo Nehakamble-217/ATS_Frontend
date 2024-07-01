@@ -723,7 +723,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchEmployeeNameAndID = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
+        `http://192.168.1.42:8891/api/ats/157industries/names-and-ids`
       );
       const data = await response.json();
       setFetchEmployeeNameID(data);
@@ -735,7 +735,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
+        `http://192.168.1.42:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -810,7 +810,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.42:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -877,7 +877,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 >
                   {showShareButton ? (
                     <button
-                      className="callingList-share-btn"
+                      className="lineUp-share-btn"
                       onClick={() => setShowShareButton(false)}
                     >
                       Share
@@ -885,19 +885,19 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   ) : (
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
-                        className="callingList-share-close-btn"
+                        className="lineUp-share-btn"
                         onClick={() => setShowShareButton(true)}
                       >
                         Close
                       </button>
                       <button
-                        className="callingList-share-select-btn"
+                        className="lineUp-share-btn"
                         onClick={handleSelectAll}
                       >
                         {allSelected ? "Deselect All" : "Select All"}
                       </button>
                       <button
-                        className="callingList-forward-btn"
+                        className="lineUp-share-btn"
                         onClick={forwardSelectedCandidate}
                       >
                         Forward
@@ -905,7 +905,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                     </div>
                   )}
                   <button
-                    className="callingList-filter-btn"
+                    className="lineUp-share-btn"
                     onClick={toggleFilterSection}
                   >
                     Filter <i className="fa-solid fa-filter"></i>
@@ -1217,7 +1217,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.interviewTime}</td>
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
-                    <button
+                    <button className="lineUp-share-btn"
                       
                       onClick={() => handleUpdate(item.candidateId)}
                     >

@@ -28,7 +28,7 @@ const CallingExcel = ({ onClose }) => {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      await axios.post(`http://192.168.1.39:8891/api/ats/157industries/uploadData/${employeeId}`, formData, {
+      await axios.post(`http://192.168.1.42:8891/api/ats/157industries/uploadData/${employeeId}`, formData, {
 
 
 
@@ -60,7 +60,7 @@ const CallingExcel = ({ onClose }) => {
         <div className="card fixed-card" style={{ 
         width: "400px", border: "1px solid gray"}}>
           <div className="card-header">
-            <h5 className="card-title mb-0">Upload Excel File</h5>
+            <h5 className="mb-0 card-title">Upload Excel File</h5>
           </div>
           <div className="card-body">
             <div className="mb-3">
@@ -72,13 +72,13 @@ const CallingExcel = ({ onClose }) => {
                 ref={fileInputRef} // Attach the ref to the file input
               />
             </div>
-            <div className="d-grid gap-2">
+            <div className="gap-2 d-grid">
               <button onClick={handleUpload}>Upload</button>
               {uploadSuccess && (
-                <center><h5 className="text-success mt-3">File data added successfully!</h5></center>
+                <center><h5 className="mt-3 text-success">File data added successfully!</h5></center>
               )}
               {uploadError && (
-                <center><h5 className="text-danger mt-3">{uploadError}</h5></center>
+                <center><h5 className="mt-3 text-danger">{uploadError}</h5></center>
               )}
               <button onClick={handleClose}>Close</button>
             </div>

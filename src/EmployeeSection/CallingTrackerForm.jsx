@@ -157,7 +157,7 @@ useEffect(() => {
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.42:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -178,7 +178,7 @@ useEffect(() => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/company-details`
+        `http://192.168.1.42:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -234,7 +234,7 @@ useEffect(() => {
       }
 
       await axios.post(
-        `http://192.168.1.39:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.42:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
 
@@ -466,13 +466,9 @@ useEffect(() => {
                 </td>
               </tr>
               <div hidden>
-
                 <input type="text" name="employeeId" readOnly value={callingTracker.employee.employeeId} />
-
               </div>
-
               <tr>
-
                 <th style={{ color: "gray" }}>Candidate's Full Name*</th>
                 <td>
                   <input
