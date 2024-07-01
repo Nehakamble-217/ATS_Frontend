@@ -328,7 +328,7 @@ const SelectedCandidate = () => {
               onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
-            <h5 style={{ color: "grey" }}>Selected Candidates </h5>
+            <h5 style={{ color: "grey" ,textAlign:"center"}}>Selected Candidates </h5>
 
             <div
               style={{

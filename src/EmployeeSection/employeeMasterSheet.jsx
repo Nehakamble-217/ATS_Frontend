@@ -144,21 +144,20 @@ const EmployeeMasterSheet = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems:"center",
           padding: "10px",
         }}
       >
-        <h5 style={{ color: "gray" }}>Employee Master Sheet</h5>
-
+        <div></div>
         {showShareButton ? (
-          <button onClick={() => setShowShareButton(false)}>Share</button>
+          <button className="lineUp-share-btn" onClick={() => setShowShareButton(false)}>Share</button>
         ) : (
           <div style={{ display: "flex", gap: "5px" }}>
-            <button onClick={() => setShowShareButton(true)}>Close</button>
-            <button onClick={handleSelectAll}>
+            <button className="lineUp-share-btn" onClick={() => setShowShareButton(true)}>Close</button>
+            <button className="lineUp-share-btn" onClick={handleSelectAll}>
               {allSelected ? "Deselect All" : "Select All"}
             </button>
-            <button onClick={forwardSelectedCandidate}>Forward</button>
+            <button className="lineUp-share-btn" onClick={forwardSelectedCandidate}>Forward</button>
           </div>
         )}
       </div>
@@ -282,7 +281,7 @@ const EmployeeMasterSheet = () => {
         {showForwardPopup ? (
           <>
             <div
-              className="modal show bg-black bg-opacity-50"
+              className="bg-black bg-opacity-50 modal show"
               style={{
                 display: "flex",
                 justifyContent: "center",
