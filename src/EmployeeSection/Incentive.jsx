@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 const Incentive = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const {employeeId} =useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://192.168.1.35:8891/api/ats/157industries/fetch-incentive/6');
+        const response = await fetch(`http://192.168.1.39:8891/api/ats/157industries/fetch-incentive/${employeeId}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const fetchedData = await response.json();
-
-        // Adjust data for active candidates
         const adjustedData = fetchedData.map(row => {
           if (row.activeStatus === 'Active') {
             return { ...row, yourIncentives: row.incentive };
@@ -92,35 +92,104 @@ const Incentive = () => {
           <th className='attendanceheading'>Candidate Incentive</th>
           <th className='attendanceheading'>Candidate Status</th>
           <th className='attendanceheading'>Your Incentive</th>
+          <th className='attendanceheading'>Incentive Received/Not</th>
         </tr>
       </thead>
       <tbody>
         {data.map((row, index) => (
           <tr key={row.id} className='attendancerows' >
-            <td className='tabledata'>{row.candidateId}</td>
-            <td className='tabledata'>{row.candidateName}</td>
-            <td className='tabledata'>{row.requirementCompany}</td>
-            <td className='tabledata'>{row.requirementId}</td>
-            <td className='tabledata'>{row.jobDesignation}</td>
-            <td className='tabledata'>{row.joinDate}</td>
-            <td className='tabledata'>{row.callDate}</td>
-            <td className='tabledata'>{row.after90DaysDate}</td>
-            <td className='tabledata'>{row.incentive}</td>
-            <td className='tabledata'>{row.activeStatus}</td>
-            <td className='tabledata'>{row.yourIncentives}</td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.candidateId}
+            <div className="tooltip">
+                      <span className="tooltiptext">{row.candidateId}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.candidateName}
+            <div className="tooltip">
+                      <span className="tooltiptext">{row.candidateName}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.requirementCompany}
+            <div className="tooltip">
+                  <span className="tooltiptext">{row.requirementCompany}</span>
+                    </div>
+            </td>
+            
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.requirementId}
+            <div className="tooltip">
+                      <span className="tooltiptext">{row.requirementId}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.jobDesignation}
+            <div className="tooltip">
+                      <span className="tooltiptext">{row.jobDesignation}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.joinDate}
+            <div className="tooltip">
+                      <span className="tooltiptext">{row.joinDate}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.callDate}
+            <div className="tooltip">
+                      <span className="tooltiptext">{row.callDate}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.after90DaysDate}
+            <div className="tooltip">
+                      <span className="tooltiptext">{row.after90DaysDate}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.incentive}
+              <div className="tooltip">
+                      <span className="tooltiptext">{row.incentive}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.activeStatus}
+              <div className="tooltip">
+                      <span className="tooltiptext">{row.activeStatus}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.yourIncentives}
+              <div className="tooltip">
+                      <span className="tooltiptext">{row.yourIncentives}</span>
+                    </div>
+            </td>
+            <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{row.Incentive_Received_Not}
+              <div className="tooltip">
+                      <span className="tooltiptext">{row.Incentive_Received_Not}</span>
+                    </div>
+            </td>
           </tr>
         ))}
         <tr className='attendancerows'>
-          <td colSpan="8" style={{ textAlign: "left" }} className='tabledata'>Grant Total Incentives</td>
-          <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'>{grantTotalIncentives}</td>
+          <td colSpan="9" style={{ textAlign: "left" }} className='tabledata'
+          onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> Grant Total Incentives
+          <div className="tooltip">
+                      <span className="tooltiptext"></span>
+                    </div></td>
+          <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'
+          onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{grantTotalIncentives}
+          <div className="tooltip">
+                      <span className="tooltiptext"></span>
+                    </div></td>
         </tr>
         <tr className="total-row">
-          <td colSpan="8" style={{ textAlign: "left" }} className='tabledata'>Grant Total Loss Incentives</td>
-          <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'>{grantTotalLossIncentives}</td>
+          <td colSpan="9" style={{ textAlign: "left" }} className='tabledata'
+          onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Grant Total Loss Incentives
+          <div className="tooltip">
+                      <span className="tooltiptext"></span>
+                    </div></td>
+          <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'
+          onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{grantTotalLossIncentives}
+          <div className="tooltip">
+                      <span className="tooltiptext">{grantTotalLossIncentives}</span>
+                    </div></td>
         </tr>
         <tr className="total-row">
-          <td colSpan="8" style={{ textAlign: "left" }} className='tabledata'>Grant Total Your Incentives</td>
-          <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'>{grantTotalYourIncentives}</td>
+          <td colSpan="9" style={{ textAlign: "left" }} className='tabledata'
+          onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Grant Total Your Incentives</td>
+          <td colSpan="3" style={{ textAlign: "left" }} className='tabledata'
+          onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{grantTotalYourIncentives}</td>
         </tr>
       </tbody>
     </table>

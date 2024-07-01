@@ -12,9 +12,7 @@ const Attendance = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-
-        const response = await fetch(`http://192.168.1.35:8891/api/ats/157industries/employee-attendance/6`);
+        const response = await fetch(`http://192.168.1.39:8891/api/ats/157industries/employee-attendance/6`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -32,7 +30,7 @@ const Attendance = () => {
     fetchData();
   }, [workId]);
 
- const handleMouseOver = (event) => {
+  const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector('.tooltip');
     const tooltiptext = tableData.querySelector('.tooltiptext');

@@ -31,7 +31,8 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
     try {
-      const response = await fetch(`http://192.168.1.39:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
+      const response = await fetch(`http://192.168.1.42:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
+
       const data = await response.json();
       if (Array.isArray(data)) {
         setInterviewResponses(data);
@@ -49,6 +50,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     try {
       const response = await fetch(
         `http://192.168.1.39:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -72,6 +74,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     try {
       const response = await fetch(
         `http://192.168.1.39:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -97,6 +100,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       try {
         const response = await fetch(
           `http://192.168.1.39:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -141,7 +145,8 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     };
   
     try {
-      const response = await fetch("http://192.168.1.39:8891/api/ats/157industries/save-interview-response", {
+      const response = await fetch("http://192.168.1.42:8891/api/ats/157industries/save-interview-response", {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -203,7 +208,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
         tooltip.style.visibility = 'hidden';
       }
     };
-
 
     const handleRowClick = async (candidateId, requirementId) => {
       setCandidateId(candidateId);
@@ -420,7 +424,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       <div className="calender-main-div">
         <div className="calendar">
-
           <div className="calendar-div">
             <Calendar
               value={selectedDate}
@@ -432,7 +435,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
             />
           </div>
         </div>
-6
         {showShortlistTable && (
           <div className="shortlist-table-div">
             <div className="interview-response-update">

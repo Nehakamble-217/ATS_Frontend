@@ -30,6 +30,9 @@ import NotePad from "../notPad/notePad";
 import EmployeeProfileData from "../EmployeeSection/employeeProfileData"
 import AddResumes from "../ResumeData/addMultipleResumes";
 import ChatRoom from "../ChatRoom/chatRoom";
+import Team_Leader from "../AdminSection/Team_Leader";
+import ShareLink from "../ResumeData/shareLink";
+import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 
 
 const EmpDashboard = ({ userGroup }) => {
@@ -63,10 +66,17 @@ const EmpDashboard = ({ userGroup }) => {
   const [showProfile,setShowProfile] = useState(false)
   const [showAddedResumes,setShowAddedResumes] = useState(false)
   const [showChatRoom,setShowChatRoom]=useState(false)
+  const[assignColumns,setAssignColumns]=useState(false)
+  const [showShareLink,setShowShareLink]=useState(false)
+  const [resumeLink,setResumeLink]=useState(false)
 
 
   const { employeeId } = useParams();
+  const [successCount, setSuccessCount] = useState(0);
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
+  const [archived, setArchived] = useState(0);
+  const [pending, setPending] = useState(0);
+
   const navigator = useNavigate();
 
   const gettingCandidateIdForUpdate = (id) => {
@@ -74,6 +84,11 @@ const EmpDashboard = ({ userGroup }) => {
     setUpdateSelfCalling(true);
     setSelfCalling(false); 
     setIncentive(false);
+  };
+
+  const updateCount = () => {
+    setSuccessCount((prevCount) => prevCount + 1);
+    setArchived((prevCount) => prevCount + 1);
   };
 
   const toggelAddRecruiter = ()=> {
@@ -96,7 +111,8 @@ const EmpDashboard = ({ userGroup }) => {
 
   const handleDataAdditionSuccess = () => {
     setSuccessfulDataAdditions((prevCount) => prevCount + 1);
-    setIncentive(false);
+    setArchived((prevArchived) => prevArchived + 1);
+    setPending((prevPending) => prevPending - 1);
   };
 
   const OpenSidebar = () => {
@@ -140,6 +156,11 @@ const EmpDashboard = ({ userGroup }) => {
     setShowProfile(false)
     setShowAddedResumes(false)
     setIncentive(false);
+    setAssignColumns(false);
+    setShowChatRoom(false);
+    setShowShareLink(false);
+    setResumeLink(false)
+    setShowResumeData(false)
   };
 
   const funForUpdateSelfCalling = () => {
@@ -227,10 +248,19 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(!incentive)
   }
 
+  const toggleAssigncolumns = ()=>{
+    resetAllToggles();
+   setAssignColumns(!assignColumns)
+  }
+
   const toggleHome = () => {
     resetAllToggles();
     setShowHome(!showHome);
   };
+  const toggleResumeLink=()=>{
+    resetAllToggles()
+    setResumeLink(!resumeLink)
+  }
 
   const toggleShortListedCandidates = () => {
     resetAllToggles();
@@ -240,7 +270,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowChatRoom(!showChatRoom);
   }
-
+  const toggleShareLink=()=>{
+    resetAllToggles();
+    setShowShareLink(!showShareLink);
+  }
   const toggleUpdateCallingTracker = () => {
     resetAllToggles();
     setShowUpdateCallingTracker(!showUpdateCallingTracker);
@@ -251,14 +284,14 @@ const EmpDashboard = ({ userGroup }) => {
     setSelfCalling(true); 
   };
  
-
-  
-  
-
-  const profilePageLink =()=>{
+  const profilePageLink = () => {
     resetAllToggles();
-    setShowProfile(!showProfile)
-  }
+    setShowProfile(!showProfile);
+  };
+
+  const handleCloseProfile = () => {
+    setShowProfile(false);
+  };
 
   const toggelAddResumes = () =>{
     resetAllToggles();
@@ -293,23 +326,32 @@ const EmpDashboard = ({ userGroup }) => {
         toggelAddResumes={toggelAddResumes}
         toggleChatRoom={toggleChatRoom}     
         toggleIncentive={toggleIncentive}
+        toggleAssigncolumns={toggleAssigncolumns}
+        toggleShareLink={toggleShareLink}
+
       />
         
       <div className="empDash-main-content">
         <div className="time-and-data">
           <DailyWork 
           employeeId={employeeId} 
-          successfulDataAdditions={successfulDataAdditions} 
+
           profilePageLink={profilePageLink}
+          successCount={successCount}
+          successfulDataAdditions={successfulDataAdditions}
+          archived={archived}
+          pending={pending}
+          handleDataAdditionSuccess={handleDataAdditionSuccess}
           />
         </div>
 
     <div>
-      { showProfile && <EmployeeProfileData></EmployeeProfileData>}
+      { showProfile && <EmployeeProfileData onClose={handleCloseProfile}></EmployeeProfileData>}
     </div>
         <div style={{ paddingTop: "50px" }}>
           {selfCalling && (
-            <CallingList updateState={handleUpdateComplete} funForGettingCandidateId={gettingCandidateIdForUpdate} />
+            <CallingList updateState={handleUpdateComplete} 
+            funForGettingCandidateId={gettingCandidateIdForUpdate} />
           )}
         </div>
 
@@ -378,8 +420,15 @@ const EmpDashboard = ({ userGroup }) => {
           {showChatRoom && <ChatRoom/>}
         </div>
         <div>
+          {showShareLink && <ShareLink toggleResumeLink={toggleResumeLink}/>}
+        </div>
+        {resumeLink && <CandidateResumeLink/> }
+        <div>
           {addCandidate && (
-            <CallingTrackerForm updateState={handleDataAdditionSuccess} />
+            <CallingTrackerForm 
+            handleDataAdditionSuccess={handleDataAdditionSuccess}
+            updateCount={updateCount}
+            />
           )}
         </div>
 
@@ -410,6 +459,9 @@ const EmpDashboard = ({ userGroup }) => {
 
         <div>
           {showUpdateCallingTracker && <UpdateCallingTracker candidateId={candidateIdForUpdate} />}
+        </div>
+        <div>
+          {assignColumns && <Team_Leader/>}
         </div>
       </div>
     </div>

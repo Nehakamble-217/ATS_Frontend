@@ -8,7 +8,8 @@ const NotePad = () => {
   const [notePadData, setNotePadData] = useState([]);
   const [editMessageId, setEditMessageId] = useState(null);
   const [error, setError] = useState(null);
-
+  const [isOverflowing, setIsOverflowing] = useState(false); 
+  
   useEffect(() => {
     fetchNotePadData();
   }, []);
@@ -107,12 +108,42 @@ const NotePad = () => {
     setError("Failed to delete note. Please try again later.");
   }
 };
+  // To handle tooltip
+
+  const handleMouseOver = (event) => {
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector('.tooltip');
+    const tooltiptext = tableData.querySelector('.tooltiptext');
+
+    if (tooltip && tooltiptext) {
+      const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
+      if (textOverflowing) {
+        const rect = tableData.getBoundingClientRect();
+        tooltip.style.top =10 //${rect.top - 10}px;
+        tooltip.style.left =10 //${rect.left + rect.width / 100}px;
+        tooltip.style.visibility = 'visible';
+      } else {
+        tooltip.style.visibility = 'hidden';
+      }
+    }
+  };
+
+  const handleMouseOut = (event) => {
+    const tooltip = event.currentTarget.querySelector('.tooltip');
+    if (tooltip) {
+      tooltip.style.visibility = 'hidden';
+    }
+  };
+  
+
 
 
   return (
     <div className='note-container'>
       <div className='note-pad-form'>
         <form className='note-form-div' onSubmit={saveMessage}>
+         
+         
           <textarea
             className='note-pad-text'
             placeholder='Enter your comment here.........'
@@ -121,8 +152,10 @@ const NotePad = () => {
             cols="30"
             rows="10"
           ></textarea>
+
+
           {successMessage && (
-            <div className="alert alert-success" role="alert">
+            <div className="notepad-alert-success" role="alert">
               Your Note Saved Successfully 😊!
             </div>
           )}
@@ -137,11 +170,11 @@ const NotePad = () => {
       <div className='notePadData' >
         <div>
           {notePadData.length > 0 ? (
-            <table className='table table-light'>
+            <table className='notepad-table-data'>
               <thead className='table-heading-rows'>
-                <tr>
+                <tr className='table-heading-rows-data'>
                   <th>Sr.No</th>
-                  <th>Message</th>
+                  <th >Message</th>
                   <th>Time & Date</th>
                   <th>Edit</th>
                   <th>Delete</th>
@@ -150,9 +183,15 @@ const NotePad = () => {
               <tbody>
                 {notePadData.map((note, index) => (
                   <tr key={index}>
-                    <td>{note.messageId}</td>
-                    <td className='note-pad-msg'>{note.message}</td>
-                    <td>{note.timeDate}</td>
+                    <td >{note.messageId}</td>
+                    <td onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} className='tabledata' >{note.message}
+                     <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} className="tooltip">
+                    <span class="tooltiptext">{note.message}</span>
+                    </div> 
+                    
+
+                    </td>
+                    <td >{note.timeDate}</td>
                     <td><button  className='note-submit-btn'  onClick={() => updateMessage(note.messageId)}>Edit</button></td>
                     <td><button className='note-submit-btn' onClick={() => deleteMessage(note.messageId)}>Delete</button></td>
                   </tr>
@@ -164,17 +203,17 @@ const NotePad = () => {
           )}
         </div>
       </div>
-      <div id="editModal" className="modal">
-        <div className="modal-content">
+      <div id="editModal" className="notepad-modal">
+        <div className="notepad-modal-content">
           <span className="close" onClick={() => document.getElementById('editModal').style.display = 'none'}>&times;</span>
           <form onSubmit={saveMessage}>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              cols="30"
+              cols="200"
               rows="10"
             ></textarea>
-            <button className='note-submit-btn' type="submit">Save Changes</button>
+            <button type="submit" className='note-submit-btn'>Save Changes</button>
           </form>
         </div>
       </div>

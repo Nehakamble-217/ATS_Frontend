@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../EmployeeSection/callingList.css";
+// import "../EmployeeSection/callingList.css";
+import "./callingExcel.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
+
 
 
 const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
@@ -33,7 +35,9 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   useEffect(() => {
 
-    fetch(`http://192.168.1.35:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
+
+
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -161,7 +165,8 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.35:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+
     )
       .then((response) => response.json())
       .then((data) => {
@@ -238,17 +243,29 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
 
   return (
-    <div className="App-after">
+    <div className="App-after1">
       {!showUpdateCallingTracker && !showCallingForm && (
         <>
           <div className="search">
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
-            <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5>
-        
+            {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
 
-            <button onClick={toggleFilterSection}>Filter <i className="fa-solid fa-filter"></i></button>
+
+            <button onClick={toggleFilterSection} 
+            style={{ fontSize: "16px", borderRadius: "15px", height: "30px",color:"#ffcb9b" ,paddingLeft:"15px",
+              paddingRight:"15px",background:"white", border: "1px solid gray",position:"sticky"}}
+              >
+  Filter <i className="fa-solid fa-filter"></i>
+</button> 
+       
           </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+  <button onClick={onCloseTable} className="close-button">
+    Close
+  </button>
+</div>
+
 
           {showSearchBar && (
             <input
@@ -263,7 +280,12 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
           {showFilterSection && (
             <div className="filter-section">
               <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
+
               <div className="filter-dropdowns">
+
+                {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
+
+
                 {filterOptions.map(option => (
                   <div key={option} className="filter-dropdown">
                     {/* <label htmlFor={option}>{option}</label> */}
@@ -301,7 +323,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
           )}
 
           <div className="attendanceTableData">
-            <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button>
+            {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
             <table className="selfcalling-table attendance-table">
               <thead>
                 <tr className="attendancerows-head">
@@ -411,7 +433,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
                       <span className="tooltiptext">{item.selectYesOrNo} </span>
                     </div></td>
                     <td className="tabledata">
-                      <i onClick={() => handleUpdate(item.candidateId,item.employeeId)} className="fa-regular fa-pen-to-square"></i>
+                      <i onClick={() => handleUpdate(item.candidateId, item.employeeId)} className="fa-regular fa-pen-to-square"></i>
                     </td>
                   </tr>
                 ))}

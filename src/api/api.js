@@ -1,11 +1,7 @@
 import axios from "axios";
 
 
-
-
-const API_BASE_URL = "http://192.168.1.39:8891/api/ats/157industries";
-
-
+const API_BASE_URL = "http://192.168.1.42:8891/api/ats/157industries";
 
 export const getPasswordFromDB = (id) =>
   axios.post(`${API_BASE_URL}/fetch-pass/${id}`);
@@ -57,6 +53,5 @@ export const fetchFile = async (url) => {
     throw error;
   }
 };
-
 
 export default axios;

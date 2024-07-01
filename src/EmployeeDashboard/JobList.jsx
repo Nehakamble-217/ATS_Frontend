@@ -3,11 +3,12 @@ import "../EmployeeDashboard/JobList.css"
 import { bottom } from '@popperjs/core';
 import ShareDescription from './shareDescription';
 import JobDescriptionEdm from '../JobDiscription/jobDescriptionEdm';
+import jobDiscriptions from '../employeeComponents/jobDiscriptions';
 
 const JobListing = () => {
  const [jobDescriptions, setJobDescriptions] = useState([]);
   const [selectedJobIndex, setSelectedJobIndex] = useState(-1); // Track which job description is selected
-const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCities, setSelectedCities] = useState(new Set());
   const [selectedExperience,setSelectedExperience]=useState(new Set());
   const [selectedIndustry,setSelectedIndustry]=useState(new Set());
@@ -23,10 +24,9 @@ const [searchTerm, setSearchTerm] = useState('');
   const [showIndustry,setShowIndustry]=useState(false);
   const [showRoles,setShowRoles]=useState(false);
   const [showJobRole,setShowJobRole]=useState(false);
-
   const [showJobDescriptionEdm,setShowJobDescriptionEdm]=useState(false)
-const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
-  const [selectedRequirementId, setSelectedRequirementId] = useState(null);
+  const [filteredJobDescriptions, setFilteredJobDescriptions] = useState(jobDescriptions);
+  const [selectedRequirementId, setSelectedRequirementId] = useState('');
 
 
 
@@ -41,6 +41,13 @@ useEffect(() => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+       useEffect(() => {
+    if (selectedRequirementId) {
+      console.log(selectedRequirementId + "   selected.. re-initialized once");
+    }
+  }, [selectedRequirementId]);
+  
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -87,7 +94,6 @@ useEffect(() => {
   };
 
   const handleApply = () => {
-    // Logic for applying the selected cities
     console.log(Array.from(selectedCities));
     console.log(Array.from(selectedExperience))
     console.log(Array.from(selectedIndustry));
@@ -145,15 +151,24 @@ useEffect(() => {
   //   roles.name.toLowerCase().includes(searchTerm.toLowerCase())
   // )
   
+
+
+
   const toggleJobDescription = (requirementId) => {
+    console.log(requirementId + " fetched...");
+    setSelectedRequirementId(requirementId +"  re-initialize values");
     setShowViewMore(true);
-    setSelectedRequirementId(selectedRequirementId === requirementId ? null : requirementId);
   };
+
+
+
+
 
 
   const handleclose =()=>{
     setShowViewMore(false);
   }
+
   const toggleCityFilter = () => {
     setShowCityFilter(!showCityFilter); // Toggle city filter visibility
     setShowExperience(false)
@@ -549,124 +564,122 @@ const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job)=> job.incen
               <i class="fa-solid fa-indian-rupee-sign"></i>
          {item.incentive}
         </div>
-        <div className="job-posted">
+        {/* <div className="job-posted">
           <i className="fas fa-clock"></i>
           {item.fild}
+        </div> */}
+         <div className="job-posted">
+          <i className="fas fa-clock"></i>
+          {item.requirementId}
         </div>
-      </div>
-
-      
+      </div>      
       {/* Arshad Added this button to share edm  */} 
       <div className="job-actions">
-        <button className='daily-tr-btns' onClick={() => toggleJobDescription(item.requirementId)}>View More</button>
+        <button className='daily-tr-btns'  onClick={() => toggleJobDescription(item.requirementId)}>View More</button>
         {/* <button className='daily-tr-btn' onClick={()=>toggleEdm(index)}> EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button> */}
       </div>
-
-
-
     </div>
-    
         ))}
-        
     </div>
   
   )}
 
 
-  {showViewMore && (
-    
-        <main className="name">
-         {selectedRequirementId === requirementId && (
-            <section className="overview">
-              <div className="scroll-container">
-                <div className="info">
-                  <div className="info-title">Position Overview</div>
-                  <div className="info-value">
-                    {jobDescriptions[selectedRequirementId]?.positionOverview?.overview || "N/A"}
+   {showViewMore  (
+        <>
+          <main className="name">
+            {selectedRequirementId && (
+              <section className="overview">
+                <div className="scroll-container">
+                  <div className="info">
+                    <div className="info-title">Position Overview</div>
+                    <div className="info-value">
+                      {jobDescriptions[selectedRequirementId]?.positionOverview?.overview || "N/A"}
+                    </div>
+                  </div>
+                  <div className="info">
+                    <div className="info-title">Responsibilities</div>
+                    <div className="info-value">
+                      <ul>
+                        {jobDescriptions[selectedRequirementId]?.responsibilities?.map((responsibility, idx) => (
+                          <li key={idx}>{responsibility.responsibilitiesMsg}</li>
+                        )) || "N/A"}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="info">
+                    <div className="info-title">Requirements</div>
+                    <div className="info-value">
+                      <ul>
+                        {jobDescriptions[selectedRequirementId]?.jobRequirements?.map((jobRequirement, idx) => (
+                          <li key={idx}>{jobRequirement.jobRequirementMsg}</li>
+                        )) || "N/A"}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="info">
+                    <div className="info-title">Preferred Qualifications</div>
+                    <div className="info-value">
+                      <ul>
+                        {jobDescriptions[selectedRequirementId]?.preferredQualifications?.map((qualification, idx) => (
+                          <li key={idx}>{qualification.preferredQualificationMsg}</li>
+                        )) || "N/A"}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                <div className="info">
-                  <div className="info-title">Responsibilities</div>
-                  <div className="info-value">
-                    <ul>
-                      {jobDescriptions[selectedRequirementId]?.responsibilities?.map((responsibility, idx) => (
-                        <li key={idx}>{responsibility.responsibilitiesMsg}</li>
-                      )) || "N/A"}
-                    </ul>
-                  </div>
-                </div>
-                <div className="info">
-                  <div className="info-title">Requirements</div>
-                  <div className="info-value">
-                    <ul>
-                      {jobDescriptions[selectedRequirementId]?.jobRequirements?.map((jobRequirement, idx) => (
-                        <li key={idx}>{jobRequirement.jobRequirementMsg}</li>
-                      )) || "N/A"}
-                    </ul>
-                  </div>
-                </div>
-                <div className="info">
-                  <div className="info-title">Preferred Qualifications</div>
-                  <div className="info-value">
-                    <ul>
-                      {jobDescriptions[selectedRequirementId]?.preferredQualifications?.map((qualification, idx) => (
-                        <li key={idx}>{qualification.preferredQualificationMsg}</li>
-                      )) || "N/A"}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </section>
-          )}
-          <section className="job-performance1">
-            <span>
-              <article>
-                <b>SOFTWARE DEVELOPER</b>
-              </article>
-              <div className="save">
-                <button className="saved daily-tr-btn">Save</button>
-                <button className="apply daily-tr-btn">Apply</button>
-                <button className="share daily-tr-btn" onClick={sharejobdescription}>Share</button>
-                <button onClick={handleclose} className='daily-tr-btn'>Close</button>
-              </div>
-            </span>
-            {selectedRequirementId === item.requirementId && (
-              <div className="names">
-                <p><b>Field : </b>{jobDescriptions[selectedRequirementId]?.field || "N/A"}</p>
-                <p><b>Location :</b>{jobDescriptions[selectedRequirementId]?.location || "N/A"}</p>
-                <p><b>Salary :</b> {jobDescriptions[selectedRequirementId]?.salary || "N/A"}</p>
-                <p><b>Designation :</b>{jobDescriptions[selectedRequirementId]?.designation || "N/A"}</p>
-                <p><b>Educational Qualifications :</b>{jobDescriptions[selectedRequirementId]?.qualification || "N/A"}</p>
-                <p><b>Experience :</b>{jobDescriptions[selectedRequirementId]?.experience || "N/A"}</p>
-                <p><b>Key Skills :</b>{jobDescriptions[selectedRequirementId]?.skills || "N/A"}</p>
-                <p><b>Company Link :</b><a href={jobDescriptions[selectedRequirementId]?.companyLink || "#"}>Website</a></p>
-                <p><b>Shifts : </b>{jobDescriptions[selectedRequirementId]?.shift || "N/A"}</p>
-                <p><b>Week Off's : </b>{jobDescriptions[selectedRequirementId]?.weekOff || "N/A"}</p>
-                <p><b>Notice Period :</b> {jobDescriptions[selectedRequirementId]?.noticePeriod || "N/A"}</p>
-                <p><b>Job Role : </b>{jobDescriptions[selectedRequirementId]?.jobRole || "N/A"}</p>
-                <p><b>Job Type : </b>{jobDescriptions[selectedRequirementId]?.job_type || "N/A"}</p>
-                <p><b>Perks:</b>
-                  {jobDescriptions[selectedRequirementId]?.perks || "N/A"}
-                </p>
-                <p><b>Incentives For Recruiters : </b>{jobDescriptions[selectedRequirementId]?.incentive || "N/A"}</p>
-                <p><b>Reporting Hierarchy : </b>{jobDescriptions[selectedRequirementId]?.reportingHierarchy || "N/A"}</p>
-                <p><b>Number of Positions : </b>{jobDescriptions[selectedRequirementId]?.position || "N/A"}</p>
-                <p><b>Documentation : </b>{jobDescriptions[selectedRequirementId]?.documentation || "N/A"}</p>
-                <p><b>Gender : </b>{jobDescriptions[selectedRequirementId]?.gender || "N/A"}</p>
-              </div>
+              </section>
             )}
-          </section>
-        </main>
- )}
- {showJobDescriptionShare && (
+            <section className="job-performance1">
+              <span>
+                <article>
+                  <b>SOFTWARE DEVELOPER</b>
+                </article>
+                <div className="save">
+                  <button className="saved daily-tr-btn">Save</button>
+                  <button className="apply daily-tr-btn">Apply</button>
+                  <button className="share daily-tr-btn" onClick={sharejobdescription}>Share</button>
+                  <button onClick={handleclose} className='daily-tr-btn'>Close</button>
+                </div>
+              </span>
+              {selectedRequirementId && (
+                <div className="names">
+                  <p><b>Id : </b>{jobDescriptions[selectedRequirementId]?.requirementId || "N/A"}</p>
+                  <p><b>Field : </b>{jobDescriptions[selectedRequirementId]?.field || "N/A"}</p>
+                  <p><b>Location :</b>{jobDescriptions[selectedRequirementId]?.location || "N/A"}</p>
+                  <p><b>Salary :</b> {jobDescriptions[selectedRequirementId]?.salary || "N/A"}</p>
+                  <p><b>Designation :</b>{jobDescriptions[selectedRequirementId]?.designation || "N/A"}</p>
+                  <p><b>Educational Qualifications :</b>{jobDescriptions[selectedRequirementId]?.qualification || "N/A"}</p>
+                  <p><b>Experience :</b>{jobDescriptions[selectedRequirementId]?.experience || "N/A"}</p>
+                  <p><b>Key Skills :</b>{jobDescriptions[selectedRequirementId]?.skills || "N/A"}</p>
+                  <p><b>Company Link :</b><a href={jobDescriptions[selectedRequirementId]?.companyLink || "#"}>Website</a></p>
+                  <p><b>Shifts : </b>{jobDescriptions[selectedRequirementId]?.shift || "N/A"}</p>
+                  <p><b>Week Off's : </b>{jobDescriptions[selectedRequirementId]?.weekOff || "N/A"}</p>
+                  <p><b>Notice Period :</b> {jobDescriptions[selectedRequirementId]?.noticePeriod || "N/A"}</p>
+                  <p><b>Job Role : </b>{jobDescriptions[selectedRequirementId]?.jobRole || "N/A"}</p>
+                  <p><b>Job Type : </b>{jobDescriptions[selectedRequirementId]?.job_type || "N/A"}</p>
+                  <p><b>Perks:</b>
+                    {jobDescriptions[selectedRequirementId]?.perks || "N/A"}
+                  </p>
+                  <p><b>Incentives For Recruiters : </b>{jobDescriptions[selectedRequirementId]?.incentive || "N/A"}</p>
+                  <p><b>Reporting Hierarchy : </b>{jobDescriptions[selectedRequirementId]?.reportingHierarchy || "N/A"}</p>
+                  <p><b>Number of Positions : </b>{jobDescriptions[selectedRequirementId]?.position || "N/A"}</p>
+                  <p><b>Documentation : </b>{jobDescriptions[selectedRequirementId]?.documentation || "N/A"}</p>
+                  <p><b>Gender : </b>{jobDescriptions[selectedRequirementId]?.gender || "N/A"}</p>
+                </div>
+              )}
+            </section>
+          </main>
+        </>
+      )}
+      {showJobDescriptionShare && (
         <>
           <ShareDescription Descriptions={jobDescriptions[selectedRequirementId]} />
         </>
       )}
       {showJobDescriptionEdm && (
-        <JobDescriptionEdm Descriptions={jobDescriptions[selectedRequirementId]}/>
+        <JobDescriptionEdm Descriptions={jobDescriptions[selectedRequirementId]} />
       )}
-
     </>
   );
 };

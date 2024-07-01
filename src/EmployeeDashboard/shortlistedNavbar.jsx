@@ -22,7 +22,7 @@ const ShortlistedNavbar = () => {
     };
 
     return (
-        <div>
+        <div className='w-full'>
             <div className='shortlisted-main-nav'>
                 <div className='shortlisted-nav-left'>
                     <i
@@ -31,7 +31,7 @@ const ShortlistedNavbar = () => {
                         className="fa-regular fa-calendar"
                     ></i>
                     <button className='shortListed-btn-nav' onClick={toggleShortlistedData}>
-                        ShortListed Candidate
+                        ShortListed 
                     </button>
                 </div>
             </div>
@@ -55,7 +55,8 @@ const ShortlistedNavbar = () => {
                     />
                 )}
             </div>
-        </div>
+        </div> 
+
     );
 };
 

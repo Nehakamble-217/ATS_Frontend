@@ -2,8 +2,14 @@
   display: none;
 }
 
+.react-calendar
+{
+  width: 100%;
+  padding: 10px;  
+}
+
 .custom-calendar .react-datepicker__month-container {
-  max-width: none;
+  /* border: 1px solid red; */
   width: 350px;
 }
 
@@ -64,6 +70,7 @@
 .calendar {
   display: flex;
   flex-direction: row;
+  margin-top: -60px;
 }
 
 #finalColumn {
@@ -99,8 +106,8 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 }
 
 .calender-main-div{
+  width: 40%;
   display: flex;
-
 }
 
 #table-shortlisted{ 
@@ -108,6 +115,14 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 
 }
 
+@media screen and (max-width: 992px)
+{
+  .react-calendar
+  {
+    width: 300px;
+  }
+
+}
 /* hitun Khalis Arshad Ne css dilyaa */
 
 /* #interviewDates-id{
@@ -115,8 +130,7 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   
 }
 .shortlist-table-div{
-  padding-top: 55px;
-  padding-left: 20px;
+  width: 100%;
   overflow-x: auto;
 
 }

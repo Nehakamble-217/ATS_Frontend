@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData =() => {
+const EmployeeProfileData = ({onClose}) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [profileImage, setProfileImage] = useState(null);
   const [pdfSrc, setPdfSrc] = useState(null);
   const [employeeData, setEmployeeData] = useState(null);
-const {employeeId} = useParams();
+  const { employeeId } = useParams();
 
   const viewMoreProfile = (e) => {
     e.preventDefault();
@@ -19,29 +19,25 @@ const {employeeId} = useParams();
   };
 
   useEffect(() => {
-    fetch("http://192.168.1.35:8891/api/ats/157industries/employee-details/34")
+    fetch(
+      `http://198.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
+    )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); // Log the fetched data to inspect its structure
+        console.log(data); 
         setEmployeeData(data);
         if (data.profileImage) {
-          // Convert byte code to Uint8Array
+
           const byteCharacters = atob(data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
           for (let i = 0; i < byteCharacters.length; i++) {
             byteNumbers[i] = byteCharacters.charCodeAt(i);
           }
           const byteArray = new Uint8Array(byteNumbers);
-
-          // Create a Blob from the byte array
           const blob = new Blob([byteArray], { type: "image/jpeg" });
 
-          // Create a URL for the Blob and set it as the image source
           const url = URL.createObjectURL(blob);
           setProfileImage(url);
-
-          // Clean up the URL object when the component unmounts
-          // return () => URL.revokeObjectURL(url);
         }
         if (data.resumeFile) {
           const byteCharacters = atob(data.resumeFile);
@@ -51,15 +47,12 @@ const {employeeId} = useParams();
           }
           const byteArray = new Uint8Array(byteNumbers);
 
-          // Create a Blob from the byte array
           const blob = new Blob([byteArray], { type: "application/pdf" });
 
-          // Create a URL for the Blob and set it as the file source
           const url = URL.createObjectURL(blob);
           setPdfSrc(url);
           console.log(url);
 
-          // Clean up the URL object when the component unmounts
           return () => URL.revokeObjectURL(url);
         }
         return () => URL.revokeObjectURL(url);
@@ -75,14 +68,20 @@ const {employeeId} = useParams();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const closeAllModalsAndClosePage = () => {
+    setIsModalOpen(false);
+    setViewMoreProfileShow(false);
+    window.close(); // Closes the current window
+  };
+
   if (viewMoreProfileShow)
     return (
-      <div className="employee-profile-main-div"> 
+      <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
             <div className="profile-back-button">
-              <button onClick={goBackToDashBoard}>
-                Back To Dashboard
+              <button onClick={onClose}>
+                Close
                 <i className="fas fa-times"></i>
               </button>
             </div>
@@ -92,7 +91,7 @@ const {employeeId} = useParams();
                 <div className="employee-profile-details">
                   <img src={profileImage} />
                   <p className="m-0">
-                    <b>Name: {employeeData.employeeName}</b>
+                    <b>Name: {employeeData?.employeeName}</b>
                   </p>
                   <p className="m-0">
                     <b>Designation: {employeeData.designation}</b>
@@ -193,7 +192,6 @@ const {employeeId} = useParams();
             </div>
 
             <div className="employee-profile-scrollsection">
-            
               <div className="employee-profile-emergency-education-details">
                 <div className="employee-profile-emergency-details">
                   <h1>
@@ -426,7 +424,7 @@ const {employeeId} = useParams();
           <Modal.Header
             style={{ fontSize: "18px", backgroundColor: "#f2f2f2" }}
           >
-            Profile
+            Employee Profile
           </Modal.Header>
           <Modal.Body
             style={{
@@ -434,6 +432,7 @@ const {employeeId} = useParams();
               gap: "10px",
               alignItems: "center",
               backgroundColor: "#f2f2f2",
+              color: "gray",
             }}
           >
             <div>
@@ -453,7 +452,12 @@ const {employeeId} = useParams();
             </div>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-            <button className="close-profile-popup-btn">Close</button>
+            <button
+            onClick={onClose}
+              className="close-profile-popup-btn"
+            >
+              Close 
+            </button>
             <button
               onClick={viewMoreProfile}
               className="display-more-profile-btn"
@@ -471,14 +475,16 @@ const {employeeId} = useParams();
             <div>Loading...</div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary">Close</Button>
-            <Button onClick={viewMoreProfile} variant="primary">
-              More
-            </Button>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="close-profile-popup-btn"
+            >
+              Close
+            </button>
           </Modal.Footer>
         </Modal.Dialog>
       )}
     </div>
   );
-}
+};
 export default EmployeeProfileData;
