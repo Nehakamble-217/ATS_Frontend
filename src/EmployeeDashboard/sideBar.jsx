@@ -141,11 +141,11 @@ function Sidebar({
 
   return (
     <>
-
       <div className={`sidebar ${isActive ? 'active' : ''}`}>
 
         <div className="sidebar-clouds1"></div>
-        <div className='head'></div>
+        {/* <div className='head'></div> */}
+        <div>
         <div className="sidebar-menu-btn" onClick={toggleSidebar}>
           <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
         </div>
@@ -581,6 +581,7 @@ function Sidebar({
             <ul>
             </ul>
           </div>
+        </div>
         </div>
       </div>
     </>
