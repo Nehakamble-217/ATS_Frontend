@@ -11,6 +11,8 @@ import Home from "../src/MainDashboard/mainDashboard";
 import ForgotPasswordForm from "./LoginPage/ForgotPasswordForm";
 
 import CandidateResumeLink from "./ResumeData/candidateResumeLink";
+import CallingTrackerForm from "./EmployeeSection/CallingTrackerForm";
+
 
 
 const App = () => {
@@ -28,6 +30,7 @@ const App = () => {
           <Route path="/admin-login" element={<AdminLogin></AdminLogin>}></Route>
           <Route path="api/ats/157industries/verify" element={<CandidateVerification></CandidateVerification>}></Route>
           <Route path="/shareResumeLink" element={<CandidateResumeLink/>}></Route>
+          <Route path="/callingtracker" element={<CallingTrackerForm/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

@@ -11,6 +11,15 @@
       position: sticky;
       left: 5px;
       margin-bottom: 10px;
+      
+   }
+   .shorttext{
+    align-items: center;
+   }
+
+   .attendanceTableHeader h6{
+    text-align: center;
+
    }
    .attendanceTableHeader button{
     font-size: 16px;
@@ -79,3 +88,8 @@ background-color: white;
   opacity: 0.8;
 }
 /* today */
+.updatebtn{
+  background-color: #ffcb9b;
+  color: white;
+  height: 30px;
+}

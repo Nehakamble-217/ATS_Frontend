@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 // import "../EmployeeSection/callingList.css";
 import "./callingExcel.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 
-
-
-const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
+const CallingExcelList = ({
+  updateState,
+  funForGettingCandidateId,
+  onCloseTable,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
   const [sortCriteria, setSortCriteria] = useState(null);
@@ -20,24 +22,24 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
-
   const [selectedRows, setSelectedRows] = useState([]);
-
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
 
-  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
+    useState(false);
 
   const navigator = useNavigate();
 
   useEffect(() => {
-
-    fetch(`http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
-
-
+    fetch(
+      `http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -46,10 +48,10 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
-
-
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId');
+    const options = Object.keys(filteredCallingList[0] || {}).filter(
+      (key) => key !== "candidateId"
+    );
     setFilterOptions(options);
   }, [filteredCallingList]);
 
@@ -57,16 +59,19 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
     console.log("Selected Filters:", selectedFilters);
   }, [selectedFilters]);
 
-
   useEffect(() => {
     console.log("Filtered Calling List:", filteredCallingList);
   }, [filteredCallingList]);
 
   useEffect(() => {
-    const limitedOptions = ['date', 'recruiterName', 'jobDesignation', 'requirementId'];
+    const limitedOptions = [
+      "date",
+      "recruiterName",
+      "jobDesignation",
+      "requirementId",
+    ];
     setFilterOptions(limitedOptions);
   }, [callingList]);
-
 
   useEffect(() => {
     filterData();
@@ -77,20 +82,35 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
       const searchTermLower = searchTerm.toLowerCase();
       return (
         (item.date && item.date.toLowerCase().includes(searchTermLower)) ||
-        (item.recruiterName && item.recruiterName.toLowerCase().includes(searchTermLower)) ||
-        (item.candidateName && item.candidateName.toLowerCase().includes(searchTermLower)) ||
-        (item.candidateEmail && item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
-        (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
-        (item.alternateNumber && item.alternateNumber.toString().includes(searchTermLower)) ||
-        (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
-
-        (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
-        (item.requirementCompany && item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
-        (item.communicationRating && item.communicationRating.toLowerCase().includes(searchTermLower)) ||
-        (item.currentLocation && item.currentLocation.toLowerCase().includes(searchTermLower)) ||
-        (item.personalFeedback && item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
-        (item.callingFeedback && item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
-        (item.selectYesOrNo && item.selectYesOrNo.toLowerCase().includes(searchTermLower))
+        (item.recruiterName &&
+          item.recruiterName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateName &&
+          item.candidateName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateEmail &&
+          item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
+        (item.contactNumber &&
+          item.contactNumber.toString().includes(searchTermLower)) ||
+        (item.alternateNumber &&
+          item.alternateNumber.toString().includes(searchTermLower)) ||
+        (item.sourceName &&
+          item.sourceName.toLowerCase().includes(searchTermLower)) ||
+        (item.requirementId &&
+          item.requirementId
+            .toString()
+            .toLowerCase()
+            .includes(searchTermLower)) ||
+        (item.requirementCompany &&
+          item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
+        (item.communicationRating &&
+          item.communicationRating.toLowerCase().includes(searchTermLower)) ||
+        (item.currentLocation &&
+          item.currentLocation.toLowerCase().includes(searchTermLower)) ||
+        (item.personalFeedback &&
+          item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.callingFeedback &&
+          item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.selectYesOrNo &&
+          item.selectYesOrNo.toLowerCase().includes(searchTermLower))
       );
     });
     setFilteredCallingList(filtered);
@@ -102,10 +122,12 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
         const aValue = a[sortCriteria];
         const bValue = b[sortCriteria];
 
-        if (typeof aValue === 'number' && typeof bValue === 'number') {
-          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-        } else if (typeof aValue === 'string' && typeof bValue === 'string') {
-          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        if (typeof aValue === "number" && typeof bValue === "number") {
+          return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
+        } else if (typeof aValue === "string" && typeof bValue === "string") {
+          return sortOrder === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
         } else {
           return 0;
         }
@@ -114,15 +136,23 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
     }
   }, [sortCriteria, sortOrder]);
 
-
   const filterData = () => {
     let filteredData = [...callingList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === 'requirementId') {
-          filteredData = filteredData.filter(item => values.includes(item[option]?.toString()));
+        if (option === "requirementId") {
+          filteredData = filteredData.filter((item) =>
+            values.includes(item[option]?.toString())
+          );
         } else {
-          filteredData = filteredData.filter(item => values.some(value => item[option]?.toString().toLowerCase().includes(value.toLowerCase())));
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value.toLowerCase())
+            )
+          );
         }
       }
     });
@@ -130,7 +160,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
   };
 
   const handleFilterSelect = (option, value) => {
-    setSelectedFilters(prevFilters => {
+    setSelectedFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
       if (!updatedFilters[option]) {
         updatedFilters[option] = [];
@@ -140,13 +170,14 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
       if (index === -1) {
         updatedFilters[option] = [...updatedFilters[option], value];
       } else {
-        updatedFilters[option] = updatedFilters[option].filter(item => item !== value);
+        updatedFilters[option] = updatedFilters[option].filter(
+          (item) => item !== value
+        );
       }
 
       return updatedFilters;
     });
   };
-
 
   const handleSort = (criteria) => {
     if (criteria === sortCriteria) {
@@ -157,16 +188,13 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
     }
   };
 
-  const handleUpdate = (candidateId) => {
-    setSelectedCandidateId(candidateId); // Set candidateId for UpdateCallingTracker
-    setShowUpdateCallingTracker(true); // Show UpdateCallingTracker
+  const handleUpdate = (candidateData) => {
+    setSelectedCandidate(candidateData); // Set candidate data for CallingTrackerForm
   };
-
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.39:8891/api/ats/157industries/calling-excel-data/${employeeId}`
-
+      `http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -177,38 +205,40 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
       .catch((error) => console.error("Error fetching data:", error));
   };
 
-
-  //arshad  chanhged some tool tip lines 
   const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
-    const tooltip = tableData.querySelector('.tooltip');
-    const tooltiptext = tableData.querySelector('.tooltiptext');
+    const tooltip = tableData.querySelector(".tooltip");
+    const tooltiptext = tableData.querySelector(".tooltiptext");
 
     if (tooltip && tooltiptext) {
-      const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
+      const textOverflowing =
+        tableData.offsetWidth < tableData.scrollWidth ||
+        tableData.offsetHeight < tableData.scrollHeight;
       if (textOverflowing) {
         const rect = tableData.getBoundingClientRect();
         tooltip.style.top = `${rect.top - 10}px`;
         tooltip.style.left = `${rect.left + rect.width / 100}px`;
-        tooltip.style.visibility = 'visible';
+        tooltip.style.visibility = "visible";
       } else {
-        tooltip.style.visibility = 'hidden';
+        tooltip.style.visibility = "hidden";
       }
     }
   };
 
-
-
   const handleMouseOut = (event) => {
-    const tooltip = event.currentTarget.querySelector('.tooltip');
+    const tooltip = event.currentTarget.querySelector(".tooltip");
     if (tooltip) {
-      tooltip.style.visibility = 'hidden';
+      tooltip.style.visibility = "hidden";
     }
   };
 
   const getSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
-      return sortOrder === "asc" ? <i className="fa-solid fa-arrow-up"></i> : <i className="fa-solid fa-arrow-down"></i>;
+      return sortOrder === "asc" ? (
+        <i className="fa-solid fa-arrow-up"></i>
+      ) : (
+        <i className="fa-solid fa-arrow-down"></i>
+      );
     }
     return null;
   };
@@ -217,10 +247,9 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
     setShowFilterSection(!showFilterSection);
   };
 
-
   const handleSelectAll = (event) => {
     if (event.target.checked) {
-      const allRowIds = filteredCallingList.map(item => item.candidateId);
+      const allRowIds = filteredCallingList.map((item) => item.candidateId);
       setSelectedRows(allRowIds);
     } else {
       setSelectedRows([]);
@@ -228,45 +257,50 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
   };
 
   const handleSelectRow = (candidateId) => {
-    setSelectedRows(prevSelectedRows => {
+    setSelectedRows((prevSelectedRows) => {
       if (prevSelectedRows.includes(candidateId)) {
-        return prevSelectedRows.filter(id => id !== candidateId);
+        return prevSelectedRows.filter((id) => id !== candidateId);
       } else {
         return [...prevSelectedRows, candidateId];
       }
     });
   };
 
-
-
-
-
-
   return (
     <div className="App-after1">
-      {!showUpdateCallingTracker && !showCallingForm && (
+      {!selectedCandidate && (
         <>
           <div className="search">
-            <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
-              style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
+            <i
+              className="fa-solid fa-magnifying-glass"
+              onClick={() => setShowSearchBar(!showSearchBar)}
+              style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+            ></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
+            <h1>Excel Calling Data</h1>
 
-
-            <button onClick={toggleFilterSection} 
-            style={{ fontSize: "16px", borderRadius: "15px", height: "30px",color:"#ffcb9b" ,paddingLeft:"15px",
-              paddingRight:"15px",background:"white", border: "1px solid gray",position:"sticky"}}
-              >
-  Filter <i className="fa-solid fa-filter"></i>
-</button> 
-       
+            <button
+              onClick={toggleFilterSection}
+              style={{
+                fontSize: "16px",
+                borderRadius: "15px",
+                height: "30px",
+                color: "#ffcb9b",
+                paddingLeft: "15px",
+                paddingRight: "15px",
+                background: "white",
+                border: "1px solid gray",
+                position: "sticky",
+              }}
+            >
+              Filter <i className="fa-solid fa-filter"></i>
+            </button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-  <button onClick={onCloseTable} className="close-button">
-    Close
-  </button>
-</div>
-
-
+          {/* <div style={{ display: 'flex' }}>
+            <button onClick={onCloseTable} className="close-button">
+              Close
+            </button>
+          </div> */}
           {showSearchBar && (
             <input
               type="text"
@@ -282,11 +316,9 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
               <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
 
               <div className="filter-dropdowns">
-
                 {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
 
-
-                {filterOptions.map(option => (
+                {filterOptions.map((option) => (
                   <div key={option} className="filter-dropdown">
                     {/* <label htmlFor={option}>{option}</label> */}
                     <div className="dropdown">
@@ -297,21 +329,31 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
                             type="checkbox"
                             id={`${option}-All`}
                             value="All"
-                            checked={!selectedFilters[option] || selectedFilters[option].length === 0}
+                            checked={
+                              !selectedFilters[option] ||
+                              selectedFilters[option].length === 0
+                            }
                             onChange={() => handleFilterSelect(option, "All")}
                           />
                           <label htmlFor={`${option}-All`}>All</label>
                         </div>
-                        {[...new Set(callingList.map(item => item[option]))].map(value => (
+                        {[
+                          ...new Set(callingList.map((item) => item[option])),
+                        ].map((value) => (
                           <div key={value}>
                             <input
                               type="checkbox"
                               id={`${option}-${value}`}
                               value={value}
-                              checked={selectedFilters[option]?.includes(value) || false}
+                              checked={
+                                selectedFilters[option]?.includes(value) ||
+                                false
+                              }
                               onChange={() => handleFilterSelect(option, value)}
                             />
-                            <label htmlFor={`${option}-${value}`}>{value}</label>
+                            <label htmlFor={`${option}-${value}`}>
+                              {value}
+                            </label>
                           </div>
                         ))}
                       </div>
@@ -327,113 +369,258 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
             <table className="selfcalling-table attendance-table">
               <thead>
                 <tr className="attendancerows-head">
-                  <th className='attendanceheading'>
-                    <input
-                      type="checkbox"
-                      onChange={handleSelectAll}
-                      checked={selectedRows.length === filteredCallingList.length}
-                    />
+                  <th className="attendanceheading">Sr No.</th>
+                  <th
+                    className="attendanceheading"
+                    onClick={() => handleSort("date")}
+                  >
+                    Date & Time {getSortIcon("date")}
                   </th>
-
-                  <th className='attendanceheading'>Sr No.</th>
-                  <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
-                  <th className='attendanceheading'>Candidate Id</th>
-                  <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
-                  <th className='attendanceheading'>Candidate Name</th>
-                  <th className='attendanceheading'>Candidate Email</th>
-                  <th className='attendanceheading'>Contact Number</th>
-                  <th className='attendanceheading'>Alternate Number</th>
-                  <th className='attendanceheading'>Source Name</th>
-                  <th className='attendanceheading'>Position</th>
-                  <th className='attendanceheading' onClick={() => handleSort("requirementId")}>Job Id {getSortIcon("requirementId")}</th>
-                  <th className='attendanceheading'>Applying Company</th>
-                  <th className='attendanceheading'>Communication Rating</th>
-                  <th className='attendanceheading'>Current Location</th>
-                  <th className='attendanceheading'>Full Address</th>
-                  <th className='attendanceheading'>Calling Feedback</th>
-                  <th className='attendanceheading'>Candidate Incentive</th>
-                  <th className='attendanceheading'>Interested / Eligible</th>
-                  <th className='attendanceheading'>Action</th>
+                  <th hidden className="attendanceheading">
+                    Candidate Id
+                  </th>
+                  <th
+                    className="attendanceheading"
+                    onClick={() => handleSort("recruiterName")}
+                  >
+                    Recruiter Name {getSortIcon("recruiterName")}
+                  </th>
+                  <th className="attendanceheading">Candidate Name</th>
+                  <th className="attendanceheading">Candidate Email</th>
+                  <th className="attendanceheading">Contact Number</th>
+                  <th className="attendanceheading">Alternate Number</th>
+                  <th className="attendanceheading">Source Name</th>
+                  <th className="attendanceheading">Position</th>
+                  <th
+                    className="attendanceheading"
+                    onClick={() => handleSort("requirementId")}
+                  >
+                    Job Id {getSortIcon("requirementId")}
+                  </th>
+                  <th className="attendanceheading">Applying Company</th>
+                  <th className="attendanceheading">Communication Rating</th>
+                  <th className="attendanceheading">Current Location</th>
+                  <th className="attendanceheading">Full Address</th>
+                  <th className="attendanceheading">Calling Feedback</th>
+                  <th className="attendanceheading">Candidate Incentive</th>
+                  <th className="attendanceheading">Interested / Eligible</th>
+                  <th className="attendanceheading">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredCallingList.map((item, index) => (
                   <tr key={item.candidateId} className="attendancerows">
-                    <td className='tabledata '>
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.includes(item.candidateId)}
-                        onChange={() => handleSelectRow(item.candidateId)}
-                      />
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {" "}
+                      {index + 1}
                     </td>
-
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {index + 1}</td>
-
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {item.date}
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {" "}
+                      {item.date}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.date}</span>
                       </div>
-                      <div className="tooltip">
-                        <span className="tooltiptext"> {item.candidateAddedTime}</span>
-                      </div>
-
                     </td>
-
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateId}
+                    <td
+                      hidden
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateId}
                       <div className="tooltip">
                         <span className="tooltiptext">{item.candidateId} </span>
                       </div>
                     </td>
 
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.recruiterName}
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.recruiterName}
                       <div className="tooltip">
-                        <span className="tooltiptext">{item.recruiterName} </span>
+                        <span className="tooltiptext">
+                          {item.recruiterName}{" "}
+                        </span>
                       </div>
                     </td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateName} <div className="tooltip">
-                      <span className="tooltiptext">{item.candidateName}</span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.candidateEmail} <div className="tooltip">
-                      <span className="tooltiptext">{item.candidateEmail}</span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.contactNumber} <div className="tooltip">
-                      <span className="tooltiptext">{item.contactNumber}</span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.alternateNumber} <div className="tooltip">
-                      <span className="tooltiptext">{item.alternateNumber}</span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.sourceName} <div className="tooltip">
-                      <span className="tooltiptext">{item.sourceName}</span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.jobDesignation} <div className="tooltip">
-                      <span className="tooltiptext">{item.jobDesignation}</span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementId} <div className="tooltip">
-                      <span className="tooltiptext"> {item.requirementId} </span>
-                    </div> </td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.requirementCompany} <div className="tooltip">
-                      <span className="tooltiptext">{item.requirementCompany} </span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.communicationRating} <div className="tooltip">
-                      <span className="tooltiptext">{item.communicationRating}</span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.currentLocation} <div className="tooltip">
-                      <span className="tooltiptext">{item.currentLocation} </span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.fullAddress} <div className="tooltip">
-                      <span className="tooltiptext">{item.fullAddress} </span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.callingFeedback} <div className="tooltip">
-                      <span className="tooltiptext">{item.callingFeedback} </span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.incentive} <div className="tooltip">
-                      <span className="tooltiptext">{item.incentive} </span>
-                    </div></td>
-                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.selectYesOrNo} <div className="tooltip">
-                      <span className="tooltiptext">{item.selectYesOrNo} </span>
-                    </div></td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateName}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.candidateName}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateEmail}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.candidateEmail}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.contactNumber}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.contactNumber}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.alternateNumber}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.alternateNumber}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.sourceName}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.sourceName}</span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.jobDesignation}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.jobDesignation}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.requirementId}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {" "}
+                          {item.requirementId}{" "}
+                        </span>
+                      </div>{" "}
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.requirementCompany}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.requirementCompany}{" "}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.communicationRating}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.communicationRating}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.currentLocation}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.currentLocation}{" "}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.fullAddress}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.fullAddress} </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.callingFeedback}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.callingFeedback}{" "}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.incentive}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.incentive} </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata "
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.selectYesOrNo}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.selectYesOrNo}{" "}
+                        </span>
+                      </div>
+                    </td>
                     <td className="tabledata">
-                      <i onClick={() => handleUpdate(item.candidateId, item.employeeId)} className="fa-regular fa-pen-to-square"></i>
+                      <i
+                        onClick={() => handleUpdate(item.candidateId)}
+                        className="fa-regular fa-pen-to-square"
+                      ></i>
                     </td>
                   </tr>
                 ))}
@@ -443,12 +630,11 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
         </>
       )}
 
-      {showUpdateCallingTracker && (
-        <UpdateCallingTracker
-          candidateId={selectedCandidateId}
-          employeeId={employeeId}
+      {selectedCandidate && (
+        <CallingTrackerForm
+          candidateData={selectedCandidate}
+          onClose={() => setSelectedCandidate(null)}
           onSuccess={handleUpdateSuccess}
-          onCancel={() => setShowUpdateCallingTracker(true)}
         />
       )}
     </div>

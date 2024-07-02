@@ -39,7 +39,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.42:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
       .then((response) => response.json())
       .then((data) => {
         setFilteredCallingList(data);
@@ -56,7 +56,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.42:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -101,7 +101,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     setShowUpdateCallingTracker(false);
 
     fetch(
-      `http://192.168.1.39:8891/api/ats/157industries/all-Data/${employeeIdnew}`
+      `http://192.168.1.42:8891/api/ats/157industries/all-Data/${employeeIdnew}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -300,7 +300,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.42:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,

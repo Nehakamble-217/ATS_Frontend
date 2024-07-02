@@ -1,5 +1,4 @@
 /* og */
-/*Swapnil_callingTrackerComponant_ResponsiveTable_StartLine_12_to_ 01/07*/
 .maintable {
   height: 100%; /* Allow height to adjust based on content */
   width: 100%; /* Allow width to adjust based on content */
@@ -246,4 +245,11 @@
 b,
 strong {
   color: gray; /* Set font color to gray */
+}
+
+@media screen and (max-width:300px) {
+  
+  .studTables tbody tr{
+    width: 100%;
+  }
 }

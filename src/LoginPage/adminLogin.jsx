@@ -30,7 +30,7 @@ const AdminLogin = ({ onLogin }) => {
   const handleBlur = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/fetch-pass-on-role/${empId}`
+        `http://192.168.1.42:8891/api/ats/157industries/fetch-pass-on-role/${empId}`
       );
 
       if (!response.ok) {
@@ -102,7 +102,7 @@ const AdminLogin = ({ onLogin }) => {
                   />
                 </div>
                 <input
-                  className="form-control my-2 px-2"
+                  className="px-2 my-2 form-control"
                   type="text"
                   id="jobRole"
                   value="Admin"

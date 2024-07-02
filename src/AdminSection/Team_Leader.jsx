@@ -200,7 +200,7 @@ function Accesstable() {
                 </button>
                 <div className="team-leadersTL">
                   {teamLeaders.map((leader, index) => (
-                    <div key={index} className="team-leader-itemTL">
+                    <div key={index} className="team-leader-itemTL checkbox-teamleader-assign radio-teamleader-assign ">
                       <label>
                         <input
                           type="radio"
@@ -246,7 +246,7 @@ function Accesstable() {
                   <span className={`dropdown-icon ${openCategory === category ? 'open' : ''}`}>&#9660;</span>
                 </div>
                 {openCategory === category && (
-                  <div className="category-options">
+                  <div className="category-options checkbox-teamleader-assign ">
                     {groupedOptions[category].map((option, optIndex) => (
                       <label key={optIndex} className="option-itemTL">
                         <input

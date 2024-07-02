@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData = ({onClose}) => {
+const EmployeeProfileData = ({ onClose }) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,15 +20,13 @@ const EmployeeProfileData = ({onClose}) => {
 
   useEffect(() => {
     fetch(
-
-      `http://198.168.1.39:8891/api/ats/157industries/employee-details/${employeeId}`
+      `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); 
+        console.log(data);
         setEmployeeData(data);
         if (data.profileImage) {
-
           const byteCharacters = atob(data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
           for (let i = 0; i < byteCharacters.length; i++) {
@@ -80,12 +78,12 @@ const EmployeeProfileData = ({onClose}) => {
       <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
-            <div className="profile-back-button">
+            {/* <div className="profile-back-button">
               <button onClick={onClose}>
                 Close
                 <i className="fas fa-times"></i>
               </button>
-            </div>
+            </div> */}
             {/* Employee personal Information and current company information */}
             <div className="employee-profile-staticsection">
               <div className="employee-profile-static">
@@ -194,6 +192,17 @@ const EmployeeProfileData = ({onClose}) => {
 
             <div className="employee-profile-scrollsection">
               <div className="employee-profile-emergency-education-details">
+                {/* Prachi EmployeeProfile 1/07 line no 205 to 210  */}
+
+                <div className="profile-back-button">
+                  <button onClick={onClose}>
+                    Close
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+
+                {/*End Prachi EmployeeProfile 1/07 line no 205 to 210  */}
+
                 <div className="employee-profile-emergency-details">
                   <h1>
                     <b>Emergency Details</b>
@@ -364,7 +373,7 @@ const EmployeeProfileData = ({onClose}) => {
         {isModalOpen && (
           <>
             <div
-              className="modal show bg-black bg-opacity-50"
+              className="bg-black bg-opacity-50 modal show"
               style={{
                 display: "flex",
                 position: "fixed",
@@ -405,7 +414,7 @@ const EmployeeProfileData = ({onClose}) => {
 
   return (
     <div
-      className="modal show bg-black bg-opacity-50"
+      className="bg-black bg-opacity-50 modal show"
       style={{
         display: "flex",
         justifyContent: "center",
@@ -454,14 +463,14 @@ const EmployeeProfileData = ({onClose}) => {
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
             <button
-            onClick={onClose}
-              className="close-profile-popup-btn"
+              onClick={onClose}
+              className="close-profile-popup-btn  white-Btn"
             >
-              Close 
+              Close
             </button>
             <button
               onClick={viewMoreProfile}
-              className="display-more-profile-btn"
+              className="display-more-profile-btn daily-tr-btn"
             >
               More
             </button>
