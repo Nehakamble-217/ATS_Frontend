@@ -4,6 +4,7 @@ import "../CandidateSection/shortlistedcandidate.css";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import InterviewDates from "../EmployeeSection/interviewDate";
 import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const [shortListedData, setShortListedData] = useState([]);
@@ -48,6 +49,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       );
       const data = await response.json();
       setShortListedData(data);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
     }
@@ -160,122 +162,168 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     setShowselectedFilters(!showselectedFilters);
   };
 
+  //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) start LineNo:-165 Date:-02/07
+  const convertToDocumentLink = (byteCode, fileName) => {
+    if (byteCode) {
+      try {
+        // Detect file type based on file name extension or content
+        const fileType = fileName.split(".").pop().toLowerCase();
+
+        // Convert PDF
+        if (fileType === "pdf") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], { type: "application/pdf" });
+          return URL.createObjectURL(blob);
+        }
+
+        // Convert Word document (assuming docx format)
+        if (fileType === "docx") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          return URL.createObjectURL(blob);
+        }
+
+        // Handle other document types here if needed
+
+        // If file type is not supported
+        console.error(`Unsupported document type: ${fileType}`);
+        return "Unsupported Document";
+      } catch (error) {
+        console.error("Error converting byte code to document:", error);
+        return "Invalid Document";
+      }
+    }
+    return "Document Not Found";
+  };
+  const [showResumeModal, setShowResumeModal] = useState(false);
+  const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
+
+  const openResumeModal = (byteCode) => {
+    setSelectedCandidateResume(byteCode);
+    setShowResumeModal(true);
+  };
+
+  const closeResumeModal = () => {
+    setSelectedCandidateResume("");
+    setShowResumeModal(false);
+  };
+  //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) End LineNo:-196 Date:-02/07
 
   return (
     <div className="calling-list-container">
       {!showUpdateCallingTracker ? (
         <div className="attendanceTableData">
           <div className="search">
-                <i
-                  className="fa-solid fa-magnifying-glass"
-                  onClick={() => setShowSearchBar(!showSearchBar)}
-                  style={{ margin: "10px", width: "auto", fontSize: "15px" }}
-                ></i>
-                <h5 style={{ color: "gray", paddingTop: "5px" }}>
-                  Shortlisted Candidate
-                </h5>
+            <i
+              className="fa-solid fa-magnifying-glass"
+              onClick={() => setShowSearchBar(!showSearchBar)}
+              style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+            ></i>
+            <h5 style={{ color: "gray", paddingTop: "5px" }}>
+              Shortlisted Candidate
+            </h5>
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "10px",
-                  }}
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "10px",
+              }}
+            >
+              {showShareButton ? (
+                <button
+                  className="lineUp-share-btn"
+                  onClick={() => setShowShareButton(false)}
                 >
-                  {showShareButton ? (
-                    <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
-                    </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={() => setShowShareButton(true)}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={handleSelectAll}
-                      >
-                        {allSelected ? "Deselect All" : "Select All"}
-                      </button>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-                    </div>
-                  )}
+                  Share
+                </button>
+              ) : (
+                <div style={{ display: "flex", gap: "5px" }}>
                   <button
                     className="lineUp-share-btn"
-                    onClick={toggleFilterSection}
+                    onClick={() => setShowShareButton(true)}
                   >
-                    Filter <i className="fa-solid fa-filter"></i>
+                    Close
+                  </button>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={handleSelectAll}
+                  >
+                    {allSelected ? "Deselect All" : "Select All"}
+                  </button>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={forwardSelectedCandidate}
+                  >
+                    Forward
                   </button>
                 </div>
-              </div>
-
-              {showSearchBar && (
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search here..."
-                  value={searchTerm}
-                  style={{ marginBottom: "10px" }}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
               )}
-              {showFilterSection && (
-                <div className="filter-section">
-                  <h3>Filter Options</h3>
-                  <div className="filter-options-container">
-                    {filterOptions.map((option) => {
-                      const uniqueValues = Array.from(
-                        new Set(callingList.map((item) => item[option]))
-                      ).slice(0, 5);
-                      return (
-                        <div key={option} className="selfcalling-filter-option">
-                          <button
-                            className="callingList-filter-btn"
-                            onClick={toggleselectedFilters}
-                          >
-                            {option}
-                          </button>
-                          {uniqueValues.map((value) => (
-                            <label
-                              key={value}
-                              className="selfcalling-filter-value"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={
-                                  selectedFilters[option]?.includes(value) ||
-                                  false
-                                }
-                                onChange={() =>
-                                  handleFilterSelect(option, value)
-                                }
-                              />
-                              {value}
-                            </label>
-                          ))}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-          <div className="attendanceTableHeader">
-         
+              <button
+                className="lineUp-share-btn"
+                onClick={toggleFilterSection}
+              >
+                Filter <i className="fa-solid fa-filter"></i>
+              </button>
+            </div>
           </div>
+          {showSearchBar && (
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search here..."
+              value={searchTerm}
+              style={{ marginBottom: "10px" }}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          )}
+          {showFilterSection && (
+            <div className="filter-section">
+              <h3>Filter Options</h3>
+              <div className="filter-options-container">
+                {filterOptions.map((option) => {
+                  const uniqueValues = Array.from(
+                    new Set(callingList.map((item) => item[option]))
+                  ).slice(0, 5);
+                  return (
+                    <div key={option} className="selfcalling-filter-option">
+                      <button
+                        className="callingList-filter-btn"
+                        onClick={toggleselectedFilters}
+                      >
+                        {option}
+                      </button>
+                      {uniqueValues.map((value) => (
+                        <label key={value} className="selfcalling-filter-value">
+                          <input
+                            type="checkbox"
+                            checked={
+                              selectedFilters[option]?.includes(value) || false
+                            }
+                            onChange={() => handleFilterSelect(option, value)}
+                          />
+                          {value}
+                        </label>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          <div className="attendanceTableHeader"></div>
           <table id="shortlisted-table-id" className="attendance-table">
             <thead>
               <tr className="attendancerows-head">
@@ -317,11 +365,12 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 <th className="attendanceheading">Gender</th>
                 <th className="attendanceheading">Education</th>
                 <th className="attendanceheading">Year Of Passing</th>
-                <th className="attendanceheading">Call Summary</th>{/* call summary */}
+                <th className="attendanceheading">Call Summary</th>
+                {/* call summary */}
                 {/* <th className="attendanceheading">Feedback</th> */}
                 <th className="attendanceheading">Holding Any Offer</th>
                 <th className="attendanceheading">Offer Letter Message</th>
-                <th className="attendanceheading">Upload Resume</th>
+                <th className="attendanceheading">Resume</th>
                 <th className="attendanceheading">Notice Period</th>
                 <th className="attendanceheading">Message For Team Leader</th>
                 <th className="attendanceheading">Interview Slot</th>
@@ -519,15 +568,29 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   {/* <td className="tabledata">{item.feedback}</td> */}
                   <td className="tabledata">{item.holdingAnyOffer}</td>
                   <td className="tabledata">{item.offerLetterMsg}</td>
-                  <td className="tabledata">{item.resume}</td>
+                  {/* <td className="tabledata">{item.lineUp.resume}</td> */}
+                  {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                  Subcategory:-ResumeViewButton(added) start LineNo:-546
+                  Date:-02/07 */}
+                  <td className="tabledata">
+                    <button
+                      className="text-secondary"
+                      onClick={() => openResumeModal(item.resume)}
+                    >
+                      <i className="fas fa-eye"></i>
+                    </button>
+                  </td>
+                  {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                  Subcategory:-ResumeViewButton(added) End LineNo:-558
+                  Date:-02/07 */}
                   <td className="tabledata">{item.noticePeriod}</td>
                   <td className="tabledata">{item.msgForTeamLeader}</td>
                   <td className="tabledata">{item.availabilityForInterview}</td>
                   <td className="tabledata">{item.interviewTime}</td>
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
-                    <button className="lineUp-share-btn"
-                      
+                    <button
+                      className="lineUp-share-btn"
                       onClick={() => handleUpdate(item.candidateId)}
                     >
                       Update
@@ -616,6 +679,35 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
               </div>
             </>
           ) : null}
+          {/* Name:-Akash Pawar Component:-ShortListedCandidate
+          Subcategory:-ResumeModel(added) End LineNo:-656 Date:-02/07 */}
+          <Modal show={showResumeModal} onHide={closeResumeModal} size="md">
+            <Modal.Header closeButton>
+              <Modal.Title>Resume</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {selectedCandidateResume ? (
+                <iframe
+                  src={convertToDocumentLink(
+                    selectedCandidateResume,
+                    "Resume.pdf"
+                  )}
+                  width="100%"
+                  height="550px"
+                  title="PDF Viewer"
+                ></iframe>
+              ) : (
+                <p>No resume available</p>
+              )}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeResumeModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/* Name:-Akash Pawar Component:-ShortListedCandidate
+          Subcategory:-ResumeModel(added) End LineNo:-681 Date:-02/07 */}
         </div>
       ) : (
         <UpdateCallingTracker

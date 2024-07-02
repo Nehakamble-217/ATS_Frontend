@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./rejectedcandidate.css";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showRejectedData, setShowRejectedData] = useState([]);
@@ -321,6 +322,63 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       tooltip.style.visibility = "hidden";
     }
   };
+
+  //Name:-Akash Pawar Component:-RejectedCandidate Subcategory:-ResumeViewButton(added) start LineNo:-326 Date:-02/07
+  const convertToDocumentLink = (byteCode, fileName) => {
+    if (byteCode) {
+      try {
+        // Detect file type based on file name extension or content
+        const fileType = fileName.split(".").pop().toLowerCase();
+
+        // Convert PDF
+        if (fileType === "pdf") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], { type: "application/pdf" });
+          return URL.createObjectURL(blob);
+        }
+
+        // Convert Word document (assuming docx format)
+        if (fileType === "docx") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          return URL.createObjectURL(blob);
+        }
+
+        // Handle other document types here if needed
+
+        // If file type is not supported
+        console.error(`Unsupported document type: ${fileType}`);
+        return "Unsupported Document";
+      } catch (error) {
+        console.error("Error converting byte code to document:", error);
+        return "Invalid Document";
+      }
+    }
+    return "Document Not Found";
+  };
+  const [showResumeModal, setShowResumeModal] = useState(false);
+  const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
+
+  const openResumeModal = (byteCode) => {
+    setSelectedCandidateResume(byteCode);
+    setShowResumeModal(true);
+  };
+
+  const closeResumeModal = () => {
+    setSelectedCandidateResume("");
+    setShowResumeModal(false);
+  };
+  //Name:-Akash Pawar Component:-RejectedCandidate Subcategory:-ResumeViewButton(added) End LineNo:-356 Date:-02/07
 
   return (
     <div className="calling-list-container">
@@ -942,7 +1000,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           </div>
                         </td>
 
-                        <td
+                        {/* <td
                           className="tabledata"
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
@@ -953,7 +1011,22 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                               {item.lineUp.resume}
                             </span>
                           </div>
+                        </td> */}
+
+                        {/* Name:-Akash Pawar Component:-RejectedCandidate
+                  Subcategory:-ResumeViewButton(added) start LineNo:-993
+                  Date:-02/07 */}
+                        <td className="tabledata">
+                          <button
+                            className="text-secondary"
+                            onClick={() => openResumeModal(item.lineUp.resume)}
+                          >
+                            <i className="fas fa-eye"></i>
+                          </button>
                         </td>
+                        {/* Name:-Akash Pawar Component:-Rejected
+                  Subcategory:-ResumeViewButton(added) End LineNo:-1005
+                  Date:-02/07 */}
 
                         <td
                           className="tabledata"
@@ -1123,6 +1196,35 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                 </div>
               </>
             ) : null}
+            {/* Name:-Akash Pawar Component:-RejectedCandidate
+          Subcategory:-ResumeModel(added) End LineNo:-1176 Date:-02/07 */}
+            <Modal show={showResumeModal} onHide={closeResumeModal} size="md">
+              <Modal.Header closeButton>
+                <Modal.Title>Resume</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {selectedCandidateResume ? (
+                  <iframe
+                    src={convertToDocumentLink(
+                      selectedCandidateResume,
+                      "Resume.pdf"
+                    )}
+                    width="100%"
+                    height="550px"
+                    title="PDF Viewer"
+                  ></iframe>
+                ) : (
+                  <p>No resume available</p>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={closeResumeModal}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            {/* Name:-Akash Pawar Component:-RejectedCandidate
+          Subcategory:-ResumeModel(added) End LineNo:-1203 Date:-02/07 */}
           </div>
         </>
       ) : (
