@@ -163,9 +163,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 
   return (
     <div className="calling-list-container">
-      {!showUpdateCallingTracker ? (
-        <div className="attendanceTableData">
-          <div className="search">
+      <div className="search">
                 <i
                   className="fa-solid fa-magnifying-glass"
                   onClick={() => setShowSearchBar(!showSearchBar)}
@@ -272,10 +270,13 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   </div>
                 </div>
               )}
+      {!showUpdateCallingTracker ? (
+        <div className="attendanceTableData">
+          
 
-          <div className="attendanceTableHeader">
+          {/* <div className="attendanceTableHeader">
          
-          </div>
+          </div> */}
           <table id="shortlisted-table-id" className="attendance-table">
             <thead>
               <tr className="attendancerows-head">

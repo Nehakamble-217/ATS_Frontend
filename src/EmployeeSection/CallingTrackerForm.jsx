@@ -117,15 +117,15 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
   // ------------------------------------------------------------
 
-  useEffect(() => {
-    if (candidateData) {
-      setFormData(candidateData);
-      setCallingTracker({
-        ...initialCallingTrackerState,
-        ...candidateData,
-      });
-    }
-  }, [candidateData]);
+  // useEffect(() => {
+  //   if (candidateData) {
+  //     setFormData(candidateData);
+  //     setCallingTracker({
+  //       ...initialCallingTrackerState,
+  //       ...candidateData,
+  //     });
+  //   }
+  // }, [candidateData]);
 
   // -------------------------------------------------------------------------
 
