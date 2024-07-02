@@ -186,7 +186,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 >
                   {showShareButton ? (
                     <button
-                      className="callingList-share-btn"
+                      className="lineUp-share-btn"
                       onClick={() => setShowShareButton(false)}
                     >
                       Share
@@ -194,19 +194,19 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   ) : (
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
-                        className="callingList-share-close-btn"
+                        className="lineUp-share-btn"
                         onClick={() => setShowShareButton(true)}
                       >
                         Close
                       </button>
                       <button
-                        className="callingList-share-select-btn"
+                        className="lineUp-share-btn"
                         onClick={handleSelectAll}
                       >
                         {allSelected ? "Deselect All" : "Select All"}
                       </button>
                       <button
-                        className="callingList-forward-btn"
+                        className="lineUp-share-btn"
                         onClick={forwardSelectedCandidate}
                       >
                         Forward
@@ -214,7 +214,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                     </div>
                   )}
                   <button
-                    className="callingList-filter-btn"
+                    className="lineUp-share-btn"
                     onClick={toggleFilterSection}
                   >
                     Filter <i className="fa-solid fa-filter"></i>
@@ -526,7 +526,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.interviewTime}</td>
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
-                    <button
+                    <button className="lineUp-share-btn"
                       
                       onClick={() => handleUpdate(item.candidateId)}
                     >

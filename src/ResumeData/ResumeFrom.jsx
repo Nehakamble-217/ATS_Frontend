@@ -73,7 +73,7 @@ const ResumeForm = ({ formData, onChange }) => {
     e.preventDefault();
     console.log(JSON.stringify(formData));
     try {
-      const response = await fetch("http://localhost:8080/api/resume", {
+      const response = await fetch("http://192.168.1.42:8080/api/resume", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,13 +99,13 @@ const ResumeForm = ({ formData, onChange }) => {
     <form className="w-full" onSubmit={handleSubmit}>
       {/* Profile Section */}
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <label className="flex flex-col text-[18px] text-gray-700">
             First Name:
             <input
               name="firstname"
               placeholder="Enter First Name"
-              className="border text-base font-normal px-2 py-1 rounded-md"
+              className="px-2 py-1 text-base font-normal border rounded-md"
               value={formData.firstname}
               onChange={handleChange}
             />
@@ -115,19 +115,19 @@ const ResumeForm = ({ formData, onChange }) => {
             <input
               name="lastname"
               placeholder="Enter Last Name"
-              className="border text-base font-normal px-2 py-1 rounded-md"
+              className="px-2 py-1 text-base font-normal border rounded-md"
               value={formData.lastname}
               onChange={handleChange}
             />
           </label>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <label className="flex flex-col text-[18px] text-gray-700">
             Phone Number:
             <input
               name="phone"
               placeholder="Enter Phone Number"
-              className="border text-base font-normal px-2 py-1 rounded-md"
+              className="px-2 py-1 text-base font-normal border rounded-md"
               value={formData.phone}
               onChange={handleChange}
             />
@@ -137,7 +137,7 @@ const ResumeForm = ({ formData, onChange }) => {
             <input
               name="email"
               placeholder="Enter Email"
-              className="border text-base font-normal px-2 py-1 rounded-md"
+              className="px-2 py-1 text-base font-normal border rounded-md"
               value={formData.email}
               onChange={handleChange}
             />
@@ -150,7 +150,7 @@ const ResumeForm = ({ formData, onChange }) => {
         <label className="text-[18px] text-gray-700">Profile Summary:</label>
         <textarea
           name="summary"
-          className="w-full border text-base px-2 py-1 rounded-md"
+          className="w-full px-2 py-1 text-base border rounded-md"
           placeholder="Summary"
           value={formData.summary}
           onChange={handleChange}
@@ -162,29 +162,29 @@ const ResumeForm = ({ formData, onChange }) => {
         <h3 className="text-[18px] text-gray-700">Experience:</h3>
         {formData.experiences.map((experience, index) => (
           <div key={index} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <input
                 name="title"
                 placeholder="Job Title"
-                className="border text-base font-normal px-2 py-1 rounded-md"
+                className="px-2 py-1 text-base font-normal border rounded-md"
                 value={experience.title}
                 onChange={(e) => handleExperienceChange(index, e)}
               />
               <input
                 name="company"
                 placeholder="Company"
-                className="border text-base font-normal px-2 py-1 rounded-md"
+                className="px-2 py-1 text-base font-normal border rounded-md"
                 value={experience.company}
                 onChange={(e) => handleExperienceChange(index, e)}
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <label className="flex flex-col text-[18px] text-gray-700">
                 Start Date:
                 <input
                   type="date"
                   name="startDate"
-                  className="border text-base font-normal px-2 py-1 rounded-md"
+                  className="px-2 py-1 text-base font-normal border rounded-md"
                   value={experience.startDate}
                   onChange={(e) => handleExperienceChange(index, e)}
                 />
@@ -194,7 +194,7 @@ const ResumeForm = ({ formData, onChange }) => {
                 <input
                   type="date"
                   name="endDate"
-                  className="border text-base font-normal px-2 py-1 rounded-md"
+                  className="px-2 py-1 text-base font-normal border rounded-md"
                   value={experience.endDate}
                   onChange={(e) => handleExperienceChange(index, e)}
                 />
@@ -204,7 +204,7 @@ const ResumeForm = ({ formData, onChange }) => {
               <textarea
                 name="description"
                 placeholder="Description"
-                className="w-full border text-base px-2 py-1 rounded-md text-gray-400"
+                className="w-full px-2 py-1 text-base text-gray-400 border rounded-md"
                 value={experience.description}
                 onChange={(e) => handleExperienceChange(index, e)}
               ></textarea>
@@ -235,14 +235,14 @@ const ResumeForm = ({ formData, onChange }) => {
             <input
               name="title"
               placeholder="Project Title"
-              className="w-full border text-base px-2 py-1 rounded-md"
+              className="w-full px-2 py-1 text-base border rounded-md"
               value={project.title}
               onChange={(e) => handleProjectChange(index, e)}
             />
             <textarea
               name="description"
               placeholder="Project Description"
-              className="w-full border text-base px-2 py-1 rounded-md"
+              className="w-full px-2 py-1 text-base border rounded-md"
               value={project.description}
               onChange={(e) => handleProjectChange(index, e)}
             ></textarea>
@@ -269,29 +269,29 @@ const ResumeForm = ({ formData, onChange }) => {
         <h3 className="text-[18px] text-gray-700">Education:</h3>
         {formData.educations.map((education, index) => (
           <div key={index} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <input
                 name="degree"
                 placeholder="Degree"
-                className="w-full border text-base px-2 py-1 rounded-md"
+                className="w-full px-2 py-1 text-base border rounded-md"
                 value={education.degree}
                 onChange={(e) => handleEducationChange(index, e)}
               />
               <input
                 name="institution"
                 placeholder="Institution"
-                className="border text-base px-2 py-1 rounded-md"
+                className="px-2 py-1 text-base border rounded-md"
                 value={education.institution}
                 onChange={(e) => handleEducationChange(index, e)}
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <label className="flex flex-col text-[18px] text-gray-700">
                 Start Date:
                 <input
                   type="date"
                   name="startDate"
-                  className="border text-base px-2 py-1 rounded-md"
+                  className="px-2 py-1 text-base border rounded-md"
                   value={education.startDate}
                   onChange={(e) => handleEducationChange(index, e)}
                 />
@@ -301,7 +301,7 @@ const ResumeForm = ({ formData, onChange }) => {
                 <input
                   type="date"
                   name="endDate"
-                  className="border text-base px-2 py-1 rounded-md"
+                  className="px-2 py-1 text-base border rounded-md"
                   value={education.endDate}
                   onChange={(e) => handleEducationChange(index, e)}
                 />
@@ -334,7 +334,7 @@ const ResumeForm = ({ formData, onChange }) => {
           <input
             name="technicalSkills"
             placeholder="Enter technical skills separated by commas"
-            className="w-full border text-base px-2 py-1 rounded-md"
+            className="w-full px-2 py-1 text-base border rounded-md"
             value={formData.technicalSkills}
             onChange={(e) => handleSkillChange("technicalSkills", e)}
           />
@@ -344,7 +344,7 @@ const ResumeForm = ({ formData, onChange }) => {
           <input
             name="softSkills"
             placeholder="Enter soft skills separated by commas"
-            className="w-full border text-base px-2 py-1 rounded-md"
+            className="w-full px-2 py-1 text-base border rounded-md"
             value={formData.softSkills}
             onChange={(e) => handleSkillChange("softSkills", e)}
           />

@@ -196,14 +196,12 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     }
   };
 
-
   return (
     <div  >
       <form>
         <div className="maintable">
-          <table className="table  table-striped  text-center studTables" >
+          <table className="table text-center table-striped studTables" >
             <tbody >
-
               <tr >
                 <th scope="col" style={{ textAlign: "center", color: "gray" }} >Date & Time:</th>
 

@@ -88,3 +88,8 @@ background-color: white;
   opacity: 0.8;
 }
 /* today */
+.updatebtn{
+  background-color: #ffcb9b;
+  color: white;
+  height: 30px;
+}
