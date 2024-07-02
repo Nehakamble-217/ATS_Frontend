@@ -193,11 +193,12 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Source Name</th>
               <th className="attendanceheading">Emp ID</th>
               <th className="attendanceheading">Line Up ID</th>
+              <th className="attendanceheading">Added Time</th>
+              <th className="attendanceheading">Full Address</th>
+              <th className="attendanceheading">Incentive</th>
               <th className="attendanceheading">Availability for Interview</th>
               <th className="attendanceheading">Company Name</th>
-              <th className="attendanceheading">Current CTC</th>
               <th className="attendanceheading">Date of Birth</th>
-              <th className="attendanceheading">Expected CTC</th>
               <th className="attendanceheading">Extra Certification</th>
               <th className="attendanceheading">Feedback</th>
               <th className="attendanceheading">Final Status</th>
@@ -205,25 +206,38 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Holding Any Offer</th>
               <th className="attendanceheading">Message for Team Leader</th>
               <th className="attendanceheading">Notice Period</th>
+            
               <th className="attendanceheading">Qualification</th>
               <th className="attendanceheading">Resume</th>
-              <th className="attendanceheading">Total Experience</th>
               <th className="attendanceheading">Year of Passing</th>
               <th className="attendanceheading">Interview Time</th>
+              <th className="attendanceheading">Experince In Year</th>
+              <th className="attendanceheading">Experince In Month</th>
+
+              <th className="attendanceheading">Current CTC Lakh</th>
+              <th className="attendanceheading">Current CTC Thousand</th>
+              <th className="attendanceheading">Expected CTC Lakh</th>
+              <th className="attendanceheading">Expected CTC Thousand</th>
+              <th className="attendanceheading">Offer Letter Msg</th>
+              <th className="attendanceheading">Relevant Experince</th>
+         
               <th className="attendanceheading">Response Update ID</th>
               <th className="attendanceheading">Interview Response</th>
               <th className="attendanceheading">Interview Round</th>
               <th className="attendanceheading">Next Interview Date</th>
               <th className="attendanceheading">Response Updated Date</th>
               <th className="attendanceheading">Next Interview Timing</th>
+
               <th className="attendanceheading">Details ID</th>
               <th className="attendanceheading">Mail Received</th>
+
               <th className="attendanceheading">Aadhaar Card</th>
               <th className="attendanceheading">PAN Card</th>
               <th className="attendanceheading">Driving License</th>
               <th className="attendanceheading">Degree Mark Sheet</th>
               <th className="attendanceheading">HSC Mark Sheet</th>
               <th className="attendanceheading">SSC Mark Sheet</th>
+
               <th className="attendanceheading">Offer Letter Received</th>
               <th className="attendanceheading">Offer Letter Accepted</th>
               <th className="attendanceheading">
@@ -232,6 +246,7 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Join Status</th>
               <th className="attendanceheading">Reason for Not Join</th>
               <th className="attendanceheading">Join Date</th>
+              
               <th className="attendanceheading">Inquiry ID</th>
               <th className="attendanceheading">Active Status</th>
               <th className="attendanceheading">Any Problem</th>
@@ -262,10 +277,7 @@ const EmployeeMasterSheet = () => {
                 ))}
                 {[42, 43, 44, 45, 46, 47].map((fileIndex) => (
                   <td className="tabledata" key={fileIndex}>
-                    <i
-                      onClick={() => handleViewFile(entry[fileIndex])}
-                      className="fa-sharp fa-solid fa-eye"
-                    ></i>
+      
                   </td>
                 ))}
                 {entry.slice(48).map((cell, cellIndex) => (
@@ -277,7 +289,6 @@ const EmployeeMasterSheet = () => {
             ))}
           </tbody>
         </table>
-
         {showForwardPopup ? (
           <>
             <div
@@ -358,7 +369,6 @@ const EmployeeMasterSheet = () => {
           </>
         ) : null}
       </div>
-
       <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>View File</Modal.Title>

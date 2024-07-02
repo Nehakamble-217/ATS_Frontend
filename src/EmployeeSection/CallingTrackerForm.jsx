@@ -117,15 +117,15 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
   // ------------------------------------------------------------
 
-  useEffect(() => {
-    if (candidateData) {
-      setFormData(candidateData);
-      setCallingTracker({
-        ...initialCallingTrackerState,
-        ...candidateData,
-      });
-    }
-  }, [candidateData]);
+  // useEffect(() => {
+  //   if (candidateData) {
+  //     setFormData(candidateData);
+  //     setCallingTracker({
+  //       ...initialCallingTrackerState,
+  //       ...candidateData,
+  //     });
+  //   }
+  // }, [candidateData]);
 
   // -------------------------------------------------------------------------
 
@@ -505,9 +505,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
-                    className={`form-control ${
-                      errors.candidateName ? "is-invalid" : ""
-                    }`}
+                    className={`form-control ${errors.candidateName ? "is-invalid" : ""
+                      }`}
                     style={{
                       height: "30px",
                       width: "100%",
@@ -609,9 +608,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                 </th>
                 <td className="onlyselect">
                   <select
-                    className={`form-control ${
-                      errors.sourceName ? "is-invalid" : ""
-                    }`}
+                    className={`form-control ${errors.sourceName ? "is-invalid" : ""
+                      }`}
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
