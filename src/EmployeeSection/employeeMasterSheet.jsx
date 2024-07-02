@@ -78,7 +78,7 @@ const EmployeeMasterSheet = () => {
     if (allSelected) {
       setSelectedRows([]);
     } else {
-      const allRowIds = data.map((item) => item.candidateId);
+      const allRowIds = data.map((item) => item[0]); // Assuming candidateId is the first element
       setSelectedRows(allRowIds);
     }
     setAllSelected(!allSelected);
@@ -114,7 +114,6 @@ const EmployeeMasterSheet = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          // Add any additional headers as needed
         },
         body: JSON.stringify(requestData),
       };
@@ -125,18 +124,72 @@ const EmployeeMasterSheet = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        // Handle success response
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
-
-        // Optionally, you can fetch updated data after successful submission
-        // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
         console.error("Error while forwarding candidates:", error);
-        // Handle error scenarios or show error messages to the user
       }
     }
   };
+
+  //Name:-Akash Pawar Component:-EmployeeMarksheet Subcategory:-ResumeViewButton(added) start LineNo:-135 Date:-02/07
+  const convertToDocumentLink = (byteCode, fileName) => {
+    if (byteCode) {
+      try {
+        // Detect file type based on file name extension or content
+        const fileType = fileName.split(".").pop().toLowerCase();
+
+        // Convert PDF
+        if (fileType === "pdf") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], { type: "application/pdf" });
+          return URL.createObjectURL(blob);
+        }
+
+        // Convert Word document (assuming docx format)
+        if (fileType === "docx") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          return URL.createObjectURL(blob);
+        }
+
+        // Handle other document types here if needed
+
+        // If file type is not supported
+        console.error(`Unsupported document type: ${fileType}`);
+        return "Unsupported Document";
+      } catch (error) {
+        console.error("Error converting byte code to document:", error);
+        return "Invalid Document";
+      }
+    }
+    return "Document Not Found";
+  };
+
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
+  const [selectedCandidateDocument, setSelectedCandidateDocument] =
+    useState("");
+
+  const openDocumentModal = (byteCode) => {
+    setSelectedCandidateDocument(byteCode);
+    setShowDocumentModal(true);
+  };
+
+  const closeDocumentModal = () => {
+    setSelectedCandidateDocument("");
+    setShowDocumentModal(false);
+  };
+  //Name:-Akash Pawar Component:-EmployeeMarksheet Subcategory:-ResumeViewButton(added) End LineNo:-167 Date:-02/07
 
   return (
     <div className="App-after">
@@ -144,20 +197,35 @@ const EmployeeMasterSheet = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems:"center",
+          alignItems: "center",
           padding: "10px",
         }}
       >
         <div></div>
         {showShareButton ? (
-          <button className="lineUp-share-btn" onClick={() => setShowShareButton(false)}>Share</button>
+          <button
+            className="lineUp-share-btn"
+            onClick={() => setShowShareButton(false)}
+          >
+            Share
+          </button>
         ) : (
           <div style={{ display: "flex", gap: "5px" }}>
-            <button className="lineUp-share-btn" onClick={() => setShowShareButton(true)}>Close</button>
+            <button
+              className="lineUp-share-btn"
+              onClick={() => setShowShareButton(true)}
+            >
+              Close
+            </button>
             <button className="lineUp-share-btn" onClick={handleSelectAll}>
               {allSelected ? "Deselect All" : "Select All"}
             </button>
-            <button className="lineUp-share-btn" onClick={forwardSelectedCandidate}>Forward</button>
+            <button
+              className="lineUp-share-btn"
+              onClick={forwardSelectedCandidate}
+            >
+              Forward
+            </button>
           </div>
         )}
       </div>
@@ -193,11 +261,12 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Source Name</th>
               <th className="attendanceheading">Emp ID</th>
               <th className="attendanceheading">Line Up ID</th>
+              <th className="attendanceheading">Added Time</th>
+              <th className="attendanceheading">Full Address</th>
+              <th className="attendanceheading">Incentive</th>
               <th className="attendanceheading">Availability for Interview</th>
               <th className="attendanceheading">Company Name</th>
-              <th className="attendanceheading">Current CTC</th>
               <th className="attendanceheading">Date of Birth</th>
-              <th className="attendanceheading">Expected CTC</th>
               <th className="attendanceheading">Extra Certification</th>
               <th className="attendanceheading">Feedback</th>
               <th className="attendanceheading">Final Status</th>
@@ -207,9 +276,16 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Notice Period</th>
               <th className="attendanceheading">Qualification</th>
               <th className="attendanceheading">Resume</th>
-              <th className="attendanceheading">Total Experience</th>
               <th className="attendanceheading">Year of Passing</th>
               <th className="attendanceheading">Interview Time</th>
+              <th className="attendanceheading">Experience In Year</th>
+              <th className="attendanceheading">Experience In Month</th>
+              <th className="attendanceheading">Current CTC Lakh</th>
+              <th className="attendanceheading">Current CTC Thousand</th>
+              <th className="attendanceheading">Expected CTC Lakh</th>
+              <th className="attendanceheading">Expected CTC Thousand</th>
+              <th className="attendanceheading">Offer Letter Msg</th>
+              <th className="attendanceheading">Relevant Experience</th>
               <th className="attendanceheading">Response Update ID</th>
               <th className="attendanceheading">Interview Response</th>
               <th className="attendanceheading">Interview Round</th>
@@ -249,30 +325,183 @@ const EmployeeMasterSheet = () => {
                   <td className="tabledata">
                     <input
                       type="checkbox"
-                      checked={selectedRows.includes(entry.candidateId)}
-                      onChange={() => handleSelectRow(entry.candidateId)}
+                      checked={selectedRows.includes(entry[0])}
+                      onChange={() => handleSelectRow(entry[0])}
                     />
                   </td>
                 ) : null}
 
-                {entry.slice(0, 42).map((cell, cellIndex) => (
-                  <td className="tabledata" key={cellIndex}>
-                    {cell}
-                  </td>
-                ))}
-                {[42, 43, 44, 45, 46, 47].map((fileIndex) => (
-                  <td className="tabledata" key={fileIndex}>
-                    <i
-                      onClick={() => handleViewFile(entry[fileIndex])}
-                      className="fa-sharp fa-solid fa-eye"
-                    ></i>
-                  </td>
-                ))}
-                {entry.slice(48).map((cell, cellIndex) => (
-                  <td className="tabledata" key={42 + cellIndex}>
-                    {cell}
-                  </td>
-                ))}
+                <td className="tabledata">{entry[0]}</td>
+                <td className="tabledata">{entry[1]}</td>
+                <td className="tabledata">{entry[2]}</td>
+                <td className="tabledata">{entry[3]}</td>
+                <td className="tabledata">{entry[4]}</td>
+                <td className="tabledata">{entry[5]}</td>
+                <td className="tabledata">{entry[6]}</td>
+                <td className="tabledata">{entry[7]}</td>
+                <td className="tabledata">{entry[8]}</td>
+                <td className="tabledata">{entry[9]}</td>
+                <td className="tabledata">{entry[10]}</td>
+                <td className="tabledata">{entry[11]}</td>
+                <td className="tabledata">{entry[12]}</td>
+                <td className="tabledata">{entry[13]}</td>
+                <td className="tabledata">{entry[14]}</td>
+                <td className="tabledata">{entry[15]}</td>
+                <td className="tabledata">{entry[16]}</td>
+                <td className="tabledata">{entry[17]}</td>
+                <td className="tabledata">{entry[18]}</td>
+                <td className="tabledata">{entry[19]}</td>
+                <td className="tabledata">{entry[20]}</td>
+                <td className="tabledata">{entry[21]}</td>
+                <td className="tabledata">{entry[22]}</td>
+                <td className="tabledata">{entry[23]}</td>
+                <td className="tabledata">{entry[24]}</td>
+                <td className="tabledata">{entry[25]}</td>
+                <td className="tabledata">{entry[26]}</td>
+                <td className="tabledata">{entry[27]}</td>
+                <td className="tabledata">{entry[28]}</td>
+                <td className="tabledata">{entry[29]}</td>
+                <td className="tabledata">{entry[30]}</td>
+
+                {/* <td className="tabledata">{entry[31]}</td> */}
+                {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+                  Subcategory:-ResumeViewButton(added) start LineNo:-340
+                  Date:-02/07 */}
+                <td className="tabledata">
+                  <button
+                    className="text-secondary"
+                    onClick={() => openDocumentModal(entry[31])}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </button>
+                </td>
+                {/* Name:-Akash Pawar Component:-EmployeeMarkSheet
+                  Subcategory:-ResumeViewButton(added) End LineNo:-354
+                  Date:-02/07 */}
+
+                <td className="tabledata">{entry[32]}</td>
+                <td className="tabledata">{entry[33]}</td>
+                <td className="tabledata">{entry[34]}</td>
+                <td className="tabledata">{entry[35]}</td>
+                <td className="tabledata">{entry[36]}</td>
+                <td className="tabledata">{entry[37]}</td>
+                <td className="tabledata">{entry[38]}</td>
+                <td className="tabledata">{entry[39]}</td>
+                <td className="tabledata">{entry[40]}</td>
+                <td className="tabledata">{entry[41]}</td>
+                <td className="tabledata">{entry[42]}</td>
+                <td className="tabledata">{entry[43]}</td>
+                <td className="tabledata">{entry[44]}</td>
+                <td className="tabledata">{entry[45]}</td>
+                <td className="tabledata">{entry[46]}</td>
+                <td className="tabledata">{entry[47]}</td>
+                <td className="tabledata">{entry[48]}</td>
+                <td className="tabledata">{entry[49]}</td>
+
+                {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+                  Subcategory:-ResumeViewButton(added) start LineNo:-378
+                  Date:-02/07 */}
+                <td className="tabledata">
+                  <button
+                    className="text-secondary"
+                    onClick={() => openDocumentModal(entry[50])}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </button>
+                </td>
+                {/* Name:-Akash Pawar Component:-Rejected
+                  Subcategory:-ResumeViewButton(added) End LineNo:-389
+                  Date:-02/07 */}
+
+                {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+                  Subcategory:-ResumeViewButton(added) start LineNo:-391
+                  Date:-02/07 */}
+                <td className="tabledata">
+                  <button
+                    className="text-secondary"
+                    onClick={() => openDocumentModal(entry[51])}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </button>
+                </td>
+                {/* Name:-Akash Pawar Component:-Rejected
+                  Subcategory:-ResumeViewButton(added) End LineNo:-403
+                  Date:-02/07 */}
+
+                {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+                  Subcategory:-ResumeViewButton(added) start LineNo:-407
+                  Date:-02/07 */}
+                <td className="tabledata">
+                  <button
+                    className="text-secondary"
+                    onClick={() => openDocumentModal(entry[52])}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </button>
+                </td>
+                {/* Name:-Akash Pawar Component:-EmployeeMarksheet
+                  Subcategory:-ResumeViewButton(added) End LineNo:-418
+                  Date:-02/07 */}
+
+                {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+                  Subcategory:-ResumeViewButton(added) start LineNo:-422
+                  Date:-02/07 */}
+                <td className="tabledata">
+                  <button
+                    className="text-secondary"
+                    onClick={() => openDocumentModal(entry[53])}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </button>
+                </td>
+                {/* Name:-Akash Pawar Component:-EmployeeMarkSheet
+                  Subcategory:-ResumeViewButton(added) End LineNo:-433
+                  Date:-02/07 */}
+
+                {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+                  Subcategory:-ResumeViewButton(added) start LineNo:-437
+                  Date:-02/07 */}
+                <td className="tabledata">
+                  <button
+                    className="text-secondary"
+                    onClick={() => openDocumentModal(entry[54])}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </button>
+                </td>
+                {/* Name:-Akash Pawar Component:-Rejected
+                  Subcategory:-ResumeViewButton(added) End LineNo:-448
+                  Date:-02/07 */}
+
+                {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+                  Subcategory:-ResumeViewButton(added) start LineNo:-451
+                  Date:-02/07 */}
+                <td className="tabledata">
+                  <button
+                    className="text-secondary"
+                    onClick={() => openDocumentModal(entry[55])}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </button>
+                </td>
+                {/* Name:-Akash Pawar Component:-EmployeeMarksheet
+                  Subcategory:-ResumeViewButton(added) End LineNo:-463
+                  Date:-02/07 */}
+
+                <td className="tabledata">{entry[56]}</td>
+                <td className="tabledata">{entry[57]}</td>
+                <td className="tabledata">{entry[58]}</td>
+                <td className="tabledata">{entry[59]}</td>
+                <td className="tabledata">{entry[60]}</td>
+                <td className="tabledata">{entry[61]}</td>
+                <td className="tabledata">{entry[62]}</td>
+                <td className="tabledata">{entry[63]}</td>
+                <td className="tabledata">{entry[64]}</td>
+                <td className="tabledata">{entry[65]}</td>
+                <td className="tabledata">{entry[66]}</td>
+                <td className="tabledata">{entry[67]}</td>
+                <td className="tabledata">{entry[68]}</td>
+                <td className="tabledata">{entry[69]}</td>
               </tr>
             ))}
           </tbody>
@@ -359,27 +588,35 @@ const EmployeeMasterSheet = () => {
         ) : null}
       </div>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
+      {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+          Subcategory:-ResumeModel(added) End LineNo:-567 Date:-02/07 */}
+      <Modal show={showDocumentModal} onHide={closeDocumentModal} size="md">
         <Modal.Header closeButton>
-          <Modal.Title>View File</Modal.Title>
+          <Modal.Title>Document</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {fileUrl ? (
+          {selectedCandidateDocument ? (
             <iframe
-              src={fileUrl}
-              title="PDF File"
-              style={{ width: "100%", height: "500px" }}
-            />
+              src={convertToDocumentLink(
+                selectedCandidateDocument,
+                "Document.pdf"
+              )}
+              width="100%"
+              height="550px"
+              title="PDF Viewer"
+            ></iframe>
           ) : (
-            <p>No file to display</p>
+            <p>No Document available</p>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button variant="secondary" onClick={closeDocumentModal}>
             Close
           </Button>
         </Modal.Footer>
       </Modal>
+      {/* Name:-Akash Pawar Component:-EmployeeMasterSheet
+          Subcategory:-ResumeModel(added) End LineNo:-592 Date:-02/07 */}
     </div>
   );
 };

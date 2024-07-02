@@ -50,7 +50,7 @@
   }
   tr{
     margin-right: 10px;
-    width: 1500px;
+    /* width: 1500px; */
     border: 1px solid gray;
     white-space: nowrap;
   }

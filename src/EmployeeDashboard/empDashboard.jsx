@@ -437,11 +437,11 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showResumeData && <ResumeData handleUpdate={handleUpdate} />}
         </div>
-        <div>{showAddEmployee && <AddEmployee />}</div>
+        {/* <div>{showAddEmployee && <AddEmployee />}</div>
         <div>{selectCandidate && <SelectedCandidate />}</div>
         <div>{rejectedCandidate && <RejectedCandidate />}</div>
-        <div>{holdCandidate && <HoldCandidate />}</div>
-        <div>{showCallingExcel && <CallingExcel />}</div>
+        <div>{holdCandidate && <HoldCandidate />}</div> */}
+        {/* <div>{showCallingExcel && <CallingExcel />}</div> */}
         <div>{showResumeData && <ResumeData />}</div>
         <div>{showNotePad && <NotePad />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
