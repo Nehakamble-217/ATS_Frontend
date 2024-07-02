@@ -35,6 +35,9 @@ function Sidebar({
   toggleAssigncolumns,
   toggeExcelCallingData,
   toggelExcelLineup,
+  toggleShareLink
+
+
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -154,9 +157,11 @@ function Sidebar({
 
   return (
     <>
+
       <div className={`sidebar ${isActive ? "active" : ""}`}>
         <div className="sidebar-clouds1"></div>
-        <div className="head"></div>
+        {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */ }
+        <div className="head-sidebar">
         <div className="sidebar-menu-btn" onClick={toggleSidebar}>
           <i className={`ph-bold ph-caret-${isActive ? "right" : "left"}`}></i>
         </div>
@@ -553,7 +558,8 @@ function Sidebar({
                     </a>
                   </li>
 
-                  <li style={{ marginLeft: "10px" }}>
+                  <li style={{marginLeft: "10px"}} onClick={toggleShareLink}>
+
                     <a href="#">
                       <span className="sidebar-text">Send Link</span>
                     </a>
@@ -669,8 +675,9 @@ function Sidebar({
           <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
             <ul></ul>
           </div>
+          </div>
         </div>
-      </div>
+        </div>
     </>
   );
 }

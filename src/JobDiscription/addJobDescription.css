@@ -1,3 +1,5 @@
+/* Swapnil_JobDescription_FullPageDesign_1to175_02/07 */
+
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +18,7 @@
   }
   
   .job-performance {
-    background-color: #ffe5b5;
+    /* background-color: #ffe5b5; */
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -34,27 +36,50 @@
   
   
   .field-column {
-    flex: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 0px;
     width: 100%;
     /* height: 650px; */
     /* max-height: 100vh; */
   }
-  
-  .field {
+  .field-Row-Gray{
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    background-color: #F2F2F2;
+    justify-content: space-around;
+    align-items: center;
+    /* padding: 3px 0px ; */
+  }
+  .field-Row-white
+  {
+    width: 100%;
+    display: flex;
+    background-color: white;
+    justify-content: space-around;
+    align-items: center;
+    /* padding: 3px 0px ; */
+
+  }
+  .field {
+    width: 100%;
+    display: flex;
+    padding: 5px 0px;
+    border: 1px solid gray;
   }
   
   .field label {
-    color: gray;
-    font-weight: bold;
+    width: 29%;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    align-items: center;
+     color:gray;
+    /* font-weight: bold; */
   }
   
   .field input,
@@ -62,7 +87,7 @@
     padding: 4px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width:320px;
+    width:69%;
   }
   
   .save {
@@ -91,18 +116,65 @@
     border: #f2f2f2;
   } */
   .textarea{
-      width: 100%; 
-    height: 40px;
-    padding: 5px;
+    width: 69%; 
+    height: 34px;
     border: 1px solid gray;
-    border-radius: 15px;
+    border-radius: 5px;
     margin-bottom: 0; 
     resize: vertical;
     font-family: Arial, sans-serif;
     font-size: 16px;
   }
-  
-  @media (max-width: 768px) {
+  .multi-field
+  {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid gray; */
+    gap: 2px;
+    padding-bottom:5px;
+    margin-bottom: 2px;
+    overflow: hidden;
+  }
+  .inner-field label
+  {
+    width: 20%;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    align-items: center;
+     color:gray;
+  }
+  .inner-field input{
+    width: 80%;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .job-button
+  {
+    width: 25%;
+    height: 30px;
+    background-color: #ffcb9b;
+    border-radius: 15px;
+    color: white;
+    border: 1px solid gray;
+    padding: 2px 15px;
+  }
+  .job-button:hover
+  {
+    color: #ffcb9b;
+    background-color: white;
+  }
+  .job-submit-button
+  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* @media (max-width: 768px) {
     .job-performance {
       width: 100%;
       max-height: fit-content;
@@ -122,11 +194,11 @@
     width:26%!important;
   } */
 
-  @media (max-width: 1260px) {
+  /* @media (max-width: 1260px) {
     .field input .field select{
-        width: 320px!important;
+        width: 320 px!important;
     }
 
     
 
-  }
+  } */

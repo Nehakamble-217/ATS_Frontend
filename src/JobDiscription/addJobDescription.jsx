@@ -36,6 +36,9 @@ const AddJobDescription = () => {
     preferredQualifications: [
       { employeeId: "", preferredQualificationMsg: "" },
     ],
+    RoundOfInterView:[
+      {round:""}
+    ],
   });
 
   const handleChange = (e) => {
@@ -124,6 +127,9 @@ const AddJobDescription = () => {
           preferredQualifications: [
             { employeeId: "", preferredQualificationMsg: "" },
           ],
+          RoundOfInterView:[
+            {round:""}
+          ],
         });
       } else {
         console.error("Error:", response.statusText);
@@ -141,9 +147,10 @@ const AddJobDescription = () => {
         </article>
         <form onSubmit={handleSubmit}>
           <div className="field-column">
+            <div className="field-Row-Gray">
             <div className="field">
               <label>
-                <b>Company Name: </b>
+                Company Name: 
               </label>
               <input
                 type="text"
@@ -154,7 +161,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Designation: </b>
+                Designation:
               </label>
               <input
                 type="text"
@@ -163,9 +170,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-white">
             <div className="field">
               <label>
-                <b>Position: </b>
+                Position:
               </label>
               <input
                 type="text"
@@ -176,7 +185,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Qualification: </b>
+                Qualification:
               </label>
               <input
                 type="text"
@@ -185,9 +194,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-Gray">
             <div className="field">
               <label>
-                <b>Year of Passing: </b>
+                Year of Passing:
               </label>
               <input
                 type="text"
@@ -198,7 +209,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Field: </b>
+                Field:
               </label>
               <input
                 type="text"
@@ -207,9 +218,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-white">
             <div className="field">
               <label>
-                <b>Stream: </b>
+                Stream:
               </label>
               <input
                 type="text"
@@ -220,7 +233,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Location: </b>
+                Location:
               </label>
               <input
                 type="text"
@@ -229,9 +242,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-Gray">
             <div className="field">
               <label>
-                <b>Salary: </b>
+                Salary:
               </label>
               <input
                 type="text"
@@ -242,7 +257,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Job Type: </b>
+                Job Type:
               </label>
               <select
                 name="job_type"
@@ -256,9 +271,11 @@ const AddJobDescription = () => {
                 <option value="Internship">Internship</option>
               </select>
             </div>
+            </div>
+            <div className="field-Row-white">
             <div className="field">
               <label>
-                <b>Experience: </b>
+                Experience:
               </label>
               <input
                 type="text"
@@ -269,7 +286,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Bond: </b>
+                Bond:
               </label>
               <input
                 type="text"
@@ -278,9 +295,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-Gray">
             <div className="field">
               <label>
-                <b>Percentage: </b>
+                Percentage:
               </label>
               <input
                 type="text"
@@ -291,7 +310,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Skills: </b>
+                Skills:
               </label>
               <input
                 type="text"
@@ -300,9 +319,12 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-white">
+           
             <div className="field">
               <label>
-                <b>Company Link: </b>
+                Company Link:
               </label>
               <input
                 type="text"
@@ -313,7 +335,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Detailed Address: </b>
+                Detailed Address:
               </label>
               <input
                 type="text"
@@ -322,9 +344,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-Gray">
             <div className="field">
               <label>
-                <b>Shift: </b>
+                Shift:
               </label>
               <input
                 type="text"
@@ -335,7 +359,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Week Off: </b>
+                Week Off:
               </label>
               <input
                 type="text"
@@ -344,9 +368,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-white">
             <div className="field">
               <label>
-                <b>Notice Period: </b>
+                Notice Period:
               </label>
               <input
                 type="text"
@@ -357,7 +383,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Job Role: </b>
+                Job Role:
               </label>
               <input
                 type="text"
@@ -366,9 +392,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-Gray">
             <div className="field">
               <label>
-                <b>Perks: </b>
+                Perks:
               </label>
               <input
                 type="text"
@@ -379,7 +407,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Incentive: </b>
+                Incentive:
               </label>
               <input
                 type="text"
@@ -388,9 +416,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-white">
             <div className="field">
               <label>
-                <b>Reporting Hierarchy: </b>
+                Reporting Hierarchy:
               </label>
               <input
                 type="text"
@@ -401,7 +431,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Gender: </b>
+                Gender:
               </label>
               <select
                 name="gender"
@@ -415,9 +445,11 @@ const AddJobDescription = () => {
                 <option value="Any">Any</option>
               </select>
             </div>
+            </div>
+            <div className="field-Row-Gray">
             <div className="field">
               <label>
-                <b>Documentation: </b>
+                Documentation:
               </label>
               <input
                 type="text"
@@ -428,7 +460,7 @@ const AddJobDescription = () => {
             </div>
             <div className="field">
               <label>
-                <b>Age Criteria: </b>
+                Age Criteria:
               </label>
               <input
                 type="text"
@@ -437,9 +469,11 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
+            </div>
+            <div className="field-Row-white">
             <div className="field">
               <label>
-                <b>Note: </b>
+                Note:
               </label>
               <input
                 type="text"
@@ -448,13 +482,10 @@ const AddJobDescription = () => {
                 onChange={handleChange}
               />
             </div>
-          </div>
-
-          <div className="position-overview">
-            {/* <h3>Position Overview</h3> */}
+          
             <div className="field">
               <label>
-                <b>Position Overview: </b>
+                Position Overview:
               </label>
               <textarea
                 name="overview"
@@ -464,14 +495,43 @@ const AddJobDescription = () => {
               />
             </div>
           </div>
+          </div>
+          <div className="multi-field bg-gray-100">
+            {/* <h3>Preferred Qualifications</h3> */}
+            {formData.RoundOfInterView.map((item, index) => (
+              <div key={index}>
+              
+                <div className="field">
+                  <label>
+                    Interview Round:
+                  </label>
+                  <textarea
+                    className="textarea"
+                    name="preferredQualificationMsg"
+                    value={item.preferredQualificationMsg}
+                    onChange={(e) =>
+                      handleInputChange(e, "RoundOfInterView", index)
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+            <button
+              type="button"
+              className="job-button"
+              onClick={() => handleAddMore("RoundOfInterView")}
+            >
+              Add More Interview Rounds
+            </button>
+          </div>
 
-          <div className="responsibilities">
+          <div className="multi-field bg-white">
             {/* <h3>Responsibilities</h3> */}
             {formData.responsibilities.map((item, index) => (
               <div key={index}>
                 <div className="field" hidden>
                   <label>
-                    <b>Employee ID: </b>
+                    Employee ID:
                   </label>
                   <input
                     type="text"
@@ -485,7 +545,7 @@ const AddJobDescription = () => {
                 </div>
                 <div className="field">
                   <label>
-                    <b>Responsibility Message: </b>
+                    Responsibility Message:
                   </label>
                   <textarea
                     className="textarea"
@@ -500,20 +560,20 @@ const AddJobDescription = () => {
             ))}
             <button
               type="button"
-              className="mt-3 mb-3 loging-hr"
+              className="job-button"
               onClick={() => handleAddMore("responsibilities")}
             >
               Add More Responsibilities
             </button>
           </div>
 
-          <div className="job-requirements">
+          <div className="multi-field bg-gray-100">
             {/* <h3>Job Requirements</h3> */}
             {formData.jobRequirements.map((item, index) => (
               <div key={index}>
                 <div className="field" hidden>
                   <label>
-                    <b>Employee ID: </b>
+                    Employee ID:
                   </label>
                   <input
                     type="text"
@@ -526,7 +586,7 @@ const AddJobDescription = () => {
                 </div>
                 <div className="field">
                   <label>
-                    <b>Job Requirement Message: </b>
+                    Job Requirement Message: 
                   </label>
                   <textarea
                     className="textarea"
@@ -541,20 +601,20 @@ const AddJobDescription = () => {
             ))}
             <button
               type="button"
-              className="mt-3 mb-3 loging-hr"
+              className="job-button"
               onClick={() => handleAddMore("jobRequirements")}
             >
               Add More Job Requirements
             </button>
           </div>
 
-          <div className="preferred-qualifications">
+          <div className="multi-field">
             {/* <h3>Preferred Qualifications</h3> */}
             {formData.preferredQualifications.map((item, index) => (
               <div key={index}>
                 <div className="field" hidden>
                   <label>
-                    <b>Employee ID: </b>
+                    Employee ID:
                   </label>
                   <input
                     type="text"
@@ -567,7 +627,7 @@ const AddJobDescription = () => {
                 </div>
                 <div className="field">
                   <label>
-                    <b>Preferred Qualification Message: </b>
+                    Preferred Qualification Message:
                   </label>
                   <textarea
                     className="textarea"
@@ -582,14 +642,14 @@ const AddJobDescription = () => {
             ))}
             <button
               type="button"
-              className="mt-3 mb-3 loging-hr"
+              className="job-button"
               onClick={() => handleAddMore("preferredQualifications")}
             >
               Add More Preferred Qualifications
             </button>
           </div>
 
-          <div className="submit-button">
+          <div className="job-submit-button">
             <button className="daily-tr-btn" type="submit">
               Submit
             </button>
