@@ -39,7 +39,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.42:8891/api/ats/157industries/all-Data/${employeeIdnew}`)
+    fetch(`http://192.168.1.42:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`)
       .then((response) => response.json())
       .then((data) => {
         setFilteredCallingList(data);
@@ -101,7 +101,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     setShowUpdateCallingTracker(false);
 
     fetch(
-      `http://192.168.1.42:8891/api/ats/157industries/all-Data/${employeeIdnew}`
+      `http://192.168.1.42:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -790,17 +790,17 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                           </div>
                         </td>
 
-                        {item.lineUp && (
+                      
                           <>
                             <td
                               className="tabledata"
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.companyName || "-"}
+                              {item.companyName || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.companyName}
+                                  {item.companyName}
                                 </span>
                               </div>
                             </td>
@@ -810,17 +810,17 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.experienceYear || "0"}
+                              {item.experienceYear || "0"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.experienceYear}{" "}
+                                  {item.experienceYear}{" "}
                                 </span>
                               </div>
                               Years
-                              {item.lineUp.experienceMonth || "0"}
+                              {item.experienceMonth || "0"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.experienceMonth}
+                                  {item.experienceMonth}
                                 </span>
                               </div>
                               Months
@@ -831,10 +831,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.relevantExperience || "-"}
+                              {item.relevantExperience || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.relevantExperience}
+                                  {item.relevantExperience}
                                 </span>
                               </div>
                             </td>
@@ -844,11 +844,11 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {`${item.lineUp.currentCTCLakh || 0} Lakh ${item.lineUp.currentCTCThousand || 0
+                              {`${item.currentCTCLakh || 0} Lakh ${item.currentCTCThousand || 0
                                 } Thousand`}
                               <div className="tooltip">
-                                <span className="tooltiptext">{`${item.lineUp.expectedCTCLakh || 0
-                                  } Lakh ${item.lineUp.expectedCTCThousand || 0
+                                <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                                  } Lakh ${item.expectedCTCThousand || 0
                                   } Thousand`}</span>
                               </div>
                             </td>
@@ -858,11 +858,11 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {`${item.lineUp.expectedCTCLakh || 0} Lakh ${item.lineUp.expectedCTCThousand || 0
+                              {`${item.expectedCTCLakh || 0} Lakh ${item.expectedCTCThousand || 0
                                 } Thousand`}
                               <div className="tooltip">
-                                <span className="tooltiptext">{`${item.lineUp.expectedCTCLakh || 0
-                                  } Lakh ${item.lineUp.expectedCTCThousand || 0
+                                <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                                  } Lakh ${item.expectedCTCThousand || 0
                                   } Thousand`}</span>
                               </div>
                             </td>
@@ -872,10 +872,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.dateOfBirth || "-"}
+                              {item.dateOfBirth || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.dateOfBirth}
+                                  {item.dateOfBirth}
                                 </span>
                               </div>
                             </td>
@@ -885,10 +885,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.gender || "-"}
+                              {item.gender || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.gender}
+                                  {item.gender}
                                 </span>
                               </div>
                             </td>
@@ -898,10 +898,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.qualification || "-"}
+                              {item.qualification || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.qualification}
+                                  {item.qualification}
                                 </span>
                               </div>
                             </td>
@@ -911,10 +911,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.yearOfPassing || "-"}
+                              {item.yearOfPassing || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.yearOfPassing}
+                                  {item.yearOfPassing}
                                 </span>
                               </div>
                             </td>
@@ -924,10 +924,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.extraCertification || "-"}
+                              {item.extraCertification || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.extraCertification}
+                                  {item.extraCertification}
                                 </span>
                               </div>
                             </td>
@@ -950,10 +950,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.holdingAnyOffer || "-"}
+                              {item.holdingAnyOffer || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.holdingAnyOffer}
+                                  {item.holdingAnyOffer}
                                 </span>
                               </div>
                             </td>
@@ -963,10 +963,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.offerLetterMsg || "-"}
+                              {item.offerLetterMsg || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.offerLetterMsg}
+                                  {item.offerLetterMsg}
                                 </span>
                               </div>
                             </td>
@@ -976,10 +976,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.resume || "-"}
+                              {item.resume || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.resume}
+                                  {item.resume}
                                 </span>
                               </div>
                             </td>
@@ -989,10 +989,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.noticePeriod || "-"}
+                              {item.noticePeriod || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.noticePeriod}
+                                  {item.noticePeriod}
                                 </span>
                               </div>
                             </td>
@@ -1002,10 +1002,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.msgForTeamLeader || "-"}
+                              {item.msgForTeamLeader || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.msgForTeamLeader}
+                                  {item.msgForTeamLeader}
                                 </span>
                               </div>
                             </td>
@@ -1015,10 +1015,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.availabilityForInterview || "-"}
+                              {item.availabilityForInterview || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.availabilityForInterview}
+                                  {item.availabilityForInterview}
                                 </span>
                               </div>
                             </td>
@@ -1028,10 +1028,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.interviewTime || "-"}
+                              {item.interviewTime || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.interviewTime}
+                                  {item.interviewTime}
                                 </span>
                               </div>
                             </td>
@@ -1041,10 +1041,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
                             >
-                              {item.lineUp.finalStatus || "-"}
+                              {item.finalStatus || "-"}
                               <div className="tooltip">
                                 <span className="tooltiptext">
-                                  {item.lineUp.finalStatus}
+                                  {item.finalStatus}
                                 </span>
                               </div>
                             </td>
@@ -1056,7 +1056,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               ></i>
                             </td>
                           </>
-                        )}
+                       
                       </tr>
                     ))}
                   </tbody>

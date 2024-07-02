@@ -157,11 +157,6 @@ useEffect(() => {
 
   };
 
-  
-
-   
-  
-
 
 
   const handleclose =()=>{

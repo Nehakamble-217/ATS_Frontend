@@ -54,8 +54,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
 
-    fetch(`http://192.168.1.42:8891/api/ats/157industries/callingData/${employeeId}`)
-
+    fetch(`http://localhost:8891/api/ats/157industries/callingData/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -73,7 +72,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.42:8891/api/ats/157industries/names-and-ids`
+          `http://localhost:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -225,7 +224,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.42:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://localhost:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
