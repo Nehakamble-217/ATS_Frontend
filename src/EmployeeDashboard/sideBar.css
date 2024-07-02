@@ -296,7 +296,7 @@ body {
 .sub-menu.active {
   display: block;
   padding-left: 20px !important;
-  list-style: decimal !important;
+  list-style: disc !important;
 }
 
 /* arshad added css here */

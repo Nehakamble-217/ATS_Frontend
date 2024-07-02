@@ -35,6 +35,9 @@ function Sidebar({
   toggleAssigncolumns,
   toggeExcelCallingData,
   toggelExcelLineup,
+  toggleShareLink
+
+
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -555,7 +558,8 @@ function Sidebar({
                     </a>
                   </li>
 
-                  <li style={{ marginLeft: "10px" }}>
+                  <li style={{marginLeft: "10px"}} onClick={toggleShareLink}>
+
                     <a href="#">
                       <span className="sidebar-text">Send Link</span>
                     </a>
