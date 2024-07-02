@@ -1,222 +1,222 @@
-/* og */
-.maintable {
-  height: 100%; /* Allow height to adjust based on content */
-  width: auto; /* Allow width to adjust based on content */
-  border-collapse: collapse;
-  overflow-x: auto; /* Adds horizontal scroll if table is too wide */
-  margin: 0 auto; /* Center align if needed */
-  max-width: 100%; /* Ensures it doesn't exceed the container width */
-  padding: 10px;
-  color: gray; /* Set font color to gray */
-}
+  /* og */
+  .maintable1 {
+    height: auto; /* Allow height to adjust based on content */
+    width: auto; /* Allow width to adjust based on content */
+    border-collapse: collapse;
+    overflow-x: auto; /* Adds horizontal scroll if table is too wide */
+    margin: 0 auto; /* Center align if needed */
+    max-width: 100%; /* Ensures it doesn't exceed the container width */
+    padding: 10px;
+    color: gray; /* Set font color to gray */
+  }
 
-.maintable::-webkit-scrollbar {
-  display: none;
-}
+  .maintable::-webkit-scrollbar {
+    display: none;
+  }
 
-.table-striped th {
-  color: gray;
-}
+  .table-striped th {
+    color: gray;
+  }
 
-.update-page-head {
-  width: 100%;
-  color: gray; /* Set font color to gray */
-  text-transform: uppercase;
-  align-self: center;
-  display: flex;
-  justify-content: center;
-  padding-top: 10px;
-}
+  .update-page-head {
+    width: 100%;
+    color: gray; /* Set font color to gray */
+    text-transform: uppercase;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
 
-.studTables {
-  width: 100%;
-  max-width: 100%; /* Ensures it doesn't exceed the container width */
-  margin: 0 auto; /* Center align if needed */
-  border-collapse: collapse; /* Remove space between cells */
-  table-layout: auto; /* Allow the table to adjust based on content */
-  white-space: nowrap;
-  color: gray; /* Set font color to gray */
-}
+  .studTables {
+    width: 100%;
+    max-width: 100%; /* Ensures it doesn't exceed the container width */
+    margin: 0 auto; /* Center align if needed */
+    border-collapse: collapse; /* Remove space between cells */
+    table-layout: auto; /* Allow the table to adjust based on content */
+    white-space: nowrap;
+    color: gray; /* Set font color to gray */
+  }
 
-.studTables th,
-.studTables td {
-  border: 1px solid gray;
-  color: gray; /* Set font color to gray */
-  text-align: left;
-  padding: 10px; /* Adjust padding as needed */
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
-  overflow: hidden; /* Hide overflow text */
-  white-space: nowrap; /* Prevent text wrapping */
-  vertical-align: middle; /* Vertically center content */
-}
+  .studTables th,
+  .studTables td {
+    border: 1px solid gray;
+    color: gray; /* Set font color to gray */
+    text-align: left;
+    padding: 10px; /* Adjust padding as needed */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    overflow: hidden; /* Hide overflow text */
+    white-space: nowrap; /* Prevent text wrapping */
+    vertical-align: middle; /* Vertically center content */
+  }
 
-.studTables th {
-  background-color: white;
-  font-size: 1em; /* Use em for relative sizing */
-  color: gray; /* Set font color to gray */
-}
+  .studTables th {
+    background-color: white;
+    font-size: 1em; /* Use em for relative sizing */
+    color: gray; /* Set font color to gray */
+  }
 
-.studTables td {
-  text-align: center;
-  font-size: 1em; /* Use em for relative sizing */
-  color: gray; /* Set font color to gray */
-}
+  .studTables td {
+    text-align: center;
+    font-size: 1em; /* Use em for relative sizing */
+    color: gray; /* Set font color to gray */
+  }
 
-.studTables input[type="text"],
-.studTables input[type="email"],
-.studTables select {
-  height: auto; /* Allow height to adjust based on content */
-  width: 100%;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: gray; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
-}
+  .studTables input[type="text"],
+  .studTables input[type="email"],
+  .studTables select {
+    height: auto; /* Allow height to adjust based on content */
+    width: 100%;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: gray; /* Set font color to gray */
+    font-size: 1em; /* Use em for relative sizing */
+  }
 
-.studTables .onlyselect select {
-  height: auto; /* Allow height to adjust based on content */
-  width: 100%;
-  border-radius: 4px;
-  color: gray; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
-}
+  .studTables .onlyselect select {
+    height: auto; /* Allow height to adjust based on content */
+    width: 100%;
+    border-radius: 4px;
+    color: gray; /* Set font color to gray */
+    font-size: 1em; /* Use em for relative sizing */
+  }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-  color: gray; /* Set font color to gray */
-}
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: gray; /* Set font color to gray */
+  }
 
-.form-group input[type="text"],
-.form-group select {
-  width: 100%;
-  font-size: 1em; /* Use em for relative sizing */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  color: gray; /* Set font color to gray */
-}
+  .form-group input[type="text"],
+  .form-group select {
+    width: 100%;
+    font-size: 1em; /* Use em for relative sizing */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: gray; /* Set font color to gray */
+  }
 
-.PhoneInputInput {
-  width: 100%;
-  height: auto; /* Allow height to adjust based on content */
-  border: none !important;
-  color: gray !important; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
-}
+  .PhoneInputInput {
+    width: 100%;
+    height: auto; /* Allow height to adjust based on content */
+    border: none !important;
+    color: gray !important; /* Set font color to gray */
+    font-size: 1em; /* Use em for relative sizing */
+  }
 
-.buttons {
-  text-align: center;
-  color: gray; /* Set font color to gray */
-  display: flex;
-}
+  .buttons {
+    text-align: center;
+    color: gray; /* Set font color to gray */
+    display: flex;
+  }
 
-.main-gender {
-  font-size: 1em; /* Use em for relative sizing */
-  color: gray; /* Set font color to gray */
-}
+  .main-gender {
+    font-size: 1em; /* Use em for relative sizing */
+    color: gray; /* Set font color to gray */
+  }
 
-.gender-checkboxes {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: gray; /* Set font color to gray */
-}
+  .gender-checkboxes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: gray; /* Set font color to gray */
+  }
 
-.gender-checkboxes input[type="checkbox"] {
-  margin-right: 0px; /* Adjust spacing between checkbox and label */
-  color: gray; /* Set font color to gray */
-}
+  .gender-checkboxes input[type="checkbox"] {
+    margin-right: 0px; /* Adjust spacing between checkbox and label */
+    color: gray; /* Set font color to gray */
+  }
 
-#resumeUpload {
-  height: auto; /* Allow height to adjust based on content */
-  width: 200px;
-  color: gray; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
-}
+  #resumeUpload {
+    height: auto; /* Allow height to adjust based on content */
+    width: 200px;
+    color: gray; /* Set font color to gray */
+    font-size: 1em; /* Use em for relative sizing */
+  }
 
-.buttons {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 8px;
-  margin: 20px;
-  text-align: center;
-  justify-content: space-around;
-  color: gray; /* Set font color to gray */
-}
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 8px;
+    margin: 20px;
+    text-align: center;
+    justify-content: space-around;
+    color: gray; /* Set font color to gray */
+  }
 
-.ctf-btn {
-  background-color: #ffcb9b;
-  color: white;
-  border-radius: 15px;
-  border: 1px solid gray;
-  /* cursor: pointer; */
-  font-size: 16px; /* Use em for relative sizing */
-  text-align: center;
-  width: auto;
-  height: 30px; /* Allow height to adjust based on content */
-  backdrop-filter: blur(2px);
-  transition: 0.5s;
-  line-height: 0.7;
-}
+  .ctf-btn {
+    background-color: #ffcb9b;
+    color: white;
+    border-radius: 15px;
+    border: 1px solid gray;
+    /* cursor: pointer; */
+    font-size: 16px; /* Use em for relative sizing */
+    text-align: center;
+    width: auto;
+    height: 30px; /* Allow height to adjust based on content */
+    backdrop-filter: blur(2px);
+    transition: 0.5s;
+    line-height: 0.7;
+  }
 
-.ctf-btn:hover {
-  background-color: white;
-  color: #ffcb9b;
-  border: 1px solid gray;
-}
+  .ctf-btn:hover {
+    background-color: white;
+    color: #ffcb9b;
+    border: 1px solid gray;
+  }
 
-.buttonDiv {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: gray; /* Set font color to gray */
-}
+  .buttonDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray; /* Set font color to gray */
+  }
 
-.upload-success-icon {
-  color: green;
-  margin-left: 10px;
-  margin-top: 3px;
-}
+  .upload-success-icon {
+    color: green;
+    margin-left: 10px;
+    margin-top: 3px;
+  }
 
-.upload-success-icons {
-  color: green;
-}
+  .upload-success-icons {
+    color: green;
+  }
 
-#currentDate {
-  width: 75%;
-  padding: 10px;
-  font-size: 1em; /* Use em for relative sizing */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: gray; /* Set font color to gray */
+  #currentDate {
+    width: 75%;
+    padding: 10px;
+    font-size: 1em; /* Use em for relative sizing */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: gray; /* Set font color to gray */
 
-}
+  }
 
-.custom-datepicker-container {
-  position: relative;
-  display: inline-block;
-}
+  .custom-datepicker-container {
+    position: relative;
+    display: inline-block;
+  }
 
-.studTables th {
-  background-color: white;
-  color: gray; /* Set font color to gray */
-  padding: 10px;
-  text-align: center;
-  font-size: 1em; /* Use em for relative sizing */
-}
+  .studTables th {
+    background-color: white;
+    color: gray; /* Set font color to gray */
+    padding: 10px;
+    text-align: center;
+    font-size: 1em; /* Use em for relative sizing */
+  }
 
-.studTables td {
-  padding: 10px; /* Adjust padding as needed */
-  text-align: center;
-  font-size: 1em; /* Use em for relative sizing */
-  border: 1px solid gray; /* Ensure consistent border */
-  color: gray; /* Set font color to gray */
-}
+  .studTables td {
+    padding: 10px; /* Adjust padding as needed */
+    text-align: center;
+    font-size: 1em; /* Use em for relative sizing */
+    border: 1px solid gray; /* Ensure consistent border */
+    color: gray; /* Set font color to gray */
+  }
 
-/* Set color of bold fonts to gray */
-b,
-strong {
-  color: gray; /* Set font color to gray */
-}
+  /* Set color of bold fonts to gray */
+  b,
+  strong {
+    color: gray; /* Set font color to gray */
+  }

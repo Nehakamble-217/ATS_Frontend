@@ -424,7 +424,7 @@ useEffect(() => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="maintable">
+        <div className="maintable1">
           <table className="table text-center table-striped studTables" >
             <tbody >
               <tr  >
