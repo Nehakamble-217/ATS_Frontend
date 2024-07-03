@@ -10,7 +10,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
 
-
 const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const { employeeId } = useParams();
   const initialCallingTrackerState = {
@@ -89,11 +88,12 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const [error, setError] = useState("");
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
 
-  const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
+  const [isOtherEducationSelected, setIsOtherEducationSelected] =
+    useState(false);
   const [formData, setFormData] = useState();
-  const [candidateName, setCandidateName] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [sourceName, setSourceName] = useState('');
+  const [candidateName, setCandidateName] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [sourceName, setSourceName] = useState("");
 
   const [errors, setErrors] = useState({
     candidateName: "",
@@ -116,7 +116,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
       }
     }
   }, [initialData]);
-
 
   useEffect(() => {
     const updateTimer = () => {
@@ -141,7 +140,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     try {
       const response = await axios.get(
         `http://192.168.1.42:8891/api/ats/157industries/employeeName/${employeeId}`
-
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -413,12 +411,21 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="maintable1">
-          <table className="table text-center table-striped studTables" >
-            <tbody >
-              <tr  >
-
-                <th scope="col" style={{ textAlign: "center", color: "gray" }} >Date & Time:</th>
-                <td style={{ display: "flex", alignItems: "center", justifyContent: "center", marginRight: 'auto', padding: '8px' }}>
+          <table className="table text-center table-striped studTables">
+            <tbody>
+              <tr>
+                <th scope="col" style={{ textAlign: "center", color: "gray" }}>
+                  Date & Time:
+                </th>
+                <td
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: "auto",
+                    padding: "8px",
+                  }}
+                >
                   <input
                     type="text"
                     //id="currentDate"
@@ -471,7 +478,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                 </td>
               </tr>
               <div hidden>
-
                 <input
                   type="text"
                   name="employeeId"
@@ -486,8 +492,9 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
-                    className={`form-control ${errors.candidateName ? "is-invalid" : ""
-                      }`}
+                    className={`form-control ${
+                      errors.candidateName ? "is-invalid" : ""
+                    }`}
                     style={{
                       height: "30px",
                       width: "100%",
@@ -536,11 +543,9 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     placeholder="Enter phone number"
                     name="contactNumber"
                     value={callingTracker.contactNumber}
-
                     onChange={(value) =>
                       handlePhoneNumberChange(value, "contactNumber")
                     }
-
                     required={callingTracker.selectYesOrNo !== "Interested"}
                     defaultCountry="IN"
                     maxLength={11}
@@ -591,8 +596,9 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                 </th>
                 <td className="onlyselect">
                   <select
-                    className={`form-control ${errors.sourceName ? "is-invalid" : ""
-                      }`}
+                    className={`form-control ${
+                      errors.sourceName ? "is-invalid" : ""
+                    }`}
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
@@ -631,7 +637,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     value={callingTracker.requirementId}
                     onChange={handleRequirementChange}
                     required={callingTracker.selectYesOrNo === "Interested"}
-
                     style={{
                       height: "30px",
                       width: "100%",
@@ -1307,16 +1312,16 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                         Diploma in Artificial Intelligence
                       </option>
                     </select>
-                    ) : (
-                      <input
-                        type="text"
-                        name="education"
-                        value={lineUpData.qualification}
-                        onChange={handleeducationInputChange}
-                        className="form-control"
-                        placeholder="Enter your Education"
-                      />
-                    )}
+                  ) : (
+                    <input
+                      type="text"
+                      name="education"
+                      value={lineUpData.qualification}
+                      onChange={handleeducationInputChange}
+                      className="form-control"
+                      placeholder="Enter your Education"
+                    />
+                  )}
 
                   <div>
                     <input
@@ -1349,7 +1354,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     />
                   </div>
                 </td>
-
               </tr>
               <tr>
                 <th style={{ color: "gray" }}>Current Company</th>
@@ -1459,7 +1463,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                   </div>
                 </td>
               </tr>
-
 
               <tr>
                 <th scope="col" style={{ color: "gray" }}>

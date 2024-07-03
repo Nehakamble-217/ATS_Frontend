@@ -485,10 +485,7 @@ const EmployeeProfileData = ({ onClose }) => {
             <div>Loading...</div>
           </Modal.Body>
           <Modal.Footer>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="close-profile-popup-btn"
-            >
+            <button onClick={onClose} className="close-profile-popup-btn">
               Close
             </button>
           </Modal.Footer>
