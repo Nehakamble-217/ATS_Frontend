@@ -107,10 +107,6 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(false);
   };
 
-  // const updateCount = () => {
-  //   setSuccessCount((prevCount) => prevCount + 1);
-  //   setArchived((prevCount) => prevCount + 1);
-  // };
 
   const toggelAddRecruiter = () => {
     resetAllToggles();
@@ -130,13 +126,6 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(false);
   };
 
-  // const handleDataAdditionSuccess = () => {
-  //   if (successfulDataAdditions > 0) {
-  //     setSuccessfulDataAdditions((prevCount) => prevCount + 1);
-  //     setArchived((prevArchived) => prevArchived + 1);
-  //     setPending((prevPending) => prevPending - 1);
-  //   }
-  // };
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -423,7 +412,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showMasterSheet && <MasterSheet />}</div>
         <div>{incentive && <Incentive />}</div>
         <div>{attendancesheet && <Attendancesheet />}</div>
-        <div>{shortListed && <InterviewDates />}</div>
+        
         <div>
           {showCallingExcelList && <CallingExcelList></CallingExcelList>}
         </div>
@@ -437,12 +426,6 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showResumeData && <ResumeData handleUpdate={handleUpdate} />}
         </div>
-        <div>{showAddEmployee && <AddEmployee />}</div>
-        <div>{selectCandidate && <SelectedCandidate />}</div>
-        <div>{rejectedCandidate && <RejectedCandidate />}</div>
-        <div>{holdCandidate && <HoldCandidate />}</div>
-        <div>{showCallingExcel && <CallingExcel />}</div>
-        <div>{showResumeData && <ResumeData />}</div>
         <div>{showNotePad && <NotePad />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
         <div>

@@ -44,7 +44,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        ` `
+        `http://192.168.1.42:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -166,115 +166,115 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       {!showUpdateCallingTracker ? (
         <div className="attendanceTableData">
           <div className="search">
-                <i
-                  className="fa-solid fa-magnifying-glass"
-                  onClick={() => setShowSearchBar(!showSearchBar)}
-                  style={{ margin: "10px", width: "auto", fontSize: "15px" }}
-                ></i>
-                <h5 style={{ color: "gray", paddingTop: "5px" }}>
-                  Shortlisted Candidate
-                </h5>
+            <i
+              className="fa-solid fa-magnifying-glass"
+              onClick={() => setShowSearchBar(!showSearchBar)}
+              style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+            ></i>
+            <h5 style={{ color: "gray", paddingTop: "5px" }}>
+              Shortlisted Candidate
+            </h5>
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "10px",
-                  }}
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "10px",
+              }}
+            >
+              {showShareButton ? (
+                <button
+                  className="lineUp-share-btn"
+                  onClick={() => setShowShareButton(false)}
                 >
-                  {showShareButton ? (
-                    <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
-                    </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={() => setShowShareButton(true)}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={handleSelectAll}
-                      >
-                        {allSelected ? "Deselect All" : "Select All"}
-                      </button>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-                    </div>
-                  )}
+                  Share
+                </button>
+              ) : (
+                <div style={{ display: "flex", gap: "5px" }}>
                   <button
                     className="lineUp-share-btn"
-                    onClick={toggleFilterSection}
+                    onClick={() => setShowShareButton(true)}
                   >
-                    Filter <i className="fa-solid fa-filter"></i>
+                    Close
+                  </button>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={handleSelectAll}
+                  >
+                    {allSelected ? "Deselect All" : "Select All"}
+                  </button>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={forwardSelectedCandidate}
+                  >
+                    Forward
                   </button>
                 </div>
-              </div>
+              )}
+              <button
+                className="lineUp-share-btn"
+                onClick={toggleFilterSection}
+              >
+                Filter <i className="fa-solid fa-filter"></i>
+              </button>
+            </div>
+          </div>
 
-              {showSearchBar && (
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search here..."
-                  value={searchTerm}
-                  style={{ marginBottom: "10px" }}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              )}
-              {showFilterSection && (
-                <div className="filter-section">
-                  <h3>Filter Options</h3>
-                  <div className="filter-options-container">
-                    {filterOptions.map((option) => {
-                      const uniqueValues = Array.from(
-                        new Set(callingList.map((item) => item[option]))
-                      ).slice(0, 5);
-                      return (
-                        <div key={option} className="selfcalling-filter-option">
-                          <button
-                            className="callingList-filter-btn"
-                            onClick={toggleselectedFilters}
-                          >
-                            {option}
-                          </button>
-                          {uniqueValues.map((value) => (
-                            <label
-                              key={value}
-                              className="selfcalling-filter-value"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={
-                                  selectedFilters[option]?.includes(value) ||
-                                  false
-                                }
-                                onChange={() =>
-                                  handleFilterSelect(option, value)
-                                }
-                              />
-                              {value}
-                            </label>
-                          ))}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+          {showSearchBar && (
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search here..."
+              value={searchTerm}
+              style={{ marginBottom: "10px" }}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          )}
+          {showFilterSection && (
+            <div className="filter-section">
+              <h3>Filter Options</h3>
+              <div className="filter-options-container">
+                {filterOptions.map((option) => {
+                  const uniqueValues = Array.from(
+                    new Set(callingList.map((item) => item[option]))
+                  ).slice(0, 5);
+                  return (
+                    <div key={option} className="selfcalling-filter-option">
+                      <button
+                        className="callingList-filter-btn"
+                        onClick={toggleselectedFilters}
+                      >
+                        {option}
+                      </button>
+                      {uniqueValues.map((value) => (
+                        <label
+                          key={value}
+                          className="selfcalling-filter-value"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={
+                              selectedFilters[option]?.includes(value) ||
+                              false
+                            }
+                            onChange={() =>
+                              handleFilterSelect(option, value)
+                            }
+                          />
+                          {value}
+                        </label>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           <div className="attendanceTableHeader">
-         
+
           </div>
           <table id="shortlisted-table-id" className="attendance-table">
             <thead>
@@ -527,7 +527,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
                     <button className="lineUp-share-btn"
-                      
+
                       onClick={() => handleUpdate(item.candidateId)}
                     >
                       Update

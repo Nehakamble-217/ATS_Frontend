@@ -1,3 +1,5 @@
+/* Swapnil_DailyWork_Cloud_OverFlow_Adjust_28_to_39_02/07 */
+
 .daily-work-div {
   display: flex;
   align-items: center;
@@ -9,7 +11,7 @@
   position: relative;
 }
 .select{
-      word-wrap: normal;
+    word-wrap: normal;
     padding:2px;
     height: 35px;
     width: 90px;
@@ -25,7 +27,7 @@
 
 .header-clouds {
   position: fixed;
-  top: -130px;
+  top: -136px;
   left: 0;
   width: 200%;
   height: 206px;

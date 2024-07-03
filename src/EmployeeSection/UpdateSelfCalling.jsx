@@ -199,7 +199,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   return (
     <div  >
       <form>
-        <div className="maintable">
+        <div className="maintable1">
           <table className="table text-center table-striped studTables" >
             <tbody >
               <tr >

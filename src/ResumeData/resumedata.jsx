@@ -14,7 +14,7 @@ const TableComponent = ({handleUpdate}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://192.168.1.42:8891/api/ats/157industries/all-resumes-data'); // Replace with your API URL
+        const response = await fetch('http://localhost:8891/api/ats/157industries/all-resumes-data'); // Replace with your API URL
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

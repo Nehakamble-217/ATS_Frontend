@@ -5,6 +5,8 @@ import "react-calendar/dist/Calendar.css";
 import "./interviewDate.css";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import UpdateCallingTracker from "./UpdateSelfCalling";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -17,42 +19,45 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [showShortlistTable, setShowShortlistTable] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const [candidateId, setCandidateId] = useState('');
-  const [requirementId, setRequirementId] = useState('');
+  const [candidateId, setCandidateId] = useState("");
+  const [requirementId, setRequirementId] = useState("");
 
   const navigate = useNavigate();
   const { employeeId } = useParams();
   const employeeIdNew = parseInt(employeeId, 10);
   console.log(employeeIdNew + " Interview Page Employe ID");
-  
+
   useEffect(() => {
     fetchInterviewDates();
   }, []);
 
-  const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
+  const fetchAndUpdateInterviewResponse = async (
+    candidateId,
+    requirementId
+  ) => {
     console.log("02 " + requirementId);
     try {
-      const response = await fetch(`http://192.168.1.42:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
+      const response = await fetch(
+        `http://192.168.1.42:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
+      );
 
       const data = await response.json();
       if (Array.isArray(data)) {
         setInterviewResponses(data);
       } else {
         console.error("Invalid data received:", data);
-        setInterviewResponses([]); 
+        setInterviewResponses([]);
       }
     } catch (error) {
       console.error("Error fetching interview response:", error);
-      setInterviewResponses([]); 
+      setInterviewResponses([]);
     }
   };
 
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-
         `http://192.168.1.42:8891/api/ats/157industries/interview-date/${employeeIdNew}`
-
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -76,7 +81,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     try {
       const response = await fetch(
         `http://192.168.1.42:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
-
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -102,7 +106,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       try {
         const response = await fetch(
           `http://192.168.1.42:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
-
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -119,16 +122,25 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     }
   };
 
-
   const handleInterviewResponseSubmit = async (event) => {
     event.preventDefault();
-  
-    const interviewRound = event.target.querySelector('select[name="interviewRound"]').value;
-    const interviewResponse = event.target.querySelector('select[name="interviewResponse"]').value;
-    const responseUpdatedDate = event.target.querySelector('input[name="responseUpdatedDate"]').value;
-    const nextInterviewDate = event.target.querySelector('input[name="nextInterviewDate"]').value;
-    const nextInterviewTiming = event.target.querySelector('input[name="nextInterviewTiming"]').value;
-  
+
+    const interviewRound = event.target.querySelector(
+      'select[name="interviewRound"]'
+    ).value;
+    const interviewResponse = event.target.querySelector(
+      'select[name="interviewResponse"]'
+    ).value;
+    const responseUpdatedDate = event.target.querySelector(
+      'input[name="responseUpdatedDate"]'
+    ).value;
+    const nextInterviewDate = event.target.querySelector(
+      'input[name="nextInterviewDate"]'
+    ).value;
+    const nextInterviewTiming = event.target.querySelector(
+      'input[name="nextInterviewTiming"]'
+    ).value;
+
     const data = {
       interviewRound,
       interviewResponse,
@@ -136,41 +148,44 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       nextInterviewDate,
       nextInterviewTiming,
       callingTracker: {
-        candidateId
+        candidateId,
       },
       requirementInfo: {
-        requirementId 
+        requirementId,
       },
       employee: {
-        employeeId: employeeIdNew
-      }
+        employeeId: employeeIdNew,
+      },
     };
-  
-    try {
-      const response = await fetch("http://192.168.1.42:8891/api/ats/157industries/save-interview-response", {
 
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
+    try {
+      const response = await fetch(
+        "http://192.168.1.42:8891/api/ats/157industries/save-interview-response",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       if (response.ok) {
         setFormSubmitted(true);
         console.log("Interview response saved successfully");
         setTimeout(() => {
           setFormSubmitted(false);
           setShowShortlistTable(false);
-        }, 2000); 
+        }, 2000);
       } else {
-        console.error("Failed to save interview response:", response.statusText);
+        console.error(
+          "Failed to save interview response:",
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("Error saving interview response:", error);
     }
   };
-
-  
 
   const handleFeedbackChange = async (candidateId, event) => {
     const feedback = event.target.value;
@@ -188,40 +203,40 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     const handleMouseOver = (event) => {
       const tableData = event.currentTarget;
-      const tooltip = tableData.querySelector('.tooltip');
-      const tooltiptext = tableData.querySelector('.tooltiptext');
+      const tooltip = tableData.querySelector(".tooltip");
+      const tooltiptext = tableData.querySelector(".tooltiptext");
 
       if (tooltip && tooltiptext) {
-        const textOverflowing = tableData.offsetWidth < tableData.scrollWidth || tableData.offsetHeight < tableData.scrollHeight;
+        const textOverflowing =
+          tableData.offsetWidth < tableData.scrollWidth ||
+          tableData.offsetHeight < tableData.scrollHeight;
         if (textOverflowing) {
           const rect = tableData.getBoundingClientRect();
           tooltip.style.top = `${rect.top - 10}px`;
           tooltip.style.left = `${rect.left + rect.width / 100}px`;
-          tooltip.style.visibility = 'visible';
+          tooltip.style.visibility = "visible";
         } else {
-          tooltip.style.visibility = 'hidden';
+          tooltip.style.visibility = "hidden";
         }
       }
     };
 
     const handleMouseOut = (event) => {
-      const tooltip = event.currentTarget.querySelector('.tooltip');
+      const tooltip = event.currentTarget.querySelector(".tooltip");
       if (tooltip) {
-        tooltip.style.visibility = 'hidden';
+        tooltip.style.visibility = "hidden";
       }
     };
 
     const handleRowClick = async (candidateId, requirementId) => {
-  console.log("01 requirementId "+ requirementId );
+      console.log("01 requirementId " + requirementId);
       setCandidateId(candidateId);
       setRequirementId(requirementId);
 
       await fetchAndUpdateInterviewResponse(candidateId, requirementId);
       setShowShortlistTable(true);
+      
     };
-    
-    
-
 
     return (
       <div className="App-after">
@@ -255,152 +270,293 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
             </thead>
             <tbody>
               {interviewData.map((item, index) => (
-                <tr key={item.candidateId} className={item.candidateId === candidateId ? 'highlighted-row' : 'attendancerows'} onClick={() => handleRowClick(item.candidateId, item.requirementId)}>
-                  <td className='tabledata'>{index + 1}</td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                <tr
+                  key={item.candidateId}
+                  className={
+                    item.candidateId === candidateId
+                      ? "highlighted-row"
+                      : "attendancerows"
+                  }
+                  onClick={() =>
+                    handleRowClick(item.candidateId, item.requirementId)
+                  }
+                >
+                  <td className="tabledata">{index + 1}</td>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.candidateId}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.candidateId}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.date}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.date}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.lineUp.availabilityForInterview || "-"}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.lineUp.availabilityForInterview}</span>
+                      <span className="tooltiptext">
+                        {item.lineUp.availabilityForInterview}
+                      </span>
                     </div>
                   </td>
 
-
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.lineUp.interviewTime || "-"}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.lineUp.interviewTime}</span>
+                      <span className="tooltiptext">
+                        {item.lineUp.interviewTime}
+                      </span>
                     </div>
                   </td>
 
-
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.candidateName}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.candidateName}</span>
                     </div>
                   </td>
 
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.candidateEmail || "-"}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.candidateEmail}</span>
                     </div>
                   </td>
 
-
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.requirementId || "-"}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.requirementId}</span>
                     </div>
                   </td>
 
-
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.jobDesignation || "-"}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.jobDesignation}</span>
                     </div>
                   </td>
 
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.requirementCompany || "-"}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.requirementCompany}</span>
+                      <span className="tooltiptext">
+                        {item.requirementCompany}
+                      </span>
                     </div>
                   </td>
 
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.contactNumber || "-"}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.contactNumber}</span>
                     </div>
                   </td>
-                  <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
                     {item.currentLocation || "-"}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.currentLocation}</span>
+                      <span className="tooltiptext">
+                        {item.currentLocation}
+                      </span>
                     </div>
                   </td>
                   {item.lineUp && (
                     <>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
                         {item.lineUp.companyName || "-"}
                         <div className="tooltip">
-                          <span className="tooltiptext">{item.lineUp.companyName}</span>
+                          <span className="tooltiptext">
+                            {item.lineUp.companyName}
+                          </span>
                         </div>
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
                         {item.lineUp.experienceYear || "0"}
                         <div className="tooltip">
-                          <span className="tooltiptext">{item.lineUp.experienceYear} </span>
+                          <span className="tooltiptext">
+                            {item.lineUp.experienceYear}{" "}
+                          </span>
                         </div>
                         Years
                         {item.lineUp.experienceMonth || "0"}
                         <div className="tooltip">
-                          <span className="tooltiptext">{item.lineUp.experienceMonth}</span>
+                          <span className="tooltiptext">
+                            {item.lineUp.experienceMonth}
+                          </span>
                         </div>
                         Months
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                        {`${item.lineUp.currentCTCLakh || 0} Lakh ${item.lineUp.currentCTCThousand || 0} Thousand`}
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {`${item.lineUp.currentCTCLakh || 0} Lakh ${
+                          item.lineUp.currentCTCThousand || 0
+                        } Thousand`}
                         <div className="tooltip">
-                          <span className="tooltiptext">{`${item.lineUp.expectedCTCLakh || 0} Lakh ${item.lineUp.expectedCTCThousand || 0} Thousand`}</span>
+                          <span className="tooltiptext">{`${
+                            item.lineUp.expectedCTCLakh || 0
+                          } Lakh ${
+                            item.lineUp.expectedCTCThousand || 0
+                          } Thousand`}</span>
                         </div>
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                        {`${item.lineUp.expectedCTCLakh || 0} Lakh ${item.lineUp.expectedCTCThousand || 0} Thousand`}
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {`${item.lineUp.expectedCTCLakh || 0} Lakh ${
+                          item.lineUp.expectedCTCThousand || 0
+                        } Thousand`}
                         <div className="tooltip">
-                          <span className="tooltiptext">{`${item.lineUp.expectedCTCLakh || 0} Lakh ${item.lineUp.expectedCTCThousand || 0} Thousand`}</span>
+                          <span className="tooltiptext">{`${
+                            item.lineUp.expectedCTCLakh || 0
+                          } Lakh ${
+                            item.lineUp.expectedCTCThousand || 0
+                          } Thousand`}</span>
                         </div>
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
                         {item.lineUp.noticePeriod || "-"}
                         <div className="tooltip">
-                          <span className="tooltiptext">{item.lineUp.noticePeriod}</span>
+                          <span className="tooltiptext">
+                            {item.lineUp.noticePeriod}
+                          </span>
                         </div>
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
                         {item.lineUp.holdingAnyOffer || "-"}
                         <div className="tooltip">
-                          <span className="tooltiptext">{item.lineUp.holdingAnyOffer}</span>
+                          <span className="tooltiptext">
+                            {item.lineUp.holdingAnyOffer}
+                          </span>
                         </div>
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                      {/* <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
                         {item.lineUp.resume || "-"}
                         <div className="tooltip">
-                          <span className="tooltiptext">{item.lineUp.resume}</span>
+                          <span className="tooltiptext">
+                            {item.lineUp.resume}
+                          </span>
                         </div>
+                      </td> */}
+
+                      {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                  Subcategory:-ResumeViewButton(added) start LineNo:-546
+                  Date:-02/07 */}
+                      <td className="tabledata">
+                        <button
+                          className="text-secondary"
+                          onClick={() => openResumeModal(item.lineUp?.resume)}
+                        >
+                          <i className="fas fa-eye"></i>
+                        </button>
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                      {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                  Subcategory:-ResumeViewButton(added) End LineNo:-558
+                  Date:-02/07 */}
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
                         {item.incentive || "-"}
                         <div className="tooltip">
                           <span className="tooltiptext">{item.incentive}</span>
                         </div>
                       </td>
-                      <td className='tabledata' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
                         {item.lineUp.finalStatus || "-"}
                         <div className="tooltip">
-                          <span className="tooltiptext">{item.lineUp.finalStatus}</span>
+                          <span className="tooltiptext">
+                            {item.lineUp.finalStatus}
+                          </span>
                         </div>
                       </td>
-                      <td className='tabledata'>
-                        <i onClick={() => { fetchAndUpdateInterviewResponse(item.candidateId, item.requirementId); setShowShortlistTable(!showShortlistTable); }}
-                          className="fa-regular fa-pen-to-square"></i>
-
-
+                      <td className="tabledata">
+                        <i
+                          onClick={() => {
+                            fetchAndUpdateInterviewResponse(
+                              item.candidateId,
+                              item.requirementId
+                            );
+                            setShowShortlistTable(!showShortlistTable);
+                          }}
+                          className="fa-regular fa-pen-to-square"
+                        ></i>
                       </td>
                     </>
                   )}
@@ -423,9 +579,65 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     }
   };
 
+  //Name:-Akash Pawar Component:-InterviewDate Subcategory:-ResumeViewButton(added) start LineNo:-240 Date:-02/07
+  const convertToDocumentLink = (byteCode, fileName) => {
+    if (byteCode) {
+      try {
+        // Detect file type based on file name extension or content
+        const fileType = fileName.split(".").pop().toLowerCase();
+
+        // Convert PDF
+        if (fileType === "pdf") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], { type: "application/pdf" });
+          return URL.createObjectURL(blob);
+        }
+
+        // Convert Word document (assuming docx format)
+        if (fileType === "docx") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          return URL.createObjectURL(blob);
+        }
+
+        // Handle other document types here if needed
+
+        // If file type is not supported
+        console.error(`Unsupported document type: ${fileType}`);
+        return "Unsupported Document";
+      } catch (error) {
+        console.error("Error converting byte code to document:", error);
+        return "Invalid Document";
+      }
+    }
+    return "Document Not Found";
+  };
+  const [showResumeModal, setShowResumeModal] = useState(false);
+  const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
+
+  const openResumeModal = (byteCode) => {
+    setSelectedCandidateResume(byteCode);
+    setShowResumeModal(true);
+  };
+
+  const closeResumeModal = () => {
+    setSelectedCandidateResume("");
+    setShowResumeModal(false);
+  };
+  //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) End LineNo:-271 Date:-02/07
+
   return (
     <div className="calendar-container">
-
       <div className="calender-main-div">
         <div className="calendar">
           <div className="calendar-div">
@@ -461,23 +673,20 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <tbody>
                   {interviewResponses.map((response, index) => (
                     <tr key={index}>
-                      <td >{index + 1}</td>
-                     
-                      <td >{response.interviewRound}</td>
-                      <td >{response.interviewResponse}</td>
-                      <td >{response.responseUpdatedDate}</td>
-                      <td >{response.nextInterviewDate}</td>
-                      <td >{response.nextInterviewTiming}</td>
+                      <td>{index + 1}</td>
+                      <td>{response.interviewRound}</td>
+                      <td>{response.interviewResponse}</td>
+                      <td></td>
+                      <td>{response.responseUpdatedDate}</td>
+                      <td>{response.nextInterviewDate}</td>
+                      <td>{response.nextInterviewTiming}</td>
                     </tr>
                   ))}
                   <tr>
                     <td></td>
-                  
-                    <td >
-                      <select
-                        name="interviewRound"
-                        required
-                      >
+
+                    <td>
+                      <select name="interviewRound" required>
                         <option value="">Select Interview</option>
                         <option value="Hr Round">Hr Round</option>
                         <option value="Technical Round">Technical Round</option>
@@ -487,16 +696,23 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                       </select>
                     </td>
                     <td>
-                      <select
-                        name="interviewResponse"
-                        required
-                      >
+                      <select name="interviewResponse" required>
                         <option value="">Update Response</option>
-                        <option value="Shortlisted For Hr Round">Shortlisted For Hr Round</option>
-                        <option value="Shortlisted For Technical Round">Shortlisted For Technical Round</option>
-                        <option value="Shortlisted For L1 Round">Shortlisted For L1 Round</option>
-                        <option value="Shortlisted For L2 Round">Shortlisted For L2 Round</option>
-                        <option value="Shortlisted For L3 Round">Shortlisted For L3 Round</option>
+                        <option value="Shortlisted For Hr Round">
+                          Shortlisted For Hr Round
+                        </option>
+                        <option value="Shortlisted For Technical Round">
+                          Shortlisted For Technical Round
+                        </option>
+                        <option value="Shortlisted For L1 Round">
+                          Shortlisted For L1 Round
+                        </option>
+                        <option value="Shortlisted For L2 Round">
+                          Shortlisted For L2 Round
+                        </option>
+                        <option value="Shortlisted For L3 Round">
+                          Shortlisted For L3 Round
+                        </option>
                         <option value="Selected">Selected</option>
                         <option value="Rejected">Rejected</option>
                         <option value="Result Pending">Hold</option>
@@ -505,8 +721,13 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                       </select>
                     </td>
                     <td>
-                        <input type="text" placeholder="Enter Comment here... " name="" id="" />
-                      </td>
+                      <input
+                        type="text"
+                        placeholder="Enter Comment here... "
+                        name=""
+                        id=""
+                      />
+                    </td>
                     <td>
                       <input type="date" name="responseUpdatedDate" />
                     </td>
@@ -517,7 +738,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                       <input type="time" name="nextInterviewTiming" />
                     </td>
                   </tr>
-
                 </tbody>
               </table>
               {formSubmitted && (
@@ -527,7 +747,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
               )}
               <div className="shortlisted-submite-btn">
                 <button type="submit">Update</button>
-                <button onClick={() => setShowShortlistTable(false)}>Close</button>
+                <button onClick={() => setShowShortlistTable(false)}>
+                  Close
+                </button>
               </div>
             </form>
           </div>
@@ -535,22 +757,44 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       </div>
 
       {!showAllData && interviewData && (
-        <div className="interview-table">
-          {renderInterviewTable()}
-        </div>
+        <div className="interview-table">{renderInterviewTable()}</div>
       )}
       {showAllData && (
-        <div className="interview-table">
-          {renderInterviewTable()}
-        </div>
+        <div className="interview-table">{renderInterviewTable()}</div>
       )}
       {!showAllData && noDataMessage && (
-        <h3 style={{ color: "#ffb281" , marginTop:"20px" }}>No interviews scheduled on this date.</h3>
+        <h3 style={{ color: "#ffb281", marginTop: "20px" }}>
+          No interviews scheduled on this date.
+        </h3>
       )}
+      {/* Name:-Akash Pawar Component:-InterviewDate
+          Subcategory:-ResumeModel(added) End LineNo:-599 Date:-02/07 */}
+      <Modal show={showResumeModal} onHide={closeResumeModal} size="md">
+        <Modal.Header closeButton>
+          <Modal.Title>Resume</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedCandidateResume ? (
+            <iframe
+              src={convertToDocumentLink(selectedCandidateResume, "Resume.pdf")}
+              width="100%"
+              height="550px"
+              title="PDF Viewer"
+            ></iframe>
+          ) : (
+            <p>No resume available</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeResumeModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Name:-Akash Pawar Component:-InterviewDate
+          Subcategory:-ResumeModel(added) End LineNo:-624 Date:-02/07 */}
     </div>
-
   );
 };
 
 export default InterviewDates;
-

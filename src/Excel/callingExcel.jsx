@@ -33,7 +33,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append("file", file);
     try {
       await axios.post(
-        `http://192.168.1.42:8891/api/ats/157industries/uploadData/${employeeId}`,
+        `http://localhost:8891/api/ats/157industries/uploadData/${employeeId}`,
         formData,
         {
           headers: {
@@ -62,7 +62,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append("file", file);
     try {
       await axios.post(
-        `http://192.168.1.42:8891/api/ats/157industries/upload-calling&lineup-data`,
+        `http://localhost:8891/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
         formData,
         {
           headers: {
@@ -89,7 +89,7 @@ const CallingExcel = ({ onClose }) => {
     }
     axios
       .post(
-        "http://192.168.1.42:8891/api/ats/157industries/add-multiple-resume",
+        "http://localhost:8891/api/ats/157industries/add-multiple-resume",
         formData
       )
 
