@@ -51,10 +51,10 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     "selectYesOrNo",
   ];
 
-
   useEffect(() => {
-
-    fetch(`http://localhost:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(
+      `http://192.168.1.42:8891/api/ats/157industries/callingData/${employeeId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -72,7 +72,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.42:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -224,7 +224,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://localhost:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.42:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -345,9 +345,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   };
   // neha
   // selfcalling tracker form and employee master sheet
-  // After share btn click ->close ,select-all, and forword btn 
+  // After share btn click ->close ,select-all, and forword btn
   // 01/07/2024
-    
 
   return (
     <div className="App-after">
@@ -506,15 +505,24 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                       <th className="attendanceheading">Source Name</th>
 
                       <th className="attendanceheading">Disignation</th>
-                      <th className="attendanceheading"onClick={() => handleSort("requirementId")}>Job Id {getSortIcon("requirementId")}
+                      <th
+                        className="attendanceheading"
+                        onClick={() => handleSort("requirementId")}
+                      >
+                        Job Id {getSortIcon("requirementId")}
                       </th>
                       <th className="attendanceheading">Applying Company</th>
-                      <th className="attendanceheading">Communication Rating</th>
+                      <th className="attendanceheading">
+                        Communication Rating
+                      </th>
                       <th className="attendanceheading">Current Location</th>
                       <th className="attendanceheading">Full Address</th>
                       <th className="attendanceheading">Calling Remark</th>
-                      <th className="attendanceheading">Recruiter's Incentive</th>
-                      <th className="attendanceheading">Interested and Eligible
+                      <th className="attendanceheading">
+                        Recruiter's Incentive
+                      </th>
+                      <th className="attendanceheading">
+                        Interested and Eligible
                       </th>
                       <th className="attendanceheading">Action</th>
                     </tr>
@@ -864,18 +872,33 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
               <h3>Filter Options</h3>
               <div className="filter-options-container">
                 {filterOptions.map((option) => {
-                  const uniqueValues = Array.from(new Set(callingList.map((item) => item[option]))).slice(0, 5);
+                  const uniqueValues = Array.from(
+                    new Set(callingList.map((item) => item[option]))
+                  ).slice(0, 5);
                   return (
                     <div key={option} className="selfcalling-filter-option">
-                      <button className="callingList-filter-btn" onClick={toggleselectedFilters}>{option}</button>
+                      <button
+                        className="callingList-filter-btn"
+                        onClick={toggleselectedFilters}
+                      >
+                        {option}
+                      </button>
                       {showselectedFilters && (
                         <>
                           {uniqueValues.map((value) => (
-                            <label key={value} className="selfcalling-filter-value">
+                            <label
+                              key={value}
+                              className="selfcalling-filter-value"
+                            >
                               <input
                                 type="checkbox"
-                                checked={selectedFilters[option]?.includes(value) || false}
-                                onChange={() => handleFilterSelect(option, value)}
+                                checked={
+                                  selectedFilters[option]?.includes(value) ||
+                                  false
+                                }
+                                onChange={() =>
+                                  handleFilterSelect(option, value)
+                                }
                               />
                               {value}
                             </label>

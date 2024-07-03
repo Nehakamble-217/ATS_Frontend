@@ -96,6 +96,11 @@ const EmpDashboard = ({ userGroup }) => {
   }, [successfulDataAdditions]);
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions End LineNo:-93 Date:-01/07
 
+  const [jobRoles, setJobRoles] = useState("");
+  const handleJobRoles = (role) => {
+    setJobRoles(role);
+  };
+
   const [id, setId] = useState(0);
 
   const navigator = useNavigate();
@@ -106,7 +111,6 @@ const EmpDashboard = ({ userGroup }) => {
     setSelfCalling(false);
     setIncentive(false);
   };
-
 
   const toggelAddRecruiter = () => {
     resetAllToggles();
@@ -125,7 +129,6 @@ const EmpDashboard = ({ userGroup }) => {
     setAddJobDescription(!addJobDescription);
     setIncentive(false);
   };
-
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -366,6 +369,7 @@ const EmpDashboard = ({ userGroup }) => {
         onLogout={handleLogoutTime}
         toggeExcelCallingData={toggeExcelCallingData}
         toggelExcelLineup={toggelExcelLineup}
+        jobRoles={jobRoles}
       />
 
       <div className="empDash-main-content">
@@ -377,6 +381,7 @@ const EmpDashboard = ({ userGroup }) => {
             successfulDataAdditions={successfulDataAdditions}
             // handleDataAdditionSuccess={handleDataAdditionSuccess}
             logoutTimestamp={logoutTimestamp}
+            onCurrentEmployeeJobRoleSet={handleJobRoles}
           />
         </div>
         <div>
@@ -408,11 +413,14 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
+
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
+
         <div>{showMasterSheet && <MasterSheet />}</div>
+
         <div>{incentive && <Incentive />}</div>
         <div>{attendancesheet && <Attendancesheet />}</div>
-        
+
         <div>
           {showCallingExcelList && <CallingExcelList></CallingExcelList>}
         </div>
