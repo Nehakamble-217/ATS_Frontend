@@ -17,11 +17,11 @@
   background-color: #ffd8a8;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-decoration: none;
-  color: black;
+  color: gray;
 }
 .job-details-share a{ 
   text-decoration: none;
-  color: black;
+  color: gray;
 }
 
 .responsibilities-share, .requirements-share, .preferred-qualifications-share, .perks-share,.positionOverview-share {

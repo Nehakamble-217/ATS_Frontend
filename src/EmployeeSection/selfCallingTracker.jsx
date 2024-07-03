@@ -55,8 +55,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   useEffect(() => {
 
 
-
-    fetch(`http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.42:8891/api/ats/157industries/callingData/${employeeId}`)
 
 
       .then((response) => response.json())
@@ -76,7 +75,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.42:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -229,9 +228,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const handleUpdateSuccess = () => {
     fetch(
 
-      `http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`
-
-
+      `http://192.168.1.42:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -316,7 +313,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.42:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -350,6 +347,11 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
       }
     }
   };
+  // neha
+  // selfcalling tracker form and employee master sheet
+  // After share btn click ->close ,select-all, and forword btn 
+  // 01/07/2024
+    
 
   return (
     <div className="App-after">
@@ -386,7 +388,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                 >
                   {showShareButton ? (
                     <button
-                      className="callingList-share-btn"
+                      className="lineUp-share-btn"
                       onClick={() => setShowShareButton(false)}
                     >
                       Share
@@ -394,19 +396,19 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                   ) : (
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
-                        className="callingList-share-close-btn"
+                        className="lineUp-share-btn"
                         onClick={() => setShowShareButton(true)}
                       >
                         Close
                       </button>
                       <button
-                        className="callingList-share-select-btn"
+                        className="lineUp-share-btn"
                         onClick={handleSelectAll}
                       >
                         {allSelected ? "Deselect All" : "Select All"}
                       </button>
                       <button
-                        className="callingList-forward-btn"
+                        className="lineUp-share-btn"
                         onClick={forwardSelectedCandidate}
                       >
                         Forward
@@ -414,7 +416,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                     </div>
                   )}
                   <button
-                    className="callingList-filter-btn"
+                    className="lineUp-share-btn"
                     onClick={toggleFilterSection}
                   >
                     Filter <i className="fa-solid fa-filter"></i>

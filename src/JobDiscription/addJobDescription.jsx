@@ -73,7 +73,8 @@ const AddJobDescription = () => {
     e.preventDefault();
     try {
 
-      const response = await fetch('http://192.168.1.39:8891/api/ats/157industries/add-requirement', {
+      const response = await fetch('http://192.168.1.42:8891/api/ats/157industries/add-requirement', {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -288,7 +289,7 @@ const AddJobDescription = () => {
                 </div>
               </div>
             ))}
-            <button type="button" className='loging-hr mt-3 mb-3' onClick={() => handleAddMore('responsibilities')}>Add More Responsibilities</button>
+            <button type="button" className='mt-3 mb-3 loging-hr' onClick={() => handleAddMore('responsibilities')}>Add More Responsibilities</button>
           </div>
 
 
@@ -316,7 +317,7 @@ const AddJobDescription = () => {
                 </div>
               </div>
             ))}
-            <button type="button"className='loging-hr mt-3 mb-3' onClick={() => handleAddMore('jobRequirements')}>Add More Job Requirements</button>
+            <button type="button"className='mt-3 mb-3 loging-hr' onClick={() => handleAddMore('jobRequirements')}>Add More Job Requirements</button>
           </div>
 
           <div className="preferred-qualifications">
@@ -343,7 +344,7 @@ const AddJobDescription = () => {
                 </div>
               </div>
             ))}
-            <button type="button" className='loging-hr mt-3 mb-3' onClick={() => handleAddMore('preferredQualifications')}>Add More Preferred Qualifications</button>
+            <button type="button" className='mt-3 mb-3 loging-hr' onClick={() => handleAddMore('preferredQualifications')}>Add More Preferred Qualifications</button>
           </div>
 
           <div className="submit-button">

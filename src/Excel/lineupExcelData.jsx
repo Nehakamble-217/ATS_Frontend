@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
-// import "../EmployeeSection/callingList.css";
-import "./callingExcel.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import "./callingExcel.css";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 
-const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
+
+const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
   const [sortCriteria, setSortCriteria] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [callingList, setCallingList] = useState([]);
+  const [lineUpList, setLineUpList] = useState([]);
   const [showFilterSection, setShowFilterSection] = useState(false);
-  const [filteredCallingList, setFilteredCallingList] = useState([]);
-  const [showCallingForm, setShowCallingForm] = useState(false);
-  const [callingToUpdate, setCallingToUpdate] = useState(null);
+  const [filteredLineUpList, setFilteredLineUpList] = useState([]);
+  const [showLineUpForm, setShowLineUpForm] = useState(false);
+  const [lineUpToUpdate, setLineUpToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
@@ -27,44 +27,44 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
 
-  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
+  const [showUpdateLineUpTracker, setShowUpdateLineUpTracker] = useState(false);
 
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
+    fetch(`http://192.168.1.42:8891/api/ats/157industries/lineup-excel-data/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
-        setCallingList(data);
-        setFilteredCallingList(data);
+        setLineUpList(data);
+        setFilteredLineUpList(data);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [employeeId]);
 
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter(key => key !== 'candidateId');
+    const options = Object.keys(filteredLineUpList[0] || {}).filter(key => key !== 'candidateId');
     setFilterOptions(options);
-  }, [filteredCallingList]);
+  }, [filteredLineUpList]);
 
   useEffect(() => {
     console.log("Selected Filters:", selectedFilters);
   }, [selectedFilters]);
 
   useEffect(() => {
-    console.log("Filtered Calling List:", filteredCallingList);
-  }, [filteredCallingList]);
+    console.log("Filtered LineUp List:", filteredLineUpList);
+  }, [filteredLineUpList]);
 
   useEffect(() => {
     const limitedOptions = ['date', 'recruiterName', 'jobDesignation', 'requirementId'];
     setFilterOptions(limitedOptions);
-  }, [callingList]);
+  }, [lineUpList]);
 
   useEffect(() => {
     filterData();
-  }, [selectedFilters, callingList]);
+  }, [selectedFilters, lineUpList]);
 
   useEffect(() => {
-    const filtered = callingList.filter((item) => {
+    const filtered = lineUpList.filter((item) => {
       const searchTermLower = searchTerm.toLowerCase();
       return (
         (item.date && item.date.toLowerCase().includes(searchTermLower)) ||
@@ -81,15 +81,21 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
         (item.currentLocation && item.currentLocation.toLowerCase().includes(searchTermLower)) ||
         (item.personalFeedback && item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
         (item.callingFeedback && item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
-        (item.selectYesOrNo && item.selectYesOrNo.toLowerCase().includes(searchTermLower))
+        (item.selectYesOrNo && item.selectYesOrNo.toLowerCase().includes(searchTermLower)) ||
+        (item.totalExperience && item.totalExperience.toLowerCase().includes(searchTermLower)) ||
+        (item.dateOfBirth && item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
+        (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
+        (item.qualification && item.qualification.toLowerCase().includes(searchTermLower)) ||
+        (item.companyName && item.companyName.toLowerCase().includes(searchTermLower)) 
+
       );
     });
-    setFilteredCallingList(filtered);
-  }, [searchTerm, callingList]);
+    setFilteredLineUpList(filtered);
+  }, [searchTerm, lineUpList]);
 
   useEffect(() => {
     if (sortCriteria) {
-      const sortedList = [...filteredCallingList].sort((a, b) => {
+      const sortedList = [...filteredLineUpList].sort((a, b) => {
         const aValue = a[sortCriteria];
         const bValue = b[sortCriteria];
 
@@ -101,12 +107,12 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
           return 0;
         }
       });
-      setFilteredCallingList(sortedList);
+      setFilteredLineUpList(sortedList);
     }
   }, [sortCriteria, sortOrder]);
 
   const filterData = () => {
-    let filteredData = [...callingList];
+    let filteredData = [...lineUpList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
         if (option === 'requirementId') {
@@ -116,7 +122,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
         }
       }
     });
-    setFilteredCallingList(filteredData);
+    setFilteredLineUpList(filteredData);
   };
 
   const handleFilterSelect = (option, value) => {
@@ -152,14 +158,14 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.42:8891/api/ats/157industries/lineup-excel-data/${employeeId}`
 
     )
       .then((response) => response.json())
       .then((data) => {
-        setCallingList(data);
-        setFilteredCallingList(data);
-        setShowUpdateCallingTracker(false);
+        setLineUpList(data);
+        setFilteredLineUpList(data);
+        setShowUpdateLineUpTracker(false);
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
@@ -202,7 +208,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
 
   const handleSelectAll = (event) => {
     if (event.target.checked) {
-      const allRowIds = filteredCallingList.map(item => item.candidateId);
+      const allRowIds = filteredLineUpList.map(item => item.candidateId);
       setSelectedRows(allRowIds);
     } else {
       setSelectedRows([]);
@@ -220,11 +226,11 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
   };
 
   return (
-
+    
     <div className="App-after1">
       {!selectedCandidate && (
         <>
-          <div className="search">
+      <div className="search">
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
@@ -281,7 +287,7 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
                           />
                           <label htmlFor={`${option}-All`}>All</label>
                         </div>
-                        {[...new Set(callingList.map(item => item[option]))].map(value => (
+                        {[...new Set(lineUpList.map(item => item[option]))].map(value => (
                           <div key={value}>
                             <input
                               type="checkbox"
@@ -301,41 +307,64 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
             </div>
           )}
 
-          <div className="attendanceTableData">
-            {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
-            <table className="selfcalling-table attendance-table">
-              <thead>
-                <tr className="attendancerows-head">
-                  <th className='attendanceheading'>
+   <div className="attendanceTableData"> 
+
+<table className="selfcalling-table attendance-table">
+                  <thead>
+                    <tr className="attendancerows-head">
+                    <th className='attendanceheading'>
                     <input
                       type="checkbox"
                       onChange={handleSelectAll}
-                      checked={selectedRows.length === filteredCallingList.length}
+                      checked={selectedRows.length === filteredLineUpList.length}
                     />
                   </th>
-                  <th className='attendanceheading'>Sr No.</th>
-                  <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
-                  <th hidden className='attendanceheading'>Candidate Id</th>
-                  <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
-                  <th className='attendanceheading'>Candidate Name</th>
-                  <th className='attendanceheading'>Candidate Email</th>
-                  <th className='attendanceheading'>Contact Number</th>
-                  <th className='attendanceheading'>Alternate Number</th>
-                  <th className='attendanceheading'>Source Name</th>
-                  <th className='attendanceheading'>Position</th>
-                  <th className='attendanceheading' onClick={() => handleSort("requirementId")}>Job Id {getSortIcon("requirementId")}</th>
-                  <th className='attendanceheading'>Applying Company</th>
-                  <th className='attendanceheading'>Communication Rating</th>
-                  <th className='attendanceheading'>Current Location</th>
-                  <th className='attendanceheading'>Full Address</th>
-                  <th className='attendanceheading'>Calling Feedback</th>
-                  <th className='attendanceheading'>Candidate Incentive</th>
-                  <th className='attendanceheading'>Interested / Eligible</th>
-                  <th className='attendanceheading'>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredCallingList.map((item, index) => (
+                      <th className="attendanceheading">Sr No.</th>
+                      <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
+                      <th hidden className="attendanceheading">Candidate Id</th>
+                      <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
+
+                      <th className="attendanceheading">Candidate Name</th>
+                      <th className="attendanceheading">Candidate Email</th>
+                      <th className="attendanceheading">Contact Number</th>
+                      <th className="attendanceheading">Whatsapp Number</th>
+                      <th className="attendanceheading">Source Name</th>
+                      <th className="attendanceheading">job Designation</th>
+                      <th className="attendanceheading" onClick={() => handleSort("requirementId")}>Job Id{getSortIcon("requirementId")}</th>
+                      <th className="attendanceheading">Applying Company</th>
+                      <th className="attendanceheading">Communication Rating</th>
+                      <th className="attendanceheading">Current Location</th>
+                      <th className="attendanceheading">Full Address</th>
+                      <th className="attendanceheading">Calling Feedback</th>
+                      <th className="attendanceheading">Recruiter's Incentive</th>
+                      <th className="attendanceheading">Interested or Not</th>
+                      <th className="attendanceheading">Current Company</th>
+                      <th className="attendanceheading">Total Experience</th>
+                      <th className="attendanceheading">Relevant Experience</th>
+                      <th className="attendanceheading">Current CTC</th>
+                      <th className="attendanceheading">Expected CTC</th>
+                      <th className="attendanceheading">Date Of Birth</th>
+                      <th className="attendanceheading">Gender</th>
+                      <th className="attendanceheading">Education</th>
+                      <th className="attendanceheading">Year Of Passing</th>
+                      <th className="attendanceheading">Extra Certification</th>
+                      <th className="attendanceheading">Call Summary</th>
+                      {/* <th className="attendanceheading">Feedback</th> */}
+                      <th className="attendanceheading">Holding Any Offer</th>
+                      <th className="attendanceheading">Offer Letter Msg</th>
+                      <th className="attendanceheading">Notice  Period</th>
+                      <th className="attendanceheading">Message For Team Leader</th>
+                      <th className="attendanceheading">Availability For Interview</th>
+                      <th className="attendanceheading">Interview Time</th>
+                      <th className="attendanceheading">Interview Status</th>
+                      <th className="attendanceheading">EmpID</th>
+                      <th className="attendanceheading">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+               
+                {filteredLineUpList.map((item, index) => (
                   <tr key={item.candidateId} className="attendancerows">
                     <td className='tabledata '>
                       <input
@@ -410,27 +439,104 @@ const CallingExcelList = ({ updateState, funForGettingCandidateId, onCloseTable 
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.selectYesOrNo} <div className="tooltip">
                       <span className="tooltiptext">{item.selectYesOrNo} </span>
                     </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.companyName} <div className="tooltip">
+                      <span className="tooltiptext">{item.companyName} </span>
+                    </div></td>
+
+
+
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {item.experienceYear}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.experienceYear}</span>
+                      </div>
+                      <div className="tooltip">
+                        <span className="tooltiptext"> {item.experienceMonth}</span>
+                      </div>
+
+                    </td>
+                   
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.relevantExperience} <div className="tooltip">
+                      <span className="tooltiptext">{item.relevantExperience} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {item.currentCtcLakh}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.currentCtcLakh}</span>
+                      </div>
+                      <div className="tooltip">
+                        <span className="tooltiptext"> {item.currentCtcThousand}</span>
+                      </div>
+
+                    </td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> {item.expectedCtcLakh}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.expectedCtcLakh}</span>
+                      </div>
+                      <div className="tooltip">
+                        <span className="tooltiptext"> {item.expectedCtcThousand}</span>
+                      </div>
+
+                    </td>
+                   
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.dateOfBirth} <div className="tooltip">
+                      <span className="tooltiptext">{item.dateOfBirth} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.gender} <div className="tooltip">
+                      <span className="tooltiptext">{item.gender} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.qualification} <div className="tooltip">
+                      <span className="tooltiptext">{item.qualification} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.yearOfPassing} <div className="tooltip">
+                      <span className="tooltiptext">{item.yearOfPassing} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.extraCertification} <div className="tooltip">
+                      <span className="tooltiptext">{item.extraCertification} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.feedBack} <div className="tooltip">
+                      <span className="tooltiptext">{item.feedBack} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.holdingAnyOffer} <div className="tooltip">
+                      <span className="tooltiptext">{item.holdingAnyOffer} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.offerLetterMsg} <div className="tooltip">
+                      <span className="tooltiptext">{item.offerLetterMsg} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.noticePeriod} <div className="tooltip">
+                      <span className="tooltiptext">{item.noticePeriod} </span>
+                    </div></td><td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.msgForTeamLeader} <div className="tooltip">
+                      <span className="tooltiptext">{item.msgForTeamLeader} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.availabilityForInterview} <div className="tooltip">
+                      <span className="tooltiptext">{item.availabilityForInterview} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.interviewTime} <div className="tooltip">
+                      <span className="tooltiptext">{item.interviewTime} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.finalStatus} <div className="tooltip">
+                      <span className="tooltiptext">{item.finalStatus} </span>
+                    </div></td>
+                    <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.empId} <div className="tooltip">
+                      <span className="tooltiptext">{item.empId} </span>
+                    </div></td>
                     <td className="tabledata">
                       <i onClick={() => handleUpdate(item.candidateId)} className="fa-regular fa-pen-to-square"></i>
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
-
-      {selectedCandidate &&  (
+                   </tbody>
+                   </table>  
+                </div>    
+                </>
+  )}
+{selectedCandidate &&  (
         <CallingTrackerForm
         candidateData={selectedCandidate}
         onClose={() => setSelectedCandidate(null)}
         onSuccess={handleUpdateSuccess}
         />
       )}
-      
-    </div>
-  );
+</div>
+);
 };
 
-export default CallingExcelList;
+export default LineupExcelData;

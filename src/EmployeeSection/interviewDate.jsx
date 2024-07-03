@@ -30,6 +30,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   }, []);
 
   const fetchAndUpdateInterviewResponse = async (candidateId, requirementId) => {
+    console.log("02 " + requirementId);
     try {
       const response = await fetch(`http://192.168.1.42:8891/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`);
 
@@ -49,7 +50,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/interview-date/${employeeIdNew}`
+
+
+        `http://192.168.1.42:8891/api/ats/157industries/interview-date/${employeeIdNew}`
 
       );
       const data = await response.json();
@@ -73,7 +76,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://192.168.1.42:8891/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
 
       );
       const data = await response.json();
@@ -99,7 +102,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://192.168.1.39:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://192.168.1.42:8891/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
 
         );
         const data = await response.json();
@@ -210,8 +213,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     };
 
     const handleRowClick = async (candidateId, requirementId) => {
+  console.log("01 requirementId "+ requirementId );
       setCandidateId(candidateId);
       setRequirementId(requirementId);
+
       await fetchAndUpdateInterviewResponse(candidateId, requirementId);
       setShowShortlistTable(true);
     };
@@ -445,19 +450,20 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <thead className="thead-dark">
                   <tr>
                     <th>No</th>
-                
+
                     <th>Interview Round</th>
                     <th>Interview Response</th>
+                    <th>Comment for TL</th>
                     <th>Update Date</th>
                     <th>Next Interview Date</th>
-                    <th> Interview Time</th>
+                    <th>Interview Time</th>
                   </tr>
                 </thead>
                 <tbody>
                   {interviewResponses.map((response, index) => (
                     <tr key={index}>
                       <td >{index + 1}</td>
-                      <td></td>
+                     
                       <td >{response.interviewRound}</td>
                       <td >{response.interviewResponse}</td>
                       <td >{response.responseUpdatedDate}</td>
@@ -466,11 +472,8 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     </tr>
                   ))}
                   <tr>
-
-
                     <td></td>
-                    
-
+                  
                     <td >
                       <select
                         name="interviewRound"
@@ -502,6 +505,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                         <option value="No Show">No Show</option>
                       </select>
                     </td>
+                    <td>
+                        <input type="text" placeholder="Enter Comment here... " name="" id="" />
+                      </td>
                     <td>
                       <input type="date" name="responseUpdatedDate" />
                     </td>

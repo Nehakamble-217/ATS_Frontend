@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
@@ -10,9 +10,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
 
-const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCount }) => {
-  const { employeeId } = useParams();
+const CallingTrackerForm = ({ 
+  initialData,
+  handleDataAdditionSuccess,
+  updateCount, 
+  candidateData,
+  onClose,
+  onSuccess }) => {
 
+  const { employeeId } = useParams();
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: '',
@@ -87,7 +93,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const [error, setError] = useState('');
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
   const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
-
+  const [formData, setFormData] = useState();
   const [candidateName, setCandidateName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [sourceName, setSourceName] = useState('');
@@ -97,9 +103,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
     sourceName: "",
 
   });
-
-
-
 
 
   useEffect(() => {
@@ -118,6 +121,21 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
       }
     }
   }, [initialData]);
+
+
+// ------------------------------------------------------------
+
+useEffect(() => {
+  if (candidateData) {
+    setFormData(candidateData);
+    setCallingTracker({
+      ...initialCallingTrackerState,
+      ...candidateData,
+    });
+  }
+}, [candidateData]);
+
+// -------------------------------------------------------------------------
 
   useEffect(() => {
     const updateTimer = () => {
@@ -139,7 +157,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.42:8891/api/ats/157industries/employeeName/${employeeId}`
 
       );
       const { data } = response;
@@ -160,7 +178,7 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.39:8891/api/ats/157industries/company-details`
+        `http://192.168.1.42:8891/api/ats/157industries/company-details`
 
       );
       const { data } = response;
@@ -216,14 +234,14 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
       }
 
       await axios.post(
-        `http://192.168.1.39:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.42:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
-
 
       setFormSubmitted(true);
       handleDataAdditionSuccess();
       updateCount();
+      onSuccess();
       setTimeout(() => {
         setFormSubmitted(false);
         setCallingTracker(initialCallingTrackerState);
@@ -448,13 +466,9 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                 </td>
               </tr>
               <div hidden>
-
                 <input type="text" name="employeeId" readOnly value={callingTracker.employee.employeeId} />
-
               </div>
-
               <tr>
-
                 <th style={{ color: "gray" }}>Candidate's Full Name*</th>
                 <td>
                   <input
@@ -490,16 +504,13 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
 
               </tr>
               <tr>
-
-
-
                 <th scope="col" style={{ color: "gray" }}>Contact Number*</th>
                 <td>
                   <PhoneInput
                     placeholder="Enter phone number"
                     name="contactNumber"
                     value={callingTracker.contactNumber}
-                    onChange={(value) => handlePhoneNumberChange(value, 'contactNumber')}
+                    onChange={handleChange}
                     required={callingTracker.selectYesOrNo !== "Interested"}
                     defaultCountry="IN"
                     maxLength={11}
@@ -572,8 +583,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                     onChange={handleRequirementChange}
                     required={callingTracker.selectYesOrNo === "Interested"}
                     style={{ height: "30px", width: "100%", alignItems: "center", lineHeight: 1, marginRight: "10px" }}
-
-
                   >
                     <option value="">Select Job Id</option>
                     {requirementOptions.map((option) => (
@@ -924,18 +933,17 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                       <option value="Diploma in Cybersecurity">Diploma in Cybersecurity</option>
                       <option value="Diploma in Data Science">Diploma in Data Science</option>
                       <option value="Diploma in Artificial Intelligence">Diploma in Artificial Intelligence</option>
-
                     </select>
-                  ) : (
-                    <input
-                      type="text"
-                      name="education"
-                      value={lineUpData.qualification}
-                      onChange={handleeducationInputChange}
-                      className="form-control"
-                      placeholder="Enter your Education"
-                    />
-                  )}
+                    ) : (
+                      <input
+                        type="text"
+                        name="education"
+                        value={lineUpData.qualification}
+                        onChange={handleeducationInputChange}
+                        className="form-control"
+                        placeholder="Enter your Education"
+                      />
+                    )}
 
                   <div>
                     <input type="text"
@@ -962,7 +970,10 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                   </div>
 
                 </td>
+
               </tr>
+
+
               <tr>
 
                 <th style={{ color: "gray" }}>Current Company</th>
@@ -1020,8 +1031,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
                   </div>
                 </td>
               </tr>
-
-
 
 
               <tr >
@@ -1341,8 +1350,6 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
           </table>
         </div>
 
-
-
         {formSubmitted && (
           <div className="alert alert-success" role="alert">
             Data Added successfully!
@@ -1371,7 +1378,11 @@ const CallingTrackerForm = ({ initialData, handleDataAdditionSuccess, updateCoun
 
 CallingTrackerForm.propTypes = {
   initialData: PropTypes.object,
-  onDataAdditionSuccess: PropTypes.func.isRequired,
+  handleDataAdditionSuccess: PropTypes.func.isRequired,
+  updateCount: PropTypes.func.isRequired,
+  candidateData: PropTypes.object,
+  onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
 
 CallingTrackerForm.defaultProps = {

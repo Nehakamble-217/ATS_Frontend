@@ -32,6 +32,8 @@ function Sidebar({
   toggelAddResumes,
   toggleChatRoom,
   toggleAssigncolumns,
+  toggeExcelCallingData,
+  toggelExcelLineup,
 
 }) {
   const [workData, setWorkData] = useState([]);
@@ -115,7 +117,7 @@ function Sidebar({
       const year = now.getFullYear();
 
       await axios.post(
-        "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
+        "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
         formData
       );
 
@@ -138,24 +140,6 @@ function Sidebar({
   }
 
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 980) {
-        setIsActive(false);
-      } else {
-        setIsActive(true);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (window.innerWidth <= 980) {
-      setIsActive(false);
-    }
-  }, []);
 
   return (
     <>
@@ -166,7 +150,8 @@ function Sidebar({
         <div className="sidebar-clouds1"></div>
         <div className='head'></div>
         <div className="sidebar-menu-btn" onClick={toggleSidebar}>
-          <i className={`ph-bold ph-caret-${isActive ? 'right' : 'left'}`}></i>
+        <i class="fa-solid fa-chevron-left"></i>
+          {/* <i className={`"fa-solid fa-arrow-left"-${isActive ? 'right' : 'left'}`}></i> */}
         </div>
 
 
@@ -360,7 +345,7 @@ function Sidebar({
                 
               >
                 <a href="#">
-                  <i className="icon ph-bold ph-chart-bar" style={{ color: "gray" }}></i>
+                  <i className="fa-solid fa-user-gear" style={{ color: "gray" }}></i>
                   <span className="sidebar-text">Employee Section</span>
                   <i className="arrow ph-bold ph-caret-down" ></i>
                 </a>
@@ -399,7 +384,8 @@ function Sidebar({
                 onClick={toggleSubMenu("admin-section")}
               >
                 <a href="#">
-                  <i className="icon ph-bold ph-chart-bar" style={{ color: "gray" }}></i>
+                
+                  <i className="fa-solid fa-computer" style={{ color: "gray" }}></i>
                   <span className="sidebar-text">Admin Section</span>
                   <i className="arrow ph-bold ph-caret-down" ></i>
                 </a>
@@ -462,22 +448,22 @@ function Sidebar({
                   >
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Calling Data</span>
+                      <span className="sidebar-text">Upload Files</span>
                     </a>
                   </li>
-                  <li style={{marginLeft: "10px"}}>
+                  <li onClick={toggeExcelCallingData} style={{marginLeft: "10px"}}>
                     <a href="#">
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Line Up Data</span>
+                      <span className="sidebar-text">Excel Calling Data</span>
                     </a>
                   </li>
 
-                  {/* <li  style={{marginLeft: "10px"}}>
-                    <a href="#"> */}
+                   <li  onClick={toggelExcelLineup} style={{marginLeft: "10px"}}>
+                    <a href="#"> 
                       {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      {/* <span className="sidebar-text">Offers Data</span>
+                       <span className="sidebar-text">Excel Lineup Data</span>
                     </a>
-                  </li> */}
+                  </li> 
                   
                   <li style={{marginLeft: "10px"}}
                     onClick={handleButtonClick("resumeData", toggelResumeData)}
@@ -489,10 +475,9 @@ function Sidebar({
                     </a>
                   </li>
 
-                  <li onClick={toggelAddResumes} style={{marginLeft: "10px"}}>
+                  <li style={{marginLeft: "10px"}}>
                     <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span className="sidebar-text">Add Resumes</span>
+                      <span className="sidebar-text">Send Link</span>
                     </a>
                   </li>
 

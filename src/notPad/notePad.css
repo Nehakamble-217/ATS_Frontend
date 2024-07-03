@@ -117,10 +117,7 @@
     text-decoration: none;
     cursor: pointer;
   }
-  body {
-    margin: 0;
-    padding: 0;
-  }
+  
   
   /* .calling-list-container {
     overflow-x: scroll;
@@ -181,37 +178,42 @@
     color: grey;
   
   }
-  .tabledata {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: relative;
-    padding: 3px;
-    border: 1px solid #ddd;
-  }
 
-  .tooltip {
-    visibility: hidden;
-    background-color: #ffcb9b;
-    color: #000;
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px;
-    position: fixed;  /* Use fixed positioning */
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
 
-  .tabledata:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .tooltiptext {
-    white-space: nowrap;
-  }
-  
+ 
+.tabledata {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  padding: 3px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+.tooltip {
+  visibility: hidden;
+  background-color: #ffcb9b;
+  color: #000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: fixed;  /* Use fixed positioning */
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+
+.tabledata:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltiptext {
+  white-space: nowrap;
+}
+
+
  
  
   /* .table-container_forselfcalling select {
