@@ -33,6 +33,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
 
   useEffect(() => {
     fetch(`http://192.168.1.42:8891/api/ats/157industries/lineup-excel-data/${employeeId}`)
+
       .then((response) => response.json())
       .then((data) => {
         setLineUpList(data);
@@ -72,7 +73,6 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
         (item.candidateName && item.candidateName.toLowerCase().includes(searchTermLower)) ||
         (item.candidateEmail && item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
         (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
-        (item.alternateNumber && item.alternateNumber.toString().includes(searchTermLower)) ||
         (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
 
         (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
@@ -85,8 +85,8 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
         (item.totalExperience && item.totalExperience.toLowerCase().includes(searchTermLower)) ||
         (item.dateOfBirth && item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
         (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
-        (item.qualification && item.qualification.toLowerCase().includes(searchTermLower)) ||
         (item.companyName && item.companyName.toLowerCase().includes(searchTermLower)) 
+
 
       );
     });
@@ -231,6 +231,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
       {!selectedCandidate && (
         <>
       <div className="search">
+
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
@@ -313,57 +314,59 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
                   <thead>
                     <tr className="attendancerows-head">
                     <th className='attendanceheading'>
+
                     <input
                       type="checkbox"
                       onChange={handleSelectAll}
                       checked={selectedRows.length === filteredLineUpList.length}
                     />
                   </th>
-                      <th className="attendanceheading">Sr No.</th>
-                      <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
-                      <th hidden className="attendanceheading">Candidate Id</th>
-                      <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
 
-                      <th className="attendanceheading">Candidate Name</th>
-                      <th className="attendanceheading">Candidate Email</th>
-                      <th className="attendanceheading">Contact Number</th>
-                      <th className="attendanceheading">Whatsapp Number</th>
-                      <th className="attendanceheading">Source Name</th>
-                      <th className="attendanceheading">job Designation</th>
-                      <th className="attendanceheading" onClick={() => handleSort("requirementId")}>Job Id{getSortIcon("requirementId")}</th>
-                      <th className="attendanceheading">Applying Company</th>
-                      <th className="attendanceheading">Communication Rating</th>
-                      <th className="attendanceheading">Current Location</th>
-                      <th className="attendanceheading">Full Address</th>
-                      <th className="attendanceheading">Calling Feedback</th>
-                      <th className="attendanceheading">Recruiter's Incentive</th>
-                      <th className="attendanceheading">Interested or Not</th>
-                      <th className="attendanceheading">Current Company</th>
-                      <th className="attendanceheading">Total Experience</th>
-                      <th className="attendanceheading">Relevant Experience</th>
-                      <th className="attendanceheading">Current CTC</th>
-                      <th className="attendanceheading">Expected CTC</th>
-                      <th className="attendanceheading">Date Of Birth</th>
-                      <th className="attendanceheading">Gender</th>
-                      <th className="attendanceheading">Education</th>
-                      <th className="attendanceheading">Year Of Passing</th>
-                      <th className="attendanceheading">Extra Certification</th>
-                      <th className="attendanceheading">Call Summary</th>
-                      {/* <th className="attendanceheading">Feedback</th> */}
-                      <th className="attendanceheading">Holding Any Offer</th>
-                      <th className="attendanceheading">Offer Letter Msg</th>
-                      <th className="attendanceheading">Notice  Period</th>
-                      <th className="attendanceheading">Message For Team Leader</th>
-                      <th className="attendanceheading">Availability For Interview</th>
-                      <th className="attendanceheading">Interview Time</th>
-                      <th className="attendanceheading">Interview Status</th>
-                      <th className="attendanceheading">EmpID</th>
-                      <th className="attendanceheading">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
-               
+                  <th className="attendanceheading">Sr No.</th>
+                  <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
+                  <th hidden className="attendanceheading">Candidate Id</th>
+                  <th className='attendanceheading' onClick={() => handleSort("recruiterName")}>Recruiter Name {getSortIcon("recruiterName")}</th>
+
+                  <th className="attendanceheading">Candidate Name</th>
+                  <th className="attendanceheading">Candidate Email</th>
+                  <th className="attendanceheading">Contact Number</th>
+                  <th className="attendanceheading">Whatsapp Number</th>
+                  <th className="attendanceheading">Source Name</th>
+                  <th className="attendanceheading">job Designation</th>
+                  <th className="attendanceheading" onClick={() => handleSort("requirementId")}>Job Id{getSortIcon("requirementId")}</th>
+                  <th className="attendanceheading">Applying Company</th>
+                  <th className="attendanceheading">Communication Rating</th>
+                  <th className="attendanceheading">Current Location</th>
+                  <th className="attendanceheading">Full Address</th>
+                  <th className="attendanceheading">Calling Feedback</th>
+                  <th className="attendanceheading">Recruiter's Incentive</th>
+                  <th className="attendanceheading">Interested or Not</th>
+                  <th className="attendanceheading">Current Company</th>
+                  <th className="attendanceheading">Total Experience</th>
+                  <th className="attendanceheading">Relevant Experience</th>
+                  <th className="attendanceheading">Current CTC</th>
+                  <th className="attendanceheading">Expected CTC</th>
+                  <th className="attendanceheading">Date Of Birth</th>
+                  <th className="attendanceheading">Gender</th>
+                  <th className="attendanceheading">Education</th>
+                  <th className="attendanceheading">Year Of Passing</th>
+                  <th className="attendanceheading">Extra Certification</th>
+                  <th className="attendanceheading">Call Summary</th>
+                  {/* <th className="attendanceheading">Feedback</th> */}
+                  <th className="attendanceheading">Holding Any Offer</th>
+                  <th className="attendanceheading">Offer Letter Msg</th>
+                  <th className="attendanceheading">Notice  Period</th>
+                  <th className="attendanceheading">Message For Team Leader</th>
+                  <th className="attendanceheading">Availability For Interview</th>
+                  <th className="attendanceheading">Interview Time</th>
+                  <th className="attendanceheading">Interview Status</th>
+                  <th className="attendanceheading">EmpID</th>
+                  <th className="attendanceheading">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+
+
                 {filteredLineUpList.map((item, index) => (
                   <tr key={item.candidateId} className="attendancerows">
                     <td className='tabledata '>
@@ -454,7 +457,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
                       </div>
 
                     </td>
-                   
+
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.relevantExperience} <div className="tooltip">
                       <span className="tooltiptext">{item.relevantExperience} </span>
                     </div></td>
@@ -476,7 +479,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
                       </div>
 
                     </td>
-                   
+
                     <td className='tabledata ' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{item.dateOfBirth} <div className="tooltip">
                       <span className="tooltiptext">{item.dateOfBirth} </span>
                     </div></td>
@@ -523,20 +526,21 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
                     </td>
                   </tr>
                 ))}
-                   </tbody>
-                   </table>  
-                </div>    
-                </>
-  )}
-{selectedCandidate &&  (
+
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+      {selectedCandidate && (
         <CallingTrackerForm
-        candidateData={selectedCandidate}
-        onClose={() => setSelectedCandidate(null)}
-        onSuccess={handleUpdateSuccess}
+          candidateData={selectedCandidate}
+          onClose={() => setSelectedCandidate(null)}
+          onSuccess={handleUpdateSuccess}
         />
       )}
-</div>
-);
+    </div>
+  );
 };
 
 export default LineupExcelData;

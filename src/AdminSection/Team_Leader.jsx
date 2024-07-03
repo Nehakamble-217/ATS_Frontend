@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import './Team_Leader.css';
+import '../AdminSection/Team_Leader.css';
 
 function Accesstable() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -296,7 +296,7 @@ function Accesstable() {
                       <td className='tabledata'>{assignments[assignee]['Important Assign'].length}</td>
                       <td className='tabledata'>{assignments[assignee]['Most Important Assign'].length}</td>
                       <td className='tabledata'>
-                        <button onClick={() => handleUpdateClick(assignee)} className='all_assignbtn'>
+                        <button onClick={() => handleUpdateClick(assignee)} className='all_assignbtn-Action'>
                           Update
                         </button>
                         {/* <button onClick={() => handleRemoveClick(assignee)} className='remove_assignbtn'>

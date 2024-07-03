@@ -4,14 +4,23 @@ import "../CandidateSection/shortlistedcandidate.css";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import InterviewDates from "../EmployeeSection/interviewDate";
 import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterOptions, setFilterOptions] = useState([]);
+
+  const [sortCriteria, setSortCriteria] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+
   const [shortListedData, setShortListedData] = useState([]);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
   const [showFilterSection, setShowFilterSection] = useState(false);
   const [showselectedFilters, setShowselectedFilters] = useState(false);
+  const [filteredShortListed, setFilteredShortListed] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
   const [showShareButton, setShowShareButton] = useState(true);
@@ -40,6 +49,14 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       console.error("Error fetching shortlisted data:", error);
     }
   };
+  const handleSort = (criteria) => {
+    if (criteria === sortCriteria) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortCriteria(criteria);
+      setSortOrder("asc");
+    }
+  };
 
   const fetchShortListedData = async () => {
     try {
@@ -48,6 +65,8 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       );
       const data = await response.json();
       setShortListedData(data);
+      setFilteredShortListed(data);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
     }
@@ -89,15 +108,20 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       tooltip.style.visibility = "hidden";
     }
   };
-
-  const handleSelectAll = () => {
-    if (allSelected) {
-      setSelectedRows([]);
-    } else {
-      const allRowIds = shortListedData.map((item) => item.candidateId);
-      setSelectedRows(allRowIds);
+  const getSortIcon = (criteria) => {
+    if (sortCriteria === criteria) {
+      return sortOrder === "asc" ? <i className="fa-solid fa-arrow-up"></i> : <i className="fa-solid fa-arrow-down"></i>;
     }
-    setAllSelected(!allSelected);
+    return null;
+  };
+
+  const handleSelectAll = (event) => {
+    if (event.target.checked) {
+      const allRowIds = filteredLineUpList.map(item => item.candidateId);
+      setSelectedRows(allRowIds);
+    } else {
+      setSelectedRows([]);
+    }
   };
 
   const handleSelectRow = (candidateId) => {
@@ -152,7 +176,108 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         // Handle error scenarios or show error messages to the user
       }
     }
+  };useEffect(() => {
+    const options = Object.keys(filteredShortListed[0] || {}).filter(key => key !== 'candidateId');
+    setFilterOptions(options);
+  }, [filteredShortListed]);
+
+  useEffect(() => {
+    console.log("Selected Filters:", selectedFilters);
+  }, [selectedFilters]);
+
+  useEffect(() => {
+    console.log("Filtered ShortListed List:", filteredShortListed);
+  }, [filteredShortListed]);
+
+  useEffect(() => {
+    const limitedOptions = ['date', 'recruiterName', 'jobDesignation', 'requirementId'];
+    setFilterOptions(limitedOptions);
+  }, [shortListedData]);
+
+  useEffect(() => {
+    filterData();
+  }, [selectedFilters, shortListedData]);
+
+  useEffect(() => {
+    const filtered = shortListedData.filter((item) => {
+      const searchTermLower = searchTerm.toLowerCase();
+      return (
+        (item.date && item.date.toLowerCase().includes(searchTermLower)) ||
+        (item.recruiterName && item.recruiterName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateName && item.candidateName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateEmail && item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
+        (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
+        (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
+
+        (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
+        (item.requirementCompany && item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
+        (item.communicationRating && item.communicationRating.toLowerCase().includes(searchTermLower)) ||
+        (item.currentLocation && item.currentLocation.toLowerCase().includes(searchTermLower)) ||
+        (item.personalFeedback && item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.callingFeedback && item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.selectYesOrNo && item.selectYesOrNo.toLowerCase().includes(searchTermLower)) ||
+        (item.totalExperience && item.totalExperience.toLowerCase().includes(searchTermLower)) ||
+        (item.dateOfBirth && item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
+        (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
+        (item.qualification && item.qualification.toLowerCase().includes(searchTermLower)) ||
+        (item.companyName && item.companyName.toLowerCase().includes(searchTermLower)) 
+
+
+      );
+    });
+    setFilteredShortListed(filtered);
+  }, [searchTerm, shortListedData]);
+
+  useEffect(() => {
+    if (sortCriteria) {
+      const sortedList = [...filteredShortListed].sort((a, b) => {
+        const aValue = a[sortCriteria];
+        const bValue = b[sortCriteria];
+
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+        } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        } else {
+          return 0;
+        }
+      });
+      setFilteredShortListed(sortedList);
+    }
+  }, [sortCriteria, sortOrder]);
+
+  const filterData = () => {
+    let filteredData = [...shortListedData];
+    Object.entries(selectedFilters).forEach(([option, values]) => {
+      if (values.length > 0) {
+        if (option === 'requirementId') {
+          filteredData = filteredData.filter(item => values.includes(item[option]?.toString()));
+        } else {
+          filteredData = filteredData.filter(item => values.some(value => item[option]?.toString().toLowerCase().includes(value.toLowerCase())));
+        }
+      }
+    });
+    setFilteredShortListed(filteredData);
   };
+
+  const handleFilterSelect = (option, value) => {
+    setSelectedFilters(prevFilters => {
+      const updatedFilters = { ...prevFilters };
+      if (!updatedFilters[option]) {
+        updatedFilters[option] = [];
+      }
+
+      const index = updatedFilters[option].indexOf(value);
+      if (index === -1) {
+        updatedFilters[option] = [...updatedFilters[option], value];
+      } else {
+        updatedFilters[option] = updatedFilters[option].filter(item => item !== value);
+      }
+
+      return updatedFilters;
+    });
+  };
+
   const toggleFilterSection = () => {
     setShowFilterSection(!showFilterSection);
   };
@@ -160,6 +285,62 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     setShowselectedFilters(!showselectedFilters);
   };
 
+  //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) start LineNo:-165 Date:-02/07
+  const convertToDocumentLink = (byteCode, fileName) => {
+    if (byteCode) {
+      try {
+        // Detect file type based on file name extension or content
+        const fileType = fileName.split(".").pop().toLowerCase();
+
+        // Convert PDF
+        if (fileType === "pdf") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], { type: "application/pdf" });
+          return URL.createObjectURL(blob);
+        }
+
+        // Convert Word document (assuming docx format)
+        if (fileType === "docx") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          return URL.createObjectURL(blob);
+        }
+
+        // Handle other document types here if needed
+
+        // If file type is not supported
+        console.error(`Unsupported document type: ${fileType}`);
+        return "Unsupported Document";
+      } catch (error) {
+        console.error("Error converting byte code to document:", error);
+        return "Invalid Document";
+      }
+    }
+    return "Document Not Found";
+  };
+  const [showResumeModal, setShowResumeModal] = useState(false);
+  const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
+
+  const openResumeModal = (byteCode) => {
+    setSelectedCandidateResume(byteCode);
+    setShowResumeModal(true);
+  };
+
+  const closeResumeModal = () => {
+    setSelectedCandidateResume("");
+    setShowResumeModal(false);
+  };
+  //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) End LineNo:-196 Date:-02/07
 
   return (
     <div className="calling-list-container">
@@ -167,116 +348,117 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         <div className="attendanceTableData">
 
           <div className="search">
-                <i
-                  className="fa-solid fa-magnifying-glass"
-                  onClick={() => setShowSearchBar(!showSearchBar)}
-                  style={{ margin: "10px", width: "auto", fontSize: "15px" }}
-                ></i>
-                <h5 style={{ color: "gray", paddingTop: "5px" }}>
-                  Shortlisted Candidate
-                </h5>
+            <i
+              className="fa-solid fa-magnifying-glass"
+              onClick={() => setShowSearchBar(!showSearchBar)}
+              style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+            ></i>
+            <h5 style={{ color: "gray", paddingTop: "5px" }}>
+              Shortlisted Candidate
+            </h5>
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "10px",
-                  }}
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "3px",
+              }}
+            >
+              {showShareButton ? (
+                <button
+                  className="lineUp-share-btn"
+                  onClick={() => setShowShareButton(false)}
                 >
-                  {showShareButton ? (
-                    <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
-                    </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={() => setShowShareButton(true)}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={handleSelectAll}
-                      >
-                        {allSelected ? "Deselect All" : "Select All"}
-                      </button>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-                    </div>
-                  )}
+                  Share
+                </button>
+              ) : (
+                <div style={{ display: "flex", gap: "5px" }}>
                   <button
                     className="lineUp-share-btn"
-                    onClick={toggleFilterSection}
+                    onClick={() => setShowShareButton(true)}
                   >
-                    Filter <i className="fa-solid fa-filter"></i>
+                    Close
+                  </button>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={handleSelectAll}
+                  >
+                    {allSelected ? "Deselect All" : "Select All"}
+                  </button>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={forwardSelectedCandidate}
+                  >
+                    Forward
                   </button>
                 </div>
-              </div>
-
-              {showSearchBar && (
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search here..."
-                  value={searchTerm}
-                  style={{ marginBottom: "10px" }}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
               )}
-              {showFilterSection && (
-                <div className="filter-section">
-                  <h3>Filter Options</h3>
-                  <div className="filter-options-container">
-                    {filterOptions.map((option) => {
-                      const uniqueValues = Array.from(
-                        new Set(callingList.map((item) => item[option]))
-                      ).slice(0, 5);
-                      return (
-                        <div key={option} className="selfcalling-filter-option">
-                          <button
-                            className="callingList-filter-btn"
-                            onClick={toggleselectedFilters}
-                          >
-                            {option}
-                          </button>
-                          {uniqueValues.map((value) => (
-                            <label
-                              key={value}
-                              className="selfcalling-filter-value"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={
-                                  selectedFilters[option]?.includes(value) ||
-                                  false
-                                }
-                                onChange={() =>
-                                  handleFilterSelect(option, value)
-                                }
-                              />
-                              {value}
-                            </label>
-                          ))}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-          <div className="attendanceTableHeader">
-         
+              <button
+                className="lineUp-share-btn"
+                onClick={toggleFilterSection}
+              >
+                Filter <i className="fa-solid fa-filter"></i>
+              </button>
+            </div>
           </div>
+
+          {showSearchBar && (
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search here..."
+              value={searchTerm}
+              style={{ marginBottom: "10px" }}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          )}
+                    {showFilterSection && (
+            <div className="filter-section">
+              <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
+
+              <div className="filter-dropdowns">
+
+                {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
+
+
+                {filterOptions.map(option => (
+                  <div key={option} className="filter-dropdown">
+                    {/* <label htmlFor={option}>{option}</label> */}
+                    <div className="dropdown">
+                      <button className="dropbtn">{option}</button>
+                      <div className="dropdown-content">
+                        <div key={`${option}-All`}>
+                          <input
+                            type="checkbox"
+                            id={`${option}-All`}
+                            value="All"
+                            checked={!selectedFilters[option] || selectedFilters[option].length === 0}
+                            onChange={() => handleFilterSelect(option, "All")}
+                          />
+                          <label htmlFor={`${option}-All`}>All</label>
+                        </div>
+                        {[...new Set(shortListedData.map(item => item[option]))].map(value => (
+                          <div key={value}>
+                            <input
+                              type="checkbox"
+                              id={`${option}-${value}`}
+                              value={value}
+                              checked={selectedFilters[option]?.includes(value) || false}
+                              onChange={() => handleFilterSelect(option, value)}
+                            />
+                            <label htmlFor={`${option}-${value}`}>{value}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+         
           <table id="shortlisted-table-id" className="attendance-table">
             <thead>
               <tr className="attendancerows-head">
@@ -318,11 +500,12 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 <th className="attendanceheading">Gender</th>
                 <th className="attendanceheading">Education</th>
                 <th className="attendanceheading">Year Of Passing</th>
-                <th className="attendanceheading">Call Summary</th>{/* call summary */}
+                <th className="attendanceheading">Call Summary</th>
+                {/* call summary */}
                 {/* <th className="attendanceheading">Feedback</th> */}
                 <th className="attendanceheading">Holding Any Offer</th>
                 <th className="attendanceheading">Offer Letter Message</th>
-                <th className="attendanceheading">Upload Resume</th>
+                <th className="attendanceheading">Resume</th>
                 <th className="attendanceheading">Notice Period</th>
                 <th className="attendanceheading">Message For Team Leader</th>
                 <th className="attendanceheading">Interview Slot</th>
@@ -516,19 +699,34 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.gender}</td>
                   <td className="tabledata">{item.qualification}</td>
                   <td className="tabledata">{item.yearOfPassing}</td>
-                  <td className="tabledata">{item.extraCertification}</td>
+                  <td className="tabledata">{item.linup?.extraCertification}</td>
                   {/* <td className="tabledata">{item.feedback}</td> */}
                   <td className="tabledata">{item.holdingAnyOffer}</td>
                   <td className="tabledata">{item.offerLetterMsg}</td>
-                  <td className="tabledata">{item.resume}</td>
+                  {/* <td className="tabledata">{item.lineUp.resume}</td> */}
+                  {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                  Subcategory:-ResumeViewButton(added) start LineNo:-546
+                  Date:-02/07 */}
+                  <td className="tabledata">
+                    <button
+                      className="text-secondary"
+                      onClick={() => openResumeModal(item.resume)}
+                    >
+                      <i className="fas fa-eye"></i>
+                    </button>
+                  </td>
+                  {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                  Subcategory:-ResumeViewButton(added) End LineNo:-558
+                  Date:-02/07 */}
                   <td className="tabledata">{item.noticePeriod}</td>
                   <td className="tabledata">{item.msgForTeamLeader}</td>
                   <td className="tabledata">{item.availabilityForInterview}</td>
                   <td className="tabledata">{item.interviewTime}</td>
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
-                    <button className="lineUp-share-btn"
-                      
+
+                    <button
+                      className="lineUp-share-btn"
                       onClick={() => handleUpdate(item.candidateId)}
                     >
                       Update
@@ -617,6 +815,35 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
               </div>
             </>
           ) : null}
+          {/* Name:-Akash Pawar Component:-ShortListedCandidate
+          Subcategory:-ResumeModel(added) End LineNo:-656 Date:-02/07 */}
+          <Modal show={showResumeModal} onHide={closeResumeModal} size="md">
+            <Modal.Header closeButton>
+              <Modal.Title>Resume</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {selectedCandidateResume ? (
+                <iframe
+                  src={convertToDocumentLink(
+                    selectedCandidateResume,
+                    "Resume.pdf"
+                  )}
+                  width="100%"
+                  height="550px"
+                  title="PDF Viewer"
+                ></iframe>
+              ) : (
+                <p>No resume available</p>
+              )}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeResumeModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/* Name:-Akash Pawar Component:-ShortListedCandidate
+          Subcategory:-ResumeModel(added) End LineNo:-681 Date:-02/07 */}
         </div>
       ) : (
         <UpdateCallingTracker
@@ -630,3 +857,5 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 };
 
 export default ShortListedCandidates;
+
+

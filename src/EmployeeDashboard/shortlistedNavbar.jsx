@@ -22,7 +22,7 @@ const ShortlistedNavbar = () => {
     };
 
     return (
-        <div className='w-full'>
+        <div className='w-full' >
             <div className='shortlisted-main-nav'>
                 <div className='shortlisted-nav-left'>
                     <i
@@ -36,7 +36,7 @@ const ShortlistedNavbar = () => {
                 </div>
             </div>
 
-            <div className='shortlisted-nav-middel'>
+            <div className='shortlisted-nav-middel' >
                 {activeComponent === 'calendar' && (
                     <InterviewDates />
                 )}
