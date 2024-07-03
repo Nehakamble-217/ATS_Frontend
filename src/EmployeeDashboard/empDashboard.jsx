@@ -399,8 +399,8 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        <div>{showShortListedNav && <ShortlistedNavbar />}</div>
-        <div>
+        <div >{showShortListedNav && <ShortlistedNavbar />}</div>
+        <div >
           {showShortlistedCandidateData && (
             <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
           )}

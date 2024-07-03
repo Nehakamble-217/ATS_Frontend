@@ -67,6 +67,7 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
+
           `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
@@ -584,6 +585,7 @@ function DailyWork({
         dayPresentUnpaid,
         remoteWork,
       };
+
 
       await axios.put(
         `http://192.168.1.42:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,

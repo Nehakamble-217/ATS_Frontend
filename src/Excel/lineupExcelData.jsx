@@ -32,7 +32,8 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:8891/api/ats/157industries/lineup-excel-data/${employeeId}`)
+    fetch(`http://192.168.1.42:8891/api/ats/157industries/lineup-excel-data/${employeeId}`)
+
       .then((response) => response.json())
       .then((data) => {
         setLineUpList(data);
@@ -72,7 +73,6 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
         (item.candidateName && item.candidateName.toLowerCase().includes(searchTermLower)) ||
         (item.candidateEmail && item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
         (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
-        (item.alternateNumber && item.alternateNumber.toString().includes(searchTermLower)) ||
         (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
 
         (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
@@ -85,8 +85,8 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
         (item.totalExperience && item.totalExperience.toLowerCase().includes(searchTermLower)) ||
         (item.dateOfBirth && item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
         (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
-        (item.qualification && item.qualification.toLowerCase().includes(searchTermLower)) ||
-        (item.companyName && item.companyName.toLowerCase().includes(searchTermLower))
+        (item.companyName && item.companyName.toLowerCase().includes(searchTermLower)) 
+
 
       );
     });
@@ -158,7 +158,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://localhost:8891/api/ats/157industries/lineup-excel-data/${employeeId}`
+      `http://192.168.1.42:8891/api/ats/157industries/lineup-excel-data/${employeeId}`
 
     )
       .then((response) => response.json())
@@ -226,11 +226,12 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
   };
 
   return (
-
+    
     <div className="App-after1">
       {!selectedCandidate && (
         <>
-          <div className="search">
+      <div className="search">
+
             <i className="fa-solid fa-magnifying-glass" onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
@@ -307,18 +308,20 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
             </div>
           )}
 
-          <div className="attendanceTableData">
+   <div className="attendanceTableData"> 
 
-            <table className="selfcalling-table attendance-table">
-              <thead>
-                <tr className="attendancerows-head">
-                  <th className='attendanceheading'>
+<table className="selfcalling-table attendance-table">
+                  <thead>
+                    <tr className="attendancerows-head">
+                    <th className='attendanceheading'>
+
                     <input
                       type="checkbox"
                       onChange={handleSelectAll}
                       checked={selectedRows.length === filteredLineUpList.length}
                     />
                   </th>
+
                   <th className="attendanceheading">Sr No.</th>
                   <th className='attendanceheading' onClick={() => handleSort("date")}>Date & Time {getSortIcon("date")}</th>
                   <th hidden className="attendanceheading">Candidate Id</th>
@@ -523,6 +526,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
                     </td>
                   </tr>
                 ))}
+
               </tbody>
             </table>
           </div>

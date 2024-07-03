@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import CallingExcelList from "./callingExcelData";
+import CallingExcelList from './callingExcelData';
+import LineupExcelData from './lineupExcelData'
+
 import "./callingExcel.css";
 
 const CallingExcel = ({ onClose }) => {
@@ -141,7 +143,7 @@ const CallingExcel = ({ onClose }) => {
               />
             </div>
             <div className="gap-2 d-grid">
-              <button onClick={handleUpload}>Upload</button>
+              <button  onClick={handleUpload}>Upload</button>
               {uploadSuccess && (
                 <center>
                   <h5 className="mt-3 text-success">
@@ -223,6 +225,15 @@ const CallingExcel = ({ onClose }) => {
           <CallingExcelList onCloseTable={() => setShowTable(false)} />
         </div>
       )}
+
+{showTable && ( 
+        <div>
+          <LineupExcelData onCloseTable={() => setShowTable(false)} />
+        </div>
+      )}
+
+
+
     </div>
   );
 };

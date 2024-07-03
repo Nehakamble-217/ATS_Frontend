@@ -5,6 +5,7 @@ import { getEmployeeWorkData } from "../api/api";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
 import axios from "axios";
+import { Modal } from "react-bootstrap";
 
 function Sidebar({
   onLogout,
@@ -43,6 +44,7 @@ function Sidebar({
   const [isActive, setIsActive] = useState(false);
   const [activeSubMenu, setActiveSubMenu] = useState(null); // Track the active submenu
   const [activeButton, setActiveButton] = useState(null); // Track the active button
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
@@ -156,6 +158,7 @@ function Sidebar({
 
   return (
     <>
+
       <div className={`sidebar ${isActive ? "active" : ""}`}>
         <div className="sidebar-clouds1"></div>
         {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */}
@@ -334,6 +337,7 @@ function Sidebar({
                   </ul>
                 </li>
 
+
                 <li
                   className={`${
                     activeSubMenu === "Jobdiscription" || isJobDescriptionActive
@@ -350,6 +354,7 @@ function Sidebar({
                     <span className="sidebar-text">Job Description</span>
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
+
 
                   <ul
                     className={`sub-menu ${
@@ -440,6 +445,7 @@ function Sidebar({
                     </li>
                   </ul>
                 </li>
+
 
                 {jobRoles === "Admin" ? (
                   <li
@@ -677,7 +683,7 @@ function Sidebar({
                   </a>
                 </li>
 
-                <li onClick={handleLogoutLocal}>
+                <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">
                     {/* <i className="icon ph-bold ph-sign-out"></i> */}
                     <i
@@ -702,6 +708,50 @@ function Sidebar({
           </div>
         </div>
       </div>
+      {showConfirmation && (
+        <div
+          className="bg-black bg-opacity-50 modal show"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "fixed",
+            width: "100%",
+            height: "100vh",
+          }}
+        >
+          <Modal.Dialog
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Modal.Body>
+              <p className="confirmation-text">
+                Are you sure you want to logout?
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button onClick={handleLogoutLocal} className="buttoncss">
+                  Yes
+                </button>
+                <button
+                  onClick={() => setShowConfirmation(false)}
+                  className="buttoncss"
+                >
+                  No
+                </button>
+              </div>
+            </Modal.Body>
+          </Modal.Dialog>
+        </div>
+      )}
     </>
   );
 }

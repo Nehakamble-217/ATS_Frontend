@@ -18,22 +18,25 @@
   }
 
 
+
   .note-submit-btn {
     width: auto;
     height: 30px;
+    border: 1px solid gray;
     border-radius: 15px;
     margin-top: 5px;
     padding-left: 10px;
     padding-right: 10px;
     color:white;
     background-color: #ffb281;
-    border: none;
     font-size: 16px;
   }
 
   .note-submit-btn:hover {
     color: #ffb281 ;
     background-color: white;
+    border: 1px solid gray;
+
   }
   
   .note-pad-text {
@@ -177,6 +180,7 @@
     color: grey;
   
   }
+
 
  
 .tabledata {

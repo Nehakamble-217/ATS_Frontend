@@ -495,6 +495,7 @@ const SelectedCandidate = () => {
               </div>
             </div>
           )}
+
           <div className="attendanceTableData">
             <table className="attendance-table">
               <thead>

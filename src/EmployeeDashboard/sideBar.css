@@ -207,6 +207,7 @@ body {
   border: 1px solid #ffb281;
   background-color: #fff;
 }
+
 .head-sidebar {
   position: absolute;
   top: 80px;
@@ -221,7 +222,7 @@ body {
   border: 1px solid black;
   border-radius: 8px;
   background-color: #fff;
-}
+} */
 .sidebar-menu-btn i {
   transition: all 0.3s;
 }
@@ -230,7 +231,7 @@ body {
   height: 100vh;
 }
 .sidebar.active .sidebar-menu-btn i {
-  transform: rotate(360deg);
+  transform: rotate(180deg);
   margin: 10px;
 }
 .sidebar.active .user-details {
@@ -322,3 +323,55 @@ body {
 .sidebar .arrow {
   color: gray;
 }
+
+
+
+/* .popup-container{
+  flex-direction: column;
+  position: fixed;
+  background-color: white;
+  width: 20%;
+  height: 15%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -75%);
+  border-radius: 2rem;
+  padding: 1rem;
+  z-index: 5;
+  text-align: center;
+  border: 1px solid #ffcb9b;
+ } */
+ .headerData{
+     font-size: 18px;
+ }
+
+ .buttoncss:hover{
+     background-color: white;
+     color: #ffb281;
+     border: 1px solid #ffb281;
+ }
+ 
+ .confirmation-text {
+    color:grey;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1.1rem;
+  }   
+
+  /* .confirmation-text:hover{
+    color:grey;
+  } */
+  .buttoncss {
+    font-size: 18px;
+    border-radius: 15px;
+    color:white;
+    background-color: #ffb281;
+    display: inline-block;
+    padding: 8px 25px;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    
+  }

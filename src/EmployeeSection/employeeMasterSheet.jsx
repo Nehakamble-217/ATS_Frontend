@@ -201,7 +201,8 @@ const EmployeeMasterSheet = () => {
           padding: "10px",
         }}
       >
-        <div></div>
+        <h5 style={{ color: "gray" }}>Employee Master Sheet</h5>
+
         {showShareButton ? (
           <button
             className="lineUp-share-btn"
