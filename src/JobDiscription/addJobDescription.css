@@ -9,21 +9,17 @@
   .job-desc {
     font-family: Arial, sans-serif;
     /* background-color: gray; */
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     /* padding: 20px; */
-    padding-top: 20px;
   }
   
   .job-performance {
     /* background-color: #ffe5b5; */
-    padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 1600px;
   }
   
   .job-performance article {
@@ -41,7 +37,6 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0px;
     width: 100%;
     /* height: 650px; */
     /* max-height: 100vh; */
@@ -77,6 +72,7 @@
     display: flex;
     justify-content: center;
     border-radius: 5px;
+    font-weight:500;
     align-items: center;
      color:gray;
     /* font-weight: bold; */
