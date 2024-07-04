@@ -142,7 +142,7 @@ function Sidebar({
   //     setData({ archived: 0, pending: 10 });
 
   // await axios.post(
-  //   "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
+  //   "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
   //   formData
   // );
 

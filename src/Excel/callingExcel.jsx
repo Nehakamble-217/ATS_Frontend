@@ -1,29 +1,52 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import CallingExcelList from './callingExcelData';
-import LineupExcelData from './lineupExcelData'
+
+import LineupExcelData from "./lineupExcelData";
 
 import "./callingExcel.css";
+import CallingExcelList from "../Excel/callingExcelData";
+import ResumeList from "./resumeList";
 
 const CallingExcel = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [uploadError, setUploadError] = useState(null);
+  const [uploadErrorLineUp, setUploadErrorLineUp] = useState(null);
+  const [uploadErrorResume, setUploadErrorResume] = useState(null);
+  const [activeTable, setActiveTable] = useState("");
   const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [showTable, setShowTable] = useState(false);
+  const [uploadSuccessLineUp, setUploadSuccessLineUp] = useState(false);
+  const [uploadSuccessResume, setUploadSuccessResume] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const fileInputRef = useRef(null);
   const { employeeId } = useParams();
 
+  const handleTableChange = (tableName) => {
+    setActiveTable(tableName);
+  };
+
+  useEffect(() => {}, [file]);
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setUploadSuccess(false);
+    setUploadSuccessLineUp(false);
+    setUploadSuccessResume(false);
     setUploadError(null);
-    setShowTable(false);
+    setUploadErrorLineUp(null);
+    setUploadErrorResume(null);
   };
 
   const handleResumeFileChange = (event) => {
     setSelectedFiles(event.target.files);
+  };
+
+  const hideSuccessMessage = () => {
+    setTimeout(() => {
+      setUploadSuccess(false);
+      setUploadSuccessLineUp(false);
+      setUploadSuccessResume(false);
+    }, 2000);
   };
 
   const handleUpload = async () => {
@@ -35,7 +58,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append("file", file);
     try {
       await axios.post(
-        `http://localhost:8891/api/ats/157industries/uploadData/${employeeId}`,
+        `http://192.168.1.38:8891/api/ats/157industries/uploadData/${employeeId}`,
         formData,
         {
           headers: {
@@ -44,10 +67,11 @@ const CallingExcel = ({ onClose }) => {
         }
       );
       setUploadSuccess(true);
-      setShowTable(true); // Show the table after successful upload
-      setFile(null); // Reset the file state
+      setActiveTable("CallingExcelList");
+      hideSuccessMessage();
+      setFile(null);
       if (fileInputRef.current) {
-        fileInputRef.current.value = ""; // Clear the file input
+        fileInputRef.current.value = "";
       }
     } catch (error) {
       console.error("Upload error:", error);
@@ -62,9 +86,10 @@ const CallingExcel = ({ onClose }) => {
     }
     const formData = new FormData();
     formData.append("file", file);
+    console.log(employeeId + " - line Page 01");
     try {
       await axios.post(
-        `http://localhost:8891/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
+        `http://192.168.1.38:8891/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
         formData,
         {
           headers: {
@@ -72,26 +97,45 @@ const CallingExcel = ({ onClose }) => {
           },
         }
       );
-      setUploadSuccess(true);
-      setShowTable(true); // Show the table after successful upload
-      setFile(null); // Reset the file state
+      console.log(employeeId + " - line Page 02");
+      setUploadSuccessLineUp(true);
+      setActiveTable("LineupExcelData");
+      hideSuccessMessage();
+      setFile(null);
       if (fileInputRef.current) {
-        fileInputRef.current.value = ""; // Clear the file input
+        fileInputRef.current.value = "";
       }
     } catch (error) {
       console.error("Upload error:", error);
-      setUploadError("Error uploading file. Please try again.");
+      setUploadErrorLineUp("Error uploading file. Please try again.");
     }
   };
 
-  const handleUploadResume = () => {
+  const handleUploadResume = async () => {
     const formData = new FormData();
     for (let i = 0; i < selectedFiles.length; i++) {
       formData.append("files", selectedFiles[i]);
     }
+    try {
+      await axios.post(
+        "http://192.168.1.38:8891/api/ats/157industries/add-multiple-resume",
+        formData
+      );
+      setUploadSuccessResume(true);
+      setActiveTable("ResumeList");
+      hideSuccessMessage();
+      setSelectedFiles([]);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      console.error("Error uploading files:", error);
+      setUploadErrorResume("Error uploading file. Please try again.");
+    }
+
     axios
       .post(
-        "http://localhost:8891/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.39:8891/api/ats/157industries/add-multiple-resume",
         formData
       )
 
@@ -116,18 +160,16 @@ const CallingExcel = ({ onClose }) => {
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "center",
         flexWrap: "wrap",
         paddingTop: "15px",
+        gap: "12px",
       }}
     >
-      {!showTable && (
+      <div>
         <div
           className="card fixed-card"
-          style={{
-            width: "350px",
-            border: "1px solid gray",
-          }}
+          style={{ width: "100%", border: "1px solid gray" }}
         >
           <div className="card-header">
             <h5 className="mb-0 card-title">Upload Calling Excel </h5>
@@ -143,11 +185,12 @@ const CallingExcel = ({ onClose }) => {
               />
             </div>
             <div className="gap-2 d-grid">
-              <button  onClick={handleUpload}>Upload</button>
+              <button onClick={handleUpload}>Upload</button>
+
               {uploadSuccess && (
                 <center>
                   <h5 className="mt-3 text-success">
-                    File data added successfully!
+                    Excel File Added successfully....
                   </h5>
                 </center>
               )}
@@ -156,19 +199,17 @@ const CallingExcel = ({ onClose }) => {
                   <h5 className="mt-3 text-danger">{uploadError}</h5>
                 </center>
               )}
-              <button onClick={handleView}>View</button>
+              <button onClick={() => handleTableChange("CallingExcelList")}>
+                View
+              </button>
             </div>
           </div>
         </div>
-      )}
-
+      </div>
       <div>
         <div
           className="card fixed-card"
-          style={{
-            width: "350px",
-            border: "1px solid gray",
-          }}
+          style={{ width: "100%", border: "1px solid gray" }}
         >
           <div className="card-header">
             <h5 className="mb-0 card-title">Upload LineUp Excel </h5>
@@ -185,55 +226,73 @@ const CallingExcel = ({ onClose }) => {
             </div>
             <div className="gap-2 d-grid">
               <button onClick={handleUploadLineupFile}>Upload</button>
-              {uploadSuccess && (
+              {uploadSuccessLineUp && (
                 <center>
                   <h5 className="mt-3 text-success">
-                    File data added successfully!
+                    Line File added successfully...
                   </h5>
                 </center>
               )}
-              {uploadError && (
+              {uploadErrorLineUp && (
                 <center>
-                  <h5 className="mt-3 text-danger">{uploadError}</h5>
+                  <h5 className="mt-3 text-danger">{uploadErrorLineUp}</h5>
                 </center>
               )}
-              <button onClick={handleView}>View</button>
+              <button onClick={() => handleTableChange("LineupExcelData")}>
+                View
+              </button>
             </div>
           </div>
         </div>
       </div>
-
       <div>
-        <div className="main-container" style={{ width: "350px" }}>
-          <div className="upload-container">
-            <h2 className="upload-title">Upload Resume</h2>
-            <input
-              type="file"
-              multiple
-              onChange={handleResumeFileChange}
-              className="file-input"
-            />
-            <button onClick={handleUploadResume} className="upload-button">
-              Upload
-            </button>
+        <div
+          className="card fixed-card"
+          style={{ width: "100%", border: "1px solid gray" }}
+        >
+          <div className="card-header">
+            <h5 className="mb-0 card-title">Upload Resume </h5>
+          </div>
+          <div className="card-body">
+            <div className="mb-3">
+              <input
+                type="file"
+                multiple
+                onChange={handleResumeFileChange}
+                className="form-control"
+                ref={fileInputRef}
+              />
+            </div>
+            <div className="gap-2 d-grid">
+              <button onClick={handleUploadResume}>Upload</button>
+              {uploadSuccessResume && (
+                <center>
+                  <h5 className="mt-3 text-success">
+                    Resume Data added successfully...
+                  </h5>
+                </center>
+              )}
+              {uploadErrorResume && (
+                <center>
+                  <h5 className="mt-3 text-danger">{uploadErrorResume}</h5>
+                </center>
+              )}
+              <button onClick={() => handleTableChange("ResumeList")}>
+                View
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      {showTable && (
-        <div>
-          <CallingExcelList onCloseTable={() => setShowTable(false)} />
-        </div>
+      {activeTable === "CallingExcelList" && (
+        <CallingExcelList onCloseTable={() => setActiveTable("")} />
       )}
-
-{showTable && ( 
-        <div>
-          <LineupExcelData onCloseTable={() => setShowTable(false)} />
-        </div>
+      {activeTable === "LineupExcelData" && (
+        <LineupExcelData onCloseTable={() => setActiveTable("")} />
       )}
-
-
-
+      {activeTable === "ResumeList" && (
+        <ResumeList onCloseTable={() => setActiveTable("")} />
+      )}
     </div>
   );
 };

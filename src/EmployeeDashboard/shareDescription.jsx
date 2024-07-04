@@ -126,11 +126,11 @@ const ShareDescription = ({ Descriptions }) => {
             </div>
           </div>
         </section>
-         <section className="positionOverview-share">
+        <section className="positionOverview-share">
           <h2>
             <b>Position Overview</b>
           </h2>
-         <p>{Descriptions.positionOverview.overview}</p>
+          <p>{Descriptions.positionOverview.overview}</p>
         </section>
         <section className="responsibilities-share">
           <h2>
@@ -185,4 +185,3 @@ const ShareDescription = ({ Descriptions }) => {
 };
 
 export default ShareDescription;
-

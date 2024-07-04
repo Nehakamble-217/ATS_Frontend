@@ -208,6 +208,7 @@
   overflow-y: auto;
 }
 .attendancerows{
+  color: gray;
   height: 30px;
 }
 
@@ -364,10 +365,10 @@ html::-webkit-scrollbar{
   .selection-containerTL {
     display: flex;
     /* justify-content: space-around; */
-    width:85%;
+    width:45%;
     flex-direction: column;
     margin-bottom: 20px;
-    margin-left: 5%;
+    /* margin-left: 5%; */
   }
 
 
@@ -574,6 +575,7 @@ html::-webkit-scrollbar{
     border-radius: 15px;
     height: 45px;
     width: 100%;
+    margin-top: 10px;
    
   }
   
@@ -693,3 +695,57 @@ html::-webkit-scrollbar{
   .dropdown-icon.open {
     transform: rotate(180deg);
   }
+
+
+
+  .TLR-buttons-div{
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .ok-button,.reset-selectTL-button{
+    font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .ok-button:hover,.reset-selectTL-button:hover{
+    background-color: white;
+    color: #ffcb9b;
+    border: #f2f2f2;
+    border: 1px solid gray;
+  }
+
+  .category-share-btn{
+    font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    margin: 5px;
+    color: #ffcb9b; 
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: white;
+    border: 1px solid gray;
+    cursor: pointer;
+  }
+  .category-share-btn:hover{
+    color: white;
+    background: #ffcb9b;
+  }
+.response-msg{
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+    padding: 10px;
+}

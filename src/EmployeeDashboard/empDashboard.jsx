@@ -15,7 +15,7 @@ import RejectedCandidate from "../CandidateSection/rejectedCandidate";
 import HoldCandidate from "../CandidateSection/holdCandidate";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import CallingExcel from "../Excel/callingExcel";
-import ResumeData from "../ResumeData/resumedata";
+import ResumeList from "../Excel/resumeList";
 import Home from "./JobList";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
@@ -432,7 +432,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showCallingExcel && <CallingExcel />}</div>
         <div>{showLineupExcelList && <LineupExcelData></LineupExcelData>}</div>
         <div>
-          {showResumeData && <ResumeData handleUpdate={handleUpdate} />}
+          {showResumeData && <ResumeList handleUpdate={handleUpdate} />}
         </div>
         <div>{showNotePad && <NotePad />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
