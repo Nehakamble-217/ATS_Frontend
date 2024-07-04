@@ -1,9 +1,10 @@
+/* this all css file made by Prachi maam and Arshad add in main project */
 .page-container {
   height: 100vh;
-  overflow: hidden; 
+  overflow: hidden;
   display: flex;
 }
-.App-after1{
+.App-after1 {
   width: 100%;
   height: 82vh;
 }
@@ -19,10 +20,8 @@
   margin-top: -10px;
   margin-bottom: -10px;
   /* height: 10px; */
- 
 }
 .fixed-card {
- 
   z-index: 1000;
   background-color: #ffe5b5;
   color: gray;
@@ -34,15 +33,13 @@
   /* padding: 10px; */
 }
 .text-success {
-  color: gray;
+  color: gray !important;
 }
 
 .text-danger {
-  color:gray;
+  color: gray;
   margin-bottom: -5px;
- 
 }
-
 
 .card-header {
   padding: 10px;
@@ -136,7 +133,7 @@
   background: #ffcb9b;
   border: none;
   height: 30px;
-  width: 150px; /* Adjust width as needed */
+  width: 100%; /*  */
   border-radius: 15px;
   color: white;
   padding: 0 20px; /* Adjust padding for text alignment */
@@ -174,10 +171,9 @@
 
 @media (max-width: 576px) {
   .d-grid button {
-    font-size: 16px; 
+    font-size: 16px;
   }
 }
-
 
 .filter-heading {
   border-radius: 15px;
@@ -213,13 +209,12 @@
 
 /* Tooltip styles */
 
-
 /* close button */
 .close-button {
   font-size: 16px;
   border-radius: 15px;
   height: 30px;
-  
+
   padding-left: 15px;
   padding-right: 15px;
   background-color: #ffcb9b;

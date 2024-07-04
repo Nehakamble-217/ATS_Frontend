@@ -28,7 +28,7 @@ const EmployeeMasterSheet = () => {
   const fetchEmployeeNameAndID = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.39:8891/api/ats/157industries/names-and-ids`
+        `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
       );
       const data = await response.json();
       setFetchEmployeeNameID(data);
@@ -103,8 +103,7 @@ const EmployeeMasterSheet = () => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
-
+      const url = `http://192.168.1.38:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
       const requestData = {
         employeeId: selectedEmployeeId,
         candidateIds: selectedRows,
@@ -275,7 +274,7 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Holding Any Offer</th>
               <th className="attendanceheading">Message for Team Leader</th>
               <th className="attendanceheading">Notice Period</th>
-            
+
               <th className="attendanceheading">Qualification</th>
               <th className="attendanceheading">Resume</th>
               <th className="attendanceheading">Year of Passing</th>
@@ -289,7 +288,7 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Expected CTC Thousand</th>
               <th className="attendanceheading">Offer Letter Msg</th>
               <th className="attendanceheading">Relevant Experince</th>
-        
+
               <th className="attendanceheading">Response Update ID</th>
               <th className="attendanceheading">Interview Response</th>
               <th className="attendanceheading">Interview Round</th>
@@ -315,7 +314,7 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Join Status</th>
               <th className="attendanceheading">Reason for Not Join</th>
               <th className="attendanceheading">Join Date</th>
-              
+
               <th className="attendanceheading">Inquiry ID</th>
               <th className="attendanceheading">Active Status</th>
               <th className="attendanceheading">Any Problem</th>
