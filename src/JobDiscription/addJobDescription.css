@@ -1,4 +1,5 @@
 /* Swapnil_JobDescription_FullPageDesign_1to175_02/07 */
+/* Swapnil_JobDescription_ResponsivePage_1to77_04/07 */
 
 * {
     margin: 0;
@@ -14,6 +15,11 @@
     flex-direction: column;
     align-items: center;
     /* padding: 20px; */
+  }
+  .job-desc-form
+  {
+    border: 1px solid gray;
+    margin-bottom:5px ;
   }
   
   .job-performance {
@@ -68,9 +74,11 @@
   
   .field label {
     width: 29%;
-    font-size: 18px;
+    font-size: 2.10vh;
+    /* border: 1px solid orange; */
+    padding: 0px 5px;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     border-radius: 5px;
     font-weight:500;
     align-items: center;
@@ -78,9 +86,16 @@
     /* font-weight: bold; */
   }
   
-  .field input,
-  .field select {
+  .field input {
     padding: 4px;
+    /* font-size: 16px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width:69%;
+  }
+  .field select{
+    padding: 5.5px 5px 5.5px 5px ;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width:69%;
@@ -169,20 +184,7 @@
     display: flex;
     justify-content: center;
   }
-
-  /* @media (max-width: 768px) {
-    .job-performance {
-      width: 100%;
-      max-height: fit-content;
-    }
-  
-    .field-column {
-      flex: 1 1 100%;
-      flex-direction: row;
-      max-height: fit-content;
-    }
-  }
-    
+    /* 
   .daily-tr-bt:hover {
     background-color: red;
   }
@@ -194,7 +196,5 @@
     .field input .field select{
         width: 320 px!important;
     }
-
-    
 
   } */

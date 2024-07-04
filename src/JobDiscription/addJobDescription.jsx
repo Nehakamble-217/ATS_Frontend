@@ -36,9 +36,9 @@ const AddJobDescription = () => {
     preferredQualifications: [
       { employeeId: "", preferredQualificationMsg: "" },
     ],
-    RoundOfInterView:[
-      {round:""}
-    ],
+    RoundOfInterView:[{
+      round:""
+    }]
   });
 
   const handleChange = (e) => {
@@ -81,7 +81,7 @@ const AddJobDescription = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://192.168.1.42:8891/api/ats/157industries/add-requirement",
+        "http://192.168.1.39:8891/api/ats/157industries/add-requirement",
         {
           method: "POST",
           headers: {
@@ -90,8 +90,9 @@ const AddJobDescription = () => {
           body: JSON.stringify(formData),
         }
       );
+      console.log(response);
       if (response.ok) {
-        const result = await response.json();
+        const result =await response.text();
         console.log("Success:", result);
         setFormData({
           companyName: "",
@@ -127,9 +128,9 @@ const AddJobDescription = () => {
           preferredQualifications: [
             { employeeId: "", preferredQualificationMsg: "" },
           ],
-          RoundOfInterView:[
-            {round:""}
-          ],
+          RoundOfInterView:[{
+            round:""
+          }]
         });
       } else {
         console.error("Error:", response.statusText);
@@ -146,6 +147,7 @@ const AddJobDescription = () => {
           <b>ADD JOB DESCRIPTION</b>
         </article>
         <form onSubmit={handleSubmit}>
+          <div className="job-desc-form">
           <div className="field-column">
             <div className="field-Row-Gray">
             <div className="field">
@@ -477,7 +479,7 @@ const AddJobDescription = () => {
               </label>
               <input
                 type="text"
-                name="ageCriteria"
+                name="note"
                 value={formData.note}
                 onChange={handleChange}
               />
@@ -648,12 +650,13 @@ const AddJobDescription = () => {
               Add More Preferred Qualifications
             </button>
           </div>
-
+          </div>
           <div className="job-submit-button">
             <button className="daily-tr-btn" type="submit">
               Submit
             </button>
           </div>
+         
         </form>
       </section>
     </main>

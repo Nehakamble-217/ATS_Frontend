@@ -1,12 +1,13 @@
 
 /* og */
-.maintable {
+.calling-tracker-main {
   height: 100%; /* Allow height to adjust based on content */
-  width: 100%; /* Allow width to adjust based on content */
-  border-collapse: collapse;
+  width: 100%; 
+  border: 1px solid gray;
+  /* Allow width to adjust based on content */
   /* border: 2px solid red; */
   /* overflow-x: auto; Adds horizontal scroll if table is too wide */
-  margin: 0 auto; /* Center align if needed */
+   /* Center align if needed */
   /* max-width: 100%; Ensures it doesn't exceed the container width */
   padding: 5px;
   color: gray; /* Set font color to gray */
@@ -17,34 +18,134 @@
   border: 2px solid red;
 } */
 
-.maintable::-webkit-scrollbar {
+.calling-tracker-main::-webkit-scrollbar {
   display: none;
 }
 
 /* .table-striped th {
   color: gray;
 } */
-
+/* 
 .update-page-head {
   width: 100%;
-  color: gray; /* Set font color to gray */
+  color: gray; Set font color to gray
   text-transform: uppercase;
   align-self: center;
   display: flex;
   justify-content: center;
   padding-top: 10px;
-}
+} */
 
-.studTables {
+.calling-tracker-submain {
   width: 100%;
-  /* max-width: 100%; Ensures it doesn't exceed the container width */
-  margin: 0 auto; /* Center align if needed */
-  border-collapse: collapse; /* Remove space between cells */
-  table-layout: auto; /* Allow the table to adjust based on content */
-  white-space: nowrap;
-  color: gray; /* Set font color to gray */
+  height: 100%;
 }
-
+.calling-tracker-form
+{
+  width: 100%;
+}
+.calling-tracker-row-gray
+{
+  width: 100%;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content:space-between;
+}
+.calling-tracker-row-white{
+  width: 100%;
+  display: flex;
+  justify-content:space-between;
+}
+.calling-tracker-field
+{
+  width: 50%;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.calling-tracker-field-inner-div
+{
+  width: 69%;
+  border: 1px solid gray;
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.calling-tracker-field-inner-sub-div
+{
+width: 48%;
+display: flex;
+padding: 2px;
+align-items: center;
+}
+.plain-input
+{
+  width: 90%;
+  padding: 5px 0px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+.calling-check-box-main-container{
+  width: 69%;
+  border: 1px solid gray;
+  padding: 5px 3px;
+  display: flex;
+  justify-content: space-around;
+}
+.calling-check-box-container
+{
+  width: 48%;
+  display: flex;
+  justify-content: space-around;
+}
+.inner-sub-div-input
+{
+  width:90% ;
+  border-radius: 5px;
+  padding: 5px 0px;
+  border: 1px solid gray;
+}
+.calling-tracker-field label
+{
+  width: 29%;
+  text-align: center;
+  font-size: 2.1vh;
+}
+.calling-tracker-field-sub-div
+{
+  width: 69%;
+  border: 1px solid gray;
+  padding: 5px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.calling-tracker-two-input
+{
+  width: 40%;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid gray;
+  padding: 5px 0px;
+}
+.calling-tracker-input-message{
+  width: 80%;
+  border-radius: 5px;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+}
+.calling-tracker-two-input-container
+{
+  width: 69%;
+  border: 1px solid gray;
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 .studTables th,
 .studTables td {
   border: 1px solid gray;
