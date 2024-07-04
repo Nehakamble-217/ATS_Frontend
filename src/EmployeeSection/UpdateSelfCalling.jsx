@@ -79,7 +79,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchEmployeeName = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:8891/api/ats/157industries/employeeName/${newCandidateId}`
+        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${newCandidateId}`
       );
       const data = await response.text();
       setRecruiterName(data);
@@ -91,7 +91,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchCandidateData = async (candidateId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.38:8891/api/ats/157industries/specific-data/${candidateId}`
       );
       const data = await response.json();
       setCallingTracker(data);
@@ -104,7 +104,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.42:8891/api/ats/157industries/company-details`
+        `http://192.168.1.38:8891/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -144,17 +144,22 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
         recruiterName: recruiterName,
       };
 
+      console.log(candidateId +"  candidateId  in updated method..  ");
       const response = await fetch(
-        `http://192.168.1.42:8891/api/ats/157industries/update-callingData/${newCandidateId}`,
+      
+        `http://192.168.1.38:8891/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          
           body: JSON.stringify(dataToUpdate),
+          
         }
       );
 
+      console.log(candidateId +"  candidateId  in updated method.. After  ");
       if (response.ok) {
         const data = await response.text();
         console.log("Data updated successfully:", data);
@@ -438,6 +443,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       lineHeight: 1,
                       marginRight: "10px",
                     }}
+                    value={callingTracker.incentive}
                     type="text"
                   />
                 </td>
@@ -497,6 +503,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       lineHeight: 1,
                       marginRight: "10px",
                     }}
+                    onChange={handleChange}
                   >
                     <option value="" style={{ color: "gray" }}>
                       Select Location
@@ -519,6 +526,9 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       lineHeight: 1,
                       marginRight: "10px",
                     }}
+                    onChange={handleChange}
+                    
+
                   />
                 </td>
               </tr>
@@ -563,7 +573,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   <input
                     type="date"
                     name="dateOfBirth"
-                    value={callingTracker.lineUp?.dateOfBirth || ""}
+                    value={callingTracker.lineUp?.dateOfBirth}
                     className="form-control"
                     style={{
                       height: "30px",
@@ -573,6 +583,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       margin: "0px",
                       padding: "0px",
                     }}
+                    onChange={handleChange}
                   />
                   <div
                     className="main-gender"
@@ -586,18 +597,20 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   >
                     <input
                       type="checkbox"
-                      name="male"
+                      name="lineUp.gender"
                       checked={callingTracker.lineUp?.gender === "Male"}
                       className="gender"
                       style={{ textAlign: "center" }}
+                      onChange={handleChange}
                     />
                     <label className="px-2">Male</label>
                     <input
                       type="checkbox"
-                      name="female"
+                      name="lineUp.gender"
                       checked={callingTracker.lineUp?.gender === "Female"}
                       className="gender"
                       style={{ paddingLeft: "auto" }}
+                      onChange={handleChange}
                     />
                     <label className="px-2">Female</label>
                   </div>
@@ -610,7 +623,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 <td>
                   <input
                     type="text"
-                    name="Call Summary"
+                    name="lineUp.msgForTeamLeader"
                     value={callingTracker.lineUp?.msgForTeamLeader}
                     onChange={handleChange}
                     className="form-control"
@@ -621,7 +634,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       lineHeight: 1,
                       marginRight: "10px",
                     }}
-                    required={callingTracker.selectYesOrNo === "Interested"}
+                    //required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 

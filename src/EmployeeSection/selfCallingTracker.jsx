@@ -54,7 +54,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   useEffect(() => {
 
 
-    fetch(`http://192.168.1.42:8891/api/ats/157industries/callingData/${employeeId}`)
+    fetch(`http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`)
 
 
       .then((response) => response.json())
@@ -74,7 +74,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.42:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);

@@ -68,7 +68,7 @@ function DailyWork({
       try {
         const response = await axios.get(
 
-          `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://localhost:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
         onCurrentEmployeeJobRoleSet(response.data.jobRole);
@@ -167,7 +167,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
+          "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
           formData
         );
 
@@ -197,7 +197,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.42:8891/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.38:8891/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -588,7 +588,7 @@ function DailyWork({
 
 
       await axios.put(
-        `http://192.168.1.42:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.38:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
         formData
       );
 
