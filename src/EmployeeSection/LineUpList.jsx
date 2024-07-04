@@ -40,8 +40,9 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const navigator = useNavigate();
 
   useEffect(() => {
-
-    fetch(`http://192.168.1.42:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`)
+    fetch(
+      `http://192.168.1.39:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setFilteredCallingList(data);
@@ -101,7 +102,6 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
-
 
     fetch(
       `http://192.168.1.42:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
@@ -854,7 +854,6 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                           </div>
                         </td>
 
-
                         <>
                           <td
                             className="tabledata"
@@ -908,12 +907,15 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                             onMouseOver={handleMouseOver}
                             onMouseOut={handleMouseOut}
                           >
-                            {`${item.currentCTCLakh || 0} Lakh ${item.currentCTCThousand || 0
-                              } Thousand`}
+                            {`${item.currentCTCLakh || 0} Lakh ${
+                              item.currentCTCThousand || 0
+                            } Thousand`}
                             <div className="tooltip">
-                              <span className="tooltiptext">{`${item.expectedCTCLakh || 0
-                                } Lakh ${item.expectedCTCThousand || 0
-                                } Thousand`}</span>
+                              <span className="tooltiptext">{`${
+                                item.expectedCTCLakh || 0
+                              } Lakh ${
+                                item.expectedCTCThousand || 0
+                              } Thousand`}</span>
                             </div>
                           </td>
 
@@ -922,12 +924,15 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                             onMouseOver={handleMouseOver}
                             onMouseOut={handleMouseOut}
                           >
-                            {`${item.expectedCTCLakh || 0} Lakh ${item.expectedCTCThousand || 0
-                              } Thousand`}
+                            {`${item.expectedCTCLakh || 0} Lakh ${
+                              item.expectedCTCThousand || 0
+                            } Thousand`}
                             <div className="tooltip">
-                              <span className="tooltiptext">{`${item.expectedCTCLakh || 0
-                                } Lakh ${item.expectedCTCThousand || 0
-                                } Thousand`}</span>
+                              <span className="tooltiptext">{`${
+                                item.expectedCTCLakh || 0
+                              } Lakh ${
+                                item.expectedCTCThousand || 0
+                              } Thousand`}</span>
                             </div>
                           </td>
 
@@ -1007,7 +1012,6 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               </div>
                             </td> */}
 
-
                           <td
                             className="tabledata"
                             onMouseOver={handleMouseOver}
@@ -1052,7 +1056,6 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                               className="text-secondary"
                               onClick={() => openResumeModal(item.resume)}
                             >
-
                               <i className="fas fa-eye"></i>
                             </button>
                           </td>

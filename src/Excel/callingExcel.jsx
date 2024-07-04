@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import CallingExcelList from './callingExcelData';
-import LineupExcelData from './lineupExcelData'
+import CallingExcelList from "./callingExcelData";
+import LineupExcelData from "./lineupExcelData";
 
 import "./callingExcel.css";
 
@@ -35,7 +35,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append("file", file);
     try {
       await axios.post(
-        `http://localhost:8891/api/ats/157industries/uploadData/${employeeId}`,
+        `http://192.168.1.39:8891/api/ats/157industries/uploadData/${employeeId}`,
         formData,
         {
           headers: {
@@ -91,7 +91,7 @@ const CallingExcel = ({ onClose }) => {
     }
     axios
       .post(
-        "http://localhost:8891/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.39:8891/api/ats/157industries/add-multiple-resume",
         formData
       )
 
@@ -143,7 +143,7 @@ const CallingExcel = ({ onClose }) => {
               />
             </div>
             <div className="gap-2 d-grid">
-              <button  onClick={handleUpload}>Upload</button>
+              <button onClick={handleUpload}>Upload</button>
               {uploadSuccess && (
                 <center>
                   <h5 className="mt-3 text-success">
@@ -226,14 +226,11 @@ const CallingExcel = ({ onClose }) => {
         </div>
       )}
 
-{showTable && ( 
+      {showTable && (
         <div>
           <LineupExcelData onCloseTable={() => setShowTable(false)} />
         </div>
       )}
-
-
-
     </div>
   );
 };

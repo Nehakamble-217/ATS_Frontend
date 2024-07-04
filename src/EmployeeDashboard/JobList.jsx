@@ -32,7 +32,7 @@ const JobListing = () => {
 
 useEffect(() => {
 
-    fetch("http://192.168.1.42:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.39:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure

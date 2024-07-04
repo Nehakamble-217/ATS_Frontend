@@ -32,7 +32,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.42:8891/api/ats/157industries/lineup-excel-data/${employeeId}`)
+    fetch(`http://192.168.1.39:8891/api/ats/157industries/lineup-excel-data/${employeeId}`)
 
       .then((response) => response.json())
       .then((data) => {
@@ -158,7 +158,7 @@ const LineupExcelData = ({ updateState, funForGettingCandidateId, onCloseTable }
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.42:8891/api/ats/157industries/lineup-excel-data/${employeeId}`
+      `http://192.168.1.39:8891/api/ats/157industries/lineup-excel-data/${employeeId}`
 
     )
       .then((response) => response.json())
