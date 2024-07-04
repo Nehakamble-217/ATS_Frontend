@@ -6,11 +6,12 @@
    .attendanceTableHeader{
       display: flex;
       justify-content: space-between;
-      padding: 10px;
+      /* padding: 5px; */
       gap: 15px;
       position: sticky;
       left: 5px;
       margin-bottom: 10px;
+
       
    }
    .shorttext{

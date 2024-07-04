@@ -8,6 +8,7 @@ import { Modal, Button } from "react-bootstrap";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 
 function DailyWork({
+  onCurrentEmployeeJobRoleSet,
   successCount,
   successfulDataAdditions,
   // handleDataAdditionSuccess,
@@ -66,9 +67,11 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
+
           `http://192.168.1.42:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
+        onCurrentEmployeeJobRoleSet(response.data.jobRole);
         if (response.data.profileImage) {
           const byteCharacters = atob(response.data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
@@ -164,7 +167,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://localhost:8082/api/ats/157industries/save-daily-work",
+          "http://192.168.1.42:8891/api/ats/157industries/save-daily-work",
           formData
         );
 
@@ -191,25 +194,20 @@ function DailyWork({
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-SaveLoginFunctionality End LineNo:-191  Date:-01/07
 
   useEffect(() => {
-    const fetchCurrentEmployerWorkId = () => {
-      const formData = {
-        id: employeeId,
-        currentDate, // Assuming currentDate is today's date
-      };
-
+    const fetchCurrentEmployerWorkId = async () => {
       try {
-        const response = axios.get(
-          `http://localhost:8082/api/ats/157industries/fetch-work-id`,
-          { params: formData }
+        const response = await axios.get(
+          `http://192.168.1.42:8891/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching work ID:", error);
       }
     };
     fetchCurrentEmployerWorkId();
-  }, []);
+  }, [employeeId]);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-CalculateTotalHoursWork(changed) Start LineNo:-193  Date:-01/07
   const calculateTotalHoursWork = (
@@ -554,6 +552,7 @@ function DailyWork({
 
   const handleLogoutLocal = async () => {
     try {
+      console.log(fetchWorkId);
       const breaksData = localStorage.getItem(`breaks_${employeeId}`);
       const breaks = breaksData ? JSON.parse(breaksData) : [];
       const totalHoursWork = calculateTotalHoursWork(
@@ -587,8 +586,9 @@ function DailyWork({
         remoteWork,
       };
 
-      await axios.post(
-        `http://192.168.1.42:8891/api/ats/157industries/update-daily-work/${fetchWorkId}`,
+
+      await axios.put(
+        `http://192.168.1.42:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
         formData
       );
 

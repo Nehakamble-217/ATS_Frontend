@@ -96,6 +96,11 @@ const EmpDashboard = ({ userGroup }) => {
   }, [successfulDataAdditions]);
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions End LineNo:-93 Date:-01/07
 
+  const [jobRoles, setJobRoles] = useState("");
+  const handleJobRoles = (role) => {
+    setJobRoles(role);
+  };
+
   const [id, setId] = useState(0);
 
   const navigator = useNavigate();
@@ -106,11 +111,6 @@ const EmpDashboard = ({ userGroup }) => {
     setSelfCalling(false);
     setIncentive(false);
   };
-
-  // const updateCount = () => {
-  //   setSuccessCount((prevCount) => prevCount + 1);
-  //   setArchived((prevCount) => prevCount + 1);
-  // };
 
   const toggelAddRecruiter = () => {
     resetAllToggles();
@@ -129,14 +129,6 @@ const EmpDashboard = ({ userGroup }) => {
     setAddJobDescription(!addJobDescription);
     setIncentive(false);
   };
-
-  // const handleDataAdditionSuccess = () => {
-  //   if (successfulDataAdditions > 0) {
-  //     setSuccessfulDataAdditions((prevCount) => prevCount + 1);
-  //     setArchived((prevArchived) => prevArchived + 1);
-  //     setPending((prevPending) => prevPending - 1);
-  //   }
-  // };
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -377,6 +369,7 @@ const EmpDashboard = ({ userGroup }) => {
         onLogout={handleLogoutTime}
         toggeExcelCallingData={toggeExcelCallingData}
         toggelExcelLineup={toggelExcelLineup}
+        jobRoles={jobRoles}
       />
 
       <div className="empDash-main-content">
@@ -388,6 +381,7 @@ const EmpDashboard = ({ userGroup }) => {
             successfulDataAdditions={successfulDataAdditions}
             // handleDataAdditionSuccess={handleDataAdditionSuccess}
             logoutTimestamp={logoutTimestamp}
+            onCurrentEmployeeJobRoleSet={handleJobRoles}
           />
         </div>
         <div>
@@ -405,8 +399,8 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        <div>{showShortListedNav && <ShortlistedNavbar />}</div>
-        <div>
+        <div >{showShortListedNav && <ShortlistedNavbar />}</div>
+        <div >
           {showShortlistedCandidateData && (
             <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
           )}
@@ -419,11 +413,14 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
+
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
+
         <div>{showMasterSheet && <MasterSheet />}</div>
+
         <div>{incentive && <Incentive />}</div>
         <div>{attendancesheet && <Attendancesheet />}</div>
-        <div>{shortListed && <InterviewDates />}</div>
+
         <div>
           {showCallingExcelList && <CallingExcelList></CallingExcelList>}
         </div>
@@ -437,12 +434,6 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showResumeData && <ResumeData handleUpdate={handleUpdate} />}
         </div>
-        {/* <div>{showAddEmployee && <AddEmployee />}</div>
-        <div>{selectCandidate && <SelectedCandidate />}</div>
-        <div>{rejectedCandidate && <RejectedCandidate />}</div>
-        <div>{holdCandidate && <HoldCandidate />}</div> */}
-        {/* <div>{showCallingExcel && <CallingExcel />}</div> */}
-        <div>{showResumeData && <ResumeData />}</div>
         <div>{showNotePad && <NotePad />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
         <div>

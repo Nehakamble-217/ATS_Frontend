@@ -31,6 +31,7 @@ const JobListing = () => {
 
 
 useEffect(() => {
+
     fetch("http://192.168.1.42:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
@@ -155,11 +156,6 @@ useEffect(() => {
         console.log(requirementId + " fetched...");
 
   };
-
-  
-
-   
-  
 
 
 

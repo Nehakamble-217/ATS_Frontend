@@ -201,7 +201,8 @@ const EmployeeMasterSheet = () => {
           padding: "10px",
         }}
       >
-        <div></div>
+        <h5 style={{ color: "gray" }}>Employee Master Sheet</h5>
+
         {showShareButton ? (
           <button
             className="lineUp-share-btn"
@@ -274,32 +275,38 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Holding Any Offer</th>
               <th className="attendanceheading">Message for Team Leader</th>
               <th className="attendanceheading">Notice Period</th>
+            
               <th className="attendanceheading">Qualification</th>
               <th className="attendanceheading">Resume</th>
               <th className="attendanceheading">Year of Passing</th>
               <th className="attendanceheading">Interview Time</th>
-              <th className="attendanceheading">Experience In Year</th>
-              <th className="attendanceheading">Experience In Month</th>
+              <th className="attendanceheading">Experince In Year</th>
+              <th className="attendanceheading">Experince In Month</th>
+
               <th className="attendanceheading">Current CTC Lakh</th>
               <th className="attendanceheading">Current CTC Thousand</th>
               <th className="attendanceheading">Expected CTC Lakh</th>
               <th className="attendanceheading">Expected CTC Thousand</th>
               <th className="attendanceheading">Offer Letter Msg</th>
-              <th className="attendanceheading">Relevant Experience</th>
+              <th className="attendanceheading">Relevant Experince</th>
+        
               <th className="attendanceheading">Response Update ID</th>
               <th className="attendanceheading">Interview Response</th>
               <th className="attendanceheading">Interview Round</th>
               <th className="attendanceheading">Next Interview Date</th>
               <th className="attendanceheading">Response Updated Date</th>
               <th className="attendanceheading">Next Interview Timing</th>
+
               <th className="attendanceheading">Details ID</th>
               <th className="attendanceheading">Mail Received</th>
+
               <th className="attendanceheading">Aadhaar Card</th>
               <th className="attendanceheading">PAN Card</th>
               <th className="attendanceheading">Driving License</th>
               <th className="attendanceheading">Degree Mark Sheet</th>
               <th className="attendanceheading">HSC Mark Sheet</th>
               <th className="attendanceheading">SSC Mark Sheet</th>
+
               <th className="attendanceheading">Offer Letter Received</th>
               <th className="attendanceheading">Offer Letter Accepted</th>
               <th className="attendanceheading">
@@ -308,6 +315,7 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Join Status</th>
               <th className="attendanceheading">Reason for Not Join</th>
               <th className="attendanceheading">Join Date</th>
+              
               <th className="attendanceheading">Inquiry ID</th>
               <th className="attendanceheading">Active Status</th>
               <th className="attendanceheading">Any Problem</th>
@@ -506,7 +514,6 @@ const EmployeeMasterSheet = () => {
             ))}
           </tbody>
         </table>
-
         {showForwardPopup ? (
           <>
             <div

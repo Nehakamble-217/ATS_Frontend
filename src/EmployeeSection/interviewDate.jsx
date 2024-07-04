@@ -57,6 +57,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
+
         `http://192.168.1.42:8891/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
@@ -674,9 +675,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                   {interviewResponses.map((response, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
-
                       <td>{response.interviewRound}</td>
                       <td>{response.interviewResponse}</td>
+                      <td></td>
                       <td>{response.responseUpdatedDate}</td>
                       <td>{response.nextInterviewDate}</td>
                       <td>{response.nextInterviewTiming}</td>

@@ -37,9 +37,8 @@ const CallingExcelList = ({
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(
-      `http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`
-    )
+    fetch(`http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
+
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -267,6 +266,7 @@ const CallingExcelList = ({
   };
 
   return (
+
     <div className="App-after1">
       {!selectedCandidate && (
         <>
@@ -300,6 +300,7 @@ const CallingExcelList = ({
             <button onClick={onCloseTable} className="close-button">
               Close
             </button>
+
           </div> */}
           {showSearchBar && (
             <input
@@ -376,6 +377,7 @@ const CallingExcelList = ({
                   >
                     Date & Time {getSortIcon("date")}
                   </th>
+
                   <th hidden className="attendanceheading">
                     Candidate Id
                   </th>
