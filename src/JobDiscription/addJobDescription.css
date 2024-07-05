@@ -1,5 +1,6 @@
 /* Swapnil_JobDescription_FullPageDesign_1to175_02/07 */
 /* Swapnil_JobDescription_ResponsivePage_1to77_04/07 */
+/* Swapnil_JobDescription_Adding PlaceHolder_05/07 */
 
 * {
     margin: 0;
@@ -90,12 +91,14 @@
     padding: 4px;
     /* font-size: 16px; */
     border: 1px solid #ccc;
+    color: gray;
     border-radius: 5px;
     width:69%;
   }
   .field select{
     padding: 5.5px 5px 5.5px 5px ;
     font-size: 16px;
+    color: gray;
     border: 1px solid #ccc;
     border-radius: 5px;
     width:69%;
@@ -165,6 +168,7 @@
   }
   .job-button
   {
+    margin-left: 2px;
     width: 25%;
     height: 30px;
     background-color: #ffcb9b;

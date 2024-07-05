@@ -470,6 +470,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                       }`}
                       onChange={handleChange}
                       required={callingTracker.selectYesOrNo !== "Interested"}
+                      placeholder="Enter Candidate Name"
                     />
                     {errors.candidateName && (
                       <div className="invalid-feedback">
@@ -487,6 +488,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     value={callingTracker.candidateEmail}
                     onChange={handleChange}
                     className={`plain-input ${error ? "is-invalid" : ""}`}
+                    placeholder="Enter Candidate Email"
                     required
                   />
                 </div>
@@ -519,17 +521,18 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
               <div className="calling-tracker-field">
                 <label>Whatsapp Number</label>
                 <div className="calling-tracker-field-sub-div">
-                  <input
-                    type="text"
-                    placeholder="Enter phone number"
-                    name="alternateNumber"
-                    value={callingTracker.alternateNumber}
-                    onChange={(e) =>
-                      handlePhoneNumberChange(e.target.value, "alternateNumber")
-                    }
-                    maxLength={10}
-                    className="plain-input"
-                  />
+                <PhoneInput
+                      placeholder="Enter phone number"
+                      name="alternateNumber"
+                      className="plain-input"
+                      value={callingTracker.alternateNumber}
+                      onChange={(value) =>
+                        handlePhoneNumberChange(value, "alternateNumber")
+                      }
+                      required={callingTracker.selectYesOrNo !== "Interested"}
+                      defaultCountry="IN"
+                      maxLength={11}
+                    />
                 </div>
               </div>
             </div>
@@ -605,6 +608,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     name="jobDesignation"
                     className="calling-tracker-two-input"
                     value={callingTracker.jobDesignation}
+                    placeholder="Enter Position"
                     readOnly
                   />
                   <input
@@ -750,6 +754,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     value={callingTracker.extraCertification}
                     onChange={handleChange}
                     className="plain-input"
+                    placeholder="Enter Call Summary"
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </div>
@@ -1236,11 +1241,12 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                       })
                     }
                     className="plain-input"
+                    placeholder="Enter Extra Certification"
                   />
                 </div>
               </div>
             </div>
-            <div className=" calling-tracker-row-white">
+            <div className=" calling-tracker-row-gray">
               <div className="calling-tracker-field">
                 <label>Current Company</label>
                 <div className="calling-tracker-field-sub-div">
@@ -1262,6 +1268,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
               </div>
               <div className="calling-tracker-field">
                 <label>Total Experience</label>
+                
                 <div
                   className="calling-tracker-two-input-container"
                   required={callingTracker.selectYesOrNo === "Interested"}
@@ -1280,7 +1287,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                       name="experienceMonth"
                       value={lineUpData.experienceMonth}
                       onChange={handleLineUpChange}
-                      className="inner-sub-div-input"
+                      className="calling-tracker-two-input"
                       placeholder="Months"
                       maxLength="2"
                       min="1"
@@ -1290,7 +1297,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
               </div>
             </div>
 
-            <div className="calling-tracker-row-gray">
+            <div className="calling-tracker-row-white">
               <div className="calling-tracker-field">
                 <label>Relevant Experience</label>
                 <div className="calling-tracker-two-input-container">
@@ -1300,6 +1307,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     value={lineUpData.relevantExperience}
                     onChange={handleLineUpChange}
                     className="calling-tracker-two-input"
+                    placeholder="Enter Relevant Experience"
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
                   <input
@@ -1333,12 +1341,13 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     value={callingTracker.communicationRating}
                     onChange={handleChange}
                     className="plain-input"
+                    placeholder="Enter Communication Rating"
                     required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </div>
               </div>
             </div>
-            <div className="calling-tracker-row-white">
+            <div className="calling-tracker-row-gray">
               <div className="calling-tracker-field">
                 <label>Current CTC(LPA)</label>
                 <div
@@ -1362,7 +1371,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                       value={lineUpData.currentCTCThousand}
                       onChange={handleLineUpChange}
                       className="calling-tracker-two-input"
-                      placeholder="Thousand:"
+                      placeholder="Thousand"
                       maxLength="2"
                       pattern="\d*"
                       inputMode="numeric"
