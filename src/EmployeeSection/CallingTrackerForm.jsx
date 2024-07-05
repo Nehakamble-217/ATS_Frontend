@@ -459,7 +459,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
             <div className="calling-tracker-row-white">
               <div className="calling-tracker-field">
-                <label>Candidate's Full Name*</label>
+                <label>Candidate's Full Name</label>
                 <div className="calling-tracker-field-sub-div">
                     <input
                       type="text"

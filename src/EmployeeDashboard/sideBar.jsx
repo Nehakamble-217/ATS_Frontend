@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getEmployeeWorkData } from "../api/api";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
+import { RiTeamFill } from "react-icons/ri"
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 
@@ -37,6 +38,7 @@ function Sidebar({
   toggeExcelCallingData,
   toggelExcelLineup,
   toggleShareLink,
+  toggleUpdateResponse,
   jobRoles,
 }) {
   const [workData, setWorkData] = useState([]);
@@ -445,7 +447,35 @@ function Sidebar({
                     </li>
                   </ul>
                 </li>
+{/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
+                {jobRoles === "Admin" ? (
+                  <li
+                    className={activeButton === "TeamLeader-section" ? "active" : ""}
+                    onClick={toggleSubMenu("TeamLeader-section")}
+                  >
+                  <a href="#">
+                    <RiTeamFill className="text-gray-500 text-lg" />
+                      <span className="sidebar-text">Team Leader Section</span>
+                      <i className="arrow ph-bold ph-caret-down"></i>
+                    </a>
+                    <ul
+                      className={`sub-menu sub-menu1 ${
+                        activeSubMenu === "TeamLeader-section" ? "active" : ""
+                      }`}
+                    >
+                      <li
+                        onClick={toggleUpdateResponse}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                          <span className="sidebar-text">Update Response</span>
+                        </a>
+                      </li>
 
+                    </ul>
+                    </li>
+                  ) : null}
 
                 {jobRoles === "Admin" ? (
                   <li

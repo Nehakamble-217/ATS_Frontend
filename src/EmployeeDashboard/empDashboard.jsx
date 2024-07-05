@@ -35,6 +35,7 @@ import ShareLink from "../ResumeData/shareLink";
 import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 import CallingExcelList from "../Excel/callingExcelData";
 import LineupExcelData from "../Excel/lineupExcelData";
+import UpdateResponse from "../TeamLeader/UpdateResponse";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -75,6 +76,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [resumeLink, setResumeLink] = useState(false);
   const [showCallingExcelList, setShowCallingExcelList] = useState(false);
   const [showLineupExcelList, setShowLineupExcelList] = useState(false);
+  const [showUpdateResponse, setShowUpdateResponse] = useState(false);
 
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
@@ -174,7 +176,7 @@ const EmpDashboard = ({ userGroup }) => {
     setAssignColumns(false);
     setShowChatRoom(false);
     setShowShareLink(false);
-
+    setShowUpdateResponse(false);
     setResumeLink(false);
     setShowResumeData(false);
     setShowCallingExcelList(false);
@@ -190,6 +192,11 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setUpdateSelfCalling(true);
   };
+
+  const toggleUpdateResponse=()=>{
+    resetAllToggles();
+    setShowUpdateResponse(true);
+  }
 
   const toggleInterviewDate = () => {
     resetAllToggles();
@@ -369,6 +376,7 @@ const EmpDashboard = ({ userGroup }) => {
         onLogout={handleLogoutTime}
         toggeExcelCallingData={toggeExcelCallingData}
         toggelExcelLineup={toggelExcelLineup}
+        toggleUpdateResponse={toggleUpdateResponse}
         jobRoles={jobRoles}
       />
 
@@ -463,6 +471,7 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
+        <div>{showUpdateResponse&&<UpdateResponse/>}</div>
       </div>
     </div>
   );
