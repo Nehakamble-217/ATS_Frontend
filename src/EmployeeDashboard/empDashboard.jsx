@@ -27,6 +27,7 @@ import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription";
 import AddEmployee from "../EmployeeSection/addEmployee";
 import NotePad from "../notPad/notePad";
+import Reports from "../Reports/reports";
 import EmployeeProfileData from "../EmployeeSection/employeeProfileData";
 import AddResumes from "../ResumeData/addMultipleResumes";
 import ChatRoom from "../ChatRoom/chatRoom";
@@ -67,6 +68,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showShortListedNav, setShowShortListdNav] = useState(false);
   const [showAddEmployee, setShowAddEmployee] = useState(false);
   const [showNotePad, setShowNotePad] = useState(false);
+  const [showReports, setShowReports] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showAddedResumes, setShowAddedResumes] = useState(false);
   const [showChatRoom, setShowChatRoom] = useState(false);
@@ -123,6 +125,11 @@ const EmpDashboard = ({ userGroup }) => {
     setShowNotePad(!showNotePad);
     setIncentive(false);
   };
+  const toggleReports = () => {
+    resetAllToggles();
+    setShowReports(!showReports);
+    setIncentive(false);
+  };
 
   const toggleAddJobDescription = () => {
     resetAllToggles();
@@ -168,6 +175,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowShortListdNav(false);
     setShowAddEmployee(false);
     setShowNotePad(false);
+    setShowReports(false)
     setShowProfile(false);
     setShowAddedResumes(false);
     setIncentive(false);
@@ -360,6 +368,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleAddJobDescription={toggleAddJobDescription}
         toggelAddRecruiter={toggelAddRecruiter}
         toggelDisplayNotPad={toggelDisplayNotPad}
+        toggleReports={toggleReports}
         toggelResumeData={toggelResumeData}
         toggelAddResumes={toggelAddResumes}
         toggleChatRoom={toggleChatRoom}
@@ -435,6 +444,7 @@ const EmpDashboard = ({ userGroup }) => {
           {showResumeData && <ResumeData handleUpdate={handleUpdate} />}
         </div>
         <div>{showNotePad && <NotePad />}</div>
+        <div>{showReports && <Reports />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
         <div>
           {showShareLink && <ShareLink toggleResumeLink={toggleResumeLink} />}

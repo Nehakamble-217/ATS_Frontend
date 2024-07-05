@@ -21,7 +21,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.42:8891/api/ats/157industries/tl-namesIds`
+        `http://192.168.1.39:8891/api/ats/157industries/tl-namesIds`
       );
       setTeamLeaderNames(response.data);
     };
@@ -30,7 +30,7 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-      `http://192.168.1.42:8891/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+      `http://192.168.1.39:8891/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -434,3 +434,9 @@ function Accesstable() {
 }
 
 export default Accesstable;
+
+
+
+
+
+

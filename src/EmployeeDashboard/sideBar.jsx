@@ -28,6 +28,7 @@ function Sidebar({
   toggleAllMasterSheet,
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
+  toggleReports,
   handleLogout,
   toggelAddRecruiter,
   toggelDisplayNotPad,
@@ -680,6 +681,15 @@ function Sidebar({
                       style={{ color: "gray" }}
                     ></i>
                     <span className="sidebar-text">Note Pad</span>
+                  </a>
+                </li>
+                <li onClick={toggleReports}>
+                  <a href="#">
+                    <i
+                      className="fa-regular fa-address-book"
+                      style={{ color: "gray" }}
+                    ></i>
+                    <span className="sidebar-text">Repots</span>
                   </a>
                 </li>
 
