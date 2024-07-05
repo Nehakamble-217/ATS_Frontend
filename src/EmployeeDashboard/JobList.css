@@ -1,4 +1,4 @@
-Global Styles
+
 .daily-tr-btns{
    border: 1px solid gray;
   border-radius: 15px;
@@ -396,7 +396,7 @@ h4 {
   padding: 20px;
   margin-bottom: 20px;
  height: 220px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px #ffcb9b;
 }
 
 .job-header {

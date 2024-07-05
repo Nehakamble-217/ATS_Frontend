@@ -671,22 +671,25 @@ const JobListing = () => {
                   {item.incentive}
                 </div>
                 {/* <div className="job-posted">
-          <i className="fas fa-clock"></i>
-          {item.fild}
-        </div> */}
+                  <i className="fas fa-clock"></i>
+                 {item.fild}
+                  </div> */}
+                <div style={{display:"flex", width:"100%"}}>
                 <div className="job-posted">
                   <i className="fas fa-clock"></i>
                   {item.requirementId}
                 </div>
-              </div>
-              {/* Arshad Added this button to share edm  */}
-              <div className="job-actions">
-                <button
+                <button style={{width:"122px"}}
                   className="daily-tr-btns"
                   onClick={() => toggleJobDescription(item.requirementId)}
                 >
                   View More
-                </button>
+                </button> 
+                </div>
+              </div>
+              {/* Arshad Added this button to share edm  */}
+              <div className="job-actions">
+               
                 {/* <button className='daily-tr-btn' onClick={()=>toggleEdm(index)}> EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button> */}
               </div>
             </div>
