@@ -29,6 +29,7 @@ const JobListing = () => {
     useState(jobDescriptions);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
 
+
   useEffect(() => {
     fetch("http://192.168.1.38:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())

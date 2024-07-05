@@ -36,7 +36,9 @@ const AddJobDescription = () => {
     preferredQualifications: [
       { employeeId: "", preferredQualificationMsg: "" },
     ],
-    RoundOfInterView: [{ round: "" }],
+    RoundOfInterView:[{
+      round:""
+    }]
   });
 
   const handleChange = (e) => {
@@ -88,8 +90,9 @@ const AddJobDescription = () => {
           body: JSON.stringify(formData),
         }
       );
+      console.log(response);
       if (response.ok) {
-        const result = await response.json();
+        const result =await response.text();
         console.log("Success:", result);
         setFormData({
           companyName: "",
@@ -125,7 +128,10 @@ const AddJobDescription = () => {
           preferredQualifications: [
             { employeeId: "", preferredQualificationMsg: "" },
           ],
-          RoundOfInterView: [{ round: "" }],
+          RoundOfInterView:[{
+            round:""
+          }]
+
         });
       } else {
         console.error("Error:", response.statusText);
@@ -142,6 +148,7 @@ const AddJobDescription = () => {
           <b>ADD JOB DESCRIPTION</b>
         </article>
         <form onSubmit={handleSubmit}>
+          <div className="job-desc-form">
           <div className="field-column">
             <div className="field-Row-Gray">
               <div className="field">
@@ -151,6 +158,7 @@ const AddJobDescription = () => {
                   name="companyName"
                   value={formData.companyName}
                   onChange={handleChange}
+                  placeholder="Enter Company Name"
                 />
               </div>
               <div className="field">
@@ -160,6 +168,7 @@ const AddJobDescription = () => {
                   name="designation"
                   value={formData.designation}
                   onChange={handleChange}
+                  placeholder="Enter Designation"
                 />
               </div>
             </div>
@@ -171,6 +180,7 @@ const AddJobDescription = () => {
                   name="position"
                   value={formData.position}
                   onChange={handleChange}
+                  placeholder="Number Of Position"
                 />
               </div>
               <div className="field">
@@ -180,6 +190,7 @@ const AddJobDescription = () => {
                   name="qualification"
                   value={formData.qualification}
                   onChange={handleChange}
+                  placeholder="Enter Qualification"
                 />
               </div>
             </div>
@@ -191,6 +202,7 @@ const AddJobDescription = () => {
                   name="year_of_passing"
                   value={formData.year_of_passing}
                   onChange={handleChange}
+                  placeholder="Enter Year of Passing"
                 />
               </div>
               <div className="field">
@@ -200,6 +212,7 @@ const AddJobDescription = () => {
                   name="field"
                   value={formData.field}
                   onChange={handleChange}
+                  placeholder="Enter Field"
                 />
               </div>
             </div>
@@ -211,6 +224,7 @@ const AddJobDescription = () => {
                   name="stream"
                   value={formData.stream}
                   onChange={handleChange}
+                  placeholder="Enter Stream"
                 />
               </div>
               <div className="field">
@@ -220,6 +234,7 @@ const AddJobDescription = () => {
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
+                  placeholder="Enter Location"
                 />
               </div>
             </div>
@@ -231,6 +246,7 @@ const AddJobDescription = () => {
                   name="salary"
                   value={formData.salary}
                   onChange={handleChange}
+                  placeholder="Enter Salary"
                 />
               </div>
               <div className="field">
@@ -256,6 +272,7 @@ const AddJobDescription = () => {
                   name="experience"
                   value={formData.experience}
                   onChange={handleChange}
+                  placeholder="Enter Experience"
                 />
               </div>
               <div className="field">
@@ -265,6 +282,7 @@ const AddJobDescription = () => {
                   name="bond"
                   value={formData.bond}
                   onChange={handleChange}
+                  placeholder="Ex. 2 Years or 3 Years"
                 />
               </div>
             </div>
@@ -276,6 +294,7 @@ const AddJobDescription = () => {
                   name="percentage"
                   value={formData.percentage}
                   onChange={handleChange}
+                  placeholder="Enter Percentage"
                 />
               </div>
               <div className="field">
@@ -285,6 +304,7 @@ const AddJobDescription = () => {
                   name="skills"
                   value={formData.skills}
                   onChange={handleChange}
+                  placeholder="Enter Skills"
                 />
               </div>
             </div>
@@ -296,6 +316,7 @@ const AddJobDescription = () => {
                   name="companyLink"
                   value={formData.companyLink}
                   onChange={handleChange}
+                  placeholder="Enter Company Link"
                 />
               </div>
               <div className="field">
@@ -305,6 +326,7 @@ const AddJobDescription = () => {
                   name="detailAddress"
                   value={formData.detailAddress}
                   onChange={handleChange}
+                  placeholder="Enter Detailed Address"
                 />
               </div>
             </div>
@@ -316,6 +338,7 @@ const AddJobDescription = () => {
                   name="shift"
                   value={formData.shift}
                   onChange={handleChange}
+                  placeholder="Enter Shift"
                 />
               </div>
               <div className="field">
@@ -325,6 +348,7 @@ const AddJobDescription = () => {
                   name="weekOff"
                   value={formData.weekOff}
                   onChange={handleChange}
+                  placeholder="Enter Week Off"
                 />
               </div>
             </div>
@@ -336,6 +360,7 @@ const AddJobDescription = () => {
                   name="noticePeriod"
                   value={formData.noticePeriod}
                   onChange={handleChange}
+                  placeholder="Enter Notice Period"
                 />
               </div>
               <div className="field">
@@ -345,6 +370,7 @@ const AddJobDescription = () => {
                   name="jobRole"
                   value={formData.jobRole}
                   onChange={handleChange}
+                  placeholder="Enter Job Role"
                 />
               </div>
             </div>
@@ -356,6 +382,7 @@ const AddJobDescription = () => {
                   name="perks"
                   value={formData.perks}
                   onChange={handleChange}
+                  placeholder="Enter Perks"
                 />
               </div>
               <div className="field">
@@ -365,6 +392,7 @@ const AddJobDescription = () => {
                   name="incentive"
                   value={formData.incentive}
                   onChange={handleChange}
+                  placeholder="Enter Incentive"
                 />
               </div>
             </div>
@@ -376,6 +404,8 @@ const AddJobDescription = () => {
                   name="reportingHierarchy"
                   value={formData.reportingHierarchy}
                   onChange={handleChange}
+                  placeholder="Enter Reporting Hierarchy"
+                  
                 />
               </div>
               <div className="field">
@@ -401,6 +431,7 @@ const AddJobDescription = () => {
                   name="documentation"
                   value={formData.documentation}
                   onChange={handleChange}
+                  placeholder="Enter Documentation"
                 />
               </div>
               <div className="field">
@@ -410,19 +441,23 @@ const AddJobDescription = () => {
                   name="ageCriteria"
                   value={formData.ageCriteria}
                   onChange={handleChange}
+                  placeholder="Enter Age Criteria"
                 />
               </div>
             </div>
             <div className="field-Row-white">
-              <div className="field">
-                <label>Note:</label>
-                <input
-                  type="text"
-                  name="ageCriteria"
-                  value={formData.note}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="field">
+              <label>
+                Note:
+              </label>
+              <input
+                type="text"
+                name="note"
+                value={formData.note}
+                onChange={handleChange}
+                placeholder="Enter Note"
+              />
+           </div>
 
               <div className="field">
                 <label>Position Overview:</label>
@@ -431,9 +466,9 @@ const AddJobDescription = () => {
                   className="textarea"
                   value={formData.positionOverview.overview}
                   onChange={handlePositionOverviewChange}
+                  placeholder="Enter Position Overview"
                 />
               </div>
-            </div>
           </div>
           <div className="multi-field bg-gray-100">
             {/* <h3>Preferred Qualifications</h3> */}
@@ -443,11 +478,12 @@ const AddJobDescription = () => {
                   <label>Interview Round:</label>
                   <textarea
                     className="textarea"
-                    name="preferredQualificationMsg"
+                    name="RoundOfInterView"
                     value={item.preferredQualificationMsg}
                     onChange={(e) =>
                       handleInputChange(e, "RoundOfInterView", index)
                     }
+                    placeholder="Enter Round Of Interview"
                   />
                 </div>
               </div>
@@ -475,6 +511,7 @@ const AddJobDescription = () => {
                     onChange={(e) =>
                       handleInputChange(e, "responsibilities", index)
                     }
+
                   />
                 </div>
                 <div className="field">
@@ -486,6 +523,8 @@ const AddJobDescription = () => {
                     onChange={(e) =>
                       handleInputChange(e, "responsibilities", index)
                     }
+                    placeholder="Enter Responsibility Message"
+
                   />
                 </div>
               </div>
@@ -523,6 +562,7 @@ const AddJobDescription = () => {
                     onChange={(e) =>
                       handleInputChange(e, "jobRequirements", index)
                     }
+                    placeholder="Enter Job Requirement Message"
                   />
                 </div>
               </div>
@@ -560,6 +600,7 @@ const AddJobDescription = () => {
                     onChange={(e) =>
                       handleInputChange(e, "preferredQualifications", index)
                     }
+                    placeholder="Enter Preferred Qualification Message"
                   />
                 </div>
               </div>
@@ -572,12 +613,14 @@ const AddJobDescription = () => {
               Add More Preferred Qualifications
             </button>
           </div>
-
+          </div>
+          </div>
           <div className="job-submit-button">
             <button className="daily-tr-btn" type="submit">
               Submit
             </button>
           </div>
+         
         </form>
       </section>
     </main>
