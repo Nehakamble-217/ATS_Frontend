@@ -12,7 +12,7 @@ function Accesstable() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   // const [assignments, setAssignments] = useState({});
   const [allSelected, setAllSelected] = useState(false);
-  // const [editRecruiter, setEditRecruiter] = useState(null);  
+  // const [editRecruiter, setEditRecruiter] = useState(null);
   const [openCategory, setOpenCategory] = useState(""); // New state for open category
   // const [showSelection, setShowSelection] = useState(true);
   const [columnName, setColumnName] = useState(null);
@@ -182,15 +182,24 @@ function Accesstable() {
     setAllSelected(!allSelected);
   };
 
+  const fetchAssignedColumnCount = async () => {
+    const response = await axios.get(
+      `http://192.168.1.38:8891/api/ats/157industries/column-category-counts`
+    );
+    setAssignedColumnsCount(response.data);
+  };
   useEffect(() => {
-    const fetchAssignedColumn = async () => {
-      const response = await axios.get(
-        `http://192.168.1.38:8891/api/ats/157industries/column-category-counts`
-      );
-      setAssignedColumnsCount(response.data);
-    };
-    fetchAssignedColumn();
+    fetchAssignedColumnCount();
   }, [response]);
+
+  const handleOpenModal = () => {
+    setOpenupdateModal(false);
+  };
+  const handleResponse = (res) => {
+    if (res) {
+      fetchAssignedColumnCount();
+    }
+  };
   return (
     <div className="AppsTL">
       <div className="selection-containerTL">
@@ -491,80 +500,236 @@ function Accesstable() {
         </center>
       </div>
       {openUpdateModal ? (
-        <UpdateAccesstable
+        <UpdateAccessTable
           columnName={columnName}
           assignedColumnRecruiterUpdate={assignedColumnRecruiterUpdate}
           fetchUpdateAssignedColumn={fetchUpdateAssignedColumn}
+          setOpenupdateModal={handleOpenModal}
+          onSetResponse={handleResponse}
         />
       ) : null}
     </div>
   );
 }
 
-const UpdateAccesstable = ({
+const UpdateAccessTable = ({
+  onSetResponse,
+  setOpenupdateModal,
   columnName,
   assignedColumnRecruiterUpdate,
   fetchUpdateAssignedColumn,
 }) => {
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [response, setResponse] = useState("");
+
+  useEffect(() => {
+    if (fetchUpdateAssignedColumn) {
+      const initialSelectedOptions = fetchUpdateAssignedColumn.map(
+        (item) => item.columnId
+      );
+
+      setSelectedOptions(initialSelectedOptions);
+    }
+  }, [fetchUpdateAssignedColumn]);
+
+  const handleOptionChange = (columnId) => {
+    setSelectedOptions((prevSelectedOptions) =>
+      prevSelectedOptions.includes(columnId)
+        ? prevSelectedOptions.filter((id) => id !== columnId)
+        : [...prevSelectedOptions, columnId]
+    );
+  };
+
+  const handleUpdateClick = async () => {
+    try {
+      const response = await axios.post(
+        `http://192.168.1.38:8891/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/assign-column`,
+        JSON.stringify(selectedOptions),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setResponse(response.data);
+      setTimeout(() => {
+        setResponse("");
+        setOpenupdateModal(false);
+      }, 3000);
+      onSetResponse(true);
+    } catch (error) {
+      onSetResponse(false);
+    }
+  };
+
   return (
-    <>
-      <div
-        className="bg-black bg-opacity-50 modal show"
+    <div
+      className="bg-black bg-opacity-50 modal show"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "fixed",
+        width: "100%",
+        height: "100vh",
+      }}
+    >
+      <Modal.Dialog
+        className="modal-xl"
         style={{
           display: "flex",
-          justifyContent: "center",
           alignItems: "center",
-          position: "fixed",
-          width: "100%",
-          height: "100vh",
+          justifyContent: "center",
         }}
       >
-        <Modal.Dialog
+        <Modal.Header
           style={{
-            width: "800px",
-            height: "800px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "100px",
+            fontSize: "18px",
+            backgroundColor: "#f2f2f2",
+            color: "gray",
           }}
         >
-          <Modal.Header
-            style={{
-              fontSize: "18px",
-              backgroundColor: "#f2f2f2",
-            }}
-          >
-            Update Column Assigned
-          </Modal.Header>
-          <Modal.Body
+          Update Column Assigned
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            backgroundColor: "#f2f2f2",
+            color: "gray",
+          }}
+        >
+          <h1 className="assignedColumnRecruiter">
+            Recruiter Name: {assignedColumnRecruiterUpdate.name}
+          </h1>
+          <div
+            className=""
             style={{
               display: "grid",
+              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
               gap: "10px",
-              gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-              backgroundColor: "#f2f2f2",
+              marginTop: "10px",
             }}
           >
-            <>
-              <div
-                className=""
-                style={{
-                  display: "flex",
-                  gap: "20px",
-                  columnSpan: "span 1 / span 1",
-                }}
-              >
-                Recruiter Name : {assignedColumnRecruiterUpdate.name}
+            <div
+              className="commonAssinedColumnSec"
+              style={{ gridColumn: "span 1/span 1" }}
+            >
+              <p>Common Column</p>
+              <div className="commonAssignedColumn">
+                {columnName &&
+                  columnName
+                    .filter((item) => item.columnCategory === "common assign")
+                    .map((option, optIndex) => (
+                      <label
+                        key={optIndex}
+                        className=""
+                        style={{
+                          display: "flex",
+                          justifyContent: "start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          value={option.columnId}
+                          className=""
+                          style={{ marginRight: "10px", zoom: "1.5" }}
+                          checked={selectedOptions.includes(option.columnId)}
+                          onChange={() => handleOptionChange(option.columnId)}
+                        />
+                        {option.columnName}
+                      </label>
+                    ))}
               </div>
-            </>
-          </Modal.Body>
-          <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-            <Button>Share</Button>
-            <Button>Close</Button>
-          </Modal.Footer>
-        </Modal.Dialog>
-      </div>
-    </>
+            </div>
+            <div
+              className="importantAssignedColumnSec"
+              style={{ gridColumn: "span 1/span 1" }}
+            >
+              <p>Important Column</p>
+              <div className="importantAssignedColumn">
+                {columnName &&
+                  columnName
+                    .filter(
+                      (item) => item.columnCategory === "important assign"
+                    )
+                    .map((option, optIndex) => (
+                      <label
+                        key={optIndex}
+                        className=""
+                        style={{
+                          display: "flex",
+                          justifyContent: "start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          value={option.columnId}
+                          className=""
+                          style={{ marginRight: "10px", zoom: "1.5" }}
+                          checked={selectedOptions.includes(option.columnId)}
+                          onChange={() => handleOptionChange(option.columnId)}
+                        />
+                        {option.columnName}
+                      </label>
+                    ))}
+              </div>
+            </div>
+            <div
+              className="mostImportantAssignedColumnSec"
+              style={{ gridColumn: "span 1/span 1" }}
+            >
+              <p>Most Important Column</p>
+              <div className="mostImportantAssignedColumn">
+                {columnName &&
+                  columnName
+                    .filter(
+                      (item) => item.columnCategory === "most important assign"
+                    )
+                    .map((option, optIndex) => (
+                      <label
+                        key={optIndex}
+                        className=""
+                        style={{
+                          display: "flex",
+                          justifyContent: "start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          value={option.columnId}
+                          className=""
+                          style={{ marginRight: "10px", zoom: "1.5" }}
+                          checked={selectedOptions.includes(option.columnId)}
+                          onChange={() => handleOptionChange(option.columnId)}
+                        />
+                        {option.columnName}
+                      </label>
+                    ))}
+              </div>
+            </div>
+          </div>
+          <div style={{ textAlign: "center", padding: "10px" }}>
+            {response != "" && response}
+          </div>
+        </Modal.Body>
+        <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
+          <button
+            onClick={handleUpdateClick}
+            className="update-assign-column-btn"
+          >
+            Update
+          </button>
+          <button
+            onClick={() => setOpenupdateModal(false)}
+            className="update-assign-column-close-btn"
+          >
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
   );
 };
 
