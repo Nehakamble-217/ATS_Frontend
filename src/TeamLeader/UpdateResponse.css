@@ -30,12 +30,14 @@
 {
     border: 1px solid gray;
     background-color: #ffcb9b;
+    color: gray;
     padding: 2px;
     text-align: center;
 }
 .TeamLead-main-table-td
 {
     border: 1px solid gray;
+    color: gray;
     padding: 5px;
     text-align: center;
 }
