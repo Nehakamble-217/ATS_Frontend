@@ -17,7 +17,7 @@ const UpdateResponse = () => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/fetch-all-shortlisted-data`
+        `http://192.168.1.46:8891/api/ats/157industries/fetch-all-shortlisted-data`
       );
       const data = await res.json();
       setUpdateResponseList(data);

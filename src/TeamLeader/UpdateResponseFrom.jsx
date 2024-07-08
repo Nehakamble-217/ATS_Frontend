@@ -12,7 +12,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
 
   const fetchDataToUpdate = async () => {
     try {
-      const response = await fetch(`http://192.168.1.38:8891/api/ats/157industries/fetch-specific-response/${candidateId}`);
+      const response = await fetch(`http://192.168.1.46:8891/api/ats/157industries/fetch-specific-response/${candidateId}`);
       const data = await response.json();
       setData(data);
     } catch (err) {
