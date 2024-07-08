@@ -41,7 +41,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchEmployeeNameAndID = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
+        `http://192.168.1.46:8891/api/ats/157industries/names-and-ids`
       );
       const data = await response.json();
       setFetchEmployeeNameID(data);
@@ -61,7 +61,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
+        `http://192.168.1.46:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
