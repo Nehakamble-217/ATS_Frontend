@@ -1,11 +1,32 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import html2canvas from "html2canvas";
+import profileImage from '../LogoImages/157logo.jpeg';
+import "./jobDescriptionEdm.css"
 
-function JobDescriptionEdm({Description}) {
+
+
+function JobDescriptionEdm({ Descriptions, onJobDescriptionEdm }) {
+  const [data, setData] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const synth = window.speechSynthesis;
   const utteranceRef = useRef(null);
   const [voices, setVoices] = useState([]);
   const [voiceLoaded, setVoiceLoaded] = useState(false);
+  const { employeeId } = useParams()
+
+  useEffect(() => {
+    fetch(`http://192.168.1.46:8891/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setData(data);
+        console.log(Descriptions + "1st Attempt in video...");
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+
 
   useEffect(() => {
     const fetchVoices = () => {
@@ -32,14 +53,79 @@ function JobDescriptionEdm({Description}) {
     };
   }, [synth]);
 
+
+
+  // const shareVideo = async () => {
+  //   if (!videoBlob) return;
+
+  //   const file = new File([videoBlob], "video.webm", { type: "video/webm" });
+  //   if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  //     try {
+  //       await navigator.share({
+  //         title: "Check out this video",
+  //         files: [file],
+  //       });
+  //     } catch (error) {
+  //       console.error("Error sharing video:", error);
+  //     }
+  //   } else {
+  //     console.warn("Sharing not supported, downloading the video instead.");
+  //     const url = URL.createObjectURL(videoBlob);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = "video.webm";
+  //     link.click();
+  //     URL.revokeObjectURL(url);
+  //   }
+  // };
+
+  const generateAndShareVideo = async () => {
+    try {
+      const input = document.getElementById("jobEDM");
+      const canvas = await html2canvas(input, { scale: 2, logging: true });
+      const blob = await new Promise((resolve) =>
+        canvas.toBlob(resolve, "video/mp4")
+      );
+
+      if (
+        navigator.canShare &&
+        navigator.canShare({ files: [new File([blob], "job_description.mp4")] })
+      ) {
+        const file = new File([blob], "job_description.mp4", {
+          type: "video/mp4",
+        });
+        await navigator.share({
+          title: Descriptions.designation,
+          text: "Check out this job description.",
+          files: [file],
+        });
+      } else {
+        console.warn("Sharing not supported, downloading the image instead.");
+        const imgData = canvas.toDataURL("video/mp4");
+        const link = document.createElement("a");
+        link.href = imgData;
+        link.download = Descriptions.designation;
+        link.click();
+      }
+    } catch (error) {
+      console.error("Error generating image:", error);
+    }
+  };
+
+  const closeJobDescrptionShare = () => {
+    onJobDescriptionEdm(false)
+  };
+
+
+
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
     if (!isPlaying) {
-      const text = document.getElementById('document-content').innerText.trim();
+      const text = document.getElementById('shareEMD').innerText.trim();
 
       // Stop current speech if it's speaking
-      if (synth.speaking && utteranceRef.current) {
-        synth.cancel(utteranceRef.current);
+      if (synth.speaking) {
+        synth.cancel();
       }
 
       const utterance = new SpeechSynthesisUtterance(text);
@@ -53,8 +139,12 @@ function JobDescriptionEdm({Description}) {
 
       synth.speak(utterance);
       utteranceRef.current = utterance;
+
+      utterance.onend = () => {
+        setIsPlaying(false);
+      };
     } else {
-      synth.pause();
+      synth.cancel();
     }
   };
 
@@ -63,37 +153,62 @@ function JobDescriptionEdm({Description}) {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col justify-center items-center">
-      <div className="max-w-4xl w-full p-6 bg-white rounded-lg shadow-lg space-y-6">
-        <div id="document-content" className="w-full">
-          <h1 className="text-2xl font-bold text-black mb-4">Required JAVA Backend Developer</h1>
-          <ul className="text-black space-y-2 mb-4">
-            <li>Min 3 years Experience required</li>
-            <li>Salary up to 11 Lac per annum</li>
-            <li>Work from office @ Baner Pune</li>
-            <li>Day Shift Job 6 Days Working</li>
-          </ul>
-          <div className="mt-4">
-            <p className="text-black font-bold">For Details</p>
-            <p className="text-black">Call Swapnil 9970730641</p>
-            <p className="text-blue-500">swapnil@157ipl.com</p>
+    <>
+
+      <div className="main-description-share1  min-h-screen  flex flex-col justify-center items-center" id='jobEDM'>
+
+        <div className="job-posting" id='shareEMD'>
+          <h3></h3>
+          <h3>We are Hiring</h3>
+          <h2> {data.designation}</h2>
+          <div className="details">
+            <h3 >Required Key Skills</h3>
+            <p> {data.skills}</p>
+            <br />
+            <h3>Team Handling experience is must.</h3>
+            <p>Relevant Experience {data.experience}</p>
+            <br />
+            <p className="salary">Salary upto {data.salary} LPA</p>
+            <p>{data.jobType} - {data.detailAddress}</p>
+            <div className="contact">
+              <div className="image-container">
+                {/* Use the imported image */}
+                <img src={profileImage} alt="Profile Image" />
+              </div>
+              <div className="details1">
+                <h4>For Details</h4>
+                <p>Name : {data.employeeName} | Contact: {data.officialContactNo} </p>
+
+                <p>Email: <a href="mailto:bezalwar@157ipl.com">{data.officialMail}</a> </p>
+
+              </div>
+            </div>
           </div>
-          <div className="w-full flex justify-end">
-            <img
-              className="min-w-20 h-auto transform scale-x-[-1]"
-              src="https://media1.giphy.com/media/de5yu652vsARnyh5x3/200w.gif?cid=6c09b952g48fre99ochi4qlkcprx1pct3gp43i0bnacin6ku&ep=v1_gifs_search&rid=200w.gif&ct=g"
-              alt=""
-            />
-          </div>
+
+          <button
+            onClick={togglePlay}
+            className="mt-4 bg-[#ffcb9b] hover:bg-white text-white hover:text-[#ffcb9b] shadow font-bold py-2 px-4 rounded transition duration-300"
+          >
+            <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
+          </button>
         </div>
-        <button
-          onClick={togglePlay}
-          className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          {isPlaying ? 'Pause' : 'Play'}
-        </button>
+
+
+        <section className="apply-section-share">
+          <button className="apply-button-share" onClick={generateAndShareVideo}>
+            Share Job Description
+          </button>
+
+          <button
+            onClick={closeJobDescrptionShare}
+            className="apply-button-share"
+          >
+            close
+          </button>
+        </section>
       </div>
-    </div>
+
+    </>
   );
 }
 

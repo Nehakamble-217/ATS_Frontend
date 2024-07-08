@@ -502,7 +502,10 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                       <th className="attendanceheading">Candidate's Email</th>
                       <th className="attendanceheading">Contact Number</th>
                       <th className="attendanceheading">Whatsapp Number</th>
-                      <th  hidden className="attendanceheading">Source Name</th>
+
+                      <th className="attendanceheading">
+                        Source Name
+                      </th>
 
                       <th className="attendanceheading">Disignation</th>
                       <th
@@ -640,7 +643,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                             </span>
                           </div>
                         </td>
-                        <td hidden
+                        <td
                           className="tabledata "
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}

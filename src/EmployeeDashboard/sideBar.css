@@ -220,9 +220,10 @@ body {
 .sidebar-menu-btn:hover i {
   color: gray;
   border: 1px solid black;
+  padding: 0px 2px;
   border-radius: 8px;
   background-color: #fff;
-} */
+} 
 .sidebar-menu-btn i {
   transition: all 0.3s;
 }

@@ -660,7 +660,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <thead className="thead-dark">
                   <tr>
                     <th>No</th>
-
                     <th>Interview Round</th>
                     <th>Interview Response</th>
                     <th>Comment for TL</th>
