@@ -1,0 +1,1331 @@
+//Akash Pawar SendClientEmail 09/07
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "./SendClientEmail.css";
+
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import HashLoader from "react-spinners/HashLoader";
+import ClipLoader from "react-spinners/ClipLoader";
+import { Form, Table } from "react-bootstrap";
+import axios from "axios";
+import { PDFDocument } from "pdf-lib";
+
+const LineUpList = ({ clientEmailSender }) => {
+  const [callingList, setCallingList] = useState([]);
+  const { employeeId } = useParams();
+  const employeeIdnew = parseInt(employeeId);
+  console.log(employeeId);
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
+    useState(false);
+  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
+  let [color, setColor] = useState("#ffcb9b");
+
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showFilterSection, setShowFilterSection] = useState(false);
+  const [filterOptions, setFilterOptions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortCriteria, setSortCriteria] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [filteredCallingList, setFilteredCallingList] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [loading, setLoading] = useState(true); // Add loading state
+
+  const [showShareButton, setShowShareButton] = useState(true);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    fetch(
+      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setFilteredCallingList(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        // alert("Error For fetching")
+        setLoading(false);
+      });
+  }, [employeeIdnew]);
+
+  useEffect(() => {
+    const options = Object.keys(filteredCallingList[0] || {}).filter(
+      (key) => key !== "candidateId"
+    );
+    setFilterOptions(options);
+  }, [filteredCallingList]);
+
+  useEffect(() => {
+    console.log("Selected Filters:", selectedFilters);
+  }, [selectedFilters]);
+
+  useEffect(() => {
+    console.log("Filtered Calling List:", filteredCallingList);
+  }, [filteredCallingList]);
+
+  useEffect(() => {
+    const limitedOptions = [
+      "date",
+      "recruiterName",
+      "jobDesignation",
+      "requirementId",
+    ];
+    setFilterOptions(limitedOptions);
+  }, [callingList]);
+
+  const handleMouseOver = (event) => {
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector(".tooltip");
+    const tooltiptext = tableData.querySelector(".tooltiptext");
+
+    if (tooltip && tooltiptext) {
+      const textOverflowing =
+        tableData.offsetWidth < tableData.scrollWidth ||
+        tableData.offsetHeight < tableData.scrollHeight;
+      if (textOverflowing) {
+        const rect = tableData.getBoundingClientRect();
+        tooltip.style.top = `${rect.top - 10}px`;
+        tooltip.style.left = `${rect.left + rect.width / 100}px`;
+        tooltip.style.visibility = "visible";
+      } else {
+        tooltip.style.visibility = "hidden";
+      }
+    }
+  };
+
+  const handleMouseOut = (event) => {
+    const tooltip = event.currentTarget.querySelector(".tooltip");
+    if (tooltip) {
+      tooltip.style.visibility = "hidden";
+    }
+  };
+
+  useEffect(() => {
+    filterData();
+  }, [selectedFilters, callingList]);
+
+  useEffect(() => {
+    const filtered = callingList.filter((item) => {
+      const searchTermLower = searchTerm.toLowerCase();
+      return (
+        (item.date && item.date.toLowerCase().includes(searchTermLower)) ||
+        (item.recruiterName &&
+          item.recruiterName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateName &&
+          item.candidateName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateEmail &&
+          item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
+        (item.contactNumber &&
+          item.contactNumber.toString().includes(searchTermLower)) ||
+        (item.alternateNumber &&
+          item.alternateNumber.toString().includes(searchTermLower)) ||
+        (item.sourceName &&
+          item.sourceName.toLowerCase().includes(searchTermLower)) ||
+        (item.requirementId &&
+          item.requirementId
+            .toString()
+            .toLowerCase()
+            .includes(searchTermLower)) ||
+        (item.requirementCompany &&
+          item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
+        (item.communicationRating &&
+          item.communicationRating.toLowerCase().includes(searchTermLower)) ||
+        (item.currentLocation &&
+          item.currentLocation.toLowerCase().includes(searchTermLower)) ||
+        (item.personalFeedback &&
+          item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.callingFeedback &&
+          item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.selectYesOrNo &&
+          item.selectYesOrNo.toLowerCase().includes(searchTermLower))
+      );
+    });
+    setFilteredCallingList(filtered);
+  }, [searchTerm, callingList]);
+
+  useEffect(() => {
+    if (sortCriteria) {
+      const sortedList = [...filteredCallingList].sort((a, b) => {
+        const aValue = a[sortCriteria];
+        const bValue = b[sortCriteria];
+
+        if (typeof aValue === "number" && typeof bValue === "number") {
+          return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
+        } else if (typeof aValue === "string" && typeof bValue === "string") {
+          return sortOrder === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        } else {
+          return 0;
+        }
+      });
+      setFilteredCallingList(sortedList);
+    }
+  }, [sortCriteria, sortOrder]);
+
+  const filterData = () => {
+    let filteredData = [...callingList];
+    Object.entries(selectedFilters).forEach(([option, values]) => {
+      if (values.length > 0) {
+        if (option === "requirementId") {
+          filteredData = filteredData.filter((item) =>
+            values.includes(item[option]?.toString())
+          );
+        } else {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value.toLowerCase())
+            )
+          );
+        }
+      }
+    });
+    setFilteredCallingList(filteredData);
+  };
+
+  const handleFilterSelect = (option, value) => {
+    setSelectedFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      if (!updatedFilters[option]) {
+        updatedFilters[option] = [];
+      }
+
+      const index = updatedFilters[option].indexOf(value);
+      if (index === -1) {
+        updatedFilters[option] = [...updatedFilters[option], value];
+      } else {
+        updatedFilters[option] = updatedFilters[option].filter(
+          (item) => item !== value
+        );
+      }
+
+      return updatedFilters;
+    });
+  };
+
+  const handleSort = (criteria) => {
+    if (criteria === sortCriteria) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortCriteria(criteria);
+      setSortOrder("asc");
+    }
+  };
+
+  const toggleFilterSection = () => {
+    setShowFilterSection(!showFilterSection);
+  };
+
+  const handleSelectRow = (can) => {
+    setSelectedRows((prevSelectedRows) => {
+      const candidateId = can.candidateId;
+      if (
+        prevSelectedRows.some(
+          (candidate) => candidate.candidateId === candidateId
+        )
+      ) {
+        return prevSelectedRows.filter(
+          (candidate) => candidate.candidateId !== candidateId
+        );
+      } else {
+        return [...prevSelectedRows, can];
+      }
+    });
+  };
+
+  const convertToDocumentLink = (byteCode, fileName) => {
+    if (byteCode) {
+      try {
+        // Detect file type based on file name extension or content
+        const fileType = fileName.split(".").pop().toLowerCase();
+
+        // Convert PDF
+        if (fileType === "pdf") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], { type: "application/pdf" });
+          return URL.createObjectURL(blob);
+        }
+
+        // Convert Word document (assuming docx format)
+        if (fileType === "docx") {
+          const binary = atob(byteCode);
+          const array = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            array[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([array], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          return URL.createObjectURL(blob);
+        }
+
+        // Handle other document types here if needed
+
+        // If file type is not supported
+        console.error(`Unsupported document type: ${fileType}`);
+        return "Unsupported Document";
+      } catch (error) {
+        console.error("Error converting byte code to document:", error);
+        return "Invalid Document";
+      }
+    }
+    return "Document Not Found";
+  };
+  const [showResumeModal, setShowResumeModal] = useState(false);
+  const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
+
+  const openResumeModal = (byteCode) => {
+    setSelectedCandidateResume(byteCode);
+    setShowResumeModal(true);
+  };
+
+  const closeResumeModal = () => {
+    setSelectedCandidateResume("");
+    setShowResumeModal(false);
+  };
+
+  const handleShow = () => {
+    if (selectedRows.length > 0) {
+      setShowModal(true);
+    }
+  };
+  const handleClose = () => setShowModal(false);
+
+  const handleSuccessEmailSend = (res) => {
+    if (res) {
+      setSelectedRows([]);
+      setShowShareButton(false);
+    }
+  };
+
+  return (
+    <div className="SCE-list-container">
+      {loading ? (
+        <div className="register">
+          <HashLoader
+            color={color}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      ) : (
+        <>
+          <div className="search">
+            <i
+              className="fa-solid fa-magnifying-glass"
+              onClick={() => setShowSearchBar(!showSearchBar)}
+              style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+            ></i>
+            <h5 style={{ color: "gray" }}>Candidate Data</h5>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "10px",
+              }}
+            >
+              {showShareButton ? (
+                <button
+                  className="SCE-share-btn"
+                  onClick={() => setShowShareButton(false)}
+                >
+                  Share
+                </button>
+              ) : (
+                <div style={{ display: "flex", gap: "5px" }}>
+                  <button
+                    className="SCE-share-close-btn"
+                    onClick={() => setShowShareButton(true)}
+                  >
+                    Close
+                  </button>
+                  <button className="SCE-forward-btn" onClick={handleShow}>
+                    Send
+                  </button>
+                </div>
+              )}
+              <button className="SCE-Filter-btn" onClick={toggleFilterSection}>
+                Filter <i className="fa-solid fa-filter"></i>
+              </button>
+            </div>
+          </div>
+          {showSearchBar && (
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search here..."
+              value={searchTerm}
+              style={{ marginBottom: "10px" }}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          )}
+          {showFilterSection && (
+            <div className="filter-section">
+              <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
+              <div className="filter-dropdowns">
+                {filterOptions.map((option) => (
+                  <div key={option} className="filter-dropdown">
+                    {/* <label htmlFor={option}>{option}</label> */}
+                    <div className="dropdown">
+                      <button className="dropbtn">{option}</button>
+                      <div className="dropdown-content">
+                        <div key={`${option}-All`}>
+                          <input
+                            type="checkbox"
+                            id={`${option}-All`}
+                            value="All"
+                            checked={
+                              !selectedFilters[option] ||
+                              selectedFilters[option].length === 0
+                            }
+                            onChange={() => handleFilterSelect(option, "All")}
+                          />
+                          <label htmlFor={`${option}-All`}>All</label>
+                        </div>
+                        {[
+                          ...new Set(callingList.map((item) => item[option])),
+                        ].map((value) => (
+                          <div key={value}>
+                            <input
+                              type="checkbox"
+                              id={`${option}-${value}`}
+                              value={value}
+                              checked={
+                                selectedFilters[option]?.includes(value) ||
+                                false
+                              }
+                              onChange={() => handleFilterSelect(option, value)}
+                            />
+                            <label htmlFor={`${option}-${value}`}>
+                              {value}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="attendanceTableData">
+            <table className="attendance-table">
+              <thead>
+                <tr className="attendancerows-head">
+                  {!showShareButton ? (
+                    <th className="attendanceheading">
+                      <input
+                        type="checkbox"
+                        checked={
+                          selectedRows.length === filteredCallingList.length
+                        }
+                        name="selectAll"
+                      />
+                    </th>
+                  ) : null}
+                  <th className="attendanceheading">No.</th>
+                  <th
+                    className="attendanceheading"
+                    onClick={() => handleSort("date")}
+                  >
+                    Date
+                  </th>
+                  <th className="attendanceheading">Time</th>
+                  <th className="attendanceheading">Candidate Id</th>
+                  <th
+                    className="attendanceheading"
+                    onClick={() => handleSort("recruiterName")}
+                  >
+                    Recruiter's Name
+                  </th>
+                  <th className="attendanceheading">Candidate's Name</th>
+                  <th className="attendanceheading">Candidate's Email</th>
+                  <th className="attendanceheading">Contact Number</th>
+                  <th className="attendanceheading">Whatsapp Number</th>
+                  <th className="attendanceheading">Source Name</th>
+                  <th className="attendanceheading">job Designation</th>
+                  <th
+                    className="attendanceheading"
+                    onClick={() => handleSort("requirementId")}
+                  >
+                    Job Id
+                  </th>
+                  <th className="attendanceheading">Applying Company</th>
+                  <th className="attendanceheading">Communication Rating</th>
+                  <th className="attendanceheading">Current Location</th>
+                  <th className="attendanceheading">Full Address</th>
+                  <th className="attendanceheading">Calling Feedback</th>
+                  <th className="attendanceheading">Recruiter's Incentive</th>
+                  <th className="attendanceheading">Interested or Not</th>
+                  <th className="attendanceheading">Current Company</th>
+                  <th className="attendanceheading">Total Experience</th>
+                  <th className="attendanceheading">Relevant Experience</th>
+                  <th className="attendanceheading">Current CTC</th>
+                  <th className="attendanceheading">Expected CTC</th>
+                  <th className="attendanceheading">Date Of Birth</th>
+                  <th className="attendanceheading">Gender</th>
+                  <th className="attendanceheading">Education</th>
+                  <th className="attendanceheading">Year Of Passing</th>
+                  <th className="attendanceheading">Call Summary</th>
+                  {/* <th className="attendanceheading">Feedback</th> */}
+                  <th className="attendanceheading">Holding Any Offer</th>
+                  <th className="attendanceheading">Offer Letter Msg</th>
+                  <th className="attendanceheading">Resume</th>
+                  <th className="attendanceheading">Notice Period</th>
+                  <th className="attendanceheading">Message For Team Leader</th>
+                  <th className="attendanceheading">
+                    Availability For Interview
+                  </th>
+                  <th className="attendanceheading">Interview Time</th>
+                  <th className="attendanceheading">Interview Status</th>
+                  <th className="attendanceheading">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredCallingList.map((item, index) => (
+                  <tr key={item.candidateId} className="attendancerows">
+                    {!showShareButton ? (
+                      <td className="tabledata">
+                        <input
+                          type="checkbox"
+                          checked={selectedRows.includes(item)}
+                          onChange={() => handleSelectRow(item)}
+                        />
+                      </td>
+                    ) : null}
+                    <td className="tabledata">{index + 1}</td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.date}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.date}</span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateAddedTime || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.candidateAddedTime}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateId}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.candidateId}</span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.recruiterName}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.recruiterName}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateName}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.candidateName}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateEmail || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.candidateEmail}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.contactNumber || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.contactNumber}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.alternateNumber || 0}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.alternateNumber}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.sourceName || 0}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.sourceName}</span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.jobDesignation || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.jobDesignation}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.requirementId || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.requirementId}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.requirementCompany || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.requirementCompany}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.communicationRating || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.communicationRating}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.currentLocation || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.currentLocation}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.fullAddress || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.fullAddress} </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.callingFeedback || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.callingFeedback}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.incentive || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.incentive}</span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.selectYesOrNo || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.selectYesOrNo}
+                        </span>
+                      </div>
+                    </td>
+
+                    <>
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.companyName || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.companyName}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.experienceYear || "0"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.experienceYear}{" "}
+                          </span>
+                        </div>
+                        Years
+                        {item.experienceMonth || "0"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.experienceMonth}
+                          </span>
+                        </div>
+                        Months
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.relevantExperience || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.relevantExperience}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {`${item.currentCTCLakh || 0} Lakh ${
+                          item.currentCTCThousand || 0
+                        } Thousand`}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{`${
+                            item.expectedCTCLakh || 0
+                          } Lakh ${
+                            item.expectedCTCThousand || 0
+                          } Thousand`}</span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {`${item.expectedCTCLakh || 0} Lakh ${
+                          item.expectedCTCThousand || 0
+                        } Thousand`}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{`${
+                            item.expectedCTCLakh || 0
+                          } Lakh ${
+                            item.expectedCTCThousand || 0
+                          } Thousand`}</span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.dateOfBirth || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.dateOfBirth}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.gender || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.gender}</span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.qualification || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.qualification}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.yearOfPassing || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.yearOfPassing}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.extraCertification || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.extraCertification}
+                          </span>
+                        </div>
+                      </td>
+
+                      {/* <td
+                              className="tabledata"
+                              onMouseOver={handleMouseOver}
+                              onMouseOut={handleMouseOut}
+                            >
+                              {item.lineUp.feedBack || "-"}
+                              <div className="tooltip">
+                                <span className="tooltiptext">
+                                  {item.lineUp.feedBack}
+                                </span>
+                              </div>
+                            </td> */}
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.holdingAnyOffer || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.holdingAnyOffer}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.offerLetterMsg || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.offerLetterMsg}
+                          </span>
+                        </div>
+                      </td>
+                      {/* Name:-Akash Pawar Component:-LineUpList
+                  Subcategory:-ResumeViewButton(added) start LineNo:-993
+                  Date:-02/07 */}
+                      <td className="tabledata">
+                        <button
+                          className="text-secondary"
+                          onClick={() => openResumeModal(item.resume)}
+                        >
+                          <i className="fas fa-eye"></i>
+                        </button>
+                      </td>
+                      {/* Name:-Akash Pawar Component:-LineUpList
+                  Subcategory:-ResumeViewButton(added) End LineNo:-1005
+                  Date:-02/07 */}
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.noticePeriod || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.noticePeriod}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.msgForTeamLeader || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.msgForTeamLeader}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.availabilityForInterview || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.availabilityForInterview}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.interviewTime || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.interviewTime}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.finalStatus || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.finalStatus}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td className="tabledata">
+                        <i
+                          onClick={() => handleUpdate(item.candidateId)}
+                          className="fa-regular fa-pen-to-square"
+                        ></i>
+                      </td>
+                    </>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {showModal ? (
+              <EmployeeDetailsPopup
+                show={showModal}
+                handleClose={handleClose}
+                selectedCandidate={selectedRows}
+                onSuccessFullEmailSend={handleSuccessEmailSend}
+                clientEmailSender={clientEmailSender}
+              />
+            ) : null}
+            {/* Name:-Akash Pawar Component:-LineUpList
+          Subcategory:-ResumeModel(added) End LineNo:-1153 Date:-02/07 */}
+            <Modal show={showResumeModal} onHide={closeResumeModal} size="md">
+              <Modal.Header closeButton>
+                <Modal.Title>Resume</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {selectedCandidateResume ? (
+                  <iframe
+                    src={convertToDocumentLink(
+                      selectedCandidateResume,
+                      "Resume.pdf"
+                    )}
+                    width="100%"
+                    height="550px"
+                    title="PDF Viewer"
+                  ></iframe>
+                ) : (
+                  <p>No resume available</p>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={closeResumeModal}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            {/* Name:-Akash Pawar Component:-LineUpList
+          Subcategory:-ResumeModel(added) End LineNo:-1184 Date:-02/07 */}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const EmployeeDetailsPopup = ({
+  show,
+  handleClose,
+  selectedCandidate,
+  onSuccessFullEmailSend,
+  clientEmailSender,
+}) => {
+  const [to, setTo] = useState("");
+  const [cc, setCc] = useState("");
+  const [subject, setSubject] = useState("");
+  const [signatureImage, setSignatureImage] = useState("");
+  const [isMailSending, setIsMailSending] = useState(false);
+  const [emailBody, setEmailBody] = useState(
+    "hi Deepak,\n\nSharing 2 more profiles: Dotnet+Azure Developer."
+  );
+
+  // const handleSignatureImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       console.log(reader);
+  //       setSignatureImage(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  const handleStoreClientInformation = async () => {
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    // This arrangement can be altered based on how we want the date's format to appear.
+    let currentDate = `${day}-${month}-${year}`;
+    const clientData = {
+      mailReceiverName: emailBody.replace(/Hi\s*,?\s*/i, "").split(",")[0],
+      receiverCompanyMail: to,
+      mailSendDate: currentDate,
+      mailSendTime: new Date().toLocaleTimeString(),
+      noOfCandidates: selectedCandidate.length,
+      mailSenderName: clientEmailSender.senderName,
+      senderEmailId: clientEmailSender.senderMail,
+      requirementIds: selectedCandidate.map((item) => item.requirementId),
+      toCCNames: cc.split(","),
+      toBCCNames: [],
+    };
+
+    const response = await axios.post(
+      "http://192.168.1.48:8891/api/ats/157industries/add-client-details",
+      clientData
+    );
+    if (response) {
+      setIsMailSending(false);
+      console.log(response);
+      handleClose();
+    }
+  };
+
+  const handleSendEmail = () => {
+    setIsMailSending(true);
+    const emailData = {
+      to,
+      cc,
+      subject,
+      body: emailBody,
+      signatureImage,
+      attachments: selectedCandidate.map((can) => ({
+        fileName: `${can.candidateName}_${can.jobDesignation}.pdf`, // Assuming all resumes are in PDF format
+        fileContent: can.resume,
+      })),
+      // tableData: selectedCandidate,
+      tableData: selectedCandidate.map((can, index) => ({
+        ...can,
+        perDayBillingSentToClient: 10000, // Assuming a static value for demonstration
+      })),
+    };
+
+    axios
+      .post("http://localhost:8082/api/ats/157industries/send-email", emailData)
+      .then((response) => {
+        handleStoreClientInformation();
+        onSuccessFullEmailSend(true);
+        console.log("Email sent successfully:", response.data);
+      })
+
+      .catch((error) => {
+        setIsMailSending(false);
+        console.error("Error sending email:", error);
+      });
+  };
+
+  return (
+    <>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="xl"
+        className="text-secondary"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Send Candidate Email To Client</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group style={{ display: "flex", gap: "5px" }}>
+            <div style={{ width: "100%" }}>
+              <Form.Label>
+                <strong>TO:</strong>
+              </Form.Label>
+              <Form.Control
+                type="email"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+              />
+            </div>
+            <div style={{ width: "100%" }}>
+              <Form.Label>
+                <strong>CC:</strong>
+              </Form.Label>
+              <Form.Control
+                type="email"
+                value={cc}
+                onChange={(e) => setCc(e.target.value)}
+              />
+            </div>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>
+              <strong>Subject:</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Label className="mt-2">
+            <strong>Email Body:</strong>
+          </Form.Label>
+          <div className="border p-2 mb-2 rounded">
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                className="text-secondary"
+                rows={5}
+                placeholder=""
+                value={emailBody}
+                onChange={(e) => setEmailBody(e.target.value)}
+              />
+              <div
+                style={{
+                  maxHeight: "400px",
+                  overflowY: "auto",
+                  scrollbarWidth: "none",
+                }}
+              >
+                <Table
+                  striped
+                  bordered
+                  hover
+                  size="sm"
+                  className="mt-4 text-secondary"
+                >
+                  <thead>
+                    <tr>
+                      <th>Sr.No</th>
+                      <th>Date</th>
+                      <th>Position</th>
+                      <th>Candidate Name</th>
+                      <th>Contact number</th>
+                      <th>Email Id</th>
+                      <th>Total Experience</th>
+                      <th>Current Company</th>
+                      <th>Notice Period(Days)</th>
+                      <th>Holding Any Offer</th>
+                      <th>Current Location</th>
+                      <th>Per Day Billing Sent To Client</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedCandidate.map((can, index) => (
+                      <tr key={index}>
+                        <td className="text-secondary">{index + 1}</td>
+                        <td className="text-secondary">{can.date}</td>
+                        <td className="text-secondary">{can.jobDesignation}</td>
+                        <td className="text-secondary">{can.candidateName}</td>
+                        <td className="text-secondary">{can.contactNumber}</td>
+                        <td className="text-secondary">{can.candidateEmail}</td>
+                        <td className="text-secondary">
+                          {can.experienceYear} years {can.experienceMonth}{" "}
+                          months
+                        </td>
+                        <td className="text-secondary">{can.companyName}</td>
+                        <td className="text-secondary">{can.noticePeriod}</td>
+                        <td className="text-secondary">
+                          {can.holdingAnyOffer}
+                        </td>
+                        <td className="text-secondary">
+                          {can.currentLocation}
+                        </td>
+                        <td className="text-secondary">10000</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            </Form.Group>
+            <div className="mt-3 d-flex flex-wrap gap-1">
+              <Form.Label className="mr-1">
+                <strong>Attachments:</strong>{" "}
+              </Form.Label>
+              {selectedCandidate.map((item, index) => (
+                <a
+                  style={{
+                    border: "1px solid gray",
+                    borderRadius: "15px",
+                    padding: "0px 4px",
+                  }}
+                  className="d-flex justify-center items-center"
+                  key={index}
+                  href={`data:application/pdf;base64,${item.resume}`}
+                  download={`${item.candidateName}_${item.jobDesignation}.pdf`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {`${item.candidateName}_${item.jobDesignation}.pdf`}
+                </a>
+              ))}
+            </div>
+            {signatureImage && (
+              <div className="mt-3">
+                <strong>Signature:</strong>
+                <br />
+                <img
+                  src={signatureImage}
+                  alt="Signature"
+                  style={{ maxWidth: "100%", maxHeight: "200px" }}
+                />
+              </div>
+            )}
+            <Form.Group>
+              <Form.Label>
+                <strong>Upload Signature Image Url:</strong>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                onChange={(e) => setSignatureImage(e.target.value)}
+              />
+            </Form.Group>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="SCE-share-forward-popup-btn" onClick={handleClose}>
+            Close
+          </button>
+          <button
+            className="SCE-close-forward-popup-btn"
+            onClick={handleSendEmail}
+          >
+            Send Email
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {isMailSending && (
+        <div className="SCE_Loading_Animation">
+          <ClipLoader size={50} color="#ffb281" />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default LineUpList;

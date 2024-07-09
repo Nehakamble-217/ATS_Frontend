@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import HashLoader from "react-spinners/HashLoader";
+import axios from "axios";
 
 const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,6 +32,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
 
+  const [fetchColumnsNames, setFetchedColumnNames] = useState(null);
+
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeIdw + "emp @@@@ id");
@@ -52,11 +55,23 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
   ];
 
   useEffect(() => {
+    const getAllColumnForCurrentUser = async () => {
+      const response = await axios.get(
+        `http://192.168.1.48:8891/api/ats/157industries/column-by-id/${employeeId}`
+      );
+      console.log(response.data);
+      setFetchedColumnNames(response.data);
+    };
+    getAllColumnForCurrentUser();
+  }, []);
+
+  useEffect(() => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.48:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setCallingList(data);
         setFilteredCallingList(data);
         setLoading(false);
@@ -72,7 +87,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -224,7 +239,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.48:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -309,7 +324,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -484,7 +499,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                           />
                         </th>
                       ) : null}
-                      <th className="attendanceheading">No.</th>
+                      {/* <th className="attendanceheading">No.</th>
                       <th
                         className="attendanceheading"
                         onClick={() => handleSort("date")}
@@ -502,9 +517,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                       <th className="attendanceheading">Candidate's Email</th>
                       <th className="attendanceheading">Contact Number</th>
                       <th className="attendanceheading">Whatsapp Number</th>
-                      <th hidden className="attendanceheading">
-                        Source Name
-                      </th>
+                      <th className="attendanceheading">Source Name</th>
 
                       <th className="attendanceheading">Disignation</th>
                       <th
@@ -526,7 +539,17 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                       <th className="attendanceheading">
                         Interested and Eligible
                       </th>
-                      <th className="attendanceheading">Action</th>
+                      <th className="attendanceheading">Action</th> */}
+                      {fetchColumnsNames &&
+                        fetchColumnsNames
+                          .filter(
+                            (item) => item.columnCategory != "dateOfBirth"
+                          )
+                          .map((column, index) => (
+                            <th className="attendanceheading" key={index}>
+                              {column.columnName}
+                            </th>
+                          ))}
                     </tr>
                   </thead>
                   <tbody>
@@ -541,8 +564,26 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                             />
                           </td>
                         ) : null}
-
-                        <td
+                        {fetchColumnsNames &&
+                          fetchColumnsNames
+                            .filter(
+                              (col) => col.columnCategory != "dateOfBirth"
+                            )
+                            .map((column) => (
+                              <td
+                                className="tabledata"
+                                onMouseOver={handleMouseOver}
+                                onMouseOut={handleMouseOut}
+                              >
+                                {item[column.columnCategory]}{" "}
+                                <div className="tooltip">
+                                  <span className="tooltiptext">
+                                    {item[column.columnCategory]}{" "}
+                                  </span>
+                                </div>
+                              </td>
+                            ))}
+                        {/* <td
                           className="tabledata "
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
@@ -643,7 +684,6 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                           </div>
                         </td>
                         <td
-                          hidden
                           className="tabledata "
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
@@ -771,7 +811,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                             }
                             className="fa-regular fa-pen-to-square"
                           ></i>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>

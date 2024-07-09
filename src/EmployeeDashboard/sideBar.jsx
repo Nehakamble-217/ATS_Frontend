@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getEmployeeWorkData } from "../api/api";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
-import { RiTeamFill } from "react-icons/ri"
+import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 
@@ -40,6 +40,7 @@ function Sidebar({
   toggleShareLink,
   toggleUpdateResponse,
   jobRoles,
+  toggleSendCandidate,
 }) {
   const [workData, setWorkData] = useState([]);
   const [error, setError] = useState("");
@@ -160,7 +161,6 @@ function Sidebar({
 
   return (
     <>
-
       <div className={`sidebar ${isActive ? "active" : ""}`}>
         <div className="sidebar-clouds1"></div>
         {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */}
@@ -339,7 +339,6 @@ function Sidebar({
                   </ul>
                 </li>
 
-
                 <li
                   className={`${
                     activeSubMenu === "Jobdiscription" || isJobDescriptionActive
@@ -356,7 +355,6 @@ function Sidebar({
                     <span className="sidebar-text">Job Description</span>
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
-
 
                   <ul
                     className={`sub-menu ${
@@ -447,14 +445,16 @@ function Sidebar({
                     </li>
                   </ul>
                 </li>
-{/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
+                {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
                 {jobRoles === "Admin" ? (
                   <li
-                    className={activeButton === "TeamLeader-section" ? "active" : ""}
+                    className={
+                      activeButton === "TeamLeader-section" ? "active" : ""
+                    }
                     onClick={toggleSubMenu("TeamLeader-section")}
                   >
-                  <a href="#">
-                    <RiTeamFill className="text-gray-500 text-lg" />
+                    <a href="#">
+                      <RiTeamFill className="text-gray-500 text-lg" />
                       <span className="sidebar-text">Team Leader Section</span>
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
@@ -472,10 +472,9 @@ function Sidebar({
                           <span className="sidebar-text">Update Response</span>
                         </a>
                       </li>
-
                     </ul>
-                    </li>
-                  ) : null}
+                  </li>
+                ) : null}
 
                 {jobRoles === "Admin" ? (
                   <li
@@ -533,6 +532,16 @@ function Sidebar({
                         <a href="#">
                           {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                           <span className="sidebar-text">Add Team Leadrs</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={toggleSendCandidate}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">
+                            Send Client Email
+                          </span>
                         </a>
                       </li>
                     </ul>
