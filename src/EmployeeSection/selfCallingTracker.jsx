@@ -224,7 +224,7 @@ const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => 
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.39:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.48:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -309,7 +309,7 @@ const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => 
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.39:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -504,8 +504,7 @@ const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => 
                       <th className="attendanceheading">Candidate's Email</th>
                       <th className="attendanceheading">Contact Number</th>
                       <th className="attendanceheading">Whatsapp Number</th>
-
-                      <th className="attendanceheading">
+                      <th hidden className="attendanceheading">
                         Source Name
                       </th>
 
@@ -646,6 +645,7 @@ const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => 
                           </div>
                         </td>
                         <td
+                          hidden
                           className="tabledata "
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}

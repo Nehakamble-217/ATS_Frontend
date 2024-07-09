@@ -14,6 +14,7 @@ function DailyWork({
   // handleDataAdditionSuccess,
   profilePageLink,
   logoutTimestamp,
+  emailSenderInformation,
 }) {
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
@@ -68,10 +69,16 @@ function DailyWork({
       try {
         const response = await axios.get(
           `http://192.168.1.48:8891/api/ats/157industries/employee-details/${employeeId}`
-
         );
         setEmployeeData(response.data);
+        //Akash Pawar DailyWork senderinformation 09/07 74
         onCurrentEmployeeJobRoleSet(response.data.jobRole);
+        const emailSender = {
+          senderName: response.data.employeeName,
+          senderMail: response.data.employeeEmail,
+        };
+        emailSenderInformation(emailSender);
+        //Akash Pawar DailyWork senderinformation 09/07 81
         if (response.data.profileImage) {
           const byteCharacters = atob(response.data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
@@ -167,7 +174,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://192.168.1.46:8891/api/ats/157industries/save-daily-work",
+          "http://192.168.1.48:8891/api/ats/157industries/save-daily-work",
           formData
         );
 
@@ -197,7 +204,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.46:8891/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.48:8891/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -587,7 +594,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.46:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.48:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
         formData
       );
 
