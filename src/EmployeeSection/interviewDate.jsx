@@ -713,7 +713,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                         </option>
                         <option value="Selected">Selected</option>
                         <option value="Rejected">Rejected</option>
-                        <option value="Result Pending">Hold</option>
+                        <option value="Hold">Hold</option>
                         <option value="Result Pending">Result Pending</option>
                         <option value="No Show">No Show</option>
                       </select>

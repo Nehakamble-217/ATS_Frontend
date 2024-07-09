@@ -5,8 +5,8 @@ const API_BASE_URL = "http://192.168.1.48:8891/api/ats/157industries";
 export const getPasswordFromDB = (id) =>
   axios.post(`${API_BASE_URL}/fetch-pass/${id}`);
 
-export const getEmployeeWorkData = (id) =>
-  axios.get(`${API_BASE_URL}/employee-work/${id}`);
+// export const getEmployeeWorkData = (id) =>
+//   axios.get(`${API_BASE_URL}/employee-work/${id}`);
 
 export const fetchMasterSheetData = async () => {
   try {

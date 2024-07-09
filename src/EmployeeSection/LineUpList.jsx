@@ -38,6 +38,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [showForwardPopup, setShowForwardPopup] = useState(false);
 
   const navigator = useNavigate();
+  useEffect(() => {
+    console.log("Component re-rendered due to changes in dependencies.");
+  }, [selectedFilters, filteredCallingList, callingList, employeeIdnew]);
+  
 
   useEffect(() => {
     fetch(

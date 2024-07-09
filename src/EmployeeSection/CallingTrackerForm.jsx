@@ -461,22 +461,22 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
               <div className="calling-tracker-field">
                 <label>Candidate's Full Name</label>
                 <div className="calling-tracker-field-sub-div">
-                    <input
-                      type="text"
-                      name="candidateName"
-                      value={callingTracker.candidateName}
-                      className={`plain-input ${
-                        errors.candidateName ? "is-invalid" : ""
-                      }`}
-                      onChange={handleChange}
-                      required={callingTracker.selectYesOrNo !== "Interested"}
-                      placeholder="Enter Candidate Name"
-                    />
-                    {errors.candidateName && (
-                      <div className="invalid-feedback">
-                        {errors.candidateName}
-                      </div>
-                    )}
+                  <input
+                    type="text"
+                    name="candidateName"
+                    value={callingTracker.candidateName}
+                    className={`plain-input ${
+                      errors.candidateName ? "is-invalid" : ""
+                    }`}
+                    onChange={handleChange}
+                    required={callingTracker.selectYesOrNo !== "Interested"}
+                    placeholder="Enter Candidate Name"
+                  />
+                  {errors.candidateName && (
+                    <div className="invalid-feedback">
+                      {errors.candidateName}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="calling-tracker-field">
@@ -499,40 +499,40 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
               <div className="calling-tracker-field">
                 <label>Contact Number</label>
                 <div className="calling-tracker-field-sub-div">
-                    <PhoneInput
-                      placeholder="Enter phone number"
-                      name="contactNumber"
-                      className="plain-input"
-                      value={callingTracker.contactNumber}
-                      onChange={(value) =>
-                        handlePhoneNumberChange(value, "contactNumber")
-                      }
-                      required={callingTracker.selectYesOrNo !== "Interested"}
-                      defaultCountry="IN"
-                      maxLength={11}
-                    />
-                    {errors.contactNumber && (
-                      <div className="invalid-feedback">
-                        {errors.contactNumber}
-                      </div>
-                    )}
+                  <PhoneInput
+                    placeholder="Enter phone number"
+                    name="contactNumber"
+                    className="plain-input"
+                    value={callingTracker.contactNumber}
+                    onChange={(value) =>
+                      handlePhoneNumberChange(value, "contactNumber")
+                    }
+                    required={callingTracker.selectYesOrNo !== "Interested"}
+                    defaultCountry="IN"
+                    maxLength={11}
+                  />
+                  {errors.contactNumber && (
+                    <div className="invalid-feedback">
+                      {errors.contactNumber}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="calling-tracker-field">
                 <label>Whatsapp Number</label>
                 <div className="calling-tracker-field-sub-div">
-                <PhoneInput
-                      placeholder="Enter phone number"
-                      name="alternateNumber"
-                      className="plain-input"
-                      value={callingTracker.alternateNumber}
-                      onChange={(value) =>
-                        handlePhoneNumberChange(value, "alternateNumber")
-                      }
-                      required={callingTracker.selectYesOrNo !== "Interested"}
-                      defaultCountry="IN"
-                      maxLength={11}
-                    />
+                  <PhoneInput
+                    placeholder="Enter phone number"
+                    name="alternateNumber"
+                    className="plain-input"
+                    value={callingTracker.alternateNumber}
+                    onChange={(value) =>
+                      handlePhoneNumberChange(value, "alternateNumber")
+                    }
+                    required={callingTracker.selectYesOrNo !== "Interested"}
+                    defaultCountry="IN"
+                    maxLength={11}
+                  />
                 </div>
               </div>
             </div>
@@ -1268,31 +1268,31 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
               </div>
               <div className="calling-tracker-field">
                 <label>Total Experience</label>
-                
+
                 <div
                   className="calling-tracker-two-input-container"
                   required={callingTracker.selectYesOrNo === "Interested"}
                 >
-                    <input
-                      type="text"
-                      name="experienceYear"
-                      value={lineUpData.experienceYear}
-                      onChange={handleLineUpChange}
-                      className="calling-tracker-two-input"
-                      placeholder="Years"
-                      maxLength="2"
-                    />
-                    <input
-                      type="number"
-                      name="experienceMonth"
-                      value={lineUpData.experienceMonth}
-                      onChange={handleLineUpChange}
-                      className="calling-tracker-two-input"
-                      placeholder="Months"
-                      maxLength="2"
-                      min="1"
-                      max="12"
-                    />
+                  <input
+                    type="text"
+                    name="experienceYear"
+                    value={lineUpData.experienceYear}
+                    onChange={handleLineUpChange}
+                    className="calling-tracker-two-input"
+                    placeholder="Years"
+                    maxLength="2"
+                  />
+                  <input
+                    type="number"
+                    name="experienceMonth"
+                    value={lineUpData.experienceMonth}
+                    onChange={handleLineUpChange}
+                    className="calling-tracker-two-input"
+                    placeholder="Months"
+                    maxLength="2"
+                    min="1"
+                    max="12"
+                  />
                 </div>
               </div>
             </div>
@@ -1354,28 +1354,28 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                   className="calling-tracker-two-input-container"
                   required={callingTracker.selectYesOrNo === "Interested"}
                 >
-                    <input
-                      type="text"
-                      name="currentCTCLakh"
-                      value={lineUpData.currentCTCLakh}
-                      onChange={handleLineUpChange}
-                      className="calling-tracker-two-input"
-                      placeholder="Lakh"
-                      maxLength="2"
-                      pattern="\d*"
-                    />
+                  <input
+                    type="text"
+                    name="currentCTCLakh"
+                    value={lineUpData.currentCTCLakh}
+                    onChange={handleLineUpChange}
+                    className="calling-tracker-two-input"
+                    placeholder="Lakh"
+                    maxLength="2"
+                    pattern="\d*"
+                  />
 
-                    <input
-                      type="text"
-                      name="currentCTCThousand"
-                      value={lineUpData.currentCTCThousand}
-                      onChange={handleLineUpChange}
-                      className="calling-tracker-two-input"
-                      placeholder="Thousand"
-                      maxLength="2"
-                      pattern="\d*"
-                      inputMode="numeric"
-                    />
+                  <input
+                    type="text"
+                    name="currentCTCThousand"
+                    value={lineUpData.currentCTCThousand}
+                    onChange={handleLineUpChange}
+                    className="calling-tracker-two-input"
+                    placeholder="Thousand"
+                    maxLength="2"
+                    pattern="\d*"
+                    inputMode="numeric"
+                  />
                 </div>
               </div>
               <div className="calling-tracker-field">
@@ -1384,29 +1384,28 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                   className="calling-tracker-two-input-container"
                   required={callingTracker.selectYesOrNo === "Interested"}
                 >
-                  
-                    <input
-                      type="text"
-                      name="expectedCTCLakh"
-                      value={lineUpData.expectedCTCLakh}
-                      onChange={handleLineUpChange}
-                      className="calling-tracker-two-input"
-                      placeholder="Lakh"
-                      maxLength="2"
-                      pattern="\d*"
-                    />
-                 
-                    <input
-                      type="text"
-                      name="expectedCTCThousand"
-                      value={lineUpData.expectedCTCThousand}
-                      onChange={handleLineUpChange}
-                      className="calling-tracker-two-input"
-                      placeholder="Thousand"
-                      maxLength="2"
-                      pattern="\d*"
-                      inputMode="numeric"
-                    />
+                  <input
+                    type="text"
+                    name="expectedCTCLakh"
+                    value={lineUpData.expectedCTCLakh}
+                    onChange={handleLineUpChange}
+                    className="calling-tracker-two-input"
+                    placeholder="Lakh"
+                    maxLength="2"
+                    pattern="\d*"
+                  />
+
+                  <input
+                    type="text"
+                    name="expectedCTCThousand"
+                    value={lineUpData.expectedCTCThousand}
+                    onChange={handleLineUpChange}
+                    className="calling-tracker-two-input"
+                    placeholder="Thousand"
+                    maxLength="2"
+                    pattern="\d*"
+                    inputMode="numeric"
+                  />
                 </div>
               </div>
             </div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../EmployeeDashboard/sideBar.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEmployeeWorkData } from "../api/api";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
 import { RiTeamFill } from "react-icons/ri";
@@ -42,7 +41,7 @@ function Sidebar({
   jobRoles,
   toggleSendCandidate,
 }) {
-  const [workData, setWorkData] = useState([]);
+
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [activeSubMenu, setActiveSubMenu] = useState(null); // Track the active submenu
@@ -51,26 +50,8 @@ function Sidebar({
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
-  // const [logoutTime, setLogoutTime] = useState(null);
   const { userGroup } = useParams();
   console.log(userGroup);
-
-  useEffect(() => {
-    if (!employeeId) {
-      navigator("/employee-login");
-    } else {
-      getEmployeeWorkData(employeeId)
-        .then((response) => {
-          setWorkData(response.data);
-          setError("");
-          console.log(employeeId + " Employee ID in employee");
-        })
-        .catch((error) => {
-          console.error("Error fetching work data:", error);
-          setError("Error fetching work data.");
-        });
-    }
-  }, [employeeId]);
 
   const toggleSubMenu = (subMenuKey) => (e) => {
     e.preventDefault();
@@ -120,39 +101,9 @@ function Sidebar({
     activeButton
   );
 
-  // const handleLogoutLocal = async () => {
-  //   try {
-  //     const logoutTime = new Date().toLocaleTimeString("en-IN");
-  //     setLogoutTime(logoutTime);
-
-  //     const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
-
-  //     const now = new Date();
-  //     const day = now.getDate().toString().padStart(2, "0");
-  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
-  //     const year = now.getFullYear();
-
-  //     await axios.post(
-  //       "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
-  //       formData
-  //     );
-
-  //     localStorage.removeItem(`stopwatchTime_${employeeId}`);
-  //     localStorage.removeItem(`dailyWorkData_${employeeId}`);
-  //     localStorage.removeItem("employeeId");
-
-  //     setTime({ hours: 0, minutes: 0, seconds: 0 });
-  //     setData({ archived: 0, pending: 10 });
-
-  // await axios.post(
-  //   "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
-  //   formData
-  // );
-
   const handleLogoutLocal = () => {
     const logoutTime = new Date().toLocaleTimeString("en-IN");
     onLogout(logoutTime);
-    // navigator("/employee-login/recruiter");
   };
 
   const tempLogout = () => {
@@ -208,11 +159,10 @@ function Sidebar({
                   </a>
                 </li>
                 <li
-                  className={`${
-                    activeSubMenu === "candidate" || isCandidateSectionActive
+                  className={`${activeSubMenu === "candidate" || isCandidateSectionActive
                       ? "active"
                       : ""
-                  }`}
+                    }`}
                   onClick={toggleSubMenu("candidate")}
                 >
                   <a href="#">
@@ -224,9 +174,8 @@ function Sidebar({
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
                   <ul
-                    className={`sub-menu ${
-                      activeSubMenu === "candidate" ? "active" : ""
-                    }`}
+                    className={`sub-menu ${activeSubMenu === "candidate" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -340,11 +289,10 @@ function Sidebar({
                 </li>
 
                 <li
-                  className={`${
-                    activeSubMenu === "Jobdiscription" || isJobDescriptionActive
+                  className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
                       ? "active"
                       : ""
-                  }`}
+                    }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
                   <a href="#">
@@ -357,9 +305,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu ${
-                      activeSubMenu === "Jobdiscription" ? "active" : ""
-                    }`}
+                    className={`sub-menu ${activeSubMenu === "Jobdiscription" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -415,9 +362,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu sub-menu1 ${
-                      activeSubMenu === "employee" ? "active" : ""
-                    }`}
+                    className={`sub-menu sub-menu1 ${activeSubMenu === "employee" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -491,9 +437,8 @@ function Sidebar({
                     </a>
 
                     <ul
-                      className={`sub-menu sub-menu1 ${
-                        activeSubMenu === "admin-section" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
+                        }`}
                     >
                       <li
                         onClick={toggleAssigncolumns}
@@ -563,9 +508,8 @@ function Sidebar({
                     </a>
 
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "database" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
+                        }`}
                     >
                       <li
                         onClick={handleButtonClick(
@@ -661,9 +605,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu sub-menu1 sub-menu2 ${
-                      activeSubMenu === "portal" ? "active" : ""
-                    }`}
+                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
+                      }`}
                   >
                     <li style={{ marginLeft: "10px" }}>
                       <a href="#">
