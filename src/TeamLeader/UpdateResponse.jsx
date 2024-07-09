@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 import "./UpdateResponse.css";
 import { Button, Modal } from "react-bootstrap";
 import UpdateResponseFrom from "./UpdateResponseFrom";
+import { data } from "autoprefixer";
 
-const UpdateResponse = () => {
+const UpdateResponse = ({ onSuccessAdd}) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
   const [showUpdateResponseFrom, setShowUpdateResponseFrom] = useState(false);
   const [showUpdateResponseID, setShowUpdateResponseID] = useState();
-
+  const [showEmployeeId, setShowEmployeeId] = useState();
+  const [showRequirementId, setShowRequirementId] = useState(); 
   useEffect(() => {
     fetchUpdateResponseList();
   }, []);
@@ -25,6 +27,7 @@ const UpdateResponse = () => {
       console.log("Error fetching shortlisted data:", err);
     }
   };
+  console.log(data);
 
   const convertToDocumentLink = (byteCode, fileName) => {
     if (byteCode) {
@@ -82,13 +85,17 @@ const UpdateResponse = () => {
     setShowResumeModal(false);
   };
 
-  const handleUpdateClick = (responseUpdateId) => {
-    setShowUpdateResponseID(responseUpdateId);
+  const handleUpdateClick = (candidateId, employeeId, requirementId) => {
+    setShowUpdateResponseID(candidateId);
+    setShowEmployeeId(employeeId);
+    setShowRequirementId(requirementId);
     setShowUpdateResponseFrom(true);
   };
 
   const closeUpdateForm = () => {
     setShowUpdateResponseID(null);
+    setShowEmployeeId(null);
+    setShowRequirementId(null);
     setShowUpdateResponseFrom(false);
   };
   const handleMouseOver = (event) => {
@@ -278,7 +285,7 @@ const UpdateResponse = () => {
                     <td className=" TeamLead-main-table-td">
                       <button
                         className="TeamLead-main-table-button"
-                        onClick={() => handleUpdateClick(data.candidateId)}
+                        onClick={() => handleUpdateClick(data.candidateId, data.employeeId, data.requirementId)}
                       >
                         Update
                       </button>
@@ -324,9 +331,12 @@ const UpdateResponse = () => {
           >
             <Modal.Body>
               <div className="TeamLead-main-table-container">
-                <UpdateResponseFrom
+              <UpdateResponseFrom
                   candidateId={showUpdateResponseID}
+                  employeeId={showEmployeeId}
+                  requirementId={showRequirementId}
                   onClose={closeUpdateForm}
+                  onSuccessAdd={onSuccessAdd}
                 />
               </div>
             </Modal.Body>

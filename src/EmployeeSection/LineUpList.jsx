@@ -36,12 +36,12 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [count,setCount] = useState(0);
 
   const navigator = useNavigate();
   useEffect(() => {
-    console.log("Component re-rendered due to changes in dependencies.");
+    setCount(count+1);
   }, [selectedFilters, filteredCallingList, callingList, employeeIdnew]);
-  
 
   useEffect(() => {
     fetch(

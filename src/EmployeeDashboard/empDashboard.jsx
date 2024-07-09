@@ -36,6 +36,7 @@ import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 import CallingExcelList from "../Excel/callingExcelData";
 import LineupExcelData from "../Excel/lineupExcelData";
 import UpdateResponse from "../TeamLeader/UpdateResponse";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -82,6 +83,8 @@ const EmpDashboard = ({ userGroup }) => {
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
   const [archived, setArchived] = useState(0);
+  
+  const [successAddUpdateResponse,setSuccessUpdateResponse]=useState(false)
 
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
@@ -95,6 +98,7 @@ const EmpDashboard = ({ userGroup }) => {
   };
   useEffect(() => {
     setSuccessfulDataAdditions(false);
+    
   }, [successfulDataAdditions]);
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions End LineNo:-93 Date:-01/07
 
@@ -102,6 +106,10 @@ const EmpDashboard = ({ userGroup }) => {
   const handleJobRoles = (role) => {
     setJobRoles(role);
   };
+
+  const handleSuccessAdd=(res)=>{
+    setSuccessUpdateResponse(res);
+  }
 
   const [id, setId] = useState(0);
 
@@ -246,6 +254,7 @@ const EmpDashboard = ({ userGroup }) => {
   const toggleSelfCalling = () => {
     resetAllToggles();
     setSelfCalling(!selfCalling);
+    setSuccessShare(true);
   };
 
   const toggelLineUp = () => {
@@ -378,6 +387,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggelExcelLineup={toggelExcelLineup}
         toggleUpdateResponse={toggleUpdateResponse}
         jobRoles={jobRoles}
+        successAddUpdateResponse={successAddUpdateResponse}
       />
 
       <div className="empDash-main-content">
@@ -471,7 +481,7 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
-        <div>{showUpdateResponse&&<UpdateResponse/>}</div>
+        <div>{showUpdateResponse&&<UpdateResponse onSuccessAdd={handleSuccessAdd}/>}</div>
       </div>
     </div>
   );

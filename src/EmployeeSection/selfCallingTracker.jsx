@@ -6,7 +6,7 @@ import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import HashLoader from "react-spinners/HashLoader";
 
-const CallingList = ({ updateState, funForGettingCandidateId }) => {
+const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => {
   const [searchTerm, setSearchTerm] = useState("");
   let [color, setColor] = useState("#ffcb9b");
   const [filterOptions, setFilterOptions] = useState([]);
@@ -53,7 +53,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.48:8891/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -72,7 +72,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -333,12 +333,14 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
         // Handle success response
         console.log("Candidates forwarded successfully!");
+        onSuccessAdd(true);
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
 
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
         console.error("Error while forwarding candidates:", error);
+        onSuccessAdd(false);
         // Handle error scenarios or show error messages to the user
       }
     }

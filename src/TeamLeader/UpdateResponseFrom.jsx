@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import Sidebar from "../EmployeeDashboard/sideBar";
 
-const UpdateResponseFrom = ({ candidateId, onClose }) => {
+const UpdateResponseFrom = ({ candidateId, employeeId, requirementId, onClose,onSuccessAdd }) => {
   const [data, setData] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  // const [count,setCount] = useState(0);
   const [formData, setFormData] = useState({
     interviewRound: "",
     interviewResponse: "",
@@ -11,8 +13,8 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     nextInterviewDate: "",
     nextInterviewTiming: "",
     callingTracker: { candidateId: candidateId },
-    requirementInfo: { requirementId: 20 },
-    employee: { employeeId: 16 },
+    requirementInfo: { requirementId: requirementId },
+    employee: { employeeId: employeeId },
   });
 
   useEffect(() => {
@@ -81,9 +83,11 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
       if (response.ok) {
         console.log("Form data saved successfully");
         setSuccessMessage("Response updated successfully.");
+        onSuccessAdd(true);
         // Optionally, handle any UI updates or notifications here
       } else {
         console.log("Failed to save form data");
+        onSuccessAdd(false);
       }
     } catch (err) {
       console.error("Error saving form data:", err);
@@ -119,7 +123,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                     name="interviewRound"
                     value={response.interviewRound}
                     onChange={(e) => handleInputChange(e, index)}
-                    required
+
                   >
                     <option value="">Select Interview</option>
                     <option value="Shortlisted For Hr Round">Hr Round</option>
@@ -197,11 +201,12 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                   onChange={(e) => handleInputChange(e)}
                   required
                 >
-                  <option value="Shortlisted For Hr Round">Shortlisted For Hr Round</option>
-                  <option value="Shortlisted For Technical Round">Shortlisted For Technical Round</option>
-                  <option value="Shortlisted For L1 Round">Shortlisted For L1 Round</option>
-                  <option value="Shortlisted For L2 Round">Shortlisted For L2 Round</option>
-                  <option value="Shortlisted For L3 Round">Shortlisted For L3 Round</option>
+                  <option value="">Select Interview</option>
+                    <option value="Shortlisted For Hr Round">Hr Round</option>
+                    <option value="Shortlisted For Technical Round">Technical Round</option>
+                    <option value="L1 Round">L1 Round</option>
+                    <option value="L2 Round">L2 Round</option>
+                    <option value="L3 Round">L3 Round</option>
                 </select>
               </td>
               <td className="p-2">
@@ -278,9 +283,10 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
         </button>
       </div>
     </form>
+    {!handleSubmit&&<>
+    <Sidebar count={count}/>
+    </>}
   </div>
-  
-
   );
 };
 

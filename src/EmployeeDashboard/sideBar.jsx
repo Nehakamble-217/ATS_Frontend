@@ -39,6 +39,7 @@ function Sidebar({
   toggleShareLink,
   toggleUpdateResponse,
   jobRoles,
+  successAddUpdateResponse
 }) {
 
   const [error, setError] = useState("");
@@ -50,12 +51,13 @@ function Sidebar({
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
   const { userGroup } = useParams();
-  console.log(userGroup);
-
+  console.log(userGroup); 
   const toggleSubMenu = (subMenuKey) => (e) => {
     e.preventDefault();
     setActiveSubMenu(activeSubMenu === subMenuKey ? null : subMenuKey);
   };
+
+  console.log(successAddUpdateResponse);
 
   const toggleSidebar = () => {
     setIsActive(!isActive);
@@ -171,6 +173,7 @@ function Sidebar({
                     <span className="sidebar-text" style={{ color: "gray" }}>
                       Find Candidate
                     </span>
+                    {successAddUpdateResponse?(<span className="text-xl font-bold text-red-600">*</span>):null}
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
                   <ul
@@ -196,12 +199,15 @@ function Sidebar({
                       onClick={handleButtonClick("lineUp", toggelLineUp)}
                       className={activeButton === "lineUp" ? "active" : ""}
                     >
-                      <a href="#">
+                      <a href="#" className="w-full flex justify-center items-center">
                         {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                         <span className="sidebar-text">Lineup Tracker</span>
+                        {
+                          successAddUpdateResponse?(<span className="text-xl font-bold text-red-600">*</span>):null
+                        }
+                        
                       </a>
                     </li>
-
                     <li
                       style={{ marginLeft: "10px" }}
                       hidden
