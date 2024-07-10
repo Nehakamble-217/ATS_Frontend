@@ -162,7 +162,7 @@ const ChatRoom = () => {
     formData.append("file", userData.file);
     formData.append("senderName", userData.username);
 
-    fetch("http://192.168.1.42:8891/upload", {
+    fetch("http://192.168.1.46:8891/upload", {
       method: "POST",
       body: formData,
     })

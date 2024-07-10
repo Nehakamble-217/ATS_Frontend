@@ -36,6 +36,7 @@ const LineupExcelData = ({
 
   useEffect(() => {
     fetch(
+
       `http://192.168.1.48:8891/api/ats/157industries/lineup-excel-data/${employeeId}`
     )
       .then((response) => response.json())

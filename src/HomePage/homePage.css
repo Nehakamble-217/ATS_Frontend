@@ -8,6 +8,7 @@
     font-family: 'Arial', sans-serif;
     position: relative; /*for page overflow*/
     overflow: hidden;
+    background: url("../LogoImages/vecteezy_abstract-glowing-blue-electric-power-energy-spark-animation_27989120.mp4");
 }
 
 .bigb {

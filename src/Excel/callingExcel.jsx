@@ -56,6 +56,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append("file", file);
     try {
       await axios.post(
+
         `http://192.168.1.48:8891/api/ats/157industries/uploadData/${employeeId}`,
         formData,
         {
@@ -87,7 +88,9 @@ const CallingExcel = ({ onClose }) => {
     console.log(employeeId + " - line Page 01");
     try {
       await axios.post(
+
         `http://192.168.1.48:8891/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
+
         formData,
         {
           headers: {
@@ -133,6 +136,7 @@ const CallingExcel = ({ onClose }) => {
 
     axios
       .post(
+
         "http://192.168.1.48:8891/api/ats/157industries/add-multiple-resume",
         formData
       )

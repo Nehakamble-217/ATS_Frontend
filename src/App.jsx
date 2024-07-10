@@ -12,6 +12,9 @@ import ForgotPasswordForm from "./LoginPage/ForgotPasswordForm";
 
 import CandidateResumeLink from "./ResumeData/candidateResumeLink";
 import CallingTrackerForm from "./EmployeeSection/CallingTrackerForm";
+import LoginSignup from "./MainDashboard/loginSignup.jsx";
+import RecruiterPage from "./MainDashboard/recruiterPage.jsx"
+import ForgotPasswordsForm from "./MainDashboard/empForgotPasswords.jsx";
 
 
 
@@ -31,6 +34,9 @@ const App = () => {
           <Route path="api/ats/157industries/verify" element={<CandidateVerification></CandidateVerification>}></Route>
           <Route path="/shareResumeLink" element={<CandidateResumeLink/>}></Route>
           <Route path="/callingtracker" element={<CallingTrackerForm/>}></Route>
+          <Route path="/employee-login" element={<RecruiterPage />} />
+          <Route path="/login/:userType" element={<LoginSignup />} />
+          <Route path="/forgot-password/:userType" element={<ForgotPasswordsForm />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -14,6 +14,7 @@ function DailyWork({
   // handleDataAdditionSuccess,
   profilePageLink,
   logoutTimestamp,
+  jobRole,
   emailSenderInformation,
 }) {
   const { employeeId } = useParams();
@@ -723,6 +724,8 @@ function DailyWork({
           </p>
         </div>
       </div>
+      {jobRole != "SuperUser" ? ( 
+        <>
       <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
         <div className="daily-t-btn">
           <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
@@ -800,6 +803,7 @@ function DailyWork({
           /> */}
           
       </div>
+      
 
       <button
         className="toggle-all-daily-btns"
@@ -807,6 +811,8 @@ function DailyWork({
       >
         {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
       </button>
+      </>
+      ): null}
     </div>
   );
 }
