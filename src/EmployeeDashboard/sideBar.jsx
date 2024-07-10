@@ -39,6 +39,7 @@ function Sidebar({
   toggleShareLink,
   toggleUpdateResponse,
   jobRoles,
+  togglePayRoll,
 }) {
 
   const [error, setError] = useState("");
@@ -160,8 +161,8 @@ function Sidebar({
                 </li>
                 <li
                   className={`${activeSubMenu === "candidate" || isCandidateSectionActive
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={toggleSubMenu("candidate")}
                 >
@@ -291,8 +292,8 @@ function Sidebar({
 
                 <li
                   className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
@@ -393,21 +394,20 @@ function Sidebar({
                     </li>
                   </ul>
                 </li>
-{/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
+                {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
                 {jobRoles === "Admin" ? (
                   <li
                     className={activeButton === "TeamLeader-section" ? "active" : ""}
                     onClick={toggleSubMenu("TeamLeader-section")}
                   >
-                  <a href="#">
-                    <RiTeamFill className="text-gray-500 text-lg" />
+                    <a href="#">
+                      <RiTeamFill className="text-gray-500 text-lg" />
                       <span className="sidebar-text">Team Leader Section</span>
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 ${
-                        activeSubMenu === "TeamLeader-section" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section" ? "active" : ""
+                        }`}
                     >
                       <li
                         onClick={toggleUpdateResponse}
@@ -420,8 +420,8 @@ function Sidebar({
                       </li>
 
                     </ul>
-                    </li>
-                  ) : null}
+                  </li>
+                ) : null}
 
                 {jobRoles === "Admin" ? (
                   <li
@@ -433,7 +433,7 @@ function Sidebar({
                         className="fa-solid fa-computer"
                         style={{ color: "gray" }}
                       ></i>
-                      <span className="sidebar-text">Admin Section</span>
+                      <span className="sidebar-text">Manager Section</span>
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
 
@@ -441,6 +441,16 @@ function Sidebar({
                       className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
                         }`}
                     >
+
+                      <li
+                        onClick={togglePayRoll}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">Pay Roll</span>
+                        </a>
+                      </li>
+
                       <li
                         onClick={toggleAssigncolumns}
                         style={{ marginLeft: "10px" }}

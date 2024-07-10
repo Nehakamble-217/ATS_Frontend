@@ -67,7 +67,7 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.46:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.48:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
         onCurrentEmployeeJobRoleSet(response.data.jobRole);
@@ -166,7 +166,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://192.168.1.46:8891/api/ats/157industries/save-daily-work",
+          "http://192.168.1.48:8891/api/ats/157industries/save-daily-work",
           formData
         );
 
@@ -196,7 +196,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.46:8891/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.48:8891/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -586,7 +586,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.46:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.48:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
         formData
       );
 
@@ -708,7 +708,6 @@ function DailyWork({
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
         </div>
-
         <div className="user-details">
           <p>
             {employeeData.employeeName} <br />
@@ -780,6 +779,7 @@ function DailyWork({
         </button>
 
         {/* Dont Remove this 2 comment ...Arshad */}
+
         {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
@@ -790,6 +790,7 @@ function DailyWork({
             src={logoutImg}
             alt="Logout"
           /> */}
+          
       </div>
 
       <button

@@ -36,6 +36,7 @@ import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 import CallingExcelList from "../Excel/callingExcelData";
 import LineupExcelData from "../Excel/lineupExcelData";
 import UpdateResponse from "../TeamLeader/UpdateResponse";
+import PayRollMain from "../PayRoll/payRollMain";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -77,6 +78,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showCallingExcelList, setShowCallingExcelList] = useState(false);
   const [showLineupExcelList, setShowLineupExcelList] = useState(false);
   const [showUpdateResponse, setShowUpdateResponse] = useState(false);
+  const [showPayRoll, setShowPayRoll] = useState(false);
 
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
@@ -181,7 +183,13 @@ const EmpDashboard = ({ userGroup }) => {
     setShowResumeData(false);
     setShowCallingExcelList(false);
     setShowLineupExcelList(false);
+    setShowPayRoll(false)
   };
+
+  const togglePayRoll = () => {
+    resetAllToggles();
+    setShowPayRoll(!showPayRoll)
+  }
 
   const funForUpdateSelfCalling = () => {
     resetAllToggles();
@@ -193,7 +201,7 @@ const EmpDashboard = ({ userGroup }) => {
     setUpdateSelfCalling(true);
   };
 
-  const toggleUpdateResponse=()=>{
+  const toggleUpdateResponse = () => {
     resetAllToggles();
     setShowUpdateResponse(true);
   }
@@ -341,9 +349,8 @@ const EmpDashboard = ({ userGroup }) => {
 
   return (
     <div
-      className={`grid-container ${
-        openSidebarToggle ? "sidebar-open" : "sidebar-closed"
-      }`}
+      className={`grid-container ${openSidebarToggle ? "sidebar-open" : "sidebar-closed"
+        }`}
     >
       <Sidebar
         userGroup={userGroup}
@@ -378,6 +385,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggelExcelLineup={toggelExcelLineup}
         toggleUpdateResponse={toggleUpdateResponse}
         jobRoles={jobRoles}
+        togglePayRoll={togglePayRoll}
       />
 
       <div className="empDash-main-content">
@@ -420,8 +428,14 @@ const EmpDashboard = ({ userGroup }) => {
               funForGettingCandidateId={gettingCandidateIdForUpdate}
             />
           )}
+
         </div>
 
+
+        <div> {
+          showPayRoll && <PayRollMain></PayRollMain>
+          }
+        </div>
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
 
         <div>{showMasterSheet && <MasterSheet />}</div>
@@ -471,7 +485,7 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
-        <div>{showUpdateResponse&&<UpdateResponse/>}</div>
+        <div>{showUpdateResponse && <UpdateResponse />}</div>
       </div>
     </div>
   );

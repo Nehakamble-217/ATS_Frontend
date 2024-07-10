@@ -2,6 +2,30 @@ import axios from "axios";
 
 const API_BASE_URL = "http://192.168.1.38:8891/api/ats/157industries";
 
+// -------------------------------------------------------------
+
+
+const API_URL = "http://192.168.1.54:8080/payroll";
+
+export const addEmployee = (employee) => {
+  return axios.post(`${API_URL}/add`, employee);
+};
+
+export const getAllEmployees = () => {
+  return axios.get(`${API_URL}/findAll`).catch((error) => {
+    if (error.response) {
+      console.error("Error response:", error.response.data);
+    } else if (error.request) {
+      console.error("Error request:", error.request);
+    } else {
+      console.error("Error message:", error.message);
+    }
+    throw error;
+  });
+};
+
+// -------------------------------------------------------------
+
 export const getPasswordFromDB = (id) =>
   axios.post(`${API_BASE_URL}/fetch-pass/${id}`);
 

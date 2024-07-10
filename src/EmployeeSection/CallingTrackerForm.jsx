@@ -210,7 +210,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
         message = "Only Calling data added";
       }
       const response = await axios.post(
-        `http://192.168.1.38:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.48:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07

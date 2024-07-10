@@ -41,7 +41,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchEmployeeNameAndID = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
+        `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
       );
       const data = await response.json();
       setFetchEmployeeNameID(data);
@@ -61,7 +61,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
+        `http://192.168.1.48:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -143,7 +143,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.38:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -162,7 +162,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       try {
         const response = await fetch(url, requestOptions);
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(`error! Status: ${response.status}`);
         }
 
         // Handle success response
@@ -176,7 +176,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         // Handle error scenarios or show error messages to the user
       }
     }
-  };useEffect(() => {
+  }; useEffect(() => {
     const options = Object.keys(filteredShortListed[0] || {}).filter(key => key !== 'candidateId');
     setFilterOptions(options);
   }, [filteredShortListed]);
@@ -220,7 +220,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         (item.dateOfBirth && item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
         (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
         (item.qualification && item.qualification.toLowerCase().includes(searchTermLower)) ||
-        (item.companyName && item.companyName.toLowerCase().includes(searchTermLower)) 
+        (item.companyName && item.companyName.toLowerCase().includes(searchTermLower))
 
 
       );
@@ -414,7 +414,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           )}
-                    {showFilterSection && (
+          {showFilterSection && (
             <div className="filter-section">
               <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
 
@@ -458,7 +458,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
               </div>
             </div>
           )}
-         
+
           <table id="shortlisted-table-id" className="attendance-table">
             <thead>
               <tr className="attendancerows-head">

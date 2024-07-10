@@ -41,8 +41,9 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
     )
+
       .then((response) => response.json())
       .then((data) => {
         setFilteredCallingList(data);
@@ -59,7 +60,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -104,7 +105,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     setShowUpdateCallingTracker(false);
 
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
