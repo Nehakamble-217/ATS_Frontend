@@ -1,4 +1,6 @@
 /* Swapnil_JobDescription_FullPageDesign_1to175_02/07 */
+/* Swapnil_JobDescription_ResponsivePage_1to77_04/07 */
+/* Swapnil_JobDescription_Adding PlaceHolder_05/07 */
 
 * {
     margin: 0;
@@ -9,21 +11,22 @@
   .job-desc {
     font-family: Arial, sans-serif;
     /* background-color: gray; */
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     /* padding: 20px; */
-    padding-top: 20px;
+  }
+  .job-desc-form
+  {
+    border: 1px solid gray;
+    margin-bottom:5px ;
   }
   
   .job-performance {
     /* background-color: #ffe5b5; */
-    padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 1600px;
   }
   
   .job-performance article {
@@ -41,7 +44,6 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0px;
     width: 100%;
     /* height: 650px; */
     /* max-height: 100vh; */
@@ -73,18 +75,30 @@
   
   .field label {
     width: 29%;
-    font-size: 18px;
+    font-size: 2.10vh;
+    /* border: 1px solid orange; */
+    padding: 0px 5px;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     border-radius: 5px;
+    font-weight:500;
     align-items: center;
      color:gray;
     /* font-weight: bold; */
   }
   
-  .field input,
-  .field select {
+  .field input {
     padding: 4px;
+    /* font-size: 16px; */
+    border: 1px solid #ccc;
+    color: gray;
+    border-radius: 5px;
+    width:69%;
+  }
+  .field select{
+    padding: 5.5px 5px 5.5px 5px ;
+    font-size: 16px;
+    color: gray;
     border: 1px solid #ccc;
     border-radius: 5px;
     width:69%;
@@ -154,6 +168,7 @@
   }
   .job-button
   {
+    margin-left: 2px;
     width: 25%;
     height: 30px;
     background-color: #ffcb9b;
@@ -173,20 +188,7 @@
     display: flex;
     justify-content: center;
   }
-
-  /* @media (max-width: 768px) {
-    .job-performance {
-      width: 100%;
-      max-height: fit-content;
-    }
-  
-    .field-column {
-      flex: 1 1 100%;
-      flex-direction: row;
-      max-height: fit-content;
-    }
-  }
-    
+    /* 
   .daily-tr-bt:hover {
     background-color: red;
   }
@@ -198,7 +200,5 @@
     .field input .field select{
         width: 320 px!important;
     }
-
-    
 
   } */

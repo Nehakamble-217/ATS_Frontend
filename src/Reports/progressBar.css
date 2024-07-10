@@ -1,0 +1,42 @@
+ /* Ajhar-progressBar.css-10-07-2024-lineNo- 1 to 42  */
+
+.progress-bar {
+    width: 300px;
+    height: 30px;
+    border-radius: 15px;
+  
+    overflow: hidden;
+  }
+  
+  .progress-bar-inner {
+    display: flex;
+    height: 100%;
+  }
+  
+  .poor {
+    background-color: #ff0909; 
+    width: 25%;
+    /* color: gray; */
+    font-size: 16px;
+  }
+
+  .average {
+    background-color: #FFA500; 
+    width: 25%;
+    /* color: gray; */
+    font-size: 16px;
+  }
+  
+  .good {
+    background-color: #FFFF00; 
+    width: 25%;
+    /* color: gray; */
+    font-size: 16px;
+  }
+  
+  .best {
+    background-color: #2c8d2c;
+    width: 25%;
+    /* color: gray; */
+    font-size: 16px;
+  }

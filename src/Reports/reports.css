@@ -1,62 +1,13 @@
+/* Ajhar-reports.css-10-07-2024-lineNo-1-to-821 */
 
-.filter-section {
-    margin-bottom: 20px;
-  }
-  
-  .filter-dropdowns {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .filter-dropdown {
-    /* margin-right: 20px; */
-  }
-  
-  .filter-dropdown label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .filter-dropdown select {
-    width: 150px; /* Adjust as needed */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    
-  }
-  
-  /* Style the filter section */
-  .filter-section {
-    margin-top: 20px;
-  }
-  
-  /* Style the filter dropdowns */
-  .filter-dropdown {
-    margin-bottom: 10px;
-  }
-  
-  /* Style the dropdown button */
-  .dropbtn { 
-    cursor: pointer;
-    border: 1px solid gray ;
-      border-radius: 15px;
-      background-color: white;
-      font-size: 16px ;
-      color: #ffcb9b;
-      height: 30px;
-      width: auto;
-      padding-left: 15px;
-      padding-right: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
-  
-  /* .dropbtn:hover{
-    background-color: white;
-  
-    border: 1px solid gray;
-  } */
+
+.kingmaker{
+  display: flex;
+  align-items:center;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  /* flex-wrap: wrap; */
+}
   
   /* Style the dropdown content (hidden by default) */
   .dropdown-content {
@@ -78,27 +29,15 @@
   .filter-dropdown:hover .dropdown-content {
     display: block;
     width: 100%;
-    z-index: 99999999999999999;
+    /* z-index: 99999999999999999; */
   }
   
   /* Style the checkbox input */
-  .dropdown-content input[type="checkbox"] {
-    /* margin-right: 5px; */
-  }
-  
+ 
   /* Style the checkbox label */
   .dropdown-content label {
     cursor: pointer;
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   .App-after {
@@ -187,17 +126,6 @@
     /* width: 100px; */
   }
   
-  /* .attendancerowsdata,
-  .tabledata {
-    text-align: center;
-    font-size: 16px;
-    border: 1px solid gray;
-    padding: 1px;
-    overflow: hidden;
-    max-width: 200px;
-    text-overflow: clip;
-    visibility: visible;
-  } */
   
   .attendanceTableData::-webkit-scrollbar {
     display: none;
@@ -228,10 +156,7 @@
       margin-bottom: 20px;
     }
     
-    .filter-dropdowns {
-      display: flex;
-      flex-wrap: wrap;
-    }
+   
     
     .filter-dropdown {
       margin-right: 20px;
@@ -353,7 +278,7 @@
   
   
   /* Overall container */
-  .AppsTL {
+  .report-AppsTL {
       display: flex;
       flex-direction: row;
       /* align-items: center; */
@@ -366,8 +291,8 @@
     .reports-selection-containerTL {
       display: flex;
       /* justify-content: space-around; */
-      width:800px;
-      width: 80%;
+      /* width:00px; */
+      /* width: 50%; */
       flex-direction: column;
       /* margin-bottom: 20px; */
       /* margin-left: 5%; */
@@ -379,7 +304,7 @@
     }
     
     /* Dropdown container */
-    .custom-dropdownTL {
+    .report-custom-dropdownTL {
       position: relative;
       width: 30%;   /* Prachi TeamLeader 1/7 */
       margin-right: 20px;
@@ -393,17 +318,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 50%;
+      text-align: center;
+      width: 100px;
+      height: 30px;
       border: 1px solid gray;
       border-radius: 15px;
-      font-size: 18px;
+      font-size: 16px;
      
     }
   /* Prachi parab TeamLeader 1/7 */
     .report-DetailsReport-btn{
-      margin-left: 13%;
-      margin-right: 13%;
-      width: 30%;
+      margin-top: -20px;
+      margin-left: 35px;
+      width: 130px;
   
     }
     
@@ -411,7 +338,7 @@
       position: absolute;
       top: 100%;
       left: 0;
-      width: 50%;   
+      width: 230px;   
       height: 400px;
       background-color: #fff;
       border: 1px solid #ccc;
@@ -452,9 +379,7 @@
       margin-bottom: 5px;
     }
     
-    .recruitersTL {
-      margin-left: 20px;
-    }
+  
     
     .recruitersTL label {
       display: block;
@@ -536,12 +461,12 @@
     
     
     }
-  /* Prachi ChatSection 28/06 line no 431 to 449 */
+
     .checkbox-teamleader-assign input[type="checkbox" i] {
       height: 25px;
       width: 25px;
      margin-right: 22px;
-     margin-left:20px;
+     /* margin-left:20px; */
       margin-bottom: 5px;
     }
   
@@ -583,7 +508,7 @@
      
     }
     
-    .hierarchy-sectionTL{
+    .report-hierarchy-sectionTL{
       height: 30px;
       color: #ffcb9b;
     
@@ -698,15 +623,58 @@
       transform: rotate(180deg);
     }
 
+    .report-category-share-btn{
+      font-size: 16px;
+      border-radius: 15px;
+      height: 30px;
+      width: 85px;
+      margin-top: 2px;
+      color: #ffcb9b; 
+      padding-left: 5px;
+      padding-right:5px;
+      background-color: white;
+      border: 1px solid gray;
+      cursor: pointer;
+    }
+    .report-category-share-btn:hover{
+      color: white;
+      background: #ffcb9b;
+    }
+    .report-buttons-div{
+      display: flex;
+      justify-content: end;
+      gap: 5px;
+      /* padding: 10px; */
+    }
+    .report-ok-button,.report-reset-selectTL-button{
+      font-size: 16px;
+      border-radius: 15px;
+      height: 30px;
+      color: white;
+      padding-left: 7px;
+      padding-right:7px;
+      background: #ffcb9b;
+      border: 1px solid gray;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  
+    .report-ok-button:hover,.report-reset-selectTL-button:hover{
+      background-color: white;
+      color: #ffcb9b;
+      border: #f2f2f2;
+      border: 1px solid gray;
+    }
+  
+
     /* --------------------------------------------------- */
 
     .month-report {
-      width: 90%;
-      height: 70vh;
-      /* margin: 20px auto; */
-      padding: 20px;
+      width: 920px;
+      margin: 0px ;
+      padding: 12px 0 5px 0;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 15px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       background-color: #fff;
     }
@@ -720,13 +688,17 @@
     .month-selector {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      align-items: center;
+      margin-bottom: 2px;
     }
     
     .month-selector label {
       margin: 0 10px;
       font-size: 16px;
       color: grey;
+    }
+    .month-selector input[type="radio" i] {
+      margin-right: 5px;
     }
     
     .report {
@@ -747,9 +719,57 @@
       margin: 0;
       color: grey;
     }
+  
+    .date-inputs{
+      text-align: center;
+      width: 100%;
+  
+      display: flex;
+      justify-content: center;
+      gap:5px;
+    }
+  
+    .date-inputs input[type="date"] {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box; /* Ensures padding is included in element's total width and height */
+      width: 100%;
+      
+    }
+  
+    
+    /* Optional: Additional styles for when the input is focused */
+    .date-inputs input[type="date"]:focus {
+      outline: none; /* Remove default focus outline */
+      border-color: #007bff; /* Example: Change border color when focused */
+  
+    }
+  
     .filterDataButton button {
       background: #ffcb9b;
-      border:1px solid gray;
+      border: 1px solid grey;
+      height: 30px;
+      width: auto; /* Adjust width as needed */
+      border-radius: 15px;
+      color: white;
+      padding: 0 10px;
+       /* Adjust padding for text alignment */
+      font-size: 16px;
+      cursor: pointer;
+     margin-top:0px;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .filterDataButton button:hover {
+      background: white;
+      color: #ffcb9b;
+    }
+    .filterDataButton1 button {
+      background: #ffcb9b;
+      border: 1px solid grey;
       height: 30px;
       width: auto; /* Adjust width as needed */
       border-radius: 15px;
@@ -757,11 +777,45 @@
       padding: 0 20px; /* Adjust padding for text alignment */
       font-size: 16px;
       cursor: pointer;
-   
+     margin-top: 5px;
+     display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
-    .filterDataButton button:hover {
-      background-color: white;
+  
+    .filterDataButton1 button:hover {
+      background: white;
       color: #ffcb9b;
     }
+    .filterDataButton{
+      text-align: center;
+    }
+   
     
+   .candidate-report select{
+      word-wrap: normal;
+    padding:2px;
+    height: 35px;
+    width: 30%;
+    border: 1px solid gray;
+    border-radius: 15px;
+  }
+  
+  .candidate-report select:hover{
+   background-color:#ffcb9b;
+  color: grey;
+  }
+  
+  .candidate-report{
+      text-align: center;
+      width: 100%;
+  
+      display: flex;
+      justify-content: center;
+      gap:40px;
+  }
+  
+  .reports-heading-report{
+    font-size: 18px;
+    margin-top: -10px;
+  }

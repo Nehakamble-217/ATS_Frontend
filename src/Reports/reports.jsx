@@ -1,5 +1,11 @@
+/* Ajhar-reports.jsx-10-07-2024-lineNo-1-to-633 */
+
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import "../Reports/reports.css"
+import CreateReportTable from "../Reports/CreateReportTable";
+import ReportsPieChart from "../Reports/reportsPieChart"
+// import ProgressBar from "./progressBar";
+
 import axios from "axios";
 
 function Accesstable() {
@@ -25,6 +31,9 @@ function Accesstable() {
   const [endDate,setEndDate]=useState('');
   const [showCustomDiv, setShowCustomDiv] = useState(false);
   const [showReportData, setshowReportData] = useState(false);
+  const [showToggle, setShowToggle] = useState(false);
+
+
 
   const [data, setData] = useState([
     { month: 'Last Month', value: ["Selected: 100 ","Rejected :200 ","LineUp :300 "] },
@@ -52,30 +61,25 @@ function Accesstable() {
   const handleEndDateChange=(event)=>{
     setEndDate(event.target.value);
   }
-
+  
+  const showDataReport=()=>{
+    setshowReportData(true);
+  }
+  
+  const handleToggle = () => {
+    
+    setShowToggle(!showToggle); 
+    setShowCustomDiv(false);
+    setshowReportData(false)
+  };
+ 
   const handleFilterData = () => {
     const filtered = data.filter(entry => {
       return entry.date >= startDate && entry.date <= endDate;
     });
     setFilteredData(filtered);
   };
-
-
-
-  const showCustomDateDiv=()=>{
-    setShowCustomDiv(true);
-  }
-  const hideCustomDateDiv=()=>{
-    setShowCustomDiv(false);
-  }
-
-  const showDataReport=()=>{
-    setshowReportData(true);
-  }
-
-
-
- 
+  
   // State to track the currently selected month
   const [selectedMonth, setSelectedMonth] = useState('Last 6 Months');
 
@@ -84,8 +88,13 @@ function Accesstable() {
     setSelectedMonth(event.target.value);
   };
 
-
-  // Filtered data based on selected month
+  const showCustomDateDiv=()=>{
+    setShowCustomDiv(true);
+  }
+  const hideCustomDateDiv=()=>{
+    setShowCustomDiv(false);
+  }
+ // Filtered data based on selected month
   const filteredData = data.find(entry => entry.month === selectedMonth);
 
 
@@ -93,7 +102,7 @@ function Accesstable() {
     useEffect(() => {
       const fetchTeamLeaderNames = async () => {
         const response = await axios.get(
-          `http://192.168.1.38:8891/api/ats/157industries/tl-namesIds`
+          `http://192.168.1.48:8891/api/ats/157industries/tl-namesIds`
         );
         setTeamLeaderNames(response.data);
       };
@@ -106,7 +115,7 @@ function Accesstable() {
     
     //   );
       const response = await axios.get(
-        `http://192.168.1.38:8891/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+        `http://192.168.1.48:8891/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
     
       );
       setRecruiterUnderTeamLeader(response.data);
@@ -181,7 +190,10 @@ function Accesstable() {
       ],
       []
     );
-  
+    const handleOkClick = () => {
+        setDropdownOpen(false);
+        setShowReport(true);
+      };
     const handleSearchChange = useCallback((event) => {
       setSearchTerm(event.target.value);
     }, []);
@@ -196,6 +208,18 @@ function Accesstable() {
         checked ? [...prev, value] : prev.filter((option) => option !== value)
       );
     }, []);
+
+    const handleSelectAll = () => {
+        if (allSelected) {
+          setSelectedOptions([]);
+        } else {
+          const allRowIds = columnName
+            .filter((cat) => openCategory === cat.columnCategory)
+            .map((item) => item.columnId);
+          setSelectedOptions(allRowIds);
+        }
+        setAllSelected(!allSelected);
+      };
   
     const assignOptionsToRecruiters = useCallback(() => {
       const updatedAssignments = { ...assignments };
@@ -326,10 +350,13 @@ function Accesstable() {
     }
   
     return (
-      <div className="AppsTL">
+      <div className="report-AppsTL">
         <div className="reports-selection-containerTL">
-          <div className="hierarchy-sectionTL">
-            <div className="custom-dropdownTL">
+          
+          <div className="report-hierarchy-sectionTL">
+
+            <div className="report-custom-dropdownTL">
+          
               <div className="reports-Admin-Dropdown" onClick={toggleDropdown}>
                 {selectedRecruiters.length === 0
                   ? "Admin"
@@ -349,12 +376,31 @@ function Accesstable() {
                     onChange={handleSearchChange}
                     className="search-inputTL"
                   />
-                  {/* <button
-                    className="select-all-buttonTL"
-                    onClick={toggleSelectAll}
+                  
+                  
+                  <div className="report-buttons-div">
+                  <button
+                    className="report-category-share-btn"
+                    onClick={handleSelectAll}
                   >
                     {allSelected ? "Deselect All" : "Select All"}
-                  </button> */}
+                  </button>
+
+                  <button className="report-ok-button" onClick={handleOkClick}     
+                  >
+                    OK
+                  </button>
+                  
+                  <button
+                    className="report-reset-selectTL-button"
+                    onClick={() => {
+                      setSelectedTeamLeader(null);
+                      setSelectedRecruiters([]);
+                    }}
+                  >
+                    Reset
+                  </button>
+                </div>
                   <div className="team-leadersTL">
                     {filteredRecruiters.map((leader, index) => (
                       <div
@@ -363,7 +409,7 @@ function Accesstable() {
                       >
                         <label>
                           <input
-                            type="radio"
+                            type="checkbox"
                             name="teamLeader"
                             value={leader.teamLeaderId}
                             checked={selectedTeamLeader === leader.teamLeaderId}
@@ -380,7 +426,7 @@ function Accesstable() {
                                 (recruiter, rIndex) => (
                                   <label key={rIndex}>
                                     <input
-                                      type="radio"
+                                      type="checkbox"
                                       name="recruiter"
                                       value={recruiter[0]}
                                       checked={selectedRecruiters.includes(
@@ -405,150 +451,29 @@ function Accesstable() {
           </div>
   
           <div className="options-section">
-            {/* <div className="options-listTL">
-              {Object.keys(groupedOptions).map((category, index) => (
-                <div
-                  key={index}
-                  className={`options-category ${category
-                    .replace(/\s+/g, "-")
-                    .toLowerCase()}`}
-                >
-                  <div
-                    className={`category-header ${getClassForCategory(category)}`}
-                    onClick={() => toggleCategoryDropdown(category)}
-                  >
-                    {category}
-                    <span
-                      className={`dropdown-icon ${
-                        openCategory === category ? "open" : ""
-                      }`}
-                    >
-                      &#9660;
-                    </span>
-                  </div>
-                  {openCategory === category && (
-                    <div className="category-options checkbox-teamleader-assign">
-                      {groupedOptions[category].map((option, optIndex) => (
-                        <label key={optIndex} className="option-itemTL">
-                          <input
-                            type="checkbox"
-                            value={option.label}
-                            checked={selectedOptions.includes(option.label)}
-                            onChange={handleOptionChange}
-                          />
-                          {option.label}
-                        </label>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div> */}
-            <div className="report-DetailsReport-btn">
+           
+            {/* <div className="report-DetailsReport-btn">
               <button
                 onClick={()=>setShowReport(true)}
                 
                 className="report-assign-optionbtn"
               >
                 {editRecruiter ? "Update Options" : "Details Report"}
+
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         
 
         {/* ---------------------------------------------------------------------? */}
         {showReport && (
-    //         <div className="month-report">
-    //               <select value={selectedMonth} onChange={handleMonthChange}>
-    //   <h2>Report</h2>
-      
-    //   <div className="month-selector">
-    //     <label>
-    //       <input
-    //         type="radio"
-    //         value="Last Month"
-    //         checked={selectedMonth === 'Last Month'}
-    //         onChange={handleMonthChange}
-    //       />
-    //       Last Month
-    //     </label>
-    //     <label>
-    //       <input
-    //         type="radio"
-    //         value="Last 3 Months"
-    //         checked={selectedMonth === 'Last 3 Months'}
-    //         onChange={handleMonthChange}
-    //       />
-    //       Last 3 Months
-    //     </label>
-    //     <label>
-    //       <input
-    //         type="radio"
-    //         value="Last 6 Months"
-    //         checked={selectedMonth === 'Last 6 Months'}
-    //         onChange={handleMonthChange}
-    //       />
-    //       Last 6 Months
-    //     </label>
-
-    //     <label>
-    //       <input
-    //         type='radio'
-    //         value="Last 1 Year"
-    //         checked={selectedMonth==="Last 1 Year"}
-    //         onChange={handleMonthChange}
-    //         />
-    //         Last 1 Year
-    //     </label>
-
-    //   <label>
-    //     <input 
-    //       type='radio'
-    //       value="Custom Date"
-    //       checked={selectedMonth==="Custom Date"}
-    //       onChange={handleMonthChange}
-    //       />
-    //       Custom Date
-    //   </label>
-    //   <label>
-    //     <input 
-    //       type='radio'
-    //       value="Joining Date"
-    //       checked={selectedMonth==="Joining Date"}
-    //       onChange={handleMonthChange}
-    //       />
-    //       Joining Date
-    //   </label>
-
-    //     {/* Add more months as needed */}
-    //   </div>
-    //   <div className="date-inputs" >
-    //     <label>
-    //       Start Date:
-    //       <input type="date" value={startDate} onChange={handleStartDateChange} />
-    //     </label>
-    //     <label>
-    //       End Date:
-    //       <input type="date" value={endDate} onChange={handleEndDateChange} />
-    //     </label>
-    //     <button onClick={handleFilterData}>Filter Data</button>
-        
-    //   </div>
-    //   </select>
-
-      
-    //   {/* Display data for the selected month */}
-    //   {filteredData && (
-    //     <div className="report">
-    //       <h3>{filteredData.month} Report</h3>
-    //       <p> {filteredData.value}</p>
-    //     </div>
-    //   )}
-    // </div>
-    <div className="month-report">
-      <h2>Report</h2>
-      
+   
+    <div>
+        <div className="month-report">
+          <div className="reports-heading-report">
+           {/* <h2>Report</h2> */}
+          </div>
       <div className="month-selector">
         <label>
           <input
@@ -556,7 +481,8 @@ function Accesstable() {
             value="Last Month"
             checked={selectedMonth === 'Last Month'}
             onChange={handleMonthChange}
-            onClick={hideCustomDateDiv}
+            onClick={handleToggle} 
+            // onClick={hideCustomDateDiv}
           />
           Last Month
         </label>
@@ -566,7 +492,8 @@ function Accesstable() {
             value="Last 3 Months"
             checked={selectedMonth === 'Last 3 Months'}
             onChange={handleMonthChange}
-            onClick={hideCustomDateDiv}
+            onClick={handleToggle} 
+            // onClick={hideCustomDateDiv}
           />
           Last 3 Months
         </label>
@@ -576,7 +503,8 @@ function Accesstable() {
             value="Last 6 Months"
             checked={selectedMonth === 'Last 6 Months'}
             onChange={handleMonthChange}
-            onClick={hideCustomDateDiv}
+            onClick={handleToggle} 
+            // onClick={hideCustomDateDiv}
           />
           Last 6 Months
         </label>
@@ -587,7 +515,8 @@ function Accesstable() {
             value="Last 1 Year"
             checked={selectedMonth==="Last 1 Year"}
             onChange={handleMonthChange}
-            onClick={hideCustomDateDiv}
+            onClick={handleToggle} 
+            // onClick={hideCustomDateDiv}
             />
             Last 1 Year
         </label>
@@ -599,7 +528,8 @@ function Accesstable() {
           value="Custom Date"
           checked={selectedMonth==="Custom Date"}
           onChange={handleMonthChange}
-          onClick={showCustomDateDiv}
+          // onClick={handleToggle} 
+           onClick={showCustomDateDiv}
           />
           Custom Date
       </label>
@@ -609,11 +539,17 @@ function Accesstable() {
           value="Joining Date"
           checked={selectedMonth==="Joining Date"}
           onChange={handleMonthChange}
-          onClick={hideCustomDateDiv}
+          onClick={handleToggle} 
+          // onClick={hideCustomDateDiv}
           />
           Joining Date
       </label>
 
+      {filteredData &&  (
+          <div className='filterDataButton'>
+            <button className='filterDataButton1' onClick={showDataReport} >Get Report</button>
+          </div>
+      )}
       
       </div>
       {
@@ -630,32 +566,61 @@ function Accesstable() {
           <input type="date" value={endDate} onChange={handleEndDateChange} />
         </label>
       
-      </div>
+      
       <div className='filterDataButton'>
         <button onClick={handleFilterData}>Filter Data</button>
         </div>
+      </div>
       </div>
       )}
       
     
       
-      {filteredData &&  (
-          <div className='filterDataButton'>
-          <button className='filterDataButton' onClick={showDataReport} >Get Report</button>
-
-          </div>
-      )}
+     
+      </div>
 
            {showReportData ? (
-          <div className="report">
-          <h3>{filteredData.month} Report</h3>
 
+            <div className="kingmaker">
+              {/* <ProgressBar/> */}
+              <CreateReportTable/>
+              <ReportsPieChart/>
 
-          <p> {filteredData.value}</p>
-          </div>
+            </div>
+
+        //   <div className="report">
+        //   <h3>{filteredData.month} Report</h3>
+
+        //   <div className='candidate-report'>
+
+        //   <select>
+
+        // {selectedCandidate.map((option, index) => (
+        //   <option key={index} value={option.value}>{option.label}</option>
+        // ))}
+        // </select>
+
+        // <select>
+        // {rejectedCandidate.map((option, index) => (
+        //   <option key={index} value={option.value}>{option.label}</option>
+        // ))}
+        // </select>
+
+        // <select>
+        // {linedUpCandidate.map((option, index) => (
+        //   <option key={index} value={option.value}>{option.label}</option>
+        // ))}
+        // </select>
+
+        // </div>
+        
+        //   </div>
         
       ):(<p></p>)} 
+    
     </div>
+    
+
         )}
 
    

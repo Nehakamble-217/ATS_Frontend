@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import "../EmployeeSection/callingList.css";
-import "./callingExcel.css";
+import "../Excel/callingExcelData.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 
@@ -37,8 +36,9 @@ const CallingExcelList = ({
   const navigator = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`)
-
+    fetch(
+      `http://192.168.1.38:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setCallingList(data);
@@ -193,7 +193,7 @@ const CallingExcelList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.42:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.38:8891/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -266,7 +266,6 @@ const CallingExcelList = ({
   };
 
   return (
-
     <div className="App-after1">
       {!selectedCandidate && (
         <>
@@ -277,7 +276,7 @@ const CallingExcelList = ({
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
-            <h1>Excel Calling Data</h1>
+            <h1 className="excel-calling-data-heading">Excel Calling Data</h1>
 
             <button
               onClick={toggleFilterSection}
@@ -300,7 +299,6 @@ const CallingExcelList = ({
             <button onClick={onCloseTable} className="close-button">
               Close
             </button>
-
           </div> */}
           {showSearchBar && (
             <input
@@ -377,10 +375,7 @@ const CallingExcelList = ({
                   >
                     Date & Time {getSortIcon("date")}
                   </th>
-
-                  <th hidden className="attendanceheading">
-                    Candidate Id
-                  </th>
+                  <th className="attendanceheading">Candidate Id</th>
                   <th
                     className="attendanceheading"
                     onClick={() => handleSort("recruiterName")}
@@ -432,7 +427,6 @@ const CallingExcelList = ({
                       </div>
                     </td>
                     <td
-                      hidden
                       className="tabledata "
                       onMouseOver={handleMouseOver}
                       onMouseOut={handleMouseOut}
@@ -618,7 +612,7 @@ const CallingExcelList = ({
                         </span>
                       </div>
                     </td>
-                    <td className="tabledata">
+                    <td className="tabledata" style={{ textAlign: "center" }}>
                       <i
                         onClick={() => handleUpdate(item.candidateId)}
                         className="fa-regular fa-pen-to-square"
@@ -631,7 +625,6 @@ const CallingExcelList = ({
           </div>
         </>
       )}
-
       {selectedCandidate && (
         <CallingTrackerForm
           candidateData={selectedCandidate}
