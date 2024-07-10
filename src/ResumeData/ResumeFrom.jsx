@@ -74,6 +74,7 @@ const ResumeForm = ({ formData, onChange }) => {
     console.log(JSON.stringify(formData));
     try {
       const response = await fetch("http://192.168.1.48:8891/api/resume", {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",

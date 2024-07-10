@@ -104,6 +104,7 @@ const EmployeeMasterSheet = () => {
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
       const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+
       const requestData = {
         employeeId: selectedEmployeeId,
         candidateIds: selectedRows,
@@ -125,6 +126,8 @@ const EmployeeMasterSheet = () => {
 
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
+        setSelectedRows([]);
+        setShowShareButton(true);
       } catch (error) {
         console.error("Error while forwarding candidates:", error);
       }

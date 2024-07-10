@@ -1,19 +1,32 @@
 /* SwapnilRokade_UpdateResponsePage_05/07 */
-
+// SwapnilRokade_UpdateResponsePage_UsingLineupListcomponantcss_&_updateResponseFormAdded_With_Functionality_08/07 
 import React, { useEffect, useState } from "react";
 import "./UpdateResponse.css";
 import { Button, Modal } from "react-bootstrap";
 import UpdateResponseFrom from "./UpdateResponseFrom";
+import { data } from "autoprefixer";
+// SwapnilRokade_UpdateResponseForm_Adding_Notification_Functionality_smallChanges_09/07
 
-const UpdateResponse = () => {
+const UpdateResponse = ({ onSuccessAdd}) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
+  const [filteredResponseList, setFilteredResponseList] = useState([]);
   const [showUpdateResponseFrom, setShowUpdateResponseFrom] = useState(false);
   const [showUpdateResponseID, setShowUpdateResponseID] = useState();
-
+  const [showEmployeeId, setShowEmployeeId] = useState();
+  const [showRequirementId, setShowRequirementId] = useState();
+  const [showSearch,setShowSearch]=useState(false);
+  const [filterType, setFilterType] = useState("");
+  const [filterValue, setFilterValue] = useState("");
   useEffect(() => {
     fetchUpdateResponseList();
   }, []);
 
+
+  useEffect(() => {
+    applyFilters();
+  }, [filterType, filterValue, updateResponseList]);
+
+  
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
@@ -25,7 +38,29 @@ const UpdateResponse = () => {
       console.log("Error fetching shortlisted data:", err);
     }
   };
+  console.log(data);
 
+  const applyFilters = () => {
+    if (!filterType || !filterValue) {
+      setFilteredResponseList(updateResponseList);
+      return;
+    }
+
+    const filteredList = updateResponseList.filter((data) => {
+      return data[filterType]?.toString().toLowerCase().includes(filterValue.toLowerCase());
+    });
+
+    setFilteredResponseList(filteredList);
+  };
+
+  const handleFilterTypeChange = (e) => {
+    setFilterType(e.target.value);
+    setFilterValue("");
+  };
+
+  const handleFilterValueChange = (e) => {
+    setFilterValue(e.target.value);
+  };
   const convertToDocumentLink = (byteCode, fileName) => {
     if (byteCode) {
       try {
@@ -82,110 +117,224 @@ const UpdateResponse = () => {
     setShowResumeModal(false);
   };
 
-  const handleUpdateClick = (responseUpdateId) => {
-    setShowUpdateResponseID(responseUpdateId);
+  const handleUpdateClick = (candidateId, employeeId, requirementId) => {
+    setShowUpdateResponseID(candidateId);
+    setShowEmployeeId(employeeId);
+    setShowRequirementId(requirementId);
     setShowUpdateResponseFrom(true);
   };
 
   const closeUpdateForm = () => {
     setShowUpdateResponseID(null);
+    setShowEmployeeId(null);
+    setShowRequirementId(null);
     setShowUpdateResponseFrom(false);
+  };
+  const handleMouseOver = (event) => {
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector(".tooltip");
+    const tooltiptext = tableData.querySelector(".tooltiptext");
+
+    if (tooltip && tooltiptext) {
+      const textOverflowing =
+        tableData.offsetWidth < tableData.scrollWidth ||
+        tableData.offsetHeight < tableData.scrollHeight;
+      if (textOverflowing) {
+        const rect = tableData.getBoundingClientRect();
+        tooltip.style.top = `${rect.top - 10}px`;
+        tooltip.style.left = `${rect.left + rect.width / 100}px`;
+        tooltip.style.visibility = "visible";
+      } else {
+        tooltip.style.visibility = "hidden";
+      }
+    }
+  };
+
+  const handleMouseOut = (event) => {
+    const tooltip = event.currentTarget.querySelector(".tooltip");
+    if (tooltip) {
+      tooltip.style.visibility = "hidden";
+    }
   };
 
   return (
+        // SwapnilRokade_UpdateResponseForm_AddingFilter_134_to _09/07"
     <div className="TeamLead-main">
       {!showUpdateResponseFrom ? (
         <>
           <div className="TeamLead-main-filter-section">
-            {/* Add Filter Here */}
-            <h1>Add Filter Here....</h1>
+            <div className="TeamLead-main-filter-section-header">
+              <div className="search" onClick={()=>setShowSearch(!showSearch)}><i className="fa-solid fa-magnifying-glass"></i></div>
+              <h1>Update Response</h1>
+              <div>
+                <button className="lineUp-share-btn">Filter</button>
+              </div>
+              </div>
+            <div className="TeamLead-main-filter-section-container">
+              {showSearch  ?(<>
+                <input
+                type="text"
+                placeholder="Enter filter value"
+                className="search-input"
+                value={filterValue}
+                onChange={handleFilterValueChange}
+                disabled={!filterType}
+              />
+              <select className="white-Btn" value={filterType} onChange={handleFilterTypeChange}>
+                <option value="">Select Filter Type</option>
+                <option value="candidateId">Candidate ID</option>
+                <option value="candidateName">Candidate Name</option>
+                <option value="requirementId">Requirement ID</option>
+                <option value="requirementCompany">Requirement Company</option>
+                <option value="jobDesignation">Job Designation</option>
+                <option value="employeeName">Employee Name</option>
+                <option value="employeeId">Employee ID</option>
+              </select>
+              </>):null}
+             
+            </div>
           </div>
-          <div className="TeamLead-main-table-section">
-            <table className="TeamLead-main-table">
+          <div className="attendanceTableData">
+            <table className="attendance-table">
               <thead>
-                <tr className="TeamLead-main-table-tr">
-                  <th className="TeamLead-main-table-th">Candidate ID</th>
-                  <th className="TeamLead-main-table-th">Candidate Name</th>
-                  <th className="TeamLead-main-table-th">Candidate Email</th>
-                  <th className="TeamLead-main-table-th">Contact Number</th>
-                  <th className="TeamLead-main-table-th">Requirement ID</th>
-                  <th className="TeamLead-main-table-th">
-                    Requirement Company
-                  </th>
-                  <th className="TeamLead-main-table-th">Job Designation</th>
-                  <th className="TeamLead-main-table-th">Comment for TL</th>
-                  <th className="TeamLead-main-table-th">Final Status</th>
-                  <th className="TeamLead-main-table-th">Interview Round</th>
-                  <th className="TeamLead-main-table-th">Interview Response</th>
-                  <th className="TeamLead-main-table-th">
-                    Response Updated Date
-                  </th>
-                  <th className="TeamLead-main-table-th">Next Interview Date</th>
-                  <th className="TeamLead-main-table-th">
-                    Next Interview Timing
-                  </th>
-                  <th className="TeamLead-main-table-th">Employee ID</th>
-                  <th className="TeamLead-main-table-th">Employee Name</th>
-                  <th className="TeamLead-main-table-th">Official Mail</th>
-                  <th className="TeamLead-main-table-th">Job Role</th>
-                  <th className="TeamLead-main-table-th">View Resume</th>
-                  <th className="TeamLead-main-table-th">
-                    Reporting Manager Name
-                  </th>
-                  <th className="TeamLead-main-table-th">Action</th>
+                <tr className="attendancerows-head">
+                  <th className="attendanceheading">Candidate ID</th>
+                  <th className="attendanceheading">Candidate Name</th>
+                  <th className="attendanceheading">Candidate Email</th>
+                  <th className="attendanceheading">Contact Number</th>
+                  <th className="attendanceheading">Requirement ID</th>
+                  <th className="attendanceheading">Requirement Company</th>
+                  <th className="attendanceheading">Job Designation</th>
+                  <th className="attendanceheading">Comment for TL</th>
+                  <th className="attendanceheading">Final Status</th>
+                  <th className="attendanceheading">Interview Round</th>
+                  <th className="attendanceheading">Interview Response</th>
+                  <th className="attendanceheading">Response Updated Date</th>
+                  <th className="attendanceheading">Next Interview Date</th>
+                  <th className="attendanceheading">Next Interview Timing</th>
+                  <th className="attendanceheading">Employee ID</th>
+                  <th className="attendanceheading">Employee Name</th>
+                  <th className="attendanceheading">Official Mail</th>
+                  <th className="attendanceheading">Job Role</th>
+                  <th className="attendanceheading">View Resume</th>
+                  <th className="attendanceheading">Reporting Manager Name</th>
+                  <th className="attendanceheading">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {updateResponseList.map((data) => (
-                  <tr
-                    key={data.responseUpdateId}
-                    className="TeamLead-main-table-tr"
-                  >
-                    <td className="TeamLead-main-table-td">
-                      {data.candidateId}
+                {filteredResponseList.map((data, index) => (
+                  <tr key={index} className="attendancerows">
+                    <td className="tabledata">{data.candidateId}</td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {data.candidateName || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.candidateName}
+                        </span>
+                      </div>
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.candidateName}
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {data.candidateEmail || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.candidateEmail}
+                        </span>
+                      </div>
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.candidateEmail}
+                    <td className="tabledata">{data.contactNumber}</td>
+                    <td className="tabledata">{data.requirementId}</td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {data.requirementCompany || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.requirementCompany }
+                        </span>
+                      </div>
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.contactNumber}
+                    <td className="tabledata"  onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {data.jobDesignation || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.jobDesignation}
+                        </span>
+                      </div>
+                      </td>
+                    <td className="tabledata">{data.commentForTL || "-"}
+                    <div className="tooltip"  onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                     >
+                        <span className="tooltiptext">
+                          {data.commentForTL}
+                        </span>
+                      </div>
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.requirementId}
+                    <td className="tabledata"  onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >{data.finalStatus || "-"}
+                    <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.finalStatus}
+                        </span>
+                      </div>
+
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.requirementCompany}
+                    <td className="tabledata"  onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >{data.interviewRound || "-"}
+                    <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.interviewRound}
+                        </span>
+                      </div>
+
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.jobDesignation}
+                    <td className="tabledata"  onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >{data.interviewResponse || "-"}
+                    <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.interviewResponse}
+                        </span>
+                      </div>
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.commentForTL}
+                    <td className="tabledata"  onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >{data.responseUpdatedDate || "-"}
+                    <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.responseUpdatedDate}
+                        </span>
+                      </div>
                     </td>
-                    <td className="TeamLead-main-table-td">{data.finalStatus}</td>
-                    <td className="TeamLead-main-table-td">
-                      {data.interviewRound}
+                    <td className="tabledata">{data.nextInterviewDate}</td>
+                    <td className="tabledata">{data.nextInterviewTiming}</td>
+                    <td className="tabledata">{data.employeeId}</td>
+                    <td className="tabledata">{data.employeeName}</td>
+                    <td className="tabledata"  onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >{data.officialMail || "-"}
+                    <div className="tooltip">
+                        <span className="tooltiptext">
+                          {data.officialMail}
+                        </span>
+                      </div>
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.interviewResponse}
-                    </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.responseUpdatedDate}
-                    </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.nextInterviewDate}
-                    </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.nextInterviewTiming}
-                    </td>
-                    <td className="TeamLead-main-table-td">{data.employeeId}</td>
-                    <td className="TeamLead-main-table-td">{data.employeeName}</td>
-                    <td className="TeamLead-main-table-td">{data.officialMail}</td>
-                    <td className="TeamLead-main-table-td">{data.jobRole}</td>
-                    <td className="TeamLead-main-table-td">
+                    <td className="tabledata">{data.jobRole}</td>
+                    <td className="tabledata">
                       <button
                         className="text-secondary"
                         onClick={() => openResumeModal(data.resume)}
@@ -193,13 +342,11 @@ const UpdateResponse = () => {
                         <i className="fas fa-eye"></i>
                       </button>
                     </td>
-                    <td className="TeamLead-main-table-td">
-                      {data.reportingManagerName}
-                    </td>
-                    <td className="TeamLead-main-table-td">
+                    <td className="tabledata">{data.reportingManagerName}</td>
+                    <td className=" TeamLead-main-table-td">
                       <button
                         className="TeamLead-main-table-button"
-                        onClick={() => handleUpdateClick(data.candidateId)}
+                        onClick={() => handleUpdateClick(data.candidateId, data.employeeId, data.requirementId)}
                       >
                         Update
                       </button>
@@ -216,7 +363,10 @@ const UpdateResponse = () => {
             <Modal.Body>
               {selectedCandidateResume ? (
                 <iframe
-                  src={convertToDocumentLink(selectedCandidateResume, "Resume.pdf")}
+                  src={convertToDocumentLink(
+                    selectedCandidateResume,
+                    "Resume.pdf"
+                  )}
                   width="100%"
                   height="550px"
                   title="PDF Viewer"
@@ -234,12 +384,24 @@ const UpdateResponse = () => {
         </>
       ) : (
         <>
-          <div className="TeamLead-main-table-container">
-            <UpdateResponseFrom
-              candidateId={showUpdateResponseID}
-              onClose={closeUpdateForm}
-            />
-          </div>
+          <Modal
+            show={showUpdateResponseFrom}
+            onHide={closeUpdateForm}
+            size="xl"
+            centered
+          >
+            <Modal.Body>
+              <div className="TeamLead-main-table-container">
+              <UpdateResponseFrom
+                  candidateId={showUpdateResponseID}
+                  employeeId={showEmployeeId}
+                  requirementId={showRequirementId}
+                  onClose={closeUpdateForm}
+                  onSuccessAdd={onSuccessAdd}
+                />
+              </div>
+            </Modal.Body>
+          </Modal>
         </>
       )}
     </div>

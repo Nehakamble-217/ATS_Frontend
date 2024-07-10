@@ -33,7 +33,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
             <th>Interview Round</th>
             <th>Interview Response</th>
             <th>Comment for TL</th>
-            <th>Update Date</th>
+            <th>Update Date</th>            
             <th>Next Interview Date</th>
             <th>Interview Time</th>
           </tr>

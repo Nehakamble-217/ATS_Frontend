@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import "../EmployeeDashboard/JobList.css"
-import { bottom } from '@popperjs/core';
-import ShareDescription from './shareDescription';
-import JobDescriptionEdm from '../JobDiscription/jobDescriptionEdm';
-import jobDiscriptions from '../employeeComponents/jobDiscriptions';
-import ShareEDM from '../JobDiscription/shareEDM';
+import React, { useState, useEffect } from "react";
+import "../EmployeeDashboard/JobList.css";
+import { bottom } from "@popperjs/core";
+import ShareDescription from "./shareDescription";
+import JobDescriptionEdm from "../JobDiscription/jobDescriptionEdm";
+import jobDiscriptions from "../employeeComponents/jobDiscriptions";
+import ShareEDM from "../JobDiscription/shareEDM";
 
 const JobListing = () => {
   const [jobDescriptions, setJobDescriptions] = useState([]);
   const [jobDescription, setJobDescription] = useState([]);
   const [selectedJobIndex, setSelectedJobIndex] = useState(-1); // Track which job description is selected
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCities, setSelectedCities] = useState(new Set());
   const [selectedExperience, setSelectedExperience] = useState(new Set());
   const [selectedIndustry, setSelectedIndustry] = useState(new Set());
@@ -18,16 +18,17 @@ const JobListing = () => {
   const [selectedSalary, setSelectedSalary] = useState(new Set());
   const [selectedIncentive, setSelectedIncentive] = useState(new Set());
   const [showViewMore, setShowViewMore] = useState(false);
-  const [showCityFilter, setShowCityFilter] = useState(false)
-  const [showExperience, setShowExperience] = useState(false)
-  const [showSalary, setShowSalary] = useState(false)
-  const [showIncentive, setShowIncentive] = useState(false)
+  const [showCityFilter, setShowCityFilter] = useState(false);
+  const [showExperience, setShowExperience] = useState(false);
+  const [showSalary, setShowSalary] = useState(false);
+  const [showIncentive, setShowIncentive] = useState(false);
   const [showJobDescriptionShare, setShowJobDescriptionShare] = useState(false);
   const [showIndustry, setShowIndustry] = useState(false);
   const [showRoles, setShowRoles] = useState(false);
   const [showJobRole, setShowJobRole] = useState(false);
-  const [showJobDescriptionEdm, setShowJobDescriptionEdm] = useState(false)
-  const [filteredJobDescriptions, setFilteredJobDescriptions] = useState(jobDescriptions);
+  const [showJobDescriptionEdm, setShowJobDescriptionEdm] = useState(false);
+  const [filteredJobDescriptions, setFilteredJobDescriptions] =
+    useState(jobDescriptions);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
   const [requirementData, setRequirementData] = useState();
   const [showEDM, setShowEDM] = useState(false);
@@ -49,7 +50,6 @@ const [experience, setExperience] = useState('');
         console.log(data); // Log the fetched data to inspect its structure
         setJobDescriptions(data);
         setFilteredJobDescriptions(data); // Show all jobs initially
-
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -87,8 +87,8 @@ const handleInputSearch = (event) => {
     } else {
       newSelectedIncentive.add(incentive);
     }
-    setSelectedIncentive(newSelectedIncentive)
-  }
+    setSelectedIncentive(newSelectedIncentive);
+  };
 
   const handleCheckboxChange2 = (salary) => {
     const newSelectedSalary = new Set(selectedSalary);
@@ -97,8 +97,8 @@ const handleInputSearch = (event) => {
     } else {
       newSelectedSalary.add(salary);
     }
-    setSelectedSalary(newSelectedSalary)
-  }
+    setSelectedSalary(newSelectedSalary);
+  };
   const handleCheckboxChange1 = (experience) => {
     const newSelectedExperiences = new Set(selectedExperience);
     if (newSelectedExperiences.has(experience)) {
@@ -108,7 +108,6 @@ const handleInputSearch = (event) => {
     }
     setSelectedExperience(newSelectedExperiences);
   };
-
 
   const handleCheckboxChange = (city) => {
     const newSelectedCities = new Set(selectedCities);
@@ -124,31 +123,32 @@ const handleInputSearch = (event) => {
   const handleApply = () => {
     // Logic for applying the selected cities
     console.log(Array.from(selectedCities));
-    console.log(Array.from(selectedExperience))
+    console.log(Array.from(selectedExperience));
     console.log(Array.from(selectedIndustry));
     console.log(Array.from(selectedRole));
-    console.log(Array.from(selectedIncentive))
+    console.log(Array.from(selectedIncentive));
 
-    const filtered = jobDescriptions.filter(job =>
-      selectedCities.has(job.location) ||
-      selectedExperience.has(job.experience) ||
-      selectedSalary.has(job.salary) ||
-      selectedIncentive.has(job.incentive)
+    const filtered = jobDescriptions.filter(
+      (job) =>
+        selectedCities.has(job.location) ||
+        selectedExperience.has(job.experience) ||
+        selectedSalary.has(job.salary) ||
+        selectedIncentive.has(job.incentive)
     );
     setFilteredJobDescriptions(filtered);
     setShowCityFilter(false);
     setFilteredJobDescriptions(filtered);
     if (filtered == "") {
-      setFilteredJobDescriptions(jobDescriptions)
+      setFilteredJobDescriptions(jobDescriptions);
     }
-    setShowCityFilter(false)
-    setShowCityFilter(false)
-    setShowExperience(false)
+    setShowCityFilter(false);
+    setShowCityFilter(false);
+    setShowExperience(false);
     setShowIncentive(false);
-    setShowIndustry(false)
-    setShowRoles(false)
-    setShowJobRole(false)
-    setShowSalary(false)
+    setShowIndustry(false);
+    setShowRoles(false);
+    setShowJobRole(false);
+    setShowSalary(false);
   };
 
   const handleReset = () => {
@@ -158,19 +158,19 @@ const handleInputSearch = (event) => {
     setSelectedExperience(new Set());
     setSelectedSalary(new Set());
     // setSelectedRole(new Set());
-    setSearchTerm('');
+    setSearchTerm("");
     setFilteredJobDescriptions(jobDescriptions);
-    setShowCityFilter(false)
-    setShowCityFilter(false)
-    setShowExperience(false)
+    setShowCityFilter(false);
+    setShowCityFilter(false);
+    setShowExperience(false);
     setShowIncentive(false);
-    setShowIndustry(false)
-    setShowRoles(false)
-    setShowJobRole(false)
-    setShowSalary(false)
+    setShowIndustry(false);
+    setShowRoles(false);
+    setShowJobRole(false);
+    setShowSalary(false);
   };
 
-  const filteredCities = jobDescriptions.filter(city =>
+  const filteredCities = jobDescriptions.filter((city) =>
     city.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
   // const filteredIndustry= industry.filter(industrys=>
@@ -180,18 +180,16 @@ const handleInputSearch = (event) => {
   //   roles.name.toLowerCase().includes(searchTerm.toLowerCase())
   // )
 
-
-
-
   const toggleJobDescription = (requirementId) => {
     console.log(requirementId + "before Api");
     fetch(`http://192.168.1.48:8891/api/ats/157industries/requirement-info/${requirementId}`)
+
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
         setRequirementData(data);
         // setJobDescription(data)
-        setShowViewMore(true)
+        setShowViewMore(true);
         console.log(requirementId + "after Api");
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -203,76 +201,75 @@ const handleInputSearch = (event) => {
   const toggleEdm2 = () => {
     setShowEDM(!showEDM);
     // document.querySelector(".main-description-share2").style.display = "block";
-
-  }
+  };
 
   const handleclose = () => {
     setShowViewMore(false);
-  }
+  };
 
   const toggleCityFilter = () => {
     setShowCityFilter(!showCityFilter); // Toggle city filter visibility
-    setShowExperience(false)
-    setShowSalary(false)
+    setShowExperience(false);
+    setShowSalary(false);
     setShowIncentive(false);
-    setShowIndustry(false)
-    setShowRoles(false)
-    setShowJobRole(false)
+    setShowIndustry(false);
+    setShowRoles(false);
+    setShowJobRole(false);
   };
   const toggleExperience = () => {
     setShowExperience(!showExperience);
-    setShowCityFilter(false) // Toggle experience filter visibility
-    setShowSalary(false)
-    setShowIncentive(false);
-    setShowIndustry(false)
-    setShowRoles(false)
-    setShowJobRole(false)
-  }
-  const toggleSalary = () => {
-    setShowSalary(!showSalary);
-    setShowCityFilter(false)
-    setShowExperience(false)
-    setShowIncentive(false);
-    setShowIndustry(false)
-    setShowRoles(false)
-    setShowJobRole(false)
-  }
-  const toggleIncentive = () => {
-    setShowIncentive(!showIncentive);
-    setShowCityFilter(false)
-    setShowExperience(false)
-    setShowSalary(false)
-    setShowIndustry(false)
-    setShowRoles(false)
-    setShowJobRole(false)
-  }
-  const toggleIndustry = () => {
-    setShowIndustry(!showIndustry);
-    setShowCityFilter(false)
-    setShowExperience(false)
-    setShowSalary(false)
-    setShowIncentive(false);
-    setShowRoles(false)
-    setShowJobRole(false)
-  }
-  const toggleRoles = () => {
-    setShowRoles(!showRoles);
-    setShowCityFilter(false)
-    setShowExperience(false)
-    setShowSalary(false)
-    setShowIncentive(false);
-    setShowIndustry(false)
-    setShowJobRole(false)
-  }
-  const toggleJobRole = () => {
-    setShowJobRole(!showJobRole);
-    setShowCityFilter(false)
-    setShowExperience(false)
-    setShowSalary(false)
+    setShowCityFilter(false); // Toggle experience filter visibility
+    setShowSalary(false);
     setShowIncentive(false);
     setShowIndustry(false);
-    setShowRoles(false)
-  }
+    setShowRoles(false);
+    setShowJobRole(false);
+  };
+  const toggleSalary = () => {
+    setShowSalary(!showSalary);
+    setShowCityFilter(false);
+    setShowExperience(false);
+    setShowIncentive(false);
+    setShowIndustry(false);
+    setShowRoles(false);
+    setShowJobRole(false);
+  };
+  const toggleIncentive = () => {
+    setShowIncentive(!showIncentive);
+    setShowCityFilter(false);
+    setShowExperience(false);
+    setShowSalary(false);
+    setShowIndustry(false);
+    setShowRoles(false);
+    setShowJobRole(false);
+  };
+  const toggleIndustry = () => {
+    setShowIndustry(!showIndustry);
+    setShowCityFilter(false);
+    setShowExperience(false);
+    setShowSalary(false);
+    setShowIncentive(false);
+    setShowRoles(false);
+    setShowJobRole(false);
+  };
+  const toggleRoles = () => {
+    setShowRoles(!showRoles);
+    setShowCityFilter(false);
+    setShowExperience(false);
+    setShowSalary(false);
+    setShowIncentive(false);
+    setShowIndustry(false);
+    setShowJobRole(false);
+  };
+  const toggleJobRole = () => {
+    setShowJobRole(!showJobRole);
+    setShowCityFilter(false);
+    setShowExperience(false);
+    setShowSalary(false);
+    setShowIncentive(false);
+    setShowIndustry(false);
+    setShowRoles(false);
+  };
 
   const sharejobdescription = (e) => {
     e.preventDefault();
@@ -281,31 +278,38 @@ const handleInputSearch = (event) => {
   };
 
   const toggleEdm = () => {
-    setShowJobDescriptionEdm(!showJobDescriptionEdm)
-  }
+    setShowJobDescriptionEdm(!showJobDescriptionEdm);
+  };
 
   const handleShareEdm = (res) => {
     setShowEDM(res);
-  }
+  };
   const handleJobDescriptionEdm = (res) => {
-    setShowJobDescriptionEdm(res)
-  }
+    setShowJobDescriptionEdm(res);
+  };
   const handleShareJobDescription = (res) => {
     setShowJobDescriptionShare(res)
   }
   
+  
 
-  const uniqueCities = Array.from(new Set(filteredCities.map((job) => job.location)));
-  const uniqueExperiences = Array.from(new Set(jobDescriptions.map((job) => job.experience)));
-  const uniqueSalary = Array.from(new Set(jobDescriptions.map((job) => job.salary)));
-  const uniqueIncentive = Array.from(new Set(jobDescriptions.map((job) => job.incentive)));
+  const uniqueCities = Array.from(
+    new Set(filteredCities.map((job) => job.location))
+  );
+  const uniqueExperiences = Array.from(
+    new Set(jobDescriptions.map((job) => job.experience))
+  );
+  const uniqueSalary = Array.from(
+    new Set(jobDescriptions.map((job) => job.salary))
+  );
+  const uniqueIncentive = Array.from(
+    new Set(jobDescriptions.map((job) => job.incentive))
+  );
 
   return (
     <>
       <div className="search-container">
-
         <div className="search-bar">
-
           <input
             className="search-input"
             placeholder="Enter keyword / designation / companies"
@@ -346,22 +350,21 @@ const handleInputSearch = (event) => {
         </div>
       </div>
       <div className="filter-buttons">
-
         <ul>
           <li>
             <button className=" white-Btn" onClick={toggleCityFilter}>
               Location <span className="filter-icon">&#x25bc;</span>
             </button>
             {showCityFilter && (
-              <div className='city-filter' >
+              <div className="city-filter">
                 <input
                   type="text"
                   placeholder="Search"
                   value={searchTerm}
                   onChange={handleSearch}
-                  style={{ width: '100%', padding: '5px' }}
+                  style={{ width: "100%", padding: "5px" }}
                 />
-                <div className='optionDiv' >
+                <div className="optionDiv">
                   {uniqueCities.map((city) => (
                     <div key={city}>
                       <label>
@@ -375,12 +378,38 @@ const handleInputSearch = (event) => {
                     </div>
                   ))}
                 </div>
-                <div style={{
-                  display: 'flex', justifyContent: 'space-between', marginTop: '10px', boxShadow: ' 0 -4px 5px rgba(0, 0, 0, .05)',
-                  padding: '10px 24px'
-                }}>
-                  <button onClick={handleReset} style={{ backgroundColor: 'white', color: "#ffcb9b", padding: '5px 10px', border: 'none' }}>Reset</button>
-                  <button onClick={handleApply} style={{ backgroundColor: '#ffcb9b', color: 'white', padding: '5px 10px', border: 'none', width: "50%" }}>Apply</button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "10px",
+                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
+                    padding: "10px 24px",
+                  }}
+                >
+                  <button
+                    onClick={handleReset}
+                    style={{
+                      backgroundColor: "white",
+                      color: "#ffcb9b",
+                      padding: "5px 10px",
+                      border: "none",
+                    }}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={handleApply}
+                    style={{
+                      backgroundColor: "#ffcb9b",
+                      color: "white",
+                      padding: "5px 10px",
+                      border: "none",
+                      width: "50%",
+                    }}
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             )}
@@ -391,7 +420,7 @@ const handleInputSearch = (event) => {
               Experience <span className="filter-icon">&#x25bc;</span>
             </button>
             {showExperience && (
-              <div className='city-filter' >
+              <div className="city-filter">
                 {/* <input
         type="text"
         placeholder="Search"
@@ -399,7 +428,7 @@ const handleInputSearch = (event) => {
         onChange={handleSearch}
         style={{ width: '100%', padding: '5px' }}
       /> */}
-                <div className='optionDiv' >
+                <div className="optionDiv">
                   {uniqueExperiences.map((experience) => (
                     <div key={experience}>
                       <label>
@@ -413,23 +442,49 @@ const handleInputSearch = (event) => {
                     </div>
                   ))}
                 </div>
-                <div style={{
-                  display: 'flex', justifyContent: 'space-between', marginTop: '10px', boxShadow: ' 0 -4px 5px rgba(0, 0, 0, .05)',
-                  padding: '10px 24px'
-                }}>
-                  <button onClick={handleReset} style={{ backgroundColor: 'white', color: "#ffcb9b", padding: '5px 10px', border: 'none' }}>Reset</button>
-                  <button onClick={handleApply} style={{ backgroundColor: '#ffcb9b', color: 'white', padding: '5px 10px', border: 'none', width: "50%" }}>Apply</button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "10px",
+                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
+                    padding: "10px 24px",
+                  }}
+                >
+                  <button
+                    onClick={handleReset}
+                    style={{
+                      backgroundColor: "white",
+                      color: "#ffcb9b",
+                      padding: "5px 10px",
+                      border: "none",
+                    }}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={handleApply}
+                    style={{
+                      backgroundColor: "#ffcb9b",
+                      color: "white",
+                      padding: "5px 10px",
+                      border: "none",
+                      width: "50%",
+                    }}
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             )}
           </li>
 
           <li>
-            <button className=" white-Btn" onClick={toggleSalary} >
+            <button className=" white-Btn" onClick={toggleSalary}>
               Salary <span className="filter-icon">&#x25bc;</span>
             </button>
             {showSalary && (
-              <div className='city-filter' >
+              <div className="city-filter">
                 {/* <input
         type="text"
         placeholder="Search"
@@ -437,7 +492,7 @@ const handleInputSearch = (event) => {
         onChange={handleSearch}
         style={{ width: '100%', padding: '5px' }}
       /> */}
-                <div className='optionDiv' >
+                <div className="optionDiv">
                   {uniqueSalary.map((salary) => (
                     <div key={salary}>
                       <label>
@@ -452,12 +507,38 @@ const handleInputSearch = (event) => {
                     </div>
                   ))}
                 </div>
-                <div style={{
-                  display: 'flex', justifyContent: 'space-between', marginTop: '10px', boxShadow: ' 0 -4px 5px rgba(0, 0, 0, .05)',
-                  padding: '10px 24px'
-                }}>
-                  <button onClick={handleReset} style={{ backgroundColor: 'white', color: "#ffcb9b", padding: '5px 10px', border: 'none' }}>Reset</button>
-                  <button onClick={handleApply} style={{ backgroundColor: '#ffcb9b', color: 'white', padding: '5px 10px', border: 'none', width: "50%" }}>Apply</button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "10px",
+                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
+                    padding: "10px 24px",
+                  }}
+                >
+                  <button
+                    onClick={handleReset}
+                    style={{
+                      backgroundColor: "white",
+                      color: "#ffcb9b",
+                      padding: "5px 10px",
+                      border: "none",
+                    }}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={handleApply}
+                    style={{
+                      backgroundColor: "#ffcb9b",
+                      color: "white",
+                      padding: "5px 10px",
+                      border: "none",
+                      width: "50%",
+                    }}
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             )}
@@ -467,7 +548,7 @@ const handleInputSearch = (event) => {
               Incentive <span className="filter-icon">&#x25bc;</span>
             </button>
             {showIncentive && (
-              <div className='city-filter' >
+              <div className="city-filter">
                 {/* <input
         type="text"
         placeholder="Search"
@@ -475,7 +556,7 @@ const handleInputSearch = (event) => {
         onChange={handleSearch}
         style={{ width: '100%', padding: '5px' }}
       /> */}
-                <div className='optionDiv' >
+                <div className="optionDiv">
                   {uniqueIncentive.map((incentive) => (
                     <div key={incentive}>
                       <label>
@@ -490,12 +571,38 @@ const handleInputSearch = (event) => {
                     </div>
                   ))}
                 </div>
-                <div style={{
-                  display: 'flex', justifyContent: 'space-between', marginTop: '10px', boxShadow: ' 0 -4px 5px rgba(0, 0, 0, .05)',
-                  padding: '10px 24px'
-                }}>
-                  <button onClick={handleReset} style={{ backgroundColor: 'white', color: "#ffcb9b", padding: '5px 10px', border: 'none' }}>Reset</button>
-                  <button onClick={handleApply} style={{ backgroundColor: '#ffcb9b', color: 'white', padding: '5px 10px', border: 'none', width: "50%" }}>Apply</button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "10px",
+                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
+                    padding: "10px 24px",
+                  }}
+                >
+                  <button
+                    onClick={handleReset}
+                    style={{
+                      backgroundColor: "white",
+                      color: "#ffcb9b",
+                      padding: "5px 10px",
+                      border: "none",
+                    }}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={handleApply}
+                    style={{
+                      backgroundColor: "#ffcb9b",
+                      color: "white",
+                      padding: "5px 10px",
+                      border: "none",
+                      width: "50%",
+                    }}
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             )}
@@ -504,92 +611,94 @@ const handleInputSearch = (event) => {
             <button className=" white-Btn" onClick={toggleIndustry}>
               Industry <span className="filter-icon">&#x25bc;</span>
             </button>
-
           </li>
           <li>
             <button className=" white-Btn" onClick={toggleRoles}>
               Role <span className="filter-icon">&#x25bc;</span>
             </button>
-
           </li>
           <li>
             <button className=" white-Btn" onClick={toggleJobRole}>
               Job Type <span className="filter-icon">&#x25bc;</span>
             </button>
             {showJobRole && (
-              <div className='city-filter' >
-
-                <div className='optionDiv'>
-                  <div >
+              <div className="city-filter">
+                <div className="optionDiv">
+                  <div>
                     <label>
-                      <input
-                        type="checkbox"
-
-                      />
+                      <input type="checkbox" />
                       Permanent Job
                     </label>
                   </div>
-                  <div >
+                  <div>
                     <label>
-                      <input
-                        type="checkbox"
-
-                      />
+                      <input type="checkbox" />
                       International
                     </label>
                   </div>
-                  <div >
+                  <div>
                     <label>
-                      <input
-                        type="checkbox"
-
-                      />
+                      <input type="checkbox" />
                       Jobs for Women
                     </label>
                   </div>
-                  <div >
+                  <div>
                     <label>
-                      <input
-                        type="checkbox"
-
-                      />
+                      <input type="checkbox" />
                       Work From Home
                     </label>
                   </div>
-                  <div >
+                  <div>
                     <label>
-                      <input
-                        type="checkbox"
-
-                      />
+                      <input type="checkbox" />
                       Contract Job
                     </label>
                   </div>
-                  <div >
+                  <div>
                     <label>
-                      <input
-                        type="checkbox"
-
-                      />
+                      <input type="checkbox" />
                       Jobs for COVID-19 Layoffs
                     </label>
                   </div>
-                  <div >
+                  <div>
                     <label>
-                      <input
-                        type="checkbox"
-
-                      />
+                      <input type="checkbox" />
                       Walkin Job
                     </label>
                   </div>
                 </div>
-                <div style={{
-                  display: 'flex', justifyContent: 'space-between', marginTop: '10px', boxShadow: ' 0 -4px 5px rgba(0, 0, 0, .05)',
-                  padding: '10px 24px'
-                }}>
-                  <button onClick={handleReset} style={{ backgroundColor: 'white', color: "#ffcb9b", padding: '5px 10px', border: 'none' }}>Reset</button>
-                  <button onClick={handleApply} style={{ backgroundColor: '#ffcb9b', color: 'white', padding: '5px 10px', border: 'none', width: "50%" }}>Apply</button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "10px",
+                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
+                    padding: "10px 24px",
+                  }}
+                >
+                  <button
+                    onClick={handleReset}
+                    style={{
+                      backgroundColor: "white",
+                      color: "#ffcb9b",
+                      padding: "5px 10px",
+                      border: "none",
+                    }}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={handleApply}
+                    style={{
+                      backgroundColor: "#ffcb9b",
+                      color: "white",
+                      padding: "5px 10px",
+                      border: "none",
+                      width: "50%",
+                    }}
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             )}
@@ -609,8 +718,7 @@ const handleInputSearch = (event) => {
       </div>
 
       {!showViewMore && (
-
-        <div className='jdCards'>
+        <div className="jdCards">
           {filteredJobDescriptions.map((item, index) => (
             <div className="job-listing" key={index}>
               <div className="job-header">
@@ -646,15 +754,18 @@ const handleInputSearch = (event) => {
               </div>
               {/* Arshad Added this button to share edm  */}
               <div className="job-actions">
-                <button className='daily-tr-btn' onClick={() => toggleJobDescription(item.requirementId)}>View More</button>
+                <button
+                  className="daily-tr-btn"
+                  onClick={() => toggleJobDescription(item.requirementId)}
+                >
+                  View More
+                </button>
                 {/* <button className='daily-tr-btn' onClick={()=>toggleEdm(index)}> EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button> */}
               </div>
             </div>
           ))}
         </div>
-
       )}
-
 
       {showViewMore && (
         <>
@@ -672,9 +783,13 @@ const handleInputSearch = (event) => {
                   <div className="info-title">Responsibilities</div>
                   <div className="info-value">
                     <ul>
-                      {requirementData.responsibilities.map((responsibility, idx) => (
-                        <li key={idx}>{responsibility.responsibilitiesMsg}</li>
-                      )) || "N/A"}
+                      {requirementData.responsibilities.map(
+                        (responsibility, idx) => (
+                          <li key={idx}>
+                            {responsibility.responsibilitiesMsg}
+                          </li>
+                        )
+                      ) || "N/A"}
                     </ul>
                   </div>
                 </div>
@@ -683,8 +798,9 @@ const handleInputSearch = (event) => {
                   <div className="info-value">
                     <ul>
                       {requirementData.jobRequirements.map((item) => (
-                        <li key={item.jobRequirementsId}
-                        >{item.jobRequirementMsg}</li>
+                        <li key={item.jobRequirementsId}>
+                          {item.jobRequirementMsg}
+                        </li>
                       )) || "N/A"}
                     </ul>
                   </div>
@@ -694,8 +810,9 @@ const handleInputSearch = (event) => {
                   <div className="info-value">
                     <ul>
                       {requirementData.preferredQualifications.map((item) => (
-                        <li key={item.preferredQualificationsId}
-                        >{item.preferredQualificationMsg}</li>
+                        <li key={item.preferredQualificationsId}>
+                          {item.preferredQualificationMsg}
+                        </li>
                       )) || "N/A"}
                     </ul>
                   </div>
@@ -706,39 +823,104 @@ const handleInputSearch = (event) => {
               <span>
                 <article>
                   <b>SOFTWARE DEVELOPER</b>
-
-
                 </article>
                 <div className="save">
-                  <button className="saved daily-tr-btn" onClick={toggleEdm}>Share Video</button>
-                  <button className=" daily-tr-btn" onClick={toggleEdm2}>Share EDM</button>
-                  <button className="share daily-tr-btn" onClick={sharejobdescription}>Share</button>
-                  <button onClick={handleclose} className='daily-tr-btn'>Close</button>
+                  <button className="saved daily-tr-btn" onClick={toggleEdm}>
+                    Share Video
+                  </button>
+                  <button className=" daily-tr-btn" onClick={toggleEdm2}>
+                    Share EDM
+                  </button>
+                  <button
+                    className="share daily-tr-btn"
+                    onClick={sharejobdescription}
+                  >
+                    Share
+                  </button>
+                  <button onClick={handleclose} className="daily-tr-btn">
+                    Close
+                  </button>
                 </div>
               </span>
               <div className="names">
-                <p><b>Id : </b>{requirementData.requirementId || "N/A"}</p>
-                <p><b>Field : </b>{requirementData.field}</p>
-                <p><b>Location :</b>{requirementData.location || "N/A"}</p>
-                <p><b>Salary :</b> {requirementData.salary || "N/A"}</p>
-                <p><b>Designation :</b>{requirementData.designation || "N/A"}</p>
-                <p><b>Educational Qualifications :</b>{requirementData.qualification || "N/A"}</p>
-                <p><b>Experience :</b>{requirementData.experience || "N/A"}</p>
-                <p><b>Key Skills :</b>{requirementData.skills || "N/A"}</p>
-                <p><b>Company Link :</b><a href={requirementData.companyLink || "#"}>Website</a></p>
-                <p><b>Shifts : </b>{requirementData.shift || "N/A"}</p>
-                <p><b>Week Off's : </b>{requirementData.weekOff || "N/A"}</p>
-                <p><b>Notice Period :</b> {requirementData.noticePeriod || "N/A"}</p>
-                <p><b>Job Role : </b>{requirementData.jobRole || "N/A"}</p>
-                <p><b>Job Type : </b>{requirementData.jobType || "N/A"}</p>
-                <p><b>Perks:</b>
+                <p>
+                  <b>Id : </b>
+                  {requirementData.requirementId || "N/A"}
+                </p>
+                <p>
+                  <b>Field : </b>
+                  {requirementData.field}
+                </p>
+                <p>
+                  <b>Location :</b>
+                  {requirementData.location || "N/A"}
+                </p>
+                <p>
+                  <b>Salary :</b> {requirementData.salary || "N/A"}
+                </p>
+                <p>
+                  <b>Designation :</b>
+                  {requirementData.designation || "N/A"}
+                </p>
+                <p>
+                  <b>Educational Qualifications :</b>
+                  {requirementData.qualification || "N/A"}
+                </p>
+                <p>
+                  <b>Experience :</b>
+                  {requirementData.experience || "N/A"}
+                </p>
+                <p>
+                  <b>Key Skills :</b>
+                  {requirementData.skills || "N/A"}
+                </p>
+                <p>
+                  <b>Company Link :</b>
+                  <a href={requirementData.companyLink || "#"}>Website</a>
+                </p>
+                <p>
+                  <b>Shifts : </b>
+                  {requirementData.shift || "N/A"}
+                </p>
+                <p>
+                  <b>Week Off's : </b>
+                  {requirementData.weekOff || "N/A"}
+                </p>
+                <p>
+                  <b>Notice Period :</b> {requirementData.noticePeriod || "N/A"}
+                </p>
+                <p>
+                  <b>Job Role : </b>
+                  {requirementData.jobRole || "N/A"}
+                </p>
+                <p>
+                  <b>Job Type : </b>
+                  {requirementData.jobType || "N/A"}
+                </p>
+                <p>
+                  <b>Perks:</b>
                   {requirementData.perks || "N/A"}
                 </p>
-                <p><b>Incentives For Recruiters : </b>{requirementData.incentive || "N/A"}</p>
-                <p><b>Reporting Hierarchy : </b>{requirementData.reportingHierarchy || "N/A"}</p>
-                <p><b>Number of Positions : </b>{requirementData.position || "N/A"}</p>
-                <p><b>Documentation : </b>{requirementData.documentation || "N/A"}</p>
-                <p><b>Gender : </b>{requirementData.gender || "N/A"}</p>
+                <p>
+                  <b>Incentives For Recruiters : </b>
+                  {requirementData.incentive || "N/A"}
+                </p>
+                <p>
+                  <b>Reporting Hierarchy : </b>
+                  {requirementData.reportingHierarchy || "N/A"}
+                </p>
+                <p>
+                  <b>Number of Positions : </b>
+                  {requirementData.position || "N/A"}
+                </p>
+                <p>
+                  <b>Documentation : </b>
+                  {requirementData.documentation || "N/A"}
+                </p>
+                <p>
+                  <b>Gender : </b>
+                  {requirementData.gender || "N/A"}
+                </p>
               </div>
             </section>
           </main>
@@ -746,17 +928,26 @@ const handleInputSearch = (event) => {
       )}
       {showJobDescriptionShare && (
         <>
-          <ShareDescription onShareDescription={handleShareJobDescription} Descriptions={requirementData} />
+          <ShareDescription
+            onShareDescription={handleShareJobDescription}
+            Descriptions={requirementData}
+          />
         </>
       )}
       {showJobDescriptionEdm && (
         <>
-          <JobDescriptionEdm onJobDescriptionEdm={handleJobDescriptionEdm} Descriptions={requirementData.requirementId} />
+          <JobDescriptionEdm
+            onJobDescriptionEdm={handleJobDescriptionEdm}
+            Descriptions={requirementData.requirementId}
+          />
         </>
       )}
       {showEDM && (
         <>
-          <ShareEDM onShareEdm={handleShareEdm} Descriptions={requirementData.requirementId} />
+          <ShareEDM
+            onShareEdm={handleShareEdm}
+            Descriptions={requirementData.requirementId}
+          />
         </>
       )}
     </>

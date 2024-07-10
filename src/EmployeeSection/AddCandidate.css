@@ -23,7 +23,7 @@
   
   /* Styling the buttons */
   .loging-hr {
-    background-color: #ffcb9b;
+    background-color: pink;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -35,6 +35,6 @@
   
   .loging-hr:hover {
     background-color: white;
-    color: #ffcb9b;
+    color: pink;
   }
   

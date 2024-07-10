@@ -2,18 +2,23 @@
 import React, { useEffect, useState } from 'react';
 import CallingTrackerForm from '../EmployeeSection/CallingTrackerForm';
 import "../Excel/resumeList.css"
+import { useParams } from 'react-router-dom';
 
 const ResumeList = ({ handleUpdate }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const {employeeId}=useParams()
+    console.log(employeeId +"empId in resume List");
 
     const [selectedCandidateId, setSelectedCandidateId] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://192.168.1.46:8891/api/ats/157industries/all-resumes-data'); // Replace with your API URL
+
+                const response = await fetch('http://192.168.1.48:8891/api/ats/157industries/all-resumes-data'); // Replace with your API URL
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -34,7 +39,9 @@ const ResumeList = ({ handleUpdate }) => {
     const handleUpdateSuccess = () => {
         // Assuming `employeeId` is a known variable or prop
         fetch(
-            `http://192.168.1.46:8891/api/ats/157industries/callingData/6`
+
+            `http://192.168.1.48:8891/api/ats/157industries/callingData/${employeeId}`
+
         )
             .then((response) => response.json())
             .then((data) => {
