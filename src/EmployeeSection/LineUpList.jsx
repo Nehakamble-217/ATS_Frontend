@@ -47,6 +47,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     fetch(
       `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
     )
+
       .then((response) => response.json())
       .then((data) => {
         setFilteredCallingList(data);
@@ -332,7 +333,8 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
         // Handle success response
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
-
+        setShowShareButton(true);
+        setSelectedRows([]);
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
@@ -441,7 +443,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
                         className="lineUp-share-close-btn"
-                        onClick={() => setShowShareButton(true)}
+                        onClick={() => {
+                          setShowShareButton(true);
+                          setSelectedRows([]);
+                        }}
                       >
                         Close
                       </button>

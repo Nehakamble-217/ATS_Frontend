@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
 import LineupExcelData from "./lineupExcelData";
-
 import "./callingExcel.css";
 import CallingExcelList from "../Excel/callingExcelData";
 import ResumeList from "./resumeList";
@@ -135,7 +133,7 @@ const CallingExcel = ({ onClose }) => {
 
     axios
       .post(
-        "http://192.168.1.39:8891/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.48:8891/api/ats/157industries/add-multiple-resume",
         formData
       )
 
@@ -156,20 +154,22 @@ const CallingExcel = ({ onClose }) => {
   };
 
   return (
-    <div
+
+    <div className="callingfiel"
       style={{
         display: "flex",
-        alignItems: "center",
+        
         justifyContent: "center",
         flexWrap: "wrap",
         paddingTop: "15px",
         gap: "12px",
       }}
     >
+    <div className="fileupload">
       <div>
         <div
           className="card fixed-card"
-          style={{ width: "100%", border: "1px solid gray" }}
+          style={{ width: "90%", border: "1px solid gray" }}
         >
           <div className="card-header">
             <h5 className="mb-0 card-title">Upload Calling Excel </h5>
@@ -206,10 +206,11 @@ const CallingExcel = ({ onClose }) => {
           </div>
         </div>
       </div>
+      
       <div>
         <div
           className="card fixed-card"
-          style={{ width: "100%", border: "1px solid gray" }}
+          style={{ width: "90%", border: "1px solid gray" }}
         >
           <div className="card-header">
             <h5 className="mb-0 card-title">Upload LineUp Excel </h5>
@@ -246,9 +247,10 @@ const CallingExcel = ({ onClose }) => {
         </div>
       </div>
       <div>
+        
         <div
           className="card fixed-card"
-          style={{ width: "100%", border: "1px solid gray" }}
+          style={{ width: "90%", border: "1px solid gray" }}
         >
           <div className="card-header">
             <h5 className="mb-0 card-title">Upload Resume </h5>
@@ -283,7 +285,10 @@ const CallingExcel = ({ onClose }) => {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+        </div>
+       
+      
       {activeTable === "CallingExcelList" && (
         <CallingExcelList onCloseTable={() => setActiveTable("")} />
       )}
@@ -294,6 +299,7 @@ const CallingExcel = ({ onClose }) => {
         <ResumeList onCloseTable={() => setActiveTable("")} />
       )}
     </div>
+    
   );
 };
 

@@ -40,6 +40,7 @@ function Sidebar({
   toggleUpdateResponse,
   jobRoles,
   successAddUpdateResponse,
+  togglePayRoll, /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_42 */
   toggleSendCandidate,
 
 }) {
@@ -163,8 +164,8 @@ function Sidebar({
                 </li>
                 <li
                   className={`${activeSubMenu === "candidate" || isCandidateSectionActive
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={toggleSubMenu("candidate")}
                 >
@@ -273,14 +274,7 @@ function Sidebar({
                       </a>
                     </li>
 
-                    {/* ---------Arshad Comment this changes dont uncomment-------------- */}
-                    {/* <li>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Self Offer Work</span>
-                  </a>
-                </li> */}
-                    {/* ---------Arshad Comment this changes dont uncomment-------------- */}
+  
                     {jobRoles === "Admin" ? (
                       <li
                         onClick={toggleEmployeeMasterSheet}
@@ -297,8 +291,8 @@ function Sidebar({
 
                 <li
                   className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
@@ -412,9 +406,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 ${
-                        activeSubMenu === "TeamLeader-section" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section" ? "active" : ""
+                        }`}
                     >
                       <li
                         onClick={toggleUpdateResponse}
@@ -439,7 +432,7 @@ function Sidebar({
                         className="fa-solid fa-computer"
                         style={{ color: "gray" }}
                       ></i>
-                      <span className="sidebar-text">Admin Section</span>
+                      <span className="sidebar-text">Manager Section</span> { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_428 */}
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
 
@@ -447,6 +440,19 @@ function Sidebar({
                       className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
                         }`}
                     >
+
+                        { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
+                      <li
+                        onClick={togglePayRoll}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">Pay Roll</span>
+                        </a>
+                      </li>
+                      { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
+
+
                       <li
                         onClick={toggleAssigncolumns}
                         style={{ marginLeft: "10px" }}
