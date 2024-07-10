@@ -33,8 +33,8 @@ const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => 
 
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
-  console.log(employeeIdw + "emp @@@@ id");
-  console.log(employeeId + "emp 1111 id");
+  // console.log(employeeIdw + "emp @@@@ id");
+  // console.log(employeeId + "emp 1111 id");
 
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);

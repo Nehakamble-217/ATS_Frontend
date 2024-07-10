@@ -9,14 +9,24 @@ import { data } from "autoprefixer";
 
 const UpdateResponse = ({ onSuccessAdd}) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
+  const [filteredResponseList, setFilteredResponseList] = useState([]);
   const [showUpdateResponseFrom, setShowUpdateResponseFrom] = useState(false);
   const [showUpdateResponseID, setShowUpdateResponseID] = useState();
   const [showEmployeeId, setShowEmployeeId] = useState();
-  const [showRequirementId, setShowRequirementId] = useState(); 
+  const [showRequirementId, setShowRequirementId] = useState();
+  const [showSearch,setShowSearch]=useState(false);
+  const [filterType, setFilterType] = useState("");
+  const [filterValue, setFilterValue] = useState("");
   useEffect(() => {
     fetchUpdateResponseList();
   }, []);
 
+
+  useEffect(() => {
+    applyFilters();
+  }, [filterType, filterValue, updateResponseList]);
+
+  
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
@@ -30,6 +40,27 @@ const UpdateResponse = ({ onSuccessAdd}) => {
   };
   console.log(data);
 
+  const applyFilters = () => {
+    if (!filterType || !filterValue) {
+      setFilteredResponseList(updateResponseList);
+      return;
+    }
+
+    const filteredList = updateResponseList.filter((data) => {
+      return data[filterType]?.toString().toLowerCase().includes(filterValue.toLowerCase());
+    });
+
+    setFilteredResponseList(filteredList);
+  };
+
+  const handleFilterTypeChange = (e) => {
+    setFilterType(e.target.value);
+    setFilterValue("");
+  };
+
+  const handleFilterValueChange = (e) => {
+    setFilterValue(e.target.value);
+  };
   const convertToDocumentLink = (byteCode, fileName) => {
     if (byteCode) {
       try {
@@ -127,12 +158,41 @@ const UpdateResponse = ({ onSuccessAdd}) => {
   };
 
   return (
+        // SwapnilRokade_UpdateResponseForm_AddingFilter_134_to _09/07"
     <div className="TeamLead-main">
       {!showUpdateResponseFrom ? (
         <>
           <div className="TeamLead-main-filter-section">
-            {/* Add Filter Here */}
-            <h1>Add Filter Here....</h1>
+            <div className="TeamLead-main-filter-section-header">
+              <div className="search" onClick={()=>setShowSearch(!showSearch)}><i className="fa-solid fa-magnifying-glass"></i></div>
+              <h1>Update Response</h1>
+              <div>
+                <button className="lineUp-share-btn">Filter</button>
+              </div>
+              </div>
+            <div className="TeamLead-main-filter-section-container">
+              {showSearch  ?(<>
+                <input
+                type="text"
+                placeholder="Enter filter value"
+                className="search-input"
+                value={filterValue}
+                onChange={handleFilterValueChange}
+                disabled={!filterType}
+              />
+              <select className="white-Btn" value={filterType} onChange={handleFilterTypeChange}>
+                <option value="">Select Filter Type</option>
+                <option value="candidateId">Candidate ID</option>
+                <option value="candidateName">Candidate Name</option>
+                <option value="requirementId">Requirement ID</option>
+                <option value="requirementCompany">Requirement Company</option>
+                <option value="jobDesignation">Job Designation</option>
+                <option value="employeeName">Employee Name</option>
+                <option value="employeeId">Employee ID</option>
+              </select>
+              </>):null}
+             
+            </div>
           </div>
           <div className="attendanceTableData">
             <table className="attendance-table">
@@ -162,7 +222,7 @@ const UpdateResponse = ({ onSuccessAdd}) => {
                 </tr>
               </thead>
               <tbody>
-                {updateResponseList.map((data, index) => (
+                {filteredResponseList.map((data, index) => (
                   <tr key={index} className="attendancerows">
                     <td className="tabledata">{data.candidateId}</td>
                     <td

@@ -85,7 +85,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [archived, setArchived] = useState(0);
   
   const [successAddUpdateResponse,setSuccessUpdateResponse]=useState(false)
-  const [showSendClientMail,setShowSendClientMail]=useState(false)
+  const [showSendClientMail, setshowSendClientMail] = useState(false);
 
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
@@ -195,6 +195,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowResumeData(false);
     setShowCallingExcelList(false);
     setShowLineupExcelList(false);
+    setshowSendClientMail(false);
   };
 
   const funForUpdateSelfCalling = () => {
@@ -353,6 +354,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowLineupExcelList(!showLineupExcelList);
   };
+  const toggleSendCandidate = () => {
+    resetAllToggles();
+    setshowSendClientMail(!showSendClientMail);
+  };
 
   return (
     <div
@@ -394,6 +399,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleUpdateResponse={toggleUpdateResponse}
         jobRoles={jobRoles}
         successAddUpdateResponse={successAddUpdateResponse}
+        toggleSendCandidate={toggleSendCandidate}
       />
 
       <div className="empDash-main-content">

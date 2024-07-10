@@ -59,7 +59,7 @@
 }
 
 .ctf-btn {
-  background-color: #ffcb9b;
+  background-color: pink;
   color: white;
   border-radius: 12px;
   border: 1px solid gray;
@@ -72,7 +72,7 @@
 
 .ctf-btn:hover {
   background-color: white;
-  color: #ffcb9b;
+  color: pink;
   border-color: gray;
   transform: translateY(-5px);
 }
@@ -142,7 +142,7 @@ input[type='number'] {
 .show-pass-btn {
   height: 30px;
   width: auto;
-  background-color: #ffcb9b;
+  background-color: pink;
   border-radius: 15px;
   padding: 0 5px;
   margin-top: 5px;
