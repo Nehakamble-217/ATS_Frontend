@@ -163,7 +163,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
     let filteredData = [...callingList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === "candidateId"||"requirementId"||"employeeId") {
+        if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
@@ -172,7 +172,29 @@ const UpdateResponse = ({ onSuccessAdd }) => {
                 .includes(value)
             )
           );
-        } else {
+        } else if(option === "requirementId")
+        {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
+          );
+        }
+        else if(option === "employeeId")
+          {
+            filteredData = filteredData.filter((item) =>
+              values.some((value) =>
+                item[option]
+                  ?.toString()
+                  .toLowerCase()
+                  .includes(value)
+              )
+            );
+          }
+         else {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
