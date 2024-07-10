@@ -110,14 +110,18 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   };
   const getSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
-      return sortOrder === "asc" ? <i className="fa-solid fa-arrow-up"></i> : <i className="fa-solid fa-arrow-down"></i>;
+      return sortOrder === "asc" ? (
+        <i className="fa-solid fa-arrow-up"></i>
+      ) : (
+        <i className="fa-solid fa-arrow-down"></i>
+      );
     }
     return null;
   };
 
   const handleSelectAll = (event) => {
     if (event.target.checked) {
-      const allRowIds = filteredLineUpList.map(item => item.candidateId);
+      const allRowIds = filteredLineUpList.map((item) => item.candidateId);
       setSelectedRows(allRowIds);
     } else {
       setSelectedRows([]);
@@ -144,7 +148,6 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
       const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
-
       const requestData = {
         employeeId: selectedEmployeeId,
         candidateIds: selectedRows,
@@ -168,7 +171,8 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         // Handle success response
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
-
+        setShowShareButton(true);
+        setSelectedRows([]);
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
@@ -176,8 +180,12 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         // Handle error scenarios or show error messages to the user
       }
     }
-  }; useEffect(() => {
-    const options = Object.keys(filteredShortListed[0] || {}).filter(key => key !== 'candidateId');
+
+  };
+  useEffect(() => {
+    const options = Object.keys(filteredShortListed[0] || {}).filter(
+      (key) => key !== "candidateId"
+    );
     setFilterOptions(options);
   }, [filteredShortListed]);
 
@@ -190,7 +198,12 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   }, [filteredShortListed]);
 
   useEffect(() => {
-    const limitedOptions = ['date', 'recruiterName', 'jobDesignation', 'requirementId'];
+    const limitedOptions = [
+      "date",
+      "recruiterName",
+      "jobDesignation",
+      "requirementId",
+    ];
     setFilterOptions(limitedOptions);
   }, [shortListedData]);
 
@@ -203,26 +216,42 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       const searchTermLower = searchTerm.toLowerCase();
       return (
         (item.date && item.date.toLowerCase().includes(searchTermLower)) ||
-        (item.recruiterName && item.recruiterName.toLowerCase().includes(searchTermLower)) ||
-        (item.candidateName && item.candidateName.toLowerCase().includes(searchTermLower)) ||
-        (item.candidateEmail && item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
-        (item.contactNumber && item.contactNumber.toString().includes(searchTermLower)) ||
-        (item.sourceName && item.sourceName.toLowerCase().includes(searchTermLower)) ||
-
-        (item.requirementId && item.requirementId.toString().toLowerCase().includes(searchTermLower)) ||
-        (item.requirementCompany && item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
-        (item.communicationRating && item.communicationRating.toLowerCase().includes(searchTermLower)) ||
-        (item.currentLocation && item.currentLocation.toLowerCase().includes(searchTermLower)) ||
-        (item.personalFeedback && item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
-        (item.callingFeedback && item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
-        (item.selectYesOrNo && item.selectYesOrNo.toLowerCase().includes(searchTermLower)) ||
-        (item.totalExperience && item.totalExperience.toLowerCase().includes(searchTermLower)) ||
-        (item.dateOfBirth && item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
+        (item.recruiterName &&
+          item.recruiterName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateName &&
+          item.candidateName.toLowerCase().includes(searchTermLower)) ||
+        (item.candidateEmail &&
+          item.candidateEmail.toLowerCase().includes(searchTermLower)) ||
+        (item.contactNumber &&
+          item.contactNumber.toString().includes(searchTermLower)) ||
+        (item.sourceName &&
+          item.sourceName.toLowerCase().includes(searchTermLower)) ||
+        (item.requirementId &&
+          item.requirementId
+            .toString()
+            .toLowerCase()
+            .includes(searchTermLower)) ||
+        (item.requirementCompany &&
+          item.requirementCompany.toLowerCase().includes(searchTermLower)) ||
+        (item.communicationRating &&
+          item.communicationRating.toLowerCase().includes(searchTermLower)) ||
+        (item.currentLocation &&
+          item.currentLocation.toLowerCase().includes(searchTermLower)) ||
+        (item.personalFeedback &&
+          item.personalFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.callingFeedback &&
+          item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
+        (item.selectYesOrNo &&
+          item.selectYesOrNo.toLowerCase().includes(searchTermLower)) ||
+        (item.totalExperience &&
+          item.totalExperience.toLowerCase().includes(searchTermLower)) ||
+        (item.dateOfBirth &&
+          item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
         (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
-        (item.qualification && item.qualification.toLowerCase().includes(searchTermLower)) ||
-        (item.companyName && item.companyName.toLowerCase().includes(searchTermLower))
-
-
+        (item.qualification &&
+          item.qualification.toLowerCase().includes(searchTermLower)) ||
+        (item.companyName &&
+          item.companyName.toLowerCase().includes(searchTermLower))
       );
     });
     setFilteredShortListed(filtered);
@@ -234,10 +263,12 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         const aValue = a[sortCriteria];
         const bValue = b[sortCriteria];
 
-        if (typeof aValue === 'number' && typeof bValue === 'number') {
-          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-        } else if (typeof aValue === 'string' && typeof bValue === 'string') {
-          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        if (typeof aValue === "number" && typeof bValue === "number") {
+          return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
+        } else if (typeof aValue === "string" && typeof bValue === "string") {
+          return sortOrder === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
         } else {
           return 0;
         }
@@ -250,10 +281,19 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     let filteredData = [...shortListedData];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === 'requirementId') {
-          filteredData = filteredData.filter(item => values.includes(item[option]?.toString()));
+        if (option === "requirementId") {
+          filteredData = filteredData.filter((item) =>
+            values.includes(item[option]?.toString())
+          );
         } else {
-          filteredData = filteredData.filter(item => values.some(value => item[option]?.toString().toLowerCase().includes(value.toLowerCase())));
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value.toLowerCase())
+            )
+          );
         }
       }
     });
@@ -261,7 +301,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   };
 
   const handleFilterSelect = (option, value) => {
-    setSelectedFilters(prevFilters => {
+    setSelectedFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
       if (!updatedFilters[option]) {
         updatedFilters[option] = [];
@@ -271,7 +311,9 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
       if (index === -1) {
         updatedFilters[option] = [...updatedFilters[option], value];
       } else {
-        updatedFilters[option] = updatedFilters[option].filter(item => item !== value);
+        updatedFilters[option] = updatedFilters[option].filter(
+          (item) => item !== value
+        );
       }
 
       return updatedFilters;
@@ -346,7 +388,6 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     <div className="calling-list-container">
       {!showUpdateCallingTracker ? (
         <div className="attendanceTableData">
-
           <div className="search">
             <i
               className="fa-solid fa-magnifying-glass"
@@ -377,7 +418,10 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                 <div style={{ display: "flex", gap: "5px" }}>
                   <button
                     className="lineUp-share-btn"
-                    onClick={() => setShowShareButton(true)}
+                    onClick={() => {
+                      setShowShareButton(true);
+                      setSelectedRows([]);
+                    }}
                   >
                     Close
                   </button>
@@ -419,11 +463,9 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
               <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
 
               <div className="filter-dropdowns">
-
                 {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
 
-
-                {filterOptions.map(option => (
+                {filterOptions.map((option) => (
                   <div key={option} className="filter-dropdown">
                     {/* <label htmlFor={option}>{option}</label> */}
                     <div className="dropdown">
@@ -434,21 +476,33 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                             type="checkbox"
                             id={`${option}-All`}
                             value="All"
-                            checked={!selectedFilters[option] || selectedFilters[option].length === 0}
+                            checked={
+                              !selectedFilters[option] ||
+                              selectedFilters[option].length === 0
+                            }
                             onChange={() => handleFilterSelect(option, "All")}
                           />
                           <label htmlFor={`${option}-All`}>All</label>
                         </div>
-                        {[...new Set(shortListedData.map(item => item[option]))].map(value => (
+                        {[
+                          ...new Set(
+                            shortListedData.map((item) => item[option])
+                          ),
+                        ].map((value) => (
                           <div key={value}>
                             <input
                               type="checkbox"
                               id={`${option}-${value}`}
                               value={value}
-                              checked={selectedFilters[option]?.includes(value) || false}
+                              checked={
+                                selectedFilters[option]?.includes(value) ||
+                                false
+                              }
                               onChange={() => handleFilterSelect(option, value)}
                             />
-                            <label htmlFor={`${option}-${value}`}>{value}</label>
+                            <label htmlFor={`${option}-${value}`}>
+                              {value}
+                            </label>
                           </div>
                         ))}
                       </div>
@@ -699,7 +753,9 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.gender}</td>
                   <td className="tabledata">{item.qualification}</td>
                   <td className="tabledata">{item.yearOfPassing}</td>
-                  <td className="tabledata">{item.linup?.extraCertification}</td>
+                  <td className="tabledata">
+                    {item.linup?.extraCertification}
+                  </td>
                   {/* <td className="tabledata">{item.feedback}</td> */}
                   <td className="tabledata">{item.holdingAnyOffer}</td>
                   <td className="tabledata">{item.offerLetterMsg}</td>
@@ -724,7 +780,6 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
                   <td className="tabledata">{item.interviewTime}</td>
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
-
                     <button
                       className="lineUp-share-btn"
                       onClick={() => handleUpdate(item.candidateId)}
@@ -857,5 +912,3 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 };
 
 export default ShortListedCandidates;
-
-

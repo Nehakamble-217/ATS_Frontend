@@ -46,4 +46,7 @@
     background-color: white;
     color: #ffcb9b;
   }
-      
+    
+  .payroll-table-layout th,td{
+    color: grey;
+  }

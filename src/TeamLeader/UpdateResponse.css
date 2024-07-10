@@ -23,12 +23,16 @@
 }
 .TeamLead-main-table-tr
 {
+    height: 30px;
     border: 1px solid gray;
 
 }
 .TeamLead-main-table-th
 {
+    width: auto;
+    height: 30px;
     border: 1px solid gray;
+    white-space: nowrap;
     background-color: #ffcb9b;
     color: gray;
     padding: 2px;
@@ -36,9 +40,11 @@
 }
 .TeamLead-main-table-td
 {
+    height: 30px;
     border: 1px solid gray;
     color: gray;
-    padding: 5px;
+    white-space: nowrap;
+    padding: 2px;
     text-align: center;
 }
 /* UpdateResponse.css */
@@ -62,8 +68,9 @@
 .TeamLead-main-table-button
 {
     border: 1px solid gray;
+    font-size: 15px;
     border-radius: 15px;
-    padding: 2px 2px;
+    padding: 2px;
     background-color: #ffcb9b;
     color: white;
 }

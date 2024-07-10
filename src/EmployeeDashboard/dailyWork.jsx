@@ -14,6 +14,7 @@ function DailyWork({
   // handleDataAdditionSuccess,
   profilePageLink,
   logoutTimestamp,
+  emailSenderInformation,
 }) {
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
@@ -70,7 +71,14 @@ function DailyWork({
           `http://192.168.1.48:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
+        //Akash_Pawar_DailyWork_senderinformation_09/07_74
         onCurrentEmployeeJobRoleSet(response.data.jobRole);
+        const emailSender = {
+          senderName: response.data.employeeName,
+          senderMail: response.data.employeeEmail,
+        };
+        emailSenderInformation(emailSender);
+        //Akash_Pawar_DailyWork_senderinformation_09/07_81
         if (response.data.profileImage) {
           const byteCharacters = atob(response.data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);

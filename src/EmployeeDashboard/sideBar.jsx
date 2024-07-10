@@ -3,7 +3,7 @@ import "../EmployeeDashboard/sideBar.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
-import { RiTeamFill } from "react-icons/ri"
+import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 
@@ -39,7 +39,8 @@ function Sidebar({
   toggleShareLink,
   toggleUpdateResponse,
   jobRoles,
-  togglePayRoll,
+  togglePayRoll, /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_42 */
+  toggleSendCandidate,
 }) {
 
   const [error, setError] = useState("");
@@ -112,7 +113,6 @@ function Sidebar({
 
   return (
     <>
-
       <div className={`sidebar ${isActive ? "active" : ""}`}>
         <div className="sidebar-clouds1"></div>
         {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */}
@@ -267,14 +267,7 @@ function Sidebar({
                       </a>
                     </li>
 
-                    {/* ---------Arshad Comment this changes dont uncomment-------------- */}
-                    {/* <li>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Self Offer Work</span>
-                  </a>
-                </li> */}
-                    {/* ---------Arshad Comment this changes dont uncomment-------------- */}
+  
                     {jobRoles === "Admin" ? (
                       <li
                         onClick={toggleEmployeeMasterSheet}
@@ -288,7 +281,6 @@ function Sidebar({
                     ) : null}
                   </ul>
                 </li>
-
 
                 <li
                   className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
@@ -305,7 +297,6 @@ function Sidebar({
                     <span className="sidebar-text">Job Description</span>
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
-
 
                   <ul
                     className={`sub-menu ${activeSubMenu === "Jobdiscription" ? "active" : ""
@@ -397,7 +388,9 @@ function Sidebar({
                 {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
                 {jobRoles === "Admin" ? (
                   <li
-                    className={activeButton === "TeamLeader-section" ? "active" : ""}
+                    className={
+                      activeButton === "TeamLeader-section" ? "active" : ""
+                    }
                     onClick={toggleSubMenu("TeamLeader-section")}
                   >
                     <a href="#">
@@ -418,7 +411,6 @@ function Sidebar({
                           <span className="sidebar-text">Update Response</span>
                         </a>
                       </li>
-
                     </ul>
                   </li>
                 ) : null}
@@ -433,7 +425,7 @@ function Sidebar({
                         className="fa-solid fa-computer"
                         style={{ color: "gray" }}
                       ></i>
-                      <span className="sidebar-text">Manager Section</span>
+                      <span className="sidebar-text">Manager Section</span> { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_428 */}
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
 
@@ -442,6 +434,7 @@ function Sidebar({
                         }`}
                     >
 
+                        { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
                       <li
                         onClick={togglePayRoll}
                         style={{ marginLeft: "10px" }}
@@ -450,6 +443,8 @@ function Sidebar({
                           <span className="sidebar-text">Pay Roll</span>
                         </a>
                       </li>
+                      { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
+
 
                       <li
                         onClick={toggleAssigncolumns}
@@ -488,6 +483,16 @@ function Sidebar({
                         <a href="#">
                           {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                           <span className="sidebar-text">Add Team Leadrs</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={toggleSendCandidate}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">
+                            Send Client Email
+                          </span>
                         </a>
                       </li>
                     </ul>
