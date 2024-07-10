@@ -1,8 +1,9 @@
 /* this all css file made by Prachi maam and Arshad add in main project */
 .page-container {
-  height: 100vh;
+  height: 90vh;
   overflow: hidden;
   display: flex;
+ 
 }
 .App-after1 {
   width: 100%;
@@ -133,7 +134,7 @@
   background: #ffcb9b;
   border: none;
   height: 30px;
-  width: 100%; /*  */
+  width: 100%; 
   border-radius: 15px;
   color: white;
   padding: 0 20px; /* Adjust padding for text alignment */
@@ -231,3 +232,32 @@
   background-color: white;
   color: #ffcb9b;
 }
+
+/* Date 08/07/2024 
+   Name-Mohini
+   Component Name:callingExcel
+   page No:- 242-271
+*/
+
+.callingfiel {
+  overflow: hidden;
+  height: 85vh;
+   
+}
+
+.fileupload {
+  display: flex;
+
+}
+
+@media (max-width: 1056px) {
+  .fileupload {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .callingfiel {
+    overflow-y: scroll;
+  }
+}
+

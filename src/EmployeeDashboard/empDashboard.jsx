@@ -36,6 +36,11 @@ import ShareLink from "../ResumeData/shareLink";
 import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 import CallingExcelList from "../Excel/callingExcelData";
 import LineupExcelData from "../Excel/lineupExcelData";
+import UpdateResponse from "../TeamLeader/UpdateResponse";
+
+import PayRollMain from "../PayRoll/payRollMain";  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+import SendClientEmail from "../AdminSection/SendClientEmail";
+
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -77,11 +82,17 @@ const EmpDashboard = ({ userGroup }) => {
   const [resumeLink, setResumeLink] = useState(false);
   const [showCallingExcelList, setShowCallingExcelList] = useState(false);
   const [showLineupExcelList, setShowLineupExcelList] = useState(false);
+  const [showUpdateResponse, setShowUpdateResponse] = useState(false);
+  const [showPayRoll, setShowPayRoll] = useState(false);  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+  const [showSendClientMail, setshowSendClientMail] = useState(false);
+
 
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
   const [archived, setArchived] = useState(0);
+  
+  const [successAddUpdateResponse,setSuccessUpdateResponse]=useState(false)
 
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
@@ -95,6 +106,7 @@ const EmpDashboard = ({ userGroup }) => {
   };
   useEffect(() => {
     setSuccessfulDataAdditions(false);
+    
   }, [successfulDataAdditions]);
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions End LineNo:-93 Date:-01/07
 
@@ -103,6 +115,17 @@ const EmpDashboard = ({ userGroup }) => {
     setJobRoles(role);
   };
 
+
+  const handleSuccessAdd=(res)=>{
+    setSuccessUpdateResponse(res);
+  }
+  //Akash_Pawar_EmpDashboard_senderinformation_09/07_113
+
+  const [clientEmailSender,setClientEmailSender]=useState();
+  const handleEmailSenderInformation=(data)=>{
+    setClientEmailSender(data);
+  }
+  
   const [id, setId] = useState(0);
 
   const navigator = useNavigate();
@@ -182,12 +205,20 @@ const EmpDashboard = ({ userGroup }) => {
     setAssignColumns(false);
     setShowChatRoom(false);
     setShowShareLink(false);
-
+    setShowUpdateResponse(false);
     setResumeLink(false);
     setShowResumeData(false);
     setShowCallingExcelList(false);
     setShowLineupExcelList(false);
+    setshowSendClientMail(false)
+    setShowPayRoll(false)  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
   };
+
+  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+  const togglePayRoll = () => {
+    resetAllToggles();
+    setShowPayRoll(!showPayRoll)
+  }
 
   const funForUpdateSelfCalling = () => {
     resetAllToggles();
@@ -198,6 +229,11 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setUpdateSelfCalling(true);
   };
+
+  const toggleUpdateResponse=()=>{
+    resetAllToggles();
+    setShowUpdateResponse(true);
+  }
 
   const toggleInterviewDate = () => {
     resetAllToggles();
@@ -247,6 +283,7 @@ const EmpDashboard = ({ userGroup }) => {
   const toggleSelfCalling = () => {
     resetAllToggles();
     setSelfCalling(!selfCalling);
+    setSuccessShare(true);
   };
 
   const toggelLineUp = () => {
@@ -339,12 +376,15 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowLineupExcelList(!showLineupExcelList);
   };
+  const toggleSendCandidate = () => {
+    resetAllToggles();
+    setshowSendClientMail(!showSendClientMail);
+  };
 
   return (
     <div
-      className={`grid-container ${
-        openSidebarToggle ? "sidebar-open" : "sidebar-closed"
-      }`}
+      className={`grid-container ${openSidebarToggle ? "sidebar-open" : "sidebar-closed"
+        }`}
     >
       <Sidebar
         userGroup={userGroup}
@@ -378,7 +418,11 @@ const EmpDashboard = ({ userGroup }) => {
         onLogout={handleLogoutTime}
         toggeExcelCallingData={toggeExcelCallingData}
         toggelExcelLineup={toggelExcelLineup}
+        toggleUpdateResponse={toggleUpdateResponse}
         jobRoles={jobRoles}
+        successAddUpdateResponse={successAddUpdateResponse}
+        togglePayRoll={togglePayRoll}   /* ArshadAttar_EmpDashboard_AddedPayrollToggele_10/07/2024_LineNo_402 */
+        toggleSendCandidate={toggleSendCandidate}
       />
 
       <div className="empDash-main-content">
@@ -391,6 +435,9 @@ const EmpDashboard = ({ userGroup }) => {
             // handleDataAdditionSuccess={handleDataAdditionSuccess}
             logoutTimestamp={logoutTimestamp}
             onCurrentEmployeeJobRoleSet={handleJobRoles}
+            jobRole={jobRoles}
+            emailSenderInformation={handleEmailSenderInformation}
+
           />
         </div>
         <div>
@@ -421,6 +468,12 @@ const EmpDashboard = ({ userGroup }) => {
               funForGettingCandidateId={gettingCandidateIdForUpdate}
             />
           )}
+
+        </div>
+        {/* ArshadAttar_EmpDashboard_AddedPayroll_10/07/2024_OnlyPayRoll_Div_LineNo_450-453 */}
+        <div> {
+          showPayRoll && <PayRollMain></PayRollMain>
+        }
         </div>
 
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
@@ -473,6 +526,8 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
+        <div>{showUpdateResponse&&<UpdateResponse onSuccessAdd={handleSuccessAdd}/>}</div>
+        <div>{showSendClientMail && <SendClientEmail clientEmailSender={clientEmailSender}/>}</div>
       </div>
     </div>
   );

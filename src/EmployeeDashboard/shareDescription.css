@@ -1,4 +1,26 @@
-.main-description-share{
+.main-description-share {
+  width: 100%;
+  /* height: 100%; */
+  /* height: 100vh; */
+  z-index: 80000;
+  top: 0px;
+  position: absolute;
+  background: rgba(45, 45, 45, 0.895);
+  /* backdrop-filter: blur(20px); */
+  padding: 50px;
+}
+.main-description-share1 {
+  width: 100%;
+  /* height: 100%; */
+  /* height: 100vh; */
+  z-index: 80000;
+  top: 0px;
+  position: absolute;
+  background: rgba(45, 45, 45, 0.895);
+  /* backdrop-filter: blur(20px); */
+  padding: 50px;
+}
+.main-description-share2 {
   width: 100%;
   /* height: 100%; */
   /* height: 100vh; */
@@ -19,12 +41,16 @@
   text-decoration: none;
   color: gray;
 }
-.job-details-share a{ 
+.job-details-share a {
   text-decoration: none;
   color: gray;
 }
 
-.responsibilities-share, .requirements-share, .preferred-qualifications-share, .perks-share,.positionOverview-share {
+.responsibilities-share,
+.requirements-share,
+.preferred-qualifications-share,
+.perks-share,
+.positionOverview-share {
   margin-bottom: 5px;
   border-radius: 15px;
   background-color: #f2f2f2;
@@ -32,20 +58,27 @@
   box-shadow: 0 0 1px black;
 }
 
-
-.job-details-share h2, .responsibilities-share h2, .requirements-share h2, .preferred-qualifications-share h2, .perks-share h2 {
+.job-details-share h2,
+.responsibilities-share h2,
+.requirements-share h2,
+.preferred-qualifications-share h2,
+.perks-share h2 {
   color: black;
   font-size: 18px;
   margin-bottom: 10px;
 }
 
-.job-details-share p, .responsibilities-share ul, .requirements-share ul, .preferred-qualifications-share ul, .perks-share ul {
+.job-details-share p,
+.responsibilities-share ul,
+.requirements-share ul,
+.preferred-qualifications-share ul,
+.perks-share ul {
   color: black;
   font-size: 16px;
   line-height: 1.5;
 }
 
-.job-details-share{
+.job-details-share {
   display: grid;
   width: 100%;
   background-color: #f2f2f2;
@@ -55,10 +88,10 @@
   /* gap: 30px; */
   /* grid-column: 2;
    */
-   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   /* justify-content: space-around; */
 }
-.job-title-share{
+.job-title-share {
   text-align: center;
   grid-column: 1 / -1;
   padding: 10px;
@@ -68,21 +101,28 @@
   box-shadow: 0 0 1px black;
   /* border-bottom: 1px solid #ffd8a8; */
 }
-.job-details-firstsection-share{
+.job-details-firstsection-share {
   border-right: 2px solid #ffd8a8;
   grid-column: span 1;
   padding: 20px;
 }
-.job-details-secondsection-share{
+.job-details-secondsection-share {
   grid-column: span 1;
   padding: 20px;
 }
 
-.job-details-share p, .responsibilities-share p, .requirements-share p, .preferred-qualifications-share p, .perks-share p {
+.job-details-share p,
+.responsibilities-share p,
+.requirements-share p,
+.preferred-qualifications-share p,
+.perks-share p {
   margin-bottom: 5px;
 }
 
-.responsibilities-share ul, .requirements-share ul, .preferred-qualifications-share ul, .perks-share ul {
+.responsibilities-share ul,
+.requirements-share ul,
+.preferred-qualifications-share ul,
+.perks-share ul {
   list-style-type: disc;
   padding-left: 20px;
 }
@@ -105,9 +145,8 @@
   height: 30px;
   width: auto;
   vertical-align: middle;
-    /* box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);/ */
+  /* box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);/ */
   border: 1px solid #ccc;
-
 }
 
 .apply-button-share:hover {

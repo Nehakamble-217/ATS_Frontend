@@ -36,13 +36,18 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [count,setCount] = useState(0);
 
   const navigator = useNavigate();
+  useEffect(() => {
+    setCount(count+1);
+  }, [selectedFilters, filteredCallingList, callingList, employeeIdnew]);
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
     )
+
       .then((response) => response.json())
       .then((data) => {
         setFilteredCallingList(data);
@@ -59,7 +64,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.38:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -104,7 +109,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     setShowUpdateCallingTracker(false);
 
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -303,7 +308,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.38:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -328,7 +333,8 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
         // Handle success response
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
-
+        setShowShareButton(true);
+        setSelectedRows([]);
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
@@ -437,7 +443,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
                         className="lineUp-share-close-btn"
-                        onClick={() => setShowShareButton(true)}
+                        onClick={() => {
+                          setShowShareButton(true);
+                          setSelectedRows([]);
+                        }}
                       >
                         Close
                       </button>

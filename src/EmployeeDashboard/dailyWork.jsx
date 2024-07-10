@@ -14,6 +14,8 @@ function DailyWork({
   // handleDataAdditionSuccess,
   profilePageLink,
   logoutTimestamp,
+  jobRole,
+  emailSenderInformation,
 }) {
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
@@ -71,7 +73,14 @@ function DailyWork({
           `http://192.168.1.48:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
+        //Akash_Pawar_DailyWork_senderinformation_09/07_74
         onCurrentEmployeeJobRoleSet(response.data.jobRole);
+        const emailSender = {
+          senderName: response.data.employeeName,
+          senderMail: response.data.employeeEmail,
+        };
+        emailSenderInformation(emailSender);
+        //Akash_Pawar_DailyWork_senderinformation_09/07_81
         if (response.data.profileImage) {
           const byteCharacters = atob(response.data.profileImage);
           const byteNumbers = new Array(byteCharacters.length);
@@ -709,7 +718,6 @@ function DailyWork({
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
         </div>
-
         <div className="user-details">
           <p>
             {employeeData.employeeName} <br />
@@ -717,6 +725,8 @@ function DailyWork({
           </p>
         </div>
       </div>
+      {jobRole != "SuperUser" ? ( 
+        <>
       <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
         <div className="daily-t-btn">
           <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
@@ -781,6 +791,7 @@ function DailyWork({
         </button>
 
         {/* Dont Remove this 2 comment ...Arshad */}
+
         {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
@@ -791,7 +802,9 @@ function DailyWork({
             src={logoutImg}
             alt="Logout"
           /> */}
+          
       </div>
+      
 
       <button
         className="toggle-all-daily-btns"
@@ -799,6 +812,8 @@ function DailyWork({
       >
         {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
       </button>
+      </>
+      ): null}
     </div>
   );
 }

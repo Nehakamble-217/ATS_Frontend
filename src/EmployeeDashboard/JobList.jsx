@@ -4,9 +4,11 @@ import { bottom } from "@popperjs/core";
 import ShareDescription from "./shareDescription";
 import JobDescriptionEdm from "../JobDiscription/jobDescriptionEdm";
 import jobDiscriptions from "../employeeComponents/jobDiscriptions";
+import ShareEDM from "../JobDiscription/shareEDM";
 
 const JobListing = () => {
   const [jobDescriptions, setJobDescriptions] = useState([]);
+  const [jobDescription, setJobDescription] = useState([]);
   const [selectedJobIndex, setSelectedJobIndex] = useState(-1); // Track which job description is selected
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCities, setSelectedCities] = useState(new Set());
@@ -28,11 +30,22 @@ const JobListing = () => {
   const [filteredJobDescriptions, setFilteredJobDescriptions] =
     useState(jobDescriptions);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
+  const [requirementData, setRequirementData] = useState();
+  const [showEDM, setShowEDM] = useState(false);
+  const [designation, setDesignation] = useState('');
+const [location, setLocation] = useState('');
+const [experience, setExperience] = useState('');
+  const [searchQuery, setSearchQuery] = useState({
+  designation: '',
+  location: '',
+  experience: '',
+});
+
 
 
 
   useEffect(() => {
-    fetch("http://192.168.1.38:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.48:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -41,6 +54,29 @@ const JobListing = () => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+useEffect(() => {
+  handleFilter();
+}, [searchQuery, jobDescriptions]);
+
+
+const handleInputSearch = (event) => {
+  const { name, value } = event.target;
+  setSearchQuery((prevQuery) => ({ ...prevQuery, [name]: value }));
+};
+
+
+    const handleFilter = () => {
+  const filtered = jobDescriptions.filter((job) => {
+    return (
+      (job.designation && job.designation.toLowerCase().includes(searchQuery.designation.toLowerCase())) ||
+      (job.location && job.location.toLowerCase().includes(searchQuery.location.toLowerCase())) ||
+      (job.experience && job.experience.toLowerCase().includes(searchQuery.experience.toLowerCase()))
+    );
+  });
+  setFilteredJobDescriptions(filtered);
+};
+
+ 
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -146,10 +182,26 @@ const JobListing = () => {
   // )
 
   const toggleJobDescription = (requirementId) => {
-    const requirementId1 = parseInt(requirementId);
-    setSelectedRequirementId(requirementId1);
-    setShowViewMore(true);
-    console.log(requirementId + " fetched...");
+    console.log(requirementId + "before Api");
+    fetch(`http://192.168.1.48:8891/api/ats/157industries/requirement-info/${requirementId}`)
+
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); // Log the fetched data to inspect its structure
+        setRequirementData(data);
+        // setJobDescription(data)
+        setShowViewMore(true);
+        console.log(requirementId + "after Api");
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  };
+
+
+
+
+  const toggleEdm2 = () => {
+    setShowEDM(!showEDM);
+    // document.querySelector(".main-description-share2").style.display = "block";
   };
 
   const handleclose = () => {
@@ -222,12 +274,25 @@ const JobListing = () => {
 
   const sharejobdescription = (e) => {
     e.preventDefault();
-    setShowJobDescriptionShare(true);
-    document.querySelector(".main-description-share").style.display = "block";
+    setShowJobDescriptionShare(!showJobDescriptionShare);
+    // document.querySelector(".main-description-share").style.display = "block";
   };
+
   const toggleEdm = () => {
     setShowJobDescriptionEdm(!showJobDescriptionEdm);
   };
+
+  const handleShareEdm = (res) => {
+    setShowEDM(res);
+  };
+  const handleJobDescriptionEdm = (res) => {
+    setShowJobDescriptionEdm(res);
+  };
+  const handleShareJobDescription = (res) => {
+    setShowJobDescriptionShare(res)
+  }
+  
+  
 
   const uniqueCities = Array.from(
     new Set(filteredCities.map((job) => job.location))
@@ -250,12 +315,17 @@ const JobListing = () => {
             className="search-input"
             placeholder="Enter keyword / designation / companies"
             type="text"
+              value={searchQuery.designation}
+  onChange={handleInputSearch}
           />
           <input
             className="search-input"
             list="experienceOptions"
             placeholder="Select experience"
             type="text"
+            value={searchQuery.experience}
+  onChange={handleInputSearch}
+            
           />
           <datalist id="experienceOptions">
             <option value="0-1 years" />
@@ -268,8 +338,10 @@ const JobListing = () => {
             className="search-input"
             placeholder="Enter location"
             type="text"
+            value={searchQuery.location}
+           onChange={handleInputSearch}
           />
-          <button className="search-button">
+          <button className="search-button" onClick={handleFilter} >
             <span className="search-icon">
               {/* Font Awesome icon for search */}
               <i className="fas fa-search"></i>
@@ -651,6 +723,7 @@ const JobListing = () => {
           {filteredJobDescriptions.map((item, index) => (
             <div className="job-listing" key={index}>
               <div className="job-header">
+                {/* <h3 >{item.requirementId}</h3> */}
                 <h2 className="job-title">{item.designation} </h2>
                 <div className="job-company">{item.companyName}</div>
               </div>
@@ -675,15 +748,15 @@ const JobListing = () => {
           <i className="fas fa-clock"></i>
           {item.fild}
         </div> */}
-                <div className="job-posted">
-                  <i className="fas fa-clock"></i>
-                  {item.requirementId}
-                </div>
+                {/* <div className="job-posted">
+          <i className="fas fa-clock"></i>
+          {item.requirementId}
+        </div> */}
               </div>
               {/* Arshad Added this button to share edm  */}
               <div className="job-actions">
                 <button
-                  className="daily-tr-btns"
+                  className="daily-tr-btn"
                   onClick={() => toggleJobDescription(item.requirementId)}
                 >
                   View More
@@ -699,69 +772,66 @@ const JobListing = () => {
         <>
           <h1>{selectedRequirementId}</h1>
           <main className="name">
-            {selectedRequirementId !== null && (
-              <section className="overview">
-                <div className="scroll-container">
-                  <div className="info">
-                    <div className="info-title">Position Overview</div>
-                    <div className="info-value">
-                      {jobDescriptions[selectedRequirementId]?.positionOverview
-                        ?.overview || "N/A"}
-                    </div>
+            <section className="overview">
+              <div className="scroll-container">
+                <div className="info">
+                  <div className="info-title">Position Overview</div>
+                  <div className="info-value">
+                    {requirementData.positionOverview?.overview || "N/A"}
                   </div>
-                  <div className="info">
-                    <div className="info-title">Responsibilities</div>
-                    <div className="info-value">
-                      <ul>
-                        {jobDescriptions[
-                          selectedRequirementId
-                        ]?.responsibilities?.map((responsibility, idx) => (
+                </div>
+                <div className="info">
+                  <div className="info-title">Responsibilities</div>
+                  <div className="info-value">
+                    <ul>
+                      {requirementData.responsibilities.map(
+                        (responsibility, idx) => (
                           <li key={idx}>
                             {responsibility.responsibilitiesMsg}
                           </li>
-                        )) || "N/A"}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="info">
-                    <div className="info-title">Requirements</div>
-                    <div className="info-value">
-                      <ul>
-                        {jobDescriptions[
-                          selectedRequirementId
-                        ]?.jobRequirements?.map((jobRequirement, idx) => (
-                          <li key={idx}>{jobRequirement.jobRequirementMsg}</li>
-                        )) || "N/A"}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="info">
-                    <div className="info-title">Preferred Qualifications</div>
-                    <div className="info-value">
-                      <ul>
-                        {jobDescriptions[
-                          selectedRequirementId
-                        ]?.preferredQualifications?.map(
-                          (qualification, idx) => (
-                            <li key={idx}>
-                              {qualification.preferredQualificationMsg}
-                            </li>
-                          )
-                        ) || "N/A"}
-                      </ul>
-                    </div>
+                        )
+                      ) || "N/A"}
+                    </ul>
                   </div>
                 </div>
-              </section>
-            )}
+                <div className="info">
+                  <div className="info-title">Requirements</div>
+                  <div className="info-value">
+                    <ul>
+                      {requirementData.jobRequirements.map((item) => (
+                        <li key={item.jobRequirementsId}>
+                          {item.jobRequirementMsg}
+                        </li>
+                      )) || "N/A"}
+                    </ul>
+                  </div>
+                </div>
+                <div className="info">
+                  <div className="info-title">Preferred Qualifications</div>
+                  <div className="info-value">
+                    <ul>
+                      {requirementData.preferredQualifications.map((item) => (
+                        <li key={item.preferredQualificationsId}>
+                          {item.preferredQualificationMsg}
+                        </li>
+                      )) || "N/A"}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </section>
             <section className="job-performance1">
               <span>
                 <article>
                   <b>SOFTWARE DEVELOPER</b>
                 </article>
                 <div className="save">
-                  <button className="saved daily-tr-btn">Save</button>
-                  <button className="apply daily-tr-btn">Apply</button>
+                  <button className="saved daily-tr-btn" onClick={toggleEdm}>
+                    Share Video
+                  </button>
+                  <button className=" daily-tr-btn" onClick={toggleEdm2}>
+                    Share EDM
+                  </button>
                   <button
                     className="share daily-tr-btn"
                     onClick={sharejobdescription}
@@ -773,104 +843,86 @@ const JobListing = () => {
                   </button>
                 </div>
               </span>
-              {selectedRequirementId !== null && (
-                <div className="names">
-                  <p>
-                    <b>Id : </b>
-                    {jobDescriptions[selectedRequirementId]?.requirementId ||
-                      "N/A"}
-                  </p>
-                  <p>
-                    <b>Field : </b>
-                    {jobDescriptions[selectedRequirementId]?.field || "N/A"}
-                  </p>
-                  <p>
-                    <b>Location :</b>
-                    {jobDescriptions[selectedRequirementId]?.location || "N/A"}
-                  </p>
-                  <p>
-                    <b>Salary :</b>{" "}
-                    {jobDescriptions[selectedRequirementId]?.salary || "N/A"}
-                  </p>
-                  <p>
-                    <b>Designation :</b>
-                    {jobDescriptions[selectedRequirementId]?.designation ||
-                      "N/A"}
-                  </p>
-                  <p>
-                    <b>Educational Qualifications :</b>
-                    {jobDescriptions[selectedRequirementId]?.qualification ||
-                      "N/A"}
-                  </p>
-                  <p>
-                    <b>Experience :</b>
-                    {jobDescriptions[selectedRequirementId]?.experience ||
-                      "N/A"}
-                  </p>
-                  <p>
-                    <b>Key Skills :</b>
-                    {jobDescriptions[selectedRequirementId]?.skills || "N/A"}
-                  </p>
-                  <p>
-                    <b>Company Link :</b>
-                    <a
-                      href={
-                        jobDescriptions[selectedRequirementId]?.companyLink ||
-                        "#"
-                      }
-                    >
-                      Website
-                    </a>
-                  </p>
-                  <p>
-                    <b>Shifts : </b>
-                    {jobDescriptions[selectedRequirementId]?.shift || "N/A"}
-                  </p>
-                  <p>
-                    <b>Week Off's : </b>
-                    {jobDescriptions[selectedRequirementId]?.weekOff || "N/A"}
-                  </p>
-                  <p>
-                    <b>Notice Period :</b>{" "}
-                    {jobDescriptions[selectedRequirementId]?.noticePeriod ||
-                      "N/A"}
-                  </p>
-                  <p>
-                    <b>Job Role : </b>
-                    {jobDescriptions[selectedRequirementId]?.jobRole || "N/A"}
-                  </p>
-                  <p>
-                    <b>Job Type : </b>
-                    {jobDescriptions[selectedRequirementId]?.job_type || "N/A"}
-                  </p>
-                  <p>
-                    <b>Perks:</b>
-                    {jobDescriptions[selectedRequirementId]?.perks || "N/A"}
-                  </p>
-                  <p>
-                    <b>Incentives For Recruiters : </b>
-                    {jobDescriptions[selectedRequirementId]?.incentive || "N/A"}
-                  </p>
-                  <p>
-                    <b>Reporting Hierarchy : </b>
-                    {jobDescriptions[selectedRequirementId]
-                      ?.reportingHierarchy || "N/A"}
-                  </p>
-                  <p>
-                    <b>Number of Positions : </b>
-                    {jobDescriptions[selectedRequirementId]?.position || "N/A"}
-                  </p>
-                  <p>
-                    <b>Documentation : </b>
-                    {jobDescriptions[selectedRequirementId]?.documentation ||
-                      "N/A"}
-                  </p>
-                  <p>
-                    <b>Gender : </b>
-                    {jobDescriptions[selectedRequirementId]?.gender || "N/A"}
-                  </p>
-                </div>
-              )}
+              <div className="names">
+                <p>
+                  <b>Id : </b>
+                  {requirementData.requirementId || "N/A"}
+                </p>
+                <p>
+                  <b>Field : </b>
+                  {requirementData.field}
+                </p>
+                <p>
+                  <b>Location :</b>
+                  {requirementData.location || "N/A"}
+                </p>
+                <p>
+                  <b>Salary :</b> {requirementData.salary || "N/A"}
+                </p>
+                <p>
+                  <b>Designation :</b>
+                  {requirementData.designation || "N/A"}
+                </p>
+                <p>
+                  <b>Educational Qualifications :</b>
+                  {requirementData.qualification || "N/A"}
+                </p>
+                <p>
+                  <b>Experience :</b>
+                  {requirementData.experience || "N/A"}
+                </p>
+                <p>
+                  <b>Key Skills :</b>
+                  {requirementData.skills || "N/A"}
+                </p>
+                <p>
+                  <b>Company Link :</b>
+                  <a href={requirementData.companyLink || "#"}>Website</a>
+                </p>
+                <p>
+                  <b>Shifts : </b>
+                  {requirementData.shift || "N/A"}
+                </p>
+                <p>
+                  <b>Week Off's : </b>
+                  {requirementData.weekOff || "N/A"}
+                </p>
+                <p>
+                  <b>Notice Period :</b> {requirementData.noticePeriod || "N/A"}
+                </p>
+                <p>
+                  <b>Job Role : </b>
+                  {requirementData.jobRole || "N/A"}
+                </p>
+                <p>
+                  <b>Job Type : </b>
+                  {requirementData.jobType || "N/A"}
+                </p>
+                <p>
+                  <b>Perks:</b>
+                  {requirementData.perks || "N/A"}
+                </p>
+                <p>
+                  <b>Incentives For Recruiters : </b>
+                  {requirementData.incentive || "N/A"}
+                </p>
+                <p>
+                  <b>Reporting Hierarchy : </b>
+                  {requirementData.reportingHierarchy || "N/A"}
+                </p>
+                <p>
+                  <b>Number of Positions : </b>
+                  {requirementData.position || "N/A"}
+                </p>
+                <p>
+                  <b>Documentation : </b>
+                  {requirementData.documentation || "N/A"}
+                </p>
+                <p>
+                  <b>Gender : </b>
+                  {requirementData.gender || "N/A"}
+                </p>
+              </div>
             </section>
           </main>
         </>
@@ -878,14 +930,26 @@ const JobListing = () => {
       {showJobDescriptionShare && (
         <>
           <ShareDescription
-            Descriptions={jobDescriptions[selectedRequirementId]}
+            onShareDescription={handleShareJobDescription}
+            Descriptions={requirementData}
           />
         </>
       )}
       {showJobDescriptionEdm && (
-        <JobDescriptionEdm
-          Descriptions={jobDescriptions[selectedRequirementId]}
-        />
+        <>
+          <JobDescriptionEdm
+            onJobDescriptionEdm={handleJobDescriptionEdm}
+            Descriptions={requirementData.requirementId}
+          />
+        </>
+      )}
+      {showEDM && (
+        <>
+          <ShareEDM
+            onShareEdm={handleShareEdm}
+            Descriptions={requirementData.requirementId}
+          />
+        </>
       )}
     </>
   );

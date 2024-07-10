@@ -14,11 +14,13 @@ const LoginSignup = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [login, setLogin]=useState("")
   const navigate = useNavigate();
 
   useEffect(() => {
     AOS.init({ duration: 3000 });
   }, []);
+ 
 
   const handleChange = (event) => {
     const { name, value } = event.target;

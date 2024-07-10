@@ -311,7 +311,8 @@ const SelectedCandidate = () => {
         // Handle success response
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
-
+        setShowShareButton(true);
+        setSelectedRows([]);
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
@@ -412,7 +413,10 @@ const SelectedCandidate = () => {
                 <div style={{ display: "flex", gap: "5px" }}>
                   <button
                     className="selectedcan-share-close-btn"
-                    onClick={() => setShowShareButton(true)}
+                    onClick={() => {
+                      setShowShareButton(true);
+                      setSelectedRows([]);
+                    }}
                   >
                     close
                   </button>

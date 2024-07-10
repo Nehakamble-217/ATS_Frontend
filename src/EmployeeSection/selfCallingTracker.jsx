@@ -6,7 +6,7 @@ import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import HashLoader from "react-spinners/HashLoader";
 
-const CallingList = ({ updateState, funForGettingCandidateId }) => {
+const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => {
   const [searchTerm, setSearchTerm] = useState("");
   let [color, setColor] = useState("#ffcb9b");
   const [filterOptions, setFilterOptions] = useState([]);
@@ -33,8 +33,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
-  console.log(employeeIdw + "emp @@@@ id");
-  console.log(employeeId + "emp 1111 id");
+  // console.log(employeeIdw + "emp @@@@ id");
+  // console.log(employeeId + "emp 1111 id");
 
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
@@ -333,12 +333,15 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
 
         // Handle success response
         console.log("Candidates forwarded successfully!");
+        onSuccessAdd(true);
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
-
+        setShowShareButton(true);
+        setSelectedRows([]);
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
         console.error("Error while forwarding candidates:", error);
+        onSuccessAdd(false);
         // Handle error scenarios or show error messages to the user
       }
     }
@@ -383,7 +386,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                 >
                   {showShareButton ? (
                     <button
-                      className="lineUp-share-btn"
+                      className="callingList-share-btn"
                       onClick={() => setShowShareButton(false)}
                     >
                       Share
@@ -391,19 +394,22 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                   ) : (
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
-                        className="lineUp-share-btn"
-                        onClick={() => setShowShareButton(true)}
+                        className="callingList-share-btn"
+                        onClick={() => {
+                          setShowShareButton(true);
+                          setSelectedRows([]);
+                        }}
                       >
                         Close
                       </button>
                       <button
-                        className="lineUp-share-btn"
+                        className="callingList-share-btn"
                         onClick={handleSelectAll}
                       >
                         {allSelected ? "Deselect All" : "Select All"}
                       </button>
                       <button
-                        className="lineUp-share-btn"
+                        className="callingList-share-btn"
                         onClick={forwardSelectedCandidate}
                       >
                         Forward
@@ -411,7 +417,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                     </div>
                   )}
                   <button
-                    className="lineUp-share-btn"
+                    className="callingList-share-btn"
                     onClick={toggleFilterSection}
                   >
                     Filter <i className="fa-solid fa-filter"></i>
@@ -502,7 +508,9 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                       <th className="attendanceheading">Candidate's Email</th>
                       <th className="attendanceheading">Contact Number</th>
                       <th className="attendanceheading">Whatsapp Number</th>
-                      <th className="attendanceheading">Source Name</th>
+                      <th hidden className="attendanceheading">
+                        Source Name
+                      </th>
 
                       <th className="attendanceheading">Disignation</th>
                       <th
@@ -641,6 +649,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                           </div>
                         </td>
                         <td
+                          hidden
                           className="tabledata "
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}

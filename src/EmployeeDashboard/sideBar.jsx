@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../EmployeeDashboard/sideBar.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEmployeeWorkData } from "../api/api";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
+import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 
@@ -38,9 +38,14 @@ function Sidebar({
   toggeExcelCallingData,
   toggelExcelLineup,
   toggleShareLink,
+  toggleUpdateResponse,
   jobRoles,
+  successAddUpdateResponse,
+  togglePayRoll, /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_42 */
+  toggleSendCandidate,
+
 }) {
-  const [workData, setWorkData] = useState([]);
+
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [activeSubMenu, setActiveSubMenu] = useState(null); // Track the active submenu
@@ -49,31 +54,18 @@ function Sidebar({
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
-  // const [logoutTime, setLogoutTime] = useState(null);
-  const { userGroup } = useParams();
-  console.log(userGroup);
+  // const { userGroup } = useParams();
+  // console.log(userGroup);
 
-  useEffect(() => {
-    if (!employeeId) {
-      navigator("/employee-login");
-    } else {
-      getEmployeeWorkData(employeeId)
-        .then((response) => {
-          setWorkData(response.data);
-          setError("");
-          console.log(employeeId + " Employee ID in employee");
-        })
-        .catch((error) => {
-          console.error("Error fetching work data:", error);
-          setError("Error fetching work data.");
-        });
-    }
-  }, [employeeId]);
+  console.log(jobRoles + "jobRoles")
+
 
   const toggleSubMenu = (subMenuKey) => (e) => {
     e.preventDefault();
     setActiveSubMenu(activeSubMenu === subMenuKey ? null : subMenuKey);
   };
+
+  console.log(successAddUpdateResponse);
 
   const toggleSidebar = () => {
     setIsActive(!isActive);
@@ -101,7 +93,7 @@ function Sidebar({
     callback(e);
   };
 
-  console.log(userGroup);
+  // console.log(userGroup);
   const isCandidateSectionActive = [
     "selfCalling",
     "lineUp",
@@ -118,39 +110,9 @@ function Sidebar({
     activeButton
   );
 
-  // const handleLogoutLocal = async () => {
-  //   try {
-  //     const logoutTime = new Date().toLocaleTimeString("en-IN");
-  //     setLogoutTime(logoutTime);
-
-  //     const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
-
-  //     const now = new Date();
-  //     const day = now.getDate().toString().padStart(2, "0");
-  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
-  //     const year = now.getFullYear();
-
-  //     await axios.post(
-  //       "http://192.168.1.38:8891/api/ats/157industries/save-daily-work",
-  //       formData
-  //     );
-
-  //     localStorage.removeItem(`stopwatchTime_${employeeId}`);
-  //     localStorage.removeItem(`dailyWorkData_${employeeId}`);
-  //     localStorage.removeItem("employeeId");
-
-  //     setTime({ hours: 0, minutes: 0, seconds: 0 });
-  //     setData({ archived: 0, pending: 10 });
-
-  // await axios.post(
-  //   "http://192.168.1.39:8891/api/ats/157industries/save-daily-work",
-  //   formData
-  // );
-
   const handleLogoutLocal = () => {
     const logoutTime = new Date().toLocaleTimeString("en-IN");
     onLogout(logoutTime);
-    // navigator("/employee-login/recruiter");
   };
 
   const tempLogout = () => {
@@ -159,7 +121,6 @@ function Sidebar({
 
   return (
     <>
-
       <div className={`sidebar ${isActive ? "active" : ""}`}>
         <div className="sidebar-clouds1"></div>
         {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */}
@@ -171,6 +132,8 @@ function Sidebar({
           <div className="nav">
             <div className="sidebar-menu">
               <ul>
+                {jobRoles != "SuperUser" ? (
+                  <>
                 <li
                   onClick={handleButtonClick(
                     "interviewDate",
@@ -189,6 +152,7 @@ function Sidebar({
                     <span className="sidebar-text">Shortlisted </span>
                   </a>
                 </li>
+                
                 <li
                   onClick={handleButtonClick(
                     "callingTrackerForm",
@@ -207,11 +171,10 @@ function Sidebar({
                   </a>
                 </li>
                 <li
-                  className={`${
-                    activeSubMenu === "candidate" || isCandidateSectionActive
-                      ? "active"
-                      : ""
-                  }`}
+                  className={`${activeSubMenu === "candidate" || isCandidateSectionActive
+                    ? "active"
+                    : ""
+                    }`}
                   onClick={toggleSubMenu("candidate")}
                 >
                   <a href="#">
@@ -220,12 +183,12 @@ function Sidebar({
                     <span className="sidebar-text" style={{ color: "gray" }}>
                       Find Candidate
                     </span>
+                    {successAddUpdateResponse?(<span className="text-xl font-bold text-red-600">*</span>):null}
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
                   <ul
-                    className={`sub-menu ${
-                      activeSubMenu === "candidate" ? "active" : ""
-                    }`}
+                    className={`sub-menu ${activeSubMenu === "candidate" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -246,12 +209,15 @@ function Sidebar({
                       onClick={handleButtonClick("lineUp", toggelLineUp)}
                       className={activeButton === "lineUp" ? "active" : ""}
                     >
-                      <a href="#">
+                      <a href="#" className="w-full flex justify-center items-center">
                         {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                         <span className="sidebar-text">Lineup Tracker</span>
+                        {
+                          successAddUpdateResponse?(<span className="text-xl font-bold text-red-600">*</span>):null
+                        }
+                        
                       </a>
                     </li>
-
                     <li
                       style={{ marginLeft: "10px" }}
                       hidden
@@ -324,7 +290,8 @@ function Sidebar({
                   </a>
                 </li> */}
                     {/* ---------Arshad Comment this changes dont uncomment-------------- */}
-                    {jobRoles === "Admin" ? (
+                    {(jobRoles === "Manager" && "SuperUser") && (jobRoles !="TeamLeader" && jobRoles !="Recruiter") ? (
+
                       <li
                         onClick={toggleEmployeeMasterSheet}
                         style={{ marginLeft: "10px" }}
@@ -338,13 +305,15 @@ function Sidebar({
                   </ul>
                 </li>
 
+                </>
+) : null}
+
 
                 <li
-                  className={`${
-                    activeSubMenu === "Jobdiscription" || isJobDescriptionActive
-                      ? "active"
-                      : ""
-                  }`}
+                  className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
+                    ? "active"
+                    : ""
+                    }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
                   <a href="#">
@@ -356,11 +325,9 @@ function Sidebar({
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
 
-
                   <ul
-                    className={`sub-menu ${
-                      activeSubMenu === "Jobdiscription" ? "active" : ""
-                    }`}
+                    className={`sub-menu ${activeSubMenu === "Jobdiscription" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -380,6 +347,7 @@ function Sidebar({
                         </span>
                       </a>
                     </li>
+                    {(jobRoles != "Recruiters" && jobRoles !="SuperUser" ) || jobRoles ==="TeamLeader" && jobRoles === "Manager" ? (
                     <li
                       style={{ marginLeft: "10px" }}
                       onClick={handleButtonClick(
@@ -397,9 +365,12 @@ function Sidebar({
                         </span>
                       </a>
                     </li>
+
+                    ) : null}
                   </ul>
                 </li>
-
+{jobRoles != "SuperUser" ? (
+  <>
                 <li
                   className={
                     activeSubMenu === "addJobDescription" ? "active" : ""
@@ -416,9 +387,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu sub-menu1 ${
-                      activeSubMenu === "employee" ? "active" : ""
-                    }`}
+                    className={`sub-menu sub-menu1 ${activeSubMenu === "employee" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -446,9 +416,44 @@ function Sidebar({
                     </li>
                   </ul>
                 </li>
+{/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
+                {jobRoles === "Manager" || "TeamLeader" ? (
+                  <>
+                  {jobRoles != "Recruiters" ?(
+
+                  <li
+                    className={
+                      activeButton === "TeamLeader-section" ? "active" : ""
+                    }
+                    onClick={toggleSubMenu("TeamLeader-section")}
+                  >
+                    <a href="#">
+                      <RiTeamFill className="text-gray-500 text-lg" />
+                      <span className="sidebar-text">Team Leader Section</span>
+                      <i className="arrow ph-bold ph-caret-down"></i>
+                    </a>
+                    <ul
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section" ? "active" : ""
+                        }`}
+                    >
+                      <li
+                        onClick={toggleUpdateResponse}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                          <span className="sidebar-text">Update Response</span>
+                        </a>
+                      </li>
+                    </ul>
+                    </li>
+                    
+                ):null}
+                </>
+                  ) : null}
 
 
-                {jobRoles === "Admin" ? (
+                { jobRoles != "Recruiters" ?(
                   <li
                     className={activeButton === "admin-section" ? "active" : ""}
                     onClick={toggleSubMenu("admin-section")}
@@ -458,15 +463,28 @@ function Sidebar({
                         className="fa-solid fa-computer"
                         style={{ color: "gray" }}
                       ></i>
-                      <span className="sidebar-text">Admin Section</span>
+                      <span className="sidebar-text">Manager Section</span> { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_428 */}
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
 
                     <ul
-                      className={`sub-menu sub-menu1 ${
-                        activeSubMenu === "admin-section" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
+                        }`}
                     >
+                       
+
+                        { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
+                      <li
+                        onClick={togglePayRoll}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">Pay Roll</span>
+                        </a>
+                      </li>
+                      { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
+
+
                       <li
                         onClick={toggleAssigncolumns}
                         style={{ marginLeft: "10px" }}
@@ -477,6 +495,8 @@ function Sidebar({
                         </a>
                       </li>
 
+
+
                       <li
                         onClick={toggleAllMasterSheet}
                         style={{ marginLeft: "10px" }}
@@ -486,7 +506,8 @@ function Sidebar({
                           <span className="sidebar-text">All Master Sheet</span>
                         </a>
                       </li>
-
+                        {jobRoles === "Manager" || "TeamLeader"  ? (
+                          <>        
                       <li
                         onClick={toggelAddRecruiter}
                         style={{ marginLeft: "10px" }}
@@ -496,7 +517,9 @@ function Sidebar({
                           <span className="sidebar-text">Add Recruiters</span>
                         </a>
                       </li>
+                         
 
+                        {jobRoles != "TeamLeader" || jobRoles === "Manager" || jobRoles === "SuperUser" ?(
                       <li
                         onClick={toggelAddRecruiter}
                         style={{ marginLeft: "10px" }}
@@ -506,11 +529,24 @@ function Sidebar({
                           <span className="sidebar-text">Add Team Leadrs</span>
                         </a>
                       </li>
+                     ) : null}
+                      </>
+                      ) : null}
+                      <li
+                        onClick={toggleSendCandidate}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">
+                            Send Client Email
+                          </span>
+                        </a>
+                      </li>
                     </ul>
                   </li>
-                ) : null}
-
-                {jobRoles === "Admin" ? (
+                ): null }
+                </>
+): null}
                   <li
                     className={activeSubMenu === "database" ? "active" : ""}
                     onClick={toggleSubMenu("database")}
@@ -525,9 +561,8 @@ function Sidebar({
                     </a>
 
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "database" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
+                        }`}
                     >
                       <li
                         onClick={handleButtonClick(
@@ -595,7 +630,6 @@ function Sidebar({
                       </li>
                     </ul>
                   </li>
-                ) : null}
 
                 <li onClick={toggleChatRoom}>
                   <a href="#">
@@ -608,6 +642,8 @@ function Sidebar({
                     <span className="sidebar-text">Chat Section</span>
                   </a>
                 </li>
+                {jobRoles != "SuperUser" ? (
+                  <>
                 <li
                   className={activeSubMenu === "portal" ? "active" : ""}
                   onClick={toggleSubMenu("portal")}
@@ -623,9 +659,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu sub-menu1 sub-menu2 ${
-                      activeSubMenu === "portal" ? "active" : ""
-                    }`}
+                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
+                      }`}
                   >
                     <li style={{ marginLeft: "10px" }}>
                       <a href="#">
@@ -693,6 +728,8 @@ function Sidebar({
                   </a>
                 </li>
 
+                </>
+) : null}
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">
                     {/* <i className="icon ph-bold ph-sign-out"></i> */}

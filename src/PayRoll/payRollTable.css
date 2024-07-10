@@ -1,0 +1,52 @@
+/* src/components/PayrollTable.css */
+
+.payroll-table {
+    width: 100%;
+    margin-top: 20px;
+    
+  }
+  
+  .payroll-table-layout{
+    width: 100%;
+    border-collapse: collapse;
+    /* border: 1px solid #ddd; */
+  }
+  
+  .payroll-table th, .payroll-table td {
+    padding: 10px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    /* text-align: left; */
+  }
+  
+  .payroll-table-heading {
+    background-color: #ffcb9b;
+  }
+  
+  .payroll-table-heading  th{
+    /* border: 1px solid gray; */
+    text-align: center;
+  }
+  .payroll-table-data td{
+    /* border: 1px solid gray; */
+    text-align: center;
+  }
+  
+  .payroll-table button {
+    padding: 5px 10px;
+    background-color: #ffcb9b;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .payroll-table button:hover
+  {
+    background-color: white;
+    color: #ffcb9b;
+  }
+    
+  .payroll-table-layout th,td{
+    color: grey;
+  }
