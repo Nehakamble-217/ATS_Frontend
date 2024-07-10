@@ -37,7 +37,7 @@ const CallingExcelList = ({
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.46:8891/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -193,7 +193,7 @@ const CallingExcelList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.38:8891/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.46:8891/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {

@@ -57,7 +57,15 @@
 // export default Home;
 
 
-import React from "react";
+
+
+
+
+
+
+
+
+import React, { useState } from "react";
 import "./mainDashboard.css";
 import clouds from '../LogoImages/clouds.png';
 import { useNavigate } from "react-router-dom";
@@ -66,7 +74,11 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleLogin = (userType) => {
-    navigate(`/employee-login/${userType}`);
+    if (userType === "employee") {
+      navigate("/employee-login");
+    } else {
+      navigate(`/employee-login/${userType}`);
+    }
   };
 
   return (
@@ -76,8 +88,8 @@ const Home = () => {
         {[
           { title: "Client", userType: "client", buttonClass: "login" },
           { title: "Applicant", userType: "applicant", buttonClass: "login" },
-          { title: "Recruiter", userType: "recruiter", buttonClass: "login1" },
-          { title: "Admin", userType: "admin", buttonClass: "login1" },
+          { title: "Employee", userType: "employee", buttonClass: "login1" },
+          { title: "Vendor", userType: "vendor", buttonClass: "login1" },
         ].map((section) => (
           <div key={section.title} className="square-box">
             <div className="content">
@@ -92,9 +104,8 @@ const Home = () => {
           </div>
         ))}
       </div>
-   </div>
+    </div>
   );
 };
 
 export default Home;
-

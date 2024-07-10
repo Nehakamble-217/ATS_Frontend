@@ -30,12 +30,20 @@ const JobListing = () => {
   const [filteredJobDescriptions, setFilteredJobDescriptions] = useState(jobDescriptions);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
   const [requirementData, setRequirementData] = useState();
-  const [showEDM, setShowEDM] = useState(false)
+  const [showEDM, setShowEDM] = useState(false);
+  const [designation, setDesignation] = useState('');
+const [location, setLocation] = useState('');
+const [experience, setExperience] = useState('');
+  const [searchQuery, setSearchQuery] = useState({
+  designation: '',
+  location: '',
+  experience: '',
+});
 
 
 
   useEffect(() => {
-    fetch("http://192.168.1.46:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.48:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -45,6 +53,29 @@ const JobListing = () => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+useEffect(() => {
+  handleFilter();
+}, [searchQuery, jobDescriptions]);
+
+
+const handleInputSearch = (event) => {
+  const { name, value } = event.target;
+  setSearchQuery((prevQuery) => ({ ...prevQuery, [name]: value }));
+};
+
+
+    const handleFilter = () => {
+  const filtered = jobDescriptions.filter((job) => {
+    return (
+      (job.designation && job.designation.toLowerCase().includes(searchQuery.designation.toLowerCase())) ||
+      (job.location && job.location.toLowerCase().includes(searchQuery.location.toLowerCase())) ||
+      (job.experience && job.experience.toLowerCase().includes(searchQuery.experience.toLowerCase()))
+    );
+  });
+  setFilteredJobDescriptions(filtered);
+};
+
+ 
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -154,7 +185,7 @@ const JobListing = () => {
 
   const toggleJobDescription = (requirementId) => {
     console.log(requirementId + "before Api");
-    fetch(`http://192.168.1.46:8891/api/ats/157industries/requirement-info/${requirementId}`)
+    fetch(`http://192.168.1.48:8891/api/ats/157industries/requirement-info/${requirementId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -165,6 +196,9 @@ const JobListing = () => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
+
+
+
 
   const toggleEdm2 = () => {
     setShowEDM(!showEDM);
@@ -259,6 +293,7 @@ const JobListing = () => {
   const handleShareJobDescription = (res) => {
     setShowJobDescriptionShare(res)
   }
+  
 
   const uniqueCities = Array.from(new Set(filteredCities.map((job) => job.location)));
   const uniqueExperiences = Array.from(new Set(jobDescriptions.map((job) => job.experience)));
@@ -275,12 +310,17 @@ const JobListing = () => {
             className="search-input"
             placeholder="Enter keyword / designation / companies"
             type="text"
+              value={searchQuery.designation}
+  onChange={handleInputSearch}
           />
           <input
             className="search-input"
             list="experienceOptions"
             placeholder="Select experience"
             type="text"
+            value={searchQuery.experience}
+  onChange={handleInputSearch}
+            
           />
           <datalist id="experienceOptions">
             <option value="0-1 years" />
@@ -293,8 +333,10 @@ const JobListing = () => {
             className="search-input"
             placeholder="Enter location"
             type="text"
+            value={searchQuery.location}
+           onChange={handleInputSearch}
           />
-          <button className="search-button">
+          <button className="search-button" onClick={handleFilter} >
             <span className="search-icon">
               {/* Font Awesome icon for search */}
               <i className="fas fa-search"></i>
@@ -572,7 +614,7 @@ const JobListing = () => {
           {filteredJobDescriptions.map((item, index) => (
             <div className="job-listing" key={index}>
               <div className="job-header">
-                <h3 >{item.requirementId}</h3>
+                {/* <h3 >{item.requirementId}</h3> */}
                 <h2 className="job-title">{item.designation} </h2>
                 <div className="job-company">{item.companyName}</div>
               </div>

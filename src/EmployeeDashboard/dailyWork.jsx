@@ -14,6 +14,7 @@ function DailyWork({
   // handleDataAdditionSuccess,
   profilePageLink,
   logoutTimestamp,
+  jobRole
 }) {
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
@@ -67,7 +68,7 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.46:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.48:8891/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
         onCurrentEmployeeJobRoleSet(response.data.jobRole);
@@ -166,7 +167,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://192.168.1.46:8891/api/ats/157industries/save-daily-work",
+          "http://192.168.1.48:8891/api/ats/157industries/save-daily-work",
           formData
         );
 
@@ -196,7 +197,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.46:8891/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.48:8891/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -586,7 +587,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.46:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.48:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
         formData
       );
 
@@ -716,6 +717,8 @@ function DailyWork({
           </p>
         </div>
       </div>
+      {jobRole != "SuperUser" ? ( 
+        <>
       <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
         <div className="daily-t-btn">
           <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
@@ -791,6 +794,7 @@ function DailyWork({
             alt="Logout"
           /> */}
       </div>
+      
 
       <button
         className="toggle-all-daily-btns"
@@ -798,6 +802,8 @@ function DailyWork({
       >
         {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
       </button>
+      </>
+      ): null}
     </div>
   );
 }

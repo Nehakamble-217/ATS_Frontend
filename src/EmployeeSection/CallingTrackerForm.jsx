@@ -139,7 +139,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:8891/api/ats/157industries/employeeName/${employeeId}`
+        `http://192.168.1.48:8891/api/ats/157industries/employeeName/${employeeId}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -158,7 +158,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:8891/api/ats/157industries/company-details`
+        `http://192.168.1.48:8891/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -210,7 +210,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
         message = "Only Calling data added";
       }
       const response = await axios.post(
-        `http://192.168.1.38:8891/api/ats/157industries/calling-tracker`,
+        `http://192.168.1.48:8891/api/ats/157industries/calling-tracker`,
         dataToUpdate
       );
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07

@@ -390,6 +390,7 @@ const EmpDashboard = ({ userGroup }) => {
             // handleDataAdditionSuccess={handleDataAdditionSuccess}
             logoutTimestamp={logoutTimestamp}
             onCurrentEmployeeJobRoleSet={handleJobRoles}
+            jobRole={jobRoles}
           />
         </div>
         <div>
