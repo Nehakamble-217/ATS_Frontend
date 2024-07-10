@@ -334,7 +334,8 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
         // Handle success response
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
-
+        setShowShareButton(true);
+        setSelectedRows([]);
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
@@ -383,7 +384,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                 >
                   {showShareButton ? (
                     <button
-                      className="lineUp-share-btn"
+                      className="callingList-share-btn"
                       onClick={() => setShowShareButton(false)}
                     >
                       Share
@@ -391,19 +392,22 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                   ) : (
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
-                        className="lineUp-share-btn"
-                        onClick={() => setShowShareButton(true)}
+                        className="callingList-share-btn"
+                        onClick={() => {
+                          setShowShareButton(true);
+                          setSelectedRows([]);
+                        }}
                       >
                         Close
                       </button>
                       <button
-                        className="lineUp-share-btn"
+                        className="callingList-share-btn"
                         onClick={handleSelectAll}
                       >
                         {allSelected ? "Deselect All" : "Select All"}
                       </button>
                       <button
-                        className="lineUp-share-btn"
+                        className="callingList-share-btn"
                         onClick={forwardSelectedCandidate}
                       >
                         Forward
@@ -411,7 +415,7 @@ const CallingList = ({ updateState, funForGettingCandidateId }) => {
                     </div>
                   )}
                   <button
-                    className="lineUp-share-btn"
+                    className="callingList-share-btn"
                     onClick={toggleFilterSection}
                   >
                     Filter <i className="fa-solid fa-filter"></i>

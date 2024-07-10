@@ -1,4 +1,4 @@
-//Akash Pawar SendClientEmail 09/07
+//Akash_Pawar_SendClientEmail_09/07
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./SendClientEmail.css";
@@ -11,11 +11,10 @@ import { Form, Table } from "react-bootstrap";
 import axios from "axios";
 import { PDFDocument } from "pdf-lib";
 
-const LineUpList = ({ clientEmailSender }) => {
+const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
   const employeeIdnew = parseInt(employeeId);
-  console.log(employeeId);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
@@ -307,7 +306,7 @@ const LineUpList = ({ clientEmailSender }) => {
   const handleSuccessEmailSend = (res) => {
     if (res) {
       setSelectedRows([]);
-      setShowShareButton(false);
+      setShowShareButton(true);
     }
   };
 
@@ -351,7 +350,10 @@ const LineUpList = ({ clientEmailSender }) => {
                 <div style={{ display: "flex", gap: "5px" }}>
                   <button
                     className="SCE-share-close-btn"
-                    onClick={() => setShowShareButton(true)}
+                    onClick={() => {
+                      setShowShareButton(true);
+                      setSelectedRows([]);
+                    }}
                   >
                     Close
                   </button>
@@ -494,7 +496,7 @@ const LineUpList = ({ clientEmailSender }) => {
                   </th>
                   <th className="attendanceheading">Interview Time</th>
                   <th className="attendanceheading">Interview Status</th>
-                  <th className="attendanceheading">Action</th>
+                  {/* <th className="attendanceheading">Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -998,19 +1000,19 @@ const LineUpList = ({ clientEmailSender }) => {
                         </div>
                       </td>
 
-                      <td className="tabledata">
+                      {/* <td className="tabledata">
                         <i
                           onClick={() => handleUpdate(item.candidateId)}
                           className="fa-regular fa-pen-to-square"
                         ></i>
-                      </td>
+                      </td> */}
                     </>
                   </tr>
                 ))}
               </tbody>
             </table>
             {showModal ? (
-              <EmployeeDetailsPopup
+              <SendEmailPopup
                 show={showModal}
                 handleClose={handleClose}
                 selectedCandidate={selectedRows}
@@ -1054,7 +1056,7 @@ const LineUpList = ({ clientEmailSender }) => {
   );
 };
 
-const EmployeeDetailsPopup = ({
+const SendEmailPopup = ({
   show,
   handleClose,
   selectedCandidate,
@@ -1064,8 +1066,11 @@ const EmployeeDetailsPopup = ({
   const [to, setTo] = useState("");
   const [cc, setCc] = useState("");
   const [subject, setSubject] = useState("");
-  const [signatureImage, setSignatureImage] = useState("");
+  const [signatureImage, setSignatureImage] = useState(
+    "https://lh3.googleusercontent.com/fife/ALs6j_HDFuzYstiAW8Rt_7NmtAoegg6nGerpkvbiAITq-mNL70gNXONQuJwnZdbiAbsKMNAYMt9iBnvsFWx8EaOOWV43cjOjDvFOAiw1XacANQb0MDBtFO1ag1TuVwCbwbzrLDnOiniRQ5hD7kGCCVjTNGsNdx6RQLsrKyZlpJ6meA1NIT1vXloRcFwlfbTjDBG14YC809U_0FGn9pOII8lbH-I_ZZLBI6kfh0Q43j4evix8AbIxnvw0Soesevgycz4jRqrAA4Fjjd67Pb0vIVBkeEgSp_Sfz_v9joDcBiMe2sLP6_iEvB7N4il1qgBgTHBRM6qp6IuNFov7hMdcyx8Jp1oCfQX7753pO2x3FGg3tyW5RI0l-1h01JWKdybFECo19c7o3Z_01lJ-dF1TABxyPTdT9eztvkSfDXOvfoQIP_oEny3ORR-8wfjijnlUFylwT7MhsCwTcaeQR6tWaPYJ9rX7AQVGOmMyJbLS_0tFLn0_UzX7NuQx6-W2TeC9aXM0ajJYJ5cLPusvMlAhgFBB0WdZfbtuOat0-rd2qP_L0MqJPfTYBdTgYyO4LoTD0dV6QRo5UJhvyDW5Ru8IBz-bB4QWhPMjs2_PFnQ9K-GLvAPCOYIk4TQPhkCK4UgOyGL8bRE4bPBIYMddVxfWdePCOb6V5JhGmYfvsYzEhAwquNmsZkMv9lEJfQV-Frs0DrF63XWlD5ieprbz4CLMs3WHh42I06Kpw2aCXfQchCDoJawTYljfozJ_QHq58UIAdMniaLvrKKYRyYfZohAFVdekMzArxrobd4e3Pac9cHm1Orz2_lAob5diRJCZxapdTOPfiT_ro-1qhbtmKua4kXr5Z_TWgBV9CwaactlqLFMnnbN3TtDOqKNDEFBGhg1pKC2NUu2Jw6IyawDyCU6VCdrnhizrHhvhPY8u0uXOxspsqfvQaU_PT0e0v-f2RPDESxSwIz3H6DEzmk5hOrbOmXFCPG8Q9bUu_5I3kL11z_loIveKwfWD3YGIkOjOvXAUomdEqw7DIXIbjcfDQflq7L45gJ3-BWuTkRmicaQL3GAtwVpYbmNUi649NpUC5JvKN_iqIxeNzhKdn1jBXEGl2-rbmzYXbPolNUmrQWwaFYKBzVzgWIcCjaaKpgSR444mFTx3mFEuSJxfjMTJtumbYGZkGrFkEE1rNaXMvF6XFT6JO63BtAfQzd5nFl31OctaJ6nf7_UbshOlPFeUNoRFpc-gB9LWyZck_V9jIToDHY8mij11-IK-9DFLdZZfNxeOhbha8DYljvTj9R6spXM006lRZmBsP6WugvIvvG5Pv_kiXoORCBbrCFAIk3vpZIEx3zDoayqgUNwctyrf7cJvfSiyWokjM0NNHRTCy0eldMfb0LLX5X6BftzMt128n5f6-Q60zmQ_kyuHSnyLGJawrCATfhHu-_ABtuuTWopOBib9gG__Vsa06z5SKZs5LM8eD8TwgUMeIRfWGfZBAy2qobuMt9ZVDrQDlPejp1tBg3Dm8Ke85TK7HFFfDqA-dJ2jCwzOq2ipybePn2kxLg911_lfaHPIXpF0LJdNwNyzfH_6IuB3IGI0nelUgtPnQbxXFMYd8xLaiVhfx9f0GLlDLkalvTQ8UPk92nprBDiYn8GdmV3zoVuWZbXwqQ4nmLaB9LIxDieP2kLO7V2igrEsBxXZHT309KauEgReDc1p7ahNkSiDjAOt3cDoEnlXhXjLXiBy"
+  );
   const [isMailSending, setIsMailSending] = useState(false);
+  const [getResponse, setResponse] = useState("");
   const [emailBody, setEmailBody] = useState(
     "hi Deepak,\n\nSharing 2 more profiles: Dotnet+Azure Developer."
   );
@@ -1083,35 +1088,40 @@ const EmployeeDetailsPopup = ({
   // };
 
   const handleStoreClientInformation = async () => {
-    const date = new Date();
+    try {
+      const date = new Date();
 
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
 
-    // This arrangement can be altered based on how we want the date's format to appear.
-    let currentDate = `${day}-${month}-${year}`;
-    const clientData = {
-      mailReceiverName: emailBody.replace(/Hi\s*,?\s*/i, "").split(",")[0],
-      receiverCompanyMail: to,
-      mailSendDate: currentDate,
-      mailSendTime: new Date().toLocaleTimeString(),
-      noOfCandidates: selectedCandidate.length,
-      mailSenderName: clientEmailSender.senderName,
-      senderEmailId: clientEmailSender.senderMail,
-      requirementIds: selectedCandidate.map((item) => item.requirementId),
-      toCCNames: cc.split(","),
-      toBCCNames: [],
-    };
+      // This arrangement can be altered based on how we want the date's format to appear.
+      let currentDate = `${day}-${month}-${year}`;
+      const clientData = {
+        mailReceiverName: emailBody.replace(/Hi\s*,?\s*/i, "").split(",")[0],
+        receiverCompanyMail: to,
+        mailSendDate: currentDate,
+        mailSendTime: new Date().toLocaleTimeString(),
+        noOfCandidates: selectedCandidate.length,
+        mailSenderName: clientEmailSender.senderName,
+        senderEmailId: clientEmailSender.senderMail,
+        requirementIds: selectedCandidate.map((item) => item.requirementId),
+        toCCNames: cc.split(","),
+        toBCCNames: [],
+      };
 
-    const response = await axios.post(
-      "http://192.168.1.48:8891/api/ats/157industries/add-client-details",
-      clientData
-    );
-    if (response) {
+      const response = await axios.post(
+        "http://192.168.1.48:8891/api/ats/157industries/add-client-details",
+        clientData
+      );
+      if (response) {
+        setIsMailSending(false);
+        setResponse(response.data);
+        handleClose();
+      }
+    } catch (error) {
       setIsMailSending(false);
-      console.log(response);
-      handleClose();
+      setResponse(error.message);
     }
   };
 
@@ -1121,7 +1131,7 @@ const EmployeeDetailsPopup = ({
       to,
       cc,
       subject,
-      body: emailBody,
+      body: emailBody.replace(/\n/g, "<br>"),
       signatureImage,
       attachments: selectedCandidate.map((can) => ({
         fileName: `${can.candidateName}_${can.jobDesignation}.pdf`, // Assuming all resumes are in PDF format
@@ -1144,6 +1154,7 @@ const EmployeeDetailsPopup = ({
 
       .catch((error) => {
         setIsMailSending(false);
+        setResponse("Error Sending Email");
         console.error("Error sending email:", error);
       });
   };
@@ -1157,7 +1168,7 @@ const EmployeeDetailsPopup = ({
         className="text-secondary"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Send Candidate Email To Client</Modal.Title>
+          <Modal.Title>Send Candidate Data To Client</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group style={{ display: "flex", gap: "5px" }}>
@@ -1167,6 +1178,7 @@ const EmployeeDetailsPopup = ({
               </Form.Label>
               <Form.Control
                 type="email"
+                className="text-secondary"
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
               />
@@ -1177,6 +1189,7 @@ const EmployeeDetailsPopup = ({
               </Form.Label>
               <Form.Control
                 type="email"
+                className="text-secondary"
                 value={cc}
                 onChange={(e) => setCc(e.target.value)}
               />
@@ -1188,6 +1201,7 @@ const EmployeeDetailsPopup = ({
             </Form.Label>
             <Form.Control
               type="text"
+              className="text-secondary"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
             />
@@ -1302,21 +1316,35 @@ const EmployeeDetailsPopup = ({
               </Form.Label>
               <Form.Control
                 type="text"
+                className="text-secondary"
+                value={signatureImage}
                 onChange={(e) => setSignatureImage(e.target.value)}
               />
             </Form.Group>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <button className="SCE-share-forward-popup-btn" onClick={handleClose}>
-            Close
-          </button>
-          <button
-            className="SCE-close-forward-popup-btn"
-            onClick={handleSendEmail}
-          >
-            Send Email
-          </button>
+        <Modal.Footer style={{ justifyContent: "space-between" }}>
+          {getResponse != "" ? (
+            <p style={{ color: "red" }}>
+              <i>{getResponse}</i>
+            </p>
+          ) : (
+            <p></p>
+          )}
+          <div className="d-flex gap-2 align-items-center">
+            <button
+              className="SCE-share-forward-popup-btn"
+              onClick={handleClose}
+            >
+              Close
+            </button>
+            <button
+              className="SCE-close-forward-popup-btn"
+              onClick={handleSendEmail}
+            >
+              Send Email
+            </button>
+          </div>
         </Modal.Footer>
       </Modal>
       {isMailSending && (
@@ -1328,4 +1356,4 @@ const EmployeeDetailsPopup = ({
   );
 };
 
-export default LineUpList;
+export default SendClientEmail;

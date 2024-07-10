@@ -125,6 +125,8 @@ const EmployeeMasterSheet = () => {
 
         console.log("Candidates forwarded successfully!");
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
+        setSelectedRows([]);
+        setShowShareButton(true);
       } catch (error) {
         console.error("Error while forwarding candidates:", error);
       }

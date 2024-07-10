@@ -105,12 +105,12 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
     setJobRoles(role);
   };
 
-  //Akash Pawar EmpDashboard senderinformation 09/07 108
+  //Akash_Pawar_EmpDashboard_senderinformation_09/07_108
   const [clientEmailSender, setClientEmailSender] = useState();
   const handleEmailSenderInformation = (data) => {
     setClientEmailSender(data);
   };
-  //Akash Pawar EmpDashboard senderinformation 09/07 113
+  //Akash_Pawar_EmpDashboard_senderinformation_09/07_113
 
   const [id, setId] = useState(0);
 
@@ -190,7 +190,6 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
     setShowResumeData(false);
     setShowCallingExcelList(false);
     setShowLineupExcelList(false);
-    setshowSendClientMail(false);
   };
 
   const funForUpdateSelfCalling = () => {
@@ -485,13 +484,13 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
         <div>{showUpdateResponse && <UpdateResponse />}</div>
-        {/* //Akash Pawar EmpDashboard senderinformation 09/07 490 */}
+        {/* Akash_Pawar_EmpDashboard_senderinformation_09/07_490 */}
         <div>
           {showSendClientMail && (
             <SendClientEmail clientEmailSender={clientEmailSender} />
           )}
         </div>
-        {/* //Akash Pawar EmpDashboard senderinformation 09/07 492 */}
+        {/* Akash_Pawar_EmpDashboard_senderinformation_09/07_492 */}
       </div>
     </div>
   );
