@@ -36,13 +36,9 @@ import CandidateResumeLink from "../ResumeData/candidateResumeLink";
 import CallingExcelList from "../Excel/callingExcelData";
 import LineupExcelData from "../Excel/lineupExcelData";
 import UpdateResponse from "../TeamLeader/UpdateResponse";
-<<<<<<< HEAD
-import { fas } from "@fortawesome/free-solid-svg-icons";
-=======
-import SendClientEmail from "../AdminSection/SendClientEmail";
->>>>>>> 312cbabb53c03614617a629d944d2bab7a391689
+import SendClientEmail from "../AdminSection/SendClientEmail"
 
-const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
+const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
   const [addCandidate, setAddCandidate] = useState(false);
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
@@ -82,7 +78,6 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
   const [showCallingExcelList, setShowCallingExcelList] = useState(false);
   const [showLineupExcelList, setShowLineupExcelList] = useState(false);
   const [showUpdateResponse, setShowUpdateResponse] = useState(false);
-  const [showSendClientMail, setshowSendClientMail] = useState(false);
 
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
@@ -90,6 +85,7 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
   const [archived, setArchived] = useState(0);
   
   const [successAddUpdateResponse,setSuccessUpdateResponse]=useState(false)
+  const [showSendClientMail,setShowSendClientMail]=useState(false)
 
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
@@ -112,19 +108,15 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
     setJobRoles(role);
   };
 
-<<<<<<< HEAD
   const handleSuccessAdd=(res)=>{
     setSuccessUpdateResponse(res);
   }
-=======
-  //Akash Pawar EmpDashboard senderinformation 09/07 108
-  const [clientEmailSender, setClientEmailSender] = useState();
-  const handleEmailSenderInformation = (data) => {
-    setClientEmailSender(data);
-  };
-  //Akash Pawar EmpDashboard senderinformation 09/07 113
->>>>>>> 312cbabb53c03614617a629d944d2bab7a391689
 
+  const [clientEmailSender,setClientEmailSender]=useState();
+  const handleEmailSenderInformation=(data)=>{
+    setClientEmailSender(data);
+  }
+  
   const [id, setId] = useState(0);
 
   const navigator = useNavigate();
@@ -203,7 +195,6 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
     setShowResumeData(false);
     setShowCallingExcelList(false);
     setShowLineupExcelList(false);
-    setshowSendClientMail(false);
   };
 
   const funForUpdateSelfCalling = () => {
@@ -216,10 +207,10 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
     setUpdateSelfCalling(true);
   };
 
-  const toggleUpdateResponse = () => {
+  const toggleUpdateResponse=()=>{
     resetAllToggles();
     setShowUpdateResponse(true);
-  };
+  }
 
   const toggleInterviewDate = () => {
     resetAllToggles();
@@ -363,11 +354,6 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
     setShowLineupExcelList(!showLineupExcelList);
   };
 
-  const toggleSendCandidate = () => {
-    resetAllToggles();
-    setshowSendClientMail(!showSendClientMail);
-  };
-
   return (
     <div
       className={`grid-container ${
@@ -407,11 +393,7 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
         toggelExcelLineup={toggelExcelLineup}
         toggleUpdateResponse={toggleUpdateResponse}
         jobRoles={jobRoles}
-<<<<<<< HEAD
         successAddUpdateResponse={successAddUpdateResponse}
-=======
-        toggleSendCandidate={toggleSendCandidate}
->>>>>>> 312cbabb53c03614617a629d944d2bab7a391689
       />
 
       <div className="empDash-main-content">
@@ -442,8 +424,8 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
             />
           )}
         </div>
-        <div>{showShortListedNav && <ShortlistedNavbar />}</div>
-        <div>
+        <div >{showShortListedNav && <ShortlistedNavbar />}</div>
+        <div >
           {showShortlistedCandidateData && (
             <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
           )}
@@ -456,10 +438,14 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
             />
           )}
         </div>
+
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
+
         <div>{showMasterSheet && <MasterSheet />}</div>
+
         <div>{incentive && <Incentive />}</div>
         <div>{attendancesheet && <Attendancesheet />}</div>
+
         <div>
           {showCallingExcelList && <CallingExcelList></CallingExcelList>}
         </div>
@@ -502,18 +488,8 @@ const EmpDashboard = ({ userGroup, emailSenderInformation }) => {
           )}
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
-<<<<<<< HEAD
         <div>{showUpdateResponse&&<UpdateResponse onSuccessAdd={handleSuccessAdd}/>}</div>
-=======
-        <div>{showUpdateResponse && <UpdateResponse />}</div>
-        {/* //Akash Pawar EmpDashboard senderinformation 09/07 490 */}
-        <div>
-          {showSendClientMail && (
-            <SendClientEmail clientEmailSender={clientEmailSender} />
-          )}
-        </div>
-        {/* //Akash Pawar EmpDashboard senderinformation 09/07 492 */}
->>>>>>> 312cbabb53c03614617a629d944d2bab7a391689
+        <div>{showSendClientMail && <SendClientEmail clientEmailSender={clientEmailSender}/>}</div>
       </div>
     </div>
   );

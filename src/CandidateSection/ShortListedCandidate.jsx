@@ -148,10 +148,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
       const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
-<<<<<<< HEAD
 
-=======
->>>>>>> 312cbabb53c03614617a629d944d2bab7a391689
       const requestData = {
         employeeId: selectedEmployeeId,
         candidateIds: selectedRows,
