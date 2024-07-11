@@ -3,12 +3,14 @@
 
 import React from 'react';
 import Modal from 'react-modal';
+import PieChart from '../Reports/reportsPieChart'
 
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
 const PdfModal = ({ isOpen, closeModal, pdfContent }) => {
   return (
+    
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
@@ -21,7 +23,11 @@ const PdfModal = ({ isOpen, closeModal, pdfContent }) => {
         <embed src={pdfContent} type="application/pdf" width="100%" height="500px" />
         
       </div>
+      
     </Modal>
+
+
+
   );
 };
 
