@@ -197,6 +197,7 @@
   .employee-profile-basic-details{
       color: gray;
   }
+
   .employee-profile-document-social-details,
   .employee-profile-interview-traning-details,
   .employee-profile-induction-message-details,
@@ -211,6 +212,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   
+  .employee-profile-performance-indicator h1,
   .employee-profile-document-social-details h1,
   .employee-profile-previouscompany-details h1,
   .employee-profile-interview-details h1,
@@ -234,4 +236,76 @@
   }
   .employee-profile-education-details{
     width: 100%;
+  }
+
+  /* Ajhar-11-07-2024 cssLineNo-241  */
+  
+  .employee-profile-performance-indicator{
+    background-color: #f2f2f2;
+      padding: 15px;
+      border-radius: 15px;   
+      color: gray;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items:center ;
+  }
+
+  .emp-pro-data-progress-bar {
+    width: 600px;
+    height: 40px;
+    border-radius: 25px;
+  
+    overflow: hidden;
+  }
+  
+  .emp-pro-data-progress-bar-inner {
+    display: flex;
+    height: 100%;
+  }
+  
+  .emp-pro-data-poor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff0909; 
+    width: 25%;
+    color: black;
+    font-size: 16px;
+  }
+
+  .emp-pro-data-average {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffa500; 
+    width: 25%;
+    color: black;
+    font-size: 16px;
+  }
+  
+  .emp-pro-data-good {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFF00; 
+    width: 25%;
+    color: black;
+    font-size: 16px;
+  }
+  
+  .emp-pro-data-best {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2c8d2c;
+    width: 25%;
+    color: black;
+    font-size: 16px;
+  }
+
+  .indicator-123{
+    font-size: 50px;
+    position: relative;
+    top:-45px;
   }
