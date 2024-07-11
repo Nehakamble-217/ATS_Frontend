@@ -1,0 +1,237 @@
+/*  Neha_addCompany.css_all_page_11/07/2024_lineno_2to_200*/
+
+.job-desc {
+  font-family: Arial, sans-serif;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+  margin-top: 10px;
+  color: gray;
+}
+
+.job-desc-form {
+  border: 1px solid gray;
+}
+
+.field-column {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.field-Row-Gray, .field-Row-white {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.field-Row-Gray {
+  background-color: #F2F2F2;
+}
+
+.field-Row-white {
+  background-color: white;
+}
+
+.field {
+  width: 100%;
+  display: flex;
+  padding: 5px 0px;
+  border: 1px solid gray;
+  white-space: nowrap;
+  height:"30px";
+}
+
+.field label {
+  width: 29%;
+  font-size: 18px;
+  padding: 0px 5px;
+  display: flex;
+  border-radius: 5px;
+  align-items: center;
+  color: gray;
+  
+}
+
+.field input {
+  padding: 4px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  color: gray;
+  border-radius: 5px;
+  width: 69%;
+  margin-right: 15px;
+}
+
+
+.field input[type="text"],
+
+.field input[type="email"] {
+width: 60%;}
+
+.textarea {
+  width: 69%;
+  height: 30px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-bottom: 0;
+  resize: vertical;
+  font-size: 16px;
+}
+
+.multi-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+  overflow: hidden;
+}
+
+.inner-field label {
+  width: 20%;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  align-items: center;
+  color: gray;
+  height: 30px;
+}
+
+.inner-field input {
+  width: 60%;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.addcompanybutton {
+  margin: 5px;
+  height: 30px;
+  background-color: #ffcb9b;
+  border-radius: 15px;
+  color: white;
+  border: 1px solid gray;
+  padding: 2px 15px;
+  font-size: 16px;
+}
+
+.addcompanybutton:hover {
+  color: #ffcb9b;
+  background-color: white;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .job-desc {
+      margin: 20px;
+  }
+
+  .field label, .field input, .field select {
+      width: 100%;
+      margin-right: 0;
+  }
+
+  .field {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .field-Row-Gray, .field-Row-white {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .field {
+      border: none;
+      padding: 10px 0;
+  }
+
+  .field label {
+      width: 100%;
+  }
+
+  .field input, .field select, .textarea {
+      width: 100%;
+      margin-right: 0;
+  }
+
+  .inner-field label, .inner-field input {
+      width: 100%;
+  }
+
+  .addcompanybutton {
+      width: 100%;
+      text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .job-desc {
+      margin: 10px;
+  }
+
+  .field {
+      padding: 5px 0;
+  }
+
+  .field label {
+      font-size: 16px;
+  }
+
+  .field input, .field select, .textarea {
+      font-size: 14px;
+  }
+
+  .addcompanybutton {
+      padding: 5px 10px;
+  }
+} 
+
+
+.ACD-share-send-popup-btn,.ACD-close-send-popup-btn{
+  font-size: 16px;
+    border-radius: 15px;
+    height: 30px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffcb9b;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.ACD-share-send-popup-btn:hover,.ACD-close-send-popup-btn:hover{
+  background-color: white;
+    color: #ffcb9b;
+    opacity: 0.8;
+}
+.ACD-close-send-popup-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ACD_Loading_Animation{
+  width: 100%;
+  background: #00000052;  
+  top:0;
+  left:0;
+  position: fixed;
+  height: 100vh;
+  z-index: 759845455622656;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}

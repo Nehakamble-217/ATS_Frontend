@@ -10,6 +10,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Form, Table } from "react-bootstrap";
 import axios from "axios";
 
+// SwapnilRokade_SendClientEmail_ModifyFilters_11/07
+
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
@@ -28,21 +30,64 @@ const SendClientEmail = ({ clientEmailSender }) => {
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [loading, setLoading] = useState(true); // Add loading state
-
+  const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   const navigator = useNavigate();
-
+  const limitedOptions = [
+    "alternateNumber",
+    "availabilityForInterview",
+    "callingFeedback",
+    "callingTrackerId",
+    "candidateAddedTime",
+    "candidateEmail",
+    "candidateId",
+    "candidateName",
+    "communicationRating",
+    "companyName",
+    "contactNumber",
+    "currentCtcLakh",
+    "currentCtcThousand",
+    "currentLocation",
+    "date",
+    "dateOfBirth",
+    "empId",
+    "expectedCtcLakh",
+    "expectedCtcThousand",
+    "experienceMonth",
+    "experienceYear",
+    "extraCertification",
+    "feedBack",
+    "finalStatus",
+    "fullAddress",
+    "gender",
+    "holdingAnyOffer",
+    "incentive",
+    "interviewTime",
+    "jobDesignation",
+    "msgForTeamLeader",
+    "noticePeriod",
+    "offerLetterMsg",
+    "oldEmployeeId",
+    "qualification",
+    "recruiterName",
+    "relevantExperience",
+    "requirementCompany",
+    "requirementId",
+    "selectYesOrNo",
+    "sourceName",
+    "yearOfPassing"
+];
   useEffect(() => {
     fetch(
       `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setFilteredCallingList(data);
+        setCallingList(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -53,30 +98,29 @@ const SendClientEmail = ({ clientEmailSender }) => {
   }, [employeeIdnew]);
 
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter(
-      (key) => key !== "candidateId"
-    );
+    const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>limitedOptions.includes(key));
     setFilterOptions(options);
   }, [filteredCallingList]);
 
   useEffect(() => {
-    console.log("Selected Filters:", selectedFilters);
   }, [selectedFilters]);
 
   useEffect(() => {
-    console.log("Filtered Calling List:", filteredCallingList);
   }, [filteredCallingList]);
 
   useEffect(() => {
-    const limitedOptions = [
-      "date",
-      "recruiterName",
-      "jobDesignation",
-      "requirementId",
-    ];
     setFilterOptions(limitedOptions);
   }, [callingList]);
 
+  const handleFilterOptionClick = (option)=>{
+    if(activeFilterOption===option)
+    {
+      setActiveFilterOption(null);
+    }
+    else{
+      setActiveFilterOption(option);
+    }
+  }
   const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector(".tooltip");
@@ -171,11 +215,49 @@ const SendClientEmail = ({ clientEmailSender }) => {
     let filteredData = [...callingList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === "requirementId") {
+        if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
-            values.includes(item[option]?.toString())
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
           );
-        } else {
+        } else if(option === "requirementId")
+        {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
+          );
+        }
+        else if(option === "employeeId")
+          {
+            filteredData = filteredData.filter((item) =>
+              values.some((value) =>
+                item[option]
+                  ?.toString()
+                  .toLowerCase()
+                  .includes(value)
+              )
+            );
+          }
+          else if(option === "contactNumber")
+            {
+              filteredData = filteredData.filter((item) =>
+                values.some((value) =>
+                  item[option]
+                    ?.toString()
+                    .toLowerCase()
+                    .includes(value)
+                )
+              );
+            }
+        else {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
@@ -220,6 +302,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
   };
 
   const toggleFilterSection = () => {
+    setShowSearchBar(false);
     setShowFilterSection(!showFilterSection);
   };
 
@@ -380,48 +463,41 @@ const SendClientEmail = ({ clientEmailSender }) => {
             <div className="filter-section">
               <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
               <div className="filter-dropdowns">
-                {filterOptions.map((option) => (
-                  <div key={option} className="filter-dropdown">
-                    {/* <label htmlFor={option}>{option}</label> */}
-                    <div className="dropdown">
-                      <button className="dropbtn">{option}</button>
-                      <div className="dropdown-content">
-                        <div key={`${option}-All`}>
-                          <input
-                            type="checkbox"
-                            id={`${option}-All`}
-                            value="All"
-                            checked={
-                              !selectedFilters[option] ||
-                              selectedFilters[option].length === 0
-                            }
-                            onChange={() => handleFilterSelect(option, "All")}
-                          />
-                          <label htmlFor={`${option}-All`}>All</label>
-                        </div>
-                        {[
-                          ...new Set(callingList.map((item) => item[option])),
-                        ].map((value) => (
-                          <div key={value}>
-                            <input
-                              type="checkbox"
-                              id={`${option}-${value}`}
-                              value={value}
-                              checked={
-                                selectedFilters[option]?.includes(value) ||
-                                false
-                              }
-                              onChange={() => handleFilterSelect(option, value)}
-                            />
-                            <label htmlFor={`${option}-${value}`}>
-                              {value}
-                            </label>
+              {showFilterSection && (
+                <div className="filter-section">
+                  <div className="filter-options-container">
+                    {filterOptions.map((option) => {
+                      const uniqueValues = Array.from(
+                        new Set(callingList.map((item) => item[option]))
+                      );
+                      return (
+                        <div key={option} className="filter-option">
+                        <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
+                          {option}
+                          <span className="filter-icon">&#x25bc;</span>
+                        </button>
+                        {activeFilterOption === option && (
+                          <div className="city-filter">
+                            <div className="optionDiv">
+                              {uniqueValues.map((value) => (
+                                <label key={value} className="selfcalling-filter-value">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedFilters[option]?.includes(value) || false}
+                                    onChange={() => handleFilterSelect(option, value)}
+                                  />
+                                  {value}
+                                </label>
+                              ))}
+                            </div>
                           </div>
-                        ))}
+                        )}
                       </div>
-                    </div>
+                      );
+                    })}
                   </div>
-                ))}
+                </div>
+              )}
               </div>
             </div>
           )}
