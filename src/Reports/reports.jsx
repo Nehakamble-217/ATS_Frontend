@@ -584,7 +584,7 @@ function Accesstable() {
             <div className="kingmaker">
               {/* <ProgressBar/> */}
               <CreateReportTable/>
-              <ReportsPieChart/>
+              <ReportsPieChart  />
 
             </div>
 

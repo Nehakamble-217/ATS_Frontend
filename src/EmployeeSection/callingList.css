@@ -119,6 +119,8 @@ body {
   } */
   .selfcalling-filter-value{
     display: flex;
+    gap: 4px;
+    color: gray;
    }
   .selfcalling-filter-option{
 display: flex;

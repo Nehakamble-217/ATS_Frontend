@@ -59,7 +59,7 @@
 }
 
 .ctf-btn {
-  background-color: pink;
+  background-color: #ffcb9b;
   color: white;
   border-radius: 12px;
   border: 1px solid gray;
@@ -72,7 +72,7 @@
 
 .ctf-btn:hover {
   background-color: white;
-  color: pink;
+  color: #ffcb9b;
   border-color: gray;
   transform: translateY(-5px);
 }
