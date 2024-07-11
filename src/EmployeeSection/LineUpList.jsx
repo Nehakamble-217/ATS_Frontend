@@ -6,7 +6,7 @@ import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
-
+// SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
@@ -29,18 +29,60 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [loading, setLoading] = useState(true); // Add loading state
-
   const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [count,setCount] = useState(0);
-
   const navigator = useNavigate();
+  const limitedOptions = [
+    "alternateNumber",
+    "availabilityForInterview",
+    "callingFeedback",
+    "callingTrackerId",
+    "candidateAddedTime",
+    "candidateEmail",
+    "candidateId",
+    "candidateName",
+    "communicationRating",
+    "companyName",
+    "contactNumber",
+    "currentCtcLakh",
+    "currentCtcThousand",
+    "currentLocation",
+    "date",
+    "dateOfBirth",
+    "empId",
+    "expectedCtcLakh",
+    "expectedCtcThousand",
+    "experienceMonth",
+    "experienceYear",
+    "extraCertification",
+    "feedBack",
+    "finalStatus",
+    "fullAddress",
+    "gender",
+    "holdingAnyOffer",
+    "incentive",
+    "interviewTime",
+    "jobDesignation",
+    "msgForTeamLeader",
+    "noticePeriod",
+    "offerLetterMsg",
+    "oldEmployeeId",
+    "qualification",
+    "recruiterName",
+    "relevantExperience",
+    "requirementCompany",
+    "requirementId",
+    "selectYesOrNo",
+    "sourceName",
+    "yearOfPassing"
+];
   useEffect(() => {
-    setCount(count+1);
   }, [selectedFilters, filteredCallingList, callingList, employeeIdnew]);
 
   useEffect(() => {
@@ -50,6 +92,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
       .then((response) => response.json())
       .then((data) => {
+        setCallingList(data)
         setFilteredCallingList(data);
         setLoading(false);
       })
@@ -76,29 +119,26 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   }, []);
 
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter(
-      (key) => key !== "candidateId"
-    );
+    const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>limitedOptions.includes(key));
     setFilterOptions(options);
   }, [filteredCallingList]);
 
   useEffect(() => {
-    console.log("Selected Filters:", selectedFilters);
+    // console.log("Selected Filters:", selectedFilters);
   }, [selectedFilters]);
 
   useEffect(() => {
-    console.log("Filtered Calling List:", filteredCallingList);
+    // console.log("Filtered Calling List:", filteredCallingList);
   }, [filteredCallingList]);
 
-  useEffect(() => {
-    const limitedOptions = [
-      "date",
-      "recruiterName",
-      "jobDesignation",
-      "requirementId",
-    ];
+  useEffect(()=>{
     setFilterOptions(limitedOptions);
-  }, [callingList]);
+  },[callingList]);
+
+  useEffect (()=>{
+    filterData();
+  },[selectedFilters,callingList])
+
 
   const handleUpdate = (candidateId) => {
     setSelectedCandidateId(candidateId);
@@ -143,10 +183,6 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
       tooltip.style.visibility = "hidden";
     }
   };
-
-  useEffect(() => {
-    filterData();
-  }, [selectedFilters, callingList]);
 
   useEffect(() => {
     const filtered = callingList.filter((item) => {
@@ -211,11 +247,60 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     let filteredData = [...callingList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === "requirementId") {
+        if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
-            values.includes(item[option]?.toString())
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
           );
-        } else {
+        } else if(option === "requirementId")
+        {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
+          );
+        }
+        else if(option === "employeeId")
+          {
+            filteredData = filteredData.filter((item) =>
+              values.some((value) =>
+                item[option]
+                  ?.toString()
+                  .toLowerCase()
+                  .includes(value)
+              )
+            );
+          }
+          else if(option === "contactNumber")
+            {
+              filteredData = filteredData.filter((item) =>
+                values.some((value) =>
+                  item[option]
+                    ?.toString()
+                    .toLowerCase()
+                    .includes(value)
+                )
+              );
+            }
+            else if(option === "alternateNumber")
+              {
+                filteredData = filteredData.filter((item) =>
+                  values.some((value) =>
+                    item[option]
+                      ?.toString()
+                      .toLowerCase()
+                      .includes(value)
+                  )
+                );
+              }
+        else {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
@@ -250,6 +335,17 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     });
   };
 
+
+  const handleFilterOptionClick = (option)=>{
+    if(activeFilterOption===option)
+    {
+      setActiveFilterOption(null);
+    }
+    else{
+      setActiveFilterOption(option);
+    }
+  }
+
   const handleSort = (criteria) => {
     if (criteria === sortCriteria) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -260,8 +356,12 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   };
 
   const toggleFilterSection = () => {
+    setShowSearchBar(false);
     setShowFilterSection(!showFilterSection);
   };
+  // const toggleselectedFilters = () => {
+  //   setShowselectedFilters(!showselectedFilters);
+  // };
 
   const getSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
@@ -418,7 +518,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
               <div className="search">
                 <i
                   className="fa-solid fa-magnifying-glass"
-                  onClick={() => setShowSearchBar(!showSearchBar)}
+                  onClick={() => {setShowSearchBar(!showSearchBar);setShowFilterSection(false);}}
                   style={{ margin: "10px", width: "auto", fontSize: "15px" }}
                 ></i>
                 <h5 style={{ color: "gray" }}>Lineup Tracker</h5>
@@ -484,56 +584,36 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
               )}
               {showFilterSection && (
                 <div className="filter-section">
-                  <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
-                  <div className="filter-dropdowns">
-                    {filterOptions.map((option) => (
-                      <div key={option} className="filter-dropdown">
-                        {/* <label htmlFor={option}>{option}</label> */}
-                        <div className="dropdown">
-                          <button className="dropbtn">{option}</button>
-                          <div className="dropdown-content">
-                            <div key={`${option}-All`}>
-                              <input
-                                type="checkbox"
-                                id={`${option}-All`}
-                                value="All"
-                                checked={
-                                  !selectedFilters[option] ||
-                                  selectedFilters[option].length === 0
-                                }
-                                onChange={() =>
-                                  handleFilterSelect(option, "All")
-                                }
-                              />
-                              <label htmlFor={`${option}-All`}>All</label>
-                            </div>
-                            {[
-                              ...new Set(
-                                callingList.map((item) => item[option])
-                              ),
-                            ].map((value) => (
-                              <div key={value}>
-                                <input
-                                  type="checkbox"
-                                  id={`${option}-${value}`}
-                                  value={value}
-                                  checked={
-                                    selectedFilters[option]?.includes(value) ||
-                                    false
-                                  }
-                                  onChange={() =>
-                                    handleFilterSelect(option, value)
-                                  }
-                                />
-                                <label htmlFor={`${option}-${value}`}>
+                  <div className="filter-options-container">
+                    {filterOptions.map((option) => {
+                      const uniqueValues = Array.from(
+                        new Set(callingList.map((item) => item[option]))
+                      );
+                      return (
+                        <div key={option} className="filter-option">
+                        <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
+                          {option}
+                          <span className="filter-icon">&#x25bc;</span>
+                        </button>
+                        {activeFilterOption === option && (
+                          <div className="city-filter">
+                            <div className="optionDiv">
+                              {uniqueValues.map((value) => (
+                                <label key={value} className="selfcalling-filter-value">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedFilters[option]?.includes(value) || false}
+                                    onChange={() => handleFilterSelect(option, value)}
+                                  />
                                   {value}
                                 </label>
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
