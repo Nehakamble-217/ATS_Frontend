@@ -58,7 +58,9 @@ const AfterSelection = ({
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.51:8891/api/ats/157industries/specific-data/${candidateId}`
+
+
+        `http://192.168.1.48:8891/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -76,7 +78,9 @@ const AfterSelection = ({
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-        `http://192.168.1.51:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+
+
+        `http://192.168.1.48:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -178,7 +182,9 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-        "http://192.168.1.51:8891/api/ats/157industries/add-after-selection",
+
+
+        "http://192.168.1.48:8891/api/ats/157industries/add-after-selection",
         {
           method: "POST",
           headers: {

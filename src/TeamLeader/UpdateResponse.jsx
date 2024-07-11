@@ -1,44 +1,50 @@
-/* SwapnilRokade_UpdateResponsePage_05/07 */
-// SwapnilRokade_UpdateResponsePage_UsingLineupListcomponantcss_&_updateResponseFormAdded_With_Functionality_08/07 
 import React, { useEffect, useState } from "react";
 import "./UpdateResponse.css";
 import { Button, Modal } from "react-bootstrap";
-import UpdateResponseFrom from "./UpdateResponseFrom";
 import { data } from "autoprefixer";
-// SwapnilRokade_UpdateResponseForm_Adding_Notification_Functionality_smallChanges_09/07
+import UpdateResponseFrom from "./UpdateResponseFrom";
 
-const UpdateResponse = ({ onSuccessAdd}) => {
+const UpdateResponse = ({ onSuccessAdd }) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
   const [filteredResponseList, setFilteredResponseList] = useState([]);
-  const [showUpdateResponseFrom, setShowUpdateResponseFrom] = useState(false);
+  const [showUpdateResponseForm, setShowUpdateResponseForm] = useState(false);
   const [showUpdateResponseID, setShowUpdateResponseID] = useState();
   const [showEmployeeId, setShowEmployeeId] = useState();
   const [showRequirementId, setShowRequirementId] = useState();
-  const [showSearch,setShowSearch]=useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [filterType, setFilterType] = useState("");
   const [filterValue, setFilterValue] = useState("");
+  const [callingList, setCallingList] = useState([]);
+  const [filteredCallingList, setFilteredCallingList] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
+  const [activeFilterOption, setActiveFilterOption] = useState(null); // New state to track the active filter option
+  const filterOptions = ["candidateId", "candidateName", "jobDesignation","requirementId","employeeId","employeeName"];
+
   useEffect(() => {
     fetchUpdateResponseList();
   }, []);
-
 
   useEffect(() => {
     applyFilters();
   }, [filterType, filterValue, updateResponseList]);
 
-  
+  useEffect(() => {
+    filterData();
+  }, [selectedFilters, callingList]);
+
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
         `http://192.168.1.51:8891/api/ats/157industries/fetch-all-shortlisted-data`
       );
       const data = await res.json();
-      setUpdateResponseList(data);
+      setCallingList(data);
+      setFilteredCallingList(data);
     } catch (err) {
       console.log("Error fetching shortlisted data:", err);
     }
   };
-  console.log(data);
 
   const applyFilters = () => {
     if (!filterType || !filterValue) {
@@ -61,13 +67,12 @@ const UpdateResponse = ({ onSuccessAdd}) => {
   const handleFilterValueChange = (e) => {
     setFilterValue(e.target.value);
   };
+
   const convertToDocumentLink = (byteCode, fileName) => {
     if (byteCode) {
       try {
-        // Detect file type based on file name extension or content
         const fileType = fileName.split(".").pop().toLowerCase();
 
-        // Convert PDF
         if (fileType === "pdf") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -78,7 +83,6 @@ const UpdateResponse = ({ onSuccessAdd}) => {
           return URL.createObjectURL(blob);
         }
 
-        // Convert Word document (assuming docx format)
         if (fileType === "docx") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -91,9 +95,6 @@ const UpdateResponse = ({ onSuccessAdd}) => {
           return URL.createObjectURL(blob);
         }
 
-        // Handle other document types here if needed
-
-        // If file type is not supported
         console.error(`Unsupported document type: ${fileType}`);
         return "Unsupported Document";
       } catch (error) {
@@ -121,15 +122,16 @@ const UpdateResponse = ({ onSuccessAdd}) => {
     setShowUpdateResponseID(candidateId);
     setShowEmployeeId(employeeId);
     setShowRequirementId(requirementId);
-    setShowUpdateResponseFrom(true);
+    setShowUpdateResponseForm(true);
   };
 
   const closeUpdateForm = () => {
     setShowUpdateResponseID(null);
     setShowEmployeeId(null);
     setShowRequirementId(null);
-    setShowUpdateResponseFrom(false);
+    setShowUpdateResponseForm(false);
   };
+
   const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector(".tooltip");
@@ -157,45 +159,160 @@ const UpdateResponse = ({ onSuccessAdd}) => {
     }
   };
 
+  const filterData = () => {
+    let filteredData = [...callingList];
+    Object.entries(selectedFilters).forEach(([option, values]) => {
+      if (values.length > 0) {
+        if (option === "candidateId") {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
+          );
+        } else if(option === "requirementId")
+        {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
+          );
+        }
+        else if(option === "employeeId")
+          {
+            filteredData = filteredData.filter((item) =>
+              values.some((value) =>
+                item[option]
+                  ?.toString()
+                  .toLowerCase()
+                  .includes(value)
+              )
+            );
+          }
+         else {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value.toLowerCase())
+            )
+          );
+        }
+      }
+    });
+    setFilteredCallingList(filteredData);
+  };
+
+  const handleFilterSelect = (option, value) => {
+    setSelectedFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      if (!updatedFilters[option]) {
+        updatedFilters[option] = [];
+      }
+
+      const index = updatedFilters[option].indexOf(value);
+      if (index === -1) {
+        updatedFilters[option] = [...updatedFilters[option], value];
+      } else {
+        updatedFilters[option] = updatedFilters[option].filter(
+          (item) => item !== value
+        );
+      }
+
+      return updatedFilters;
+    });
+  };
+
+  const handleFilterOptionClick = (option) => {
+    if (activeFilterOption === option) {
+      setActiveFilterOption(null); // Hide if already active
+    } else {
+      setActiveFilterOption(option); // Show selected option
+    }
+  };
+
   return (
-        // SwapnilRokade_UpdateResponseForm_AddingFilter_134_to _09/07"
+
+    // SwapnilRokade_UpdateResponse_FilterAdded_7_to_504_10/07"
     <div className="TeamLead-main">
-      {!showUpdateResponseFrom ? (
+      {!showUpdateResponseForm ? (
         <>
           <div className="TeamLead-main-filter-section">
             <div className="TeamLead-main-filter-section-header">
-              <div className="search" onClick={()=>setShowSearch(!showSearch)}><i className="fa-solid fa-magnifying-glass"></i></div>
+              <div className="search" onClick={() => setShowSearch(!showSearch)}>
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </div>
               <h1>Update Response</h1>
               <div>
-                <button className="lineUp-share-btn">Filter</button>
+                <button className="lineUp-share-btn" onClick={() => setShowFilterOptions(!showFilterOptions)}>
+                  Filter
+                </button>
               </div>
-              </div>
-            <div className="TeamLead-main-filter-section-container">
-              {showSearch  ?(<>
-                <input
-                type="text"
-                placeholder="Enter filter value"
-                className="search-input"
-                value={filterValue}
-                onChange={handleFilterValueChange}
-                disabled={!filterType}
-              />
-              <select className="white-Btn" value={filterType} onChange={handleFilterTypeChange}>
-                <option value="">Select Filter Type</option>
-                <option value="candidateId">Candidate ID</option>
-                <option value="candidateName">Candidate Name</option>
-                <option value="requirementId">Requirement ID</option>
-                <option value="requirementCompany">Requirement Company</option>
-                <option value="jobDesignation">Job Designation</option>
-                <option value="employeeName">Employee Name</option>
-                <option value="employeeId">Employee ID</option>
-              </select>
-              </>):null}
-             
             </div>
+            {showSearch && (
+              <div className="TeamLead-main-filter-section-container">
+                <input
+                  type="text"
+                  placeholder="Enter filter value"
+                  className="search-input"
+                  value={filterValue}
+                  onChange={handleFilterValueChange}
+                  disabled={!filterType}
+                />
+                <select className="white-Btn" value={filterType} onChange={handleFilterTypeChange}>
+                  <option value="">Select Filter Type</option>
+                  <option value="candidateId">Candidate ID</option>
+                  <option value="candidateName">Candidate Name</option>
+                  <option value="requirementId">Requirement ID</option>
+                  <option value="requirementCompany">Requirement Company</option>
+                  <option value="jobDesignation">Job Designation</option>
+                  <option value="employeeName">Employee Name</option>
+                  <option value="employeeId">Employee ID</option>
+                </select>
+              </div>
+            )}
+            {showFilterOptions && (
+              <div className="filter-options-container">
+                {filterOptions.map((option) => {
+                  const uniqueValues = Array.from(
+                    new Set(callingList.map((item) => item[option]))
+                  );
+                  return (
+                    <div key={option} className="filter-option">
+                      <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
+                        {option}
+                        <span className="filter-icon">&#x25bc;</span>
+                      </button>
+                      {activeFilterOption === option && (
+                        <div className="city-filter">
+                          <div className="optionDiv">
+                            {uniqueValues.map((value) => (
+                              <label key={value} className="selfcalling-filter-value">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedFilters[option]?.includes(value) || false}
+                                  onChange={() => handleFilterSelect(option, value)}
+                                />
+                                {value}
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
           <div className="attendanceTableData">
-            <table className="attendance-table">
+          <table className="attendance-table">
               <thead>
                 <tr className="attendancerows-head">
                   <th className="attendanceheading">Candidate ID</th>
@@ -222,7 +339,7 @@ const UpdateResponse = ({ onSuccessAdd}) => {
                 </tr>
               </thead>
               <tbody>
-                {filteredResponseList.map((data, index) => (
+                {filteredCallingList.map((data, index) => (
                   <tr key={index} className="attendancerows">
                     <td className="tabledata">{data.candidateId}</td>
                     <td
@@ -385,7 +502,7 @@ const UpdateResponse = ({ onSuccessAdd}) => {
       ) : (
         <>
           <Modal
-            show={showUpdateResponseFrom}
+            show={showUpdateResponseForm}
             onHide={closeUpdateForm}
             size="xl"
             centered

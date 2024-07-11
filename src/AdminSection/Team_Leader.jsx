@@ -32,6 +32,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
+
         `http://192.168.1.48:8891/api/ats/157industries/tl-namesIds`
       );
       setTeamLeaderNames(response.data);
@@ -41,6 +42,7 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
+
       `http://192.168.1.48:8891/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
     );
     setRecruiterUnderTeamLeader(response.data);
@@ -56,6 +58,7 @@ function Accesstable() {
 
   const fetchColumnsNames = async () => {
     const response = await axios.get(
+
       `http://192.168.1.48:8891/api/ats/157industries/fetch-columns-names`
     );
     setColumnName(response.data);
@@ -115,6 +118,7 @@ function Accesstable() {
   };
   const fetchAssignedColumn = async (assigneID) => {
     const response = await axios.get(
+
       `http://192.168.1.48:8891/api/ats/157industries/column-by-id/${assigneID}`
     );
     setFetchupdateAssignedColumn(response.data);
@@ -148,6 +152,7 @@ function Accesstable() {
 
     try {
       const response = await axios.post(
+
         `http://192.168.1.48:8891/api/ats/157industries/${selectedRecruiters}/assign-column`,
         JSON.stringify(selectedOptions),
         {
@@ -189,6 +194,7 @@ function Accesstable() {
     setAssignedColumnsCount(response.data);
   };
   useEffect(() => {
+
     fetchAssignedColumnCount();
   }, [response]);
 
@@ -734,3 +740,9 @@ const UpdateAccessTable = ({
 };
 
 export default Accesstable;
+
+
+
+
+
+

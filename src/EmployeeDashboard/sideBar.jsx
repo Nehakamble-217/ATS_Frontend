@@ -28,6 +28,7 @@ function Sidebar({
   toggleAllMasterSheet,
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
+  toggleReports,
   handleLogout,
   toggelAddRecruiter,
   toggelDisplayNotPad,
@@ -737,6 +738,16 @@ function Sidebar({
                     <span className="sidebar-text">Note Pad</span>
                   </a>
                 </li>
+                <li onClick={toggleReports}>
+                  <a href="#">
+                    <i
+                      className="fa-regular fa-address-book"
+                      style={{ color: "gray" }}
+                    ></i>
+                    <span className="sidebar-text">Reports</span>
+                  </a>
+                </li>
+
                 </>
 ) : null}
                 <li onClick={() => setShowConfirmation(true)}>

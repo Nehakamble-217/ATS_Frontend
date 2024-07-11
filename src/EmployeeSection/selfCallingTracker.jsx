@@ -6,7 +6,11 @@ import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import HashLoader from "react-spinners/HashLoader";
 
-const CallingList = ({ updateState, funForGettingCandidateId ,onSuccessAdd}) => {
+const CallingList = ({
+  updateState,
+  funForGettingCandidateId,
+  onSuccessAdd,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
   let [color, setColor] = useState("#ffcb9b");
   const [filterOptions, setFilterOptions] = useState([]);

@@ -60,7 +60,9 @@ const SelectedCandidate = () => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.51:8891/api/ats/157industries/selected-candidate/${employeeId}`
+
+
+        `http://192.168.1.48:8891/api/ats/157industries/selected-candidate/${employeeId}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -78,7 +80,8 @@ const SelectedCandidate = () => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.51:8891/api/ats/157industries/names-and-ids`
+
+          `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);

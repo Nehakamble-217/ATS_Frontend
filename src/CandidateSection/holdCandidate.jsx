@@ -41,7 +41,9 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.51:8891/api/ats/157industries/names-and-ids`
+
+
+          `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -81,7 +83,9 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     try {
       const response = await fetch(
 
-        `http://192.168.1.51:8891/api/ats/157industries/hold-candidate/${employeeId}`
+
+
+        `http://192.168.1.48:8891/api/ats/157industries/hold-candidate/${employeeId}`
       );
       console.log(employeeId + "---> 777");
       const data = await response.json();
