@@ -1,18 +1,18 @@
 
 /* Ajhar-pdfUtils.jsx-10-07-2024-lineNo-1-to-92 */
 
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { drawText, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import PieChart from "../Reports/reportsPieChart";
 
 
-async function createPdf(data) {
+
+async function createPdf(data,SuperUserName,TeamLeaderName,ManagerName,RecruiterName,DateReportData,totalCandidatepdf,pieChartData) {
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage();
-  
+    const { width, height } = page.getSize();
     const headers=['Status of Candidate','No of Candidate']
 
     const tableRows=data.map((row)=>[row.status,row.CandidateCount.toString()]);
-
-    
 
     const font=await pdfDoc.embedFont(StandardFonts.Helvetica);
     const fontSize=12;
@@ -25,10 +25,48 @@ async function createPdf(data) {
   const tableLeftMargin = 50;
   const cellPadding = 5;
   const borderWidth = 1; // Border width
-  
-
+  const topPosition = height - 50;
+ 
   // Draw table headers with borders
   let y = tableTopMargin;
+  
+  page.drawText(SuperUserName,{
+    x: 50,
+    y: 792 ,
+    size: 12,
+    color: rgb(0, 0, 0)
+  });
+  page.drawText(ManagerName,{
+    x: 50,
+    y: 776,
+    size: 12,
+    color: rgb(0, 0, 0)
+  });
+  page.drawText(TeamLeaderName,{
+    x: 50,
+    y: 760,
+    size: 12,
+    color: rgb(0, 0, 0)
+  });
+  page.drawText(RecruiterName,{
+    x: 50,
+    y: 746,
+    size: 12,
+    color: rgb(0, 0, 0)
+  });
+
+
+
+  page.drawText(DateReportData,{
+    x: 300,
+    y: topPosition,
+    size: 12,
+    color: rgb(0, 0, 0)
+  });
+
+
+ 
+
   headers.forEach((header, columnIndex) => {
     drawTableCell(page, header, tableLeftMargin + sum(columnWidths.slice(0, columnIndex)) + cellPadding, y, columnWidths[columnIndex], rowHeight, fontSizeHeader, font, true);
   });
@@ -43,12 +81,62 @@ async function createPdf(data) {
     });
     y -= rowHeight;
   });
+ page.drawText(totalCandidatepdf,{
+    x: 300,
+    y: 330,
+    size: 14,
+    color: rgb(0, 0, 0)
+  });
+  
+  
+
 
 //   pdfDoc.setTitle('Table Data');
 
     const pdfBytes = await pdfDoc.save();
     
     return URL.createObjectURL(new Blob([pdfBytes], { type: 'application/pdf' }));
+  
+  
+    // Add a new page for the pie chart
+  const piePage = pdfDoc.addPage();
+
+// Draw the pie chart on the new page
+  const chartWidth = 400;
+  const chartHeight = 400;
+  const chartX = (piePage.getWidth() - chartWidth) / 2;
+  const chartY = (piePage.getHeight() - chartHeight) / 2;
+
+  const chartImage = await createChartImage(pieChartData, chartWidth, chartHeight);
+  piePage.drawImage(chartImage, { x: chartX, y: chartY, width: chartWidth, height: chartHeight });
+
+
+}
+
+
+async function createChartImage(chartData, width, height) {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+  
+    const chart = new Chart(canvas, {
+      type: 'pie',
+      data: chartData,
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+      },
+    });
+  
+    await chart.render();
+  
+    // Convert the canvas to an image
+    const image = canvas.toDataURL('image/png');
+  
+    // Clean up the canvas
+    canvas.remove();
+  
+    return image;
   }
 
   function sum(arr) {
@@ -87,6 +175,9 @@ async function createPdf(data) {
     textAlign: 'center', // Adjust text alignment as needed (left, right, center)
     verticalAlign: 'bottom', // Adjust vertical alignment as needed (top, middle, bottom)
   });
+  
+ 
+  
 }
   
   export { createPdf };
