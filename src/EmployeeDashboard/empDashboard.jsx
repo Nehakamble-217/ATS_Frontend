@@ -40,6 +40,7 @@ import UpdateResponse from "../TeamLeader/UpdateResponse";
 
 import PayRollMain from "../PayRoll/payRollMain";  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
 import SendClientEmail from "../AdminSection/SendClientEmail";
+import LineGraph from "../SuperUser/profitLoseChart"; /* ArshadAttar_EmpDashboard_Added_LineGraph_11/07/2024_LineNo_43 */
 
 
 const EmpDashboard = ({ userGroup }) => {
@@ -85,6 +86,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showUpdateResponse, setShowUpdateResponse] = useState(false);
   const [showPayRoll, setShowPayRoll] = useState(false);  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
   const [showSendClientMail, setshowSendClientMail] = useState(false);
+  const [showProfitLoss, setShowProfitLoss] = useState(false);  /* ArshadAttar_EmpDashboard_Added_showProfitLoss_11/07/2024_LineNo_89 */
 
 
   const { employeeId } = useParams();
@@ -212,7 +214,15 @@ const EmpDashboard = ({ userGroup }) => {
     setShowLineupExcelList(false);
     setshowSendClientMail(false)
     setShowPayRoll(false)  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+    setShowProfitLoss(false)/* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_217 */
   };
+
+
+   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
+  const toggeleProfitChart =() =>{
+    resetAllToggles();
+    setShowProfitLoss(!showProfitLoss)
+  }
 
   /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
   const togglePayRoll = () => {
@@ -423,6 +433,7 @@ const EmpDashboard = ({ userGroup }) => {
         successAddUpdateResponse={successAddUpdateResponse}
         togglePayRoll={togglePayRoll}   /* ArshadAttar_EmpDashboard_AddedPayrollToggele_10/07/2024_LineNo_402 */
         toggleSendCandidate={toggleSendCandidate}
+        toggeleProfitChart={toggeleProfitChart}/* ArshadAttar_EmpDashboard_Added_toggeleProfitChart_11/07/2024_LineNo_428 */
       />
 
       <div className="empDash-main-content">
@@ -470,11 +481,12 @@ const EmpDashboard = ({ userGroup }) => {
           )}
 
         </div>
+
         {/* ArshadAttar_EmpDashboard_AddedPayroll_10/07/2024_OnlyPayRoll_Div_LineNo_450-453 */}
-        <div> {
-          showPayRoll && <PayRollMain></PayRollMain>
-        }
-        </div>
+        <div>{showPayRoll && <PayRollMain></PayRollMain>}</div>
+
+       {/* ArshadAttar_EmpDashboard_Added_LineGraph_11/07/2024_OnlyLineGraph_Div_LineNo_488-489 */}
+        <div style={{border:"1px solid black"}}>{showProfitLoss && <LineGraph></LineGraph>}</div>
 
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
 

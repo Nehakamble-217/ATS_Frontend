@@ -19,6 +19,7 @@
     "aos": "^2.3.4",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.3",
     "fortawesome": "^0.0.1-security",
     "html2canvas": "^1.4.1",
     "io": "^1.5.0",
