@@ -1,20 +1,16 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://192.168.1.48:8891/api/ats/157industries";
+const API_BASE_URL = "http://localhost:8891/api/ats/157industries";
 
 
 
 // -------------------------------------------------------------
 
-
-const API_URL = "http://192.168.1.54:8080/payroll";
-
 export const addEmployee = (employee) => {
-  return axios.post(`${API_URL}/add`, employee);
+  return axios.post(`${API_BASE_URL}/add-payroll-details`, employee);
 };
-
 export const getAllEmployees = () => {
-  return axios.get(`${API_URL}/findAll`).catch((error) => {
+  return axios.get(`${API_BASE_URL}/findAll-all-payrolls`).catch((error) => {
     if (error.response) {
       console.error("Error response:", error.response.data);
     } else if (error.request) {

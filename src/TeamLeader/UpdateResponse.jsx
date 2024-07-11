@@ -315,6 +315,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
           <table className="attendance-table">
               <thead>
                 <tr className="attendancerows-head">
+                  <th className="attendanceheading">Sr No</th>
                   <th className="attendanceheading">Candidate ID</th>
                   <th className="attendanceheading">Candidate Name</th>
                   <th className="attendanceheading">Candidate Email</th>
@@ -341,6 +342,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
               <tbody>
                 {filteredCallingList.map((data, index) => (
                   <tr key={index} className="attendancerows">
+                    <td className="tabledata">{index +1}</td>
                     <td className="tabledata">{data.candidateId}</td>
                     <td
                       className="tabledata"

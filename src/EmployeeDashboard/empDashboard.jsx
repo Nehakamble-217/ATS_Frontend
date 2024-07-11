@@ -379,7 +379,7 @@ const EmpDashboard = ({ userGroup }) => {
   const toggleSendCandidate = () => {
     resetAllToggles();
     setshowSendClientMail(!showSendClientMail);
-  };
+};
 
   return (
     <div
