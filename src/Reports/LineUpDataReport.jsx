@@ -9,12 +9,14 @@ const ShortListedCandidates=({filteredLineUpItems})=>{
     
     return(
         <div className="Ludr-main-div">
-            <div className="search">
+            <div className="ludr-search">
             <i
               className="fa-solid fa-magnifying-glass"
-            //   onClick={() => setShowSearchBar(!showSearchBar)}
+              onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px"  }}
             ></i>
+            </div>
+
                 <div className='lineUpData-shortlisted-Candidate'>
                 <h5 >
                     Shortlisted Candidate
@@ -40,7 +42,6 @@ const ShortListedCandidates=({filteredLineUpItems})=>{
                     </button>
 
                 </div> */}
-            </div>
 
             <table id='shortlisted-table-id' className='Ludr-attendance-table'>
                 <thead>

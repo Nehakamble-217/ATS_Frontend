@@ -42,31 +42,56 @@ const LineUpDataDummy=[
   {no:17,date:'1/2/2024',status:'yettoschedule',Time:'12:00',CandidateId:104,RecruiterName:"Sanika Tendulkar",CandidateName:"Sarika Shetye",CandidateEmail:"abc@gmail.com",ContactNo:"9823456781",WhatsappNo:"9823456781",SourceName:"ABC",JobDesignation:"Asp.Net Developer" ,JobId:22,ApplyingCompany:"Infosys",CommunicationRating:5,CurrentLocation:"Pune"},
   {no:18,date:'1/2/2024',status:'noshow',Time:'12:00',CandidateId:104,RecruiterName:"Sanika Tendulkar",CandidateName:"Sarika Shetye",CandidateEmail:"abc@gmail.com",ContactNo:"9823456781",WhatsappNo:"9823456781",SourceName:"ABC",JobDesignation:"Asp.Net Developer" ,JobId:22,ApplyingCompany:"Infosys",CommunicationRating:5,CurrentLocation:"Pune"}
 
-
-
 ]
+// Data for pdf
 
-const data = [
-  { status: 'Selected Candidate', CandidateCount: 30},
-  { status: 'Rejected Candidate', CandidateCount: 25 },
-  { status: 'LineUp Candidate', CandidateCount: 40 },
-  { status: 'Hold Candidate', CandidateCount: 17 },
-  { status: 'Dropout Candidate', CandidateCount: 6 },
-  { status: 'Join Candidate', CandidateCount: 40 },
-  { status: 'Not Join Candidate', CandidateCount: 20 },
-  { status: 'Active Candidate', CandidateCount: 40 },
-  { status: 'InActive Candidate', CandidateCount: 40 },
-  { status: 'Round 1 Candidate', CandidateCount: 10 },
-  { status: 'Round 2 Candidate', CandidateCount: 40 },
-  { status: 'Round 3 Candidate', CandidateCount: 12 },
-  { status: 'Round 4 Candidate', CandidateCount: 14 },
-  { status: 'Round 5 Candidate', CandidateCount: 32 },
-  { status: 'Round 6 Candidate', CandidateCount: 33 },
+const DateReportData=`Last 6 months report from 1/2/2004 to 1/7/2004`;
+const SuperUserName="SuperUser Name : Avni Deshpande";
+const ManagerName="Manager Name : Amit Deshpande";
+const TeamLeaderName="TeamLeader Name : Shreya Sawant";
+const RecruiterName="Recruiter Name :Saniya Mirza";
 
-  { status: 'Yet To Schedule Candidate', CandidateCount: 33 },
-  { status: 'No Show Candidate', CandidateCount: 33 },
-  {status:'Total',CandidateCount:200},
+const LineUpselectedCount = LineUpDataDummy.filter(item => item.status === 'selected').length;
+const LineUprejectedCount = LineUpDataDummy.filter(item => item.status === 'rejected').length;
+const LineUplineupCount = LineUpDataDummy.filter(item => item.status === 'lineup').length;
+const LineUpholdCount = LineUpDataDummy.filter(item => item.status === 'hold').length;
+const LineUpdropoutCount = LineUpDataDummy.filter(item => item.status === 'dropout').length;
+const LineUpjoinCount = LineUpDataDummy.filter(item => item.status === 'join').length;
+const LineUpnotjoinCount = LineUpDataDummy.filter(item => item.status === 'notjoin').length;
+const LineUpactiveCount = LineUpDataDummy.filter(item => item.status === 'active').length;
+const LineUpinactiveCount = LineUpDataDummy.filter(item => item.status === 'inactive').length;
+const LineUpl1Count = LineUpDataDummy.filter(item => item.status === 'l1').length;
+const LineUpl2Count = LineUpDataDummy.filter(item => item.status === 'l2').length;
+const LineUpl3Count = LineUpDataDummy.filter(item => item.status === 'l3').length;
+const LineUpl4Count = LineUpDataDummy.filter(item => item.status === 'l4').length;
+const LineUpl5Count = LineUpDataDummy.filter(item => item.status === 'l5').length;
+const LineUpl6Count = LineUpDataDummy.filter(item => item.status === 'l6').length;
+const LineUpyettoScheduleCount = LineUpDataDummy.filter(item => item.status === 'yettoschedule').length;
+const LineUpnoshowCount = LineUpDataDummy.filter(item => item.status === 'noshow').length;
 
+const totalCandidateCount=LineUpselectedCount+LineUprejectedCount+LineUplineupCount+LineUpholdCount+LineUpdropoutCount+LineUpjoinCount+LineUpnotjoinCount+LineUpactiveCount+LineUpinactiveCount+LineUpl1Count+LineUpl2Count+LineUpl3Count+LineUpl4Count+LineUpl5Count+LineUpl6Count+LineUpyettoScheduleCount+LineUpnoshowCount;
+const totalCandidatepdf="Total Candidate :"+totalCandidateCount;
+
+const datadistributed = [
+
+  { status: 'Selected Candidate', CandidateCount: LineUpselectedCount},
+  { status: 'Rejected Candidate', CandidateCount: LineUprejectedCount },
+  { status: 'LineUp Candidate', CandidateCount: LineUplineupCount },
+  { status: 'Hold Candidate', CandidateCount: LineUpholdCount },
+  { status: 'Dropout Candidate', CandidateCount: LineUpdropoutCount },
+  { status: 'Join Candidate', CandidateCount: LineUpjoinCount },
+  { status: 'Not Join Candidate', CandidateCount: LineUpnotjoinCount },
+  { status: 'Active Candidate', CandidateCount: LineUpactiveCount },
+  { status: 'InActive Candidate', CandidateCount: LineUpinactiveCount },
+  { status: 'Round 1 Candidate', CandidateCount: LineUpl1Count },
+  { status: 'Round 2 Candidate', CandidateCount: LineUpl2Count },
+  { status: 'Round 3 Candidate', CandidateCount: LineUpl3Count },
+  { status: 'Round 4 Candidate', CandidateCount: LineUpl4Count },
+  { status: 'Round 5 Candidate', CandidateCount: LineUpl5Count },
+  { status: 'Round 6 Candidate', CandidateCount: LineUpl6Count },
+  { status: 'Yet to Schedule Candidate', CandidateCount: LineUpyettoScheduleCount },
+  { status: 'No show Candidate', CandidateCount: LineUpnoshowCount },
+  
 ];
 
 
@@ -115,14 +140,47 @@ const Attendance = () => {
   const LineUpl4Count = LineUpItems.filter(item => item.status === 'l4').length;
   const LineUpl5Count = LineUpItems.filter(item => item.status === 'l5').length;
   const LineUpl6Count = LineUpItems.filter(item => item.status === 'l6').length;
-
   const LineUpyettoscheduleCount = LineUpItems.filter(item => item.status === 'yettoschedule').length;
   const LineUpnoshowCount = LineUpItems.filter(item => item.status === 'noshow').length;
 
   const handleDownloadPdf = async () => {
     try {
       // Replace this with your logic to create or fetch the PDF content
-      const pdfContent = await createPdf(data); // Example function to create PDF content
+
+      const pieChartData = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Cyan', 'Magenta', 'Lime', 'Pink', 'Teal', 'Lavender'],
+        datasets: [
+          {
+            label: 'My First Dataset',
+            data: [12, 19, 10, 20, 10, 15, 9, 6, 4, 7, 11, 14],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(153, 102, 255, 0.6)',
+              'rgba(255, 159, 64, 0.6)',
+              'rgba(0, 255, 255, 0.6)',
+              'rgba(255, 0, 255, 0.6)',
+              'rgba(0, 255, 0, 0.6)',
+              'rgba(255, 192, 203, 0.6)',
+              'rgba(0, 128, 128, 0.6)',
+              'rgba(230, 230, 250, 0.6)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    
+  };
+
+      const pdfContent = await createPdf(datadistributed,SuperUserName,ManagerName,TeamLeaderName,RecruiterName,DateReportData,totalCandidatepdf,pieChartData); // Example function to create PDF content
       
       
 
@@ -321,6 +379,11 @@ const Attendance = () => {
           </div>     
    
        
+      </div>
+
+      <div>
+      <ReportsPieChart  data={datadistributed}/>
+
       </div>
 
       <div className='crt-shortlisted-candidates-css'>

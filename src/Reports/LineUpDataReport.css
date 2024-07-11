@@ -4,6 +4,7 @@
 .Ludr-main-div{
   /* justify-content: start;
   align-items: start; */
+  
 }
   
  
@@ -13,7 +14,11 @@
     margin-top: 20px;
   }
   
-  /* Style the filter dropdowns */
+  .ludr-search{
+    display: flex;
+    align-items: start;
+    margin-bottom: -25px;
+  }
 
   
   /* Style the dropdown button */
@@ -78,6 +83,7 @@
   .Ludr-attendance-table {
     width: 30%;
     border-collapse: collapse;
+    overflow-x: auto;
   }
   
   .Ludr-attendance-table thead th {
@@ -202,7 +208,10 @@
     margin-top: 30px;
   }
   .lineUpData-shortlisted-Candidate{
+    display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center;
     color: gray;
     padding-top: 5px;
     /* align-items: start; */
