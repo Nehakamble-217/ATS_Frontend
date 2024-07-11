@@ -8,6 +8,7 @@ import axios from "axios";
 import { PDFDocument } from "pdf-lib";
 
 const AddCompanyDetails = () => {
+  /*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_11*/
   const [showEmailButton, setShowEmailButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -166,7 +167,7 @@ const AddCompanyDetails = () => {
     }
   };
   const handleClose = () => setShowModal(false);
-
+  /*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_170*/
   return (
     <>
       <main className="job-desc">
@@ -195,7 +196,6 @@ const AddCompanyDetails = () => {
                       type="file"
                       name="companyLogoImg"
                       onChange={handleChange}
-                      value={formData.companyLogoImg}
                       style={{ marginLeft: "50px" }}
                     />
                   </div>
@@ -315,6 +315,7 @@ const AddCompanyDetails = () => {
                       name="companyEmail"
                       id=""
                       value={formData.companyEmail}
+                      onChange={handleChange}
                       placeholder="Enter Company Email Id"
                       style={{ marginLeft: "45px" }}
                     />
@@ -615,15 +616,6 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                   <div className="field">
-                    <label> GST No</label>
-                    <input
-                      type="text"
-                      name="totalGst"
-                      value={formData.totalGst}
-                      onChange={handleChange}
-                      style={{ height: "30px" }}
-                    />
-
                     <label>IGST NO</label>
                     <input
                       type="text"
@@ -632,20 +624,17 @@ const AddCompanyDetails = () => {
                       onChange={handleChange}
                       style={{ height: "30px" }}
                     />
-                  </div>
-                </div>
-                <div className="field-Row-white">
-                  <div className="field">
-                    <label>Total Gst</label>
+                    <label> GST No</label>
                     <input
                       type="text"
                       name="totalGst"
-                      placeholder="Enter Total GST"
                       value={formData.totalGst}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
+                      style={{ height: "30px" }}
                     />
                   </div>
+                </div>
+                <div className="field-Row-white">
                   <div className="field">
                     <label>Grand Total</label>
                     <input
@@ -655,6 +644,17 @@ const AddCompanyDetails = () => {
                       value={formData.grandTotal}
                       onChange={handleChange}
                       style={{ marginLeft: "45px" }}
+                    />
+                  </div>
+                  <div className="field">
+                    <label>Account Number </label>
+                    <input
+                      type="text"
+                      name="accountNumber"
+                      placeholder="Enter Account No."
+                      value={formData.accountNumber}
+                      onChange={handleChange}
+                      style={{ marginLeft: "60px" }}
                     />
                   </div>
                 </div>
@@ -684,17 +684,6 @@ const AddCompanyDetails = () => {
                 </div>
                 <div className="field-Row-white">
                   <div className="field">
-                    <label>Account Number </label>
-                    <input
-                      type="text"
-                      name="accountNumber"
-                      placeholder="Enter Account No."
-                      value={formData.accountNumber}
-                      onChange={handleChange}
-                      style={{ marginLeft: "60px" }}
-                    />
-                  </div>
-                  <div className="field">
                     <label>IFSC</label>
                     <input
                       type="text"
@@ -703,7 +692,8 @@ const AddCompanyDetails = () => {
                       value={formData.ifscCode}
                       onChange={handleChange}
                     />
-
+                  </div>
+                  <div className="field">
                     <label>MICR No</label>
                     <input
                       type="text"
@@ -733,6 +723,7 @@ const AddCompanyDetails = () => {
           </form>
         </section>
       </main>
+      {/*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_737-740*/}
       {showModal && (
         <SendEmailPopup show={showModal} handleClose={handleClose} />
       )}
@@ -740,6 +731,7 @@ const AddCompanyDetails = () => {
   );
 };
 
+/*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_744*/
 const SendEmailPopup = ({ show, handleClose }) => {
   const [to, setTo] = useState("");
   const [cc, setCc] = useState("");
@@ -911,5 +903,6 @@ const SendEmailPopup = ({ show, handleClose }) => {
     </>
   );
 };
+/*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_917*/
 
 export default AddCompanyDetails;
