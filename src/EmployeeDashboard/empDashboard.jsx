@@ -39,6 +39,9 @@ import UpdateResponse from "../TeamLeader/UpdateResponse";
 
 import PayRollMain from "../PayRoll/payRollMain";  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
 import SendClientEmail from "../AdminSection/SendClientEmail";
+import InvoiceTable from "./invoice";
+import InvoiceReport from "./invoiceReport";
+import InvoicePdf from "./invoicePdf";
 
 
 const EmpDashboard = ({ userGroup }) => {
@@ -83,6 +86,10 @@ const EmpDashboard = ({ userGroup }) => {
   const [showUpdateResponse, setShowUpdateResponse] = useState(false);
   const [showPayRoll, setShowPayRoll] = useState(false);  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
   const [showSendClientMail, setshowSendClientMail] = useState(false);
+  const [showInvoice,setShowInvoice]=useState(false)
+  const [showInvoiceReport,setShowInvoiceReport]=useState(false)
+  const [showInvoicePdf,setShowInvoicePdf]=useState(false)
+  /*ArbazPathan_EmpDashboard_AddedInvoiceToggeleFunction_11/07/2024_LineNo_87-207 */
 
 
   const { employeeId } = useParams();
@@ -203,6 +210,9 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCallingExcelList(false);
     setShowLineupExcelList(false);
     setshowSendClientMail(false)
+     setShowInvoice(false)
+     setShowInvoicePdf(false)
+     setShowInvoiceReport(false) /*ArbazPathan_EmpDashboard_AddedInvoiceToggeleFunction_11/07/2024_LineNo_198-208 */
     setShowPayRoll(false)  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
   };
 
@@ -372,6 +382,18 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setshowSendClientMail(!showSendClientMail);
   };
+const toggleInvoice =()=>{
+  resetAllToggles();
+  setShowInvoice(!showInvoice);
+}
+const toggleInvoiceReport =()=>{
+  resetAllToggles();
+  setShowInvoiceReport(!showInvoiceReport);
+}
+const handleInvoicePdf=()=>{
+  resetAllToggles();
+  setShowInvoicePdf(!showInvoicePdf);
+}
 
   return (
     <div
@@ -414,6 +436,9 @@ const EmpDashboard = ({ userGroup }) => {
         successAddUpdateResponse={successAddUpdateResponse}
         togglePayRoll={togglePayRoll}   /* ArshadAttar_EmpDashboard_AddedPayrollToggele_10/07/2024_LineNo_402 */
         toggleSendCandidate={toggleSendCandidate}
+         /* ArbazPathan_EmpDashboard_AddedInvoice_InvoiceRepsortToggele_11/07/2024_LineNo_426-426 */
+        toggleInvoice={toggleInvoice}
+        toggleInvoiceReport={toggleInvoiceReport}
       />
 
       <div className="empDash-main-content">
@@ -510,6 +535,9 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showHome && <Home />}</div>
         <div>{showAddedResumes && <AddResumes></AddResumes>}</div>
         <div>{showShortListedCandidates && <ShortListedCandidates />}</div>
+        <div>{showInvoice && <InvoiceTable/>}</div>
+        <div>{showInvoiceReport && <InvoiceReport handleInvoicePdf={handleInvoicePdf}/>}</div>
+        <div>{showInvoicePdf && <InvoicePdf/>}</div>
         <div>
           {showUpdateCallingTracker && (
             <UpdateCallingTracker candidateId={candidateIdForUpdate} />

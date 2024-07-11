@@ -44,7 +44,7 @@ const [experience, setExperience] = useState('');
 
 
   useEffect(() => {
-    fetch("http://192.168.1.48:8891/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.51:8891/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -182,7 +182,7 @@ const handleInputSearch = (event) => {
 
   const toggleJobDescription = (requirementId) => {
     console.log(requirementId + "before Api");
-    fetch(`http://192.168.1.48:8891/api/ats/157industries/requirement-info/${requirementId}`)
+    fetch(`http://192.168.1.51:8891/api/ats/157industries/requirement-info/${requirementId}`)
 
       .then((response) => response.json())
       .then((data) => {

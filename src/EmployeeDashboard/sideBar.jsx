@@ -42,6 +42,9 @@ function Sidebar({
   successAddUpdateResponse,
   togglePayRoll, /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_42 */
   toggleSendCandidate,
+  toggleInvoice,
+  toggleInvoiceReport
+  /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
 
 }) {
 
@@ -470,8 +473,8 @@ function Sidebar({
                       className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
                         }`}
                     >
-                       
-
+                      {jobRoles !="TeamLeader" ? (
+                        <>
                         { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
                       <li
                         onClick={togglePayRoll}
@@ -479,6 +482,22 @@ function Sidebar({
                       >
                         <a href="#">
                           <span className="sidebar-text">Pay Roll</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={toggleInvoice}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text"> Make Invoice</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={toggleInvoiceReport}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text"> Invoice Report</span>
                         </a>
                       </li>
                       { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
@@ -493,8 +512,9 @@ function Sidebar({
                           <span className="sidebar-text">Assign Columns</span>
                         </a>
                       </li>
+                      </>
 
-
+):null }
 
                       <li
                         onClick={toggleAllMasterSheet}

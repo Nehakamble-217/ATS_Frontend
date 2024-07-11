@@ -30,7 +30,7 @@ const UpdateResponse = ({ onSuccessAdd}) => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `http://192.168.1.48:8891/api/ats/157industries/fetch-all-shortlisted-data`
+        `http://192.168.1.51:8891/api/ats/157industries/fetch-all-shortlisted-data`
       );
       const data = await res.json();
       setUpdateResponseList(data);
