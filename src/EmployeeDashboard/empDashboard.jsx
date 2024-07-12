@@ -38,12 +38,13 @@ import CallingExcelList from "../Excel/callingExcelData";
 import LineupExcelData from "../Excel/lineupExcelData";
 import UpdateResponse from "../TeamLeader/UpdateResponse";
 
-import PayRollMain from "../PayRoll/payRollMain";  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+import PayRollMain from "../PayRoll/payRollMain"; /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
 import SendClientEmail from "../AdminSection/SendClientEmail";
 import InvoiceTable from "./invoice";
 import InvoiceReport from "./invoiceReport";
 import InvoicePdf from "./invoicePdf";
 
+import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_43*/
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -86,20 +87,27 @@ const EmpDashboard = ({ userGroup }) => {
   const [showCallingExcelList, setShowCallingExcelList] = useState(false);
   const [showLineupExcelList, setShowLineupExcelList] = useState(false);
   const [showUpdateResponse, setShowUpdateResponse] = useState(false);
-  const [showPayRoll, setShowPayRoll] = useState(false);  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+  const [showPayRoll, setShowPayRoll] =
+    useState(
+      false
+    ); /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
   const [showSendClientMail, setshowSendClientMail] = useState(false);
   const [showInvoice,setShowInvoice]=useState(false)
   const [showInvoiceReport,setShowInvoiceReport]=useState(false)
   const [showInvoicePdf,setShowInvoicePdf]=useState(false)
   /*ArbazPathan_EmpDashboard_AddedInvoiceToggeleFunction_11/07/2024_LineNo_87-207 */
 
+  const [showAddCompany, setShowAddCompany] =
+    useState(
+      false
+    ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
 
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
   const [archived, setArchived] = useState(0);
-  
-  const [successAddUpdateResponse,setSuccessUpdateResponse]=useState(false)
+
+  const [successAddUpdateResponse, setSuccessUpdateResponse] = useState(false);
 
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
@@ -113,7 +121,6 @@ const EmpDashboard = ({ userGroup }) => {
   };
   useEffect(() => {
     setSuccessfulDataAdditions(false);
-    
   }, [successfulDataAdditions]);
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions End LineNo:-93 Date:-01/07
 
@@ -122,17 +129,16 @@ const EmpDashboard = ({ userGroup }) => {
     setJobRoles(role);
   };
 
-
-  const handleSuccessAdd=(res)=>{
+  const handleSuccessAdd = (res) => {
     setSuccessUpdateResponse(res);
-  }
+  };
   //Akash_Pawar_EmpDashboard_senderinformation_09/07_113
 
-  const [clientEmailSender,setClientEmailSender]=useState();
-  const handleEmailSenderInformation=(data)=>{
+  const [clientEmailSender, setClientEmailSender] = useState();
+  const handleEmailSenderInformation = (data) => {
     setClientEmailSender(data);
-  }
-  
+  };
+
   const [id, setId] = useState(0);
 
   const navigator = useNavigate();
@@ -205,7 +211,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowShortListdNav(false);
     setShowAddEmployee(false);
     setShowNotePad(false);
-    setShowReports(false)
+    setShowReports(false);
     setShowProfile(false);
     setShowAddedResumes(false);
     setIncentive(false);
@@ -222,13 +228,26 @@ const EmpDashboard = ({ userGroup }) => {
      setShowInvoicePdf(false)
      setShowInvoiceReport(false) /*ArbazPathan_EmpDashboard_AddedInvoiceToggeleFunction_11/07/2024_LineNo_198-208 */
     setShowPayRoll(false)  /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+    setshowSendClientMail(false);
+    setShowPayRoll(
+      false
+    ); /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
+    setShowAddCompany(
+      false
+    ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
   };
 
   /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_198-202 */
   const togglePayRoll = () => {
     resetAllToggles();
-    setShowPayRoll(!showPayRoll)
-  }
+    setShowPayRoll(!showPayRoll);
+  };
+
+  /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_233-235*/
+  const toggleAddCompany = () => {
+    resetAllToggles();
+    setShowAddCompany(!showPayRoll);
+  };
 
   const funForUpdateSelfCalling = () => {
     resetAllToggles();
@@ -240,10 +259,10 @@ const EmpDashboard = ({ userGroup }) => {
     setUpdateSelfCalling(true);
   };
 
-  const toggleUpdateResponse=()=>{
+  const toggleUpdateResponse = () => {
     resetAllToggles();
     setShowUpdateResponse(true);
-  }
+  };
 
   const toggleInterviewDate = () => {
     resetAllToggles();
@@ -403,10 +422,12 @@ const handleInvoicePdf=()=>{
   setShowInvoicePdf(!showInvoicePdf);
 }
 
+
   return (
     <div
-      className={`grid-container ${openSidebarToggle ? "sidebar-open" : "sidebar-closed"
-        }`}
+      className={`grid-container ${
+        openSidebarToggle ? "sidebar-open" : "sidebar-closed"
+      }`}
     >
       <Sidebar
         userGroup={userGroup}
@@ -443,11 +464,18 @@ const handleInvoicePdf=()=>{
         toggleUpdateResponse={toggleUpdateResponse}
         jobRoles={jobRoles}
         successAddUpdateResponse={successAddUpdateResponse}
-        togglePayRoll={togglePayRoll}   /* ArshadAttar_EmpDashboard_AddedPayrollToggele_10/07/2024_LineNo_402 */
+        togglePayRoll={
+          togglePayRoll
+        } /* ArshadAttar_EmpDashboard_AddedPayrollToggele_10/07/2024_LineNo_402 */
         toggleSendCandidate={toggleSendCandidate}
          /* ArbazPathan_EmpDashboard_AddedInvoice_InvoiceRepsortToggele_11/07/2024_LineNo_426-426 */
         toggleInvoice={toggleInvoice}
         toggleInvoiceReport={toggleInvoiceReport}
+
+        toggleAddCompany={
+          toggleAddCompany
+        } /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_444*/
+
       />
 
       <div className="empDash-main-content">
@@ -462,7 +490,6 @@ const handleInvoicePdf=()=>{
             onCurrentEmployeeJobRoleSet={handleJobRoles}
             jobRole={jobRoles}
             emailSenderInformation={handleEmailSenderInformation}
-
           />
         </div>
         <div>
@@ -480,8 +507,8 @@ const handleInvoicePdf=()=>{
             />
           )}
         </div>
-        <div >{showShortListedNav && <ShortlistedNavbar />}</div>
-        <div >
+        <div>{showShortListedNav && <ShortlistedNavbar />}</div>
+        <div>
           {showShortlistedCandidateData && (
             <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
           )}
@@ -493,13 +520,9 @@ const handleInvoicePdf=()=>{
               funForGettingCandidateId={gettingCandidateIdForUpdate}
             />
           )}
-
         </div>
         {/* ArshadAttar_EmpDashboard_AddedPayroll_10/07/2024_OnlyPayRoll_Div_LineNo_450-453 */}
-        <div> {
-          showPayRoll && <PayRollMain></PayRollMain>
-        }
-        </div>
+        <div> {showPayRoll && <PayRollMain></PayRollMain>}</div>
 
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
 
@@ -554,8 +577,17 @@ const handleInvoicePdf=()=>{
           )}
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
-        <div>{showUpdateResponse&&<UpdateResponse onSuccessAdd={handleSuccessAdd}/>}</div>
-        <div>{showSendClientMail && <SendClientEmail clientEmailSender={clientEmailSender}/>}</div>
+        <div>
+          {showUpdateResponse && (
+            <UpdateResponse onSuccessAdd={handleSuccessAdd} />
+          )}
+        </div>
+        <div>
+          {showSendClientMail && (
+            <SendClientEmail clientEmailSender={clientEmailSender} />
+          )}
+        </div>
+        <div>{showAddCompany && <AddCompanyDetails />}</div>
       </div>
     </div>
   );

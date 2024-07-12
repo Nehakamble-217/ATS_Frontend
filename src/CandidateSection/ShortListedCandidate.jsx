@@ -5,7 +5,7 @@ import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import InterviewDates from "../EmployeeSection/interviewDate";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
+// SwapnilRokade_ShortListedCandidates_ModifyFilters_11/07
 const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
@@ -28,10 +28,55 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [activeFilterOption, setActiveFilterOption] = useState(null);
 
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
   const navigator = useNavigate();
+  const limitedOptions = [
+    "alternateNumber",
+    "availabilityForInterview",
+    "callingFeedback",
+    "callingTrackerId",
+    "candidateAddedTime",
+    "candidateEmail",
+    "candidateId",
+    "candidateName",
+    "communicationRating",
+    "companyName",
+    "contactNumber",
+    "currentCtcLakh",
+    "currentCtcThousand",
+    "currentLocation",
+    "date",
+    "dateOfBirth",
+    "empId",
+    "expectedCtcLakh",
+    "expectedCtcThousand",
+    "experienceMonth",
+    "experienceYear",
+    "extraCertification",
+    "feedBack",
+    "finalStatus",
+    "fullAddress",
+    "gender",
+    "holdingAnyOffer",
+    "incentive",
+    "interviewTime",
+    "jobDesignation",
+    "msgForTeamLeader",
+    "noticePeriod",
+    "offerLetterMsg",
+    "oldEmployeeId",
+    "qualification",
+    "recruiterName",
+    "relevantExperience",
+    "requirementCompany",
+    "requirementId",
+    "selectYesOrNo",
+    "sourceName",
+    "yearOfPassing"
+];
 
   useEffect(() => {
     fetchShortListedData();
@@ -68,6 +113,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
         `http://192.168.1.48:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
       );
       const data = await response.json();
+
       setShortListedData(data);
       setFilteredShortListed(data);
       console.log(data);
@@ -190,27 +236,19 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 
   };
   useEffect(() => {
-    const options = Object.keys(filteredShortListed[0] || {}).filter(
-      (key) => key !== "candidateId"
-    );
+   const options = Object.keys(filteredShortListed[0] || {}).filter((key) =>limitedOptions.includes(key));
     setFilterOptions(options);
   }, [filteredShortListed]);
 
   useEffect(() => {
-    console.log("Selected Filters:", selectedFilters);
+    // console.log("Selected Filters:", selectedFilters);
   }, [selectedFilters]);
 
   useEffect(() => {
-    console.log("Filtered ShortListed List:", filteredShortListed);
+    // console.log("Filtered ShortListed List:", filteredShortListed);
   }, [filteredShortListed]);
 
   useEffect(() => {
-    const limitedOptions = [
-      "date",
-      "recruiterName",
-      "jobDesignation",
-      "requirementId",
-    ];
     setFilterOptions(limitedOptions);
   }, [shortListedData]);
 
@@ -264,6 +302,17 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     setFilteredShortListed(filtered);
   }, [searchTerm, shortListedData]);
 
+  const handleFilterOptionClick = (option)=>{
+    if(activeFilterOption===option)
+    {
+      setActiveFilterOption(null);
+    }
+    else{
+      setActiveFilterOption(option);
+    }
+  }
+
+
   useEffect(() => {
     if (sortCriteria) {
       const sortedList = [...filteredShortListed].sort((a, b) => {
@@ -288,11 +337,59 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     let filteredData = [...shortListedData];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === "requirementId") {
+        if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
-            values.includes(item[option]?.toString())
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
           );
-        } else {
+        } else if(option === "requirementId")
+        {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
+          );
+        }
+        else if(option === "employeeId")
+          {
+            filteredData = filteredData.filter((item) =>
+              values.some((value) =>
+                item[option]
+                  ?.toString()
+                  .toLowerCase()
+                  .includes(value)
+              )
+            );
+          }
+          else if(option === "contactNumber")
+            {
+              filteredData = filteredData.filter((item) =>
+                values.some((value) =>
+                  item[option]
+                    ?.toString()
+                    .toLowerCase()
+                    .includes(value)
+                )
+              );
+            } 
+            else if(option === "alternateNumber")
+              {
+                filteredData = filteredData.filter((item) =>
+                  values.some((value) =>
+                    item[option]
+                      ?.toString()
+                      .toLowerCase()
+                      .includes(value)
+                  )
+                );
+              } else  {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
@@ -328,6 +425,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   };
 
   const toggleFilterSection = () => {
+    setShowSearchBar(false);
     setShowFilterSection(!showFilterSection);
   };
   const toggleselectedFilters = () => {
@@ -398,7 +496,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
           <div className="search">
             <i
               className="fa-solid fa-magnifying-glass"
-              onClick={() => setShowSearchBar(!showSearchBar)}
+              onClick={() => {setShowSearchBar(!showSearchBar);setShowFilterSection(false);}}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
             <h5 style={{ color: "gray", paddingTop: "5px" }}>
@@ -467,55 +565,43 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
           )}
           {showFilterSection && (
             <div className="filter-section">
-              <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
-
               <div className="filter-dropdowns">
-                {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
-
-                {filterOptions.map((option) => (
-                  <div key={option} className="filter-dropdown">
-                    {/* <label htmlFor={option}>{option}</label> */}
-                    <div className="dropdown">
-                      <button className="dropbtn">{option}</button>
-                      <div className="dropdown-content">
-                        <div key={`${option}-All`}>
-                          <input
-                            type="checkbox"
-                            id={`${option}-All`}
-                            value="All"
-                            checked={
-                              !selectedFilters[option] ||
-                              selectedFilters[option].length === 0
-                            }
-                            onChange={() => handleFilterSelect(option, "All")}
-                          />
-                          <label htmlFor={`${option}-All`}>All</label>
-                        </div>
-                        {[
-                          ...new Set(
-                            shortListedData.map((item) => item[option])
-                          ),
-                        ].map((value) => (
-                          <div key={value}>
-                            <input
-                              type="checkbox"
-                              id={`${option}-${value}`}
-                              value={value}
-                              checked={
-                                selectedFilters[option]?.includes(value) ||
-                                false
-                              }
-                              onChange={() => handleFilterSelect(option, value)}
-                            />
-                            <label htmlFor={`${option}-${value}`}>
-                              {value}
-                            </label>
+              {showFilterSection && (
+                <div className="filter-section">
+                  <div className="filter-options-container">
+                    {filterOptions.map((option) => {
+                      const uniqueValues = Array.from(
+                        new Set(shortListedData.map((item) => item[option]))
+                      );
+                      console.log(uniqueValues);
+                      return (
+                        <div key={option} className="filter-option">
+                        <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
+                          {option}
+                          <span className="filter-icon">&#x25bc;</span>
+                        </button>
+                        {activeFilterOption === option && (
+                          <div className="city-filter">
+                            <div className="optionDiv">
+                              {uniqueValues.map((value) => (
+                                <label key={value} className="selfcalling-filter-value">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedFilters[option]?.includes(value) || false}
+                                    onChange={() => handleFilterSelect(option, value)}
+                                  />
+                                  {value}
+                                </label>
+                              ))}
+                            </div>
                           </div>
-                        ))}
+                        )}
                       </div>
-                    </div>
+                      );
+                    })}
                   </div>
-                ))}
+                </div>
+              )}
               </div>
             </div>
           )}
@@ -576,7 +662,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
               </tr>
             </thead>
             <tbody>
-              {shortListedData.map((item, index) => (
+              {filteredShortListed.map((item, index) => (
                 <tr key={item.candidateId} className="attendancerows">
                   {!showShareButton ? (
                     <td className="tabledata">

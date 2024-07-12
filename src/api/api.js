@@ -7,7 +7,7 @@ const API_BASE_URL = "http://192.168.1.51:8891/api/ats/157industries";
 // -------------------------------------------------------------
 
 
-const API_URL = "http://192.168.1.54:8080/payroll";
+const API_URL = "http://192.168.1.48:8080/payroll";
 
 export const addEmployee = (employee) => {
   return axios.post(`${API_URL}/add`, employee);

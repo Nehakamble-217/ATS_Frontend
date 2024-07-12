@@ -1,7 +1,7 @@
  /* Ajhar-progressBar.css-10-07-2024-lineNo- 1 to 42  */
 
 .progress-bar {
-    width: 300px;
+    width: 400px;
     height: 30px;
     border-radius: 15px;
   
@@ -14,6 +14,9 @@
   }
   
   .poor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #ff0909; 
     width: 25%;
     /* color: gray; */
@@ -21,6 +24,9 @@
   }
 
   .average {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #FFA500; 
     width: 25%;
     /* color: gray; */
@@ -28,6 +34,9 @@
   }
   
   .good {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #FFFF00; 
     width: 25%;
     /* color: gray; */
@@ -35,6 +44,9 @@
   }
   
   .best {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #2c8d2c;
     width: 25%;
     /* color: gray; */

@@ -4,7 +4,7 @@ import "./holdCandidate.css";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
+// SwapnilRokade_HoldCandidate_ModifyFilters_47to534_11/07
 const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showHoldData, setShowHoldData] = useState([]);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
@@ -21,7 +21,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
-
+  const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
@@ -32,6 +32,50 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const newEmployeeId = parseInt(employeeId, 10);
 
   const navigator = useNavigate();
+  const limitedOptions = [
+    "alternateNumber",
+    "availabilityForInterview",
+    "callingFeedback",
+    "callingTrackerId",
+    "candidateAddedTime",
+    "candidateEmail",
+    "candidateId",
+    "candidateName",
+    "communicationRating",
+    "companyName",
+    "contactNumber",
+    "currentCtcLakh",
+    "currentCtcThousand",
+    "currentLocation",
+    "date",
+    "dateOfBirth",
+    "empId",
+    "expectedCtcLakh",
+    "expectedCtcThousand",
+    "experienceMonth",
+    "experienceYear",
+    "extraCertification",
+    "feedBack",
+    "finalStatus",
+    "fullAddress",
+    "gender",
+    "holdingAnyOffer",
+    "incentive",
+    "interviewTime",
+    "jobDesignation",
+    "msgForTeamLeader",
+    "noticePeriod",
+    "offerLetterMsg",
+    "oldEmployeeId",
+    "qualification",
+    "recruiterName",
+    "relevantExperience",
+    "requirementCompany",
+    "requirementId",
+    "selectYesOrNo",
+    "sourceName",
+    "yearOfPassing"
+];
 
   useEffect(() => {
     fetchHoldCandidateData();
@@ -55,27 +99,17 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   }, []);
 
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter(
-      (key) => key !== "candidateId"
-    );
+    const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>limitedOptions.includes(key));
     setFilterOptions(options);
   }, [filteredCallingList]);
 
   useEffect(() => {
-    console.log("Selected Filters:", selectedFilters);
   }, [selectedFilters]);
 
   useEffect(() => {
-    console.log("Filtered Calling List:", filteredCallingList);
   }, [filteredCallingList]);
 
   useEffect(() => {
-    const limitedOptions = [
-      "date",
-      "recruiterName",
-      "jobDesignation",
-      "requirementId",
-    ];
     setFilterOptions(limitedOptions);
   }, [callingList]);
 
@@ -87,15 +121,13 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
 
         `http://192.168.1.48:8891/api/ats/157industries/hold-candidate/${employeeId}`
       );
-      console.log(employeeId + "---> 777");
       const data = await response.json();
-      setShowHoldData(data);
+      setCallingList(data);
       setFilteredCallingList(data);
     } catch (error) {
       console.error("Error fetching hold candidate data:", error);
     }
   };
-
   useEffect(() => {
     filterData();
   }, [selectedFilters, callingList]);
@@ -163,11 +195,59 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     let filteredData = [...callingList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === "requirementId") {
+        if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
-            values.includes(item[option]?.toString())
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
           );
-        } else {
+        } else if(option === "requirementId")
+        {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
+            )
+          );
+        }
+        else if(option === "employeeId")
+          {
+            filteredData = filteredData.filter((item) =>
+              values.some((value) =>
+                item[option]
+                  ?.toString()
+                  .toLowerCase()
+                  .includes(value)
+              )
+            );
+          }
+          else if(option === "contactNumber")
+            {
+              filteredData = filteredData.filter((item) =>
+                values.some((value) =>
+                  item[option]
+                    ?.toString()
+                    .toLowerCase()
+                    .includes(value)
+                )
+              );
+            }
+            else if(option === "alternateNumber")
+              {
+                filteredData = filteredData.filter((item) =>
+                  values.some((value) =>
+                    item[option]
+                      ?.toString()
+                      .toLowerCase()
+                      .includes(value)
+                  )
+                );
+              } else {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
@@ -249,8 +329,19 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   };
 
   const toggleFilterSection = () => {
+    setShowSearchBar(false);
     setShowFilterSection(!showFilterSection);
   };
+  const handleFilterOptionClick = (option)=>{
+    if(activeFilterOption===option)
+    {
+      setActiveFilterOption(null);
+    }
+    else{
+      setActiveFilterOption(option);
+    }
+  }
+
 
   const getSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
@@ -392,7 +483,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
           <div className="search">
             <i
               className="fa-solid fa-magnifying-glass"
-              onClick={() => setShowSearchBar(!showSearchBar)}
+              onClick={() => {setShowSearchBar(!showSearchBar);setShowFilterSection(false);}}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
             <h5 style={{ color: "gray" }}>Hold Candidates</h5>
@@ -438,7 +529,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
                 </div>
               )}
               <button
-                className="holdCan-filter-btn"
+                className="lineUp-Filter-btn"
                 onClick={toggleFilterSection}
               >
                 Filter <i className="fa-solid fa-filter"></i>
@@ -456,54 +547,40 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
             />
           )}
           {showFilterSection && (
-            <div className="filter-section">
-              <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
-              <div className="filter-dropdowns">
-                {filterOptions.map((option) => (
-                  <div key={option} className="filter-dropdown">
-                    {/* <label htmlFor={option}>{option}</label> */}
-                    <div className="dropdown">
-                      <button className="dropbtn">{option}</button>
-                      <div className="dropdown-content">
-                        <div key={`${option}-All`}>
-                          <input
-                            type="checkbox"
-                            id={`${option}-All`}
-                            value="All"
-                            checked={
-                              !selectedFilters[option] ||
-                              selectedFilters[option].length === 0
-                            }
-                            onChange={() => handleFilterSelect(option, "All")}
-                          />
-                          <label htmlFor={`${option}-All`}>All</label>
-                        </div>
-                        {[
-                          ...new Set(callingList.map((item) => item[option])),
-                        ].map((value) => (
-                          <div key={value}>
-                            <input
-                              type="checkbox"
-                              id={`${option}-${value}`}
-                              value={value}
-                              checked={
-                                selectedFilters[option]?.includes(value) ||
-                                false
-                              }
-                              onChange={() => handleFilterSelect(option, value)}
-                            />
-                            <label htmlFor={`${option}-${value}`}>
-                              {value}
-                            </label>
+                <div className="filter-section">
+                  <div className="filter-options-container">
+                    {filterOptions.map((option) => {
+                      const uniqueValues = Array.from(
+                        new Set(callingList.map((item) => item[option]))
+                      );
+                      return (
+                        <div key={option} className="filter-option">
+                        <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
+                          {option}
+                          <span className="filter-icon">&#x25bc;</span>
+                        </button>
+                        {activeFilterOption === option && (
+                          <div className="city-filter">
+                            <div className="optionDiv">
+                              {uniqueValues.map((value) => (
+                                <label key={value} className="selfcalling-filter-value">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedFilters[option]?.includes(value) || false}
+                                    onChange={() => handleFilterSelect(option, value)}
+                                  />
+                                  {value}
+                                </label>
+                              ))}
+                            </div>
                           </div>
-                        ))}
+                        )}
                       </div>
-                    </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                </div>
+              )}
 
           <div className="attendanceTableData">
             <table className="attendance-table">
