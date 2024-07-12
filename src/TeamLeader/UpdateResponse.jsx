@@ -6,7 +6,6 @@ import UpdateResponseFrom from "./UpdateResponseFrom";
 
 const UpdateResponse = ({ onSuccessAdd }) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
-  const [filteredResponseList, setFilteredResponseList] = useState([]);
   const [showUpdateResponseForm, setShowUpdateResponseForm] = useState(false);
   const [showUpdateResponseID, setShowUpdateResponseID] = useState();
   const [showEmployeeId, setShowEmployeeId] = useState();
@@ -27,7 +26,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
 
   useEffect(() => {
     applyFilters();
-  }, [filterType, filterValue, updateResponseList]);
+  }, [filterType, filterValue, callingList]);
 
   useEffect(() => {
     filterData();
@@ -41,6 +40,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
       const data = await res.json();
       setCallingList(data);
       setFilteredCallingList(data);
+      setUpdateResponseList(data);
     } catch (err) {
       console.log("Error fetching shortlisted data:", err);
     }
@@ -48,7 +48,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
 
   const applyFilters = () => {
     if (!filterType || !filterValue) {
-      setFilteredResponseList(updateResponseList);
+      setFilteredCallingList(updateResponseList);
       return;
     }
 
@@ -56,7 +56,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
       return data[filterType]?.toString().toLowerCase().includes(filterValue.toLowerCase());
     });
 
-    setFilteredResponseList(filteredList);
+    setFilteredCallingList(filteredList);
   };
 
   const handleFilterTypeChange = (e) => {
@@ -245,12 +245,12 @@ const UpdateResponse = ({ onSuccessAdd }) => {
         <>
           <div className="TeamLead-main-filter-section">
             <div className="TeamLead-main-filter-section-header">
-              <div className="search" onClick={() => setShowSearch(!showSearch)}>
+              <div className="search" onClick={() => {setShowSearch(!showSearch);setShowFilterOptions(false)}}>
                 <i className="fa-solid fa-magnifying-glass"></i>
               </div>
               <h1>Update Response</h1>
               <div>
-                <button className="lineUp-share-btn" onClick={() => setShowFilterOptions(!showFilterOptions)}>
+                <button className="lineUp-share-btn" onClick={() => {setShowFilterOptions(!showFilterOptions);setShowSearch(false)}}>
                   Filter
                 </button>
               </div>

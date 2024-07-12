@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, BarElement } from 'chart.js';
-import '../SuperUser/profitLoseChart.css'; 
+import '../SuperUser/profitLoseChart.css';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, BarElement);
 
@@ -68,8 +68,8 @@ const LineGraph = () => {
     }, [lineChartData]);
 
     return (
-        <div className="wrapper" style={{border:"1px solid black"}}>
-            <div className="container" style={{border:"1px solid red"}}>
+        <div className="wrapper" >
+            <div className="container" >
                 <h2>Profit and Loss Graphs</h2>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <div className="chart-container left">
@@ -78,7 +78,7 @@ const LineGraph = () => {
                             <Line data={lineChartData} />
                         </div>
                     </div>
-                    <div className="chart-container right" style={{border:"1px solid green"}}>
+                    <div className="chart-container right" >
                         <h3>Bar Chart</h3>
                         <div className="chart">
                             <Bar
