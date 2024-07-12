@@ -107,6 +107,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
     try {
       const response = await fetch(
 
+
         `http://192.168.1.48:8891/api/ats/157industries/rejected-candidate/${employeeId}`
       );
       const data = await response.json();
@@ -127,6 +128,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
+
 
           `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
@@ -176,6 +178,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   }
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
+
 
       const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 

@@ -8,7 +8,7 @@ const PayRollMain = () => {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const res = await axios.get("http://192.168.1.54:8080/payroll/findAll");
+                const res = await axios.get("http://localhost:8891/api/ats/157industries/findAll-all-payrolls");
                 setEmployees(res.data.data); // Adjusted to match the provided data structure
             } catch (error) {
                 console.error('Error fetching employees:', error);

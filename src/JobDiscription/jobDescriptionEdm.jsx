@@ -16,7 +16,7 @@ function JobDescriptionEdm({ Descriptions, onJobDescriptionEdm }) {
   const { employeeId } = useParams()
 
   useEffect(() => {
-    fetch(`http://192.168.1.48:8891/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
+    fetch(`http://192.168.1.51:8891/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -114,6 +114,11 @@ function JobDescriptionEdm({ Descriptions, onJobDescriptionEdm }) {
 
   const closeJobDescrptionShare = () => {
     onJobDescriptionEdm(false)
+    if (isPlaying){
+     if (synth.speaking) {
+        synth.cancel();
+      }
+    }
   };
 
 

@@ -101,6 +101,7 @@ const SelectedCandidate = () => {
     try {
       const response = await fetch(
 
+
         `http://192.168.1.48:8891/api/ats/157industries/selected-candidate/${employeeId}`
       );
       const data = await response.json();
@@ -386,7 +387,7 @@ const SelectedCandidate = () => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.51:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
