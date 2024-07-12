@@ -47,7 +47,6 @@ function Sidebar({
   toggleInvoice,
   toggleInvoiceReport,
   /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
-
   toggleAddCompany /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_46*/,
 }) {
   const [error, setError] = useState("");
@@ -605,6 +604,17 @@ function Sidebar({
                           </span>
                         </a>
                       </li>
+
+                         <li
+                            onClick={toggleAddCompany}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <a href="#">
+                              <span className="sidebar-text">
+                                Add Company Details
+                              </span>
+                            </a>
+                          </li>
                     </ul>
                   </li>
                 ) : null}
