@@ -605,16 +605,16 @@ function Sidebar({
                         </a>
                       </li>
 
-                         <li
-                            onClick={toggleAddCompany}
-                            style={{ marginLeft: "10px" }}
-                          >
-                            <a href="#">
-                              <span className="sidebar-text">
-                                Add Company Details
-                              </span>
-                            </a>
-                          </li>
+                      <li
+                        onClick={toggleAddCompany}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">
+                            Add Company Details
+                          </span>
+                        </a>
+                      </li>
                     </ul>
                   </li>
                 ) : null}
