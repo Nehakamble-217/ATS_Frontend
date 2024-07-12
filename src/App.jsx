@@ -9,7 +9,6 @@ import AdminLogin from "./LoginPage/adminLogin";
 import CandidateVerification from "./CandidateSection/candidateVerification";  
 import Home from "../src/MainDashboard/mainDashboard";
 import ForgotPasswordForm from "./LoginPage/ForgotPasswordForm";
-
 import CandidateResumeLink from "./ResumeData/candidateResumeLink";
 import CallingTrackerForm from "./EmployeeSection/CallingTrackerForm";
 import LoginSignup from "./MainDashboard/loginSignup.jsx";

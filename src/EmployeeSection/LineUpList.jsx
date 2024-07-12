@@ -408,7 +408,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.51:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,

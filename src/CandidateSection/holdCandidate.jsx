@@ -4,11 +4,11 @@ import "./holdCandidate.css";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import HashLoader from "react-spinners/HashLoader";
 // SwapnilRokade_HoldCandidate_ModifyFilters_47to534_11/07
 const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showHoldData, setShowHoldData] = useState([]);
-  const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
-    useState(false);
+  const [showUpdateCallingTracker, setShowUpdateCallingTracker] = useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
   const [showFilterSection, setShowFilterSection] = useState(false);
   const [filterOptions, setFilterOptions] = useState([]);
@@ -28,6 +28,8 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [loading,setLoading] =useState(true);
+  let [color, setColor] = useState("#ffcb9b");
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
 
@@ -86,6 +88,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
       try {
         const response = await fetch(
 
+
           `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
@@ -117,13 +120,16 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
       const response = await fetch(
 
 
+
         `http://192.168.1.48:8891/api/ats/157industries/hold-candidate/${employeeId}`
       );
       const data = await response.json();
       setCallingList(data);
       setFilteredCallingList(data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching hold candidate data:", error);
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -381,7 +387,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.51:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -476,6 +482,14 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
 
   return (
     <div className="App-after">
+      {loading?(<div className="register">
+          <HashLoader
+            color={color}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>):(<>
+
       {!showUpdateCallingTracker ? (
         <>
           <div className="search">
@@ -1315,6 +1329,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
           onCancel={() => setShowUpdateCallingTracker(false)}
         />
       )}
+      </>)}
     </div>
   );
 };

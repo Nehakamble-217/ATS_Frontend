@@ -59,6 +59,7 @@ const AfterSelection = ({
     try {
       const response = await fetch(
 
+
         `http://192.168.1.48:8891/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
@@ -77,6 +78,7 @@ const AfterSelection = ({
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
+
 
         `http://192.168.1.48:8891/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
@@ -181,6 +183,7 @@ const AfterSelection = ({
     try {
       const response = await fetch(
 
+
         "http://192.168.1.48:8891/api/ats/157industries/add-after-selection",
         {
           method: "POST",
@@ -239,7 +242,7 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-        "http://192.168.1.48:8891/api/ats/157industries/save-join-data",
+        "http://192.168.1.51:8891/api/ats/157industries/save-join-data",
         {
           method: "POST",
           body: formData,
