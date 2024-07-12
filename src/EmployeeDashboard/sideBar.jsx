@@ -44,6 +44,10 @@ function Sidebar({
   togglePayRoll /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_42 */,
   toggleSendCandidate,
   toggeleProfitChart, /* ArshadAttar_EmpDashboard_Added_toggeleProfitChart_11/07/2024_LineNo_46 */
+  toggleInvoice,
+  toggleInvoiceReport,
+  /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
+
   toggleAddCompany /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_46*/,
 }) {
   const [error, setError] = useState("");
@@ -138,7 +142,6 @@ function Sidebar({
                         "interviewDate",
                         toggleInterviewDate
                       )}
-
                       className={
                         activeButton === "interviewDate" ? "active" : ""
                       }
@@ -209,7 +212,6 @@ function Sidebar({
                             "selfCalling",
                             toggleSelfCalling
                           )}
-
                           className={
                             activeButton === "selfCalling" ? "active" : ""
                           }
@@ -304,7 +306,6 @@ function Sidebar({
                         >
                           <a href="#">
                             {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-
                             <span className="sidebar-text">
                               Rejected Candidate
                             </span>
@@ -319,7 +320,6 @@ function Sidebar({
                   </a>
                 </li> */}
                         {/* ---------Arshad Comment this changes dont uncomment-------------- */}
-
                         {jobRoles === "Manager" &&
                           "SuperUser" &&
                           jobRoles != "TeamLeader" &&
@@ -330,7 +330,6 @@ function Sidebar({
                           >
                             <a href="#">
                               {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-
                               <span className="sidebar-text">
                                 Master Tracker
                               </span>
@@ -339,7 +338,6 @@ function Sidebar({
                         ) : null}
                       </ul>
                     </li>
-
                   </>
                 ) : null}
 
@@ -381,7 +379,6 @@ function Sidebar({
                         </span>
                       </a>
                     </li>
-
                     {(jobRoles != "Recruiters" && jobRoles != "SuperUser") ||
                       (jobRoles === "TeamLeader" && jobRoles === "Manager") ? (
                       <li
@@ -447,7 +444,6 @@ function Sidebar({
                             "attendance",
                             toggleAttendance
                           )}
-
                           className={
                             activeButton === "attendance" ? "active" : ""
                           }
@@ -460,75 +456,70 @@ function Sidebar({
                       </ul>
                     </li>
                     {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
-                    {jobRoles === "Manager" || "TeamLeader" ? (
-                      <>
-                        {jobRoles != "Recruiters" ? (
 
-                          <li
-                            className={
-                              activeButton === "TeamLeader-section"
-                                ? "active"
-                                : ""
-                            }
-                            onClick={toggleSubMenu("TeamLeader-section")}
-                          >
-                            <a href="#">
-                              <RiTeamFill className="text-gray-500 text-lg" />
 
-                              <span className="sidebar-text">
-                                Team Leader Section
-                              </span>
-                              <i className="arrow ph-bold ph-caret-down"></i>
-                            </a>
-                            <ul
-                              className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section"
-                                ? "active"
-                                : ""
-                                }`}
-                            >
-                              <li
-                                onClick={toggleUpdateResponse}
-                                style={{ marginLeft: "10px" }}
-                              >
-                                <a href="#">
-                                  {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
 
-                                  <span className="sidebar-text">
-                                    Update Response
-                                  </span>
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
+                  </>
+                ) : null}
 
-                        ) : null}
-                      </>
-                    ) : null}
-
+                {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
+                {jobRoles === "Manager" || "TeamLeader" ? (
+                  <>
                     {jobRoles != "Recruiters" ? (
+
                       <li
                         className={
-                          activeButton === "admin-section" ? "active" : ""
+                          activeButton === "TeamLeader-section" ? "active" : ""
                         }
-                        onClick={toggleSubMenu("admin-section")}
+                        onClick={toggleSubMenu("TeamLeader-section")}
                       >
                         <a href="#">
-                          <i
-                            className="fa-solid fa-computer"
-                            style={{ color: "gray" }}
-                          ></i>
-
-                          <span className="sidebar-text">Manager Section</span>{" "}
-                          {/* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_428 */}
+                          <RiTeamFill className="text-gray-500 text-lg" />
+                          <span className="sidebar-text">Team Leader Section</span>
                           <i className="arrow ph-bold ph-caret-down"></i>
                         </a>
-
                         <ul
-
-                          className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
+                          className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section" ? "active" : ""
                             }`}
                         >
-                          {/* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
+                          <li
+                            onClick={toggleUpdateResponse}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <a href="#">
+                              {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                              <span className="sidebar-text">Update Response</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+
+                    ) : null}
+                  </>
+                ) : null}
+
+
+                {jobRoles != "Recruiters" ? (
+                  <li
+                    className={activeButton === "admin-section" ? "active" : ""}
+                    onClick={toggleSubMenu("admin-section")}
+                  >
+                    <a href="#">
+                      <i
+                        className="fa-solid fa-computer"
+                        style={{ color: "gray" }}
+                      ></i>
+                      <span className="sidebar-text">Manager Section</span> { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_428 */}
+                      <i className="arrow ph-bold ph-caret-down"></i>
+                    </a>
+
+                    <ul
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
+                        }`}
+                    >
+                      {jobRoles != "TeamLeader" ? (
+                        <>
+                          { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
                           <li
                             onClick={togglePayRoll}
                             style={{ marginLeft: "10px" }}
@@ -537,8 +528,24 @@ function Sidebar({
                               <span className="sidebar-text">Pay Roll</span>
                             </a>
                           </li>
+                          <li
+                            onClick={toggleInvoice}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <a href="#">
+                              <span className="sidebar-text"> Make Invoice</span>
+                            </a>
+                          </li>
+                          <li
+                            onClick={toggleInvoiceReport}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <a href="#">
+                              <span className="sidebar-text"> Invoice Report</span>
+                            </a>
+                          </li>
+                          { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
 
-                          {/* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
 
                           <li
                             onClick={toggleAssigncolumns}
@@ -546,164 +553,63 @@ function Sidebar({
                           >
                             <a href="#">
                               {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-
-                              <span className="sidebar-text">
-                                Assign Columns
-                              </span>
+                              <span className="sidebar-text">Assign Columns</span>
                             </a>
                           </li>
+                        </>
 
+                      ) : null}
+
+                      <li
+                        onClick={toggleAllMasterSheet}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                          <span className="sidebar-text">All Master Sheet</span>
+                        </a>
+                      </li>
+                      {jobRoles === "Manager" || "TeamLeader" ? (
+                        <>
                           <li
-                            onClick={toggleAllMasterSheet}
+                            onClick={toggelAddRecruiter}
                             style={{ marginLeft: "10px" }}
                           >
                             <a href="#">
                               {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-
-                              <span className="sidebar-text">
-                                All Master Sheet
-                              </span>
+                              <span className="sidebar-text">Add Recruiters</span>
                             </a>
                           </li>
-                          {jobRoles === "Manager" || "TeamLeader" ? (
-                            <>
-                              <li
-                                onClick={toggelAddRecruiter}
-                                style={{ marginLeft: "10px" }}
-                              >
-                                <a href="#">
-                                  {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
 
-                                  <span className="sidebar-text">
-                                    Add Recruiters
-                                  </span>
-                                </a>
-                              </li>
 
-                              {jobRoles != "TeamLeader" ||
-                                jobRoles === "Manager" ||
-                                jobRoles === "SuperUser" ? (
-                                <li
-                                  onClick={toggelAddRecruiter}
-                                  style={{ marginLeft: "10px" }}
-                                >
-                                  <a href="#">
-                                    {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-
-                                    <span className="sidebar-text">
-                                      Add Team Leadrs
-                                    </span>
-                                  </a>
-                                </li>
-                              ) : null}
-                            </>
+                          {jobRoles != "TeamLeader" || jobRoles === "Manager" || jobRoles === "SuperUser" ? (
+                            <li
+                              onClick={toggelAddRecruiter}
+                              style={{ marginLeft: "10px" }}
+                            >
+                              <a href="#">
+                                {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                                <span className="sidebar-text">Add Team Leadrs</span>
+                              </a>
+                            </li>
                           ) : null}
-                          <li
-                            onClick={toggleSendCandidate}
-                            style={{ marginLeft: "10px" }}
-                          >
-                            <a href="#">
-                              <span className="sidebar-text">
-                                Send Client Email
-                              </span>
-                            </a>
-                          </li>
-
-                          <li
-                            onClick={toggleAddCompany}
-                            style={{ marginLeft: "10px" }}
-                          >
-                            <a href="#">
-                              <span className="sidebar-text">
-                                Add Company Details
-                              </span>
-                            </a>
-                          </li>
-                        </ul>
+                        </>
+                      ) : null}
+                      <li
+                        onClick={toggleSendCandidate}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">
+                            Send Client Email
+                          </span>
+                        </a>
                       </li>
-                    ) : null}
-                  </>
+                    </ul>
+                  </li>
                 ) : null}
-                <li
-                  className={activeSubMenu === "database" ? "active" : ""}
-                  onClick={toggleSubMenu("database")}
-                >
-                  <a href="#">
-                    <i
-                      className="fa-solid fa-database"
-                      style={{ color: "gray" }}
-                    ></i>
-                    <span className="sidebar-text">Database</span>
-                    <i className="arrow ph-bold ph-caret-down"></i>
-                  </a>
-
-                  <ul
-
-                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
-                      }`}
-                  >
-                    <li
-                      onClick={handleButtonClick(
-                        "excelCalling",
-                        toggleExcelCalling
-                      )}
-                      className={
-                        activeButton === "excelCalling" ? "active" : ""
-                      }
-                      style={{ marginLeft: "10px" }}
-                    >
-                      <a href="#">
-                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                        <span className="sidebar-text">Upload Files</span>
-                      </a>
-                    </li>
-
-                    <li
-                      onClick={toggeExcelCallingData}
-                      style={{ marginLeft: "10px" }}
-                    >
-                      <a href="#">
-                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-
-                        <span className="sidebar-text">Excel Calling Data</span>
-                      </a>
-                    </li>
-
-                    <li
-                      onClick={toggelExcelLineup}
-                      style={{ marginLeft: "10px" }}
-                    >
-                      <a href="#">
-                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                        <span className="sidebar-text">Excel Lineup Data</span>
-                      </a>
-                    </li>
-
-                    <li
-                      style={{ marginLeft: "10px" }}
-                      onClick={handleButtonClick(
-                        "resumeData",
-                        toggelResumeData
-                      )}
-
-                      className={activeButton === "resumeData" ? "active" : ""}
-                    >
-                      <a href="#">
-                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                        <span className="sidebar-text">Resume Data</span>
-                      </a>
-                    </li>
-
-                    <li
-                      style={{ marginLeft: "10px" }}
-                      onClick={toggleShareLink}
-                    >
-                      <a href="#">
-                        <span className="sidebar-text">Send Link</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+                {/* </>
+): null} */}
 
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_633 */}
                 <li
@@ -733,6 +639,90 @@ function Sidebar({
                   </ul>
                 </li>
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_660 */}
+
+                <li
+                  className={activeSubMenu === "database" ? "active" : ""}
+                  onClick={toggleSubMenu("database")}
+                >
+                  <a href="#">
+                    <i
+                      className="fa-solid fa-database"
+                      style={{ color: "gray" }}
+                    ></i>
+                    <span className="sidebar-text">Database</span>
+                    <i className="arrow ph-bold ph-caret-down"></i>
+                  </a>
+
+                  <ul
+                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
+                      }`}
+                  >
+                    <li
+                      onClick={handleButtonClick(
+                        "excelCalling",
+                        toggleExcelCalling
+                      )}
+                      className={
+                        activeButton === "excelCalling" ? "active" : ""
+                      }
+                      style={{ marginLeft: "10px" }}
+                    >
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span className="sidebar-text">Upload Files</span>
+                      </a>
+                    </li>
+
+                    <li
+                      onClick={toggeExcelCallingData}
+                      style={{ marginLeft: "10px" }}
+                    >
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span className="sidebar-text">
+                          Excel Calling Data
+                        </span>
+                      </a>
+                    </li>
+
+                    <li
+                      onClick={toggelExcelLineup}
+                      style={{ marginLeft: "10px" }}
+                    >
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span className="sidebar-text">
+                          Excel Lineup Data
+                        </span>
+                      </a>
+                    </li>
+
+                    <li
+                      style={{ marginLeft: "10px" }}
+                      onClick={handleButtonClick(
+                        "resumeData",
+                        toggelResumeData
+                      )}
+                      className={
+                        activeButton === "resumeData" ? "active" : ""
+                      }
+                    >
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span className="sidebar-text">Resume Data</span>
+                      </a>
+                    </li>
+
+                    <li
+                      style={{ marginLeft: "10px" }}
+                      onClick={toggleShareLink}
+                    >
+                      <a href="#">
+                        <span className="sidebar-text">Send Link</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
 
 
                 <li onClick={toggleChatRoom}>
@@ -832,77 +822,76 @@ function Sidebar({
                       </a>
                     </li>
                   </>
-                ) : null
-}
-<li onClick={() => setShowConfirmation(true)}>
-  <a href="#">
-    {/* <i className="icon ph-bold ph-sign-out"></i> */}
-    <i
-      className="fa-solid fa-power-off"
-      style={{ color: "gray" }}
-    ></i>
-    <span className="sidebar-text">Logout</span>
-  </a>
-</li>
-              </ul >
-            </div >
+                ) : null}
+                <li onClick={() => setShowConfirmation(true)}>
+                  <a href="#">
+                    {/* <i className="icon ph-bold ph-sign-out"></i> */}
+                    <i
+                      className="fa-solid fa-power-off"
+                      style={{ color: "gray" }}
+                    ></i>
+                    <span className="sidebar-text">Logout</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-{/* <div className="sidebar-menu">
+            {/* <div className="sidebar-menu">
           <ul>
             
           </ul>
         </div> */}
 
-  < div className = "sidebar-menu" style = {{ paddingLeft: "20px" }}>
-    <ul></ul>
-            </div >
-          </div >
-        </div >
-      </div >
-  { showConfirmation && (
-    <div
-      className="bg-black bg-opacity-50 modal show"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "fixed",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <Modal.Dialog
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Modal.Body>
-          <p className="confirmation-text">
-            Are you sure you want to logout?
-          </p>
-          <div
+            <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
+              <ul></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {showConfirmation && (
+        <div
+          className="bg-black bg-opacity-50 modal show"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "fixed",
+            width: "100%",
+            height: "100vh",
+          }}
+        >
+          <Modal.Dialog
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <button onClick={handleLogoutLocal} className="buttoncss">
-              Yes
-            </button>
-            <button
-              onClick={() => setShowConfirmation(false)}
-              className="buttoncss"
-            >
-              No
-            </button>
-          </div>
-        </Modal.Body>
-      </Modal.Dialog>
-    </div>
-  )}
+            <Modal.Body>
+              <p className="confirmation-text">
+                Are you sure you want to logout?
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button onClick={handleLogoutLocal} className="buttoncss">
+                  Yes
+                </button>
+                <button
+                  onClick={() => setShowConfirmation(false)}
+                  className="buttoncss"
+                >
+                  No
+                </button>
+              </div>
+            </Modal.Body>
+          </Modal.Dialog>
+        </div>
+      )}
     </>
   );
 }
