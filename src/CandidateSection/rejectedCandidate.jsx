@@ -4,6 +4,7 @@ import "./rejectedcandidate.css";
 import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import HashLoader from "react-spinners/HashLoader";
 // SwapnilRokade_RejectedCandidate_ModifyFilters_11/07
 const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showRejectedData, setShowRejectedData] = useState([]);
@@ -19,6 +20,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [callingList, setCallingList] = useState([]);
   const [filteredCallingList, setFilteredCallingList] = useState([]);
+  const [loading,setLoading] = useState(true);
   const [showCallingForm, setShowCallingForm] = useState(false);
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
@@ -29,6 +31,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  let [color, setColor] = useState("#ffcb9b");
 
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
@@ -109,8 +112,10 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       const data = await response.json();
       setCallingList(data);
       setFilteredCallingList(data);
+      setLoading(false)
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
+      setLoading(false)
     }
   };
 
@@ -479,6 +484,16 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
 
   return (
     <div className="calling-list-container">
+      {loading?(
+        <div className="register">
+        <HashLoader
+          color={color}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+      ):(<>
+
       {!showUpdateCallingTracker ? (
         <>
           <div className="search">
@@ -1327,6 +1342,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
           onCancel={() => setShowUpdateCallingTracker(false)}
         />
       )}
+      </>)}
     </div>
   );
 };

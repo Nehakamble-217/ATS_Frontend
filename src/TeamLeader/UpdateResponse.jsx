@@ -3,6 +3,7 @@ import "./UpdateResponse.css";
 import { Button, Modal } from "react-bootstrap";
 import { data } from "autoprefixer";
 import UpdateResponseFrom from "./UpdateResponseFrom";
+import HashLoader from "react-spinners/HashLoader";
 
 const UpdateResponse = ({ onSuccessAdd }) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
@@ -11,6 +12,8 @@ const UpdateResponse = ({ onSuccessAdd }) => {
   const [showEmployeeId, setShowEmployeeId] = useState();
   const [showRequirementId, setShowRequirementId] = useState();
   const [showSearch, setShowSearch] = useState(false);
+  let [color, setColor] = useState("#ffcb9b");
+  const [loading,setLoading]=useState(true)
   const [filterType, setFilterType] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [callingList, setCallingList] = useState([]);
@@ -41,8 +44,10 @@ const UpdateResponse = ({ onSuccessAdd }) => {
       setCallingList(data);
       setFilteredCallingList(data);
       setUpdateResponseList(data);
+      setLoading(false);
     } catch (err) {
       console.log("Error fetching shortlisted data:", err);
+      setLoading(false);
     }
   };
 
@@ -241,6 +246,15 @@ const UpdateResponse = ({ onSuccessAdd }) => {
 
     // SwapnilRokade_UpdateResponse_FilterAdded_7_to_504_10/07"
     <div className="TeamLead-main">
+      {loading ? (
+        <div className="register">
+          <HashLoader
+            color={color}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>):(
+      <>
       {!showUpdateResponseForm ? (
         <>
           <div className="TeamLead-main-filter-section">
@@ -521,6 +535,8 @@ const UpdateResponse = ({ onSuccessAdd }) => {
           </Modal>
         </>
       )}
+      </>
+    )}
     </div>
   );
 };
