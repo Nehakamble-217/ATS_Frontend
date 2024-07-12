@@ -1,127 +1,108 @@
 /*  Neha_addCompany.css_all_page_11/07/2024_lineno_2to_200*/
 
-.job-desc {
+.ACD-desc {
   font-family: Arial, sans-serif;
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px;
+  /* margin: 50px; */
   margin-top: 10px;
   color: gray;
 }
 
-.job-desc-form {
-  border: 1px solid gray;
-}
+/* .ACD-desc-form {
+  margin: 50px;
+  
+} */
 
-.field-column {
+.ACD_Field-column {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
+ 
 }
 
-.field-Row-Gray, .field-Row-white {
+.ACD_Field-Row-Gray, .ACD_Field-Row-white {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border: 1px solid gray;
 }
 
-.field-Row-Gray {
+.ACD_Field-Row-Gray {
   background-color: #F2F2F2;
 }
 
-.field-Row-white {
+.ACD_Field-Row-white {
   background-color: white;
 }
 
-.field {
+.ACD_Field {
   width: 100%;
   display: flex;
-  padding: 5px 0px;
-  border: 1px solid gray;
+  justify-content: space-between;
+  padding: 5px;
+  /* border: 1px solid #ccc; */
   white-space: nowrap;
-  height:"30px";
+  /* height:"30px"; */
+  border-left: 1px solid #ccc;
 }
 
-.field label {
-  width: 29%;
+.ACD_Field label {
+  width: 28%;
   font-size: 18px;
   padding: 0px 5px;
   display: flex;
   border-radius: 5px;
   align-items: center;
   color: gray;
-  
 }
 
-.field input {
+/* .ACD_Field input {
   padding: 4px;
   font-size: 16px;
   border: 1px solid #ccc;
   color: gray;
   border-radius: 5px;
-  width: 69%;
+  margin-left: 111px;
   margin-right: 15px;
-}
-
-
-.field input[type="text"],
-
-.field input[type="email"] {
-width: 60%;}
-
-.textarea {
-  width: 69%;
-  height: 30px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  margin-bottom: 0;
-  resize: vertical;
-  font-size: 16px;
-}
-
-.multi-field {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding-bottom: 5px;
-  margin-bottom: 2px;
-  overflow: hidden;
-}
-
-.inner-field label {
-  width: 20%;
-  font-size: 16px;
-  display: flex;
-  justify-content: center;
-  border-radius: 5px;
-  align-items: center;
-  color: gray;
-  height: 30px;
-}
-
-.inner-field input {
-  width: 60%;
-  padding: 4px;
+} */
+.ACD_Field input[type="file"]{
+  width: 50%;
   border: 1px solid #ccc;
   border-radius: 5px;
-  height: 30px;
+}
+.ACD_Field input[type="text"],
+.ACD_Field input[type="email"] {
+width: 50%;
+padding: 4px;
+  font-size: 16px;
+border: 1px solid #ccc;
+color: gray;
+border-radius: 5px;
+}
+
+.ACD_buttons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0;
 }
 
 .addcompanybutton {
-  margin: 5px;
+  margin-top: 10px;
   height: 30px;
   background-color: #ffcb9b;
   border-radius: 15px;
   color: white;
   border: 1px solid gray;
-  padding: 2px 15px;
+  padding: 2px 15px;  
   font-size: 16px;
 }
 
@@ -130,108 +111,124 @@ width: 60%;}
   background-color: white;
 }
 
+.ACD_Attachments_list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ACD_Attachments_list li{
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 15px;
+}
+
 /* Responsive Styles */
 @media (max-width: 1200px) {
-  .job-desc {
+  .ACD-desc {
       margin: 20px;
   }
-
-  .field label, .field input, .field select {
-      width: 100%;
-      margin-right: 0;
+  .ACD_Field input[type="file"]{
+    width: 100%;
+   
+  }
+  .ACD_Field input[type="text"],
+  .ACD_Field input[type="email"] {
+  width: 100%;
   }
 
-  .field {
+  .ACD_Field {
       flex-direction: column;
-      align-items: flex-start;
   }
 }
 
 @media (max-width: 768px) {
-  .field-Row-Gray, .field-Row-white {
+  .ACD_Field-Row-Gray, .ACD_Field-Row-white {
       flex-direction: column;
-      align-items: flex-start;
   }
-
-  .field {
-      border: none;
-      padding: 10px 0;
+  .ACD_Field input[type="file"]{
+    width: 50%;
+   
   }
-
-  .field label {
-      width: 100%;
+  .ACD_Field input[type="text"],
+  .ACD_Field input[type="email"] {
+  width: 50%;
   }
-
-  .field input, .field select, .textarea {
-      width: 100%;
-      margin-right: 0;
-  }
-
-  .inner-field label, .inner-field input {
-      width: 100%;
-  }
-
-  .addcompanybutton {
+    .addcompanybutton {
       width: 100%;
       text-align: center;
-  }
+    }
+    .ACD_Field {
+    padding: 10px;
+    flex-direction: row;
+}
+.ACD_Field label {
+  font-size: 16px;
+}
 }
 
 @media (max-width: 480px) {
-  .job-desc {
+  .ACD-desc {
       margin: 10px;
   }
-
-  .field {
-      padding: 5px 0;
+  .ACD_Field {
+      padding: 5px;
+  }
+  .ACD_Field input[type="file"]{
+    width: 100%;
+   
+  }
+  .ACD_Field input[type="text"],
+  .ACD_Field input[type="email"] {
+  width: 100%;
   }
 
-  .field label {
+  .ACD_Field label {
       font-size: 16px;
   }
 
-  .field input, .field select, .textarea {
+  .ACD_Field input, .ACD_Field select, .textarea {
       font-size: 14px;
   }
 
   .addcompanybutton {
       padding: 5px 10px;
   }
-} 
+}
 
-
-.ACD-share-send-popup-btn,.ACD-close-send-popup-btn{
+.ACD-share-send-popup-btn, .ACD-close-send-popup-btn {
   font-size: 16px;
-    border-radius: 15px;
-    height: 30px;
-    color: white;
-    padding-left: 15px;
-    padding-right: 15px;
-    background: #ffcb9b;
-    border: 1px solid gray;
-    cursor: pointer;
-    margin-bottom: 10px;
+  border-radius: 15px;
+  height: 30px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: #ffcb9b;
+  border: 1px solid gray;
+  cursor: pointer;
+  margin-bottom: 10px;
 }
-.ACD-share-send-popup-btn:hover,.ACD-close-send-popup-btn:hover{
+
+.ACD-share-send-popup-btn:hover, .ACD-close-send-popup-btn:hover {
   background-color: white;
-    color: #ffcb9b;
-    opacity: 0.8;
+  color: #ffcb9b;
+  opacity: 0.8;
 }
-.ACD-close-send-popup-btn{
+
+.ACD-close-send-popup-btn {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.ACD_Loading_Animation{
+
+.ACD_Loading_Animation {
   width: 100%;
-  background: #00000052;  
-  top:0;
-  left:0;
+  background: #00000052;
+  top: 0;
+  left: 0;
   position: fixed;
   height: 100vh;
   z-index: 759845455622656;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }

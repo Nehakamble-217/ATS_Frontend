@@ -4,6 +4,7 @@ import "./selectedcandidate.css";
 import AfterSelection from "./afterSelection";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import HashLoader from "react-spinners/HashLoader";
 // SwapnilRokade_SelectedCandidate_ModifyFilters_47to534_11/07
 const SelectedCandidate = () => {
   const [shortListedData, setShortListedData] = useState([]);
@@ -19,13 +20,14 @@ const SelectedCandidate = () => {
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [activeFilterOption, setActiveFilterOption] = useState(null);
-
+  const [loading,setLoading] =useState(true);
   const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  let [color, setColor] = useState("#ffcb9b");
 
   const { employeeId } = useParams();
   const limitedOptions = [
@@ -84,11 +86,11 @@ const SelectedCandidate = () => {
   }, [filteredCallingList]);
 
   useEffect(() => {
-    console.log("Selected Filters:", selectedFilters);
+    // console.log("Selected Filters:", selectedFilters);
   }, [selectedFilters]);
 
   useEffect(() => {
-    console.log("Filtered Calling List:", filteredCallingList);
+    // console.log("Filtered Calling List:", filteredCallingList);
   }, [filteredCallingList]);
 
   useEffect(() => {
@@ -105,8 +107,10 @@ const SelectedCandidate = () => {
       const data = await response.json();
       setCallingList(data);
       setFilteredCallingList(data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
+      setLoading(false);
     }
   };
 
@@ -297,11 +301,9 @@ const SelectedCandidate = () => {
     if(activeFilterOption===option)
     {
       setActiveFilterOption(null);
-      console.log("hello");
     }
     else{
       setActiveFilterOption(option);
-      console.log(option);
     }
   }
 
@@ -480,6 +482,14 @@ const SelectedCandidate = () => {
 
   return (
     <div className="App-after">
+      {loading?(<div className="register">
+          <HashLoader
+            color={color}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>):(<>
+
       {!selectedCandidateId ? (
         <>
           <div className="search">
@@ -1270,6 +1280,7 @@ const SelectedCandidate = () => {
           onReturn={handleReturn}
         />
       )}
+      </>)}
     </div>
   );
 };

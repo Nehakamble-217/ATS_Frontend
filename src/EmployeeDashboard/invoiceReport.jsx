@@ -1,11 +1,23 @@
 /* Mohini_InvoiceTable_WholePage_09/07/2024 */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './invoiceReport.css';
 import InvoicePdf from './invoicePdf';
 
 const InvoiceReport = ({handleInvoicePdf}) => {
       // const [showInvoicePdf,setShowInvoicePdf]=useState(false)
+      const [invoiceReport,setInvoiceReport] = useState([]);
+
+      useEffect(()=>{
+        fetchInvoice();
+      },[])
+
+      const fetchInvoice = async()=>{
+        const response = await fetch('http://localhost:8080/api/fetchInvoice')
+        const data = await response.json();
+        setInvoiceReport(data);
+        console.log(data);
+      }
 
  const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
@@ -157,15 +169,17 @@ const InvoiceReport = ({handleInvoicePdf}) => {
 
         </thead>
         <tbody>
-            <td className='tabledata'>1</td>
+          {invoiceReport.map((item,index)=>(
+          <tr key={item.id}>
+            <td className='tabledata'>{item.id}</td>
             <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        12/12/2024
+                    {item.invoiceDate}
                     <div className="tooltip">
-                      <span className="tooltiptext">12/12/2024</span>
+                      <span className="tooltiptext"> {item.invoiceDate}</span>
                     </div>
             </td>
              <td
@@ -173,9 +187,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        Arshad Attar
+                        {item.clientName}
                     <div className="tooltip">
-                      <span className="tooltiptext">Arshad Attar</span>
+                      <span className="tooltiptext">{item.clientName}</span>
                     </div>
             </td>
              <td
@@ -183,9 +197,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        Pune
+                       {item.clientAddress}
                     <div className="tooltip">
-                      <span className="tooltiptext">Pune</span>
+                      <span className="tooltiptext"> {item.clientAddress}</span>
                     </div>
             </td>
              <td
@@ -193,9 +207,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        TCS
+                        {item.companyName}
                     <div className="tooltip">
-                      <span className="tooltiptext">TCS</span>
+                      <span className="tooltiptext">{item.companyName}</span>
                     </div>
             </td>
              <td
@@ -203,9 +217,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        Pune
+                        {item.companyAddress}
                     <div className="tooltip">
-                      <span className="tooltiptext">Pune</span>
+                      <span className="tooltiptext"> {item.companyAddress}</span>
                     </div>
             </td>
              <td
@@ -213,9 +227,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        GTS4162576198
+                      {item.clientGstNumber}
                     <div className="tooltip">
-                      <span className="tooltiptext">GTS4162576198</span>
+                      <span className="tooltiptext">{item.clientGstNumber}</span>
                     </div>
             </td>
               <td
@@ -223,9 +237,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        GTS4162576198
+                        {item.hsnCode  }
                     <div className="tooltip">
-                      <span className="tooltiptext">GTS4162576198</span>
+                      <span className="tooltiptext">{item.hsnCode}</span>
                     </div>
             </td>
               <td
@@ -233,9 +247,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        GTS4162576198
+                        {item.sacCode}
                     <div className="tooltip">
-                      <span className="tooltiptext">GTS4162576198</span>
+                      <span className="tooltiptext">{item.sacCode}</span>
                     </div>
             </td>
               <td
@@ -243,9 +257,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        4162576198
+                       {item.invoiceNo}
                     <div className="tooltip">
-                      <span className="tooltiptext">4162576198</span>
+                      <span className="tooltiptext">{item.invoiceNo}</span>
                     </div>
             </td>
               <td
@@ -264,9 +278,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Candidate
+                        {item.productType}
                     <div className="tooltip">
-                      <span className="tooltiptext">Candidate</span>
+                      <span className="tooltiptext">{item.productType}</span>
                     </div>
             </td>
               <td
@@ -275,9 +289,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Arbaz Pathan
+                       {item.candidateName}
                     <div className="tooltip">
-                      <span className="tooltiptext">Arbaz Pathan</span>
+                      <span className="tooltiptext"> {item.candidateName}</span>
                     </div>
             </td>
              <td
@@ -286,9 +300,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Pune
+                        {item.candidateLocation}
                     <div className="tooltip">
-                      <span className="tooltiptext">Pune</span>
+                      <span className="tooltiptext">{item.candidateLocation}</span>
                     </div>
             </td>
              <td
@@ -297,9 +311,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        11/07/2024
+                        {item.dateOfJoining}
                     <div className="tooltip">
-                      <span className="tooltiptext">11/07/2024</span>
+                      <span className="tooltiptext">{item.dateOfJoining}</span>
                     </div>
             </td>
              <td
@@ -308,9 +322,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        IT
+                        {item.department}
                     <div className="tooltip">
-                      <span className="tooltiptext">IT</span>
+                      <span className="tooltiptext">{item.department}</span>
                     </div>
             </td>
              <td
@@ -319,9 +333,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        54,000
+                        {item.salary}
                     <div className="tooltip">
-                      <span className="tooltiptext">54,000</span>
+                      <span className="tooltiptext">{item.salary}</span>
                     </div>
             </td>
              <td
@@ -341,9 +355,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        6,40,000
+                       {item.annualCtc }
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext"> {item.annualCtc }</span>
                     </div>
             </td>
             <td
@@ -352,9 +366,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        6,40,000
+                       {item.billingRate}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext">{item.billingRate}</span>
                     </div>
             </td>
             <td
@@ -363,9 +377,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        63,40,000
+                        {item.grossBillAmount}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext"> {item.grossBillAmount}</span>
                     </div>
             </td>
             <td
@@ -374,9 +388,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        69,40,000
+                       {item.totalBillAmount}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext">{item.totalBillAmount}</span>
                     </div>
             </td>
             <td
@@ -385,9 +399,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        40,000
+                        {item.cgst}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext"> {item.cgst}</span>
                     </div>
             </td>
             <td
@@ -396,9 +410,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        40,000
+                        {item.sgst}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext">{item.sgst}</span>
                     </div>
             </td>
             <td
@@ -407,9 +421,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        40,000
+                       {item.igst}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext">{item.igst}</span>
                     </div>
             </td>
             <td
@@ -418,9 +432,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        40,000
+                        {item.grandTotal}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext">{item.grandTotal}</span>
                     </div>
             </td>
             <td
@@ -429,9 +443,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Seventy Lakh fourty Thousand
+                       {item.grandTotalInWords}
                     <div className="tooltip">
-                      <span className="tooltiptext">6,40,000</span>
+                      <span className="tooltiptext"> {item.grandTotalInWords}</span>
                     </div>
             </td>
             <td
@@ -440,9 +454,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                       222
+                       {item.consultantId}
                     <div className="tooltip">
-                      <span className="tooltiptext">222</span>
+                      <span className="tooltiptext"> {item.consultantId}</span>
                     </div>
             </td>
             <td
@@ -451,9 +465,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        GYR65771387
+                        {item.greNo}
                     <div className="tooltip">
-                      <span className="tooltiptext">GYR65771387</span>
+                      <span className="tooltiptext"> {item.greNo}</span>
                     </div>
             </td>
             <td
@@ -462,9 +476,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        GYR65771387
+                        {item.poNo}
                     <div className="tooltip">
-                      <span className="tooltiptext">GYR65771387</span>
+                      <span className="tooltiptext">{item.poNo}</span>
                     </div>
             </td>
             <td
@@ -473,9 +487,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        SBI
+                        {item.bankName}
                     <div className="tooltip">
-                      <span className="tooltiptext">SBI</span>
+                      <span className="tooltiptext"> {item.bankName}</span>
                     </div>
             </td>
             <td
@@ -484,9 +498,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        62789172788
+                       {item.acNo}
                     <div className="tooltip">
-                      <span className="tooltiptext">62789172788</span>
+                      <span className="tooltiptext">{item.acNo}</span>
                     </div>
             </td>
              <td
@@ -495,9 +509,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        SBIN00078272
+                        {item.ifscCode}
                     <div className="tooltip">
-                      <span className="tooltiptext">SBIN00078272</span>
+                      <span className="tooltiptext"> {item.ifscCode}</span>
                     </div>
             </td>
             <td
@@ -506,9 +520,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Kondhawa
+                        {item.branch}
                     <div className="tooltip">
-                      <span className="tooltiptext">Kondhawa</span>
+                      <span className="tooltiptext">{item.branch}</span>
                     </div>
             </td>
              <td
@@ -517,9 +531,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Manager
+                       {item.invoiceSentFrom}
                     <div className="tooltip">
-                      <span className="tooltiptext">Manager</span>
+                      <span className="tooltiptext">{item.invoiceSentFrom}</span>
                     </div>
             </td>
              <td
@@ -528,9 +542,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Manager
+                        {item.invoiceSentTo}
                     <div className="tooltip">
-                      <span className="tooltiptext">Manager</span>
+                      <span className="tooltiptext">{item.invoiceSentTo}</span>
                     </div>
             </td>
              <td
@@ -539,9 +553,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Yes
+                        {item.hardCopySent}
                     <div className="tooltip">
-                      <span className="tooltiptext">Yes</span>
+                      <span className="tooltiptext">{item.hardCopySent}</span>
                     </div>
             </td>
              <td
@@ -550,9 +564,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        80,39,999
+                       {item.paymentExpected}
                     <div className="tooltip">
-                      <span className="tooltiptext">80,39,999</span>
+                      <span className="tooltiptext">{item.paymentExpected}</span>
                     </div>
             </td>
              <td
@@ -572,9 +586,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        30,000
+                        {item.tds}
                     <div className="tooltip">
-                      <span className="tooltiptext">30,000</span>
+                      <span className="tooltiptext"> {item.tds}</span>
                     </div>
             </td>
              <td
@@ -583,9 +597,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Yes
+                        {item.paymentReceived}
                     <div className="tooltip">
-                      <span className="tooltiptext">Yes</span>
+                      <span className="tooltiptext">{item.paymentReceived}</span>
                     </div>
             </td>
              <td
@@ -594,9 +608,10 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        70,00,000
+                    {item.paymentReceivedAmount}
+                        
                     <div className="tooltip">
-                      <span className="tooltiptext">70,00,000</span>
+                      <span className="tooltiptext"> {item.paymentReceivedAmount}</span>
                     </div>
             </td>
              <td
@@ -605,9 +620,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        88,000
+                        {item.grossAmount}
                     <div className="tooltip">
-                      <span className="tooltiptext">88,000</span>
+                      <span className="tooltiptext"> {item.grossAmount}</span>
                     </div>
             </td>
              <td
@@ -616,9 +631,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        90,000
+                        {item.discrepancyAmount}
                     <div className="tooltip">
-                      <span className="tooltiptext">90,000</span>
+                      <span className="tooltiptext">{item.discrepancyAmount}</span>
                     </div>
             </td>
              <td
@@ -627,9 +642,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Good to go
+                        {item.discrepancyRemark}
                     <div className="tooltip">
-                      <span className="tooltiptext">Good to go</span>
+                      <span className="tooltiptext">{item.discrepancyRemark}</span>
                     </div>
             </td>
              <td
@@ -638,9 +653,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Done
+                        {item.gstFile}
                     <div className="tooltip">
-                      <span className="tooltiptext">Done</span>
+                      <span className="tooltiptext"> {item.gstFile}</span>
                     </div>
             </td>
             <td
@@ -649,9 +664,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Done
+                     {item.gstAmtPayment}
                     <div className="tooltip">
-                      <span className="tooltiptext">Done</span>
+                      <span className="tooltiptext"> {item.gstAmtPayment}</span>
                     </div>
             </td>
             <td
@@ -660,9 +675,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Arshad Attar
+                        {item.sendDetails.name}
                     <div className="tooltip">
-                      <span className="tooltiptext">Arshad Attar</span>
+                      <span className="tooltiptext"> {item.sendDetails.name}</span>
                     </div>
             </td>
             <td
@@ -671,9 +686,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        Manager
+                        {item.sendDetails.designation}
                     <div className="tooltip">
-                      <span className="tooltiptext">Manager</span>
+                      <span className="tooltiptext">{item.sendDetails.designation}</span>
                     </div>
             </td>
             <td
@@ -682,9 +697,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        connecttoaspathan@gmail.com
+                        {item.sendDetails.email}
                     <div className="tooltip">
-                      <span className="tooltiptext">connecttoaspathan@gmail.com</span>
+                      <span className="tooltiptext">{item.sendDetails.email}</span>
                     </div>
             </td>
              <td
@@ -693,9 +708,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        9284097026
+                       {item.sendDetails.mobile}
                     <div className="tooltip">
-                      <span className="tooltiptext">9284097026</span>
+                      <span className="tooltiptext">{item.sendDetails.mobile}</span>
                     </div>
             </td>
              <td
@@ -704,9 +719,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        TCS
+                        {item.companyDetails.name}
                     <div className="tooltip">
-                      <span className="tooltiptext">TCS</span>
+                      <span className="tooltiptext"> {item.companyDetails.name}</span>
                     </div>
             </td>
              <td
@@ -715,9 +730,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                       Founder
+                       {item.companyDetails.designation}
                     <div className="tooltip">
-                      <span className="tooltiptext">Founter</span>
+                      <span className="tooltiptext">{item.companyDetails.designation}</span>
                     </div>
             </td>
              <td
@@ -726,9 +741,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        connecttoaspathan@gmail.com
+                        {item.companyDetails.email}
                     <div className="tooltip">
-                      <span className="tooltiptext">connecttoaspathan@gmail.com</span>
+                      <span className="tooltiptext">{item.companyDetails.email}</span>
                     </div>
             </td>
              <td
@@ -737,12 +752,14 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        9673898626
+                        {item.companyDetails.mobile}
                     <div className="tooltip">
-                      <span className="tooltiptext">9673898626</span>
+                      <span className="tooltiptext">{item.companyDetails.mobile}</span>
                     </div>
             </td>
             <td className="tabledata"><button onClick={handleInvoicePdf}  className='daily-tr-btn'>Print</button></td>
+            </tr>
+))}
         </tbody>
       </table>
 
