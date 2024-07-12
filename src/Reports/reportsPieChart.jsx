@@ -1,14 +1,18 @@
 /* Ajhar-reportsPieChart.jsx-10-07-2024-lineNo-1-to-10 */
 
 
-import React from 'react';
+import React,{useRef,useEffect} from 'react';
 import "../Reports/reportsPieChart.css";
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js';
+import html2canvas from 'html2canvas';
+
 
 Chart.register(ArcElement);
 
 const PieChart = () => {
+    const chartRef = useRef(null);
+
   const data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Cyan', 'Magenta', 'Lime', 'Pink', 'Teal', 'Lavender'],
     datasets: [
@@ -38,10 +42,37 @@ const PieChart = () => {
     responsive: true,
     maintainAspectRatio: false,
   };
+useEffect(() => {
+    // Create the chart instance when the component mounts
+    if (chartRef.current && data && options) {
+      const chartInstance = new Chart(chartRef.current, {
+        type: 'pie',
+        data: data,
+        options: options
+      });
+    }
+  }, [data, options]);
+
+   const saveChartAsImage = () => {
+    // Ensure chartRef is valid before attempting to convert to image
+    if (chartRef.current) {
+      html2canvas(chartRef.current).then(canvas => {
+        const imageURL = canvas.toDataURL();
+        console.log('Image URL:', imageURL);
+        // Use imageURL as needed
+      }).catch(error => {
+        console.error('Error while converting to image:', error);
+      });
+    } else {
+      console.error('Chart element not found or not ready.');
+    }
+  };
 
   return (
-    <div className="chart-container">
+    <div className="chart-container" ref={chartRef}>
       <Pie data={data} options={options} />
+            <button onClick={saveChartAsImage}>Save Chart as Image</button>
+
     </div>
   );
 };

@@ -1212,7 +1212,7 @@ const SendEmailPopup = ({
     };
 
     axios
-      .post("http://localhost:8082/api/ats/157industries/send-email", emailData)
+      .post("http://192.168.1.48:8082/api/ats/157industries/send-email", emailData)
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);

@@ -20,7 +20,7 @@ const EmployeeProfileData = ({ onClose }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.48:8891/api/ats/157industries/employee-details/${employeeId}`
+      `http://192.168.1.51:8891/api/ats/157industries/employee-details/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -72,6 +72,8 @@ const EmployeeProfileData = ({ onClose }) => {
     setViewMoreProfileShow(false);
     window.close(); // Closes the current window
   };
+
+  
 
   if (viewMoreProfileShow)
     return (
@@ -367,6 +369,45 @@ const EmployeeProfileData = ({ onClose }) => {
                   </ul>
                 </div>
               </div>
+              {/* Ajhar-11-07-2024 jsx.LineNo-370  */}
+              
+               {/* Employee Performance Indicator */}
+               <div className="employee-profile-performance-indicator">
+                  <h1>
+                    <b>Performance Indicator</b>
+                  </h1>
+                
+              <div className="emp-pro-data-progress-bar">
+
+            <div className="emp-pro-data-progress-bar-inner">
+
+              <div className="emp-pro-data-poor">
+              <h6 >Poor</h6>
+                </div> 
+
+               <div className="emp-pro-data-average" >
+               <h6>Average</h6>
+               </div> 
+
+               <div className="emp-pro-data-good" >
+               <h6>Good</h6>
+               </div> 
+
+               <div className="emp-pro-data-best"  >
+               <h6>Best</h6>
+              </div>
+
+              </div>
+
+              <div className="indicator-123" >
+              <i class="fa-solid fa-i"></i>
+              </div>
+
+               </div>
+                  
+               
+              </div>
+            
             </div>
           </section>
         </main>

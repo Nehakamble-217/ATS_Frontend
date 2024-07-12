@@ -87,6 +87,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     try {
       const response = await fetch(
 
+
         `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
       );
       const data = await response.json();
@@ -107,6 +108,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
+
 
         `http://192.168.1.48:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
       );
@@ -195,6 +197,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
+
 
       const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 

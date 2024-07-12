@@ -16,7 +16,7 @@ const AddResumes = ({ show }) => {
     }
     axios
       .post(
-        "http://192.168.1.48:8891/api/ats/157industries/add-resume-data",
+        "http://192.168.1.51:8891/api/ats/157industries/add-resume-data",
         formData
       )
 

@@ -22,8 +22,8 @@ const ShortlistedNavbar = () => {
     };
 
     return (
-        <div className='w-full' >
-            <div className='shortlisted-main-nav'>
+        <div className='w-full'  >
+            <div className='shortlisted-main-nav' >
                 <div className='shortlisted-nav-left'>
                     <i
                         style={{ fontSize: "22px" }}
