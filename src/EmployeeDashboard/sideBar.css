@@ -232,7 +232,7 @@ body {
   background-color: #fff;
 } 
 .sidebar-menu-btn i {
-  transition: all 0.3s;
+  transition: all .30s;
 }
 .sidebar.active {
   width: 55px;

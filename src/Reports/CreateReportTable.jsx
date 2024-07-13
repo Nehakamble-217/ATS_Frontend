@@ -162,7 +162,8 @@ const Attendance = () => {
       
  
 
-      const pdfContent = await createPdf(datadistributed,SuperUserName,ManagerName,TeamLeaderName,RecruiterName,DateReportData,totalCandidatepdf,imageURL); // Example function to create PDF content
+        const pdfContent = await createPdf(datadistributed,SuperUserName,ManagerName,TeamLeaderName,RecruiterName,DateReportData,totalCandidatepdf,imageURL); // Example function to create PDF content
+
       
       
 
@@ -369,9 +370,13 @@ const Attendance = () => {
       </div>
 
       <div className='crt-shortlisted-candidates-css'>
-          {LineUpDataReport &&  <ShortListedCandidates filteredLineUpItems={filteredLineUpItems}/> 
+          {LineUpDataReport && <ReportsPieChart  data={datadistributed}/> && <ShortListedCandidates filteredLineUpItems={filteredLineUpItems}/> 
             
            }
+            <div>
+      
+
+      </div>
 
           {/* {LineUpDataReport &&<ReportsPieChart/>
           } */}

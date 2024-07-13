@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddCompany.css";
 import jsPDF from "jspdf";
 import Modal from "react-bootstrap/Modal";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Form } from "react-bootstrap";
 import axios from "axios";
-import { PDFDocument } from "pdf-lib";
+import { useParams } from "react-router-dom";
 
 const AddCompanyDetails = () => {
   /*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_11*/
+  const { employeeId } = useParams();
   const [showEmailButton, setShowEmailButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({
+  const [addedCompanyDetailsId, setAddedCompanyDetailsId] = useState(null);
+  const [onOptionChange, setOnOptionChange] = useState(null);
+  const [latestAddedData, setLatestAddedCompanyData] = useState();
+  const [response, setResponse] = useState("");
+  const [responseError, setResponseError] = useState("");
+  const [initialFormData, setInitialFormData] = useState({
     companyName: "",
     companyLogoImg: null,
     companyAddress: "",
@@ -60,449 +66,541 @@ const AddCompanyDetails = () => {
     companyEmail: "",
   });
 
+  const fetchPreviousCompanyDetailsId = async () => {
+    const response = await axios.get(
+      "http://192.168.1.48:8891/api/ats/157industries/fetch-details-ids"
+    );
+    if (addedCompanyDetailsId < response.data.length) {
+      setLatestAddedCompanyData(response.data[0]);
+    }
+    setAddedCompanyDetailsId(response.data);
+  };
+  useEffect(() => {
+    fetchPreviousCompanyDetailsId();
+  }, []);
+
+  const handleSelectChange = (e) => {
+    setShowEmailButton(true);
+    const selectedValue = e.target.value;
+    setOnOptionChange(selectedValue);
+  };
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: files ? files[0] : value,
-    }));
+    if (files) {
+      setInitialFormData({ ...initialFormData, [name]: files[0] });
+    } else {
+      setInitialFormData({ ...initialFormData, [name]: value });
+    }
   };
 
-  const generatePdf = (formdata) => {
+  const generatePdf = (formData) => {
     const doc = new jsPDF();
-    doc.text(`Company Name: ${formdata.companyName || ""}`, 10, 10);
-    doc.text(`Company Address: ${formdata.companyAddress || ""}`, 10, 20);
+
+    // Set a smaller font size and reduce line height
+    const fontSize = 12; // Adjust as needed
+    const lineHeightFactor = 0.7; // Adjust line height factor to reduce padding
+    doc.setFontSize(fontSize);
+
+    // Company details
+    let yPos = 10;
+    doc.text(`Company Name: ${formData.companyName || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Company Address: ${formData.companyAddress || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
     doc.text(
-      `Company Display Name: ${formdata.companyDisplayName || ""}`,
+      `Company Display Name: ${formData.companyDisplayName || ""}`,
       10,
-      30
+      yPos
     );
-    doc.text(`Company Website: ${formdata.companyWebsite || ""}`, 10, 40);
-    doc.text(`Company Services: ${formdata.companyServices || ""}`, 10, 50);
-    doc.text(`TL Information: ${formdata.tlInformation || ""}`, 10, 60);
-    doc.text(`SOP: ${formdata.sop || ""}`, 10, 70);
-    doc.text(`Charges: ${formdata.charges || ""}`, 10, 80);
-    doc.text(`Contact Number: ${formdata.contactNumber || ""}`, 10, 90);
-    doc.text(`About Us: ${formdata.aboutUs || ""}`, 10, 100);
-    doc.text(`Company PAN: ${formdata.companyPanCardNumber || ""}`, 10, 110);
-    doc.text(`Company TAN: ${formdata.tanNumber || ""}`, 10, 120);
-    doc.text(`CIN: ${formdata.cinNumber || ""}`, 10, 130);
-    doc.text(`DIN: ${formdata.dinNumber || ""}`, 10, 140);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Company Website: ${formData.companyWebsite || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Company Services: ${formData.companyServices || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`TL Information: ${formData.tlInformation || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`SOP: ${formData.sop || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Charges: ${formData.charges || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Contact Number: ${formData.contactNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`About Us: ${formData.aboutUs || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+
+    // Legal details
+    doc.text(`Company PAN: ${formData.companyPanCardNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Company TAN: ${formData.tanNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`CIN: ${formData.cinNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`DIN: ${formData.dinNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+
+    // Certificates and taxes
     doc.text(
-      `Udyam Certificate: ${formdata.udyamCertificateNumber || ""}`,
+      `Udyam Certificate: ${formData.udyamCertificateNumber || ""}`,
       10,
-      150
+      yPos
     );
+    yPos += fontSize * lineHeightFactor;
     doc.text(
-      `Shopact Certificate: ${formdata.shopActCertificateNumber || ""}`,
+      `Shopact Certificate: ${formData.shopActCertificateNumber || ""}`,
       10,
-      160
+      yPos
     );
-    doc.text(`CGST: ${formdata.cgst || ""}`, 10, 170);
-    doc.text(`SGST: ${formdata.sgst || ""}`, 10, 180);
-    doc.text(`IGST: ${formdata.igst || ""}`, 10, 190);
-    doc.text(`Total GST: ${formdata.totalGst || ""}`, 10, 200);
-    doc.text(`Grand Total: ${formdata.grandTotal || ""}`, 10, 210);
-    doc.text(`PF Certificate: ${formdata.pfCertificateNumber || ""}`, 10, 220);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`CGST: ${formData.cgst || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`SGST: ${formData.sgst || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`IGST: ${formData.igst || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Total GST: ${formData.totalGst || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Grand Total: ${formData.grandTotal || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+
+    // Financial details
+    doc.text(`PF Certificate: ${formData.pfCertificateNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
     doc.text(
       `Professional Tax Certificate: ${
-        formdata.professionalTaxCertificateNumber || ""
+        formData.professionalTaxCertificateNumber || ""
       }`,
       10,
-      230
+      yPos
     );
+    yPos += fontSize * lineHeightFactor;
     doc.text(
-      `MOA Certificate: ${formdata.moaCertificateNumber || ""}`,
+      `MOA Certificate: ${formData.moaCertificateNumber || ""}`,
       10,
-      240
+      yPos
     );
+    yPos += fontSize * lineHeightFactor;
     doc.text(
-      `AOA Certificate: ${formdata.aoaCertificateNumber || ""}`,
+      `AOA Certificate: ${formData.aoaCertificateNumber || ""}`,
       10,
-      250
+      yPos
     );
+    yPos += fontSize * lineHeightFactor;
     doc.text(
-      `ROC Certificate: ${formdata.rocCertificateNumber || ""}`,
+      `ROC Certificate: ${formData.rocCertificateNumber || ""}`,
       10,
-      260
+      yPos
     );
-    doc.text(`Bank Name: ${formdata.bankHolderName || ""}`, 10, 270);
-    doc.text(`Branch Name: ${formdata.branchName || ""}`, 10, 280);
-    doc.text(`Account Number: ${formdata.accountNumber || ""}`, 10, 290);
-    doc.text(`IFSC Code: ${formdata.ifscCode || ""}`, 10, 300);
-    doc.text(`MICR Number: ${formdata.micrNumber || ""}`, 10, 310);
-    doc.text(`Email: ${formdata.companyEmail || ""}`, 10, 320);
+    yPos += fontSize * lineHeightFactor;
+
+    // Bank details
+    doc.text(`Bank Name: ${formData.bankHolderName || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Branch Name: ${formData.branchName || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Account Number: ${formData.accountNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`IFSC Code: ${formData.ifscCode || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`MICR Number: ${formData.micrNumber || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+    doc.text(`Email: ${formData.companyEmail || ""}`, 10, yPos);
+    yPos += fontSize * lineHeightFactor;
+
+    // Save the PDF
     doc.save("company-details.pdf");
 
-    return doc;
+    // Convert PDF to Blob and return
+    const pdfBytes = doc.output("arraybuffer");
+    return new Blob([pdfBytes], { type: "application/pdf" });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Create a FormData object to handle the file uploads
-    const formPayload = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formPayload.append(key, formData[key]);
-    });
-
+    // Generate the PDF blob
+    const pdfBlob = generatePdf(initialFormData);
+    initialFormData.detailsPdf = pdfBlob;
+    console.log(initialFormData);
     try {
       // Send the form data to the backend
       const response = await axios.post(
         "http://192.168.1.48:8891/api/ats/157industries/save-our-company",
-        formPayload,
+        initialFormData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data", // Ensure correct content type for form data
           },
         }
       );
 
       if (response.status === 200) {
+        setResponse(response.data);
         setShowEmailButton(true);
-        const pdfDoc = generatePdf(formData);
+        fetchPreviousCompanyDetailsId();
+        setInitialFormData({});
         // Create the PDF if the submission is successful
+      } else {
+        setResponseError(response.data);
       }
     } catch (error) {
       console.error("Error submitting form data", error);
     }
   };
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+    setShowModal(false);
+    setOnOptionChange(null);
+  };
   /*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_170*/
   return (
     <>
-      <main className="job-desc">
-        <section className="job-performance">
+      <main className="ACD-desc">
+        <section className="ACD-performance">
           <form onSubmit={handleSubmit}>
             {/* <center>
               <h1>Add Our Company Information</h1>
             </center> */}
-            <div className="job-desc-form">
-              <div className="field-column">
-                <div className="field-Row-Gray">
-                  <div className="field">
+            <div className="ACD-desc-form">
+              <div className="ACD_Field-column">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label>Company Name</label>
                     <input
                       type="text"
                       name="companyName"
-                      onChange={handleChange}
                       placeholder="Enter Company Name"
-                      value={formData.companyName}
-                      style={{ marginLeft: "45px" }}
+                      value={initialFormData.companyName}
+                      onChange={handleChange}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Company Logo</label>
                     <input
                       type="file"
                       name="companyLogoImg"
                       onChange={handleChange}
-                      style={{ marginLeft: "50px" }}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
                     />
                   </div>
                 </div>
-                <div className="field-Row-white">
-                  <div className="field">
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
                     <label>Company Address</label>
                     <input
                       type="text"
                       name="companyAddress"
                       placeholder="Company Address"
-                      value={formData.companyAddress}
+                      value={initialFormData.companyAddress}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Company Display Name</label>
                     <input
                       type="text"
                       name="companyDisplayName"
                       placeholder="Company Display Name"
-                      value={formData.companyDisplayName}
+                      value={initialFormData.companyDisplayName}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label>Company Website</label>
                     <input
                       type="text"
                       name="companyWebsite"
                       placeholder="Company Website"
-                      value={formData.companyWebsite}
+                      value={initialFormData.companyWebsite}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Company Services</label>
                     <input
                       type="text"
                       name="companyServices"
                       placeholder="Enter Company Services"
-                      value={formData.companyServices}
+                      value={initialFormData.companyServices}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
-                <div className="field-Row-white">
-                  <div className="field">
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
                     <label>TL Information</label>
                     <input
                       type="text"
                       name="tlInformation"
                       placeholder="Enter TL Information"
-                      value={formData.tlInformation}
+                      value={initialFormData.tlInformation}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Company SOP</label>
                     <input
                       type="text"
                       name="sop"
                       placeholder="Enter SOP"
-                      value={formData.sop}
+                      value={initialFormData.sop}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label>Company Charges</label>
                     <input
                       type="text"
                       name="charges"
                       placeholder="Charges"
-                      value={formData.charges}
+                      value={initialFormData.charges}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Contact Number</label>
                     <input
                       type="text"
                       name="contactNumber"
                       placeholder="Enter Contact Number"
-                      value={formData.contactNumber}
+                      value={initialFormData.contactNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
-                <div className="field-Row-white">
-                  <div className="field">
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
                     <label>About us</label>
                     <input
                       type="text"
                       name="aboutUs"
                       placeholder="About Us"
-                      value={formData.aboutUs}
+                      value={initialFormData.aboutUs}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label htmlFor="companyemail">Company Email</label>
                     <input
                       type="email"
-                      name="companyEmail"
+                      name="companyemail"
                       id=""
-                      value={formData.companyEmail}
-                      onChange={handleChange}
+                      value={initialFormData.email}
                       placeholder="Enter Company Email Id"
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label>Upload Pancard</label>
                     <input
                       type="file"
                       name="companyPanCardImg"
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label> Enter Pancard No</label>
                     <input
                       type="text"
                       placeholder="Enter Pan No."
                       name="companyPanCardNumber"
-                      value={formData.companyPanCardNumber}
+                      value={initialFormData.companyPanCardNumber}
                       onChange={handleChange}
-                      style={{ height: "30px", marginLeft: "50px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-white">
-                  <div className="field">
-                    <label style={{ paddingRight: "5px", height: "30px" }}>
-                      Upload TAN{" "}
-                    </label>
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
+                    <label>Upload TAN </label>
                     <input
                       type="file"
                       name="companyTanNumberImg"
                       onChange={handleChange}
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Enter TAN Number</label>
                     <input
                       type="text"
                       placeholder="Enter TAN No."
                       name="tanNumber"
-                      value={formData.tanNumber}
+                      value={initialFormData.tanNumber}
                       onChange={handleChange}
-                      style={{ height: "30px", marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-Gray">
-                  <div className="field">
-                    <label> Upload CIN</label>
-                    <input type="file" name="cinImg" onChange={handleChange} />
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
+                    <label>Upload Incarporation certificate</label>
+                    <input
+                      type="file"
+                      name="incorporationCertificateImg"
+                      onChange={handleChange}
+                      accept=".pdf"
+                    />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
+                    <label>Enter Incarporation Number</label>
+                    <input
+                      type="text"
+                      placeholder="Enter In No."
+                      name="incorporationCertificateNumber"
+                      value={initialFormData.incorporationCertificateNumber}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
+                    <label> Upload CIN</label>
+                    <input
+                      type="file"
+                      name="cinImg"
+                      onChange={handleChange}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
+                    />
+                  </div>
+                  <div className="ACD_Field">
                     <label>Enter CIN No</label>
                     <input
                       type="text"
                       placeholder="Enter CIN No."
                       name="cinNumber"
-                      value={formData.cinNumber}
+                      value={initialFormData.cinNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-white">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label> Upload DIN</label>
                     <input
+                      className="uploadcompanydocs"
                       type="file"
                       name="dinImg"
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Enter DIN NO</label>
                     <input
                       type="text"
                       placeholder="Enter DIN No."
                       name="dinNumber"
-                      value={formData.dinNumber}
+                      value={initialFormData.dinNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
                     <label> Upload Udyam Certificate</label>
                     <input
+                      className="uploadcompanydocs"
                       type="file"
                       name="udyamCertificateNumberImg"
                       onChange={handleChange}
-                      style={{ width: "70%", marginLeft: "45px" }}
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Enter Udyam No</label>
                     <input
                       type="text"
                       placeholder="Enter Udyam Certificate No."
                       name="udyamCertificateNumber"
-                      value={formData.udyamCertificateNumber}
+                      value={initialFormData.udyamCertificateNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-white">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label> Upload Professional tax Certificate</label>
 
                     <input
                       type="file"
+                      className="uploadcompanydocs"
                       name="professionalTaxCertificateImg"
+                      onChange={handleChange}
                       placeholder=""
-                      style={{ width: "70%", marginLeft: "105px" }}
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label> Enter PTC No</label>
                     <input
                       type="text"
                       name="professionalTaxCertificateNumber"
                       placeholder="Enter PTC Certificate No."
-                      value={formData.professionalTaxCertificateNumber}
+                      value={initialFormData.professionalTaxCertificateNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
                     <label> Upload Shopact Certificate</label>
                     <input
                       type="file"
                       name="shopActCertificateImg"
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label> Enter Shopact Certificate</label>
                     <input
                       type="text"
                       placeholder="Enter Shopact Certificate No."
                       name="shopActCertificateNumber"
-                      value={formData.shopActCertificateNumber}
+                      value={initialFormData.shopActCertificateNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-white">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label> Upload PF Certificate</label>
                     <input
                       type="file"
                       name="pfCertificateImg"
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Enter PF Certificate No</label>
                     <input
                       type="text"
                       placeholder="Enter PF Certificate No."
                       name="pfCertificateNumber"
-                      value={formData.pfCertificateNumber}
+                      value={initialFormData.pfCertificateNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
                     <label>Upload MOA Certificate</label>
                     {/* Memorandum of Association Certification */}
                     <input
@@ -510,207 +608,190 @@ const AddCompanyDetails = () => {
                       name="moaCertificateImg"
                       placeholder=""
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Enter MOA Certificate No</label>
                     <input
                       type="text"
                       name="moaCertificateNumber"
                       placeholder="Enter MOA No."
-                      value={formData.moaCertificateNumber}
+                      value={initialFormData.moaCertificateNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-white">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label> Upload AOA Certificate</label>
                     <input
                       type="file"
                       name="aoaCertificateImg"
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label> Enter AOA Certificate No</label>
                     <input
                       type="text"
                       name="aoaCertificateNumber"
                       placeholder="Enter AOA Certificate No."
-                      value={formData.aoaCertificateNumber}
+                      value={initialFormData.aoaCertificateNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
 
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
                     <label>Upload ROC Certificate</label>
                     <input
                       type="file"
-                      name="ROC"
+                      name="rocCertificateImg"
+                      onChange={handleChange}
                       placeholder=" "
-                      value={formData.rocCertificateImg}
-                      style={{ marginLeft: "45px" }}
+                      className="uploadcompanydocs"
+                      accept=".pdf"
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>Enter ROC Certificate</label>
                     <input
                       type="text"
                       name="rocCertificateNumber"
                       placeholder="Enter ROC Certificate No."
-                      value={formData.rocCertificateNumber}
+                      value={initialFormData.rocCertificateNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
                 </div>
-
-                <div className="field-Row-white">
-                  <div className="field">
-                    <label>Upload Incorporation Certificate</label>
-                    <input
-                      type="file"
-                      name="incorporationCertificateImg"
-                      placeholder=" "
-                      onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
-                    />
-                  </div>
-                  <div className="field">
-                    <label>Enter Incorporation Certificate</label>
-                    <input
-                      type="text"
-                      name="incorporationCertificateNumber"
-                      placeholder="Enter Incorporation Certificate No."
-                      value={formData.incorporationCertificateNumber}
-                      onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
-                    />
-                  </div>
-                </div>
-                <div className="field-Row-Gray">
-                  <div className="field">
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
                     <label>CGST</label>
                     <input
                       type="text"
                       name="cgst"
-                      value={formData.cgst}
+                      placeholder="Cgst"
+                      value={initialFormData.cgst}
                       onChange={handleChange}
-                      style={{ height: "30px" }}
                     />
                     <label>SGST</label>
                     <input
                       type="text"
                       name="sgst"
-                      value={formData.sgst}
+                      placeholder="Sgst"
+                      value={initialFormData.sgst}
                       onChange={handleChange}
-                      style={{ height: "30px" }}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>IGST NO</label>
                     <input
                       type="text"
                       name="igst"
-                      value={formData.igst}
+                      placeholder="Igst"
+                      value={initialFormData.igst}
                       onChange={handleChange}
-                      style={{ height: "30px" }}
                     />
-                    <label> GST No</label>
+                    <label>Total Gst</label>
                     <input
                       type="text"
                       name="totalGst"
-                      value={formData.totalGst}
+                      placeholder="Total Gst"
+                      value={initialFormData.totalGst}
                       onChange={handleChange}
-                      style={{ height: "30px" }}
                     />
                   </div>
                 </div>
-                <div className="field-Row-white">
-                  <div className="field">
-                    <label>Grand Total</label>
+                <div className="ACD_Field-Row-Gray">
+                  <div className="ACD_Field">
+                    <label>Bank Details</label>
                     <input
                       type="text"
                       name="grandTotal"
-                      placeholder="Enter GrandTotal"
-                      value={formData.grandTotal}
+                      placeholder="GrandTotal"
+                      value={initialFormData.grandTotal}
                       onChange={handleChange}
-                      style={{ marginLeft: "45px" }}
                     />
                   </div>
-                  <div className="field">
+                  <div className="ACD_Field">
+                    <label>Bank Details</label>
+                    <input
+                      type="text"
+                      name="bankHolderName"
+                      placeholder=" Holder"
+                      value={initialFormData.bankHolderName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="ACD_Field-Row-white">
+                  <div className="ACD_Field">
+                    <label htmlFor="">Branch name</label>
+                    <input
+                      type="text"
+                      name="branchName"
+                      placeholder="Enter bank branch name."
+                      value={initialFormData.branchName}
+                      onChange={handleChange}
+                    />
                     <label>Account Number </label>
                     <input
                       type="text"
                       name="accountNumber"
                       placeholder="Enter Account No."
-                      value={formData.accountNumber}
+                      value={initialFormData.accountNumber}
                       onChange={handleChange}
-                      style={{ marginLeft: "60px" }}
                     />
                   </div>
-                </div>
-                <div className="field-Row-Gray">
-                  <div className="field">
-                    <label>Bank Holder Name</label>
-                    <input
-                      type="text"
-                      name="bankHolderName"
-                      placeholder="Holder"
-                      value={formData.bankHolderName}
-                      onChange={handleChange}
-                      style={{ marginLeft: "50px" }}
-                    />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="">Enter Branch name</label>
-                    <input
-                      type="text"
-                      name="branchName"
-                      placeholder="Enter bank branch name."
-                      value={formData.branchName}
-                      onChange={handleChange}
-                      style={{ marginLeft: "50px" }}
-                    />
-                  </div>
-                </div>
-                <div className="field-Row-white">
-                  <div className="field">
+                  <div className="ACD_Field">
                     <label>IFSC</label>
                     <input
                       type="text"
                       name="ifscCode"
                       placeholder=" Enter IFSC Code"
-                      value={formData.ifscCode}
+                      value={initialFormData.ifscCode}
                       onChange={handleChange}
                     />
-                  </div>
-                  <div className="field">
+
                     <label>MICR No</label>
                     <input
                       type="text"
                       name="micrNumber"
                       placeholder="Enter MICR No."
-                      value={formData.micrNumber}
+                      value={initialFormData.micrNumber}
                       onChange={handleChange}
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <center>
+            <div className="ACD_buttons">
               <button className="addcompanybutton" type="submit">
-                Create PDF OR Vedio
+                Add Details
               </button>
-              {showEmailButton && (
+
+              {addedCompanyDetailsId != null && (
+                <select
+                  id="previousId"
+                  className="addcompanybutton"
+                  onChange={handleSelectChange}
+                >
+                  <option value="">Select Previous Id</option>
+                  {addedCompanyDetailsId.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              {(onOptionChange != null || showEmailButton) && (
                 <button
                   className="addcompanybutton"
                   type="button"
@@ -719,90 +800,201 @@ const AddCompanyDetails = () => {
                   Send Email
                 </button>
               )}
-            </center>
+            </div>
           </form>
+          <center>
+            {response != "" && (
+              <div class="alert alert-success" role="alert">
+                {response}
+              </div>
+            )}
+            {responseError != "" && (
+              <div class="alert alert-danger" role="alert">
+                {responseError}
+              </div>
+            )}
+          </center>
         </section>
       </main>
       {/*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_737-740*/}
       {showModal && (
-        <SendEmailPopup show={showModal} handleClose={handleClose} />
+        <SendEmailPopup
+          show={showModal}
+          handleClose={handleClose}
+          onOptionChange={onOptionChange}
+          latestAddedData={latestAddedData}
+          employeeId={employeeId}
+        />
       )}
     </>
   );
 };
 
 /*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_744*/
-const SendEmailPopup = ({ show, handleClose }) => {
+const SendEmailPopup = ({
+  show,
+  handleClose,
+  onOptionChange,
+  latestAddedData,
+  employeeId,
+}) => {
   const [to, setTo] = useState("");
   const [cc, setCc] = useState("");
   const [subject, setSubject] = useState("");
-  //   const [signatureImage, setSignatureImage] = useState(
-  //     "https://lh3.googleusercontent.com/fife/ALs6j_HDFuzYstiAW8Rt_7NmtAoegg6nGerpkvbiAITq-mNL70gNXONQuJwnZdbiAbsKMNAYMt9iBnvsFWx8EaOOWV43cjOjDvFOAiw1XacANQb0MDBtFO1ag1TuVwCbwbzrLDnOiniRQ5hD7kGCCVjTNGsNdx6RQLsrKyZlpJ6meA1NIT1vXloRcFwlfbTjDBG14YC809U_0FGn9pOII8lbH-I_ZZLBI6kfh0Q43j4evix8AbIxnvw0Soesevgycz4jRqrAA4Fjjd67Pb0vIVBkeEgSp_Sfz_v9joDcBiMe2sLP6_iEvB7N4il1qgBgTHBRM6qp6IuNFov7hMdcyx8Jp1oCfQX7753pO2x3FGg3tyW5RI0l-1h01JWKdybFECo19c7o3Z_01lJ-dF1TABxyPTdT9eztvkSfDXOvfoQIP_oEny3ORR-8wfjijnlUFylwT7MhsCwTcaeQR6tWaPYJ9rX7AQVGOmMyJbLS_0tFLn0_UzX7NuQx6-W2TeC9aXM0ajJYJ5cLPusvMlAhgFBB0WdZfbtuOat0-rd2qP_L0MqJPfTYBdTgYyO4LoTD0dV6QRo5UJhvyDW5Ru8IBz-bB4QWhPMjs2_PFnQ9K-GLvAPCOYIk4TQPhkCK4UgOyGL8bRE4bPBIYMddVxfWdePCOb6V5JhGmYfvsYzEhAwquNmsZkMv9lEJfQV-Frs0DrF63XWlD5ieprbz4CLMs3WHh42I06Kpw2aCXfQchCDoJawTYljfozJ_QHq58UIAdMniaLvrKKYRyYfZohAFVdekMzArxrobd4e3Pac9cHm1Orz2_lAob5diRJCZxapdTOPfiT_ro-1qhbtmKua4kXr5Z_TWgBV9CwaactlqLFMnnbN3TtDOqKNDEFBGhg1pKC2NUu2Jw6IyawDyCU6VCdrnhizrHhvhPY8u0uXOxspsqfvQaU_PT0e0v-f2RPDESxSwIz3H6DEzmk5hOrbOmXFCPG8Q9bUu_5I3kL11z_loIveKwfWD3YGIkOjOvXAUomdEqw7DIXIbjcfDQflq7L45gJ3-BWuTkRmicaQL3GAtwVpYbmNUi649NpUC5JvKN_iqIxeNzhKdn1jBXEGl2-rbmzYXbPolNUmrQWwaFYKBzVzgWIcCjaaKpgSR444mFTx3mFEuSJxfjMTJtumbYGZkGrFkEE1rNaXMvF6XFT6JO63BtAfQzd5nFl31OctaJ6nf7_UbshOlPFeUNoRFpc-gB9LWyZck_V9jIToDHY8mij11-IK-9DFLdZZfNxeOhbha8DYljvTj9R6spXM006lRZmBsP6WugvIvvG5Pv_kiXoORCBbrCFAIk3vpZIEx3zDoayqgUNwctyrf7cJvfSiyWokjM0NNHRTCy0eldMfb0LLX5X6BftzMt128n5f6-Q60zmQ_kyuHSnyLGJawrCATfhHu-_ABtuuTWopOBib9gG__Vsa06z5SKZs5LM8eD8TwgUMeIRfWGfZBAy2qobuMt9ZVDrQDlPejp1tBg3Dm8Ke85TK7HFFfDqA-dJ2jCwzOq2ipybePn2kxLg911_lfaHPIXpF0LJdNwNyzfH_6IuB3IGI0nelUgtPnQbxXFMYd8xLaiVhfx9f0GLlDLkalvTQ8UPk92nprBDiYn8GdmV3zoVuWZbXwqQ4nmLaB9LIxDieP2kLO7V2igrEsBxXZHT309KauEgReDc1p7ahNkSiDjAOt3cDoEnlXhXjLXiBy"
-  //   );
   const [isMailSending, setIsMailSending] = useState(false);
   const [getResponse, setResponse] = useState("");
   const [emailBody, setEmailBody] = useState(
     "Dear [Recipient's Name],\n\nI hope this message finds you well. Please find attached the necessary company documents and certificates for your review."
   );
+  const [companyDetails, setCompanyDetails] = useState(null);
 
-  // const handleSignatureImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       console.log(reader);
-  //       setSignatureImage(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
+  useEffect(() => {
+    const fetchCompanyDetailsById = async () => {
+      let response;
+      if (onOptionChange != null) {
+        response = await axios.get(
+          `http://192.168.1.48:8891/api/ats/157industries/details-by-Id/${onOptionChange}`
+        );
+      } else {
+        response = await axios.get(
+          `http://192.168.1.48:8891/api/ats/157industries/details-by-Id/${latestAddedData}`
+        );
+      }
+      setCompanyDetails(response.data);
+    };
+    fetchCompanyDetailsById();
+  }, [latestAddedData]);
 
-  //   const handleStoreClientInformation = async () => {
-  //     try {
-  //       const date = new Date();
+  const handleStoreClientInformation = async () => {
+    try {
+      const date = new Date();
 
-  //       let day = date.getDate();
-  //       let month = date.getMonth() + 1;
-  //       let year = date.getFullYear();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
 
-  //       // This arrangement can be altered based on how we want the date's format to appear.
-  //       let currentDate = `${day}-${month}-${year}`;
-  //       const clientData = {
-  //         mailReceiverName: emailBody.replace(/Hi\s*,?\s*/i, "").split(",")[0],
-  //         receiverCompanyMail: to,
-  //         mailSendDate: currentDate,
-  //         mailSendTime: new Date().toLocaleTimeString(),
-  //         noOfCandidates: selectedCandidate.length,
-  //         mailSenderName: clientEmailSender.senderName,
-  //         senderEmailId: clientEmailSender.senderMail,
-  //         requirementIds: selectedCandidate.map((item) => item.requirementId),
-  //         toCCNames: cc.split(","),
-  //         toBCCNames: [],
-  //       };
+      // This arrangement can be altered based on how we want the date's format to appear.
+      let currentDate = `${day}-${month}-${year}`;
+      const clientData = {
+        receiverName: emailBody.replace(/Dear\s*,?\s*/i, "").split(",")[0],
+        receiverEmail: to,
+        sendDate: currentDate,
+        sendTime: new Date().toLocaleTimeString(),
+        detailsId: companyDetails.detailsId,
+        employeeId: parseInt(employeeId),
+      };
 
-  //       const response = await axios.post(
-  //         "http://192.168.1.48:8891/api/ats/157industries/add-client-details",
-  //         clientData
-  //       );
-  //       if (response) {
-  //         setIsMailSending(false);
-  //         setResponse(response.data);
-  //         handleClose();
-  //       }
-  //     } catch (error) {
-  //       setIsMailSending(false);
-  //       setResponse(error.message);
-  //     }
-  //   };
+      const response = await axios.post(
+        "http://192.168.1.48:8891/api/ats/157industries/save-send-details",
+        clientData
+      );
+      if (response) {
+        setIsMailSending(false);
+        setResponse(response.data);
+        handleClose();
+      }
+    } catch (error) {
+      setIsMailSending(false);
+      setResponse(error.message);
+    }
+  };
 
   const handleSendEmail = () => {
     const emailData = {
       to,
-      cc,
       subject,
       body: emailBody.replace(/\n/g, "<br>"),
     };
-    console.log(emailData);
+    const attachments = [];
+    // Attach byte string images as files
+    if (companyDetails) {
+      if (companyDetails.companyLogoImg) {
+        attachments.push({
+          fileName: "companyLogo.pdf",
+          fileContent: companyDetails.companyLogoImg,
+        });
+      }
+      if (companyDetails.detailsPdf) {
+        attachments.push({
+          fileName: "companyDetails.pdf",
+          fileContent: companyDetails.detailsPdf,
+        });
+      }
+      if (companyDetails.aoaCertificateImg) {
+        attachments.push({
+          fileName: "aoaCertificate.pdf",
+          fileContent: companyDetails.aoaCertificateImg,
+        });
+      }
+      if (companyDetails.cinImg) {
+        attachments.push({
+          fileName: "cin.pdf",
+          fileContent: companyDetails.cinImg,
+        });
+      }
+      if (companyDetails.companyPanCardImg) {
+        attachments.push({
+          fileName: "companyPanCard.pdf",
+          fileContent: companyDetails.companyPanCardImg,
+        });
+      }
+      if (companyDetails.companyTanNumberImg) {
+        attachments.push({
+          fileName: "companyTanNumber.pdf",
+          fileContent: companyDetails.companyTanNumberImg,
+        });
+      }
+      if (companyDetails.dinImg) {
+        attachments.push({
+          fileName: "din.pdf",
+          fileContent: companyDetails.dinImg,
+        });
+      }
+      if (companyDetails.incorporationCertificateImg) {
+        attachments.push({
+          fileName: "incorporationCertificate.pdf",
+          fileContent: companyDetails.incorporationCertificateImg,
+        });
+      }
+      if (companyDetails.moaCertificateImg) {
+        attachments.push({
+          fileName: "moaCertificate.pdf",
+          fileContent: companyDetails.moaCertificateImg,
+        });
+      }
+      if (companyDetails.pfCertificateImg) {
+        attachments.push({
+          fileName: "PFCertificate.pdf",
+          fileContent: companyDetails.pfCertificateImg,
+        });
+      }
+      if (companyDetails.professionalTaxCertificateImg) {
+        attachments.push({
+          fileName: "professionalTaxCertificate.pdf",
+          fileContent: companyDetails.professionalTaxCertificateImg,
+        });
+      }
+      if (companyDetails.rocCertificateImg) {
+        attachments.push({
+          fileName: "rocCertificate.pdf",
+          fileContent: companyDetails.rocCertificateImg,
+        });
+      }
+      if (companyDetails.shopActCertificateImg) {
+        attachments.push({
+          fileName: "shopActCertificate.pdf",
+          fileContent: companyDetails.shopActCertificateImg,
+        });
+      }
+      if (companyDetails.udyamCertificateNumberImg) {
+        attachments.push({
+          fileName: "udyamCertificate.pdf",
+          fileContent: companyDetails.udyamCertificateNumberImg,
+        });
+      }
+    }
+    emailData.attachments = attachments;
+
     setIsMailSending(true);
 
     axios
@@ -811,8 +1003,8 @@ const SendEmailPopup = ({ show, handleClose }) => {
         emailData
       )
       .then((response) => {
+        handleStoreClientInformation();
         setIsMailSending(false);
-        handleClose();
         console.log("Email sent successfully:", response.data);
       })
       .catch((error) => {
@@ -822,6 +1014,53 @@ const SendEmailPopup = ({ show, handleClose }) => {
       });
   };
 
+  const saveAsPdf = (filename, base64Data) => {
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+
+    const blob = new Blob([byteArray], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+
+    // Example: create a link to download the PDF
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+
+    // Return the blob URL if needed
+    return url;
+  };
+
+  // Render attachments list
+  const renderAttachments = () => {
+    if (!companyDetails) return null;
+    return (
+      <>
+        {Object.entries(companyDetails).map(([key, value], index) => {
+          if (typeof value === "string" && key.endsWith("Img")) {
+            const filename = `${key}.pdf`;
+            return (
+              <li>
+                <button onClick={() => saveAsPdf(filename, value)}>
+                  {filename}
+                </button>
+              </li>
+            );
+          }
+          return null;
+        })}
+      </>
+    );
+  };
   return (
     <>
       <Modal
@@ -835,7 +1074,9 @@ const SendEmailPopup = ({ show, handleClose }) => {
         </Modal.Header>
         <Modal.Body>
           <Form.Group controlId="to">
-            <Form.Label>To:</Form.Label>
+            <Form.Label>
+              <strong>To:</strong>
+            </Form.Label>
             <Form.Control
               type="email"
               className="text-secondary"
@@ -844,7 +1085,9 @@ const SendEmailPopup = ({ show, handleClose }) => {
             />
           </Form.Group>
           <Form.Group controlId="cc">
-            <Form.Label>CC:</Form.Label>
+            <Form.Label>
+              <strong>CC:</strong>
+            </Form.Label>
             <Form.Control
               type="email"
               className="text-secondary"
@@ -853,7 +1096,9 @@ const SendEmailPopup = ({ show, handleClose }) => {
             />
           </Form.Group>
           <Form.Group controlId="subject">
-            <Form.Label>Subject:</Form.Label>
+            <Form.Label>
+              <strong>Subject:</strong>
+            </Form.Label>
             <Form.Control
               type="text"
               className="text-secondary"
@@ -862,7 +1107,9 @@ const SendEmailPopup = ({ show, handleClose }) => {
             />
           </Form.Group>
           <Form.Group controlId="emailBody">
-            <Form.Label>Email Body:</Form.Label>
+            <Form.Label>
+              <strong>Email Body:</strong>
+            </Form.Label>
             <Form.Control
               as="textarea"
               className="text-secondary"
@@ -871,16 +1118,18 @@ const SendEmailPopup = ({ show, handleClose }) => {
               onChange={(e) => setEmailBody(e.target.value)}
             />
           </Form.Group>
-          {/* <div>
+          <div className="ACD_Attachments">
             <strong>Attachments:</strong>
-            <ul>{renderAttachmentNames()}</ul>
-          </div> */}
+            <ul className="ACD_Attachments_list">{renderAttachments()}</ul>
+          </div>
         </Modal.Body>
         <Modal.Footer style={{ justifyContent: "space-between" }}>
-          {getResponse && (
+          {getResponse != "" ? (
             <p style={{ color: "red" }}>
               <i>{getResponse}</i>
             </p>
+          ) : (
+            <p></p>
           )}
           <div className="d-flex gap-2 align-items-center">
             <button className="ACD-share-send-popup-btn" onClick={handleClose}>

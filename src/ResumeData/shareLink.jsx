@@ -24,6 +24,7 @@
 
 import React from "react";
 import { RWebShare } from "react-web-share";
+import "../ResumeData/shareLink.css"
 
 const ShareLink = ({ toggleResumeLink }) => {
   // Get the current hostname and port
@@ -35,12 +36,12 @@ const ShareLink = ({ toggleResumeLink }) => {
   const shareURL = `${protocol}//${hostname}:${port}/shareResumeLink`;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
+    <div className="shareLink-mainDiv"
+      // style={{
+      //   display: "flex",
+      //   alignItems: "center",
+      //   justifyContent: "space-around",
+      // }}
     >
       <RWebShare
         data={{
@@ -48,11 +49,17 @@ const ShareLink = ({ toggleResumeLink }) => {
         }}
         onClick={() => alert("Shared successfully!")}
       >
-        <button className="daily-tr-btn">Share 🔗</button>
+      <div className="shareLink-share-btn-Div">
+        <h1>Share Link To Candidate</h1>
+        <button className="shareLink-share-btn">Share 🔗</button>
+        </div>
       </RWebShare>
-      <button className="daily-tr-btn" onClick={toggleResumeLink}>
-        View
+      <div className="shareLink-view-btn-Div">
+        <h1>Create Resume</h1>
+      <button className="shareLink-view-btn" onClick={toggleResumeLink}>
+      Create
       </button>
+      </div>
     </div>
   );
 };
