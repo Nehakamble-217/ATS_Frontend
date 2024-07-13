@@ -124,13 +124,12 @@ function Sidebar({
   return (
     <>
       <div className={`sidebar ${isActive ? "active" : ""}`}>
-        <div className="sidebar-clouds1"></div>
+        {/* <div className="sidebar-clouds1"></div> */}
         {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */}
         <div className="head-sidebar">
           <div className="sidebar-menu-btn" onClick={toggleSidebar}>
             <i className="fa-solid fa-chevron-left"></i>
           </div>
-
           <div className="nav">
             <div className="sidebar-menu">
               <ul>
@@ -321,8 +320,7 @@ function Sidebar({
                   </a>
                 </li> */}
                         {/* ---------Arshad Comment this changes dont uncomment-------------- */}
-                        {jobRoles === "Manager" &&
-                        "SuperUser" &&
+                        {
                         jobRoles != "TeamLeader" &&
                         jobRoles != "Recruiter" ? (
                           <li

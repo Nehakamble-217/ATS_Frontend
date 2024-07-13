@@ -10,7 +10,7 @@ import html2canvas from 'html2canvas';
 
 Chart.register(ArcElement);
 
-const PieChart = () => {
+const PieChart = ({onSaveImage}) => {
     const chartRef = useRef(null);
 
   const data = {
@@ -42,36 +42,35 @@ const PieChart = () => {
     responsive: true,
     maintainAspectRatio: false,
   };
-useEffect(() => {
-    // Create the chart instance when the component mounts
-    if (chartRef.current && data && options) {
-      const chartInstance = new Chart(chartRef.current, {
-        type: 'pie',
-        data: data,
-        options: options
-      });
-    }
-  }, [data, options]);
-
-   const saveChartAsImage = () => {
-    // Ensure chartRef is valid before attempting to convert to image
+// useEffect(() => {
+//     // Create the chart instance when the component mounts
+//     if (chartRef.current && data && options) {
+//       const chartInstance = new Chart(chartRef.current, {
+//         type: 'pie',
+//         data: data,
+//         options: options
+//       });
+//     }
+//   }, [data, options]);
+ useEffect(() => {
     if (chartRef.current) {
       html2canvas(chartRef.current).then(canvas => {
         const imageURL = canvas.toDataURL();
-        console.log('Image URL:', imageURL);
-        // Use imageURL as needed
+        if (onSaveImage) {
+          onSaveImage(imageURL);
+        }
       }).catch(error => {
         console.error('Error while converting to image:', error);
       });
     } else {
       console.error('Chart element not found or not ready.');
     }
-  };
+  }, [onSaveImage]);
+  
 
   return (
     <div className="chart-container" ref={chartRef}>
       <Pie data={data} options={options} />
-            <button onClick={saveChartAsImage}>Save Chart as Image</button>
 
     </div>
   );

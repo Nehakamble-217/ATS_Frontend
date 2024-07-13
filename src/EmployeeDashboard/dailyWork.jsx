@@ -714,7 +714,7 @@ function DailyWork({
 
   return (
     <div className="daily-timeanddate">
-      <div className="header-clouds"></div>
+      {/* <div className="header-clouds"></div> */}
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />

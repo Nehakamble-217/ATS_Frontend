@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import "../Reports/CreateReportTable.css";
 import ShortListedCandidates from "../Reports/LineUpDataReport";
 import ReportsPieChart from "../Reports/reportsPieChart"
+import PieChart from '../Reports/reportsPieChart';
 
 import PdfModal from '../Reports/pdfModal';
 import {createPdf } from '../Reports/pdfUtils';
@@ -100,6 +101,8 @@ const Attendance = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [LineUpDataReport,setLineUpDataReport]=useState(false);
+    const [imageURL, setImageURL] = useState('');
+
 
   const [LineUpItems, setLineUpItems] = useState(LineUpDataDummy);
   const [FilterLineUpItems,setFilterLineUpItems]=useState('selected');
@@ -143,44 +146,23 @@ const Attendance = () => {
   const LineUpyettoscheduleCount = LineUpItems.filter(item => item.status === 'yettoschedule').length;
   const LineUpnoshowCount = LineUpItems.filter(item => item.status === 'noshow').length;
 
+
+   const handleUrl= (url) => {
+    setImageURL(url);
+    console.log('Image URL:', url);
+    // You can now use the imageURL as needed
+     const img = new Image();
+    img.src = url;
+    setImage(img);
+  };
   const handleDownloadPdf = async () => {
     try {
       // Replace this with your logic to create or fetch the PDF content
 
-      const pieChartData = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Cyan', 'Magenta', 'Lime', 'Pink', 'Teal', 'Lavender'],
-        datasets: [
-          {
-            label: 'My First Dataset',
-            data: [12, 19, 10, 20, 10, 15, 9, 6, 4, 7, 11, 14],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-              'rgba(0, 255, 255, 0.6)',
-              'rgba(255, 0, 255, 0.6)',
-              'rgba(0, 255, 0, 0.6)',
-              'rgba(255, 192, 203, 0.6)',
-              'rgba(0, 128, 128, 0.6)',
-              'rgba(230, 230, 250, 0.6)',
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
-
       
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+ 
 
-    
-  };
-
-      const pdfContent = await createPdf(datadistributed,SuperUserName,ManagerName,TeamLeaderName,RecruiterName,DateReportData,totalCandidatepdf,pieChartData); // Example function to create PDF content
+      const pdfContent = await createPdf(datadistributed,SuperUserName,ManagerName,TeamLeaderName,RecruiterName,DateReportData,totalCandidatepdf,imageURL); // Example function to create PDF content
       
       
 
@@ -382,7 +364,7 @@ const Attendance = () => {
       </div>
 
       <div>
-      <ReportsPieChart  data={datadistributed}/>
+      <ReportsPieChart  data={datadistributed} onSaveImage={handleUrl}/>
 
       </div>
 
