@@ -82,12 +82,14 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     "sourceName",
     "yearOfPassing"
 ];
+    const {userType}=useParams();
+
   useEffect(() => {
   }, [selectedFilters, filteredCallingList, callingList, employeeIdnew]);
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+      `http://192.168.1.48:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
     )
 
       .then((response) => response.json())

@@ -8,6 +8,7 @@ function Accesstable() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   // const [selectedMainAdmin, setSelectedMainAdmin] = useState(null);
   const [selectedTeamLeader, setSelectedTeamLeader] = useState(null);
+  const [selectedManager, setSelectedManager] = useState(null);
   const [selectedRecruiters, setSelectedRecruiters] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   // const [assignments, setAssignments] = useState({});
@@ -20,6 +21,8 @@ function Accesstable() {
 
   //Name:-Akash Pawar Component:-Team_Leadder Subcategory:-Assign Column TeamLeader Names and Recruiter Names(changed) Start LineNo:-17  Date:-03/07
   const [teamLeaderNames, setTeamLeaderNames] = useState([]);
+  const [manager, setManager] = useState([]);
+  const [teamLeaderUnderManager, setTeamLeaderUnderManager] = useState([]);
   const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
   const [assignedColumnsCount, setAssignedColumnsCount] = useState([]);
   const [openUpdateModal, setOpenupdateModal] = useState(false);
@@ -30,20 +33,30 @@ function Accesstable() {
     useState([]);
 
   useEffect(() => {
+    const fetchManagerNames = async () => {
+      const response = await axios.get(
+        `http://192.168.1.48:9090/api/ats/157industries/get-all-managers`
+      );
+      setManager(response.data);
+    };
+    fetchManagerNames();
+  }, []);
+
+  useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-
-        `http://192.168.1.48:9090/api/ats/157industries/tl-namesIds`
+        `http://192.168.1.48:9090/api/ats/157industries/tl-namesIds/${selectedManager}`
       );
-      setTeamLeaderNames(response.data);
+      setTeamLeaderUnderManager(response.data);
+      console.log(selectedManager)
     };
     fetchTeamLeaderNames();
-  }, []);
+  }, [selectedManager]);
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
 
-      `http://192.168.1.48:8891/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+      `http://192.168.1.48:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader}`
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -219,22 +232,8 @@ function Accesstable() {
                 >
                   {allSelected ? "Deselect All" : "Select All"}
                 </button> */}
-                <div className="TLR-buttons-div">
-                  <button className="ok-button" onClick={handleOkClick}>
-                    OK
-                  </button>
-                  <button
-                    className="reset-selectTL-button"
-                    onClick={() => {
-                      setSelectedTeamLeader(null);
-                      setSelectedRecruiters([]);
-                    }}
-                  >
-                    Reset
-                  </button>
-                </div>
                 <div className="team-leadersTL">
-                  {filteredRecruiters.map((leader, index) => (
+                  {manager.map((id, index) => (
                     <div
                       key={index}
                       className="team-leader-itemTL checkbox-teamleader-assign radio-teamleader-assign"
@@ -242,41 +241,82 @@ function Accesstable() {
                       <label>
                         <input
                           type="radio"
-                          name="teamLeader"
-                          value={leader.teamLeaderId}
-                          checked={selectedTeamLeader === leader.teamLeaderId}
+                          name="manager"
+                          value={id.managerId}
+                          checked={selectedManager === id.managerId}
                           onChange={() =>
-                            setSelectedTeamLeader(leader.teamLeaderId)
+                            setSelectedManager(id.managerId)
                           }
                         />
-                        {leader.teamLeaderName}
+                        {id.managerName}
                       </label>
-                      {selectedTeamLeader === leader.teamLeaderId &&
-                        recruiterUnderTeamLeader && (
+
+                      {selectedManager === id.managerId &&
+                        teamLeaderUnderManager && (
                           <div className="recruitersTL">
-                            {recruiterUnderTeamLeader.map(
-                              (recruiter, rIndex) => (
-                                <label key={rIndex}>
-                                  <input
-                                    type="radio"
-                                    name="recruiter"
-                                    value={recruiter[0]}
-                                    checked={selectedRecruiters.includes(
-                                      recruiter[0]
+                            {teamLeaderUnderManager.map(
+                              (teamleader, tIndex) => (
+                                <div>
+                                  <label key={tIndex}>
+                                    <input
+                                      type="radio"
+                                      name="recruiter"
+                                      value={teamleader.teamLeaderId}
+                                      checked={selectedTeamLeader ===
+                                        teamleader.teamLeaderId
+                                      }
+                                      onChange={() =>
+                                        setSelectedTeamLeader(teamleader.teamLeaderId)
+                                      }
+                                    />
+                                    {teamleader.teamLeaderName}
+                                  </label>
+                                  {selectedTeamLeader === teamleader.teamLeaderId &&
+                                    recruiterUnderTeamLeader && (
+                                      <div className="recruitersTL">
+                                        {recruiterUnderTeamLeader.map((recruiter, rIndex) => (
+                                          <label key={rIndex}>
+                                            <input
+                                              type="radio"
+                                              name="recruiter"
+                                              value={recruiter.employeeId}
+                                              checked={selectedRecruiters === recruiter.employeeId}
+                                              onChange={() =>
+                                                setSelectedRecruiters(recruiter.employeeId)
+                                              }
+                                            />
+                                            {recruiter.employeeName}
+                                          </label>
+                                        ))}
+                                      </div>
                                     )}
-                                    onChange={() =>
-                                      setSelectedRecruiters([recruiter[0]])
-                                    }
-                                  />
-                                  {recruiter[1]}
-                                </label>
+                                </div>
                               )
                             )}
                           </div>
                         )}
+
                     </div>
                   ))}
+
                 </div>
+
+
+                <div className="TLR-buttons-div">
+                  <button className="ok-button" onClick={handleOkClick}>
+                    OK
+                  </button>
+                  <button
+                    className="reset-selectTL-button"
+                    onClick={() => {
+                      setSelectedManager(null);
+                      setSelectedRecruiters([]);
+                    }}
+                  >
+                    Reset
+                  </button>
+                </div>
+
               </div>
             )}
           </div>

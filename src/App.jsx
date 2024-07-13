@@ -27,7 +27,7 @@ const App = () => {
           <Route path="/mainDashboard" element={<MainDashboard />} />
           <Route path="/employee-login/:userType" element={<Login />} />
           <Route path="/forgotPassword" element={<ForgotPasswordForm/>}/>
-          <Route path="/empDash/:employeeId" element={<EmpDashboard />} />
+          <Route path="/empDash/:employeeId/:userType" element={<EmpDashboard />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection />} />
           <Route path="/admin-login" element={<AdminLogin></AdminLogin>}></Route>
           <Route path="api/ats/157industries/verify" element={<CandidateVerification></CandidateVerification>}></Route>

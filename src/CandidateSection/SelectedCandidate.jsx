@@ -74,6 +74,7 @@ const SelectedCandidate = () => {
     "sourceName",
     "yearOfPassing"
 ];
+const {userType}=useParams();
 
   useEffect(() => {
     fetchShortListedData();
@@ -102,7 +103,7 @@ const SelectedCandidate = () => {
       const response = await fetch(
 
 
-        `http://192.168.1.48:8891/api/ats/157industries/selected-candidate/${employeeId}`
+        `http://192.168.1.48:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);

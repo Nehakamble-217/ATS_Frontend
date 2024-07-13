@@ -234,6 +234,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowAddCompany(
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
+    setShowProfitLoss(false)
   };
 
 
