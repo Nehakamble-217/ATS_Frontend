@@ -39,7 +39,7 @@ function Sidebar({
   toggelExcelLineup,
   toggleShareLink,
   toggleUpdateResponse,
-  jobRoles,
+  // userType,
   successAddUpdateResponse,
   togglePayRoll /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_42 */,
   toggleSendCandidate,
@@ -59,8 +59,9 @@ function Sidebar({
   const empid = parseInt(employeeId);
   // const { userGroup } = useParams();
   // console.log(userGroup);
+  const {userType}=useParams();
 
-  console.log(jobRoles + "jobRoles");
+  console.log(userType + "userType");
 
   const toggleSubMenu = (subMenuKey) => (e) => {
     e.preventDefault();
@@ -133,7 +134,7 @@ function Sidebar({
           <div className="nav">
             <div className="sidebar-menu">
               <ul>
-                {jobRoles != "SuperUser" ? (
+                {userType != "SuperUser" ? (
                   <>
                     <li
                       onClick={handleButtonClick(
@@ -319,10 +320,10 @@ function Sidebar({
                 </li> */}
                         {/* ---------Arshad Comment this changes dont uncomment-------------- */}
 
-                        {jobRoles === "Manager" &&
+                        {userType === "Manager" &&
                           "SuperUser" &&
-                          jobRoles != "TeamLeader" &&
-                          jobRoles != "Recruiter" ? (
+                          userType != "TeamLeader" &&
+                          userType != "Recruiter" ? (
                           <li
                             onClick={toggleEmployeeMasterSheet}
                             style={{ marginLeft: "10px" }}
@@ -378,8 +379,8 @@ function Sidebar({
                         </span>
                       </a>
                     </li>
-                    {(jobRoles != "Recruiters" && jobRoles != "SuperUser") ||
-                      (jobRoles === "TeamLeader" && jobRoles === "Manager") ? (
+                    {(userType != "Recruiters" && userType != "SuperUser") ||
+                      (userType === "TeamLeader" && userType === "Manager") ? (
                       <li
                         style={{ marginLeft: "10px" }}
                         onClick={handleButtonClick(
@@ -400,7 +401,7 @@ function Sidebar({
                     ) : null}
                   </ul>
                 </li>
-                {jobRoles != "SuperUser" ? (
+                {userType != "SuperUser" ? (
                   <>
                     <li
                       className={
@@ -462,9 +463,9 @@ function Sidebar({
                 ) : null}
 
                 {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
-                {jobRoles === "Manager" || "TeamLeader" ? (
+                {userType === "Manager" || "TeamLeader" ? (
                   <>
-                    {jobRoles != "Recruiters" ? (
+                    {userType != "Recruiters" ? (
 
                       <li
                         className={
@@ -498,7 +499,7 @@ function Sidebar({
                 ) : null}
 
 
-                {jobRoles != "Recruiters" ? (
+                {userType != "Recruiters" ? (
                   <li
                     className={activeButton === "admin-section" ? "active" : ""}
                     onClick={toggleSubMenu("admin-section")}
@@ -516,7 +517,7 @@ function Sidebar({
                       className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
                         }`}
                     >
-                      {jobRoles != "TeamLeader" ? (
+                      {userType != "TeamLeader" ? (
                         <>
                           { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
                           <li
@@ -568,7 +569,7 @@ function Sidebar({
                           <span className="sidebar-text">All Master Sheet</span>
                         </a>
                       </li>
-                      {jobRoles === "Manager" || "TeamLeader" ? (
+                      {userType === "Manager" || "TeamLeader" ? (
                         <>
                           <li
                             onClick={toggelAddRecruiter}
@@ -581,7 +582,7 @@ function Sidebar({
                           </li>
 
 
-                          {jobRoles != "TeamLeader" || jobRoles === "Manager" || jobRoles === "SuperUser" ? (
+                          {userType != "TeamLeader" || userType === "Manager" || userType === "SuperUser" ? (
                             <li
                               onClick={toggelAddRecruiter}
                               style={{ marginLeft: "10px" }}
@@ -746,7 +747,7 @@ function Sidebar({
                     <span className="sidebar-text">Chat Section</span>
                   </a>
                 </li>
-                {jobRoles != "SuperUser" ? (
+                {userType != "SuperUser" ? (
                   <>
                     <li
                       className={activeSubMenu === "portal" ? "active" : ""}

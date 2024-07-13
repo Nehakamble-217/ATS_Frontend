@@ -36,6 +36,8 @@ const CallingList = ({
   const [showForwardPopup, setShowForwardPopup] = useState(false);
 
   const { employeeId } = useParams();
+    const {userType}=useParams();
+
   const employeeIdw = parseInt(employeeId);
   // console.log(employeeIdw + "emp @@@@ id");
   // console.log(employeeId + "emp 1111 id");
@@ -65,7 +67,7 @@ const CallingList = ({
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.48:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.48:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -295,7 +297,7 @@ const handleFilterOptionClick = (option)=>{
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.48:8891/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.48:9090/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {

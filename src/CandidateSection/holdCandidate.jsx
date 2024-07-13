@@ -78,7 +78,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
     "sourceName",
     "yearOfPassing"
 ];
-
+const {userType}=useParams();
   useEffect(() => {
     fetchHoldCandidateData();
   }, []);
@@ -121,7 +121,7 @@ const HoldCandidate = ({ updateState, funForGettingCandidateId }) => {
 
 
 
-        `http://192.168.1.48:8891/api/ats/157industries/hold-candidate/${employeeId}`
+        `http://192.168.1.48:9090/api/ats/157industries/hold-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);

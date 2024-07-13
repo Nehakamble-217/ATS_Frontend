@@ -74,16 +74,11 @@
     border-radius: 15px;
     background-color: white;
     font-size: 16px;
-    height: 30px;
-    width: auto;
+   
     color: #ffb281;
-    padding-left: 15px;
-    padding-right: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  
+   
     
-    margin-left: 450px;
 }
 
 

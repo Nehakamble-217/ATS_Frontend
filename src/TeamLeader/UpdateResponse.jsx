@@ -4,6 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import { data } from "autoprefixer";
 import UpdateResponseFrom from "./UpdateResponseFrom";
 import HashLoader from "react-spinners/HashLoader";
+import { useParams } from "react-router-dom";
 
 const UpdateResponse = ({ onSuccessAdd }) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
@@ -23,6 +24,10 @@ const UpdateResponse = ({ onSuccessAdd }) => {
   const [activeFilterOption, setActiveFilterOption] = useState(null); // New state to track the active filter option
   const filterOptions = ["candidateId", "candidateName", "jobDesignation","requirementId","employeeId","employeeName"];
 
+      const {userType}=useParams();
+      const {employeeId}=useParams();
+
+
   useEffect(() => {
     fetchUpdateResponseList();
   }, []);
@@ -38,13 +43,14 @@ const UpdateResponse = ({ onSuccessAdd }) => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `http://192.168.1.48:8891/api/ats/157industries/fetch-all-shortlisted-data`
+        `http://192.168.1.48:9090/api/ats/157industries/shortListed-date/${employeeId}/${userType}`
       );
       const data = await res.json();
       setCallingList(data);
       setFilteredCallingList(data);
       setUpdateResponseList(data);
       setLoading(false);
+      console.log(callingList)
     } catch (err) {
       console.log("Error fetching shortlisted data:", err);
       setLoading(false);

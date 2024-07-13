@@ -78,6 +78,8 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     "yearOfPassing"
 ];
 
+    const {userType}=useParams();
+
   useEffect(() => {
     fetchShortListedData();
     fetchEmployeeNameAndID();
@@ -108,9 +110,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-
-
-        `http://192.168.1.48:8891/api/ats/157industries/shortListed-date/${newEmployeeId}`
+        `http://192.168.1.48:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
       );
       const data = await response.json();
 
