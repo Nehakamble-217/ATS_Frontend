@@ -22,7 +22,7 @@ const LoginSignup = ({ onLogin }) => {
     AOS.init({ duration: 3000 });
   }, []);
 
-  
+
     
  useEffect(() => {
     fetch(
