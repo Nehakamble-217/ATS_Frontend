@@ -238,7 +238,9 @@ const EmpDashboard = ({ userGroup }) => {
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
     setShowProfitLoss(false)
+    setShowCapex(false)
   };
+  
 
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -609,7 +611,8 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
         <div>{showAddCompany && <AddCompanyDetails />}</div>
         <div>
-          <Capex/>
+          {showCapex &&  <Capex/>}
+          
         </div>
       </div>
     </div>
