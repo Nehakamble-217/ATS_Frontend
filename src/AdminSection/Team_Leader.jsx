@@ -35,7 +35,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.48:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.46:9090/api/ats/157industries/get-all-managers`
       );
       setManager(response.data);
     };
@@ -46,7 +46,7 @@ function Accesstable() {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
 
-        `http://192.168.1.48:9090/api/ats/157industries/tl-namesIds/${selectedManager}`
+        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${selectedManager}`
       );
       setTeamLeaderUnderManager(response.data);
       console.log(selectedManager)
@@ -57,7 +57,7 @@ function Accesstable() {
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
 
-      `http://192.168.1.48:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader}`
+      `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader}`
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -73,7 +73,7 @@ function Accesstable() {
   const fetchColumnsNames = async () => {
     const response = await axios.get(
 
-      `http://192.168.1.48:8891/api/ats/157industries/fetch-columns-names`
+      `http://192.168.1.46:9090/api/ats/157industries/fetch-columns-names`
     );
     setColumnName(response.data);
   };
@@ -133,7 +133,7 @@ function Accesstable() {
   const fetchAssignedColumn = async (assigneID) => {
     const response = await axios.get(
 
-      `http://192.168.1.48:8891/api/ats/157industries/column-by-id/${assigneID}`
+      `http://192.168.1.46:9090/api/ats/157industries/column-by-id/${assigneID}`
     );
     setFetchupdateAssignedColumn(response.data);
   };
@@ -167,7 +167,7 @@ function Accesstable() {
     try {
       const response = await axios.post(
 
-        `http://192.168.1.48:8891/api/ats/157industries/${selectedRecruiters}/assign-column`,
+        `http://192.168.1.46:9090/api/ats/157industries/${selectedRecruiters}/assign-column`,
         JSON.stringify(selectedOptions),
         {
           headers: {
@@ -203,7 +203,7 @@ function Accesstable() {
 
   const fetchAssignedColumnCount = async () => {
     const response = await axios.get(
-      `http://192.168.1.48:8891/api/ats/157industries/column-category-counts`
+      `http://192.168.1.46:9090/api/ats/157industries/column-category-counts`
     );
     setAssignedColumnsCount(response.data);
   };
@@ -594,7 +594,7 @@ const UpdateAccessTable = ({
   const handleUpdateClick = async () => {
     try {
       const response = await axios.post(
-        `http://192.168.1.48:8891/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/assign-column`,
+        `http://192.168.1.46:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/assign-column`,
         JSON.stringify(selectedOptions),
         {
           headers: {
