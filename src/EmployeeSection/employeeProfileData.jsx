@@ -17,10 +17,9 @@ const EmployeeProfileData = ({ onClose }) => {
     e.preventDefault();
     setViewMoreProfileShow(true);
   };
-
   useEffect(() => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/fetch-profile-details/870/Manager`
+      `http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/870/Manager`
     )
       .then((response) => response.json())
       .then((data) => {
