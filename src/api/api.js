@@ -5,6 +5,7 @@ const API_BASE_URL = "http://localhost:8891/api/ats/157industries";
 export const addEmployee = (employee) => {
   return axios.post(`${API_BASE_URL}/add-payroll-details`, employee);
 };
+
 export const getAllEmployees = () => {
   return axios.get(`${API_BASE_URL}/findAll-all-payrolls`).catch((error) => {
     if (error.response) {

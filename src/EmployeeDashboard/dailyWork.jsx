@@ -65,13 +65,13 @@ function DailyWork({
   const [profileImage, setProfileImage] = useState(null);
 
   const navigate = useNavigate();
+  const {userType}=useParams();
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
 
-
-          `http://192.168.1.46:9090/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
         );
         setEmployeeData(response.data);
         //Akash_Pawar_DailyWork_senderinformation_09/07_74
@@ -177,7 +177,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://192.168.1.48:8891/api/ats/157industries/save-daily-work",
+          "http://localhost:9090/api/ats/157industries/save-daily-work",
           formData
         );
 
@@ -207,7 +207,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.48:8891/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://localhost:9090/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -597,7 +597,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.48:8891/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://localhost:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
         formData
       );
 
@@ -721,100 +721,99 @@ function DailyWork({
         </div>
         <div className="user-details">
           <p>
-            {employeeData.employeeName} <br />
+            {employeeData.name}  - {employeeData.jobRole}<br />
             157{employeeId}
           </p>
         </div>
       </div>
-      {jobRole != "SuperUser" ? ( 
+      {jobRole != "SuperUser" ? (
         <>
-      <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
-        <div className="daily-t-btn">
-          <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
-            Target : 10
-          </button>
-          <button
-            className="daily-tr-btn"
-            style={{
-              color: data.archived <= 3 ? "red" : "green",
-              background: "#ffcb9b",
-            }}
-          >
-            Archived : {data.archived}
-          </button>
-          <button
-            className="daily-tr-btn"
-            style={{
-              color: data.pending < 7 ? "green" : "red",
-              background: "#ffcb9b",
-            }}
-          >
-            Pending : {data.pending}
-          </button>
-        </div>
-        <button className="loging-hr">
-          <h6 hidden>Time: {currentTime}</h6>
-          <h6 hidden>Date: {currentDate}</h6>
-          Login Hours : {time.hours.toString().padStart(2, "0")}:
-          {time.minutes.toString().padStart(2, "0")}:
-          {time.seconds.toString().padStart(2, "0")}
-        </button>
-        <div hidden>
-          <h6>Late Mark : {lateMark}</h6>
-          <h6>Leave Type : {leaveType}</h6>
-          <h6>Paid Leave : {paidLeave}</h6>
-          <h6>Unpaid Leave : {unpaidLeave}</h6>
-          <h6>Day Present Paid : {dayPresentPaid}</h6>
-          <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
-        </div>
+          <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
+            <div className="daily-t-btn">
+              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
+                Target : 10
+              </button>
+              <button
+                className="daily-tr-btn"
+                style={{
+                  color: data.archived <= 3 ? "red" : "green",
+                  background: "#ffcb9b",
+                }}
+              >
+                Archived : {data.archived}
+              </button>
+              <button
+                className="daily-tr-btn"
+                style={{
+                  color: data.pending < 7 ? "green" : "red",
+                  background: "#ffcb9b",
+                }}
+              >
+                Pending : {data.pending}
+              </button>
+            </div>
+            <button className="loging-hr">
+              <h6 hidden>Time: {currentTime}</h6>
+              <h6 hidden>Date: {currentDate}</h6>
+              Login Hours : {time.hours.toString().padStart(2, "0")}:
+              {time.minutes.toString().padStart(2, "0")}:
+              {time.seconds.toString().padStart(2, "0")}
+            </button>
+            <div hidden>
+              <h6>Late Mark : {lateMark}</h6>
+              <h6>Leave Type : {leaveType}</h6>
+              <h6>Paid Leave : {paidLeave}</h6>
+              <h6>Unpaid Leave : {unpaidLeave}</h6>
+              <h6>Day Present Paid : {dayPresentPaid}</h6>
+              <h6>Day Present Unpaid: {dayPresentUnpaid}</h6>
+            </div>
 
-        <div hidden style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="remoteWork">Remote Work:</label>
-          <select
-            className="select"
-            id="remoteWork"
-            value={remoteWork}
-            onChange={(e) => setRemoteWork(e.target.value)}
-          >
-            <option>Select</option>
-            <option value="work from Office">WFO</option>
-            <option value="Work from Home">WFH</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
-        </div>
+            <div hidden style={{ display: "flex", flexDirection: "column" }}>
+              <label htmlFor="remoteWork">Remote Work:</label>
+              <select
+                className="select"
+                id="remoteWork"
+                value={remoteWork}
+                onChange={(e) => setRemoteWork(e.target.value)}
+              >
+                <option>Select</option>
+                <option value="work from Office">WFO</option>
+                <option value="Work from Home">WFH</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
 
-        <button
-          className={running ? "timer-break-btn" : "timer-break-btn"}
-          onClick={running ? handlePause : handleResume}
-          style={{ height: "30px" }}
-        >
-          {running ? "Pause" : "Resume"}
-        </button>
+            <button
+              className={running ? "timer-break-btn" : "timer-break-btn"}
+              onClick={running ? handlePause : handleResume}
+              style={{ height: "30px" }}
+            >
+              {running ? "Pause" : "Resume"}
+            </button>
 
-        {/* Dont Remove this 2 comment ...Arshad */}
+            {/* Dont Remove this 2 comment ...Arshad */}
 
-        {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
+            {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
           {showDetails ? "Hide" : "Show"}
         </button> */}
 
-        {/* <img className="logout-btn"
+            {/* <img className="logout-btn"
             onClick={handleLogoutLocal}
             // style={{ width: "30px", borderRadius: "60%" }}
             src={logoutImg}
             alt="Logout"
           /> */}
-          
-      </div>
-      
 
-      <button
-        className="toggle-all-daily-btns"
-        onClick={handleToggleAllDailyBtns}
-      >
-        {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
-      </button>
-      </>
-      ): null}
+          </div>
+
+          <button
+            className="toggle-all-daily-btns"
+            onClick={handleToggleAllDailyBtns}
+          >
+            {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
+          </button>
+        </>
+      ) : null}
     </div>
   );
 }

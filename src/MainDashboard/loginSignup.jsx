@@ -26,7 +26,7 @@ const LoginSignup = ({ onLogin }) => {
     
  useEffect(() => {
     fetch(
-      `http://192.168.1.48:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+      `http://192.168.1.46:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
     )
       .then((response) => response.text())
       .then((data) => {
@@ -69,7 +69,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate('/empDash/6');
+    navigate('/empDash/870/Manager');
   };
 
   return (
@@ -126,7 +126,7 @@ const LoginSignup = ({ onLogin }) => {
                 </div>
                 <div className="loginpage-error">{error}</div>
                 <button className="login-button" type="submit" data-aos="fade-top">Login</button>
-                <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button>
+                <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboar</button>
                 <center>
                   <span className="psw" onClick={() => setShowForgotPassword(true)}>Forgot password?</span>
                 </center>
