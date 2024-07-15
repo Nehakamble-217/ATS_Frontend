@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8891/api/ats/157industries";
+const API_BASE_URL = "http://192.168.1.46:9090/api/ats/157industries";
 
 export const addEmployee = (employee) => {
   return axios.post(`${API_BASE_URL}/add-payroll-details`, employee);
@@ -19,10 +19,8 @@ export const getAllEmployees = () => {
   });
 };
 
-
 export const getPasswordFromDB = (id) =>
   axios.post(`${API_BASE_URL}/fetch-pass/${id}`);
-
 
 export const fetchMasterSheetData = async () => {
   try {

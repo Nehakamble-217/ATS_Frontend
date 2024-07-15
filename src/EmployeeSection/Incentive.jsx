@@ -5,16 +5,20 @@ const Incentive = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { employeeId } = useParams();
+  const {userType}=useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.51:8891/api/ats/157industries/fetch-incentive/${employeeId}`
+          `http://192.168.1.46:9090/api/ats/157industries/fetch-incentive/${employeeId}/${userType}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
+          
         }
+                  // console.log(employeeId + userType);
+
 
         const fetchedData = await response.json();
         const adjustedData = fetchedData.map((row) => {
