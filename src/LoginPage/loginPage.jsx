@@ -50,7 +50,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate('/empDash/6');
+    navigate('/empDash/870/Manager');
   };
 
   return (

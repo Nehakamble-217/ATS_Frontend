@@ -45,6 +45,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
+
         `http://192.168.1.48:9090/api/ats/157industries/tl-namesIds/${selectedManager}`
       );
       setTeamLeaderUnderManager(response.data);
@@ -60,8 +61,6 @@ function Accesstable() {
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
-
-
 
   useEffect(() => {
     if (selectedTeamLeader != null) {
@@ -139,6 +138,25 @@ function Accesstable() {
     setFetchupdateAssignedColumn(response.data);
   };
 
+  // const handleRemoveClick = (recruiter) => {
+  //   setSelectedRecruiters((prev) => prev.filter((item) => item !== recruiter));
+  //   const updatedAssignments = { ...assignments };
+  //   delete updatedAssignments[recruiter];
+  //   setAssignments(updatedAssignments);
+  // };
+
+  // function getClassForCategory(category) {
+  //   switch (category) {
+  //     case "Common Assign":
+  //       return "common-assign";
+  //     case "Important Assign":
+  //       return "important-assign";
+  //     case "Most Important Assign":
+  //       return "most-important-assign";
+  //     default:
+  //       return "";
+  //   }
+  // }
   const handleOkClick = () => {
     setDropdownOpen(false);
   };
@@ -253,6 +271,7 @@ function Accesstable() {
 
                       {selectedManager === id.managerId &&
                         teamLeaderUnderManager && (
+
                           <div className="recruitersTL">
                             {teamLeaderUnderManager.map(
                               (teamleader, tIndex) => (
@@ -265,6 +284,7 @@ function Accesstable() {
                                       checked={selectedTeamLeader ===
                                         teamleader.teamLeaderId
                                       }
+
                                       onChange={() =>
                                         setSelectedTeamLeader(teamleader.teamLeaderId)
                                       }
@@ -293,6 +313,7 @@ function Accesstable() {
                                 </div>
                               )
                             )}
+
                           </div>
                         )}
 
@@ -300,6 +321,7 @@ function Accesstable() {
                   ))}
 
                 </div>
+
 
 
                 <div className="TLR-buttons-div">

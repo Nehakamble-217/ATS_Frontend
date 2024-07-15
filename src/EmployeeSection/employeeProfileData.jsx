@@ -20,7 +20,7 @@ const EmployeeProfileData = ({ onClose }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.51:8891/api/ats/157industries/employee-details/${employeeId}`
+      `http://localhost:9090/api/ats/157industries/fetch-profile-details/870/Manager`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -80,19 +80,13 @@ const EmployeeProfileData = ({ onClose }) => {
       <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
-            {/* <div className="profile-back-button">
-              <button onClick={onClose}>
-                Close
-                <i className="fas fa-times"></i>
-              </button>
-            </div> */}
-            {/* Employee personal Information and current company information */}
+
             <div className="employee-profile-staticsection">
               <div className="employee-profile-static">
                 <div className="employee-profile-details">
                   <img src={profileImage} />
                   <p className="m-0">
-                    <b>Name: {employeeData?.employeeName}</b>
+                    <b>Name: {employeeData?.name}</b>
                   </p>
                   <p className="m-0">
                     <b>Designation: {employeeData.designation}</b>
@@ -491,7 +485,7 @@ const EmployeeProfileData = ({ onClose }) => {
             </div>
             <div>
               <p className="m-1" style={{ color: "gray" }}>
-                Name : {employeeData.employeeName}
+                Name : {employeeData.name}
               </p>
               <p className="m-1">Job Role: {employeeData.jobRole}</p>
               <p className="m-1">Email: {employeeData.employeeEmail}</p>
