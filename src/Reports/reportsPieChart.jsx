@@ -10,7 +10,7 @@ import html2canvas from 'html2canvas';
 
 Chart.register(ArcElement);
 
-const PieChart = ({onSaveImage}) => {
+const PieChart = () => {
     const chartRef = useRef(null);
 
   const data = {
@@ -52,25 +52,26 @@ const PieChart = ({onSaveImage}) => {
 //       });
 //     }
 //   }, [data, options]);
- useEffect(() => {
+
+   const saveChartAsImage = () => {
+    // Ensure chartRef is valid before attempting to convert to image
     if (chartRef.current) {
       html2canvas(chartRef.current).then(canvas => {
         const imageURL = canvas.toDataURL();
-        if (onSaveImage) {
-          onSaveImage(imageURL);
-        }
+        console.log('Image URL:', imageURL);
+        // Use imageURL as needed
       }).catch(error => {
         console.error('Error while converting to image:', error);
       });
     } else {
       console.error('Chart element not found or not ready.');
     }
-  }, [onSaveImage]);
-  
+  };
 
   return (
     <div className="chart-container" ref={chartRef}>
       <Pie data={data} options={options} />
+            <button onClick={saveChartAsImage}>Save Chart as Image</button>
 
     </div>
   );

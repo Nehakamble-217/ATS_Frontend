@@ -65,11 +65,13 @@ function DailyWork({
   const [profileImage, setProfileImage] = useState(null);
 
   const navigate = useNavigate();
+  const {userType}=useParams();
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9090/api/ats/157industries/fetch-profile-details/1/Recruiters`
+
+          `http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
         );
         setEmployeeData(response.data);
         //Akash_Pawar_DailyWork_senderinformation_09/07_74
