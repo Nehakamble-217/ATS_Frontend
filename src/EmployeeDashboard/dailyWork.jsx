@@ -71,7 +71,7 @@ function DailyWork({
         const response = await axios.get(
 
 
-          `http://192.168.1.48:8891/api/ats/157industries/employee-details/${employeeId}`
+          `http://192.168.1.46:9090/api/ats/157industries/employee-details/${employeeId}`
         );
         setEmployeeData(response.data);
         //Akash_Pawar_DailyWork_senderinformation_09/07_74
