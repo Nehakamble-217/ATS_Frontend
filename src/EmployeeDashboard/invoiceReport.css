@@ -2,6 +2,30 @@
 
 /* callingList.css */
 
+.table-container {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.table-header {
+  background-color: #ffcb9b;
+}
+.table-header-cell {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+.sub-heading {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.sub-heading-cell {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
 .filter-section {
   margin-bottom: 20px;
 }
