@@ -8,7 +8,7 @@ function Accesstable() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   // const [selectedMainAdmin, setSelectedMainAdmin] = useState(null);
   const [selectedTeamLeader, setSelectedTeamLeader] = useState(null);
-  const [selectedManager,setSelectedManager]=useState(null);
+  const [selectedManager, setSelectedManager] = useState(null);
   const [selectedRecruiters, setSelectedRecruiters] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   // const [assignments, setAssignments] = useState({});
@@ -21,7 +21,7 @@ function Accesstable() {
 
   //Name:-Akash Pawar Component:-Team_Leadder Subcategory:-Assign Column TeamLeader Names and Recruiter Names(changed) Start LineNo:-17  Date:-03/07
   const [teamLeaderNames, setTeamLeaderNames] = useState([]);
-  const [manager,setManager]=useState([]);
+  const [manager, setManager] = useState([]);
   const [teamLeaderUnderManager, setTeamLeaderUnderManager] = useState([]);
   const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
   const [assignedColumnsCount, setAssignedColumnsCount] = useState([]);
@@ -31,7 +31,7 @@ function Accesstable() {
   );
   const [assignedColumnRecruiterUpdate, setAssignedColumnRecruiterUpdate] =
     useState([]);
-    
+
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
@@ -47,6 +47,7 @@ function Accesstable() {
       const response = await axios.get(
 
         `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${selectedManager}`
+
       );
       setTeamLeaderUnderManager(response.data);
       console.log(selectedManager)
@@ -61,6 +62,8 @@ function Accesstable() {
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
+
+
 
   useEffect(() => {
     if (selectedTeamLeader != null) {
@@ -138,25 +141,6 @@ function Accesstable() {
     setFetchupdateAssignedColumn(response.data);
   };
 
-  // const handleRemoveClick = (recruiter) => {
-  //   setSelectedRecruiters((prev) => prev.filter((item) => item !== recruiter));
-  //   const updatedAssignments = { ...assignments };
-  //   delete updatedAssignments[recruiter];
-  //   setAssignments(updatedAssignments);
-  // };
-
-  // function getClassForCategory(category) {
-  //   switch (category) {
-  //     case "Common Assign":
-  //       return "common-assign";
-  //     case "Important Assign":
-  //       return "important-assign";
-  //     case "Most Important Assign":
-  //       return "most-important-assign";
-  //     default:
-  //       return "";
-  //   }
-  // }
   const handleOkClick = () => {
     setDropdownOpen(false);
   };
@@ -261,68 +245,64 @@ function Accesstable() {
                           type="radio"
                           name="manager"
                           value={id.managerId}
-                          checked={selectedManager=== id.managerId}
+                          checked={selectedManager === id.managerId}
                           onChange={() =>
                             setSelectedManager(id.managerId)
                           }
                         />
                         {id.managerName}
                       </label>
-                      
+
                       {selectedManager === id.managerId &&
                         teamLeaderUnderManager && (
-    
                           <div className="recruitersTL">
                             {teamLeaderUnderManager.map(
                               (teamleader, tIndex) => (
                                 <div>
-                                <label key={tIndex}>
-                                  <input
-                                    type="radio"
-                                    name="recruiter"
-                                    value={teamleader.teamLeaderId}
-                                    checked={selectedTeamLeader ===
-                                      teamleader.teamLeaderId
-                                    }
-                   
-                                    onChange={() =>
-                                      setSelectedTeamLeader(teamleader.teamLeaderId)
-                                    }
-                                  />
-                                  {teamleader.teamLeaderName}
-                                </label>
-                                {selectedTeamLeader === teamleader.teamLeaderId &&
-                                recruiterUnderTeamLeader && (
-                               <div className="recruitersTL">
-                                 {recruiterUnderTeamLeader.map((recruiter, rIndex) => (
-                              <label key={rIndex}>
-                                <input
-                                 type="radio"
-                                 name="recruiter"
-                                 value={recruiter.employeeId}
-                                 checked={selectedRecruiters === recruiter.employeeId}
-                                 onChange={() =>
-                                 setSelectedRecruiters(recruiter.employeeId)
-                                 }
-                                />
-                                {recruiter.employeeName}
-                              </label>
-                               ))}
-                            </div>
-                            )}
+                                  <label key={tIndex}>
+                                    <input
+                                      type="radio"
+                                      name="recruiter"
+                                      value={teamleader.teamLeaderId}
+                                      checked={selectedTeamLeader ===
+                                        teamleader.teamLeaderId
+                                      }
+                                      onChange={() =>
+                                        setSelectedTeamLeader(teamleader.teamLeaderId)
+                                      }
+                                    />
+                                    {teamleader.teamLeaderName}
+                                  </label>
+                                  {selectedTeamLeader === teamleader.teamLeaderId &&
+                                    recruiterUnderTeamLeader && (
+                                      <div className="recruitersTL">
+                                        {recruiterUnderTeamLeader.map((recruiter, rIndex) => (
+                                          <label key={rIndex}>
+                                            <input
+                                              type="radio"
+                                              name="recruiter"
+                                              value={recruiter.employeeId}
+                                              checked={selectedRecruiters === recruiter.employeeId}
+                                              onChange={() =>
+                                                setSelectedRecruiters(recruiter.employeeId)
+                                              }
+                                            />
+                                            {recruiter.employeeName}
+                                          </label>
+                                        ))}
+                                      </div>
+                                    )}
                                 </div>
                               )
                             )}
-                            
                           </div>
-                        )}  
-                        
-                    </div>   
+                        )}
+
+                    </div>
                   ))}
-                  
+
                 </div>
-                
-                
+
 
                 <div className="TLR-buttons-div">
                   <button className="ok-button" onClick={handleOkClick}>
@@ -338,7 +318,7 @@ function Accesstable() {
                     Reset
                   </button>
                 </div>
-                
+
               </div>
             )}
           </div>
