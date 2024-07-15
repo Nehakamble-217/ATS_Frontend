@@ -18,9 +18,11 @@ const EmployeeProfileData = ({ onClose }) => {
     setViewMoreProfileShow(true);
   };
 
+  const { userType } = useParams();
+
   useEffect(() => {
     fetch(
-      `http://192.168.1.51:8891/api/ats/157industries/employee-details/${employeeId}`
+      `http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -73,26 +75,17 @@ const EmployeeProfileData = ({ onClose }) => {
     window.close(); // Closes the current window
   };
 
-  
-
   if (viewMoreProfileShow)
     return (
       <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
-            {/* <div className="profile-back-button">
-              <button onClick={onClose}>
-                Close
-                <i className="fas fa-times"></i>
-              </button>
-            </div> */}
-            {/* Employee personal Information and current company information */}
             <div className="employee-profile-staticsection">
               <div className="employee-profile-static">
                 <div className="employee-profile-details">
                   <img src={profileImage} />
                   <p className="m-0">
-                    <b>Name: {employeeData?.employeeName}</b>
+                    <b>Name: {employeeData?.name}</b>
                   </p>
                   <p className="m-0">
                     <b>Designation: {employeeData.designation}</b>
@@ -370,44 +363,37 @@ const EmployeeProfileData = ({ onClose }) => {
                 </div>
               </div>
               {/* Ajhar-11-07-2024 jsx.LineNo-370  */}
-              
-               {/* Employee Performance Indicator */}
-               <div className="employee-profile-performance-indicator">
-                  <h1>
-                    <b>Performance Indicator</b>
-                  </h1>
-                
-              <div className="emp-pro-data-progress-bar">
 
-            <div className="emp-pro-data-progress-bar-inner">
+              {/* Employee Performance Indicator */}
+              <div className="employee-profile-performance-indicator">
+                <h1>
+                  <b>Performance Indicator</b>
+                </h1>
 
-              <div className="emp-pro-data-poor">
-              <h6 >Poor</h6>
-                </div> 
+                <div className="emp-pro-data-progress-bar">
+                  <div className="emp-pro-data-progress-bar-inner">
+                    <div className="emp-pro-data-poor">
+                      <h6>Poor</h6>
+                    </div>
 
-               <div className="emp-pro-data-average" >
-               <h6>Average</h6>
-               </div> 
+                    <div className="emp-pro-data-average">
+                      <h6>Average</h6>
+                    </div>
 
-               <div className="emp-pro-data-good" >
-               <h6>Good</h6>
-               </div> 
+                    <div className="emp-pro-data-good">
+                      <h6>Good</h6>
+                    </div>
 
-               <div className="emp-pro-data-best"  >
-               <h6>Best</h6>
+                    <div className="emp-pro-data-best">
+                      <h6>Best</h6>
+                    </div>
+                  </div>
+
+                  <div className="indicator-123">
+                    <i class="fa-solid fa-i"></i>
+                  </div>
+                </div>
               </div>
-
-              </div>
-
-              <div className="indicator-123" >
-              <i class="fa-solid fa-i"></i>
-              </div>
-
-               </div>
-                  
-               
-              </div>
-            
             </div>
           </section>
         </main>
@@ -491,7 +477,7 @@ const EmployeeProfileData = ({ onClose }) => {
             </div>
             <div>
               <p className="m-1" style={{ color: "gray" }}>
-                Name : {employeeData.employeeName}
+                Name : {employeeData.name}
               </p>
               <p className="m-1">Job Role: {employeeData.jobRole}</p>
               <p className="m-1">Email: {employeeData.employeeEmail}</p>

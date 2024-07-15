@@ -765,8 +765,6 @@ const Attendance = () => {
         totalCandidatepdf
       ); // Example function to create PDF content
 
-      window.open(pdfContent, "_blank");
-
       // Open the modal
       setModalIsOpen(true);
     } catch (error) {
@@ -1022,7 +1020,6 @@ const Attendance = () => {
         {LineUpDataReport && (
           <ShortListedCandidates filteredLineUpItems={filteredLineUpItems} />
         )}
-
         {/* {LineUpDataReport &&<ReportsPieChart/>
           } */}
       </div>

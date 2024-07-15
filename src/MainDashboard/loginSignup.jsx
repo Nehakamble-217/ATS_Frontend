@@ -67,7 +67,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate("/empDash/6");
+    navigate("/empDash/870/Manager");
   };
 
   return (
@@ -144,7 +144,7 @@ const LoginSignup = ({ onLogin }) => {
                   onClick={dashboardLink}
                   data-aos="fade-top"
                 >
-                  Dashboard
+                  Dashboar
                 </button>
                 <center>
                   <span
