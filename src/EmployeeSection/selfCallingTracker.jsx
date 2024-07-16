@@ -28,7 +28,7 @@ const CallingList = ({
   const [selectedCandidateId, setSelectedCandidateId] = useState();
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [activeFilterOption, setActiveFilterOption] = useState(null);
-  const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
+  const [fetchTeamleader, setFetchTeamleader] = useState(null);
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -82,19 +82,32 @@ const CallingList = ({
       });
   }, [employeeId]);
 
+  const fetchTeamLeader = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${employeeId}`
+      );
+      const data = await response.json();
+      setFetchTeamleader(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching shortlisted data:", error);
+    }
+  };
+  const fetchRecruiters = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+      );
+      const data = await response.json();
+      setFetchTeamleader(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching shortlisted data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchEmployeeNameAndID = async () => {
-      try {
-        const response = await fetch(
-          `http://192.168.1.46:9090/api/ats/157industries/names-and-ids`
-        );
-        const data = await response.json();
-        setFetchEmployeeNameID(data);
-      } catch (error) {
-        console.error("Error fetching shortlisted data:", error);
-      }
-    };
-    fetchEmployeeNameAndID();
+    fetchTeamLeader();
   }, []);
 
   useEffect(() => {
