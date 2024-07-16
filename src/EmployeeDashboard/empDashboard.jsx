@@ -46,6 +46,7 @@ import InvoicePdf from "./invoicePdf";
 import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_43*/
 import QuestionPaper from "./questionPaper";
 import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
+import EmployeeDetails from "../EmployeeDetails/EmployeeDetails";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -108,7 +109,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showQuestionpaper, setShowQuestionpaper] = useState(false);
 
   const [showCapex, setShowCapex] = useState(false);
-
+  const [showEmployeeDetails, setShowEmployeeDetails] = useState(false);
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
@@ -252,10 +253,10 @@ const EmpDashboard = ({ userGroup }) => {
     setShowAddCompany(
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
-
     setShowProfitLoss(false);
     setShowQuestionpaper(false);
     setShowCapex(false);
+    setShowEmployeeDetails(false); /*Swapnil_AddedEmployeeDetails_16/07*/
   };
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -268,6 +269,12 @@ const EmpDashboard = ({ userGroup }) => {
   const togglePayRoll = () => {
     resetAllToggles();
     setShowPayRoll(!showPayRoll);
+  };
+
+  // Swapnil_AddedEmployeeDetails_16/07
+  const toggleEmployeeDetails = () => {
+    resetAllToggles();
+    setShowEmployeeDetails(!showEmployeeDetails);
   };
 
   /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_233-235*/
@@ -514,6 +521,7 @@ const EmpDashboard = ({ userGroup }) => {
         } /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_444*/
         toggleQuestionPaper={toggleQuestionPaper}
         toggleCapex={toggleCapex}
+        toggleEmployeeDetails={toggleEmployeeDetails}
       />
 
       <div className="empDash-main-content">
@@ -654,6 +662,7 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
         <div>{showAddCompany && <AddCompanyDetails />}</div>
         <div>{showCapex && <Capex />}</div>
+        <div>{showEmployeeDetails && <EmployeeDetails />}</div>
       </div>
     </div>
   );
