@@ -144,7 +144,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
       const { data } = response;
       setCallingTracker((prevState) => ({
         ...prevState,
-        recruiterName: data,
       }));
       setLineUpData((prevState) => ({
         ...prevState,
@@ -160,7 +159,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
       const response = await axios.get(
         `http://192.168.1.46:9090/api/ats/157industries/company-details`
       );
-      const { data } = response;
+      const { data } = response;  
       setRequirementOptions(data);
     } catch (error) {
       console.error("Error fetching requirement options:", error);
