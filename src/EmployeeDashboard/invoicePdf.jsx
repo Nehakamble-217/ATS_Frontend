@@ -1,10 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './invoicePdf.css';
 import logo from '../LogoImages/LoginImge.jpg';
+import { format,parseISO } from 'date-fns';
+// SwapnilRokade_InvoicePdf_FetchingDataFromBackend_05To188_15/07
+const InvoicePdf = ({id, onClose}) => {
+    const [invoiceData,setInvoiceData] = useState([]);
+    useEffect(()=>{
+        fetchInvoice();
+    },[id])
+    const fetchInvoice = async () => {
+        try {
+            const res = await fetch(`http://localhost:8080/api/fetchById/${id}`);
+            const data = await res.json();
+            setInvoiceData([data]);
+            console.log(data);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+    // const invoiceDate = format(parseISO(invoiceData.invoiceDate), 'dd-MMM-yyyy');
+    // console.log(invoiceDate);
+      console.log(invoiceData);
+      const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'short', day: '2-digit' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', options)
+        .replace(/(\d+)-(\w+)-(\d+)/, "$1-$2-$3");
+      };
 
-const InvoicePdf = () => {
     return (
         <div className="invoice-container">
+              <button className="lineUp-share-btn" onClick={onClose}>
+        Close
+      </button>
             <div className="invoice-header">
                 <div className="logo-container">
                     <img src={logo} alt="Logo" className="logo" />
@@ -17,31 +45,30 @@ const InvoicePdf = () => {
             </div>
             <div className="invoice-table-container">
                 <table className="invoice-table">
-                    <tbody>
+                {invoiceData.map((item,index)=>(
+                    <tbody key={index}>
                         {/* Row 1: Tax Invoice */}
                         <tr>
                             <td colSpan="7" className="tax-invoice center-text nowrap-text">Tax Invoice</td>
                         </tr>
 
                         {/* Row 2: Details of Receiver and Supplier */}
+                        
                         <tr>
                             <td colSpan="3" className="receiver-details">
                                 <strong>Details of Receiver:</strong><br />
                                 Billed to<br />
-                                Predikly Technologies Private Limited.<br />
-                                401 Pride House, Ganeshkhind Road,<br />
-                                Near Pune University,<br />
-                                Pune 411016, INDIA.<br />
-                                GST Number: 27AAJCP8956AIZ5
+                                {item.companyName}<br />
+                                {item.companyAddress}<br />
+                                GST Number:{item.companyGstNo}
                             </td>
                             <td colSpan="4" className="supplier-details">
                                 <strong>Details of Supplier:</strong><br />
-                                157 Industries Private Limited<br />
-                                308, Powerone<br />
-                                Koregaon Park Annex,<br />
-                                Near passport office Mundhawa, Pune<br />
-                                GST: 27AABCZ5272FIZ6<br />
-                                SAC Code: 998512
+                                {item.supplierDetails.supplierName}<br />
+                                {item.supplierDetails.supplierOfficeNo}<br />
+                                {item.supplierDetails.supplierNearLoc}, {item.supplierDetails.supplierCity},{item.supplierDetails.supplierPinCode}<br />
+                                GST: {item.supplierDetails.supplierGstNo}<br />
+                                SAC Code:{item.supplierDetails.supplierSacCode}
                             </td>
                         </tr>
 
@@ -59,8 +86,8 @@ const InvoicePdf = () => {
 
                         {/* Row 5: 18th April 2024, EIS7040, Recruitment Service */}
                         <tr className="center-text">
-                            <td colSpan="2">18th April 2024</td>
-                            <td colSpan="2">EIS7040</td>
+                            <td colSpan="2">{formatDate(item.invoiceDate)}</td>
+                            <td colSpan="2">EIS{item.invoiceNo}</td>
                             <td colSpan="3">Recruitment Service</td>
                         </tr>
 
@@ -78,19 +105,19 @@ const InvoicePdf = () => {
                         {/* Row 7: Candidate Details */}
                         <tr className="center-text">
                             <td>1</td>
-                            <td>Shubham Jambutkar</td>
-                            <td>Proposal Writer</td>
-                            <td>18-01-2024</td>
-                            <td>14,00,000</td>
+                            <td>{item.candidateName}</td>
+                            <td>{item.designation}</td>
+                            <td>{formatDate(item.dateOfJoining)}</td>
+                            <td>{item.annualCtc}</td>
                             <td>3.00%</td>
-                            <td>43,500.00</td>
+                            <td>{item.grossAmount}</td>
                         </tr>
 
                         {/* Row 8: Total */}
                         <tr className="center-text">
                             <td colSpan="5"></td>
                             <td className="total-label">Total</td>
-                            <td className="total-amount">43,500.00</td>
+                            <td className="total-amount">{item.grossAmount}</td>
                         </tr>
 
                         {/* Row 9: GST Breakup */}
@@ -102,7 +129,7 @@ const InvoicePdf = () => {
                         <tr className="center-text">
                             <td colSpan="4"></td>
                             <td>CGST</td>
-                            <td>9%</td>
+                            <td>{item.cgst}%</td>
                             <td>3,915.00</td>
                         </tr>
 
@@ -110,7 +137,7 @@ const InvoicePdf = () => {
                         <tr className="center-text">
                             <td colSpan="4"></td>
                             <td>SGST</td>
-                            <td>9%</td>
+                            <td>{item.cgst}%</td>
                             <td>3,915.00</td>
                         </tr>
 
@@ -118,7 +145,7 @@ const InvoicePdf = () => {
                         <tr className="center-text">
                             <td colSpan="4"></td>
                             <td>IGST</td>
-                            <td>9%</td>
+                            <td>{item.cgst}%</td>
                             <td>3,915.00</td>
                         </tr>
 
@@ -126,7 +153,7 @@ const InvoicePdf = () => {
                         <tr className="center-text">
                             <td colSpan="4"></td>
                             <td>Total GST</td>
-                            <td>27%</td>
+                            <td>{item.totalGst}%</td>
                             <td>11,745.00</td>
                         </tr>
 
@@ -135,13 +162,13 @@ const InvoicePdf = () => {
                             <td colSpan="4"></td>
                             <td><b>Grand Total (in numbers)</b></td>
                             <td></td>
-                            <td>55,245.00</td>
+                            <td>{item.grandTotal}</td>
                         </tr>
 
                         {/* Row 15: Amount in Words */}
                         <tr className="amount-in-words left-text">
                             <td colSpan="7">
-                                Amount in words: Fifty one thousand three hundred and thirty rupees only.
+                                Amount in words:{item.grandTotalInWords}.
                             </td>
                         </tr>
 
@@ -149,14 +176,14 @@ const InvoicePdf = () => {
                         <tr className="bank-details">
                             <td colSpan="7">
                                 <strong>Bank Details :</strong><br />
-                                Bank Name: Kotak Mahindra Bank
+                                Bank Name: {item.bankName}
                                 <br />
                                 Bank A/c Holder: 157 INDUSTRIES PRIVATE LIMITED
                                 <br />
-                                Bank A/c Number: 114138782
+                                Bank A/c Number: {item.acNo}
                                 <br />
-                                IFSC Code:<br />
-                                Bank Address:
+                                IFSC Code: {item.ifscCode}<br />
+                                Bank Address:{item.branch}
                                 {/* Row 16: Authorised Signature */}
 
 
@@ -167,7 +194,8 @@ const InvoicePdf = () => {
 
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody> )
+                        )}
                 </table>
             </div>
         </div>

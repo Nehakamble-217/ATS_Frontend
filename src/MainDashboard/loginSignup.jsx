@@ -11,10 +11,10 @@ const LoginSignup = ({ onLogin }) => {
   const { userType } = useParams(); // Get the userType from the URL
   const [employeeId, setEmployeeId] = useState("");
   const [password, setPassword] = useState("");
-  const [usersType,setUsersType]=useState("")
+  const [usersType, setUsersType] = useState("");
   const [error, setError] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-    const [login, setLogin]=useState("")
+  const [login, setLogin] = useState("");
 
   const navigate = useNavigate();
 
@@ -22,9 +22,7 @@ const LoginSignup = ({ onLogin }) => {
     AOS.init({ duration: 3000 });
   }, []);
 
-
-    
- useEffect(() => {
+  useEffect(() => {
     fetch(
       `http://192.168.1.46:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
     )
@@ -35,11 +33,10 @@ const LoginSignup = ({ onLogin }) => {
       .catch((error) => {
         console.error("Error fetching data:", error);
         // alert("Failed to Fetch")
-        
       });
-  },[employeeId][userType]);
+  }, [employeeId][userType]);
   console.log(userType);
-  console.log(login +" loginSignUp")
+  console.log(login + " loginSignUp");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -47,7 +44,8 @@ const LoginSignup = ({ onLogin }) => {
       setEmployeeId(value);
     } else if (name === "password") {
       setPassword(value);
-    } else if (name === "userType") { // Handle userType change
+    } else if (name === "userType") {
+      // Handle userType change
       setUsersType(value);
     }
   };
@@ -69,25 +67,33 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate('/empDash/870/Manager');
+    navigate("/empDash/870/Manager");
   };
 
   return (
     <div className="main-body">
       <div className="main-login-container">
         <div className="main-loginpage-clouds"></div>
-        <div className={`container22 ${showForgotPassword ? 'full-width' : ''}`}>
+        <div
+          className={`container22 ${showForgotPassword ? "full-width" : ""}`}
+        >
           {!showForgotPassword && (
             <div className="left-panel" data-aos="fade-right">
               <img src={LoginImage} alt="Logo" className="logo" />
             </div>
           )}
-          <div className={` ${showForgotPassword ? 'full-width-panel' : 'right-panel'}`} data-aos="fade-left">
+          <div
+            className={` ${
+              showForgotPassword ? "full-width-panel" : "right-panel"
+            }`}
+            data-aos="fade-left"
+          >
             {showForgotPassword ? (
               <ForgotPasswordForms userType={userType} />
             ) : (
               <form onSubmit={handleSubmit}>
-                <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2> {/* Display the userType */}
+                <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2>{" "}
+                {/* Display the userType */}
                 <div className="input-groups">
                   <i className="fas fa-user"></i>
                   <input
@@ -100,7 +106,7 @@ const LoginSignup = ({ onLogin }) => {
                     className="loginpage-form-control"
                   />
                 </div>
-                  <div className="input-groups" hidden>
+                <div className="input-groups" hidden>
                   <i className="fas fa-briefcase"></i>
                   <input
                     type="text"
@@ -125,10 +131,28 @@ const LoginSignup = ({ onLogin }) => {
                   />
                 </div>
                 <div className="loginpage-error">{error}</div>
-                <button className="login-button" type="submit" data-aos="fade-top">Login</button>
-                <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboar</button>
+                <button
+                  className="login-button"
+                  type="submit"
+                  data-aos="fade-top"
+                >
+                  Login
+                </button>
+                <button
+                  type="button"
+                  className="dashboard-button"
+                  onClick={dashboardLink}
+                  data-aos="fade-top"
+                >
+                  Dashboar
+                </button>
                 <center>
-                  <span className="psw" onClick={() => setShowForgotPassword(true)}>Forgot password?</span>
+                  <span
+                    className="psw"
+                    onClick={() => setShowForgotPassword(true)}
+                  >
+                    Forgot password?
+                  </span>
                 </center>
               </form>
             )}

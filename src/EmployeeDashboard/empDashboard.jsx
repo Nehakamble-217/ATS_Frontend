@@ -44,6 +44,7 @@ import InvoiceTable from "./invoice";
 import InvoiceReport from "./invoiceReport";
 import InvoicePdf from "./invoicePdf";
 import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_43*/
+import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -97,10 +98,12 @@ const EmpDashboard = ({ userGroup }) => {
   const [showInvoicePdf, setShowInvoicePdf] = useState(false)
   /*ArbazPathan_EmpDashboard_AddedInvoiceToggeleFunction_11/07/2024_LineNo_87-207 */
   const [showAddCompany, setShowAddCompany] =
-    useState(
-      false
-    ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
-
+  useState(
+    false
+  ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
+  
+  const [showCapex , setShowCapex] = useState(false)
+  
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
@@ -235,7 +238,9 @@ const EmpDashboard = ({ userGroup }) => {
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
     setShowProfitLoss(false)
+    setShowCapex(false)
   };
+  
 
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -429,6 +434,10 @@ const EmpDashboard = ({ userGroup }) => {
     setShowInvoicePdf(!showInvoicePdf);
   }
 
+  const toggleCapex = () => {
+    resetAllToggles();
+    setShowCapex(!showCapex);
+  };
 
   return (
     <div
@@ -481,6 +490,8 @@ const EmpDashboard = ({ userGroup }) => {
         toggleAddCompany={
           toggleAddCompany
         } /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_444*/
+
+      toggleCapex={toggleCapex}
 
       />
 
@@ -599,6 +610,10 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{showAddCompany && <AddCompanyDetails />}</div>
+        <div>
+          {showCapex &&  <Capex/>}
+          
+        </div>
       </div>
     </div>
   );
