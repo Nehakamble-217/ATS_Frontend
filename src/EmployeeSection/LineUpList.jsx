@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/LineUpList.css";
 import UpdateCallingTracker from "./UpdateSelfCalling";
+import * as XLSX from 'xlsx';
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -89,7 +90,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.48:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/870/Manager`
     )
 
       .then((response) => response.json())
@@ -109,7 +110,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.48:8891/api/ats/157industries/names-and-ids`
+          `http://192.168.1.46:9090/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
         setFetchEmployeeNameID(data);
@@ -151,7 +152,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     setShowUpdateCallingTracker(false);
 
     fetch(
-      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/870/Manager`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -410,7 +411,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.46:9090/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
@@ -503,6 +504,127 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   };
   //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) End LineNo:-196 Date:-02/07
 
+
+  //Mohini_Raut_LineUpList_columnsToInclude_columnsToExclude_16/07/2024//
+const handleExportToExcel = () => {
+  // Define columns to include in export
+  const columnsToInclude = [
+    'No.',
+    'Date',
+    'Time',
+    'Candidate Id',
+    "Recruiter Name",
+    "Candidate's Name",
+    "Candidate's Email",
+    'Contact Number',
+    'Whatsapp Number',
+    'Source Name',
+    'Job Designation',
+    'Job Id',
+    'Applying Company',
+    'Communication Rating',
+    'Current Location',
+    'Full Address',
+    'Calling Feedback',
+    "Recruiter Incentive",
+    'Interested or Not',
+    'Current Company',
+    'Total Experience',
+    'Relevant Experience',
+    'Current CTC',
+    'Expected CTC',
+    'Date Of Birth',
+    'Gender',
+    'Education',
+    'Year Of Passing',
+    'Call Summary',
+    'Holding Any Offer',
+    'Offer Letter Msg',
+    'Notice Period',
+    'Message For Team Leader',
+    'Availability For Interview',
+    'Interview Time',
+    'Interview Status',
+  ];
+
+  // Filter out columns to exclude from export
+  const columnsToExclude = ['Resume', 'Action'];
+
+  // Clone the data and map to match columnsToInclude order
+  const dataToExport = filteredCallingList.map((item, index) => {
+    // Create a filtered item without the 'Resume' field
+    const filteredItem = {
+      'No.': index + 1,
+      'Date': item.date || '-',
+      'Time': item.candidateAddedTime || '-',
+      'Candidate Id': item.candidateId || '-',
+      "Recruiter Name": item.recruiterName || '-',
+      "Candidate's Name": item.candidateName || '-',
+      "Candidate's Email": item.candidateEmail || '-',
+      'Contact Number': item.contactNumber || '-',
+      'Whatsapp Number': item.alternateNumber || 0,
+      'Source Name': item.sourceName || '-',
+      'Job Designation': item.jobDesignation || '-',
+      'Job Id': item.requirementId || '-',
+      'Applying Company': item.requirementCompany || '-',
+      'Communication Rating': item.communicationRating || '-',
+      'Current Location': item.currentLocation || '-',
+      'Full Address': item.fullAddress || '-',
+      'Calling Feedback': item.callingFeedback || '-',
+      "Recruiter Incentive": item.incentive || '-',
+      'Interested or Not': item.selectYesOrNo || '-',
+      'Current Company': item.companyName || '-',
+      'Total Experience': `${item.experienceYear || 0} Years ${item.experienceMonth || 0} Months`,
+      'Relevant Experience': item.relevantExperience || '-',
+      'Current CTC': `${item.currentCTCLakh || 0} Lakh ${item.currentCTCThousand || 0} Thousand`,
+      'Expected CTC': `${item.expectedCTCLakh || 0} Lakh ${item.expectedCTCThousand || 0} Thousand`,
+      'Date Of Birth': item.dateOfBirth || '-',
+      'Gender': item.gender || '-',
+      'Education': item.qualification || '-',
+      'Year Of Passing': item.yearOfPassing || '-',
+      'Call Summary': item.extraCertification || '-',
+      'Holding Any Offer': item.holdingAnyOffer || '-',
+      'Offer Letter Msg': item.offerLetterMsg || '-',
+      'Notice Period': item.noticePeriod || '-',
+      'Message For Team Leader': item.msgForTeamLeader || '-',
+      'Availability For Interview': item.availabilityForInterview || '-',
+      'Interview Time': item.interviewTime || '-',
+      'Interview Status': item.finalStatus || '-'
+    };
+
+    return filteredItem;
+  });
+
+  // Define sheet name and create worksheet
+   const ws = XLSX.utils.json_to_sheet(dataToExport, { header: columnsToInclude });
+
+  // Add conditional formatting for header row
+  const headerRange = XLSX.utils.decode_range(ws['!ref']);
+  for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+    const cell = ws[XLSX.utils.encode_cell({ r: headerRange.s.r, c: C })];
+    if (cell) {
+      cell.s = {
+        font: {
+          bold: true,
+          color: { rgb: '000000' },
+          sz: 20,
+        },
+        fill: {
+          patternType: 'solid',
+          fgColor: { rgb: 'FF0000' }, // Red background
+        },
+      };
+    }
+  }
+
+  // Save the Excel file
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Calling List');
+  XLSX.writeFile(wb, 'calling_list.xlsx');
+};  
+  //Mohini_Raut_LineUpList_columnsToInclude_columnsToExclude_16/07/2024//
+
+  
   return (
     <div className="calling-list-container">
       {loading ? (
@@ -534,7 +656,11 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                     padding: "10px",
                   }}
                 >
+                   <button  className='lineUp-share-close-btn' onClick={handleExportToExcel}>Create Excel</button>
+
+
                   {showShareButton ? (
+                    
                     <button
                       className="lineUp-share-btn"
                       onClick={() => setShowShareButton(false)}

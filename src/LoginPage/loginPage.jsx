@@ -7,6 +7,7 @@ import "./loginPage.css";
 import LoginImage from "../LogoImages/LoginImge.jpg";
 import { getPasswordFromDB } from "../api/api";
 import ForgotPasswordForm from './ForgotPasswordForm'; // Import the ForgotPasswordForm component
+import JobList from "../EmployeeDashboard/JobList";
 
 const LoginSignup = ({ onLogin }) => {
   const { userType } = useParams(); // Get the userType from the URL
@@ -52,6 +53,10 @@ const LoginSignup = ({ onLogin }) => {
   const dashboardLink = () => {
     navigate('/empDash/870/Manager');
   };
+  console.log(userType);
+  const createAccount =()=>{
+    navigate("/empDash/435/TeamLeader")
+  }
 
   return (
     <div className="main-body">
@@ -95,7 +100,9 @@ const LoginSignup = ({ onLogin }) => {
                 </div>
                 <div className="loginpage-error">{error}</div>
                 <button className="login-button" type="submit" data-aos="fade-top">Login</button>
-                <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button>
+              
+                <button className="login-button" onClick={createAccount}>Create account</button>
+                {/* <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Dashboard</button> */}
                 <center>
                   <span className="psw" onClick={() => setShowForgotPassword(true)}>Forgot password?</span>
                 </center>

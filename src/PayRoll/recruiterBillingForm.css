@@ -1,0 +1,215 @@
+/* Mohini_15/07/2024_RecruiterBillingForm_Whole_page */
+------------------------------------------------------------
+CSS
+
+/* RecruiterBillingForm.css */
+/* Mohini_15/07/2024_RecruiterBillingForm_Whole_page_css_StartLine_1_EndLine_206 */
+.recruiterBilling-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  height: 100%;
+}
+
+.recruiterBilling-heading {
+  text-align: center;
+  font-size: 18px;
+  color: gray;
+}
+
+.recruiterBilling-headingForm {
+  width: 100%;
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px; */
+}
+
+.field-Row-Gray {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.field-Row-white {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.form-group {
+  width: 50%;
+  display: flex;
+  height: 40px;
+  /* padding: 5px; */
+  border: 1px solid gray;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.form-group label {
+  width: 28%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-right: 1px solid gray; */
+  color: gray;
+}
+
+.form-group input {
+  width: 48%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 30px;
+  padding: 10px;
+  margin-right: 20px;
+}
+.form-group-date{
+  width: 68%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1px 0px;
+}
+
+/* Styling for buttons */
+.button {
+  margin-left: 10px;
+  height: 30px;
+  padding: 0 15px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  background-color: #ffcb9b;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.button.cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.button:hover {
+  background-color: white;
+  color: #ffcb9b;
+}
+
+
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.recruiter-modal-body{
+  padding: 1px;
+}
+
+.recruiter-modal-content {
+  background-color: white;
+  padding: 5px;
+  border-radius: 10px;
+  width: 50%;
+  max-width: 350px;
+}
+
+.modal-header {
+  display: flex;
+  padding-bottom: 10px;
+  /* padding-right: 10px; */
+  color: gray;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: gray;
+  font-size: 18px;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+
+
+
+/* .modal-body {
+  margin-bottom: 20px;
+} */
+
+/* .modal-body div {
+  margin-bottom: 10px;
+} */
+
+/* .modal-footer {
+  text-align: right;
+} */
+.buttonDiv {
+  padding-top:5px ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: gray; /* Set font color to gray */
+}
+.ctf-btn {
+  background-color: #ffcb9b;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 15px;
+  border: 1px solid gray;
+  /* cursor: pointer; */
+  font-size: 16px; /* Use em for relative sizing */
+  text-align: center;
+  width: auto;
+  height: 30px; /* Allow height to adjust based on content */
+  backdrop-filter: blur(2px);
+  transition: 0.5s;
+  line-height: 0.7;
+}
+
+.ctf-btn:hover {
+  background-color: white;
+  color: #ffcb9b;
+  border: 1px solid gray;
+}
+.cancelButton {
+  background-color: #ffcb9b; /* Different background color for cancel button */
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 15px;
+  border: 1px solid darkgray;
+  font-size: 16px; /* Use em for relative sizing */
+  text-align: center;
+  width: auto;
+  height: 30px; /* Allow height to adjust based on content */
+  backdrop-filter: blur(2px);
+  transition: 0.5s;
+  line-height: 0.7;
+  margin: 0 10px; /* Add horizontal margin for spacing between buttons */
+}
+
+.cancelButton:hover {
+  background-color: white;
+  color: #ffcb9b;
+  border: 1px solid gray;
+}
+
+
+.modal-body input[type="radio"] {
+  margin-right: 5px; 
+}
+
+.modal-body div {
+  margin-bottom: 10px; 
+}
+/* Mohini_15/07/2024_RecruiterBillingForm_Whole_page_css_StartLine_1_EndLine_206 */

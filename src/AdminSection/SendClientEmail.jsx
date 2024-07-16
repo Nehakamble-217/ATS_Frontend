@@ -15,7 +15,7 @@ import axios from "axios";
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
-  const employeeIdnew = parseInt(employeeId);
+  // const employeeIdnew = parseInt(employeeId);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
@@ -82,7 +82,11 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
   useEffect(() => {
     fetch(
-      `http://192.168.1.48:8891/api/ats/157industries/calling-lineup/${employeeIdnew}`
+<<<<<<< HEAD
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}`
+=======
+      `http://192.168.1.46:8891/api/ats/157industries/calling-lineup/${employeeId}`
+>>>>>>> 440074da58739c1017e930cafb8c14338d95b317
     )
       .then((response) => response.json())
       .then((data) => {
@@ -95,7 +99,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
         // alert("Error For fetching")
         setLoading(false);
       });
-  }, [employeeIdnew]);
+  }, [employeeId]);
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
@@ -1178,7 +1182,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.48:8891/api/ats/157industries/add-client-details",
+        "http://192.168.1.46:9090/api/ats/157industries/add-client-details",
         clientData
       );
       if (response) {
@@ -1212,7 +1216,7 @@ const SendEmailPopup = ({
     };
 
     axios
-      .post("http://192.168.1.48:8082/api/ats/157industries/send-email", emailData)
+      .post("http://192.168.1.46:9090/api/ats/157industries/send-email", emailData)
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
