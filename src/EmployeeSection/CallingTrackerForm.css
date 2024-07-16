@@ -130,7 +130,7 @@ align-items: center;
   /* border: 1px solid gray; */
   /* padding: 5px 0px; */
   display: flex;
-  justify-content: center;
+   justify-content:flex-start; /* neha change this space around to flex-start date-16/7/24  */
   align-items: center;
 }
 .calling-tracker-two-input
