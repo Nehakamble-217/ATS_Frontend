@@ -681,11 +681,7 @@ const UpdateAccessTable = ({
   const handleUpdateClick = async () => {
     try {
       const response = await axios.post(
-<<<<<<< HEAD
-        `http://192.168.1.46:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/assign-column`,
-=======
         `http://192.168.1.46:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
->>>>>>> 440074da58739c1017e930cafb8c14338d95b317
         JSON.stringify(selectedOptions),
         {
           headers: {

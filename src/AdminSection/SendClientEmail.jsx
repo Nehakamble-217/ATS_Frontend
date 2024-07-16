@@ -82,11 +82,8 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
   useEffect(() => {
     fetch(
-<<<<<<< HEAD
-      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}`
-=======
-      `http://192.168.1.46:8891/api/ats/157industries/calling-lineup/${employeeId}`
->>>>>>> 440074da58739c1017e930cafb8c14338d95b317
+
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
