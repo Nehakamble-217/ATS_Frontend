@@ -711,6 +711,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                             />
                           </td>
                         ) : null}
+                  
                         <td className="tabledata">{index + 1}</td>
 
                         <td

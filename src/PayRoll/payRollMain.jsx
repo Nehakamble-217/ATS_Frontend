@@ -14,7 +14,6 @@ const PayRollMain = () => {
                 console.error('Error fetching employees:', error);
             }
         };
-
         fetchEmployees();
     }, []);
 
