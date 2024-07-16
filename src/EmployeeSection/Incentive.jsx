@@ -100,7 +100,7 @@ const Incentive = () => {
               <th className="attendanceheading">Join Date</th>
               <th className="attendanceheading">Last Call Date</th>
               <th className="attendanceheading">After 90 Days Date</th>
-              <th className="attendanceheading">Candidate Incentive</th>
+              {/* <th className="attendanceheading">Candidate Incentive</th> */}
               <th className="attendanceheading">Candidate Status</th>
               <th className="attendanceheading">Your Incentive</th>
               <th className="attendanceheading">Incentive Received/Not</th>
@@ -192,7 +192,7 @@ const Incentive = () => {
                     <span className="tooltiptext">{row.after90DaysDate}</span>
                   </div>
                 </td>
-                <td
+                {/* <td
                   className="tabledata"
                   onMouseOver={handleMouseOver}
                   onMouseOut={handleMouseOut}
@@ -201,7 +201,7 @@ const Incentive = () => {
                   <div className="tooltip">
                     <span className="tooltiptext">{row.incentive}</span>
                   </div>
-                </td>
+                </td> */}
                 <td
                   className="tabledata"
                   onMouseOver={handleMouseOver}

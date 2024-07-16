@@ -103,7 +103,7 @@ const {userType}=useParams();
       const response = await fetch(
 
 
-        `http://192.168.1.48:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
+        `http://192.168.1.46:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);

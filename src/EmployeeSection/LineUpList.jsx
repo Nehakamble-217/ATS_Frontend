@@ -89,7 +89,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.48:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
     )
 
       .then((response) => response.json())

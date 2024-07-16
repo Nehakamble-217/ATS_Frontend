@@ -390,7 +390,7 @@ const handleUrl= (url) => {
       </div>
 
       <div>
-      <ReportsPieChart  data={datadistributed} onSaveImage={handleUrl}/>
+      <ReportsPieChart  data={datadistributed} />
 
       </div>
       {/* <PieChart /> */}

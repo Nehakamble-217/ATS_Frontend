@@ -67,7 +67,7 @@ const CallingList = ({
 
   useEffect(() => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
+      `http://192.168.1.46:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
