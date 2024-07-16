@@ -20,10 +20,12 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
+
     "fortawesome": "^0.0.1-security",
     "html2canvas": "^1.4.1",
     "io": "^1.5.0",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "pdf-lib": "^1.17.1",
     "pdfmake": "^0.2.10",
     "react": "^18.2.0",
@@ -48,6 +50,7 @@
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
+    "svg-to-img": "^2.0.9",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

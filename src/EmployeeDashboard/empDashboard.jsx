@@ -44,6 +44,8 @@ import InvoiceTable from "./invoice";
 import InvoiceReport from "./invoiceReport";
 import InvoicePdf from "./invoicePdf";
 import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_43*/
+import QuestionPaper from "./questionPaper";
+import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -100,7 +102,14 @@ const EmpDashboard = ({ userGroup }) => {
     useState(
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
+    const [showQuestionpaper ,setShowQuestionpaper]=useState(false)
 
+  useState(
+    false
+  ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
+  
+  const [showCapex , setShowCapex] = useState(false)
+  
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
@@ -235,7 +244,10 @@ const EmpDashboard = ({ userGroup }) => {
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
     setShowProfitLoss(false)
+    setShowQuestionpaper(false)
+    setShowCapex(false)
   };
+  
 
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -428,7 +440,15 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowInvoicePdf(!showInvoicePdf);
   }
+  const toggleQuestionPaper=()=>{
+    resetAllToggles();
+    setShowQuestionpaper(!showQuestionpaper)
+  }
 
+  const toggleCapex = () => {
+    resetAllToggles();
+    setShowCapex(!showCapex);
+  };
 
   return (
     <div
@@ -481,6 +501,9 @@ const EmpDashboard = ({ userGroup }) => {
         toggleAddCompany={
           toggleAddCompany
         } /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_444*/
+          toggleQuestionPaper={toggleQuestionPaper}
+
+      toggleCapex={toggleCapex}
 
       />
 
@@ -533,6 +556,7 @@ const EmpDashboard = ({ userGroup }) => {
 
         {/* ArshadAttar_EmpDashboard_Added_LineGraph_11/07/2024_OnlyLineGraph_Div_LineNo_488-489 */}
         <div>{showProfitLoss && <LineGraph></LineGraph>}</div>
+        <div>{showQuestionpaper && <QuestionPaper/>}</div>
 
 
         <div>{showEmployeeMasterSheet && <EmployeeMasterSheet />}</div>
@@ -599,6 +623,10 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{showAddCompany && <AddCompanyDetails />}</div>
+        <div>
+          {showCapex &&  <Capex/>}
+          
+        </div>
       </div>
     </div>
   );

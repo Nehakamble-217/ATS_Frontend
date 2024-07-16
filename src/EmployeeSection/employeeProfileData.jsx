@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
@@ -12,13 +12,13 @@ const EmployeeProfileData = ({ onClose }) => {
   const [pdfSrc, setPdfSrc] = useState(null);
   const [employeeData, setEmployeeData] = useState(null);
   const { employeeId } = useParams();
+  const {userType}=useParams();
 
   const viewMoreProfile = (e) => {
     e.preventDefault();
     setViewMoreProfileShow(true);
   };
 
-  const {userType}=useParams();
 
 
   useEffect(() => {
@@ -76,14 +76,11 @@ const EmployeeProfileData = ({ onClose }) => {
     window.close(); // Closes the current window
   };
 
-  
-
   if (viewMoreProfileShow)
     return (
       <div className="employee-profile-main-div">
         <main className="employee-profile-main">
           <section className="employee-profile-section">
-
             <div className="employee-profile-staticsection">
               <div className="employee-profile-static">
                 <div className="employee-profile-details">
@@ -137,8 +134,8 @@ const EmployeeProfileData = ({ onClose }) => {
                     {employeeData.employeeStatus}
                   </p>
                   <p className="m-1">
-                    <b>Offered Salary : </b>
-                    {employeeData.offeredSalary}
+                    <b> Salary : </b>
+                    {employeeData.salary}
                   </p>
                   <p className="m-1">
                     <b>Official Email : </b>
@@ -146,23 +143,23 @@ const EmployeeProfileData = ({ onClose }) => {
                   </p>
                   <p className="m-1">
                     <b>Personal Email : </b>
-                    {employeeData.employeeEmail}
+                    {employeeData.personalEmailId}
                   </p>
                   <p className="m-1">
                     <b>Official Contact : </b>
-                    {employeeData.officialContactNumber}
+                    {employeeData.officialContactNo}
                   </p>
                   <p className="m-1">
                     <b>Company Contact : </b>
-                    {employeeData.companyMobileNumber}
+                    {employeeData.companyMobileNo}
                   </p>
                   <p className="m-1">
-                    <b>Perosnal Contact : </b>
-                    {employeeData.employeeNumber}
+                    <b>Personal Contact : </b>
+                    {employeeData.alternateContactNo}
                   </p>
                   <p className="m-1">
                     <b>Whatsapp Number : </b>
-                    {employeeData.whatsAppnumber}
+                    {employeeData.whatsAppNo}
                   </p>
 
                   <p className="m-1">
@@ -175,14 +172,14 @@ const EmployeeProfileData = ({ onClose }) => {
                   </p>
                   <p className="m-1">
                     <b>Permanent Address : </b>
-                    {employeeData.employeeAddress}
+                    {employeeData.address}
                   </p>
                   <p className="m-1">
                     <b>Present Address : </b>
-                    {employeeData.employeePresentAddress}
+                    {employeeData.presentAddress}
                   </p>
                   <p className="m-1">
-                    <b>Preks : </b>
+                    <b>Perks : </b>
                     {employeeData.perks}
                   </p>
                 </div>
@@ -213,7 +210,7 @@ const EmployeeProfileData = ({ onClose }) => {
                     </li>
                     <li>
                       Emergency Contact Number :{" "}
-                      {employeeData.emergencyContactNumber}
+                      {employeeData.emergencyContactNo}
                     </li>
                     <li>
                       Emergency Contact Relation :{" "}
@@ -227,7 +224,7 @@ const EmployeeProfileData = ({ onClose }) => {
                   </h1>
                   <ul>
                     <li>
-                      Qualifications : {employeeData.educationalQualification}
+                      Qualifications : {employeeData.qualification}
                     </li>
                   </ul>
                 </div>
@@ -239,7 +236,7 @@ const EmployeeProfileData = ({ onClose }) => {
                   </h1>
                   <ul>
                     <li>Previous Company Name : {employeeData.lastCompany}</li>
-                    <li>Last Working Date : {employeeData.lastWorkingDate}</li>
+                    <li>Last Working Date : {employeeData.workingDate}</li>
                     <li>
                       Reason For Leaving : {employeeData.reasonForLeaving}
                     </li>
@@ -280,10 +277,10 @@ const EmployeeProfileData = ({ onClose }) => {
                     <b>Message</b>
                   </h1>
                   <ul>
-                    <li>warning Comments : {employeeData.warningComments}</li>
-                    <li>Team Leader Message : {employeeData.teamLeaderMsg}</li>
+                    <li>Warning Comments : {employeeData.warningComments}</li>
+                    <li>Team Leader Message : {employeeData.messageForAdmin}</li>
                     <li>
-                      Edit And Delete Authority :{" "}
+                      Edit and delete authority :{" "}
                       {employeeData.editDeleteAuthority}
                     </li>
                   </ul>
@@ -367,44 +364,37 @@ const EmployeeProfileData = ({ onClose }) => {
                 </div>
               </div>
               {/* Ajhar-11-07-2024 jsx.LineNo-370  */}
-              
-               {/* Employee Performance Indicator */}
-               <div className="employee-profile-performance-indicator">
-                  <h1>
-                    <b>Performance Indicator</b>
-                  </h1>
-                
-              <div className="emp-pro-data-progress-bar">
 
-            <div className="emp-pro-data-progress-bar-inner">
+              {/* Employee Performance Indicator */}
+              <div className="employee-profile-performance-indicator">
+                <h1>
+                  <b>Performance Indicator</b>
+                </h1>
 
-              <div className="emp-pro-data-poor">
-              <h6 >Poor</h6>
-                </div> 
+                <div className="emp-pro-data-progress-bar">
+                  <div className="emp-pro-data-progress-bar-inner">
+                    <div className="emp-pro-data-poor">
+                      <h6>Poor</h6>
+                    </div>
 
-               <div className="emp-pro-data-average" >
-               <h6>Average</h6>
-               </div> 
+                    <div className="emp-pro-data-average">
+                      <h6>Average</h6>
+                    </div>
 
-               <div className="emp-pro-data-good" >
-               <h6>Good</h6>
-               </div> 
+                    <div className="emp-pro-data-good">
+                      <h6>Good</h6>
+                    </div>
 
-               <div className="emp-pro-data-best"  >
-               <h6>Best</h6>
+                    <div className="emp-pro-data-best">
+                      <h6>Best</h6>
+                    </div>
+                  </div>
+
+                  <div className="indicator-123">
+                    <i class="fa-solid fa-i"></i>
+                  </div>
+                </div>
               </div>
-
-              </div>
-
-              <div className="indicator-123" >
-              <i class="fa-solid fa-i"></i>
-              </div>
-
-               </div>
-                  
-               
-              </div>
-            
             </div>
           </section>
         </main>
@@ -439,9 +429,9 @@ const EmployeeProfileData = ({ onClose }) => {
                   ></iframe>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button onClick={closeModal} variant="secondary">
+                  <button onClick={closeModal} variant="secondary">
                     Close
-                  </Button>
+                  </button>
                 </Modal.Footer>
               </Modal.Dialog>
             </div>
@@ -491,9 +481,9 @@ const EmployeeProfileData = ({ onClose }) => {
                 Name : {employeeData.name}
               </p>
               <p className="m-1">Job Role: {employeeData.jobRole}</p>
-              <p className="m-1">Email: {employeeData.employeeEmail}</p>
+              <p className="m-1">Email: {employeeData.personalEmailId}</p>
               <p className="m-1">
-                Mobile no: {employeeData.emergencyContactNumber}
+                Mobile no: {employeeData.emergencyContactNo}
               </p>
               <p className="m-1">Gender: {employeeData.gender}</p>
               <p className="m-1">Blood Group: {employeeData.bloodGroup}</p>

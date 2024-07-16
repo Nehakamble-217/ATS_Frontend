@@ -3,10 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import './invoiceReport.css';
 import InvoicePdf from './invoicePdf';
+import { Modal } from 'react-bootstrap';
 
-const InvoiceReport = ({handleInvoicePdf}) => {
-      // const [showInvoicePdf,setShowInvoicePdf]=useState(false)
+
+// SwapnilRokade_InvoiceReport_FetchDataFromApiAndDisplay_09_to_664_12/07
+// SwapnilRokade_InvoiceReport_FetchDataFromApiAndDisplay_05To664_15/07
+const InvoiceReport = () => {
+      const [showInvoicePdf,setShowInvoicePdf]=useState(false)
       const [invoiceReport,setInvoiceReport] = useState([]);
+      const [invoiceId,setInvoiceId] = useState();
 
       useEffect(()=>{
         fetchInvoice();
@@ -45,124 +50,132 @@ const InvoiceReport = ({handleInvoicePdf}) => {
       tooltip.style.visibility = "hidden";
     }
   };
-//   const handleInvoicePdf =()=>{
-//       setShowInvoicePdf(!showInvoicePdf)
-//   }
+  const handleClick =(id)=>{
+      setInvoiceId(id);
+      console.log(id);
+      setShowInvoicePdf(true);
+  }
+
+  const closeInvoicePdf = () => {
+    setShowInvoicePdf(false);
+  }
+
+  console.log(invoiceId);
 
   return (
     <div className="attendanceTableData">
-      <table className="selfcalling-table attendance-table">
+      {!showInvoicePdf ?(
+      <table className="table-container">
         <thead>
-          <tr className="attendancerows-head">
-            <th className="attendanceheading">Sr No.</th>
-            <th className="attendanceheading">Invoice Date</th>
-            <th className="attendanceheading">Client Name</th>
-            <th className="attendanceheading">Client Address</th>
+          <tr className="table-header">
+            <th className="table-header-cell">Sr No.</th>
+            <th className="table-header-cell">Invoice Date</th>
+            <th className="table-header-cell">Client Name</th>
+            <th className="table-header-cell">Client Address</th>
+            <th className="table-header-cell">Client GST Number</th>
             {/* Company Details */}
-            <th className="attendanceheading" colSpan="5">Company Details</th>
+            <th className="table-header-cell" colSpan="5">Company Details</th>
            
-            <th className="attendanceheading">Invoice Number</th>
-            <th className="attendanceheading">Service Type</th>
-            <th className="attendanceheading">Product Type</th>
+            <th className="table-header-cell">Invoice Number</th>
+            <th className="table-header-cell">Service Type</th>
+            <th className="table-header-cell">Product Type</th>
             {/* Candidate Details
              
             
             */}
-            <th className="attendanceheading" colSpan="4">Candidate Details</th>
+            <th className="table-header-cell" colSpan="4">Candidate Details</th>
 
-            <th className="attendanceheading">Salary</th>
-            <th className="attendanceheading">Percentage</th>
-            <th className="attendanceheading">Annual CTC</th>
-            <th className="attendanceheading">Billing Rate</th>
-            <th className="attendanceheading">Gross Bill Amount</th>
-            <th className="attendanceheading">Total Bill Amount</th>
+            <th className="table-header-cell">Salary</th>
+            <th className="table-header-cell">Annual CTC</th>
+            <th className="table-header-cell">Billing Rate</th>
+            <th className="table-header-cell">Gross Bill Amount</th>
+            <th className="table-header-cell">Total Bill Amount</th>
             {/* GST */}
-            <th className="attendanceheading" colSpan="5">GST</th>
+            <th className="table-header-cell" colSpan="5">GST</th>
            
             {/* Miscellaneous */}
-            <th className="attendanceheading">Consultant Id</th>
-            <th className="attendanceheading">GRE No</th>
-            <th className="attendanceheading">Po No</th>
+            <th className="table-header-cell">Consultant Id</th>
+            <th className="table-header-cell">GRE No</th>
+            <th className="table-header-cell">Po No</th>
             {/* Bank Details */}
-            <th className="attendanceheading" colSpan="4">Bank details</th>
+            <th className="table-header-cell" colSpan="4">Bank details</th>
 
             
             {/* Invoice Tracking */}
-            <th className="attendanceheading">Invoice Sent From</th>
-            <th className="attendanceheading">Invoice Sent To</th>
-            <th className="attendanceheading">Hard Copy Sent</th>
-            <th className="attendanceheading">Payment Expected</th>
-            <th className="attendanceheading">GST</th>
-            <th className="attendanceheading">TDS</th>
-            <th className="attendanceheading">Payment Received</th>
-            <th className="attendanceheading">Payment Received Amount</th>
-            <th className="attendanceheading">GST Amount</th>
-            <th className="attendanceheading">Discrepancy Amount</th>
-            <th className="attendanceheading">Discrepancy Remark</th>
-            <th className="attendanceheading">GST File</th>
-            <th className="attendanceheading">GST Amount Payment</th>
+            <th className="table-header-cell">Invoice Sent From</th>
+            <th className="table-header-cell">Invoice Sent To</th>
+            <th className="table-header-cell">Hard Copy Sent</th>
+            <th className="table-header-cell">Payment Expected</th>
+            <th className="table-header-cell">TDS</th>
+            <th className="table-header-cell">Payment Received</th>
+            <th className="table-header-cell">Payment Received Amount</th>
+            <th className="table-header-cell">GST Amount</th>
+            <th className="table-header-cell">Discrepancy Amount</th>
+            <th className="table-header-cell">Discrepancy Remark</th>
+            <th className="table-header-cell">GST File</th>
+            <th className="table-header-cell">GST Amount Payment</th>
 
             {/* send to details */}
-            <th className="attendanceheading" colSpan="4">Send To Details</th>
+            <th className="table-header-cell" colSpan="4">Send To Details</th>
             
             {/* Client Details */}
-            <th className="attendanceheading" colSpan="4">Client Details</th>
-             <th className="attendanceheading" >Print</th>
+            <th className="table-header-cell" colSpan="4">Client Details</th>
+             <th className="table-header-cell" >Print</th>
            
 
 
 
           </tr>
-          <tr className="attendancerows-head">
-            <th className="attendanceheading" colSpan="4"></th>
+          <tr className="table-header">
+            <th className="table-header-cell" colSpan="5"></th>
             {/* Sub-headings for Company Details */}
-            <th className="attendanceheading">Name</th>
-            <th className="attendanceheading">Address</th>
-            <th className="attendanceheading">GST No</th>
-            <th className="attendanceheading">HSC Code</th>
-            <th className="attendanceheading">SAC Code</th>
-            {/* <th className="attendanceheading" colSpan="1"></th> */}
+            <th className="sub-heading-cell">Name</th>
+            <th className="sub-heading-cell">Address</th>
+            <th className="sub-heading-cell">GST No</th>
+            <th className="sub-heading-cell">HSC Code</th>
+            <th className="sub-heading-cell">SAC Code</th>
+            {/* <th className="sub-heading-cell" colSpan="1"></th> */}
 
-            <th className="attendanceheading" colSpan="3"></th>
+            <th className="sub-heading-cell" colSpan="3"></th>
             {/* Sub-headings for Company Details */}
-            <th className="attendanceheading">Candidate Name</th>
-            <th className="attendanceheading">Candidate Location</th>
-            <th className="attendanceheading">Date Of Joining</th>
-            <th className="attendanceheading">Department</th> 
-            {/* <th className="attendanceheading" colSpan=""></th> */}
+            <th className="sub-heading-cell">Candidate Name</th>
+            <th className="sub-heading-cell">Candidate Location</th>
+            <th className="sub-heading-cell">Date Of Joining</th>
+            <th className="sub-heading-cell">Department</th> 
+            {/* <th className="sub-heading-cell" colSpan=""></th> */}
 
-            <th className="attendanceheading" colSpan="6"></th>
+            <th className="sub-heading-cell" colSpan="5"></th>
             {/* Sub-headings for Company Details */}
-            <th className="attendanceheading">CGST</th>
-            <th className="attendanceheading">SGST</th>
-            <th className="attendanceheading">IGST</th>
-           <th className="attendanceheading">Grand Total</th>
-           <th className="attendanceheading">Grand Total In Word</th>
-            {/* <th className="attendanceheading" colSpan=""></th> */}
+            <th className="sub-heading-cell">CGST</th>
+            <th className="sub-heading-cell">SGST</th>
+            <th className="sub-heading-cell">IGST</th>
+           <th className="sub-heading-cell">Grand Total</th>
+           <th className="sub-heading-cell">Grand Total In Word</th>
+            {/* <th className="sub-heading-cell" colSpan=""></th> */}
 
-            <th className="attendanceheading" colSpan="3"></th>
+            <th className="sub-heading-cell" colSpan="3"></th>
             {/* Sub-headings for Company Details */}
-            <th className="attendanceheading">Bank Name</th>
-            <th className="attendanceheading">Ac No</th>
-            <th className="attendanceheading">IFSC Code</th>
-            <th className="attendanceheading">Branch</th>
-            {/* <th className="attendanceheading" colSpan=""></th> */}
+            <th className="sub-heading-cell">Bank Name</th>
+            <th className="sub-heading-cell">Ac No</th>
+            <th className="sub-heading-cell">IFSC Code</th>
+            <th className="sub-heading-cell">Branch</th>
+            {/* <th className="sub-heading-cell" colSpan=""></th> */}
 
-            <th className="attendanceheading" colSpan="13"></th>
+            <th className="sub-heading-cell" colSpan="12"></th>
             {/* Sub-headings for Company Details */}
-            <th className="attendanceheading">Name</th>
-            <th className="attendanceheading">Designation</th>
-            <th className="attendanceheading">Email</th>
-            <th className="attendanceheading">Mobile No</th>
+            <th className="sub-heading-cell">Name</th>
+            <th className="sub-heading-cell">Designation</th>
+            <th className="sub-heading-cell">Email</th>
+            <th className="sub-heading-cell">Mobile No</th>
             
 
            
             {/* Sub-headings for Company Details */}
-            <th className="attendanceheading">Name</th>
-            <th className="attendanceheading">Designation</th>
-            <th className="attendanceheading">Email</th>
-            <th className="attendanceheading">Mobile No</th>
-            <th className="attendanceheading" colSpan="2"></th>
+            <th className="sub-heading-cell">Name</th>
+            <th className="sub-heading-cell">Designation</th>
+            <th className="sub-heading-cell">Email</th>
+            <th className="sub-heading-cell">Mobile No</th>
+            <th className="sub-heading-cell" colSpan="2"></th>
           </tr>
            
 
@@ -171,7 +184,7 @@ const InvoiceReport = ({handleInvoicePdf}) => {
         <tbody>
           {invoiceReport.map((item,index)=>(
           <tr key={item.id}>
-            <td className='tabledata'>{item.id}</td>
+            <td className='tabledata'>{index+1}</td>
             <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
@@ -200,6 +213,16 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                        {item.clientAddress}
                     <div className="tooltip">
                       <span className="tooltiptext"> {item.clientAddress}</span>
+                    </div>
+            </td>
+            <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
+                       {item.clientGstNumber}
+                    <div className="tooltip">
+                      <span className="tooltiptext"> {item.clientGstNumber}</span>
                     </div>
             </td>
              <td
@@ -267,9 +290,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                        React Developer
+                        {item.serviceType}
                     <div className="tooltip">
-                      <span className="tooltiptext">React Developer</span>
+                      <span className="tooltiptext">{item.serviceType}</span>
                     </div>
             </td>
               <td
@@ -336,17 +359,6 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                         {item.salary}
                     <div className="tooltip">
                       <span className="tooltiptext">{item.salary}</span>
-                    </div>
-            </td>
-             <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-
-                  >
-                        88%
-                    <div className="tooltip">
-                      <span className="tooltiptext">88%</span>
                     </div>
             </td>
              <td
@@ -575,17 +587,6 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        50,000
-                    <div className="tooltip">
-                      <span className="tooltiptext">50,000</span>
-                    </div>
-            </td>
-             <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-
-                  >
                         {item.tds}
                     <div className="tooltip">
                       <span className="tooltiptext"> {item.tds}</span>
@@ -620,9 +621,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        {item.grossAmount}
+                        {item.gstAmount}
                     <div className="tooltip">
-                      <span className="tooltiptext"> {item.grossAmount}</span>
+                      <span className="tooltiptext"> {item.gstAmount}</span>
                     </div>
             </td>
              <td
@@ -719,9 +720,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        {item.companyDetails.name}
+                        {item.clientDetails.name}
                     <div className="tooltip">
-                      <span className="tooltiptext"> {item.companyDetails.name}</span>
+                      <span className="tooltiptext"> {item.clientDetails.name}</span>
                     </div>
             </td>
              <td
@@ -730,9 +731,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                       {item.companyDetails.designation}
+                       {item.clientDetails.designation}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.companyDetails.designation}</span>
+                      <span className="tooltiptext">{item.clientDetails.designation}</span>
                     </div>
             </td>
              <td
@@ -741,9 +742,9 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        {item.companyDetails.email}
+                        {item.clientDetails.email}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.companyDetails.email}</span>
+                      <span className="tooltiptext">{item.clientDetails.email}</span>
                     </div>
             </td>
              <td
@@ -752,21 +753,34 @@ const InvoiceReport = ({handleInvoicePdf}) => {
                     onMouseOut={handleMouseOut}
 
                   >
-                        {item.companyDetails.mobile}
+                        {item.clientDetails.mobile}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.companyDetails.mobile}</span>
+                      <span className="tooltiptext">{item.clientDetails.mobile}</span>
                     </div>
             </td>
-            <td className="tabledata"><button onClick={handleInvoicePdf}  className='daily-tr-btn'>Print</button></td>
+            <td className="tabledata"><button onClick={()=>handleClick(item.invoiceNo)}  className='daily-tr-btn'>Print</button></td>
             </tr>
-))}
+         ))}
         </tbody>
       </table>
-
-      {/* {showInvoicePdf && (
-            <InvoicePdf/>
+      ):
+       (
+        <Modal
+            show={showInvoicePdf}
+            onHide={closeInvoicePdf}
+            size="xl"
+            centered
+          >
+        <Modal.Body>
+              <div className="TeamLead-main-table-container">
+            <InvoicePdf id={invoiceId} onClose={closeInvoicePdf}/>
+            </div>
+            </Modal.Body>
+          </Modal>
             
-          )} */}
+          )
+          
+          }
     </div>
   );
 };

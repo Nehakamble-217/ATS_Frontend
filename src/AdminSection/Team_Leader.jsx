@@ -2,14 +2,27 @@ import React, { useState, useMemo, useCallback, useEffect } from "react";
 import "../AdminSection/Team_Leader.css";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import { json, useParams } from "react-router-dom";
 
 function Accesstable() {
+  const { employeeId } = useParams();
+  const { userType } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   // const [selectedMainAdmin, setSelectedMainAdmin] = useState(null);
-  const [selectedTeamLeader, setSelectedTeamLeader] = useState(null);
-  const [selectedManager,setSelectedManager]=useState(null);
-  const [selectedRecruiters, setSelectedRecruiters] = useState([]);
+  const [selectedTeamLeader, setSelectedTeamLeader] = useState({
+    teamLeaderId: "",
+    teamLeaderJobRole: "",
+  });
+  const [selectedManager, setSelectedManager] = useState({
+    managerId: "",
+    managerJobRole: "",
+  });
+  const [selectedRecruiters, setSelectedRecruiters] = useState({
+    index: "",
+    recruiterId: "",
+    recruiterJobRole: "",
+  });
   const [selectedOptions, setSelectedOptions] = useState([]);
   // const [assignments, setAssignments] = useState({});
   const [allSelected, setAllSelected] = useState(false);
@@ -21,7 +34,7 @@ function Accesstable() {
 
   //Name:-Akash Pawar Component:-Team_Leadder Subcategory:-Assign Column TeamLeader Names and Recruiter Names(changed) Start LineNo:-17  Date:-03/07
   const [teamLeaderNames, setTeamLeaderNames] = useState([]);
-  const [manager,setManager]=useState([]);
+  const [manager, setManager] = useState([]);
   const [teamLeaderUnderManager, setTeamLeaderUnderManager] = useState([]);
   const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
   const [assignedColumnsCount, setAssignedColumnsCount] = useState([]);
@@ -31,33 +44,42 @@ function Accesstable() {
   );
   const [assignedColumnRecruiterUpdate, setAssignedColumnRecruiterUpdate] =
     useState([]);
-    
+
+  // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_49_65
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
         `http://192.168.1.46:9090/api/ats/157industries/get-all-managers`
       );
-      setManager(response.data);
+      if (userType === "SuperUser") {
+        // Show all managers for the superuser
+        setManager(response.data);
+      } else {
+        // Show only the manager's own name
+        setManager(
+          response.data.filter((manager) => manager.managerId == employeeId)
+        );
+      }
     };
     fetchManagerNames();
   }, []);
 
+  // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_69_91
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-
-        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${selectedManager}`
+        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
       );
       setTeamLeaderUnderManager(response.data);
-      console.log(selectedManager)
     };
-    fetchTeamLeaderNames();
+    if (selectedManager.managerId != "") {
+      fetchTeamLeaderNames();
+    }
   }, [selectedManager]);
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-
-      `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader}`
+      `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -72,7 +94,6 @@ function Accesstable() {
 
   const fetchColumnsNames = async () => {
     const response = await axios.get(
-
       `http://192.168.1.46:9090/api/ats/157industries/fetch-columns-names`
     );
     setColumnName(response.data);
@@ -122,20 +143,25 @@ function Accesstable() {
 
   const toggleCategoryDropdown = (category) => {
     setOpenCategory((prev) => (prev === category ? null : category));
-    console.log(category);
   };
 
-  const handleUpdateClick = (assigneID, assigneeName) => {
+  const handleUpdateClick = (assigneID, assigneeName, assigneeJobRole) => {
     setOpenupdateModal(true);
-    fetchAssignedColumn(assigneID);
-    setAssignedColumnRecruiterUpdate({ id: assigneID, name: assigneeName });
+    fetchAssignedColumn(assigneID, assigneeJobRole.replace(/\s+/g, ""));
+    setAssignedColumnRecruiterUpdate({
+      id: assigneID,
+      name: assigneeName,
+      jobRole: assigneeJobRole.replace(/\s+/g, ""),
+    });
   };
-  const fetchAssignedColumn = async (assigneID) => {
-    const response = await axios.get(
 
-      `http://192.168.1.46:9090/api/ats/157industries/column-by-id/${assigneID}`
+  // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_158_165
+  const fetchAssignedColumn = async (assigneID, assigneeJobRole) => {
+    const response = await axios.get(
+      `http://192.168.1.46:9090/api/ats/157industries/column-by-id/${assigneID}/${assigneeJobRole}`
     );
     setFetchupdateAssignedColumn(response.data);
+    // console.log(response.data);
   };
 
   // const handleRemoveClick = (recruiter) => {
@@ -158,27 +184,57 @@ function Accesstable() {
   //   }
   // }
   const handleOkClick = () => {
-    setDropdownOpen(false);
+    if (selectedManager.managerId != "") {
+      setDropdownOpen(false);
+    }
   };
 
+  // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_193_246
   const handleAssignColumns = async (e) => {
     e.preventDefault();
-
+    let response;
     try {
-      const response = await axios.post(
-
-        `http://192.168.1.46:9090/api/ats/157industries/${selectedRecruiters}/assign-column`,
-        JSON.stringify(selectedOptions),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      if (selectedRecruiters.recruiterId != "") {
+        response = await axios.post(
+          `http://192.168.1.46:9090/api/ats/157industries/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
+          JSON.stringify(selectedOptions),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else if (selectedTeamLeader.teamLeaderId != "") {
+        response = await axios.post(
+          `http://192.168.1.46:9090/api/ats/157industries/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
+          JSON.stringify(selectedOptions),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else {
+        response = await axios.post(
+          `http://192.168.1.46:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
+          JSON.stringify(selectedOptions),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
       setResponse(response.data);
 
       setTimeout(() => {
-        setSelectedRecruiters([]);
+        setSelectedRecruiters({
+          recruiterId: "",
+          recruiterJobRole: "",
+          index: "",
+        });
+        setSelectedManager({ managerId: "", managerJobRole: "" });
+        setSelectedTeamLeader({ teamLeaderId: "", teamLeaderJobRole: "" });
         setSelectedOptions([]);
         setResponse("");
       }, 5000);
@@ -201,14 +257,14 @@ function Accesstable() {
     setAllSelected(!allSelected);
   };
 
+  // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_260_269
   const fetchAssignedColumnCount = async () => {
     const response = await axios.get(
-      `http://192.168.1.46:9090/api/ats/157industries/column-category-counts`
+      `http://192.168.1.46:9090/api/ats/157industries/column-category-counts/${employeeId}/${userType}`
     );
     setAssignedColumnsCount(response.data);
   };
   useEffect(() => {
-
     fetchAssignedColumnCount();
   }, [response]);
 
@@ -226,9 +282,9 @@ function Accesstable() {
         <div className="hierarchy-sectionTL">
           <div className="custom-dropdownTL">
             <div className="dropdown-headerTL" onClick={toggleDropdown}>
-              {selectedRecruiters.length === 0
+              {selectedRecruiters.index === ""
                 ? "Select Team Leaders or Recruiters"
-                : `${selectedRecruiters.length} Recruiter(s) selected`}
+                : `${selectedRecruiters.index} Recruiter(s) selected`}
               <span
                 className={`dropdown-icon_open ${dropdownOpen ? "open" : ""}`}
               >
@@ -261,68 +317,80 @@ function Accesstable() {
                           type="radio"
                           name="manager"
                           value={id.managerId}
-                          checked={selectedManager=== id.managerId}
+                          checked={selectedManager.managerId === id.managerId}
                           onChange={() =>
-                            setSelectedManager(id.managerId)
+                            setSelectedManager({
+                              managerId: id.managerId,
+                              managerJobRole: id.managerJobRole,
+                            })
                           }
                         />
                         {id.managerName}
                       </label>
-                      
-                      {selectedManager === id.managerId &&
+
+                      {selectedManager.managerId === id.managerId &&
                         teamLeaderUnderManager && (
-    
                           <div className="recruitersTL">
                             {teamLeaderUnderManager.map(
                               (teamleader, tIndex) => (
                                 <div>
-                                <label key={tIndex}>
-                                  <input
-                                    type="radio"
-                                    name="recruiter"
-                                    value={teamleader.teamLeaderId}
-                                    checked={selectedTeamLeader ===
-                                      teamleader.teamLeaderId
-                                    }
-                   
-                                    onChange={() =>
-                                      setSelectedTeamLeader(teamleader.teamLeaderId)
-                                    }
-                                  />
-                                  {teamleader.teamLeaderName}
-                                </label>
-                                {selectedTeamLeader === teamleader.teamLeaderId &&
-                                recruiterUnderTeamLeader && (
-                               <div className="recruitersTL">
-                                 {recruiterUnderTeamLeader.map((recruiter, rIndex) => (
-                              <label key={rIndex}>
-                                <input
-                                 type="radio"
-                                 name="recruiter"
-                                 value={recruiter.employeeId}
-                                 checked={selectedRecruiters === recruiter.employeeId}
-                                 onChange={() =>
-                                 setSelectedRecruiters(recruiter.employeeId)
-                                 }
-                                />
-                                {recruiter.employeeName}
-                              </label>
-                               ))}
-                            </div>
-                            )}
+                                  <label key={tIndex}>
+                                    <input
+                                      type="radio"
+                                      name="teamleader"
+                                      value={teamleader.teamLeaderId}
+                                      checked={
+                                        selectedTeamLeader.teamLeaderId ===
+                                        teamleader.teamLeaderId
+                                      }
+                                      onChange={() =>
+                                        setSelectedTeamLeader({
+                                          teamLeaderId: teamleader.teamLeaderId,
+                                          teamLeaderJobRole: teamleader.jobRole,
+                                        })
+                                      }
+                                    />
+                                    {teamleader.teamLeaderName}
+                                  </label>
+                                  {selectedTeamLeader.teamLeaderId ===
+                                    teamleader.teamLeaderId &&
+                                    recruiterUnderTeamLeader && (
+                                      <div className="recruitersTL">
+                                        {recruiterUnderTeamLeader.map(
+                                          (recruiter, rIndex) => (
+                                            <label key={rIndex}>
+                                              <input
+                                                type="radio"
+                                                name="recruiter"
+                                                value={recruiter.employeeId}
+                                                checked={
+                                                  selectedRecruiters.recruiterId ===
+                                                  recruiter.employeeId
+                                                }
+                                                onChange={() =>
+                                                  setSelectedRecruiters({
+                                                    index: 1,
+                                                    recruiterId:
+                                                      recruiter.employeeId,
+                                                    recruiterJobRole:
+                                                      recruiter.jobRole,
+                                                  })
+                                                }
+                                              />
+                                              {recruiter.employeeName}
+                                            </label>
+                                          )
+                                        )}
+                                      </div>
+                                    )}
                                 </div>
                               )
                             )}
-                            
                           </div>
-                        )}  
-                        
-                    </div>   
+                        )}
+                    </div>
                   ))}
-                  
                 </div>
-                
-                
 
                 <div className="TLR-buttons-div">
                   <button className="ok-button" onClick={handleOkClick}>
@@ -331,14 +399,21 @@ function Accesstable() {
                   <button
                     className="reset-selectTL-button"
                     onClick={() => {
-                      setSelectedManager(null);
-                      setSelectedRecruiters([]);
+                      setSelectedRecruiters({
+                        recruiterId: "",
+                        recruiterJobRole: "",
+                        index: "",
+                      });
+                      setSelectedManager({ managerId: "", managerJobRole: "" });
+                      setSelectedTeamLeader({
+                        teamLeaderId: "",
+                        teamLeaderJobRole: "",
+                      });
                     }}
                   >
                     Reset
                   </button>
                 </div>
-                
               </div>
             )}
           </div>
@@ -525,14 +600,25 @@ function Accesstable() {
                   {assignedColumnsCount.map((assignee, index) => (
                     <tr key={index} className="attendancerows">
                       <td className="tabledata">{index + 1}</td>
-                      <td className="tabledata">{assignee[1]}</td>
-                      <td className="tabledata">{assignee[2]}</td>
-                      <td className="tabledata">{assignee[3]}</td>
-                      <td className="tabledata">{assignee[4]}</td>
+                      <td className="tabledata">{assignee.employeeName}</td>
+                      {/* <td className="tabledata">{assignee.employeeName}</td> */}
+                      <td className="tabledata">
+                        {assignee.commonAssignCount}
+                      </td>
+                      <td className="tabledata">
+                        {assignee.importantAssignCount}
+                      </td>
+                      <td className="tabledata">
+                        {assignee.mostImportantAssignCount}
+                      </td>
                       <td className="tabledata">
                         <button
                           onClick={() =>
-                            handleUpdateClick(assignee[0], assignee[1])
+                            handleUpdateClick(
+                              assignee.employeeId,
+                              assignee.employeeName,
+                              assignee.jobRole
+                            )
                           }
                           className="all_assignbtn-Action"
                         >
@@ -591,10 +677,15 @@ const UpdateAccessTable = ({
     );
   };
 
+  // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_680_701
   const handleUpdateClick = async () => {
     try {
       const response = await axios.post(
+<<<<<<< HEAD
         `http://192.168.1.46:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/assign-column`,
+=======
+        `http://192.168.1.46:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
+>>>>>>> 440074da58739c1017e930cafb8c14338d95b317
         JSON.stringify(selectedOptions),
         {
           headers: {
@@ -785,9 +876,3 @@ const UpdateAccessTable = ({
 };
 
 export default Accesstable;
-
-
-
-
-
-

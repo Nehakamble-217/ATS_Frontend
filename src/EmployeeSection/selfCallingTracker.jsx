@@ -36,7 +36,7 @@ const CallingList = ({
   const [showForwardPopup, setShowForwardPopup] = useState(false);
 
   const { employeeId } = useParams();
-    const {userType}=useParams();
+  const { userType } = useParams();
 
   const employeeIdw = parseInt(employeeId);
   // console.log(employeeIdw + "emp @@@@ id");
@@ -46,7 +46,7 @@ const CallingList = ({
     useState(false);
 
   const navigator = useNavigate();
-// SwapnilRokade_SelfCallingTracker_ModifyFilters_47to534_11/07
+  // SwapnilRokade_SelfCallingTracker_ModifyFilters_47to534_11/07
   const limitedOptions = [
     "candidateId",
     "recruiterName",
@@ -186,56 +186,34 @@ const CallingList = ({
         if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]
-                ?.toString()
-                .toLowerCase()
-                .includes(value)
+              item[option]?.toString().toLowerCase().includes(value)
             )
           );
-        } else if(option === "requirementId")
-        {
+        } else if (option === "requirementId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]
-                ?.toString()
-                .toLowerCase()
-                .includes(value)
+              item[option]?.toString().toLowerCase().includes(value)
             )
           );
-        }
-        else if(option === "employeeId")
-          {
-            filteredData = filteredData.filter((item) =>
-              values.some((value) =>
-                item[option]
-                  ?.toString()
-                  .toLowerCase()
-                  .includes(value)
-              )
-            );
-          }
-          else if(option === "contactNumber")
-            {
-              filteredData = filteredData.filter((item) =>
-                values.some((value) =>
-                  item[option]
-                    ?.toString()
-                    .toLowerCase()
-                    .includes(value)
-                )
-              );
-            }
-            else if(option === "alternateNumber")
-              {
-                filteredData = filteredData.filter((item) =>
-                  values.some((value) =>
-                    item[option]
-                      ?.toString()
-                      .toLowerCase()
-                      .includes(value)
-                  )
-                );
-              }else {
+        } else if (option === "employeeId") {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]?.toString().toLowerCase().includes(value)
+            )
+          );
+        } else if (option === "contactNumber") {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]?.toString().toLowerCase().includes(value)
+            )
+          );
+        } else if (option === "alternateNumber") {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]?.toString().toLowerCase().includes(value)
+            )
+          );
+        } else {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
@@ -270,16 +248,13 @@ const CallingList = ({
     });
   };
 
-const handleFilterOptionClick = (option)=>{
-  if(activeFilterOption===option)
-  {
-    setActiveFilterOption(null);
-  }
-  else{
-    setActiveFilterOption(option);
-  }
-}
-
+  const handleFilterOptionClick = (option) => {
+    if (activeFilterOption === option) {
+      setActiveFilterOption(null);
+    } else {
+      setActiveFilterOption(option);
+    }
+  };
 
   const handleSort = (criteria) => {
     if (criteria === sortCriteria) {
@@ -442,7 +417,10 @@ const handleFilterOptionClick = (option)=>{
               <div className="search">
                 <i
                   className="fa-solid fa-magnifying-glass"
-                  onClick={() => {setShowSearchBar(!showSearchBar);setShowFilterSection(false);}}
+                  onClick={() => {
+                    setShowSearchBar(!showSearchBar);
+                    setShowFilterSection(false);
+                  }}
                   style={{ margin: "10px", width: "auto", fontSize: "15px" }}
                 ></i>
                 <h5 style={{ color: "gray", paddingTop: "5px" }}>
@@ -518,27 +496,39 @@ const handleFilterOptionClick = (option)=>{
                       );
                       return (
                         <div key={option} className="filter-option">
-                        <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
-                          {option}
-                          <span className="filter-icon">&#x25bc;</span>
-                        </button>
-                        {activeFilterOption === option && (
-                          <div className="city-filter">
-                            <div className="optionDiv">
-                              {uniqueValues.map((value) => (
-                                <label key={value} className="selfcalling-filter-value">
-                                  <input
-                                    type="checkbox"
-                                    checked={selectedFilters[option]?.includes(value) || false}
-                                    onChange={() => handleFilterSelect(option, value)}
-                                  />
-                                  {value}
-                                </label>
-                              ))}
+                          <button
+                            className="white-Btn"
+                            onClick={() => handleFilterOptionClick(option)}
+                          >
+                            {option}
+                            <span className="filter-icon">&#x25bc;</span>
+                          </button>
+                          {activeFilterOption === option && (
+                            <div className="city-filter">
+                              <div className="optionDiv">
+                                {uniqueValues.map((value) => (
+                                  <label
+                                    key={value}
+                                    className="selfcalling-filter-value"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={
+                                        selectedFilters[option]?.includes(
+                                          value
+                                        ) || false
+                                      }
+                                      onChange={() =>
+                                        handleFilterSelect(option, value)
+                                      }
+                                    />
+                                    {value}
+                                  </label>
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
+                          )}
+                        </div>
                       );
                     })}
                   </div>

@@ -19,10 +19,8 @@ export const getAllEmployees = () => {
   });
 };
 
-
 export const getPasswordFromDB = (id) =>
   axios.post(`${API_BASE_URL}/fetch-pass/${id}`);
-
 
 export const fetchMasterSheetData = async () => {
   try {

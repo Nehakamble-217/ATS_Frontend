@@ -960,6 +960,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     }
                     
                     required={callingTracker.selectYesOrNo === "Interested"}
+
                   />
                 </div>
               </div>
@@ -1159,9 +1160,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     name="finalStatus"
                     value={callingTracker.lineUp?.finalStatus}
                     onChange={handleChange}
-                  
-                    required={callingTracker.selectYesOrNo === "Interested"}
-                  >
+                    required={callingTracker.selectYesOrNo === "Interested"} >
                     <option value="">Whats Now</option>
                     <option value="Interview schedule">
                       Interview schedule
@@ -1201,8 +1200,8 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
               <button type="submit" className="ctf-btn">
                 Update Data
               </button>
-
               <button type="submit" className="ctf-btn" id="uploadbtn2" >
+
                 Cancel
               </button>
             </div>
