@@ -81,7 +81,7 @@ const AddJobDescription = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://192.168.1.51:8891/api/ats/157industries/add-requirement",
+        "http://192.168.1.46:9090/api/ats/157industries/add-requirement",
         {
           method: "POST",
           headers: {

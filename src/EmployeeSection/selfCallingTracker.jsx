@@ -272,7 +272,7 @@ const CallingList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.48:9090/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.46:9090/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -358,7 +358,7 @@ const CallingList = ({
 
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
-      const url = `http://192.168.1.48:8891/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.46:9090/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
         employeeId: selectedEmployeeId,
