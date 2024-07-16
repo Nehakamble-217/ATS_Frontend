@@ -45,6 +45,7 @@ import InvoiceReport from "./invoiceReport";
 import InvoicePdf from "./invoicePdf";
 import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_43*/
 import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
+import EmployeeDetails from "../EmployeeDetails/EmployeeDetails";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -103,6 +104,7 @@ const EmpDashboard = ({ userGroup }) => {
   ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
   
   const [showCapex , setShowCapex] = useState(false)
+  const [showEmployeeDetails, setShowEmployeeDetails] = useState(false)
   
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
@@ -239,6 +241,7 @@ const EmpDashboard = ({ userGroup }) => {
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
     setShowProfitLoss(false)
     setShowCapex(false)
+    setShowEmployeeDetails(false)  /*Swapnil_AddedEmployeeDetails_16/07*/
   };
   
 
@@ -253,6 +256,12 @@ const EmpDashboard = ({ userGroup }) => {
   const togglePayRoll = () => {
     resetAllToggles();
     setShowPayRoll(!showPayRoll);
+  };
+
+  // Swapnil_AddedEmployeeDetails_16/07
+  const toggleEmployeeDetails = () => {
+    resetAllToggles();
+    setShowEmployeeDetails(!showEmployeeDetails);
   };
 
   /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_233-235*/
@@ -492,6 +501,7 @@ const EmpDashboard = ({ userGroup }) => {
         } /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_444*/
 
       toggleCapex={toggleCapex}
+      toggleEmployeeDetails={toggleEmployeeDetails}
 
       />
 
@@ -612,7 +622,9 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showAddCompany && <AddCompanyDetails />}</div>
         <div>
           {showCapex &&  <Capex/>}
-          
+        </div>
+        <div>
+          {showEmployeeDetails&&<EmployeeDetails/>}
         </div>
       </div>
     </div>

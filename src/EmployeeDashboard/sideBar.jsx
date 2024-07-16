@@ -7,6 +7,9 @@ import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 
+
+// Swapnil_Sidebar_AddingEmployeeDetailsinto_ManagerSection_17/07
+
 function Sidebar({
   onLogout,
   openSidebarToggle,
@@ -48,7 +51,8 @@ function Sidebar({
   toggleInvoiceReport,
   /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
   toggleAddCompany /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_46*/,
-  toggleCapex
+  toggleCapex,
+  toggleEmployeeDetails
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -568,6 +572,15 @@ function Sidebar({
                         <a href="#">
                           {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                           <span className="sidebar-text">All Master Sheet</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={toggleEmployeeDetails}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                          <span className="sidebar-text">Employee Details</span>
                         </a>
                       </li>
                       {userType === "Manager" || "TeamLeader" ? (
