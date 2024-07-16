@@ -79,7 +79,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchEmployeeName = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.48:8891/api/ats/157industries/employeeName/${newCandidateId}`
+        `http://192.168.1.46:9090/api/ats/157industries/employeeName/${newCandidateId}`
       );
       const data = await response.text();
       setRecruiterName(data);
@@ -91,7 +91,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchCandidateData = async (candidateId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.48:8891/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.46:9090/api/ats/157industries/specific-data/${candidateId}`
       );
       const data = await response.json();
       setCallingTracker(data);
@@ -104,7 +104,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.48:8891/api/ats/157industries/company-details`
+        `http://192.168.1.46:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -146,7 +146,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
 
       console.log(candidateId + "  candidateId  in updated method..  ");
       const response = await fetch(
-        `http://192.168.1.48:8891/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.46:9090/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {
@@ -630,7 +630,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       lineHeight: 1,
                       marginRight: "10px",
                     }}
-                    //required={callingTracker.selectYesOrNo === "Interested"}
+                  //required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
@@ -1105,7 +1105,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     }}
                     onChange={handleChange}
                     className="form-control"
-                    //required={callingTracker.selectYesOrNo === "Interested"}
+                  //required={callingTracker.selectYesOrNo === "Interested"}
                   />
                 </td>
 
@@ -1573,7 +1573,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       lineHeight: 1,
                       marginRight: "10px",
                     }}
-                    //required={callingTracker.selectYesOrNo === "Interested"}
+                  //required={callingTracker.selectYesOrNo === "Interested"}
                   >
                     <option value="">Whats Now</option>
                     <option value="Interview schedule">
@@ -1628,7 +1628,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 Update Data
               </button>
 
-              <button type="submit" className="ctf-btn" id="uploadbtn2">
+              <button className="ctf-btn" id="uploadbtn2">
                 Cancel
               </button>
             </div>

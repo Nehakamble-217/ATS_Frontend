@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import './invoice.css'; 
 import axios from 'axios';
 // SwapnilRokade_InvoiceTable_StroreFormDateToDatabase__07_to_654_12/07
+// SwapnilRokade_InvoiceTable_StoringSupplierSection_09To664_15/07
 const InvoiceTable = () => {
   const [formData,setFormData] = useState({
     invoiceDate:'',
@@ -15,7 +16,7 @@ const InvoiceTable = () => {
     companyGstNo:'',
     hsnCode:'',
     sacCode: '',
-    invoiceNo: '',
+    serviceType:'',
     productType:'',
     candidateName: '',
     candidateLocation: '',
@@ -50,10 +51,10 @@ const InvoiceTable = () => {
     tds: '',
     paymentExpected: '',
     paymentReceivedAmount: '',
-    gstAmountReceived: '',
     discrepancyAmount: '',
     discrepancyRemark: '',
     gstFile: '',
+    gstAmount:'',
     gstAmtPayment: '',
     sendDetails: {
       name: '',
@@ -61,11 +62,20 @@ const InvoiceTable = () => {
       email: '',
       mobile: ''
     },
-    companyDetails: {
+    clientDetails: {
       name: '',
       designation: '',
       email: '',
       mobile: ''
+    },
+    supplierDetails:{
+      supplierName:'',
+      supplierOfficeNo:'',
+      supplierNearLoc:'',
+      supplierCity:'',
+      supplierPinCode:'',
+      supplierGstNo:'',
+      supplierSacCode:''
     }
   })
 
@@ -76,18 +86,21 @@ const InvoiceTable = () => {
       [name]: value
     }));
   };
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: checked
-    }));
-  };
   const handleSendDetailsChange = (e)=>
   {
     const {name,value}=e.target;
     setFormData((prev)=>({...prev,sendDetails:{...prev.sendDetails,[name]:value}}));
   }
+  const handleCompanyDetailsChange = (e)=>
+    {
+      const {name,value}=e.target;
+      setFormData((prev)=>({...prev,clientDetails:{...prev.clientDetails,[name]:value}}));
+    }
+    const handleSupplierDetailsChange = (e)=>
+      {
+        const {name,value}=e.target;
+        setFormData((prev)=>({...prev,supplierDetails:{...prev.supplierDetails,[name]:value}}));
+      }
 
   const handleSubmit =async(e)=>{
     e.preventDefault();
@@ -109,7 +122,6 @@ const InvoiceTable = () => {
   return (
     <main className="job-desc">
     <section className="job-performance">
-      
       <form onSubmit={handleSubmit}>
         <div className="job-desc-form">
         <div className="field-column">
@@ -215,8 +227,8 @@ const InvoiceTable = () => {
               <label>Invoice No</label>
               <input
                 type="text"
-                name="invoiceNo"
-                value={formData.invoiceNo}
+                name="serviceType"
+                value={formData.serviceType}
                 onChange={handleChange}
                 placeholder="Service Type"
               />
@@ -282,7 +294,7 @@ const InvoiceTable = () => {
             <div className="field">
               <label>Salary</label>
               <input
-                type="text"
+                type="number"
                 name="salary"
                 value={formData.salary}
                 onChange={handleChange}
@@ -346,45 +358,6 @@ const InvoiceTable = () => {
               />
             </div>
             <div className="field">
-          
-              <label>CGST</label>
-              <input
-                type="text"
-                name="cgst"
-                value={formData.cgst}
-                onChange={handleChange}
-              />
-              <label>SGST</label>
-              <input
-                type="text"
-                name="sgst"
-                value={formData.sgst}
-                onChange={handleChange}
-              /><label>IGST</label>
-              <input
-                type="text"
-                name="igst"
-                value={formData.igst}
-                onChange={handleChange}
-              />
-              <label>Total GST </label>
-              <input
-                type="text"
-                name="totalGst"
-                value={formData.totalGst}
-                onChange={handleChange}
-              />
-              <label>Grand Total</label>
-              <input
-                type="text"
-                name="grandTotal"
-                value={formData.grandTotal}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="field-Row-Gray">
-            <div className="field">
               <label>Consultant Id</label>
               <input
                 type="text"
@@ -394,7 +367,54 @@ const InvoiceTable = () => {
                 placeholder="Enter Consultant Id "
               />
             </div>
-            <div className="field">
+          </div>
+          <div className="field-Row-Gray">
+          <div className="field">
+          
+          <label>CGST</label>
+          <input
+            type="text"
+            name="cgst"
+            value={formData.cgst}
+            onChange={handleChange}
+          />
+          <label>SGST</label>
+          <input
+            type="text"
+            name="sgst"
+            value={formData.sgst}
+            onChange={handleChange}
+          />
+          <label>IGST</label>
+          <input
+            type="text"
+            name="igst"
+            value={formData.igst}
+            onChange={handleChange}
+          />
+          </div>
+           <div className="field">
+          
+          <label>Total GST </label>
+          <input
+            type="text"
+            name="totalGst"
+            value={formData.totalGst}
+            onChange={handleChange}
+          />
+          <label>Grand Total</label>
+          <input
+            type="text"
+            name="grandTotal"
+            value={formData.grandTotal}
+            onChange={handleChange}
+          />
+        </div>
+            
+            
+          </div>
+          <div className="field-Row-white">
+          <div className="field">
               <label>Grand Total in Words</label>
               <input
                 type="text"
@@ -404,8 +424,6 @@ const InvoiceTable = () => {
                 placeholder="Enter Grand total in word"
               />
             </div>
-          </div>
-          <div className="field-Row-white">
             <div className="field">
               <label>Po No</label>
               <input
@@ -425,7 +443,9 @@ const InvoiceTable = () => {
                 placeholder="Enter GRE No "
               />
             </div>
-            <div className="field">
+          </div>
+          <div className="field-Row-Gray">
+          <div className="field">
               <label>Bank Details</label>
               <input
                 type="text"
@@ -441,6 +461,8 @@ const InvoiceTable = () => {
                 onChange={handleChange}
                 placeholder="AC No "
               />
+              </div>
+              <div className="field">
                <label>IFSC</label>
               <input
                 type="text"
@@ -459,9 +481,10 @@ const InvoiceTable = () => {
               />
             </div>
           </div>
+
           <div className="field-Row-Gray">
             <div className="field">
-              <label>Invoice Sent From</label>
+              <label>Invoice Sent From-To</label>
               <input
                 type="date"
                 name="invoiceSentFrom"
@@ -469,7 +492,6 @@ const InvoiceTable = () => {
                 onChange={handleChange}
                 placeholder="Enter Invoice Sent From "
               />
-               <label>Invoice Sent To</label>
               <input
                 type="date"
                 name="invoiceSentTo"
@@ -500,42 +522,51 @@ const InvoiceTable = () => {
           <div className="field">
           <label>Hard Copy Sent</label>
         <label>
-          <input type="checkbox" name="hardCopySent" checked={formData.hardCopySent} value="Yes" onChange={handleCheckboxChange} /> Yes
+          <input type="radio" name="hardCopySent" checked={formData.hardCopySent === 'Yes'}value="Yes" onChange={handleChange} /> Yes
         </label>
         <label>
-          <input type="checkbox" name="hardCopySent" checked={formData.hardCopySent} value="No" onChange={handleCheckboxChange} /> No
+          <input type="radio" name="hardCopySent" checked={formData.hardCopySent==='No'} value="No" onChange={handleChange} /> No
         </label>
             
          </div>
 
-            <div className="field">
-            <label>Payment Received</label>
-        <label>
-          <input type="checkbox" name="paymentReceived" checked={formData.paymentReceived} value="Yes" onChange={handleCheckboxChange} /> Yes
-        </label>
-        <label>
-          <input type="checkbox" name="paymentReceived" checked={formData.paymentReceived} value="No" onChange={handleCheckboxChange} /> No
-        </label>
-            </div>
-            
-        </div>
-        <div className="field-Row-Gray">
-          <div className="field">
+         <div className="field">
             <label>
              TDS
-            </label><input
+            </label>
+            <input
                 type="text"
                 name="tds"
                 value={formData.tds}
                 onChange={handleChange}
                 placeholder="Enter TDS"
               />
-            
-            
          </div>
+        </div>
+        <div className="field-Row-Gray">
+        <div className="field">
+            <label>Payment Received</label>
+        <label>
+          <input type="radio" name="paymentReceived" checked={formData.paymentReceived==='Yes'} value="Yes" onChange={handleChange} /> Yes
+        </label>
+        <label>
+          <input type="radio" name="paymentReceived" checked={formData.paymentReceived==='No'} value="No" onChange={handleChange} /> No
+        </label>
+            </div>
 
             <div className="field">
-              <label>Payment Expected</label>
+          <label>Payment Received Amount</label>
+          <input type="number" name="paymentReceivedAmount" value={formData.paymentReceivedAmount} onChange={handleChange} />
+            
+         </div>
+         
+
+           
+            
+        </div>
+        <div className="field-Row-white">
+        <div className="field">
+              <label>Payment Expected Date</label>
               <input
                 type="date"
                 name="paymentExpected"
@@ -544,27 +575,15 @@ const InvoiceTable = () => {
                 placeholder="Enter Payment Expected "
               />
             </div>
-            
-        </div>
-        <div className="field-Row-white">
-          <div className="field">
-          <label>Payment Received Amount</label>
-        <label>
-          <input type="checkbox" name="paymentReceivedAmount" checked={formData.paymentReceivedAmount} value="Yes" onChange={handleCheckboxChange} /> Yes
-        </label>
-        <label>
-          <input type="checkbox" name="paymentReceivedAmount" checked={formData.paymentReceivedAmount} value="No" onChange={handleCheckboxChange} /> No
-        </label>
-            
-         </div>
+        
 
             <div className="field">
             <label>GST Amt Payment</label>
         <label>
-          <input type="checkbox" name="gstAmtPayment" checked={formData.gstAmtPayment} value="Yes" onChange={handleCheckboxChange} /> Yes
+          <input type="radio" name="gstAmtPayment" checked={formData.gstAmtPayment === 'Yes'} value="Yes" onChange={handleChange} /> Yes
         </label>
         <label>
-          <input type="checkbox" name="gstAmtPayment" checked={formData.gstAmtPayment} value="No" onChange={handleCheckboxChange} /> No
+          <input type="radio" name="gstAmtPayment"value="No" checked={formData.gstAmtPayment === 'No'} onChange={handleChange} /> No
         </label>
             </div>
             
@@ -596,34 +615,37 @@ const InvoiceTable = () => {
           <div className="field">
           <label>GST File</label>
         <label>
-          <input type="checkbox" name="gstFile" checked={formData.gstFile} value="Yes" onChange={handleCheckboxChange} /> Yes
+          <input type="radio" name="gstFile" value="Yes" checked={formData.gstFile === 'Yes'} onChange={handleChange} /> Yes
         </label>
         <label>
-          <input type="checkbox" name="gstFile" checked={formData.gstFile} value="No" onChange={handleCheckboxChange} /> No
+          <input type="radio" name="gstFile" value="No" checked={formData.gstFile === 'No'} onChange={handleChange} /> No
         </label>
             
          </div>
-
-            <div className="field">
-              <label>GST Amt Payment</label>
-              <label><input type="checkbox" name="gstAmtPayment" value="Yes" onChange={handleCheckboxChange} /> Yes</label>
-            <label><input type="checkbox" name="gstAmtPayment"   value="No" onChange={handleCheckboxChange}/> No</label>
-            </div>
+         <div className="field">
+          <label>GST Amount</label>
+        <label>
+          <input type="radio" name="gstAmount" value="Yes" checked={formData.gstAmount === 'Yes'} onChange={handleChange} /> Yes
+        </label>
+        <label>
+          <input type="radio" name="gstAmount" value="No" checked={formData.gstAmount === 'No'} onChange={handleChange} /> No
+        </label>
             
+         </div>
         </div>
         <div className="field-Row-Gray">
           <div className="field">
             <label>
            Send to details
             </label>
-              <label>Name<input type="text" name="name" value={formData.sendDetails.name} onChange={handleSendDetailsChange} /></label>
-              <label>Designation<input type="text" name="designation" value={formData.sendDetails.designation} onChange={handleSendDetailsChange} /></label>
+              <label>Name</label><input type="text" name="name" value={formData.sendDetails.name} onChange={handleSendDetailsChange} />
+              <label>Designation</label><input type="text" name="designation" value={formData.sendDetails.designation} onChange={handleSendDetailsChange} />
               
          </div>
          <div className="field">
            
-         <label>Email<input type="text" name="email" value={formData.sendDetails.email} onChange={handleSendDetailsChange}  /></label>
-         <label>Mobile  <input type="text" name="mobile" value={formData.sendDetails.mobile} onChange={handleSendDetailsChange} /></label>
+         <label>Email</label><input type="text" name="email" value={formData.sendDetails.email} onChange={handleSendDetailsChange}  />
+         <label>Mobile</label>  <input type="text" name="mobile" value={formData.sendDetails.mobile} onChange={handleSendDetailsChange} />
               
          </div>
             
@@ -634,15 +656,39 @@ const InvoiceTable = () => {
             <label>
             Client details
             </label>
-              <label>Name<input type="text" name="name" value={formData.companyDetails.name} onChange={handleChange} /></label>
-              <label>Designation<input type="text" name="designation" value={formData.companyDetails.designation} onChange={handleChange} /></label>
+              <label>Name</label><input type="text" name="name" value={formData.clientDetails.name} onChange={handleCompanyDetailsChange} />
+              <label>Designation</label><input type="text" name="designation" value={formData.clientDetails.designation} onChange={handleCompanyDetailsChange} />
               
          </div>
          <div className="field">
            
-         <label>Email<input type="text" name="email" value={formData.companyDetails.email} onChange={handleChange} /></label>
-         <label>Mobile  <input type="text" name="mobile" value={formData.companyDetails.mobile} onChange={handleChange} /></label>      
+         <label>Email</label><input type="text" name="email" value={formData.clientDetails.email} onChange={handleCompanyDetailsChange} />
+         <label>Mobile</label>  <input type="text" name="mobile" value={formData.clientDetails.mobile} onChange={handleCompanyDetailsChange} />      
          </div>
+        </div>
+        <div className="field-Row-Gray">
+        <div className="field">
+          <label>Details of Supplier:</label>
+          <input type="text" name='supplierName' placeholder='Enter Company Name' value={formData.supplierDetails.supplierName} onChange={handleSupplierDetailsChange}/>
+          
+          </div>
+          <div className="field">
+          <input type="text" name='supplierOfficeNo' placeholder='Enter Office No' value={formData.supplierDetails.supplierOfficeNo} onChange={handleSupplierDetailsChange}/>
+          <input type="text" name='supplierNearLoc' placeholder='Enter Area/BuildingName' value={formData.supplierDetails.supplierNearLoc} onChange={handleSupplierDetailsChange}/>
+        
+          </div>
+          </div>
+          <div className="field-Row-white">
+          <div className="field">
+          <input type="text" name='supplierCity' placeholder='Enter City' value={formData.supplierDetails.supplierCity} onChange={handleSupplierDetailsChange}/>
+          <input type="text" name='supplierPinCode' placeholder='Enter Pin Code' value={formData.supplierDetails.supplierPinCode} onChange={handleSupplierDetailsChange}/>
+          
+          </div>
+          <div className="field">
+          <input type="text" name='supplierGstNo' placeholder='Enter Gst Number' value={formData.supplierDetails.supplierGstNo} onChange={handleSupplierDetailsChange}/>
+          <input type="text" name='supplierSacCode' placeholder='Enter SAC COde' value={formData.supplierDetails.supplierSacCode} onChange={handleSupplierDetailsChange}/>
+        </div>
+
         </div>
         </div>
         </div>

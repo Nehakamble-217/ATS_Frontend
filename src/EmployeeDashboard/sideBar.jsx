@@ -48,7 +48,8 @@ function Sidebar({
   toggleInvoiceReport,
   /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
   toggleAddCompany /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_46*/,
-  toggleQuestionPaper
+  toggleQuestionPaper,
+  toggleCapex
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -639,6 +640,18 @@ function Sidebar({
                           </span>
                         </a>
                       </li>
+
+                      <li
+                        onClick={toggleCapex}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">
+                            Capex
+                          </span>
+                        </a>
+                      </li>
+
                     </ul>
                   </li>
                 ) : null}

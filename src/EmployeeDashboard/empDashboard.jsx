@@ -45,6 +45,7 @@ import InvoiceReport from "./invoiceReport";
 import InvoicePdf from "./invoicePdf";
 import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_43*/
 import QuestionPaper from "./questionPaper";
+import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -103,6 +104,12 @@ const EmpDashboard = ({ userGroup }) => {
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
     const [showQuestionpaper ,setShowQuestionpaper]=useState(false)
 
+  useState(
+    false
+  ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
+  
+  const [showCapex , setShowCapex] = useState(false)
+  
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
@@ -238,7 +245,9 @@ const EmpDashboard = ({ userGroup }) => {
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
     setShowProfitLoss(false)
     setShowQuestionpaper(false)
+    setShowCapex(false)
   };
+  
 
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -436,6 +445,10 @@ const EmpDashboard = ({ userGroup }) => {
     setShowQuestionpaper(!showQuestionpaper)
   }
 
+  const toggleCapex = () => {
+    resetAllToggles();
+    setShowCapex(!showCapex);
+  };
 
   return (
     <div
@@ -489,6 +502,9 @@ const EmpDashboard = ({ userGroup }) => {
           toggleAddCompany
         } /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_444*/
           toggleQuestionPaper={toggleQuestionPaper}
+
+      toggleCapex={toggleCapex}
+
       />
 
       <div className="empDash-main-content">
@@ -607,6 +623,10 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{showAddCompany && <AddCompanyDetails />}</div>
+        <div>
+          {showCapex &&  <Capex/>}
+          
+        </div>
       </div>
     </div>
   );

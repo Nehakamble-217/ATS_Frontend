@@ -446,7 +446,10 @@ html::-webkit-scrollbar{
   }
   
   .team-leaderTL label {
-    display: block;
+    /* display: block; */
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
     margin-bottom: 5px;
   }
   
@@ -455,7 +458,9 @@ html::-webkit-scrollbar{
   }
   
   .recruitersTL label {
-    display: block;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
     margin-bottom: 5px;
   }
   

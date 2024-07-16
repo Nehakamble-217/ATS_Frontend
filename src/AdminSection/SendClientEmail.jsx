@@ -1178,7 +1178,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.48:8891/api/ats/157industries/add-client-details",
+        "http://192.168.1.46:9090/api/ats/157industries/add-client-details",
         clientData
       );
       if (response) {
@@ -1212,7 +1212,7 @@ const SendEmailPopup = ({
     };
 
     axios
-      .post("http://192.168.1.48:8082/api/ats/157industries/send-email", emailData)
+      .post("http://192.168.1.46:9090/api/ats/157industries/send-email", emailData)
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
