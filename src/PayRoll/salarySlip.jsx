@@ -3,6 +3,7 @@ import React from 'react';
 import '../PayRoll/salarySlip.css';
 
 const SalarySlip = ({ employee }) => {
+    console.log(employee);
     return (
         <div className="salary-slip">
             <h2>Salary Slip for {employee.empName}</h2>

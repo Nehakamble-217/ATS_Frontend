@@ -7,6 +7,9 @@ import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 
+
+// Swapnil_Sidebar_AddingEmployeeDetailsinto_ManagerSection_17/07
+
 function Sidebar({
   onLogout,
   openSidebarToggle,
@@ -48,7 +51,11 @@ function Sidebar({
   toggleInvoiceReport,
   /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
   toggleAddCompany /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_46*/,
-  toggleCapex
+
+  toggleCapex,
+  toggleEmployeeDetails,
+
+  toggleQuestionPaper,
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -135,8 +142,10 @@ function Sidebar({
           <div className="nav">
             <div className="sidebar-menu">
               <ul>
-                {userType != "SuperUser" ? (
+               
                   <>
+                  {userType != "SuperUser" ? (
+                    <>
                     <li
                       onClick={handleButtonClick(
                         "interviewDate",
@@ -175,6 +184,9 @@ function Sidebar({
                         <span className="sidebar-text">Add Candidate</span>
                       </a>
                     </li>
+                    </>
+                    ) : null}
+                    
                     <li
                       className={`${activeSubMenu === "candidate" ||
                         isCandidateSectionActive
@@ -340,7 +352,7 @@ function Sidebar({
                       </ul>
                     </li>
                   </>
-                ) : null}
+               
 
                 <li
                   className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
@@ -492,6 +504,15 @@ function Sidebar({
                               <span className="sidebar-text">Update Response</span>
                             </a>
                           </li>
+                          <li
+                            onClick={toggleQuestionPaper}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <a href="#">
+                              {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                              <span className="sidebar-text">Create Question paper's</span>
+                            </a>
+                          </li>
                         </ul>
                       </li>
 
@@ -547,6 +568,15 @@ function Sidebar({
                           </li>
                           { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
 
+                         <li
+                            onClick={toggleQuestionPaper}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <a href="#">
+                              {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                              <span className="sidebar-text">Create Question paper's</span>
+                            </a>
+                          </li>
 
                           <li
                             onClick={toggleAssigncolumns}
@@ -570,6 +600,15 @@ function Sidebar({
                           <span className="sidebar-text">All Master Sheet</span>
                         </a>
                       </li>
+                      <li
+                        onClick={toggleEmployeeDetails}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                          <span className="sidebar-text">Employee Details</span>
+                        </a>
+                      </li>
                       {userType === "Manager" || "TeamLeader" ? (
                         <>
                           <li
@@ -583,17 +622,16 @@ function Sidebar({
                           </li>
 
 
-                          {userType != "TeamLeader" || userType === "Manager" || userType === "SuperUser" ? (
+                          {/* {userType != "TeamLeader" || userType === "Manager" || userType === "SuperUser" ? (
                             <li
                               onClick={toggelAddRecruiter}
                               style={{ marginLeft: "10px" }}
                             >
                               <a href="#">
-                                {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                                 <span className="sidebar-text">Add Team Leadrs</span>
                               </a>
                             </li>
-                          ) : null}
+                          ) : null} */}
                         </>
                       ) : null}
                       <li

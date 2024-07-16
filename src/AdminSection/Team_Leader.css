@@ -367,7 +367,6 @@ html::-webkit-scrollbar{
     width:45%;
     flex-direction: column;
     margin-bottom: 20px;
-    /* margin-left: 5%; */
   }
 
 
@@ -480,7 +479,6 @@ html::-webkit-scrollbar{
     margin-bottom: 20px;
     flex-direction: column;
     gap: 20px;
-    
   }
   
   .options-category {
@@ -490,9 +488,6 @@ html::-webkit-scrollbar{
     text-align: center;
     border: 1px solid gray;
     border-radius: 15px;
-    
-   
-    
   }
   .options-category.common-assign {
     display: flex;
@@ -508,8 +503,13 @@ html::-webkit-scrollbar{
     border-radius: 15px;
    text-align: center;
    font-size: 16px;
+   max-height: 70vh;
+    overflow-y: auto;
    /* height: 30px;
     */
+  }
+  .options-category::-webkit-scrollbar{
+    width: 0px;
   }
   
   .options-category.important-assign {
@@ -522,6 +522,8 @@ html::-webkit-scrollbar{
     background-color: #ffcb9b;
     text-align: center;
     font-size: 18px;
+    max-height: 70vh;
+    overflow-y: auto;
     
   }
   
@@ -535,16 +537,16 @@ html::-webkit-scrollbar{
     background-color: #ffcb9b;
     text-align: center;
     font-size: 18px;
+    max-height: 70vh;
+    overflow-y: auto;
   }
   
-  .category-headerTL {
+  .category-header {
     background-color: #ffcb9b;
     color: white;
-    border-radius: 15px;
     text-align: center;
-  
-  
-  
+    position: sticky;
+    top: -5px;
   }
 /* Prachi ChatSection 28/06 line no 431 to 449 */
   .checkbox-teamleader-assign input[type="checkbox" i] {

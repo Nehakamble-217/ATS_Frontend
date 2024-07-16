@@ -1,16 +1,29 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import SalarySlip from './salarySlip.jsx';
 import '../PayRoll/payRollTable.css';
+import RecruiterBillingForm from './recruiterBillingForm.jsx';
+// import { content } from 'html2canvas/dist/types/css/property-descriptors/content.js';
 
 const PayrollTable = ({ employees }) => {
     const slipRefs = useRef({});
+    const [showPaySlip, setShowPaySlip]=useState(false)
+    const [employeeId,setEmployeId]=useState(null)
 
     const handlePrint = useReactToPrint({
         content: () => slipRefs.current.currentEmployee,
+       
     });
-
+     console.log(handlePrint());
+    const handlePaySlip=()=>{
+        setShowPaySlip(true)
+    }
+    const cancel =()=>{
+        setShowPaySlip(false)
+    }
+  
     return (
+        <>
         <div className="payroll-table">
             <table className='payroll-table-layout'>
                 <thead>
@@ -26,6 +39,7 @@ const PayrollTable = ({ employees }) => {
                         <th>Deductions</th>
                         <th>Total Salary</th>
                         <th>Action</th>
+                        <th>Pay</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +61,7 @@ const PayrollTable = ({ employees }) => {
                                         onClick={() => {
                                             slipRefs.current.currentEmployee = slipRefs.current[employee.id];
                                             handlePrint();
+                                            // setEmployeId(employee.id)
                                         }}
                                     >
                                         Pay & Print
@@ -57,12 +72,24 @@ const PayrollTable = ({ employees }) => {
                                         </div>
                                     </div>
                                 </td>
+                                <td>
+                                    <button onClick={handlePaySlip}>
+                                        Pay
+                                    </button>
+                                </td>
                             </tr>
                         </React.Fragment>
                     ))}
                 </tbody>
             </table>
         </div>
+        {showPaySlip && (
+        <div className='recruiterBillingForm'>
+            <RecruiterBillingForm employees={employees}/>
+             <button style={{margin:"auto"}} className='daily-tr-btn' onClick={cancel}>Cancel</button>
+        </div>
+        )}
+       </>
     );
 };
 
