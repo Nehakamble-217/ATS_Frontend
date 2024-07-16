@@ -7,7 +7,11 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
-const LineUpList = ({ updateState, funForGettingCandidateId }) => {
+const LineUpList = ({
+  updateState,
+  funForGettingCandidateId,
+  loginEmployeeName,
+}) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
   const employeeIdnew = parseInt(employeeId);
@@ -29,15 +33,28 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [loading, setLoading] = useState(true); // Add loading state
-  const [fetchEmployeeNameID, setFetchEmployeeNameID] = useState(null);
+  const [fetchTeamleader, setFetchTeamleader] = useState([]);
+  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
   const [activeFilterOption, setActiveFilterOption] = useState(null);
-  const [count,setCount] = useState(0);
+  const [count, setCount] = useState(0);
   const navigator = useNavigate();
+
+  const [selectedTeamLeader, setSelectedTeamLeader] = useState({
+    teamLeaderId: "",
+    teamLeaderJobRole: "",
+  });
+
+  const [selectedRecruiters, setSelectedRecruiters] = useState({
+    index: "",
+    recruiterId: "",
+    recruiterJobRole: "",
+  });
+
   const limitedOptions = [
     "alternateNumber",
     "availabilityForInterview",
@@ -80,48 +97,78 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     "requirementId",
     "selectYesOrNo",
     "sourceName",
-    "yearOfPassing"
-];
-    const {userType}=useParams();
+    "yearOfPassing",
+  ];
+  const { userType } = useParams();
+
+  useEffect(() => {}, [
+    selectedFilters,
+    filteredCallingList,
+    callingList,
+    employeeIdnew,
+  ]);
+
+  const fetchCallingTrackerData = async () => {
+    const url = `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      setCallingList(data);
+      setFilteredCallingList(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // Handle error scenarios or show error messages to the user
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-  }, [selectedFilters, filteredCallingList, callingList, employeeIdnew]);
-
-  useEffect(() => {
-    fetch(
-      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
-    )
-
-      .then((response) => response.json())
-      .then((data) => {
-        setCallingList(data)
-        setFilteredCallingList(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        // alert("Error For fetching")
-        setLoading(false);
-      });
+    if (userType === "Manager") {
+      fetchTeamLeader();
+    }
+    fetchCallingTrackerData();
   }, [employeeIdnew]);
 
+  const fetchTeamLeader = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${employeeId}`
+      );
+      const data = await response.json();
+      setFetchTeamleader(data);
+    } catch (error) {
+      console.error("Error fetching shortlisted data:", error);
+    }
+  };
+  const fetchRecruiters = async (teamLeaderId) => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+      );
+      const data = await response.json();
+      setRecruiterUnderTeamLeader(data);
+    } catch (error) {
+      console.error("Error fetching shortlisted data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchEmployeeNameAndID = async () => {
-      try {
-        const response = await fetch(
-          `http://192.168.1.46:9090/api/ats/157industries/names-and-ids`
-        );
-        const data = await response.json();
-        setFetchEmployeeNameID(data);
-      } catch (error) {
-        console.error("Error fetching shortlisted data:", error);
-      }
-    };
-    fetchEmployeeNameAndID();
-  }, []);
+    if (selectedTeamLeader.teamLeaderId != "") {
+      fetchRecruiters(selectedTeamLeader.teamLeaderId);
+    }
+    if (userType === "TeamLeader") {
+      fetchRecruiters(employeeId);
+    }
+  }, [selectedTeamLeader]);
 
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>limitedOptions.includes(key));
+    const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
+      limitedOptions.includes(key)
+    );
     setFilterOptions(options);
   }, [filteredCallingList]);
 
@@ -133,14 +180,13 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     // console.log("Filtered Calling List:", filteredCallingList);
   }, [filteredCallingList]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setFilterOptions(limitedOptions);
-  },[callingList]);
+  }, [callingList]);
 
-  useEffect (()=>{
+  useEffect(() => {
     filterData();
-  },[selectedFilters,callingList])
-
+  }, [selectedFilters, callingList]);
 
   const handleUpdate = (candidateId) => {
     setSelectedCandidateId(candidateId);
@@ -252,57 +298,34 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
         if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]
-                ?.toString()
-                .toLowerCase()
-                .includes(value)
+              item[option]?.toString().toLowerCase().includes(value)
             )
           );
-        } else if(option === "requirementId")
-        {
+        } else if (option === "requirementId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]
-                ?.toString()
-                .toLowerCase()
-                .includes(value)
+              item[option]?.toString().toLowerCase().includes(value)
             )
           );
-        }
-        else if(option === "employeeId")
-          {
-            filteredData = filteredData.filter((item) =>
-              values.some((value) =>
-                item[option]
-                  ?.toString()
-                  .toLowerCase()
-                  .includes(value)
-              )
-            );
-          }
-          else if(option === "contactNumber")
-            {
-              filteredData = filteredData.filter((item) =>
-                values.some((value) =>
-                  item[option]
-                    ?.toString()
-                    .toLowerCase()
-                    .includes(value)
-                )
-              );
-            }
-            else if(option === "alternateNumber")
-              {
-                filteredData = filteredData.filter((item) =>
-                  values.some((value) =>
-                    item[option]
-                      ?.toString()
-                      .toLowerCase()
-                      .includes(value)
-                  )
-                );
-              }
-        else {
+        } else if (option === "employeeId") {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]?.toString().toLowerCase().includes(value)
+            )
+          );
+        } else if (option === "contactNumber") {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]?.toString().toLowerCase().includes(value)
+            )
+          );
+        } else if (option === "alternateNumber") {
+          filteredData = filteredData.filter((item) =>
+            values.some((value) =>
+              item[option]?.toString().toLowerCase().includes(value)
+            )
+          );
+        } else {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
               item[option]
@@ -337,16 +360,13 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
     });
   };
 
-
-  const handleFilterOptionClick = (option)=>{
-    if(activeFilterOption===option)
-    {
+  const handleFilterOptionClick = (option) => {
+    if (activeFilterOption === option) {
       setActiveFilterOption(null);
-    }
-    else{
+    } else {
       setActiveFilterOption(option);
     }
-  }
+  };
 
   const handleSort = (criteria) => {
     if (criteria === sortCriteria) {
@@ -409,13 +429,24 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
   };
 
   const handleShare = async () => {
-    if (selectedEmployeeId && selectedRows.length > 0) {
+    if (
+      (selectedRecruiters.recruiterId != "" ||
+        selectedTeamLeader.teamLeaderId != "") &&
+      selectedRows.length > 0
+    ) {
       const url = `http://192.168.1.46:9090/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
-
-      const requestData = {
-        employeeId: selectedEmployeeId,
-        candidateIds: selectedRows,
-      };
+      let requestData;
+      if (selectedRecruiters.recruiterId != "") {
+        requestData = {
+          employeeId: selectedRecruiters.recruiterId,
+          candidateIds: selectedRows,
+        };
+      } else {
+        requestData = {
+          employeeId: selectedTeamLeader.teamLeaderId,
+          candidateIds: selectedRows,
+        };
+      }
 
       const requestOptions = {
         method: "PUT",
@@ -431,12 +462,19 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         // Handle success response
         console.log("Candidates forwarded successfully!");
+        fetchCallingTrackerData();
+        onSuccessAdd(true);
         setShowForwardPopup(false); // Close the modal or handle any further UI updates
         setShowShareButton(true);
         setSelectedRows([]);
+        setSelectedRecruiters({
+          index: "",
+          recruiterId: "",
+          recruiterJobRole: "",
+        });
+        setSelectedTeamLeader({ teamLeaderId: "", teamLeaderJobRole: "" });
         // Optionally, you can fetch updated data after successful submission
         // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
       } catch (error) {
@@ -520,7 +558,10 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
               <div className="search">
                 <i
                   className="fa-solid fa-magnifying-glass"
-                  onClick={() => {setShowSearchBar(!showSearchBar);setShowFilterSection(false);}}
+                  onClick={() => {
+                    setShowSearchBar(!showSearchBar);
+                    setShowFilterSection(false);
+                  }}
                   style={{ margin: "10px", width: "auto", fontSize: "15px" }}
                 ></i>
                 <h5 style={{ color: "gray" }}>Lineup Tracker</h5>
@@ -548,6 +589,7 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                         onClick={() => {
                           setShowShareButton(true);
                           setSelectedRows([]);
+                          setAllSelected(false);
                         }}
                       >
                         Close
@@ -593,27 +635,39 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                       );
                       return (
                         <div key={option} className="filter-option">
-                        <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
-                          {option}
-                          <span className="filter-icon">&#x25bc;</span>
-                        </button>
-                        {activeFilterOption === option && (
-                          <div className="city-filter">
-                            <div className="optionDiv">
-                              {uniqueValues.map((value) => (
-                                <label key={value} className="selfcalling-filter-value">
-                                  <input
-                                    type="checkbox"
-                                    checked={selectedFilters[option]?.includes(value) || false}
-                                    onChange={() => handleFilterSelect(option, value)}
-                                  />
-                                  {value}
-                                </label>
-                              ))}
+                          <button
+                            className="white-Btn"
+                            onClick={() => handleFilterOptionClick(option)}
+                          >
+                            {option}
+                            <span className="filter-icon">&#x25bc;</span>
+                          </button>
+                          {activeFilterOption === option && (
+                            <div className="city-filter">
+                              <div className="optionDiv">
+                                {uniqueValues.map((value) => (
+                                  <label
+                                    key={value}
+                                    className="selfcalling-filter-value"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={
+                                        selectedFilters[option]?.includes(
+                                          value
+                                        ) || false
+                                      }
+                                      onChange={() =>
+                                        handleFilterSelect(option, value)
+                                      }
+                                    />
+                                    {value}
+                                  </label>
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
+                          )}
+                        </div>
                       );
                     })}
                   </div>
@@ -1263,36 +1317,129 @@ const LineUpList = ({ updateState, funForGettingCandidateId }) => {
                         </Modal.Header>
                         <Modal.Body
                           style={{
-                            display: "grid",
-                            gap: "10px",
-                            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                             backgroundColor: "#f2f2f2",
                           }}
                         >
-                          {fetchEmployeeNameID.map((item) => (
-                            <>
-                              <div
-                                key={`${item[0]}`}
-                                className=""
-                                style={{
-                                  display: "flex",
-                                  gap: "20px",
-                                  columnSpan: "span 1 / span 1",
-                                }}
-                              >
-                                <input
-                                  type="radio"
-                                  id={`${item[0]}`}
-                                  name="forward"
-                                  value={`${item[0]}`}
-                                  onChange={(e) =>
-                                    setSelectedEmployeeId(e.target.value)
-                                  }
-                                />
-                                <label htmlFor={`${item[0]}`}>{item[1]}</label>
+                          <div className="accordion">
+                            {fetchTeamleader &&
+                              userType === "Manager" &&
+                              fetchTeamleader.map((teamleaders) => (
+                                <div className="accordion-item">
+                                  <div className="accordion-header">
+                                    <label
+                                      htmlFor={`${teamleaders.teamLeaderId}`}
+                                      className="accordion-title"
+                                    >
+                                      <input
+                                        type="radio"
+                                        name="teamLeaders"
+                                        id={`${teamleaders.teamLeaderId}`}
+                                        value={teamleaders.teamLeaderId}
+                                        checked={
+                                          selectedTeamLeader.teamLeaderId ===
+                                          teamleaders.teamLeaderId
+                                        }
+                                        onChange={() =>
+                                          setSelectedTeamLeader({
+                                            teamLeaderId:
+                                              teamleaders.teamLeaderId,
+                                            teamLeaderJobRole:
+                                              teamleaders.jobRole,
+                                          })
+                                        }
+                                      />{" "}
+                                      {teamleaders.teamLeaderName}
+                                    </label>
+                                  </div>
+                                  {selectedTeamLeader.teamLeaderId ===
+                                    teamleaders.teamLeaderId && (
+                                    <div className="accordion-content">
+                                      <form>
+                                        {recruiterUnderTeamLeader &&
+                                          recruiterUnderTeamLeader.map(
+                                            (recruiters) => (
+                                              <div className="form-group">
+                                                <label
+                                                  htmlFor={
+                                                    recruiters.employeeId
+                                                  }
+                                                >
+                                                  <input
+                                                    type="radio"
+                                                    id={recruiters.employeeId}
+                                                    name="recruiter"
+                                                    value={
+                                                      recruiters.employeeId
+                                                    }
+                                                    checked={
+                                                      selectedRecruiters.recruiterId ===
+                                                      recruiters.employeeId
+                                                    }
+                                                    onChange={() =>
+                                                      setSelectedRecruiters({
+                                                        index: 1,
+                                                        recruiterId:
+                                                          recruiters.employeeId,
+                                                        recruiterJobRole:
+                                                          recruiters.jobRole,
+                                                      })
+                                                    }
+                                                  />{" "}
+                                                  {recruiters.employeeName}
+                                                </label>
+                                              </div>
+                                            )
+                                          )}
+                                      </form>
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            {userType === "TeamLeader" && (
+                              <div className="accordion-item">
+                                <div className="accordion-header">
+                                  <label className="accordion-title">
+                                    {loginEmployeeName}
+                                  </label>
+                                </div>
+                                <div className="accordion-content">
+                                  <form>
+                                    {recruiterUnderTeamLeader &&
+                                      recruiterUnderTeamLeader.map(
+                                        (recruiters) => (
+                                          <div className="form-group">
+                                            <label
+                                              htmlFor={recruiters.employeeId}
+                                            >
+                                              <input
+                                                type="radio"
+                                                id={recruiters.employeeId}
+                                                name="recruiter"
+                                                value={recruiters.employeeId}
+                                                checked={
+                                                  selectedRecruiters.recruiterId ===
+                                                  recruiters.employeeId
+                                                }
+                                                onChange={() =>
+                                                  setSelectedRecruiters({
+                                                    index: 1,
+                                                    recruiterId:
+                                                      recruiters.employeeId,
+                                                    recruiterJobRole:
+                                                      recruiters.jobRole,
+                                                  })
+                                                }
+                                              />{" "}
+                                              {recruiters.employeeName}
+                                            </label>
+                                          </div>
+                                        )
+                                      )}
+                                  </form>
+                                </div>
                               </div>
-                            </>
-                          ))}
+                            )}
+                          </div>
                         </Modal.Body>
                         <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
                           <button
