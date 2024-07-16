@@ -17,7 +17,7 @@ const ResumeList = ({ handleUpdate }) => {
         const fetchData = async () => {
             try {
 
-                const response = await fetch('http://192.168.1.51:8891/api/ats/157industries/all-resumes-data'); // Replace with your API URL
+                const response = await fetch('http://192.168.1.46:9090/api/ats/157industries/all-resumes-data'); // Replace with your API URL
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ const ResumeList = ({ handleUpdate }) => {
         // Assuming `employeeId` is a known variable or prop
         fetch(
 
-            `http://192.168.1.51:8891/api/ats/157industries/callingData/${employeeId}`
+            `http://192.168.1.46:9090/api/ats/157industries/callingData/${employeeId}`
 
         )
             .then((response) => response.json())
