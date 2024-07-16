@@ -33,8 +33,8 @@ const LineUpList = ({
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [loading, setLoading] = useState(true); // Add loading state
-  const [fetchTeamleader, setFetchTeamleader] = useState([]);
-  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
+  const [fetchTeamleader, setFetchTeamleader] = useState([]); //akash_pawar_LineUpList_ShareFunctionality_16/07_36
+  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]); //akash_pawar_LineUpList_ShareFunctionality_16/07_37
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -44,6 +44,7 @@ const LineUpList = ({
   const [count, setCount] = useState(0);
   const navigator = useNavigate();
 
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_47
   const [selectedTeamLeader, setSelectedTeamLeader] = useState({
     teamLeaderId: "",
     teamLeaderJobRole: "",
@@ -54,6 +55,7 @@ const LineUpList = ({
     recruiterId: "",
     recruiterJobRole: "",
   });
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_58
 
   const limitedOptions = [
     "alternateNumber",
@@ -108,6 +110,7 @@ const LineUpList = ({
     employeeIdnew,
   ]);
 
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_111
   const fetchCallingTrackerData = async () => {
     const url = `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
 
@@ -164,6 +167,7 @@ const LineUpList = ({
       fetchRecruiters(employeeId);
     }
   }, [selectedTeamLeader]);
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_168
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
@@ -428,6 +432,7 @@ const LineUpList = ({
     }
   };
 
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_431
   const handleShare = async () => {
     if (
       (selectedRecruiters.recruiterId != "" ||
@@ -483,6 +488,7 @@ const LineUpList = ({
       }
     }
   };
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_486
 
   //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) start LineNo:-165 Date:-02/07
   const convertToDocumentLink = (byteCode, fileName) => {
@@ -1320,6 +1326,7 @@ const LineUpList = ({
                             backgroundColor: "#f2f2f2",
                           }}
                         >
+                          {/* akash_pawar_selfCallingTracker_ShareFunctionality_16/07_1323 */}
                           <div className="accordion">
                             {fetchTeamleader &&
                               userType === "Manager" &&
@@ -1440,6 +1447,7 @@ const LineUpList = ({
                               </div>
                             )}
                           </div>
+                          {/* akash_pawar_selfCallingTracker_ShareFunctionality_16/07_1443 */}
                         </Modal.Body>
                         <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
                           <button

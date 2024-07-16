@@ -44,6 +44,7 @@ import InvoiceTable from "./invoice";
 import InvoiceReport from "./invoiceReport";
 import InvoicePdf from "./invoicePdf";
 import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_43*/
+import QuestionPaper from "./questionPaper";
 import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
 
 const EmpDashboard = ({ userGroup }) => {
@@ -104,6 +105,7 @@ const EmpDashboard = ({ userGroup }) => {
     useState(
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
+  const [showQuestionpaper, setShowQuestionpaper] = useState(false);
 
   const [showCapex, setShowCapex] = useState(false);
 
@@ -146,7 +148,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [loginEmployeeName, setLoginEmployeeName] = useState("");
   const [clientEmailSender, setClientEmailSender] = useState();
   const handleEmailSenderInformation = (data) => {
-    setLoginEmployeeName(data.senderName);
+    setLoginEmployeeName(data.senderName); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_151
     setClientEmailSender(data);
   };
 
@@ -250,7 +252,9 @@ const EmpDashboard = ({ userGroup }) => {
     setShowAddCompany(
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_221*/
+
     setShowProfitLoss(false);
+    setShowQuestionpaper(false);
     setShowCapex(false);
   };
 
@@ -444,6 +448,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowInvoicePdf(!showInvoicePdf);
   };
+  const toggleQuestionPaper = () => {
+    resetAllToggles();
+    setShowQuestionpaper(!showQuestionpaper);
+  };
 
   const toggleCapex = () => {
     resetAllToggles();
@@ -504,6 +512,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleAddCompany={
           toggleAddCompany
         } /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_444*/
+        toggleQuestionPaper={toggleQuestionPaper}
         toggleCapex={toggleCapex}
       />
 
@@ -533,7 +542,7 @@ const EmpDashboard = ({ userGroup }) => {
             <CallingList
               updateState={handleUpdateComplete}
               funForGettingCandidateId={gettingCandidateIdForUpdate}
-              loginEmployeeName={loginEmployeeName}
+              loginEmployeeName={loginEmployeeName} //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_545
             />
           )}
         </div>
@@ -548,7 +557,7 @@ const EmpDashboard = ({ userGroup }) => {
             <LineUpList
               updateState={funForUpdateLineUp}
               funForGettingCandidateId={gettingCandidateIdForUpdate}
-              loginEmployeeName={loginEmployeeName}
+              loginEmployeeName={loginEmployeeName} //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_560
             />
           )}
         </div>
@@ -558,10 +567,11 @@ const EmpDashboard = ({ userGroup }) => {
 
         {/* ArshadAttar_EmpDashboard_Added_LineGraph_11/07/2024_OnlyLineGraph_Div_LineNo_488-489 */}
         <div>{showProfitLoss && <LineGraph></LineGraph>}</div>
+        <div>{showQuestionpaper && <QuestionPaper />}</div>
 
         <div>
           {showEmployeeMasterSheet && (
-            <EmployeeMasterSheet loginEmployeeName={loginEmployeeName} />
+            <EmployeeMasterSheet loginEmployeeName={loginEmployeeName} /> //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_574
           )}
         </div>
 

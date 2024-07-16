@@ -29,24 +29,28 @@ const CallingList = ({
   const [selectedCandidateId, setSelectedCandidateId] = useState();
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [activeFilterOption, setActiveFilterOption] = useState(null);
-  const [fetchTeamleader, setFetchTeamleader] = useState([]);
-  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
+  const [fetchTeamleader, setFetchTeamleader] = useState([]); //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_32
+  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]); //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_33
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
 
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_41
   const [selectedTeamLeader, setSelectedTeamLeader] = useState({
     teamLeaderId: "",
     teamLeaderJobRole: "",
   });
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_44
 
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_46
   const [selectedRecruiters, setSelectedRecruiters] = useState({
     index: "",
     recruiterId: "",
     recruiterJobRole: "",
   });
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_51
 
   const { employeeId } = useParams();
   const { userType } = useParams();
@@ -78,6 +82,7 @@ const CallingList = ({
     "selectYesOrNo",
   ];
 
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_85
   const fetchCallingTrackerData = async () => {
     try {
       const response = await fetch(
@@ -133,6 +138,7 @@ const CallingList = ({
       fetchRecruiters(employeeId);
     }
   }, [selectedTeamLeader]);
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_140
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
@@ -393,6 +399,7 @@ const CallingList = ({
     }
   };
 
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_403
   const handleShare = async () => {
     if (
       (selectedRecruiters.recruiterId != "" ||
@@ -448,6 +455,8 @@ const CallingList = ({
       }
     }
   };
+  //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_457
+
   // neha
   // selfcalling tracker form and employee master sheet
   // After share btn click ->close ,select-all, and forword btn
@@ -931,6 +940,7 @@ const CallingList = ({
                             backgroundColor: "#f2f2f2",
                           }}
                         >
+                          {/* akash_pawar_selfCallingTracker_ShareFunctionality_16/07_943 */}
                           <div className="accordion">
                             {fetchTeamleader &&
                               userType === "Manager" &&
@@ -1051,6 +1061,7 @@ const CallingList = ({
                               </div>
                             )}
                           </div>
+                          {/* akash_pawar_selfCallingTracker_ShareFunctionality_16/07_1063 */}
                         </Modal.Body>
                         <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
                           <button

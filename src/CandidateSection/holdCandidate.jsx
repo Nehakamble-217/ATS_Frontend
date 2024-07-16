@@ -27,8 +27,8 @@ const HoldCandidate = ({
   const [callingToUpdate, setCallingToUpdate] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [activeFilterOption, setActiveFilterOption] = useState(null);
-  const [fetchTeamleader, setFetchTeamleader] = useState([]);
-  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
+  const [fetchTeamleader, setFetchTeamleader] = useState([]); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_30
+  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_31
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -39,6 +39,7 @@ const HoldCandidate = ({
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
 
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_43
   const [selectedTeamLeader, setSelectedTeamLeader] = useState({
     teamLeaderId: "",
     teamLeaderJobRole: "",
@@ -49,6 +50,7 @@ const HoldCandidate = ({
     recruiterId: "",
     recruiterJobRole: "",
   });
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_52
 
   const navigator = useNavigate();
   const limitedOptions = [
@@ -96,6 +98,7 @@ const HoldCandidate = ({
     "yearOfPassing",
   ];
   const { userType } = useParams();
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_100
   useEffect(() => {
     if (userType === "Manager") {
       fetchTeamLeader();
@@ -133,6 +136,7 @@ const HoldCandidate = ({
       fetchRecruiters(employeeId);
     }
   }, [selectedTeamLeader]);
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_137
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
@@ -391,6 +395,7 @@ const HoldCandidate = ({
     }
   };
 
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_395
   const handleShare = async () => {
     if (
       (selectedRecruiters.recruiterId != "" ||
@@ -446,6 +451,7 @@ const HoldCandidate = ({
       }
     }
   };
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_449
 
   //Name:-Akash Pawar Component:-HoldCandidate Subcategory:-ResumeViewButton(added) start LineNo:-325 Date:-02/07
   const convertToDocumentLink = (byteCode, fileName) => {
@@ -1306,6 +1312,7 @@ const HoldCandidate = ({
                             backgroundColor: "#f2f2f2",
                           }}
                         >
+                          {/* akash_pawar_SelectedCandidate_ShareFunctionality_16/07_1309 */}
                           <div className="accordion">
                             {fetchTeamleader &&
                               userType === "Manager" &&
@@ -1426,6 +1433,7 @@ const HoldCandidate = ({
                               </div>
                             )}
                           </div>
+                          {/* akash_pawar_SelectedCandidate_ShareFunctionality_16/07_1430 */}
                         </Modal.Body>
                         <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
                           <button

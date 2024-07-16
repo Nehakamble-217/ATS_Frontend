@@ -21,8 +21,8 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const [selectedFilters, setSelectedFilters] = useState({});
   const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [fetchTeamleader, setFetchTeamleader] = useState([]);
-  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]);
+  const [fetchTeamleader, setFetchTeamleader] = useState([]); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_24
+  const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_25
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -30,6 +30,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const [showForwardPopup, setShowForwardPopup] = useState(false);
   let [color, setColor] = useState("#ffcb9b");
 
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_33
   const [selectedTeamLeader, setSelectedTeamLeader] = useState({
     teamLeaderId: "",
     teamLeaderJobRole: "",
@@ -40,6 +41,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
     recruiterId: "",
     recruiterJobRole: "",
   });
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_43
 
   const { employeeId } = useParams();
   const limitedOptions = [
@@ -88,12 +90,14 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   ];
   const { userType } = useParams();
 
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_93
   useEffect(() => {
     if (userType === "Manager") {
       fetchTeamLeader();
     }
     fetchShortListedData();
   }, []);
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_99
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
@@ -134,6 +138,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
     filterData();
   }, [selectedFilters, callingList]);
 
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_141
   const fetchTeamLeader = async () => {
     try {
       const response = await fetch(
@@ -164,6 +169,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
       fetchRecruiters(employeeId);
     }
   }, [selectedTeamLeader]);
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_171
 
   useEffect(() => {
     const filtered = callingList.filter((item) => {
@@ -391,6 +397,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
     }
   };
 
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_400
   const handleShare = async () => {
     if (
       (selectedRecruiters.recruiterId != "" ||
@@ -446,6 +453,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
       }
     }
   };
+  //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_455
 
   //Name:-Akash Pawar Component:-SelectedCandidate Subcategory:-ResumeViewButton(added) start LineNo:-322 Date:-02/07
   const convertToDocumentLink = (byteCode, fileName) => {
@@ -1253,6 +1261,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                             backgroundColor: "#f2f2f2",
                           }}
                         >
+                          {/* akash_pawar_SelectedCandidate_ShareFunctionality_16/07_1264 */}
                           <div className="accordion">
                             {fetchTeamleader &&
                               userType === "Manager" &&
@@ -1373,6 +1382,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                               </div>
                             )}
                           </div>
+                          {/* akash_pawar_SelectedCandidate_ShareFunctionality_16/07_1385 */}
                         </Modal.Body>
                         <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
                           <button
