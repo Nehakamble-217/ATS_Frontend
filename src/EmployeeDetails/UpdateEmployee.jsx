@@ -13,7 +13,6 @@ const UpdateEmployee = ({id,userType}) => {
     department: "",
     officialMail: "",
     employeeEmail: "",
-    employeeNumber: "",
     officialContactNumber: "",  
     alternateContactNo: "",
     dateOfBirth: "",
@@ -44,7 +43,6 @@ const UpdateEmployee = ({id,userType}) => {
     interviewTakenPerson: "",
     warningComments: "",
     performanceIndicator: "",
-    teamLeaderMsg: "",
     editDeleteAuthority: "",
     linkedInURl: "",
     faceBookURL: "",
@@ -61,12 +59,9 @@ const UpdateEmployee = ({id,userType}) => {
     pfNo: "",
     employeePassword: "",
     confirmPassword: "",
-    // profileImage: profileImage,
-    // document: pdf,
-    // resumeFile: pdfSrc,
-    insuranceNumber: "",
-    reportingMangerName: "",
-    reportingMangerDesignation: "",
+    profileImage: null,
+    document: null,
+    resumeFile: null,
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -74,146 +69,154 @@ const UpdateEmployee = ({id,userType}) => {
   const [passwordError, setPasswordError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
+  const [fileNames, setFileNames] = useState({
+    profileImage: "",
+    document: "",
+    resumeFile: ""
+  });
   
   useEffect(()=>{
     fetchEmployeeDetails();
   },[id])
 
-  const fetchEmployeeDetails=async()=>{
-    try{
-        const response = await axios.get(`http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${id}/${userType}`);
-        // console.log(response.data);
+  const fetchEmployeeDetails = async () => {
+    try {
+      const response = await axios.get(`http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${id}/${userType}`);
+      const initialResponse = response.data;
+      console.log(initialResponse);
   
-          const initialResponse = response.data;
-          console.log(initialResponse);
-          if (initialResponse.profileImage) {
-            const byteCharacters = atob(initialResponse.profileImage);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-              byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], { type: "image/jpeg" });
+      let profileImageFile = null;
+      let resumeFileFile = null;
+      let documentFile = null;
   
-            const url = URL.createObjectURL(blob);
-            setProfileImage(url);
-          }
-          if (initialResponse.resumeFile) {
-            const byteCharacters = atob(initialResponse.resumeFile);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-              byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
+      if (initialResponse.profileImage) {
+        const byteCharacters = atob(initialResponse.profileImage);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "image/jpeg" });
   
-            const blob = new Blob([byteArray], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        setProfileImage(url);
+        profileImageFile = new File([blob], "profileImage.jpg", { type: "image/jpeg" });
+      }
+      if (initialResponse.resumeFile) {
+        const byteCharacters = atob(initialResponse.resumeFile);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
   
-            const url = URL.createObjectURL(blob);
-            setPdfSrc(url);
-          }
-          if (initialResponse.document) {
-            const byteCharacters = atob(initialResponse.document);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-              byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "application/pdf" });
   
-            const blob = new Blob([byteArray], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        setPdfSrc(url);
+        resumeFileFile = new File([blob], "resumeFile.pdf", { type: "application/pdf" });
+      }
+      if (initialResponse.document) {
+        const byteCharacters = atob(initialResponse.document);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
   
-            const url = URL.createObjectURL(blob);
-            setPdf(url);
-          }
-
-
-
-
-
-           // Assuming data is an array of responses
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            employeeId:initialResponse.id||"",
-            employeeName: initialResponse.name || "",
-            dateOfJoining: formatDate1(initialResponse.dateOfJoining) || "",
-            designation: initialResponse.designation || "",
-            department: initialResponse.department || "",
-            jobRole: initialResponse.jobRole || "",
-            officialMail: initialResponse.officialMail || "",
-            employeeEmail: initialResponse.personalEmailId || "",
-            alternateContactNo: initialResponse.alternateContactNo || "",
-            companyMobileNumber: initialResponse.companyMobileNo || "",
-            officialContactNumber: initialResponse.officialContactNo || "",
-            whatsAppNumber: initialResponse.whatsAppNo || "",
-            dateOfBirth:initialResponse.dateOfBirth ||"",
-            gender:initialResponse.gender||"",
-            maritalStatus:initialResponse.maritalStatus||"",
-            anniversaryDate:initialResponse.anniversaryDate||"",
-            emergencyContactNumber:initialResponse.emergencyContactNo||"",
-            emergencyContactPerson:initialResponse.emergencyContactPerson||"",
-            emergencyPersonRelation:initialResponse.emergencyPersonRelation||"",
-            tshirtSize:initialResponse.tshirtSize||"",
-            bloodGroup:initialResponse.bloodGroup||"",
-            aadhaarNo:initialResponse.aadhaarNo||"",
-            panNo:initialResponse.panNo||"",
-            educationalQualification:initialResponse.qualification||"",
-            offeredSalary:initialResponse.salary||"",
-            profileImage:profileImage||"",
-            document:pdf||"",
-            resumeFile:pdfSrc||"",
-            employeePresentAddress:initialResponse.presentAddress||"",
-            employeeExperience:initialResponse.experience||"",
-            perks:initialResponse.perks||"",
-            lastCompany:initialResponse.lastCompany||"",
-            workLocation:initialResponse.workLocation||"",
-            entrySource:initialResponse.entrySource||"",
-            employeeStatus:initialResponse.status||"",
-            lastWorkingDate:formatDate(initialResponse.workingDate)||"",
-            reasonForLeaving:initialResponse.reasonForLeaving||"",
-            inductionYesOrNo:initialResponse.inductionYesOrNo||"",  
-            inductionComment: initialResponse.inductionComment || "",
-            trainingSource: initialResponse.trainingSource || "",
-            trainingCompletedYesOrNo: initialResponse.trainingCompletedYesOrNo || "",
-            trainingTakenCount: initialResponse.trainingTakenCount || "",
-            roundsOfInterview: initialResponse.roundsOfInterview || "",
-            interviewTakenPerson: initialResponse.interviewTakenPerson || "",
-            warningComments: initialResponse.warningComments || "",
-            performanceIndicator: initialResponse.performanceIndicator || "",
-            teamLeaderMsg: initialResponse.teamLeaderMsg || "",
-            editDeleteAuthority: initialResponse.editDeleteAuthority || "",
-            linkedInURl: initialResponse.linkedInURL || "",
-            faceBookURL: initialResponse.faceBookURL || "",
-            twitterURl: initialResponse.twitterURL || "",
-            employeeAddress: initialResponse.address || "",
-            professionalPtNo: initialResponse.professionalPtNo || "",
-            esIcNo: initialResponse.esIcNo || "",
-            pfNo: initialResponse.pfNo || "",
-            employeePassword: "",
-            confirmPassword: "",
-            insuranceNumber: initialResponse.insuranceNumber || "",
-            reportingMangerName: initialResponse.reportingMangerName || "",
-            reportingMangerDesignation: initialResponse.reportingMangerDesignation || ""
-            
-          }));
-        
+        const blob = new Blob([byteArray], { type: "application/pdf" });
+  
+        const url = URL.createObjectURL(blob);
+        setPdf(url);
+        documentFile = new File([blob], "document.pdf", { type: "application/pdf" });
+      }
+  
+      // Update form data and file names
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        employeeId: initialResponse.id || "",
+        employeeName: initialResponse.name || "",
+        dateOfJoining: initialResponse.dateOfJoining || "",
+        designation: initialResponse.designation || "",
+        department: initialResponse.department || "",
+        jobRole: initialResponse.jobRole || "",
+        officialMail: initialResponse.officialMail || "",
+        employeeEmail: initialResponse.personalEmailId || "",
+        alternateContactNo: initialResponse.alternateContactNo || "",
+        companyMobileNumber: initialResponse.companyMobileNo || "",
+        officialContactNumber: initialResponse.officialContactNo || "",
+        whatsAppNumber: initialResponse.whatsAppNo || "",
+        dateOfBirth: initialResponse.dateOfBirth || "",
+        gender: initialResponse.gender || "",
+        maritalStatus: initialResponse.maritalStatus || "",
+        anniversaryDate: initialResponse.anniversaryDate || "",
+        emergencyContactNumber: initialResponse.emergencyContactNo || "",
+        emergencyContactPerson: initialResponse.emergencyContactPerson || "",
+        emergencyPersonRelation: initialResponse.emergencyPersonRelation || "",
+        tshirtSize: initialResponse.tshirtSize || "",
+        bloodGroup: initialResponse.bloodGroup || "",
+        aadhaarNo: initialResponse.aadhaarNo || "",
+        panNo: initialResponse.panNo || "",
+        educationalQualification: initialResponse.qualification || "",
+        offeredSalary: initialResponse.salary || "",
+        profileImage: profileImageFile || "",
+        document: documentFile || "",
+        resumeFile: resumeFileFile || "",
+        employeePresentAddress: initialResponse.presentAddress || "",
+        employeeExperience: initialResponse.experience || "",
+        perks: initialResponse.perks || "",
+        lastCompany: initialResponse.lastCompany || "",
+        workLocation: initialResponse.workLocation || "",
+        entrySource: initialResponse.entrySource || "",
+        employeeStatus: initialResponse.status || "",
+        lastWorkingDate: formatDate(initialResponse.workingDate) || "",
+        reasonForLeaving: initialResponse.reasonForLeaving || "",
+        inductionYesOrNo: initialResponse.inductionYesOrNo || "",
+        inductionComment: initialResponse.inductionComment || "",
+        trainingSource: initialResponse.trainingSource || "",
+        trainingCompletedYesOrNo: initialResponse.trainingCompletedYesOrNo || "",
+        trainingTakenCount: initialResponse.trainingTakenCount || "",
+        roundsOfInterview: initialResponse.roundsOfInterview || "",
+        interviewTakenPerson: initialResponse.interviewTakenPerson || "",
+        warningComments: initialResponse.warningComments || "",
+        performanceIndicator: initialResponse.performanceIndicator || "",
+        editDeleteAuthority: initialResponse.editDeleteAuthority || "",
+        linkedInURl: initialResponse.linkedInURL || "",
+        faceBookURL: initialResponse.faceBookURL || "",
+        twitterURl: initialResponse.twitterURL || "",
+        employeeAddress: initialResponse.address || "",
+        professionalPtNo: initialResponse.professionalPtNo || "",
+        esIcNo: initialResponse.esIcNo || "",
+        pfNo: initialResponse.pfNo || "",
+        employeePassword: initialResponse.password || "",
+        confirmPassword: initialResponse.confirmPassword || "",
+      }));
+  
+      setFileNames({
+        profileImage: profileImageFile ? profileImageFile.name : "",
+        document: documentFile ? documentFile.name : "",
+        resumeFile: resumeFileFile ? resumeFileFile.name : ""
+      });
+    } catch (err) {
+      console.log(err);
     }
-    catch(err)
-    {
-        console.log(err)
-    }
-  }
-
-
-  console.log(profileImage,pdfSrc,pdf);
+  };
+  
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     if (files.length > 0) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: files[0],
+        [name]: files[0]
+      }));
+      setFileNames((prevFileNames) => ({
+        ...prevFileNames,
+        [name]: files[0].name
       }));
     }
   };
+
 
 
   const formatDate = (dateString) => {
@@ -251,6 +254,8 @@ const UpdateEmployee = ({id,userType}) => {
     return `${year}-${month}-${day}`;
   };
 
+  
+
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
 
@@ -258,6 +263,10 @@ const UpdateEmployee = ({id,userType}) => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: files[0],
+      }));
+      setFileNames((prevFileNames) => ({
+        ...prevFileNames,
+        [name]: files[0].name
       }));
     } else {
       if (
@@ -279,9 +288,8 @@ const UpdateEmployee = ({id,userType}) => {
         name === "teamLeaderMsg" ||
         name === "editDeleteAuthority" ||
         name === "bloodGroup" ||
-        name === "educationalQualification" ||
-        name === "reportingMangerName" ||
-        name === "reportingMangerDesignation"
+        name === "educationalQualification" 
+       
       ) {
         if (/\d/.test(value)) {
           setErrors((prevErrors) => ({
@@ -299,13 +307,11 @@ const UpdateEmployee = ({id,userType}) => {
           }));
         }
       } else if (
-        name === "employeeNumber" ||
         name === "officialContactNumber" ||
         name === "alternateContactNo" ||
         name === "companyMobileNumber" ||
         name === "whatsAppNumber" ||
         name === "emergencyContactNumber" ||
-        name === "insuranceNumber" ||
         name === "aadhaarNo" ||
         name === "offeredSalary" ||
         name === "trainingTakenCount" ||
@@ -313,7 +319,8 @@ const UpdateEmployee = ({id,userType}) => {
         name === "esIcNo" ||
         name === "pfNo" ||
         name === "roundsOfInterview"
-      ) {
+      )
+      {
         if (/[^0-9]/.test(value)) {
           setErrors((prevErrors) => ({
             ...prevErrors,
@@ -329,7 +336,8 @@ const UpdateEmployee = ({id,userType}) => {
             [name]: value,
           }));
         }
-      } else {
+      }
+       else {
         setFormData((prevFormData) => ({
           ...prevFormData,
           [name]: value,
@@ -374,6 +382,7 @@ const UpdateEmployee = ({id,userType}) => {
         }
       );
       if (response) {
+        console.log(formData);
         console.log(response);
         setSuccessMessage("Employee Data Added Successfully.");
       } else {
@@ -495,7 +504,7 @@ const UpdateEmployee = ({id,userType}) => {
           />
         </div>
 
-        <div className="form-row">
+        {/* <div className="form-row">
           <label>Mobile Number:</label>
           <input
             type="text"
@@ -507,7 +516,7 @@ const UpdateEmployee = ({id,userType}) => {
           {errors.employeeNumber && (
             <div className="error">{errors.employeeNumber}</div>
           )}
-        </div>
+        </div> */}
 
         <div className="form-row">
           <label>Alternate Mobile Number:</label>
@@ -738,17 +747,22 @@ const UpdateEmployee = ({id,userType}) => {
 
         <div className="form-row">
           <label>Upload Profile Image:</label>
-          <input type="file" name="profileImage" onChange={handleInputChange} />
+          <input type="file" name="profileImage" onChange={handleFileChange} />
+          {fileNames.profileImage && <p>Selected Profile Image: {fileNames.profileImage}</p>}
         </div>
 
         <div className="form-row">
           <label>Upload Document:</label>
-          <input type="file" name="document" onChange={handleInputChange} />
+          <input type="file" name="document" onChange={handleFileChange} />
+          {fileNames.document && <p>Selected Document: {fileNames.document}</p>}
+          
+      
         </div>
 
         <div className="form-row">
           <label>Upload Resume:</label>
           <input type="file" name="resumeFile" onChange={handleFileChange} />
+          {fileNames.resumeFile && <p>Selected Resume File: {fileNames.resumeFile}</p>}
         </div>
 
         <div className="form-row">
@@ -985,7 +999,7 @@ const UpdateEmployee = ({id,userType}) => {
           )}
         </div>
 
-        <div className="form-row">
+        {/* <div className="form-row">
           <label>Team Leader Message:</label>
           <input
             type="text"
@@ -997,7 +1011,7 @@ const UpdateEmployee = ({id,userType}) => {
           {errors.teamLeaderMsg && (
             <div className="error">{errors.teamLeaderMsg}</div>
           )}
-        </div>
+        </div> */}
 
         <div className="form-row">
           <label>Edit/Delete Authority:</label>
@@ -1095,7 +1109,7 @@ const UpdateEmployee = ({id,userType}) => {
           {errors.pfNo && <div className="error">{errors.pfNo}</div>}
         </div>
 
-        <div className="form-row">
+        {/* <div className="form-row">
           <label>Insurance Number:</label>
           <input
             type="text"
@@ -1135,7 +1149,7 @@ const UpdateEmployee = ({id,userType}) => {
           {errors.reportingMangerDesignation && (
             <div className="error">{errors.reportingMangerDesignation}</div>
           )}
-        </div>
+        </div> */}
 
         <div className="form-row">
           <label>Password:</label>
