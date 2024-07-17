@@ -1,29 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import SalarySlip from './salarySlip.jsx';
 import '../PayRoll/payRollTable.css';
-import RecruiterBillingForm from './recruiterBillingForm.jsx';
-// import { content } from 'html2canvas/dist/types/css/property-descriptors/content.js';
 
 const PayrollTable = ({ employees }) => {
     const slipRefs = useRef({});
-    const [showPaySlip, setShowPaySlip]=useState(false)
-    const [employeeId,setEmployeId]=useState(null)
 
     const handlePrint = useReactToPrint({
         content: () => slipRefs.current.currentEmployee,
-       
     });
-     console.log(handlePrint());
-    const handlePaySlip=()=>{
-        setShowPaySlip(true)
-    }
-    const cancel =()=>{
-        setShowPaySlip(false)
-    }
-  
+
     return (
-        <>
         <div className="payroll-table">
             <table className='payroll-table-layout'>
                 <thead>
@@ -39,12 +26,11 @@ const PayrollTable = ({ employees }) => {
                         <th>Deductions</th>
                         <th>Total Salary</th>
                         <th>Action</th>
-                        <th>Pay</th>
                     </tr>
                 </thead>
                 <tbody>
                     {employees.map((employee) => (
-                        <React.Fragment key={employee.id}>
+                        <React.Fragment key={employee.empId}>
                             <tr className='payroll-table-data'>
                                 <td>{employee.empId}</td>
                                 <td>{employee.empName}</td>
@@ -59,23 +45,17 @@ const PayrollTable = ({ employees }) => {
                                 <td>
                                     <button
                                         onClick={() => {
-                                            slipRefs.current.currentEmployee = slipRefs.current[employee.id];
+                                            slipRefs.current.currentEmployee = slipRefs.current[employee.empId];
                                             handlePrint();
-                                            // setEmployeId(employee.id)
                                         }}
                                     >
                                         Pay & Print
                                     </button>
                                     <div style={{ display: 'none' }}>
-                                        <div ref={(el) => (slipRefs.current[employee.id] = el)}>
+                                        <div ref={(el) => (slipRefs.current[employee.empId] = el)}>
                                             <SalarySlip employee={employee} />
                                         </div>
                                     </div>
-                                </td>
-                                <td>
-                                    <button onClick={handlePaySlip}>
-                                        Pay
-                                    </button>
                                 </td>
                             </tr>
                         </React.Fragment>
@@ -83,13 +63,6 @@ const PayrollTable = ({ employees }) => {
                 </tbody>
             </table>
         </div>
-        {showPaySlip && (
-        <div className='recruiterBillingForm'>
-            <RecruiterBillingForm employees={employees}/>
-             <button style={{margin:"auto"}} className='daily-tr-btn' onClick={cancel}>Cancel</button>
-        </div>
-        )}
-       </>
     );
 };
 

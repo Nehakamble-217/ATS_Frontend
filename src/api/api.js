@@ -6,18 +6,6 @@ export const addEmployee = (employee) => {
   return axios.post(`${API_BASE_URL}/add-payroll-details`, employee);
 };
 
-export const getAllEmployees = () => {
-  return axios.get(`${API_BASE_URL}/findAll-all-payrolls`).catch((error) => {
-    if (error.response) {
-      console.error("Error response:", error.response.data);
-    } else if (error.request) {
-      console.error("Error request:", error.request);
-    } else {
-      console.error("Error message:", error.message);
-    }
-    throw error;
-  });
-};
 
 export const getPasswordFromDB = (id) =>
   axios.post(`${API_BASE_URL}/fetch-pass/${id}`);
