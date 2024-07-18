@@ -199,7 +199,7 @@ const ShortListedCandidates = ({ closeComponents, viewUpdatedPage }) => {
     if (selectedEmployeeId && selectedRows.length > 0) {
 
 
-      const url = `http://192.168.1.46:9090/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
+      const url = `http://192.168.1.46:9090/api/ats/157industries/updateEmployeeIds`; 
 
       const requestData = {
         employeeId: selectedEmployeeId,

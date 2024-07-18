@@ -126,9 +126,6 @@ const UpdateEmployee = ({id,userType}) => {
           }
 
 
-
-
-
            // Assuming data is an array of responses
           setFormData((prevFormData) => ({
             ...prevFormData,

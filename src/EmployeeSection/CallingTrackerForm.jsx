@@ -73,11 +73,10 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     availabilityForInterview: "",
     interviewTime: "",
     finalStatus: "",
+    resume: null,
   };
 
-  const [callingTracker, setCallingTracker] = useState(
-    initialCallingTrackerState
-  );
+  const [callingTracker, setCallingTracker] = useState(initialCallingTrackerState);
   const [lineUpData, setLineUpData] = useState(initialLineUpState);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [resumeUploaded, setResumeUploaded] = useState(false);
@@ -87,9 +86,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
-
-  const [isOtherEducationSelected, setIsOtherEducationSelected] =
-    useState(false);
+  const [isOtherEducationSelected, setIsOtherEducationSelected] = useState(false);
   const [formData, setFormData] = useState();
   const [candidateName, setCandidateName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -100,6 +97,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     contactNumber: "",
     sourceName: "",
   });
+
   useEffect(() => {
     fetchRecruiterName();
     fetchRequirementOptions();
@@ -138,16 +136,15 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
   const fetchRecruiterName = async () => {
     try {
-      const response = await axios.get(
-        `http://192.168.1.46:9090/api/ats/157industries/employeeName/${employeeId}`
-      );
+      const response = await axios.get(`http://localhost:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`);
       const { data } = response;
-      setCallingTracker((prevState) => ({
+      setCallingTracker(prevState => ({
         ...prevState,
+        recruiterName: data
       }));
-      setLineUpData((prevState) => ({
+      setLineUpData(prevState => ({
         ...prevState,
-        recruiterName: data,
+        recruiterName: data
       }));
     } catch (error) {
       console.error("Error fetching employee name:", error);
@@ -157,9 +154,9 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.46:9090/api/ats/157industries/company-details`
+        `http://localhost:9090/api/ats/157industries/company-details`
       );
-      const { data } = response;  
+      const { data } = response;
       setRequirementOptions(data);
     } catch (error) {
       console.error("Error fetching requirement options:", error);
@@ -203,13 +200,12 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
       if (callingTracker.selectYesOrNo === "Interested") {
         dataToUpdate.lineUp = lineUpData;
-
         message = "In Calling & Line Up Data Added";
       } else {
         message = "Only Calling data added";
       }
       const response = await axios.post(
-        `http://192.168.1.46:9090/api/ats/157industries/calling-tracker`,
+        `http://localhost:9090/api/ats/157industries/calling-tracker/Recruiters`,
         dataToUpdate
       );
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
@@ -219,7 +215,6 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
         onsuccessfulDataAdditions(false);
       }
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions End LineNo:-223 Date:-01/07
-
       setFormSubmitted(true);
       // handleDataAdditionSuccess();
       setTimeout(() => {
@@ -359,13 +354,16 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     }
   };
 
-  const handleResumeFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setLineUpData({ ...lineUpData, resume: file });
-      setResumeUploaded(true);
-    }
-  };
+ const handleResumeFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setLineUpData(prevState => ({
+      ...prevState,
+      resume: file // Ensure this matches the property name expected by your backend
+    }));
+    setResumeUploaded(true);
+  }
+};
 
   const handleRequirementChange = (e) => {
     const { value } = e.target;
@@ -464,9 +462,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                     type="text"
                     name="candidateName"
                     value={callingTracker.candidateName}
-                    className={`plain-input ${
-                      errors.candidateName ? "is-invalid" : ""
-                    }`}
+                    className={`plain-input ${errors.candidateName ? "is-invalid" : ""
+                      }`}
                     onChange={handleChange}
                     required={callingTracker.selectYesOrNo !== "Interested"}
                     placeholder="Enter Candidate Name"
@@ -541,9 +538,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                 <label>Source Name</label>
                 <div className="calling-tracker-field-sub-div">
                   <select
-                    className={`plain-input ${
-                      errors.sourceName ? "is-invalid" : ""
-                    }`}
+                    className={`plain-input ${errors.sourceName ? "is-invalid" : ""
+                      }`}
                     name="sourceName"
                     value={callingTracker.sourceName}
                     onChange={handleChange}
@@ -1220,6 +1216,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
                 <div className="calling-tracker-field-sub-div">
                   <input
                     type="file"
+                    name="resume"
                     onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="plain-input"

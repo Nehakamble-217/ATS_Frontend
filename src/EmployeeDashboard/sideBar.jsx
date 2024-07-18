@@ -28,7 +28,6 @@ function Sidebar({
   toggleInterviewDate,
   toggleIncentive,
   toggleAttendance,
-  toggleAllMasterSheet,
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
   toggleReports,
@@ -104,7 +103,6 @@ function Sidebar({
     callback(e);
   };
 
-  // console.log(userGroup);
   const isCandidateSectionActive = [
     "selfCalling",
     "lineUp",
@@ -178,7 +176,7 @@ function Sidebar({
                     >
                       <a href="#">
                         <i
-                          class="fa-solid fa-user-plus"
+                          className="fa-solid fa-user-plus"
                           style={{ color: "gray" }}
                         ></i>
                         <span className="sidebar-text">Add Candidate</span>
@@ -591,15 +589,7 @@ function Sidebar({
 
                       ) : null}
 
-                      <li
-                        onClick={toggleAllMasterSheet}
-                        style={{ marginLeft: "10px" }}
-                      >
-                        <a href="#">
-                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                          <span className="sidebar-text">All Master Sheet</span>
-                        </a>
-                      </li>
+      
                       <li
                         onClick={toggleEmployeeDetails}
                         style={{ marginLeft: "10px" }}
