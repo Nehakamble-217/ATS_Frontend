@@ -5,7 +5,7 @@
 .table-container {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  padding-top: 10px;
 }
 .table-header {
   background-color: #ffcb9b;

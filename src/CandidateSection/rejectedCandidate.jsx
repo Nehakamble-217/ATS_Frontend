@@ -5,6 +5,7 @@ import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
+import * as XLSX from "xlsx";
 // SwapnilRokade_RejectedCandidate_ModifyFilters_11/07
 const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showRejectedData, setShowRejectedData] = useState([]);
@@ -31,6 +32,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [showExportConfirmation, setShowExportConfirmation] = useState(false);
   let [color, setColor] = useState("#ffcb9b");
 
   const { employeeId } = useParams();
@@ -92,18 +94,6 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
     setFilterOptions(options);
   }, [filteredCallingList]);
 
-  useEffect(() => {
-    // console.log("Selected Filters:", selectedFilters);
-  }, [selectedFilters]);
-
-  useEffect(() => {
-    // console.log("Filtered Calling List:", filteredCallingList);
-  }, [filteredCallingList]);
-
-  useEffect(() => {
-    setFilterOptions(limitedOptions);
-  }, [callingList]);
-
   const fetchRejectedData = async () => {
     try {
       const response = await fetch(
@@ -115,6 +105,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       setCallingList(data);
       setFilteredCallingList(data);
       setLoading(false)
+      console.log(data);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
       setLoading(false)
@@ -481,6 +472,150 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   };
   //Name:-Akash Pawar Component:-RejectedCandidate Subcategory:-ResumeViewButton(added) End LineNo:-356 Date:-02/07
 
+
+ //Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
+ const handleExportToExcel = () => {
+  // Define columns to include in export
+  const columnsToInclude = [
+    "No.",
+    "Date",
+    "Time",
+    "Candidate's Id",
+    "Recruiter's Name",
+    "Candidate's Name",
+    "Candidate's Email",
+    "Contact Number",
+    "Whatsapp Number",
+    "Source Name",
+    "Job Designation",
+    "Job Id",
+    "Applying Company",
+    "Communication Rating",
+    "Current Location",
+    "Full Address",
+    "Recruiter's Incentive",
+    "Interested or Not",
+    "Current Company",
+    "Total Experience",
+    "Relevant Experience",
+    "Current CTC",
+    "Expected CTC",
+    "Date Of Birth",
+    "Gender",
+    "Education",
+    "Year Of Passing",
+    "Call Summary",
+    "Holding Any Offer",
+    "Offer Letter Message",
+    "Notice Period",
+    "Message For Team Leader",
+    "Availability For Interview",
+    "Interview Time",
+    "Final Status",
+  ];
+
+  // Clone the data and map to match columnsToInclude order
+  const dataToExport = filteredCallingList.map((item, index) => {
+    // Create a filtered item without the 'Resume' field
+    const filteredItem = {
+      "No.": index + 1,
+      Date: item.date || "-",
+      Time: item.candidateAddedTime || "-",
+      "Candidate's Id": item.candidateId || "-",
+      "Recruiter's Name": item.recruiterName || "-",
+      "Candidate's Name": item.candidateName || "-",
+      "Candidate's Email": item.candidateEmail || "-",
+      "Contact Number": item.contactNumber || "-",
+      "Whatsapp Number": item.alternateNumber || "-",
+      "Source Name": item.sourceName || "-",
+      "Job Designation": item.jobDesignation || "-",
+      "Job Id": item.requirementId || "-",
+      "Applying Company": item.requirementCompany || "-",
+      "Communication Rating": item.communicationRating || "-",
+      "Current Location": item.currentLocation || "-",
+      "Full Address": item.fullAddress || "-",
+      "Recruiter's Incentive": item.incentive || "-",
+      "Interested or Not": item.selectYesOrNo || "-",
+      "Current Company": item.companyName || "-",
+      "Total Experience": item.experienceYear||"-",
+      "Relevant Experience": item.relevantExperience  || "-",
+      "Current CTC": `${item.currentCTCLakh || "0"} Lakh ${
+        item.currentCTCThousand || "0"
+      } Thousand`,
+      "Expected CTC": `${item.expectedCTCLakh || "0"} Lakh ${
+        item.expectedCTCThousand || "0"
+      } Thousand`,
+      "Date Of Birth": item.dateOfBirth || "-",
+      Gender: item.gender || "-",
+      Education: item.qualification || "-",
+      "Year Of Passing": item.yearOfPassing || "-",
+      "Call Summary": item.feedBack || "-",
+      "Holding Any Offer": item.holdingAnyOffer || "-",
+      "Offer Letter Message": item.offerLetterMsg || "-",
+      "Notice Period": item.noticePeriod || "-",
+      "Message For Team Leader": item.msgForTeamLeader || "-",
+      "Availability For Interview":item.availabilityForInterview || "-",
+      "Interview Time": item.interviewTime || "-",
+      "Final Status": item.finalStatus || "-",
+    };
+
+    return filteredItem;
+  });
+
+  // Define sheet name and create worksheet
+  const ws = XLSX.utils.json_to_sheet(dataToExport, {
+    header: columnsToInclude,
+  });
+
+  // Add conditional formatting for header row
+  const headerRange = XLSX.utils.decode_range(ws["!ref"]);
+  for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+    const cell = ws[XLSX.utils.encode_cell({ r: headerRange.s.r, c: C })];
+    if (cell) {
+      cell.s = {
+        font: {
+          bold: true,
+          color: { rgb: "000000" },
+          sz: 20,
+        },
+        fill: {
+          patternType: "solid",
+          fgColor: { rgb: "FF0000" }, // Red background
+        },
+      };
+    }
+  }
+
+  // Save the Excel file
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "RejectedCandidates List");
+  XLSX.writeFile(wb, "RejectedCandidates_list.xlsx");
+};
+
+const showPopup = () => {
+  setShowExportConfirmation(true);
+  document.querySelector(".calling-list-container").classList.add("blurred");
+};
+
+const hidePopup = () => {
+  setShowExportConfirmation(false);
+  document
+    .querySelector(".calling-list-container")
+    .classList.remove("blurred");
+};
+
+const confirmExport = () => {
+  setShowExportConfirmation(false);
+  handleExportToExcel();
+  hidePopup();
+};
+
+const cancelExport = () => {
+  hidePopup();
+};
+//Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
+
+
   return (
     <div className="calling-list-container">
       {loading ? (
@@ -512,6 +647,33 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                   padding: "10px",
                 }}
               >
+
+<div>
+                    <button className="lineUp-share-btn" onClick={showPopup}>
+                      Create Excel
+                    </button>
+
+                    {showExportConfirmation && (
+                      <div className="popup-containers">
+                        <p className="confirmation-texts">
+                          Are you sure you want to generate the Excel file?
+                        </p>
+                        <button
+                          onClick={confirmExport}
+                          className="buttoncss-ctn"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={cancelExport}
+                          className="buttoncss-ctn"
+                        >
+                          No
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
                 {showShareButton ? (
                   <button
                     className="rejectedcan-share-btn"
@@ -663,7 +825,6 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                     <th className="attendanceheading">Qualification</th>
                     <th className="attendanceheading">Year Of Passing</th>
                     <th className="attendanceheading">Extra Certification</th>
-                    <th className="attendanceheading">Feed Back</th>
                     <th className="attendanceheading">Holding Any Offer</th>
                     <th className="attendanceheading">Offer Letter Msg</th>
                     <th className="attendanceheading">Resume</th>
@@ -1193,6 +1354,18 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           <div className="tooltip">
                             <span className="tooltiptext">
                               {item.finalStatus}
+                            </span>
+                          </div>
+                        </td>
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                         
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              
                             </span>
                           </div>
                         </td>

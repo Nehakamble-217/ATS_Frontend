@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import HashLoader from "react-spinners/HashLoader";
+import * as XLSX from "xlsx";
 
 const CallingList = ({
   updateState,
@@ -36,6 +37,7 @@ const CallingList = ({
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [showExportConfirmation, setShowExportConfirmation] = useState(false);
 
   //akash_pawar_selfCallingTracker_ShareFunctionality_16/07_41
   const [selectedTeamLeader, setSelectedTeamLeader] = useState({
@@ -54,17 +56,15 @@ const CallingList = ({
 
   const { employeeId } = useParams();
   const { userType } = useParams();
-
   const employeeIdw = parseInt(employeeId);
-  // console.log(employeeIdw + "emp @@@@ id");
-  // console.log(employeeId + "emp 1111 id");
-
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
 
   const navigator = useNavigate();
   // SwapnilRokade_SelfCallingTracker_ModifyFilters_47to534_11/07
+  // SwapnilRokade_SelfCallingTracker_Adding date and jobDescription filter option_18/07
   const limitedOptions = [
+    "date",
     "candidateId",
     "recruiterName",
     "candidateName",
@@ -72,12 +72,11 @@ const CallingList = ({
     "contactNumber",
     "alternateNumber",
     "sourceName",
-    "designation",
+    "jobDesignation",
     "jobId",
     "applyingCompany",
     "communicationRating",
     "currentLocation",
-    "fullAddress",
     "callingFeedback",
     "selectYesOrNo",
   ];
@@ -146,18 +145,6 @@ const CallingList = ({
     );
     setFilterOptions(options);
   }, [filteredCallingList]);
-
-  useEffect(() => {
-    console.log("Selected Filters:", selectedFilters);
-  }, [selectedFilters]);
-
-  useEffect(() => {
-    console.log("Filtered Calling List:", filteredCallingList);
-  }, [filteredCallingList]);
-
-  useEffect(() => {
-    setFilterOptions(limitedOptions);
-  }, [callingList]);
 
   useEffect(() => {
     filterData();
@@ -462,8 +449,113 @@ const CallingList = ({
   // After share btn click ->close ,select-all, and forword btn
   // 01/07/2024
 
+
+   //Swapnil_Rokade_SelfCallingTracker_columnsToInclude_columnsToExclude_17/07/2024//
+   const handleExportToExcel = () => {
+    // Define columns to include in export
+    const columnsToInclude = [
+      "No.",
+    "Date & Time",
+    "Candidate's Id",
+    "Recruiter's Name",
+    "Candidate's Name",
+    "Candidate's Email",
+    "Contact Number",
+    "Whatsapp Number",
+    "Source Name",
+    "Designation",
+    "Job Id",
+    "Applying Company",
+    "Communication Rating",
+    "Current Location",
+    "Full Address",
+    "Calling Remark",
+    "Recruiter's Incentive",
+    "Interested or Not"
+    ];
+
+    // Clone the data and map to match columnsToInclude order
+    const dataToExport = filteredCallingList.map((item, index) => {
+      // Create a filtered item without the 'Resume' field
+      const filteredItem = {
+       "No.": index + 1,
+      "Date & Time": `${item.date} ${item.candidateAddedTime}` || "-",
+      "Candidate's Id": item.candidateId || "-",
+      "Recruiter's Name": item.recruiterName || "-",
+      "Candidate's Name": item.candidateName || "-",
+      "Candidate's Email": item.candidateEmail || "-",
+      "Contact Number": item.contactNumber || "-",
+      "Whatsapp Number": item.alternateNumber || "-",
+      "Source Name": item.sourceName || "-",
+      "Designation": item.jobDesignation || "-",
+      "Job Id": item.requirementId || "-",
+      "Applying Company": item.requirementCompany || "-",
+      "Communication Rating": item.communicationRating || "-",
+      "Current Location": item.currentLocation || "-",
+      "Full Address": item.fullAddress || "-",
+      "Calling Remark": item.callingFeedback || "-",
+      "Recruiter's Incentive": item.incentive || "-",
+     "Interested or Not": item.selectYesOrNo || "-",
+      };
+
+      return filteredItem;
+    });
+
+    // Define sheet name and create worksheet
+    const ws = XLSX.utils.json_to_sheet(dataToExport, {
+      header: columnsToInclude,
+    });
+
+    // Add conditional formatting for header row
+    const headerRange = XLSX.utils.decode_range(ws["!ref"]);
+    for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+      const cell = ws[XLSX.utils.encode_cell({ r: headerRange.s.r, c: C })];
+      if (cell) {
+        cell.s = {
+          font: {
+            bold: true,
+            color: { rgb: "000000" },
+            sz: 20,
+          },
+          fill: {
+            patternType: "solid",
+            fgColor: { rgb: "FF0000" }, // Red background
+          },
+        };
+      }
+    }
+
+    // Save the Excel file
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Calling List");
+    XLSX.writeFile(wb, "calling_list.xlsx");
+  };
+
+  const showPopup = () => {
+    setShowExportConfirmation(true);
+    document.querySelector('.calling-list-container').classList.add('blurred');
+  };
+
+  const hidePopup = () => {
+    setShowExportConfirmation(false);
+    document.querySelector('.calling-list-container').classList.remove('blurred');
+  };
+
+  const confirmExport = () => {
+    setShowExportConfirmation(false);
+    handleExportToExcel();
+    hidePopup();
+  };
+
+  const cancelExport = () => {
+    hidePopup();
+  };
+//Swapnil_Rokade_SelfCallingTracker_columnsToInclude_columnsToExclude_17/07/2024//
+
+
+
   return (
-    <div className="App-after">
+    <div className="calling-list-container">
       {loading ? (
         <div className="register">
           <HashLoader
@@ -498,6 +590,33 @@ const CallingList = ({
                     padding: "10px",
                   }}
                 >
+                  {/* Swapnil_Rokade_SelfCallingTracker_CreateExcel_17/07/2024 */}
+                  <div>
+                    <button className="lineUp-share-btn" onClick={showPopup}>
+                      Create Excel
+                    </button>
+
+                    {showExportConfirmation && (
+                      <div className="popup-containers">
+                        <p className="confirmation-texts">
+                          Are you sure you want to generate the Excel file?
+                        </p>
+                        <button
+                          onClick={confirmExport}
+                          className="buttoncss-ctn"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={cancelExport}
+                          className="buttoncss-ctn"
+                        >
+                          No
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
                   {showShareButton ? (
                     <button
                       className="callingList-share-btn"
@@ -1092,50 +1211,6 @@ const CallingList = ({
               onSuccess={handleUpdateSuccess}
               onCancel={() => setShowUpdateCallingTracker(true)}
             />
-          )}
-          {showFilterSection && (
-            <div className="filter-section">
-              <h3>Filter Options</h3>
-              <div className="filter-options-container">
-                {filterOptions.map((option) => {
-                  const uniqueValues = Array.from(
-                    new Set(callingList.map((item) => item[option]))
-                  ).slice(0, 5);
-                  return (
-                    <div key={option} className="selfcalling-filter-option">
-                      <button
-                        className="callingList-filter-btn"
-                        onClick={toggleselectedFilters}
-                      >
-                        {option}
-                      </button>
-                      {showselectedFilters && (
-                        <>
-                          {uniqueValues.map((value) => (
-                            <label
-                              key={value}
-                              className="selfcalling-filter-value"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={
-                                  selectedFilters[option]?.includes(value) ||
-                                  false
-                                }
-                                onChange={() =>
-                                  handleFilterSelect(option, value)
-                                }
-                              />
-                              {value}
-                            </label>
-                          ))}
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           )}
         </>
       )}
