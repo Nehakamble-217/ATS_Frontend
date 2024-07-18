@@ -7,6 +7,7 @@ import * as XLSX from "xlsx";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({
   updateState,
@@ -16,7 +17,6 @@ const LineUpList = ({
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
   const employeeIdnew = parseInt(employeeId);
-  console.log(employeeId);
 
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
@@ -36,6 +36,7 @@ const LineUpList = ({
   const [loading, setLoading] = useState(true); // Add loading state
   const [fetchTeamleader, setFetchTeamleader] = useState([]); //akash_pawar_LineUpList_ShareFunctionality_16/07_36
   const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]); //akash_pawar_LineUpList_ShareFunctionality_16/07_37
+  const [fetchAllManager, setFetchAllManager] = useState([]); //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_34
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -44,11 +45,16 @@ const LineUpList = ({
   const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [count, setCount] = useState(0);
   const navigator = useNavigate();
+  const [isDataSending, setIsDataSending] = useState(false);
 
-  //akash_pawar_LineUpList_ShareFunctionality_16/07_47
-  const [selectedTeamLeader, setSelectedTeamLeader] = useState({
-    teamLeaderId: "",
-    teamLeaderJobRole: "",
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_48
+  const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
+    oldTeamLeaderId: "",
+    oldTeamLeaderJobRole: "",
+  });
+  const [newselectedTeamLeader, setNewSelectedTeamLeader] = useState({
+    newTeamLeaderId: "",
+    newTeamLeaderJobRole: "",
   });
 
   const [selectedRecruiters, setSelectedRecruiters] = useState({
@@ -56,7 +62,16 @@ const LineUpList = ({
     recruiterId: "",
     recruiterJobRole: "",
   });
-  //akash_pawar_LineUpList_ShareFunctionality_16/07_58
+
+  const [oldSelectedManager, setOldSelectedManager] = useState({
+    oldManagerId: "",
+    oldManagerJobRole: "",
+  });
+  const [newSelectedManager, setNewSelectedManager] = useState({
+    newManagerId: "",
+    newManagerJobRole: "",
+  });
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_71
 
   const limitedOptions = [
     "alternateNumber",
@@ -104,14 +119,7 @@ const LineUpList = ({
   ];
   const { userType } = useParams();
 
-  useEffect(() => {}, [
-    selectedFilters,
-    filteredCallingList,
-    callingList,
-    employeeIdnew,
-  ]);
-
-  //akash_pawar_LineUpList_ShareFunctionality_16/07_111
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_128
   const fetchCallingTrackerData = async () => {
     const url = `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
 
@@ -132,33 +140,27 @@ const LineUpList = ({
   };
 
   useEffect(() => {
-    if (userType === "Manager") {
-      fetchTeamLeader();
-    }
     fetchCallingTrackerData();
-  }, [selectedFilters, filteredCallingList, callingList, employeeIdnew]);
-
-  useEffect(() => {
-    fetch(
-      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/870/Manager`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setCallingList(data);
-        setFilteredCallingList(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        // alert("Error For fetching")
-        setLoading(false);
-      });
   }, [employeeIdnew]);
 
-  const fetchTeamLeader = async () => {
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_144
+  const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${employeeId}`
+        `http://192.168.1.46:9090/api/ats/157industries/get-all-managers`
+      );
+      const data = await response.json();
+      setFetchAllManager(data);
+    } catch (error) {
+      console.error("Error fetching shortlisted data:", error);
+    }
+  };
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_156
+
+  const fetchTeamLeader = async (empId) => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -178,14 +180,15 @@ const LineUpList = ({
     }
   };
   useEffect(() => {
-    if (selectedTeamLeader.teamLeaderId != "") {
-      fetchRecruiters(selectedTeamLeader.teamLeaderId);
-    }
-    if (userType === "TeamLeader") {
+    if (userType === "SuperUser") {
+      fetchManager();
+    } else if (userType === "Manager") {
+      fetchTeamLeader(employeeId);
+    } else {
       fetchRecruiters(employeeId);
     }
-  }, [selectedTeamLeader]);
-  //akash_pawar_LineUpList_ShareFunctionality_16/07_168
+  }, []);
+  //akash_pawar_LineUpList_ShareFunctionality_16/07_202
 
   useEffect(() => {
     const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
@@ -193,18 +196,6 @@ const LineUpList = ({
     );
     setFilterOptions(options);
   }, [filteredCallingList]);
-
-  useEffect(() => {
-    // console.log("Selected Filters:", selectedFilters);
-  }, [selectedFilters]);
-
-  useEffect(() => {
-    // console.log("Filtered Calling List:", filteredCallingList);
-  }, [filteredCallingList]);
-
-  useEffect(() => {
-    setFilterOptions(limitedOptions);
-  }, [callingList]);
 
   useEffect(() => {
     filterData();
@@ -217,9 +208,8 @@ const LineUpList = ({
 
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
-
     fetch(
-      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/870/Manager`
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -403,9 +393,6 @@ const LineUpList = ({
     setShowSearchBar(false);
     setShowFilterSection(!showFilterSection);
   };
-  // const toggleselectedFilters = () => {
-  //   setShowselectedFilters(!showselectedFilters);
-  // };
 
   const getSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
@@ -416,11 +403,6 @@ const LineUpList = ({
       );
     }
     return null;
-  };
-
-  const handleShortlistedShare = (e) => {
-    e.preventDefault();
-    setShowShareButton(false);
   };
 
   const handleSelectAll = () => {
@@ -443,34 +425,47 @@ const LineUpList = ({
     });
   };
 
+  //akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_460
   const forwardSelectedCandidate = (e) => {
     e.preventDefault();
-    if (selectedRows.length > 0) {
+    if (selectedRows.length > 0 && userType === "TeamLeader") {
+      setShowForwardPopup(true);
+    }
+    if (userType === "SuperUser") {
+      setShowForwardPopup(true);
+    }
+    if (userType === "Manager") {
       setShowForwardPopup(true);
     }
   };
+  //akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_472
 
-  //akash_pawar_LineUpList_ShareFunctionality_16/07_431
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_475
   const handleShare = async () => {
+    setIsDataSending(true);
+    let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
+    let requestData;
     if (
-      (selectedRecruiters.recruiterId != "" ||
-        selectedTeamLeader.teamLeaderId != "") &&
+      userType === "TeamLeader" &&
+      selectedRecruiters.recruiterId != "" &&
       selectedRows.length > 0
     ) {
-      const url = `http://192.168.1.46:9090/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
-      let requestData;
-      if (selectedRecruiters.recruiterId != "") {
-        requestData = {
-          employeeId: selectedRecruiters.recruiterId,
-          candidateIds: selectedRows,
-        };
-      } else {
-        requestData = {
-          employeeId: selectedTeamLeader.teamLeaderId,
-          candidateIds: selectedRows,
-        };
-      }
-
+      requestData = {
+        employeeId: parseInt(selectedRecruiters.recruiterId),
+        candidateIds: selectedRows,
+      };
+    } else if (userType === "Manager") {
+      requestData = {
+        currentTeamLeaderId: parseInt(oldselectedTeamLeader.oldTeamLeaderId),
+        newTeamLeaderId: parseInt(newselectedTeamLeader.newTeamLeaderId),
+      };
+    } else {
+      requestData = {
+        currentManagerId: parseInt(oldSelectedManager.oldManagerId),
+        newManagerId: parseInt(newSelectedManager.newManagerId),
+      };
+    }
+    try {
       const requestOptions = {
         method: "PUT",
         headers: {
@@ -479,34 +474,48 @@ const LineUpList = ({
         },
         body: JSON.stringify(requestData),
       };
-
-      try {
-        const response = await fetch(url, requestOptions);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        // Handle success response
-        console.log("Candidates forwarded successfully!");
-        fetchCallingTrackerData();
-        onSuccessAdd(true);
-        setShowForwardPopup(false); // Close the modal or handle any further UI updates
-        setShowShareButton(true);
-        setSelectedRows([]);
-        setSelectedRecruiters({
-          index: "",
-          recruiterId: "",
-          recruiterJobRole: "",
-        });
-        setSelectedTeamLeader({ teamLeaderId: "", teamLeaderJobRole: "" });
-        // Optionally, you can fetch updated data after successful submission
-        // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
-      } catch (error) {
-        console.error("Error while forwarding candidates:", error);
-        // Handle error scenarios or show error messages to the user
+      const response = await fetch(url, requestOptions);
+      if (!response.ok) {
+        setIsDataSending(false);
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      // Handle success response
+      setIsDataSending(false);
+      console.log("Candidates forwarded successfully!");
+      fetchCallingTrackerData();
+      onSuccessAdd(true);
+      setShowForwardPopup(false); // Close the modal or handle any further UI updates
+      setShowShareButton(true);
+      setSelectedRows([]);
+      setSelectedRecruiters({
+        index: "",
+        recruiterId: "",
+        recruiterJobRole: "",
+      });
+      setOldSelectedTeamLeader({
+        oldTeamLeaderId: "",
+        oldTeamLeaderJobRole: "",
+      });
+      setNewSelectedTeamLeader({
+        newTeamLeaderId: "",
+        newTeamLeaderJobRole: "",
+      });
+      setOldSelectedManager({
+        oldManagerId: "",
+        oldManagerJobRole: "",
+      });
+      setNewSelectedManager({
+        newManagerId: "",
+        newManagerJobRole: "",
+      });
+      // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
+    } catch (error) {
+      setIsDataSending(false);
+      console.error("Error while forwarding candidates:", error);
+      // Handle error scenarios or show error messages to the user
     }
   };
-  //akash_pawar_LineUpList_ShareFunctionality_16/07_486
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_546
 
   //Name:-Akash Pawar Component:-ShortListedCandidate Subcategory:-ResumeViewButton(added) start LineNo:-165 Date:-02/07
   const convertToDocumentLink = (byteCode, fileName) => {
@@ -732,38 +741,45 @@ const LineUpList = ({
                   >
                     Create Excel
                   </button>
-
-                  {showShareButton ? (
-                    <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
-                    </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-close-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                          setAllSelected(false);
-                        }}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="lineUp-share-select-btn"
-                        onClick={handleSelectAll}
-                      >
-                        {allSelected ? "Deselect All" : "Select All"}
-                      </button>
-                      <button
-                        className="lineUp-forward-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
+                  {userType !== "Recruiters" && (
+                    <div>
+                      {showShareButton ? (
+                        <button
+                          className="lineUp-share-btn"
+                          onClick={() => setShowShareButton(false)}
+                        >
+                          Share
+                        </button>
+                      ) : (
+                        <div style={{ display: "flex", gap: "5px" }}>
+                          <button
+                            className="lineUp-share-close-btn"
+                            onClick={() => {
+                              setShowShareButton(true);
+                              setSelectedRows([]);
+                              setAllSelected(false);
+                            }}
+                          >
+                            Close
+                          </button>
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_793 */}
+                          {userType === "TeamLeader" && (
+                            <button
+                              className="callingList-share-btn"
+                              onClick={handleSelectAll}
+                            >
+                              {allSelected ? "Deselect All" : "Select All"}
+                            </button>
+                          )}
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_801 */}
+                          <button
+                            className="lineUp-forward-btn"
+                            onClick={forwardSelectedCandidate}
+                          >
+                            Forward
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
                   <button
@@ -835,7 +851,7 @@ const LineUpList = ({
                 <table className="attendance-table">
                   <thead>
                     <tr className="attendancerows-head">
-                      {!showShareButton ? (
+                      {!showShareButton && userType === "TeamLeader" ? (
                         <th className="attendanceheading">
                           <input
                             type="checkbox"
@@ -914,7 +930,7 @@ const LineUpList = ({
                   <tbody>
                     {filteredCallingList.map((item, index) => (
                       <tr key={item.candidateId} className="attendancerows">
-                        {!showShareButton ? (
+                        {!showShareButton && userType === "TeamLeader" ? (
                           <td className="tabledata">
                             <input
                               type="checkbox"
@@ -923,7 +939,7 @@ const LineUpList = ({
                             />
                           </td>
                         ) : null}
-                  
+
                         <td className="tabledata">{index + 1}</td>
 
                         <td
@@ -1479,82 +1495,183 @@ const LineUpList = ({
                             backgroundColor: "#f2f2f2",
                           }}
                         >
-                          {/* akash_pawar_selfCallingTracker_ShareFunctionality_16/07_1323 */}
+                          {/* akash_pawar_LineUpList_ShareFunctionality_17/07_1524 */}
                           <div className="accordion">
-                            {fetchTeamleader &&
-                              userType === "Manager" &&
-                              fetchTeamleader.map((teamleaders) => (
-                                <div className="accordion-item">
-                                  <div className="accordion-header">
-                                    <label
-                                      htmlFor={`${teamleaders.teamLeaderId}`}
-                                      className="accordion-title"
+                            {fetchAllManager && userType === "SuperUser" && (
+                              <div className="manager-data-transfer">
+                                <div className="old-manager-data">
+                                  <center>
+                                    <h1>Old Managers</h1>
+                                  </center>
+                                  {fetchAllManager.map((managers) => (
+                                    <div
+                                      className="accordion-item-SU"
+                                      key={managers.managerId}
                                     >
-                                      <input
-                                        type="radio"
-                                        name="teamLeaders"
-                                        id={`${teamleaders.teamLeaderId}`}
-                                        value={teamleaders.teamLeaderId}
-                                        checked={
-                                          selectedTeamLeader.teamLeaderId ===
-                                          teamleaders.teamLeaderId
-                                        }
-                                        onChange={() =>
-                                          setSelectedTeamLeader({
-                                            teamLeaderId:
-                                              teamleaders.teamLeaderId,
-                                            teamLeaderJobRole:
-                                              teamleaders.jobRole,
-                                          })
-                                        }
-                                      />{" "}
-                                      {teamleaders.teamLeaderName}
-                                    </label>
-                                  </div>
-                                  {selectedTeamLeader.teamLeaderId ===
-                                    teamleaders.teamLeaderId && (
-                                    <div className="accordion-content">
-                                      <form>
-                                        {recruiterUnderTeamLeader &&
-                                          recruiterUnderTeamLeader.map(
-                                            (recruiters) => (
-                                              <div className="form-group">
-                                                <label
-                                                  htmlFor={
-                                                    recruiters.employeeId
-                                                  }
-                                                >
-                                                  <input
-                                                    type="radio"
-                                                    id={recruiters.employeeId}
-                                                    name="recruiter"
-                                                    value={
-                                                      recruiters.employeeId
-                                                    }
-                                                    checked={
-                                                      selectedRecruiters.recruiterId ===
-                                                      recruiters.employeeId
-                                                    }
-                                                    onChange={() =>
-                                                      setSelectedRecruiters({
-                                                        index: 1,
-                                                        recruiterId:
-                                                          recruiters.employeeId,
-                                                        recruiterJobRole:
-                                                          recruiters.jobRole,
-                                                      })
-                                                    }
-                                                  />{" "}
-                                                  {recruiters.employeeName}
-                                                </label>
-                                              </div>
-                                            )
-                                          )}
-                                      </form>
+                                      <div className="accordion-header-SU">
+                                        <label
+                                          htmlFor={`old-${managers.managerId}`}
+                                          className="accordion-title"
+                                        >
+                                          <input
+                                            type="radio"
+                                            name="oldmanagers"
+                                            id={`old-${managers.managerId}`}
+                                            value={managers.managerId}
+                                            checked={
+                                              oldSelectedManager.oldManagerId ===
+                                              managers.managerId
+                                            }
+                                            onChange={() =>
+                                              setOldSelectedManager({
+                                                oldManagerId:
+                                                  managers.managerId,
+                                                oldManagerJobRole:
+                                                  managers.managerJobRole,
+                                              })
+                                            }
+                                          />{" "}
+                                          {managers.managerName}
+                                        </label>
+                                      </div>
                                     </div>
-                                  )}
+                                  ))}
                                 </div>
-                              ))}
+
+                                <div className="new-manager-data">
+                                  <center>
+                                    <h1>New Managers</h1>
+                                  </center>
+                                  {fetchAllManager
+                                    .filter(
+                                      (item) =>
+                                        item.managerId !==
+                                        oldSelectedManager.oldManagerId
+                                    )
+                                    .map((managers) => (
+                                      <div
+                                        className="accordion-item-SU"
+                                        key={managers.managerId}
+                                      >
+                                        <div className="accordion-header-SU">
+                                          <label
+                                            htmlFor={`new-${managers.managerId}`}
+                                            className="accordion-title"
+                                          >
+                                            <input
+                                              type="radio"
+                                              name="newmanagers"
+                                              id={`new-${managers.managerId}`}
+                                              value={managers.managerId}
+                                              checked={
+                                                newSelectedManager.newManagerId ===
+                                                managers.managerId
+                                              }
+                                              onChange={() =>
+                                                setNewSelectedManager({
+                                                  newManagerId:
+                                                    managers.managerId,
+                                                  newManagerJobRole:
+                                                    managers.managerJobRole,
+                                                })
+                                              }
+                                            />{" "}
+                                            {managers.managerName}
+                                          </label>
+                                        </div>
+                                      </div>
+                                    ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {fetchTeamleader && userType === "Manager" && (
+                              <div className="teamleader-data-transfer">
+                                <div className="old-teamleader-data">
+                                  <center>
+                                    <h1>Old Team Leaders</h1>
+                                  </center>
+                                  {fetchTeamleader.map((teamleaders) => (
+                                    <div
+                                      className="accordion-item-M"
+                                      key={teamleaders.teamLeaderId}
+                                    >
+                                      <div className="accordion-header-M">
+                                        <label
+                                          htmlFor={`old-${teamleaders.teamLeaderId}`}
+                                          className="accordion-title"
+                                        >
+                                          <input
+                                            type="radio"
+                                            name="oldteamleaders"
+                                            id={`old-${teamleaders.teamLeaderId}`}
+                                            value={teamleaders.teamLeaderId}
+                                            checked={
+                                              oldselectedTeamLeader.oldTeamLeaderId ===
+                                              teamleaders.teamLeaderId
+                                            }
+                                            onChange={() =>
+                                              setOldSelectedTeamLeader({
+                                                oldTeamLeaderId:
+                                                  teamleaders.teamLeaderId,
+                                                oldTeamLeaderJobRole:
+                                                  teamleaders.teamLeaderJobRole,
+                                              })
+                                            }
+                                          />{" "}
+                                          {teamleaders.teamLeaderName}
+                                        </label>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+
+                                <div className="new-teamleader-data">
+                                  <center>
+                                    <h1>New Team Leaders</h1>
+                                  </center>
+                                  {fetchTeamleader
+                                    .filter(
+                                      (item) =>
+                                        item.teamLeaderId !==
+                                        oldselectedTeamLeader.oldTeamLeaderId
+                                    )
+                                    .map((teamleaders) => (
+                                      <div
+                                        className="accordion-item-M"
+                                        key={teamleaders.managerId}
+                                      >
+                                        <div className="accordion-header-SU">
+                                          <label
+                                            htmlFor={`new-${teamleaders.teamLeaderId}`}
+                                            className="accordion-title"
+                                          >
+                                            <input
+                                              type="radio"
+                                              name="newteamleaders"
+                                              id={`new-${teamleaders.teamLeaderId}`}
+                                              value={teamleaders.teamLeaderId}
+                                              checked={
+                                                newselectedTeamLeader.newTeamLeaderId ===
+                                                teamleaders.teamLeaderId
+                                              }
+                                              onChange={() =>
+                                                setNewSelectedTeamLeader({
+                                                  newTeamLeaderId:
+                                                    teamleaders.teamLeaderId,
+                                                  newTeamLeaderJobRole:
+                                                    teamleaders.teamLeaderJobRole,
+                                                })
+                                              }
+                                            />{" "}
+                                            {teamleaders.teamLeaderName}
+                                          </label>
+                                        </div>
+                                      </div>
+                                    ))}
+                                </div>
+                              </div>
+                            )}
                             {userType === "TeamLeader" && (
                               <div className="accordion-item">
                                 <div className="accordion-header">
@@ -1567,7 +1684,10 @@ const LineUpList = ({
                                     {recruiterUnderTeamLeader &&
                                       recruiterUnderTeamLeader.map(
                                         (recruiters) => (
-                                          <div className="form-group">
+                                          <div
+                                            key={recruiters.recruiterId}
+                                            className="form-group"
+                                          >
                                             <label
                                               htmlFor={recruiters.employeeId}
                                             >
@@ -1600,7 +1720,7 @@ const LineUpList = ({
                               </div>
                             )}
                           </div>
-                          {/* akash_pawar_selfCallingTracker_ShareFunctionality_16/07_1443 */}
+                          {/* akash_pawar_LineUpList_ShareFunctionality_17/07_1747 */}
                         </Modal.Body>
                         <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
                           <button
@@ -1664,6 +1784,11 @@ const LineUpList = ({
             />
           )}
         </>
+      )}
+      {isDataSending && (
+        <div className="ShareFunc_Loading_Animation">
+          <ClipLoader size={50} color="#ffb281" />
+        </div>
       )}
     </div>
   );
