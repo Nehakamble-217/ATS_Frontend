@@ -5,6 +5,7 @@ import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
+import * as XLSX from "xlsx";
 // SwapnilRokade_RejectedCandidate_ModifyFilters_11/07
 const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showRejectedData, setShowRejectedData] = useState([]);
@@ -31,6 +32,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
+  const [showExportConfirmation, setShowExportConfirmation] = useState(false);
   let [color, setColor] = useState("#ffcb9b");
 
   const { employeeId } = useParams();
@@ -79,7 +81,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
     "requirementId",
     "selectYesOrNo",
     "sourceName",
-    "yearOfPassing",
+    "yearOfPassing"
   ];
   const { userType } = useParams();
 
@@ -88,36 +90,25 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   }, []);
 
   useEffect(() => {
-    const options = Object.keys(filteredCallingList[0] || {}).filter((key) =>
-      limitedOptions.includes(key)
-    );
+    const options = Object.keys(filteredCallingList[0] || {}).filter((key) => limitedOptions.includes(key));
     setFilterOptions(options);
   }, [filteredCallingList]);
-
-  useEffect(() => {
-    // console.log("Selected Filters:", selectedFilters);
-  }, [selectedFilters]);
-
-  useEffect(() => {
-    // console.log("Filtered Calling List:", filteredCallingList);
-  }, [filteredCallingList]);
-
-  useEffect(() => {
-    setFilterOptions(limitedOptions);
-  }, [callingList]);
 
   const fetchRejectedData = async () => {
     try {
       const response = await fetch(
+
+
         `http://192.168.1.46:9090/api/ats/157industries/rejected-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);
       setFilteredCallingList(data);
-      setLoading(false);
+      setLoading(false)
+      console.log(data);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
-      setLoading(false);
+      setLoading(false)
     }
   };
 
@@ -129,6 +120,8 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
     const fetchEmployeeNameAndID = async () => {
       try {
         const response = await fetch(
+
+
           `http://192.168.1.46:9090/api/ats/157industries/names-and-ids`
         );
         const data = await response.json();
@@ -169,12 +162,15 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const handleFilterOptionClick = (option) => {
     if (activeFilterOption === option) {
       setActiveFilterOption(null);
-    } else {
+    }
+    else {
       setActiveFilterOption(option);
     }
-  };
+  }
   const handleShare = async () => {
     if (selectedEmployeeId && selectedRows.length > 0) {
+
+
       const url = `http://192.168.1.46:9090/api/ats/157industries/updateEmployeeIds`; // Replace with your actual API endpoint
 
       const requestData = {
@@ -277,31 +273,49 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
         if (option === "candidateId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
             )
           );
         } else if (option === "requirementId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
             )
           );
-        } else if (option === "employeeId") {
+        }
+        else if (option === "employeeId") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
             )
           );
-        } else if (option === "contactNumber") {
+        }
+        else if (option === "contactNumber") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
             )
           );
-        } else if (option === "alternateNumber") {
+        }
+        else if (option === "alternateNumber") {
           filteredData = filteredData.filter((item) =>
             values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value)
             )
           );
         } else {
@@ -458,6 +472,150 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   };
   //Name:-Akash Pawar Component:-RejectedCandidate Subcategory:-ResumeViewButton(added) End LineNo:-356 Date:-02/07
 
+
+ //Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
+ const handleExportToExcel = () => {
+  // Define columns to include in export
+  const columnsToInclude = [
+    "No.",
+    "Date",
+    "Time",
+    "Candidate's Id",
+    "Recruiter's Name",
+    "Candidate's Name",
+    "Candidate's Email",
+    "Contact Number",
+    "Whatsapp Number",
+    "Source Name",
+    "Job Designation",
+    "Job Id",
+    "Applying Company",
+    "Communication Rating",
+    "Current Location",
+    "Full Address",
+    "Recruiter's Incentive",
+    "Interested or Not",
+    "Current Company",
+    "Total Experience",
+    "Relevant Experience",
+    "Current CTC",
+    "Expected CTC",
+    "Date Of Birth",
+    "Gender",
+    "Education",
+    "Year Of Passing",
+    "Call Summary",
+    "Holding Any Offer",
+    "Offer Letter Message",
+    "Notice Period",
+    "Message For Team Leader",
+    "Availability For Interview",
+    "Interview Time",
+    "Final Status",
+  ];
+
+  // Clone the data and map to match columnsToInclude order
+  const dataToExport = filteredCallingList.map((item, index) => {
+    // Create a filtered item without the 'Resume' field
+    const filteredItem = {
+      "No.": index + 1,
+      Date: item.date || "-",
+      Time: item.candidateAddedTime || "-",
+      "Candidate's Id": item.candidateId || "-",
+      "Recruiter's Name": item.recruiterName || "-",
+      "Candidate's Name": item.candidateName || "-",
+      "Candidate's Email": item.candidateEmail || "-",
+      "Contact Number": item.contactNumber || "-",
+      "Whatsapp Number": item.alternateNumber || "-",
+      "Source Name": item.sourceName || "-",
+      "Job Designation": item.jobDesignation || "-",
+      "Job Id": item.requirementId || "-",
+      "Applying Company": item.requirementCompany || "-",
+      "Communication Rating": item.communicationRating || "-",
+      "Current Location": item.currentLocation || "-",
+      "Full Address": item.fullAddress || "-",
+      "Recruiter's Incentive": item.incentive || "-",
+      "Interested and Eligible": item.selectYesOrNo || "-",
+      "Current Company": item.companyName || "-",
+      "Total Experience": item.experienceYear||"-",
+      "Relevant Experience": item.relevantExperience  || "-",
+      "Current CTC": `${item.currentCTCLakh || "0"} Lakh ${
+        item.currentCTCThousand || "0"
+      } Thousand`,
+      "Expected CTC": `${item.expectedCTCLakh || "0"} Lakh ${
+        item.expectedCTCThousand || "0"
+      } Thousand`,
+      "Date Of Birth": item.dateOfBirth || "-",
+      Gender: item.gender || "-",
+      Education: item.qualification || "-",
+      "Year Of Passing": item.yearOfPassing || "-",
+      "Call Summary": item.feedBack || "-",
+      "Holding Any Offer": item.holdingAnyOffer || "-",
+      "Offer Letter Message": item.offerLetterMsg || "-",
+      "Notice Period": item.noticePeriod || "-",
+      "Message For Team Leader": item.msgForTeamLeader || "-",
+      "Availability For Interview":item.availabilityForInterview || "-",
+      "Interview Time": item.interviewTime || "-",
+      "Final Status": item.finalStatus || "-",
+    };
+
+    return filteredItem;
+  });
+
+  // Define sheet name and create worksheet
+  const ws = XLSX.utils.json_to_sheet(dataToExport, {
+    header: columnsToInclude,
+  });
+
+  // Add conditional formatting for header row
+  const headerRange = XLSX.utils.decode_range(ws["!ref"]);
+  for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+    const cell = ws[XLSX.utils.encode_cell({ r: headerRange.s.r, c: C })];
+    if (cell) {
+      cell.s = {
+        font: {
+          bold: true,
+          color: { rgb: "000000" },
+          sz: 20,
+        },
+        fill: {
+          patternType: "solid",
+          fgColor: { rgb: "FF0000" }, // Red background
+        },
+      };
+    }
+  }
+
+  // Save the Excel file
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Calling List");
+  XLSX.writeFile(wb, "calling_list.xlsx");
+};
+
+const showPopup = () => {
+  setShowExportConfirmation(true);
+  document.querySelector(".calling-list-container").classList.add("blurred");
+};
+
+const hidePopup = () => {
+  setShowExportConfirmation(false);
+  document
+    .querySelector(".calling-list-container")
+    .classList.remove("blurred");
+};
+
+const confirmExport = () => {
+  setShowExportConfirmation(false);
+  handleExportToExcel();
+  hidePopup();
+};
+
+const cancelExport = () => {
+  hidePopup();
+};
+//Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
+
+
   return (
     <div className="calling-list-container">
       {loading ? (
@@ -468,139 +626,222 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
             data-testid="loader"
           />
         </div>
-      ) : (
-        <>
-          {!showUpdateCallingTracker ? (
-            <>
-              <div className="search">
-                <i
-                  className="fa-solid fa-magnifying-glass"
-                  onClick={() => {
-                    setShowSearchBar(!showSearchBar);
-                    setShowFilterSection(false);
-                  }}
-                  style={{ margin: "10px", width: "auto", fontSize: "15px" }}
-                ></i>
-                <h5 style={{ color: "gray" }}>Rejected Data </h5>
+      ) : (<>
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "10px",
-                  }}
-                >
-                  {showShareButton ? (
-                    <button
-                      className="rejectedcan-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
+        {!showUpdateCallingTracker ? (
+          <>
+            <div className="search">
+              <i
+                className="fa-solid fa-magnifying-glass"
+                onClick={() => { setShowSearchBar(!showSearchBar); setShowFilterSection(false); }}
+                style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+              ></i>
+              <h5 style={{ color: "gray" }}>Rejected Data </h5>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                }}
+              >
+
+<div>
+                    <button className="lineUp-share-btn" onClick={showPopup}>
+                      Create Excel
                     </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="rejectedcan-share-close-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                        }}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="rejectedcan-share-select-btn"
-                        onClick={handleSelectAll}
-                      >
-                        {allSelected ? "Deselect All" : "Select All"}
-                      </button>
-                      <button
-                        className="rejectedcan-forward-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-                    </div>
-                  )}
-                  <button
-                    className="rejectedcan-Filter-btn"
-                    onClick={toggleFilterSection}
-                  >
-                    Filter <i className="fa-solid fa-filter"></i>
-                  </button>
-                </div>
-              </div>
-              {showSearchBar && (
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search here..."
-                  value={searchTerm}
-                  style={{ marginBottom: "10px" }}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              )}
-              {showFilterSection && (
-                <div className="filter-section">
-                  <div className="filter-dropdowns">
-                    {showFilterSection && (
-                      <div className="filter-section">
-                        <div className="filter-options-container">
-                          {filterOptions.map((option) => {
-                            const uniqueValues = Array.from(
-                              new Set(callingList.map((item) => item[option]))
-                            );
-                            return (
-                              <div key={option} className="filter-option">
-                                <button
-                                  className="white-Btn"
-                                  onClick={() =>
-                                    handleFilterOptionClick(option)
-                                  }
-                                >
-                                  {option}
-                                  <span className="filter-icon">&#x25bc;</span>
-                                </button>
-                                {activeFilterOption === option && (
-                                  <div className="city-filter">
-                                    <div className="optionDiv">
-                                      {uniqueValues.map((value) => (
-                                        <label
-                                          key={value}
-                                          className="selfcalling-filter-value"
-                                        >
-                                          <input
-                                            type="checkbox"
-                                            checked={
-                                              selectedFilters[option]?.includes(
-                                                value
-                                              ) || false
-                                            }
-                                            onChange={() =>
-                                              handleFilterSelect(option, value)
-                                            }
-                                          />
-                                          {value}
-                                        </label>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
+
+                    {showExportConfirmation && (
+                      <div className="popup-containers">
+                        <p className="confirmation-texts">
+                          Are you sure you want to generate the Excel file?
+                        </p>
+                        <button
+                          onClick={confirmExport}
+                          className="buttoncss-ctn"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={cancelExport}
+                          className="buttoncss-ctn"
+                        >
+                          No
+                        </button>
                       </div>
                     )}
                   </div>
+
+                {showShareButton ? (
+                  <button
+                    className="rejectedcan-share-btn"
+                    onClick={() => setShowShareButton(false)}
+                  >
+                    Share
+                  </button>
+                ) : (
+                  <div style={{ display: "flex", gap: "5px" }}>
+                    <button
+                      className="rejectedcan-share-close-btn"
+                      onClick={() => {
+                        setShowShareButton(true);
+                        setSelectedRows([]);
+                      }}
+                    >
+                      Close
+                    </button>
+                    <button
+                      className="rejectedcan-share-select-btn"
+                      onClick={handleSelectAll}
+                    >
+                      {allSelected ? "Deselect All" : "Select All"}
+                    </button>
+                    <button
+                      className="rejectedcan-forward-btn"
+                      onClick={forwardSelectedCandidate}
+                    >
+                      Forward
+                    </button>
+                  </div>
+                )}
+                <button
+                  className="rejectedcan-Filter-btn"
+                  onClick={toggleFilterSection}
+                >
+                  Filter <i className="fa-solid fa-filter"></i>
+                </button>
+              </div>
+            </div>
+            {showSearchBar && (
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search here..."
+                value={searchTerm}
+                style={{ marginBottom: "10px" }}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            )}
+            {showFilterSection && (
+              <div className="filter-section">
+                <div className="filter-dropdowns">
+                  {showFilterSection && (
+                    <div className="filter-section">
+                      <div className="filter-options-container">
+                        {filterOptions.map((option) => {
+                          const uniqueValues = Array.from(
+                            new Set(callingList.map((item) => item[option]))
+                          );
+                          return (
+                            <div key={option} className="filter-option">
+                              <button className="white-Btn" onClick={() => handleFilterOptionClick(option)}>
+                                {option}
+                                <span className="filter-icon">&#x25bc;</span>
+                              </button>
+                              {activeFilterOption === option && (
+                                <div className="city-filter">
+                                  <div className="optionDiv">
+                                    {uniqueValues.map((value) => (
+                                      <label key={value} className="selfcalling-filter-value">
+                                        <input
+                                          type="checkbox"
+                                          checked={selectedFilters[option]?.includes(value) || false}
+                                          onChange={() => handleFilterSelect(option, value)}
+                                        />
+                                        {value}
+                                      </label>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-              <div className="attendanceTableData">
-                <table className="attendance-table">
-                  <thead>
-                    <tr className="attendancerows-head">
+              </div>
+            )}
+            <div className="attendanceTableData">
+              <table className="attendance-table">
+                <thead>
+                  <tr className="attendancerows-head">
+                    {!showShareButton ? (
+                      <th className="attendanceheading">
+                        <input
+                          type="checkbox"
+                          onChange={handleSelectAll}
+                          checked={
+                            selectedRows.length === filteredCallingList.length
+                          }
+                          name="selectAll"
+                        />
+                      </th>
+                    ) : null}
+                    <th className="attendanceheading">Sr No.</th>
+                    <th
+                      className="attendanceheading"
+                      onClick={() => handleSort("date")}
+                    >
+                      Date
+                    </th>
+                    <th className="attendanceheading">Time</th>
+                    <th className="attendanceheading">Candidate Id</th>
+                    <th
+                      className="attendanceheading"
+                      onClick={() => handleSort("recruiterName")}
+                    >
+                      Recruiter Name
+                    </th>
+                    <th className="attendanceheading">Candidate Name</th>
+                    <th className="attendanceheading">Candidate Email</th>
+                    <th className="attendanceheading">Contact Number</th>
+                    <th className="attendanceheading">Alternate Number</th>
+                    <th className="attendanceheading">sourceName</th>
+                    <th className="attendanceheading">job Designation</th>
+                    <th
+                      className="attendanceheading"
+                      onClick={() => handleSort("requirementId")}
+                    >
+                      Job Id
+                    </th>
+                    <th className="attendanceheading">Applying Company</th>
+                    <th className="attendanceheading">Communication Rating</th>
+                    <th className="attendanceheading">Current Location</th>
+                    <th className="attendanceheading">Full Address</th>
+                    <th className="attendanceheading">Calling Feedback</th>
+                    <th className="attendanceheading">Incentive</th>
+                    <th className="attendanceheading">Interseed or Not</th>
+                    <th className="attendanceheading">Current Company</th>
+                    <th className="attendanceheading">Total Experience</th>
+                    <th className="attendanceheading">relevantExperience</th>
+                    <th className="attendanceheading">Current CTC</th>
+                    <th className="attendanceheading">Expected CTC</th>
+                    <th className="attendanceheading">Date Of Birth</th>
+                    <th className="attendanceheading">Gender</th>
+                    <th className="attendanceheading">Qualification</th>
+                    <th className="attendanceheading">Year Of Passing</th>
+                    <th className="attendanceheading">Extra Certification</th>
+                    <th className="attendanceheading">Holding Any Offer</th>
+                    <th className="attendanceheading">Offer Letter Msg</th>
+                    <th className="attendanceheading">Resume</th>
+                    <th className="attendanceheading">NoticePeriod</th>
+                    <th className="attendanceheading">Msg For TeamLeader</th>
+                    <th className="attendanceheading">
+                      Availability For Interview
+                    </th>
+                    <th className="attendanceheading">Interview Time</th>
+                    <th className="attendanceheading">Final Status</th>
+                    <th className="attendanceheading">Reason For Reject</th>
+                    <th className="attendanceheading">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredCallingList.map((item, index) => (
+                    <tr key={item.candidateId} className="attendancerows">
                       {!showShareButton ? (
                         <th className="attendanceheading">
                           <input
@@ -613,105 +854,252 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           />
                         </th>
                       ) : null}
-                      <th className="attendanceheading">Sr No.</th>
-                      <th
-                        className="attendanceheading"
-                        onClick={() => handleSort("date")}
+
+
+                      <td className="tabledata">{index + 1}</td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
                       >
-                        Date
-                      </th>
-                      <th className="attendanceheading">Time</th>
-                      <th className="attendanceheading">Candidate Id</th>
-                      <th
-                        className="attendanceheading"
-                        onClick={() => handleSort("recruiterName")}
+                        {item.date}
+                        <div className="tooltip">
+                          <span className="tooltiptext">{item.date}</span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
                       >
-                        Recruiter Name
-                      </th>
-                      <th className="attendanceheading">Candidate Name</th>
-                      <th className="attendanceheading">Candidate Email</th>
-                      <th className="attendanceheading">Contact Number</th>
-                      <th className="attendanceheading">Alternate Number</th>
-                      <th className="attendanceheading">sourceName</th>
-                      <th className="attendanceheading">job Designation</th>
-                      <th
-                        className="attendanceheading"
-                        onClick={() => handleSort("requirementId")}
+                        {item.candidateAddedTime || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.candidateAddedTime}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
                       >
-                        Job Id
-                      </th>
-                      <th className="attendanceheading">Applying Company</th>
-                      <th className="attendanceheading">
-                        Communication Rating
-                      </th>
-                      <th className="attendanceheading">Current Location</th>
-                      <th className="attendanceheading">Full Address</th>
-                      <th className="attendanceheading">Calling Feedback</th>
-                      <th className="attendanceheading">Incentive</th>
-                      <th className="attendanceheading">Interseed or Not</th>
-                      <th className="attendanceheading">Current Company</th>
-                      <th className="attendanceheading">Total Experience</th>
-                      <th className="attendanceheading">relevantExperience</th>
-                      <th className="attendanceheading">Current CTC</th>
-                      <th className="attendanceheading">Expected CTC</th>
-                      <th className="attendanceheading">Date Of Birth</th>
-                      <th className="attendanceheading">Gender</th>
-                      <th className="attendanceheading">Qualification</th>
-                      <th className="attendanceheading">Year Of Passing</th>
-                      <th className="attendanceheading">Extra Certification</th>
-                      <th className="attendanceheading">Feed Back</th>
-                      <th className="attendanceheading">Holding Any Offer</th>
-                      <th className="attendanceheading">Offer Letter Msg</th>
-                      <th className="attendanceheading">Resume</th>
-                      <th className="attendanceheading">NoticePeriod</th>
-                      <th className="attendanceheading">Msg For TeamLeader</th>
-                      <th className="attendanceheading">
-                        Availability For Interview
-                      </th>
-                      <th className="attendanceheading">Interview Time</th>
-                      <th className="attendanceheading">Final Status</th>
-                      <th className="attendanceheading">Reason For Reject</th>
-                      <th className="attendanceheading">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredCallingList.map((item, index) => (
-                      <tr key={item.candidateId} className="attendancerows">
-                        {!showShareButton ? (
-                          <th className="attendanceheading">
-                            <input
-                              type="checkbox"
-                              onChange={handleSelectAll}
-                              checked={
-                                selectedRows.length ===
-                                filteredCallingList.length
-                              }
-                              name="selectAll"
-                            />
-                          </th>
-                        ) : null}
-                        <td className="tabledata">{index + 1}</td>
+                        {item.candidateId}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.candidateId}
+                          </span>
+                        </div>
+                      </td>
 
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.recruiterName}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.recruiterName}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.candidateName}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.candidateName}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.candidateEmail || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.candidateEmail}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.contactNumber || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.contactNumber}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.alternateNumber || 0}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.alternateNumber}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.sourceName || 0}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.sourceName}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.jobDesignation || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.jobDesignation}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.requirementId || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.requirementId}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.requirementCompany || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.requirementCompany}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.communicationRating || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.communicationRating}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.currentLocation || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.currentLocation}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.fullAddress || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.fullAddress}{" "}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.callingFeedback || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.callingFeedback}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.incentive || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.incentive}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td
+                        className="tabledata"
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {item.selectYesOrNo || "-"}
+                        <div className="tooltip">
+                          <span className="tooltiptext">
+                            {item.selectYesOrNo}
+                          </span>
+                        </div>
+                      </td>
+
+                      <>
                         <td
                           className="tabledata"
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.date}
-                          <div className="tooltip">
-                            <span className="tooltiptext">{item.date}</span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.candidateAddedTime || "-"}
+                          {item.companyName || "-"}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.candidateAddedTime}
+                              {item.companyName}
                             </span>
                           </div>
                         </td>
@@ -721,10 +1109,31 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.candidateId}
+                          {item.experienceYear || "0"}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.candidateId}
+                              {item.experienceYear}{" "}
+                            </span>
+                          </div>
+                          Years
+                          {item.experienceMonth || "0"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.experienceMonth}
+                            </span>
+                          </div>
+                          Months
+                        </td>
+
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.relevantExperience || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.relevantExperience}
                             </span>
                           </div>
                         </td>
@@ -734,10 +1143,38 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.recruiterName}
+                          {`${item.currentCTCLakh || 0} Lakh ${item.currentCTCThousand || 0
+                            } Thousand`}
+                          <div className="tooltip">
+                            <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                              } Lakh ${item.expectedCTCThousand || 0
+                              } Thousand`}</span>
+                          </div>
+                        </td>
+
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {`${item.expectedCTCLakh || 0} Lakh ${item.expectedCTCThousand || 0
+                            } Thousand`}
+                          <div className="tooltip">
+                            <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                              } Lakh ${item.expectedCTCThousand || 0
+                              } Thousand`}</span>
+                          </div>
+                        </td>
+
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.dateOfBirth || "-"}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.recruiterName}
+                              {item.dateOfBirth}
                             </span>
                           </div>
                         </td>
@@ -747,10 +1184,21 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.candidateName}
+                          {item.gender || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">{item.gender}</span>
+                          </div>
+                        </td>
+
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.qualification || "-"}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.candidateName}
+                              {item.qualification}
                             </span>
                           </div>
                         </td>
@@ -760,10 +1208,10 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.candidateEmail || "-"}
+                          {item.yearOfPassing || "-"}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.candidateEmail}
+                              {item.yearOfPassing}
                             </span>
                           </div>
                         </td>
@@ -773,306 +1221,15 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.contactNumber || "-"}
+                          {item.extraCertification || "-"}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.contactNumber}
+                              {item.extraCertification}
                             </span>
                           </div>
                         </td>
 
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.alternateNumber || 0}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.alternateNumber}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.sourceName || 0}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.sourceName}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.jobDesignation || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.jobDesignation}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.requirementId || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.requirementId}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.requirementCompany || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.requirementCompany}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.communicationRating || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.communicationRating}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.currentLocation || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.currentLocation}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.fullAddress || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.fullAddress}{" "}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.callingFeedback || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.callingFeedback}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.incentive || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.incentive}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td
-                          className="tabledata"
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {item.selectYesOrNo || "-"}
-                          <div className="tooltip">
-                            <span className="tooltiptext">
-                              {item.selectYesOrNo}
-                            </span>
-                          </div>
-                        </td>
-
-                        {item.lineUp && (
-                          <>
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.companyName || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.companyName}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.experienceYear || "0"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.experienceYear}{" "}
-                                </span>
-                              </div>
-                              Years
-                              {item.lineUp.experienceMonth || "0"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.experienceMonth}
-                                </span>
-                              </div>
-                              Months
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.relevantExperience || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.relevantExperience}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {`${item.lineUp.currentCTCLakh || 0} Lakh ${
-                                item.lineUp.currentCTCThousand || 0
-                              } Thousand`}
-                              <div className="tooltip">
-                                <span className="tooltiptext">{`${
-                                  item.lineUp.expectedCTCLakh || 0
-                                } Lakh ${
-                                  item.lineUp.expectedCTCThousand || 0
-                                } Thousand`}</span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {`${item.lineUp.expectedCTCLakh || 0} Lakh ${
-                                item.lineUp.expectedCTCThousand || 0
-                              } Thousand`}
-                              <div className="tooltip">
-                                <span className="tooltiptext">{`${
-                                  item.lineUp.expectedCTCLakh || 0
-                                } Lakh ${
-                                  item.lineUp.expectedCTCThousand || 0
-                                } Thousand`}</span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.dateOfBirth || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.dateOfBirth}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.gender || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.gender}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.qualification || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.qualification}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.yearOfPassing || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.yearOfPassing}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.extraCertification || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.extraCertification}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
+                        {/* <td
                               className="tabledata"
                               onMouseOver={handleMouseOver}
                               onMouseOut={handleMouseOut}
@@ -1083,280 +1240,265 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                                   {item.lineUp.feedBack}
                                 </span>
                               </div>
-                            </td>
+                            </td> */}
 
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.holdingAnyOffer || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.holdingAnyOffer}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.offerLetterMsg || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.offerLetterMsg}
-                                </span>
-                              </div>
-                            </td>
-
-                            {/* <td
+                        <td
                           className="tabledata"
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp.resume || "-"}
+                          {item.holdingAnyOffer || "-"}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp.resume}
+                              {item.holdingAnyOffer}
                             </span>
                           </div>
-                        </td> */}
+                        </td>
 
-                            {/* Name:-Akash Pawar Component:-RejectedCandidate
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.offerLetterMsg || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.offerLetterMsg}
+                            </span>
+                          </div>
+                        </td>
+
+                        {/* <td
+                            className="tabledata"
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                          >
+                            {item.resume || "-"}
+                            <div className="tooltip">
+                              <span className="tooltiptext">{item.resume}</span>
+                            </div>
+                          </td> */}
+                        {/* Name:-Akash Pawar Component:-LineUpList
                   Subcategory:-ResumeViewButton(added) start LineNo:-993
                   Date:-02/07 */}
-                            <td className="tabledata">
-                              <button
-                                className="text-secondary"
-                                onClick={() =>
-                                  openResumeModal(item.lineUp.resume)
-                                }
-                              >
-                                <i className="fas fa-eye"></i>
-                              </button>
-                            </td>
-                            {/* Name:-Akash Pawar Component:-Rejected
+                        <td className="tabledata">
+                          <button
+                            className="text-secondary"
+                            onClick={() => openResumeModal(item.resume)}
+                          >
+                            <i className="fas fa-eye"></i>
+                          </button>
+                        </td>
+                        {/* Name:-Akash Pawar Component:-LineUpList
                   Subcategory:-ResumeViewButton(added) End LineNo:-1005
                   Date:-02/07 */}
 
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.noticePeriod || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.noticePeriod}
-                                </span>
-                              </div>
-                            </td>
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.noticePeriod || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.noticePeriod}
+                            </span>
+                          </div>
+                        </td>
 
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.msgForTeamLeader || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.msgForTeamLeader}
-                                </span>
-                              </div>
-                            </td>
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.msgForTeamLeader || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.msgForTeamLeader}
+                            </span>
+                          </div>
+                        </td>
 
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.availabilityForInterview || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.availabilityForInterview}
-                                </span>
-                              </div>
-                            </td>
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.availabilityForInterview || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.availabilityForInterview}
+                            </span>
+                          </div>
+                        </td>
 
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.interviewTime || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.interviewTime}
-                                </span>
-                              </div>
-                            </td>
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.interviewTime || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.interviewTime}
+                            </span>
+                          </div>
+                        </td>
 
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.finalStatus || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.finalStatus}
-                                </span>
-                              </div>
-                            </td>
-                            <td
-                              className="tabledata"
-                              onMouseOver={handleMouseOver}
-                              onMouseOut={handleMouseOut}
-                            >
-                              {item.lineUp.remark || "-"}
-                              <div className="tooltip">
-                                <span className="tooltiptext">
-                                  {item.lineUp.remark}
-                                </span>
-                              </div>
-                            </td>
-
-                            <td className="tabledata">
-                              <i
-                                onClick={() => handleUpdate(item.candidateId)}
-                                className="fa-regular fa-pen-to-square"
-                              ></i>
-                            </td>
-                          </>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {showForwardPopup ? (
-                  <>
-                    <div
-                      className="bg-black bg-opacity-50 modal show"
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.finalStatus || "-"}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.finalStatus}
+                            </span>
+                          </div>
+                        </td>
+                        <td
+                          className="tabledata"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                         
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              
+                            </span>
+                          </div>
+                        </td>
+                        <td className="tabledata">
+                          <i
+                            onClick={() => handleUpdate(item.candidateId)}
+                            className="fa-regular fa-pen-to-square"
+                          ></i>
+                        </td>
+                      </>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {showForwardPopup ? (
+                <>
+                  <div
+                    className="bg-black bg-opacity-50 modal show"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      position: "fixed",
+                      width: "100%",
+                      height: "100vh",
+                    }}
+                  >
+                    <Modal.Dialog
                       style={{
+                        width: "500px",
+                        height: "800px",
                         display: "flex",
-                        justifyContent: "center",
                         alignItems: "center",
-                        position: "fixed",
-                        width: "100%",
-                        height: "100vh",
+                        justifyContent: "center",
+                        marginTop: "100px",
                       }}
                     >
-                      <Modal.Dialog
+                      <Modal.Header
+                        style={{ fontSize: "18px", backgroundColor: "#f2f2f2" }}
+                      >
+                        Forward To
+                      </Modal.Header>
+                      <Modal.Body
                         style={{
-                          width: "500px",
-                          height: "800px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          marginTop: "100px",
+                          display: "grid",
+                          gap: "10px",
+                          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                          backgroundColor: "#f2f2f2",
                         }}
                       >
-                        <Modal.Header
-                          style={{
-                            fontSize: "18px",
-                            backgroundColor: "#f2f2f2",
-                          }}
+                        {fetchEmployeeNameID.map((item) => (
+                          <>
+                            <div
+                              key={`${item[0]}`}
+                              className=""
+                              style={{
+                                display: "flex",
+                                gap: "20px",
+                                columnSpan: "span 1 / span 1",
+                              }}
+                            >
+                              <input
+                                type="radio"
+                                id={`${item[0]}`}
+                                name="forward"
+                                value={`${item[0]}`}
+                                onChange={(e) =>
+                                  setSelectedEmployeeId(e.target.value)
+                                }
+                              />
+                              <label htmlFor={`${item[0]}`}>{item[1]}</label>
+                            </div>
+                          </>
+                        ))}
+                      </Modal.Body>
+                      <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
+                        <button
+                          onClick={handleShare}
+                          className="selectedcan-share-forward-popup-btn"
                         >
-                          Forward To
-                        </Modal.Header>
-                        <Modal.Body
-                          style={{
-                            display: "grid",
-                            gap: "10px",
-                            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                            backgroundColor: "#f2f2f2",
-                          }}
+                          Share
+                        </button>
+                        <button
+                          onClick={() => setShowForwardPopup(false)}
+                          className="selectedcan-close-forward-popup-btn"
                         >
-                          {fetchEmployeeNameID.map((item) => (
-                            <>
-                              <div
-                                key={`${item[0]}`}
-                                className=""
-                                style={{
-                                  display: "flex",
-                                  gap: "20px",
-                                  columnSpan: "span 1 / span 1",
-                                }}
-                              >
-                                <input
-                                  type="radio"
-                                  id={`${item[0]}`}
-                                  name="forward"
-                                  value={`${item[0]}`}
-                                  onChange={(e) =>
-                                    setSelectedEmployeeId(e.target.value)
-                                  }
-                                />
-                                <label htmlFor={`${item[0]}`}>{item[1]}</label>
-                              </div>
-                            </>
-                          ))}
-                        </Modal.Body>
-                        <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-                          <button
-                            onClick={handleShare}
-                            className="selectedcan-share-forward-popup-btn"
-                          >
-                            Share
-                          </button>
-                          <button
-                            onClick={() => setShowForwardPopup(false)}
-                            className="selectedcan-close-forward-popup-btn"
-                          >
-                            Close
-                          </button>
-                        </Modal.Footer>
-                      </Modal.Dialog>
-                    </div>
-                  </>
-                ) : null}
-                {/* Name:-Akash Pawar Component:-RejectedCandidate
+                          Close
+                        </button>
+                      </Modal.Footer>
+                    </Modal.Dialog>
+                  </div>
+                </>
+              ) : null}
+              {/* Name:-Akash Pawar Component:-RejectedCandidate
           Subcategory:-ResumeModel(added) End LineNo:-1176 Date:-02/07 */}
-                <Modal
-                  show={showResumeModal}
-                  onHide={closeResumeModal}
-                  size="md"
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title>Resume</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    {selectedCandidateResume ? (
-                      <iframe
-                        src={convertToDocumentLink(
-                          selectedCandidateResume,
-                          "Resume.pdf"
-                        )}
-                        width="100%"
-                        height="550px"
-                        title="PDF Viewer"
-                      ></iframe>
-                    ) : (
-                      <p>No resume available</p>
-                    )}
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={closeResumeModal}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-                {/* Name:-Akash Pawar Component:-RejectedCandidate
+              <Modal show={showResumeModal} onHide={closeResumeModal} size="md">
+                <Modal.Header closeButton>
+                  <Modal.Title>Resume</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  {selectedCandidateResume ? (
+                    <iframe
+                      src={convertToDocumentLink(
+                        selectedCandidateResume,
+                        "Resume.pdf"
+                      )}
+                      width="100%"
+                      height="550px"
+                      title="PDF Viewer"
+                    ></iframe>
+                  ) : (
+                    <p>No resume available</p>
+                  )}
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={closeResumeModal}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+              {/* Name:-Akash Pawar Component:-RejectedCandidate
           Subcategory:-ResumeModel(added) End LineNo:-1203 Date:-02/07 */}
-              </div>
-            </>
-          ) : (
-            <UpdateCallingTracker
-              candidateId={selectedCandidateId}
-              employeeId={employeeId}
-              onSuccess={handleUpdateSuccess}
-              onCancel={() => setShowUpdateCallingTracker(false)}
-            />
-          )}
-        </>
-      )}
+            </div>
+          </>
+        ) : (
+          <UpdateCallingTracker
+            candidateId={selectedCandidateId}
+            employeeId={employeeId}
+            onSuccess={handleUpdateSuccess}
+            onCancel={() => setShowUpdateCallingTracker(false)}
+          />
+        )}
+      </>)}
     </div>
   );
 };
