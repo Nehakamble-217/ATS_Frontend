@@ -5,11 +5,8 @@ import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
-<<<<<<< HEAD
 import * as XLSX from "xlsx";
-
 import ClipLoader from "react-spinners/ClipLoader";
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
 // SwapnilRokade_RejectedCandidate_ModifyFilters_11/07
 const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showRejectedData, setShowRejectedData] = useState([]);
@@ -137,7 +134,6 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       const data = await response.json();
       setCallingList(data);
       setFilteredCallingList(data);
-
       setLoading(false);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
@@ -270,7 +266,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       // Handle success response
       setIsDataSending(false);
       console.log("Candidates forwarded successfully!");
-      fetchCallingTrackerData();
+      fetchRejectedData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
       setShowShareButton(true);
@@ -716,20 +712,7 @@ const cancelExport = () => {
         </div>
       ) : (
         <>
-          {!showUpdateCallingTracker ? (
-            <>
-              <div className="search">
-                <i
-                  className="fa-solid fa-magnifying-glass"
-                  onClick={() => {
-                    setShowSearchBar(!showSearchBar);
-                    setShowFilterSection(false);
-                  }}
-                  style={{ margin: "10px", width: "auto", fontSize: "15px" }}
-                ></i>
-                <h5 style={{ color: "gray" }}>Rejected Data </h5>
-
-<<<<<<< HEAD
+      
         {!showUpdateCallingTracker ? (
           <>
             <div className="search">
@@ -776,52 +759,6 @@ const cancelExport = () => {
                     )}
                   </div>
 
-                {showShareButton ? (
-                  <button
-                    className="rejectedcan-share-btn"
-                    onClick={() => setShowShareButton(false)}
-                  >
-                    Share
-                  </button>
-                ) : (
-                  <div style={{ display: "flex", gap: "5px" }}>
-                    <button
-                      className="rejectedcan-share-close-btn"
-                      onClick={() => {
-                        setShowShareButton(true);
-                        setSelectedRows([]);
-                      }}
-                    >
-                      Close
-                    </button>
-                    <button
-                      className="rejectedcan-share-select-btn"
-                      onClick={handleSelectAll}
-                    >
-                      {allSelected ? "Deselect All" : "Select All"}
-                    </button>
-                    <button
-                      className="rejectedcan-forward-btn"
-                      onClick={forwardSelectedCandidate}
-                    >
-                      Forward
-                    </button>
-                  </div>
-                )}
-                <button
-                  className="rejectedcan-Filter-btn"
-                  onClick={toggleFilterSection}
-=======
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "10px",
-                  }}
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
-                >
                   {userType !== "Recruiters" && (
                     <div>
                       {showShareButton ? (
@@ -870,87 +807,6 @@ const cancelExport = () => {
                   </button>
                 </div>
               </div>
-<<<<<<< HEAD
-            )}
-            <div className="attendanceTableData">
-              <table className="attendance-table">
-                <thead>
-                  <tr className="attendancerows-head">
-                    {!showShareButton ? (
-                      <th className="attendanceheading">
-                        <input
-                          type="checkbox"
-                          onChange={handleSelectAll}
-                          checked={
-                            selectedRows.length === filteredCallingList.length
-                          }
-                          name="selectAll"
-                        />
-                      </th>
-                    ) : null}
-                    <th className="attendanceheading">Sr No.</th>
-                    <th
-                      className="attendanceheading"
-                      onClick={() => handleSort("date")}
-                    >
-                      Date
-                    </th>
-                    <th className="attendanceheading">Time</th>
-                    <th className="attendanceheading">Candidate Id</th>
-                    <th
-                      className="attendanceheading"
-                      onClick={() => handleSort("recruiterName")}
-                    >
-                      Recruiter Name
-                    </th>
-                    <th className="attendanceheading">Candidate Name</th>
-                    <th className="attendanceheading">Candidate Email</th>
-                    <th className="attendanceheading">Contact Number</th>
-                    <th className="attendanceheading">Alternate Number</th>
-                    <th className="attendanceheading">sourceName</th>
-                    <th className="attendanceheading">job Designation</th>
-                    <th
-                      className="attendanceheading"
-                      onClick={() => handleSort("requirementId")}
-                    >
-                      Job Id
-                    </th>
-                    <th className="attendanceheading">Applying Company</th>
-                    <th className="attendanceheading">Communication Rating</th>
-                    <th className="attendanceheading">Current Location</th>
-                    <th className="attendanceheading">Full Address</th>
-                    <th className="attendanceheading">Calling Feedback</th>
-                    <th className="attendanceheading">Incentive</th>
-                    <th className="attendanceheading">Interseed or Not</th>
-                    <th className="attendanceheading">Current Company</th>
-                    <th className="attendanceheading">Total Experience</th>
-                    <th className="attendanceheading">relevantExperience</th>
-                    <th className="attendanceheading">Current CTC</th>
-                    <th className="attendanceheading">Expected CTC</th>
-                    <th className="attendanceheading">Date Of Birth</th>
-                    <th className="attendanceheading">Gender</th>
-                    <th className="attendanceheading">Qualification</th>
-                    <th className="attendanceheading">Year Of Passing</th>
-                    <th className="attendanceheading">Extra Certification</th>
-                    <th className="attendanceheading">Holding Any Offer</th>
-                    <th className="attendanceheading">Offer Letter Msg</th>
-                    <th className="attendanceheading">Resume</th>
-                    <th className="attendanceheading">NoticePeriod</th>
-                    <th className="attendanceheading">Msg For TeamLeader</th>
-                    <th className="attendanceheading">
-                      Availability For Interview
-                    </th>
-                    <th className="attendanceheading">Interview Time</th>
-                    <th className="attendanceheading">Final Status</th>
-                    <th className="attendanceheading">Reason For Reject</th>
-                    <th className="attendanceheading">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredCallingList.map((item, index) => (
-                    <tr key={item.candidateId} className="attendancerows">
-                      {!showShareButton ? (
-=======
               {showSearchBar && (
                 <input
                   type="text"
@@ -1021,7 +877,6 @@ const cancelExport = () => {
                   <thead>
                     <tr className="attendancerows-head">
                       {!showShareButton && userType === "TeamLeader" ? (
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
                         <th className="attendanceheading">
                           <input
                             type="checkbox"
@@ -1599,8 +1454,6 @@ const cancelExport = () => {
                               </span>
                             </div>
                           </td>
-
-<<<<<<< HEAD
                         <td
                           className="tabledata"
                           onMouseOver={handleMouseOver}
@@ -1636,49 +1489,10 @@ const cancelExport = () => {
                   ))}
                 </tbody>
               </table>
-              {showForwardPopup ? (
-                <>
-                  <div
-                    className="bg-black bg-opacity-50 modal show"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      position: "fixed",
-                      width: "100%",
-                      height: "100vh",
-                    }}
-                  >
-                    <Modal.Dialog
-=======
-                          <td
-                            className="tabledata"
-                            onMouseOver={handleMouseOver}
-                            onMouseOut={handleMouseOut}
-                          >
-                            {item.finalStatus || "-"}
-                            <div className="tooltip">
-                              <span className="tooltiptext">
-                                {item.finalStatus}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="tabledata">
-                            <i
-                              onClick={() => handleUpdate(item.candidateId)}
-                              className="fa-regular fa-pen-to-square"
-                            ></i>
-                          </td>
-                        </>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
                 {showForwardPopup ? (
                   <>
                     <div
                       className="bg-black bg-opacity-50 modal show"
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
                       style={{
                         display: "flex",
                         justifyContent: "center",

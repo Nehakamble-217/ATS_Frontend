@@ -311,7 +311,7 @@ const ShortListedCandidates = ({
       // Handle success response
       setIsDataSending(false);
       console.log("Candidates forwarded successfully!");
-      fetchCallingTrackerData();
+      fetchShortListedData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
       setShowShareButton(true);

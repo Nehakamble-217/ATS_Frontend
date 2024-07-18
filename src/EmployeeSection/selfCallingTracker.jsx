@@ -5,11 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import HashLoader from "react-spinners/HashLoader";
-<<<<<<< HEAD
 import * as XLSX from "xlsx";
-=======
+
 import ClipLoader from "react-spinners/ClipLoader";
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
 
 const CallingList = ({
   updateState,
@@ -42,11 +40,11 @@ const CallingList = ({
   const [selectedRows, setSelectedRows] = useState([]);
   const [allSelected, setAllSelected] = useState(false); // New state to track if all rows are selected
   const [showForwardPopup, setShowForwardPopup] = useState(false);
-<<<<<<< HEAD
+
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
-=======
+
   const [isDataSending, setIsDataSending] = useState(false);
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
+
 
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_41
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -81,12 +79,8 @@ const CallingList = ({
     useState(false);
 
   const navigator = useNavigate();
-<<<<<<< HEAD
   // SwapnilRokade_SelfCallingTracker_ModifyFilters_47to534_11/07
   // SwapnilRokade_SelfCallingTracker_Adding date and jobDescription filter option_18/07
-=======
-
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
   const limitedOptions = [
     "date",
     "candidateId",
@@ -656,7 +650,6 @@ const CallingList = ({
                     padding: "10px",
                   }}
                 >
-<<<<<<< HEAD
                   {/* Swapnil_Rokade_SelfCallingTracker_CreateExcel_17/07/2024 */}
                   <div>
                     <button className="lineUp-share-btn" onClick={showPopup}>
@@ -683,39 +676,6 @@ const CallingList = ({
                       </div>
                     )}
                   </div>
-
-                  {showShareButton ? (
-                    <button
-                      className="callingList-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
-                    </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="callingList-share-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                          setAllSelected(false);
-                        }}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="callingList-share-btn"
-                        onClick={handleSelectAll}
-                      >
-                        {allSelected ? "Deselect All" : "Select All"}
-                      </button>
-                      <button
-                        className="callingList-share-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-=======
                   {userType !== "Recruiters" && (
                     <div>
                       {showShareButton ? (
@@ -755,7 +715,6 @@ const CallingList = ({
                           </button>
                         </div>
                       )}
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
                     </div>
                   )}
                   <button

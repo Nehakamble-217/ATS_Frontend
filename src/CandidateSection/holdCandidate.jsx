@@ -5,11 +5,8 @@ import UpdateCallingTracker from "../EmployeeSection/UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
-<<<<<<< HEAD
 import * as XLSX from "xlsx";
-=======
 import ClipLoader from "react-spinners/ClipLoader";
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
 // SwapnilRokade_HoldCandidate_ModifyFilters_47to534_11/07
 const HoldCandidate = ({
   updateState,
@@ -44,11 +41,8 @@ const HoldCandidate = ({
   let [color, setColor] = useState("#ffcb9b");
   const { employeeId } = useParams();
   const newEmployeeId = parseInt(employeeId, 10);
-<<<<<<< HEAD
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
-=======
   const [isDataSending, setIsDataSending] = useState(false);
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
 
   //akash_pawar_HoldCandidate_ShareFunctionality_18/07_43
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -469,7 +463,7 @@ const HoldCandidate = ({
       // Handle success response
       setIsDataSending(false);
       console.log("Candidates forwarded successfully!");
-      fetchCallingTrackerData();
+      fetchHoldCandidateData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
       setShowShareButton(true);
@@ -736,7 +730,6 @@ const HoldCandidate = ({
                     padding: "10px",
                   }}
                 >
-<<<<<<< HEAD
                   <div>
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
@@ -762,39 +755,6 @@ const HoldCandidate = ({
                       </div>
                     )}
                   </div>
-
-                  {showShareButton ? (
-                    <button
-                      className="hold-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
-                    </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="hold-share-close-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                          setAllSelected(false);
-                        }}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="hold-share-select-btn"
-                        onClick={handleSelectAll}
-                      >
-                        {allSelected ? "Deselect All" : "Select All"}
-                      </button>
-                      <button
-                        className="lineUp-forward-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-=======
                   {userType !== "Recruiters" && (
                     <div>
                       {showShareButton ? (
@@ -834,7 +794,6 @@ const HoldCandidate = ({
                           </button>
                         </div>
                       )}
->>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
                     </div>
                   )}
                   <button
