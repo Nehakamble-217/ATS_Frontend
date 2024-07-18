@@ -121,7 +121,7 @@ function Accesstable() {
   };
 
   const filteredRecruiters = useMemo(() => {
-    return teamLeaderNames.reduce((acc, leader) => {
+    return teamLeaderUnderManager.reduce((acc, leader) => {
       const leaderNameMatch = leader.teamLeaderName
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
@@ -426,33 +426,32 @@ function Accesstable() {
                 className="category-header"
                 onClick={() => toggleCategoryDropdown("common assign")}
               >
-                Common Assign
-                <span className={`dropdown-icon`}> &#9660;</span>
+                <p>
+                  Common Assign
+                  <span className={`dropdown-icon`}> &#9660;</span>
+                </p>
               </div>
               {openCategory === "common assign" && (
                 <div className="category-options checkbox-teamleader-assign">
-                  <button
-                    className="category-share-btn"
-                    onClick={() => {
-                      setOpenCategory("");
-                    }}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="category-share-btn"
-                    onClick={handleSelectAll}
-                  >
-                    {allSelected ? "Deselect All" : "Select All"}
-                  </button>
-                  {selectedOptions.length != 0 && (
+                  <div>
                     <button
                       className="category-share-btn"
-                      onClick={() => setOpenCategory("")}
+                      onClick={() => {
+                        setOpenCategory("");
+                      }}
                     >
-                      Ok
+                      Close
                     </button>
-                  )}
+                    <button
+                      className="category-share-btn"
+                      onClick={handleSelectAll}
+                    >
+                      {allSelected ? "Deselect All" : "Select All"}
+                    </button>
+                    {selectedOptions.length != 0 && (
+                      <button className="category-share-btn">Ok</button>
+                    )}
+                  </div>
                   {columnName &&
                     columnName
                       .filter((item) => item.columnCategory === "common assign")
@@ -681,7 +680,10 @@ const UpdateAccessTable = ({
   const handleUpdateClick = async () => {
     try {
       const response = await axios.post(
+<<<<<<< HEAD
 
+=======
+>>>>>>> e8c4baf08c7bfa0a96995e66f12204862ff176b2
         `http://192.168.1.46:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
         JSON.stringify(selectedOptions),
         {

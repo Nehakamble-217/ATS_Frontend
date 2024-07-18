@@ -21,3 +21,4 @@ const SalarySlip = ({ employee }) => {
 };
 
 export default SalarySlip;
+

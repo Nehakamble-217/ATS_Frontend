@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import PayrollTable from './payRollTable';
 import PayRollForm from './payRollForm';
 import axios from 'axios';
 
 const PayRollMain = () => {
     const [employees, setEmployees] = useState([]);
+
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
                 const res = await axios.get("http://192.168.1.46:9090/api/ats/157industries/findAll-all-payrolls");
-                setEmployees(res.data.data); // Adjusted to match the provided data structure
+                setEmployees(res.data); 
             } catch (error) {
                 console.error('Error fetching employees:', error);
             }
         };
-
         fetchEmployees();
     }, []);
 
@@ -29,6 +29,4 @@ const PayRollMain = () => {
         </div>
     );
 };
-
-
-export default PayRollMain
+export default PayRollMain;

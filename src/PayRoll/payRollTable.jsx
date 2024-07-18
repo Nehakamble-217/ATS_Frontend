@@ -30,7 +30,7 @@ const PayrollTable = ({ employees }) => {
                 </thead>
                 <tbody>
                     {employees.map((employee) => (
-                        <React.Fragment key={employee.id}>
+                        <React.Fragment key={employee.empId}>
                             <tr className='payroll-table-data'>
                                 <td>{employee.empId}</td>
                                 <td>{employee.empName}</td>
@@ -45,14 +45,14 @@ const PayrollTable = ({ employees }) => {
                                 <td>
                                     <button
                                         onClick={() => {
-                                            slipRefs.current.currentEmployee = slipRefs.current[employee.id];
+                                            slipRefs.current.currentEmployee = slipRefs.current[employee.empId];
                                             handlePrint();
                                         }}
                                     >
                                         Pay & Print
                                     </button>
                                     <div style={{ display: 'none' }}>
-                                        <div ref={(el) => (slipRefs.current[employee.id] = el)}>
+                                        <div ref={(el) => (slipRefs.current[employee.empId] = el)}>
                                             <SalarySlip employee={employee} />
                                         </div>
                                     </div>

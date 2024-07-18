@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.accordion {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .accordion-item {
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+  
+  .accordion-header {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #ffb281;
+    font-size: 18px;
+}
+
+.accordion-title {
+    font-weight: bold;
+    color: white;
+  }
+  
+  .accordion-content {
+    padding: 10px;
+    color: gray;
+    font-size: 16px;
+  }
