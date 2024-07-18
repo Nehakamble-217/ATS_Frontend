@@ -82,11 +82,8 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
   useEffect(() => {
     fetch(
-<<<<<<< HEAD
-      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}`
-=======
+
       `http://192.168.1.46:8891/api/ats/157industries/calling-lineup/${employeeId}`
->>>>>>> 440074da58739c1017e930cafb8c14338d95b317
     )
       .then((response) => response.json())
       .then((data) => {
@@ -1280,7 +1277,7 @@ const SendEmailPopup = ({
           <Form.Label className="mt-2">
             <strong>Email Body:</strong>
           </Form.Label>
-          <div className="border p-2 mb-2 rounded">
+          <div className="p-2 mb-2 border rounded">
             <Form.Group>
               <Form.Control
                 as="textarea"
@@ -1348,7 +1345,7 @@ const SendEmailPopup = ({
                 </Table>
               </div>
             </Form.Group>
-            <div className="mt-3 d-flex flex-wrap gap-1">
+            <div className="flex-wrap gap-1 mt-3 d-flex">
               <Form.Label className="mr-1">
                 <strong>Attachments:</strong>{" "}
               </Form.Label>
@@ -1359,7 +1356,7 @@ const SendEmailPopup = ({
                     borderRadius: "15px",
                     padding: "0px 4px",
                   }}
-                  className="d-flex justify-center items-center"
+                  className="items-center justify-center d-flex"
                   key={index}
                   href={`data:application/pdf;base64,${item.resume}`}
                   download={`${item.candidateName}_${item.jobDesignation}.pdf`}
@@ -1402,7 +1399,7 @@ const SendEmailPopup = ({
           ) : (
             <p></p>
           )}
-          <div className="d-flex gap-2 align-items-center">
+          <div className="gap-2 d-flex align-items-center">
             <button
               className="SCE-share-forward-popup-btn"
               onClick={handleClose}
