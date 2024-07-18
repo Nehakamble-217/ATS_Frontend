@@ -7,6 +7,7 @@ import * as XLSX from "xlsx";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({
   updateState,
@@ -44,7 +45,11 @@ const LineUpList = ({
   const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [count, setCount] = useState(0);
   const navigator = useNavigate();
+<<<<<<< HEAD
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
+=======
+  const [isDataSending, setIsDataSending] = useState(false);
+>>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_48
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -142,7 +147,11 @@ const LineUpList = ({
     fetchCallingTrackerData();
   }, [employeeIdnew]);
 
+<<<<<<< HEAD
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_171
+=======
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_144
+>>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
   const fetchManager = async () => {
     try {
       const response = await fetch(
@@ -154,7 +163,11 @@ const LineUpList = ({
       console.error("Error fetching shortlisted data:", error);
     }
   };
+<<<<<<< HEAD
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_183
+=======
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_156
+>>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
 
   const fetchTeamLeader = async (empId) => {
     try {
@@ -404,11 +417,6 @@ const LineUpList = ({
     return null;
   };
 
-  const handleShortlistedShare = (e) => {
-    e.preventDefault();
-    setShowShareButton(false);
-  };
-
   const handleSelectAll = () => {
     if (allSelected) {
       setSelectedRows([]);
@@ -446,6 +454,10 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_475
   const handleShare = async () => {
+<<<<<<< HEAD
+=======
+    setIsDataSending(true);
+>>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
     let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
@@ -479,9 +491,17 @@ const LineUpList = ({
       };
       const response = await fetch(url, requestOptions);
       if (!response.ok) {
+<<<<<<< HEAD
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       // Handle success response
+=======
+        setIsDataSending(false);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      // Handle success response
+      setIsDataSending(false);
+>>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
       console.log("Candidates forwarded successfully!");
       fetchCallingTrackerData();
       onSuccessAdd(true);
@@ -511,6 +531,10 @@ const LineUpList = ({
       });
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
+<<<<<<< HEAD
+=======
+      setIsDataSending(false);
+>>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
       console.error("Error while forwarding candidates:", error);
       // Handle error scenarios or show error messages to the user
     }
@@ -756,6 +780,7 @@ const LineUpList = ({
                     padding: "10px",
                   }}
                 >
+<<<<<<< HEAD
                   <div>
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
@@ -817,6 +842,53 @@ const LineUpList = ({
                       >
                         Forward
                       </button>
+=======
+                  <button
+                    className="lineUp-share-close-btn"
+                    onClick={handleExportToExcel}
+                  >
+                    Create Excel
+                  </button>
+                  {userType !== "Recruiters" && (
+                    <div>
+                      {showShareButton ? (
+                        <button
+                          className="lineUp-share-btn"
+                          onClick={() => setShowShareButton(false)}
+                        >
+                          Share
+                        </button>
+                      ) : (
+                        <div style={{ display: "flex", gap: "5px" }}>
+                          <button
+                            className="lineUp-share-close-btn"
+                            onClick={() => {
+                              setShowShareButton(true);
+                              setSelectedRows([]);
+                              setAllSelected(false);
+                            }}
+                          >
+                            Close
+                          </button>
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_793 */}
+                          {userType === "TeamLeader" && (
+                            <button
+                              className="callingList-share-btn"
+                              onClick={handleSelectAll}
+                            >
+                              {allSelected ? "Deselect All" : "Select All"}
+                            </button>
+                          )}
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_801 */}
+                          <button
+                            className="lineUp-forward-btn"
+                            onClick={forwardSelectedCandidate}
+                          >
+                            Forward
+                          </button>
+                        </div>
+                      )}
+>>>>>>> 56066acf425d9d27b3ff8836c4a4fb66a3c5b8d3
                     </div>
                   )}
                   <button
@@ -1821,6 +1893,11 @@ const LineUpList = ({
             />
           )}
         </>
+      )}
+      {isDataSending && (
+        <div className="ShareFunc_Loading_Animation">
+          <ClipLoader size={50} color="#ffb281" />
+        </div>
       )}
     </div>
   );

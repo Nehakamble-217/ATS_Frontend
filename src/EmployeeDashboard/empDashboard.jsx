@@ -20,7 +20,7 @@ import Home from "./JobList";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
 import Profile from "../LogoImages/ProfilePic.png";
-import MasterSheet from "../EmployeeSection/masterSheet";
+
 import EmployeeMasterSheet from "../EmployeeSection/employeeMasterSheet";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
@@ -70,7 +70,6 @@ const EmpDashboard = ({ userGroup }) => {
   const [showShortlistedCandidateData, setShortlistedCandidateData] =
     useState(false);
   const [addJobDescription, setAddJobDescription] = useState(false);
-  const [showMasterSheet, setShowMasterSheet] = useState(false);
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
   const [showShortListedCandidates, setShowShortListedCandidates] =
     useState(false);
@@ -220,7 +219,6 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCallingExcel(false);
     setAttendanceSheet(false);
     setShowEmployeeMasterSheet(false);
-    setShowMasterSheet(false);
     setAddJobDescription(false);
     setShowShortListdNav(false);
     setShowAddEmployee(false);
@@ -301,11 +299,6 @@ const EmpDashboard = ({ userGroup }) => {
   const toggleInterviewDate = () => {
     resetAllToggles();
     setShowShortListdNav(!showShortListedNav);
-  };
-
-  const toggleAllMasterSheet = () => {
-    resetAllToggles();
-    setShowMasterSheet(!showMasterSheet);
   };
 
   const toggleEmployeeMasterSheet = () => {
@@ -487,7 +480,6 @@ const EmpDashboard = ({ userGroup }) => {
         toggleResumeData={toggelResumeData}
         toggleJobDescription={toggleJobDescription}
         toggleInterviewDate={toggleInterviewDate}
-        toggleAllMasterSheet={toggleAllMasterSheet}
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
@@ -550,14 +542,22 @@ const EmpDashboard = ({ userGroup }) => {
             <CallingList
               updateState={handleUpdateComplete}
               funForGettingCandidateId={gettingCandidateIdForUpdate}
+              onSuccessAdd={handleSuccessAdd}
               loginEmployeeName={loginEmployeeName} //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_545
             />
           )}
         </div>
-        <div>{showShortListedNav && <ShortlistedNavbar />}</div>
+        <div>
+          {showShortListedNav && (
+            <ShortlistedNavbar loginEmployeeName={loginEmployeeName} />
+          )}
+        </div>
         <div>
           {showShortlistedCandidateData && (
-            <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
+            <ShortListedCandidates
+              viewUpdatedPage={viewUpdatedPage}
+              loginEmployeeName={loginEmployeeName}
+            />
           )}
         </div>
         <div>
@@ -582,9 +582,6 @@ const EmpDashboard = ({ userGroup }) => {
             <EmployeeMasterSheet loginEmployeeName={loginEmployeeName} /> //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_574
           )}
         </div>
-
-        <div>{showMasterSheet && <MasterSheet />}</div>
-
         <div>{incentive && <Incentive />}</div>
         <div>{attendancesheet && <Attendancesheet />}</div>
 
@@ -636,7 +633,6 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showJobDiscriptions && <Home />}</div>
         <div>{showHome && <Home />}</div>
         <div>{showAddedResumes && <AddResumes></AddResumes>}</div>
-        <div>{showShortListedCandidates && <ShortListedCandidates />}</div>
         <div>{showInvoice && <InvoiceTable />}</div>
         <div>
           {showInvoiceReport && (
