@@ -243,3 +243,7 @@
         width:100%;
     }
 }
+.loginpage-error{
+    color: red;
+    font-size: 16px;
+}

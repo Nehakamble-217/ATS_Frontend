@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const [isOtherEducationSelected, setIsOtherEducationSelected] =
@@ -160,7 +161,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
       console.log(candidateId + "  candidateId  in updated method.. After  ");
       if (response.ok) {
         const data = await response.text();
-        console.log("Data updated successfully:", data);
+        toast.log("Data updated successfully:");
         setFormSubmitted(true);
         setShowAlert(true);
         setTimeout(() => {
@@ -168,10 +169,10 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
           setFormSubmitted(false);
         }, 4000);
       } else {
-        console.error("Failed to update data");
+        toast.error("Failed to update data");
       }
     } catch (error) {
-      console.error("Error updating data:", error);
+      toast.error("Error updating data:", error);
     }
   };
 
@@ -205,7 +206,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   //neha_updateselfcalling_designing_start_lineno_205_date_16/07/24
   return (
     <div>
-      
+      <form onSubmit={handleSubmit}>
       <div className="calling-tracker-row-gray">
               <div className="calling-tracker-field">
                 <label>Date & Time:</label>
@@ -1200,12 +1201,12 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
               <button type="submit" className="ctf-btn">
                 Update Data
               </button>
-              <button type="submit" className="ctf-btn" id="uploadbtn2" >
-
+              <button  className="ctf-btn" id="uploadbtn2" >
                 Cancel
               </button>
             </div>
           </center>
+          </form>
         </div>    
   );
 };

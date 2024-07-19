@@ -64,6 +64,7 @@ const LoginSignup = ({ onLogin }) => {
 
   return (
     <div className="main-body">
+       
       <div className="main-login-container">
         <div className="main-loginpage-clouds"></div>
         <div className={`container22 ${showForgotPassword ? "full-width" : ""}`}>

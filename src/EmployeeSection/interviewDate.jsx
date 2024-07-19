@@ -7,6 +7,7 @@ import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { toast } from "react-toastify";
 
 const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -171,19 +172,19 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
       );
       if (response.ok) {
         setFormSubmitted(true);
-        console.log("Interview response saved successfully");
+        toast.success("Interview response saved successfully");
         setTimeout(() => {
           setFormSubmitted(false);
           setShowShortlistTable(false);
         }, 2000);
       } else {
-        console.error(
+        toast.error(
           "Failed to save interview response:",
           response.statusText
         );
       }
     } catch (error) {
-      console.error("Error saving interview response:", error);
+      toast.error("Error saving interview response:", error);
     }
   };
 

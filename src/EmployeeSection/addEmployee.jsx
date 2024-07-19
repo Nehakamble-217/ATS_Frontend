@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../EmployeeSection/addEmployee.css";
+import { toast } from "react-toastify";
 
 const AddEmployee = () => {
   const [formData, setFormData] = useState({
@@ -194,13 +195,13 @@ const AddEmployee = () => {
         }
       );
       if (response) {
-        setSuccessMessage("Employee Data Added Successfully.");
+        toast.success("Employee Data Added Successfully.");//Swapnil Error&success message 
       } else {
-        setSuccessMessage(data.message || "Failed to add employee data.");
+        toast.error(data.message || "Failed to add employee data.");//Swapnil Error&success message 
       }
     } catch (error) {
       console.error("Error:", error);
-      setSuccessMessage("Error occurred while adding employee data.");
+      toast.error("Error occurred while adding employee data.");  //Swapnil Error&success message 
     }
   };
 

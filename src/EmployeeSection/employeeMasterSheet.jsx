@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchEmployeeMasterSheet, fetchFile } from "../api/api";
 import "./EmployeeMasterSheet.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 
 const EmployeeMasterSheet = () => {
   const [data, setData] = useState([]);
@@ -212,7 +213,7 @@ const EmployeeMasterSheet = () => {
       }
       // Handle success response
       setIsDataSending(false);
-      console.log("Candidates forwarded successfully!");
+      toast.log("Candidates forwarded successfully!");//Swapnil Error&success message 
       fetchCallingTrackerData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -242,7 +243,8 @@ const EmployeeMasterSheet = () => {
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
       setIsDataSending(false);
-      console.error("Error while forwarding candidates:", error);
+      setShowForwardPopup(false);
+      toast.error("Error while forwarding candidates:", error);//Swapnil Error&success message 
       // Handle error scenarios or show error messages to the user
     }
   };
