@@ -7,6 +7,7 @@ import * as XLSX from "xlsx";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({
   updateState,
@@ -44,6 +45,8 @@ const LineUpList = ({
   const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [count, setCount] = useState(0);
   const navigator = useNavigate();
+  const [showExportConfirmation, setShowExportConfirmation] = useState(false);
+  const [isDataSending, setIsDataSending] = useState(false);
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_48
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -141,7 +144,11 @@ const LineUpList = ({
     fetchCallingTrackerData();
   }, [employeeIdnew]);
 
+<<<<<<< HEAD
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_171
+=======
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_144
+>>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
   const fetchManager = async () => {
     try {
       const response = await fetch(
@@ -153,7 +160,11 @@ const LineUpList = ({
       console.error("Error fetching shortlisted data:", error);
     }
   };
+<<<<<<< HEAD
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_183
+=======
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_156
+>>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
 
   const fetchTeamLeader = async (empId) => {
     try {
@@ -403,11 +414,6 @@ const LineUpList = ({
     return null;
   };
 
-  const handleShortlistedShare = (e) => {
-    e.preventDefault();
-    setShowShareButton(false);
-  };
-
   const handleSelectAll = () => {
     if (allSelected) {
       setSelectedRows([]);
@@ -445,6 +451,10 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_475
   const handleShare = async () => {
+<<<<<<< HEAD
+=======
+    setIsDataSending(true);
+>>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
     let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
@@ -478,9 +488,17 @@ const LineUpList = ({
       };
       const response = await fetch(url, requestOptions);
       if (!response.ok) {
+<<<<<<< HEAD
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       // Handle success response
+=======
+        setIsDataSending(false);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      // Handle success response
+      setIsDataSending(false);
+>>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
       console.log("Candidates forwarded successfully!");
       fetchCallingTrackerData();
       onSuccessAdd(true);
@@ -510,6 +528,10 @@ const LineUpList = ({
       });
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
+<<<<<<< HEAD
+=======
+      setIsDataSending(false);
+>>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
       console.error("Error while forwarding candidates:", error);
       // Handle error scenarios or show error messages to the user
     }
@@ -695,8 +717,29 @@ const LineUpList = ({
 
     // Save the Excel file
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Calling List");
-    XLSX.writeFile(wb, "calling_list.xlsx");
+    XLSX.utils.book_append_sheet(wb, ws, "LineUp List");
+    XLSX.writeFile(wb, "LineUp_list.xlsx");
+  };
+  const showPopup = () => {
+    setShowExportConfirmation(true);
+    document.querySelector(".calling-list-container").classList.add("blurred");
+  };
+
+  const hidePopup = () => {
+    setShowExportConfirmation(false);
+    document
+      .querySelector(".calling-list-container")
+      .classList.remove("blurred");
+  };
+
+  const confirmExport = () => {
+    setShowExportConfirmation(false);
+    handleExportToExcel();
+    hidePopup();
+  };
+
+  const cancelExport = () => {
+    hidePopup();
   };
   //Mohini_Raut_LineUpList_columnsToInclude_columnsToExclude_16/07/2024//
 
@@ -734,20 +777,11 @@ const LineUpList = ({
                     padding: "10px",
                   }}
                 >
-                  <button
-                    className="lineUp-share-close-btn"
-                    onClick={handleExportToExcel}
-                  >
-                    Create Excel
-                  </button>
-
-                  {showShareButton ? (
-                    <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
+                  <div>
+                    <button className="lineUp-share-btn" onClick={showPopup}>
+                      Create Excel
                     </button>
+<<<<<<< HEAD
                   ) : (
                     <div style={{ display: "flex", gap: "5px" }}>
                       <button
@@ -776,6 +810,69 @@ const LineUpList = ({
                       >
                         Forward
                       </button>
+=======
+
+                    {showExportConfirmation && (
+                      <div className="popup-containers">
+                        <p className="confirmation-texts">
+                          Are you sure you want to generate the Excel file?
+                        </p>
+                        <button
+                          onClick={confirmExport}
+                          className="buttoncss-ctn"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={cancelExport}
+                          className="buttoncss-ctn"
+                        >
+                          No
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {userType !== "Recruiters" && (
+                    <div>
+                      {showShareButton ? (
+                        <button
+                          className="lineUp-share-btn"
+                          onClick={() => setShowShareButton(false)}
+                        >
+                          Share
+                        </button>
+                      ) : (
+                        <div style={{ display: "flex", gap: "5px" }}>
+                          <button
+                            className="lineUp-share-close-btn"
+                            onClick={() => {
+                              setShowShareButton(true);
+                              setSelectedRows([]);
+                              setAllSelected(false);
+                            }}
+                          >
+                            Close
+                          </button>
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_793 */}
+                          {userType === "TeamLeader" && (
+                            <button
+                              className="callingList-share-btn"
+                              onClick={handleSelectAll}
+                            >
+                              {allSelected ? "Deselect All" : "Select All"}
+                            </button>
+                          )}
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_801 */}
+                          <button
+                            className="lineUp-forward-btn"
+                            onClick={forwardSelectedCandidate}
+                          >
+                            Forward
+                          </button>
+                        </div>
+                      )}
+>>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
                     </div>
                   )}
                   <button
@@ -1780,6 +1877,11 @@ const LineUpList = ({
             />
           )}
         </>
+      )}
+      {isDataSending && (
+        <div className="ShareFunc_Loading_Animation">
+          <ClipLoader size={50} color="#ffb281" />
+        </div>
       )}
     </div>
   );

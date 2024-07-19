@@ -104,14 +104,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
     setFilterOptions(options);
   }, [filteredCallingList]);
 
-  useEffect(() => {}, [selectedFilters]);
-
-  useEffect(() => {}, [filteredCallingList]);
-
-  useEffect(() => {
-    setFilterOptions(limitedOptions);
-  }, [callingList]);
-
   const handleFilterOptionClick = (option) => {
     if (activeFilterOption === option) {
       setActiveFilterOption(null);
