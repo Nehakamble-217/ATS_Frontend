@@ -35,7 +35,7 @@ const App = () => {
           <Route path="/callingtracker" element={<CallingTrackerForm/>}></Route>
           <Route path="/employee-login" element={<RecruiterPage />} />
           <Route path="/login/:userType" element={<LoginSignup />} />
-          <Route path="/forgot-password/:userType" element={<ForgotPasswordsForm />} />
+          <Route path="/forgot-password/:userType" element={<ForgotPasswordsForm/>}/>
         </Routes>
       </BrowserRouter>
     </div>

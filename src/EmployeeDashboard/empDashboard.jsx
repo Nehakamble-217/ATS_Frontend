@@ -542,14 +542,22 @@ const EmpDashboard = ({ userGroup }) => {
             <CallingList
               updateState={handleUpdateComplete}
               funForGettingCandidateId={gettingCandidateIdForUpdate}
+              onSuccessAdd={handleSuccessAdd}
               loginEmployeeName={loginEmployeeName} //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_545
             />
           )}
         </div>
-        <div>{showShortListedNav && <ShortlistedNavbar />}</div>
+        <div>
+          {showShortListedNav && (
+            <ShortlistedNavbar loginEmployeeName={loginEmployeeName} />
+          )}
+        </div>
         <div>
           {showShortlistedCandidateData && (
-            <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
+            <ShortListedCandidates
+              viewUpdatedPage={viewUpdatedPage}
+              loginEmployeeName={loginEmployeeName}
+            />
           )}
         </div>
         <div>
@@ -574,7 +582,6 @@ const EmpDashboard = ({ userGroup }) => {
             <EmployeeMasterSheet loginEmployeeName={loginEmployeeName} /> //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_574
           )}
         </div>
-
         <div>{incentive && <Incentive />}</div>
         <div>{attendancesheet && <Attendancesheet />}</div>
 
@@ -626,7 +633,6 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showJobDiscriptions && <Home />}</div>
         <div>{showHome && <Home />}</div>
         <div>{showAddedResumes && <AddResumes></AddResumes>}</div>
-        <div>{showShortListedCandidates && <ShortListedCandidates />}</div>
         <div>{showInvoice && <InvoiceTable />}</div>
         <div>
           {showInvoiceReport && (

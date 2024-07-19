@@ -30,9 +30,11 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     communicationRating: "",
     selectYesOrNo: "No",
     callingFeedback: "",
+
     employee: {
       employeeId: parseInt(employeeId, 10),
     },
+    
   };
 
   const initialLineUpState = {
