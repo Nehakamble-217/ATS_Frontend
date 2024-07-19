@@ -55,7 +55,7 @@ const LoginSignup = ({ onLogin }) => {
   };
   console.log(userType);
   const createAccount =()=>{
-    navigate("/empDash/435/TeamLeader")
+    navigate("/createAccount/Applicant")
   }
 
   return (

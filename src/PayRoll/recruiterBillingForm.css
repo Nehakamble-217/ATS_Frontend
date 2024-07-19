@@ -4,7 +4,7 @@ CSS
 
 /* RecruiterBillingForm.css */
 /* Mohini_15/07/2024_RecruiterBillingForm_Whole_page_css_StartLine_1_EndLine_206 */
-.recruiterBilling-container {
+/* .recruiterBilling-container {
   max-width: 100%;
   margin: 0 auto;
   padding: 20px;
@@ -12,13 +12,13 @@ CSS
   border-radius: 8px;
   background-color: white;
   height: 100%;
-}
+} */
 
-.recruiterBilling-heading {
+/* .recruiterBilling-heading {
   text-align: center;
   font-size: 18px;
   color: gray;
-}
+} */
 
 .recruiterBilling-headingForm {
   width: 100%;
@@ -27,49 +27,49 @@ CSS
   gap: 10px; */
 }
 
-.field-Row-Gray {
+/* .field-Row-Gray {
   width: 100%;
   display: flex;
   align-items: center;
   background-color: #f2f2f2;
   border-radius: 8px;
-}
+} */
 
-.field-Row-white {
+/* .field-Row-white {
   width: 100%;
   display: flex;
   align-items: center;
   background-color: #f0f0f0;
   border-radius: 8px;
-}
+} */
 
-.form-group {
+/* .form-group {
   width: 50%;
   display: flex;
-  height: 40px;
+  height: 40px; */
   /* padding: 5px; */
-  border: 1px solid gray;
+  /* border: 1px solid gray;
   align-items: center;
   justify-content: space-around;
-}
+} */
 
-.form-group label {
+/* .form-group label {
   width: 28%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   /* border-right: 1px solid gray; */
-  color: gray;
-}
+  /* color: gray;
+} */
 
-.form-group input {
+/* .form-group input {
   width: 48%;
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 30px;
   padding: 10px;
   margin-right: 20px;
-}
+} */
 .form-group-date{
   width: 68%;
   border: 1px solid #ccc;

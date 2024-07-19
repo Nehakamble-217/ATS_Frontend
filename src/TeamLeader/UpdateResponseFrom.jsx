@@ -92,6 +92,13 @@ const handleSubmit = async (e) => {
   }
 };
 
+const timeCalculate =()=>{
+   const updateResponseTime = new Date();
+        const updateResponseTime1 = updateResponseTime.toISOString();
+        console.log(updateResponseTime1);
+}
+
+
 return (
 <div className="p-6 bg-white shadow-md rounded-lg max-w-full">
   <div className="mb-4">
@@ -272,7 +279,7 @@ return (
         </div>
          )}
          <div className="mt-4 flex justify-end">
-           <button className="lineUp-share-btn" type="submit">
+           <button className="lineUp-share-btn" onClick={timeCalculate} type="submit">
              Update
            </button>
            <button className="lineUp-share-btn" onClick={onClose}>

@@ -121,10 +121,12 @@ const Home = () => {
   const handleLogin = (userType) => {
     if (userType === "employee") {
       navigate("/employee-login");
-    } else {
+    } else if (userType === "client") {
       navigate(`/employee-login/${userType}`);
     }
   };
+
+  
 
   // useEffect(() => {
   //   const cards = document.querySelectorAll('.square-box');

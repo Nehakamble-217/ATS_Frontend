@@ -87,6 +87,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
+    const [startTime, setStartTime] = useState(null);
+
 
   const [isOtherEducationSelected, setIsOtherEducationSelected] =
     useState(false);
@@ -100,6 +102,8 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
     contactNumber: "",
     sourceName: "",
   });
+
+  
   useEffect(() => {
     fetchRecruiterName();
     fetchRequirementOptions();
@@ -168,6 +172,10 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target || e;
+     if (!startTime) {
+      setStartTime(Date.now());
+      console.log("timmer Start");
+    }
     if (name === "selectYesOrNo" && value === "No") {
       setLineUpData(initialLineUpState);
     } else if (name === "selectYesOrNo" && value === "Interested") {
@@ -190,6 +198,13 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+     if (startTime) {
+       const endTime = Date.now();
+    const timeTaken = (endTime - startTime) / 1000; // Time in seconds
+    const minutes = Math.floor(timeTaken / 60);
+    const seconds = Math.floor(timeTaken % 60);
+    console.log(`Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`);
+    }
 
     try {
       const dataToUpdate = {

@@ -7,6 +7,9 @@ import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 
+
+// Swapnil_Sidebar_AddingEmployeeDetailsinto_ManagerSection_17/07
+
 function Sidebar({
   onLogout,
   openSidebarToggle,
@@ -48,8 +51,14 @@ function Sidebar({
   toggleInvoiceReport,
   /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
   toggleAddCompany /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_46*/,
+
+  toggleCapex,
+  toggleEmployeeDetails,
+
   toggleQuestionPaper,
-  toggleCapex
+    /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-61 */
+  toggelSubscriptions,
+  toggelCompanyPolicy
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -96,6 +105,8 @@ function Sidebar({
   const handleButtonClick = (buttonKey, callback) => (e) => {
     setActiveButton(buttonKey);
     callback(e);
+    
+
   };
 
   // console.log(userGroup);
@@ -136,10 +147,32 @@ function Sidebar({
           <div className="nav">
             <div className="sidebar-menu">
               <ul>
-               
+                     {userType === "SuperUser"  ? (
+                    <li
+                      onClick={handleButtonClick(
+                        "subscription",
+                        toggelSubscriptions
+                      )}
+                      className={
+                        activeButton === "subscription" ? "active" : ""
+                      }
+                    >
+                      <a href="#">
+                        {/* <i className="icon ph-bold ph-house-simple"></i> */}
+
+                        <i
+                          className="xyz-icon"
+                          class="fa-solid fa-user-check"
+                          style={{ color: "gray" }}
+                        ></i>
+                        <span className="sidebar-text">Subscription Plans </span>
+                      </a>
+                    </li>
+                     ): null}
                   <>
                   {userType != "SuperUser" ? (
                     <>
+                     {userType != "Applicant" && userType != "Vendor" ? (
                     <li
                       onClick={handleButtonClick(
                         "interviewDate",
@@ -160,7 +193,10 @@ function Sidebar({
                         <span className="sidebar-text">Shortlisted </span>
                       </a>
                     </li>
-
+                     ): null}
+                  
+                  
+                     {userType === "Applicant" || userType === "Vendor" || userType === "SuperUser" || userType === "Manager" || userType === "TeamLeadder" || userType === "Recruiter"? (
                     <li
                       onClick={handleButtonClick(
                         "callingTrackerForm",
@@ -178,9 +214,10 @@ function Sidebar({
                         <span className="sidebar-text">Add Candidate</span>
                       </a>
                     </li>
-                    </>
-                    ) : null}
+                     ):null}
                     
+            
+                     {userType != "Applicant" ? (
                     <li
                       className={`${activeSubMenu === "candidate" ||
                         isCandidateSectionActive
@@ -248,6 +285,9 @@ function Sidebar({
                             ) : null}
                           </a>
                         </li>
+                        
+                        {userType != "Vendor" ? (
+                           <>
                         <li
                           style={{ marginLeft: "10px" }}
                           hidden
@@ -343,8 +383,14 @@ function Sidebar({
                             </a>
                           </li>
                         ) : null}
+                       </>
+                        ) : null}
                       </ul>
                     </li>
+                    
+                    ): null}
+                    </>
+                    ): null}
                   </>
                
 
@@ -386,7 +432,7 @@ function Sidebar({
                         </span>
                       </a>
                     </li>
-                    {(userType != "Recruiters" && userType != "SuperUser") ||
+                    {(userType != "Recruiters" && userType != "SuperUser" && userType !="Applicant" && userType != "Vendor") ||
                       (userType === "TeamLeader" && userType === "Manager") ? (
                       <li
                         style={{ marginLeft: "10px" }}
@@ -408,8 +454,12 @@ function Sidebar({
                     ) : null}
                   </ul>
                 </li>
+               
+                  <>
                 {userType != "SuperUser" ? (
                   <>
+                   {userType !="Applicant" && userType != "Vendor" ? (
+                    <>
                     <li
                       className={
                         activeSubMenu === "addJobDescription" ? "active" : ""
@@ -464,15 +514,15 @@ function Sidebar({
                     </li>
                     {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
 
-
-
+    </>
+                   ): null}
                   </>
                 ) : null}
 
                 {/*SwapnilRokade_ Add TeamLeader section Added_05/07 */}
                 {userType === "Manager" || "TeamLeader" ? (
                   <>
-                    {userType != "Recruiters" ? (
+                    {userType != "Recruiters" && userType != "Applicant" && userType != "Vendor" ? (
 
                       <li
                         className={
@@ -515,7 +565,7 @@ function Sidebar({
                 ) : null}
 
 
-                {userType != "Recruiters" ? (
+                {userType != "Recruiters" && userType != "Applicant" && userType !="Vendor" ? (
                   <li
                     className={activeButton === "admin-section" ? "active" : ""}
                     onClick={toggleSubMenu("admin-section")}
@@ -594,6 +644,15 @@ function Sidebar({
                           <span className="sidebar-text">All Master Sheet</span>
                         </a>
                       </li>
+                      <li
+                        onClick={toggleEmployeeDetails}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                          <span className="sidebar-text">Employee Details</span>
+                        </a>
+                      </li>
                       {userType === "Manager" || "TeamLeader" ? (
                         <>
                           <li
@@ -657,7 +716,8 @@ function Sidebar({
                 ) : null}
                 {/* </>
 ): null} */}
-
+                {userType != "Applicant" && userType != "Vendor" && userType != "TeamLeader" && userType != "Recruiters"? ( 
+  <>
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_633 */}
                 <li
                   className={activeSubMenu === "SuperUser" ? "active" : ""}
@@ -685,6 +745,8 @@ function Sidebar({
                     </li>
                   </ul>
                 </li>
+                </>
+                )  : null}
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_660 */}
 
                 <li
@@ -704,6 +766,8 @@ function Sidebar({
                     className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
                       }`}
                   >
+                    {userType != "Applicant" ? (
+                      <>
                     <li
                       onClick={handleButtonClick(
                         "excelCalling",
@@ -759,7 +823,9 @@ function Sidebar({
                         <span className="sidebar-text">Resume Data</span>
                       </a>
                     </li>
-
+                    </>
+                    ): null}
+                  {userType === "Applicant"}
                     <li
                       style={{ marginLeft: "10px" }}
                       onClick={toggleShareLink}
@@ -771,7 +837,8 @@ function Sidebar({
                   </ul>
                 </li>
 
-
+                {userType != "Applicant" && userType != "Vendor" ? ( 
+                   <>
                 <li onClick={toggleChatRoom}>
                   <a href="#">
                     {/* <i className="icon ph-bold ph-gear"></i> */}
@@ -870,6 +937,30 @@ function Sidebar({
                     </li>
                   </>
                 ) : null}
+               </>
+                ) : null}
+                </>
+                     <li
+                      onClick={handleButtonClick(
+                        "companyPolicy",
+                        toggelCompanyPolicy
+                      )}
+                      className={
+                        activeButton === "companyPolicy" ? "active" : ""
+                      }
+                    >
+                      <a href="#">
+                        {/* <i className="icon ph-bold ph-house-simple"></i> */}
+
+                        <i
+                          className="xyz-icon"
+                          class="fa-solid fa-user-check"
+                          style={{ color: "gray" }}
+                        ></i>
+                        <span className="sidebar-text">Company Policy </span>
+                      </a>
+                    </li>
+                
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">
                     {/* <i className="icon ph-bold ph-sign-out"></i> */}

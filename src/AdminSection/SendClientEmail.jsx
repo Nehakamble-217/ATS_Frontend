@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./SendClientEmail.css";
+import { differenceInDays, differenceInSeconds } from 'date-fns';
+
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -15,6 +17,8 @@ import axios from "axios";
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
+  const {userType} =useParams();
+
   // const employeeIdnew = parseInt(employeeId);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
@@ -34,6 +38,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [difference,setDifference]=useState();
 
   const navigator = useNavigate();
   const limitedOptions = [
@@ -82,7 +87,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
   useEffect(() => {
     fetch(
-      `http://192.168.1.46:8891/api/ats/157industries/calling-lineup/${employeeId}`
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -1085,6 +1090,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
                 selectedCandidate={selectedRows}
                 onSuccessFullEmailSend={handleSuccessEmailSend}
                 clientEmailSender={clientEmailSender}
+                date1={date1}
               />
             ) : null}
             {/* Name:-Akash Pawar Component:-LineUpList
@@ -1129,6 +1135,7 @@ const SendEmailPopup = ({
   selectedCandidate,
   onSuccessFullEmailSend,
   clientEmailSender,
+  date1
 }) => {
   const [to, setTo] = useState("");
   const [cc, setCc] = useState("");
@@ -1141,6 +1148,7 @@ const SendEmailPopup = ({
   const [emailBody, setEmailBody] = useState(
     "hi Deepak,\n\nSharing 2 more profiles: Dotnet+Azure Developer."
   );
+  const [difference,setDifference]=useState([])
 
   // const handleSignatureImageChange = (event) => {
   //   const file = event.target.files[0];
@@ -1178,7 +1186,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.46:9090/api/ats/157industries/add-client-details",
+        "http://192.168.1.46:9090/api/ats/157industries/  ",
         clientData
       );
       if (response) {
@@ -1193,6 +1201,7 @@ const SendEmailPopup = ({
   };
 
   const handleSendEmail = () => {
+    
     setIsMailSending(true);
     const emailData = {
       to,
@@ -1212,17 +1221,56 @@ const SendEmailPopup = ({
     };
 
     axios
-      .post("http://192.168.1.46:9090/api/ats/157industries/send-email", emailData)
+      .post(
+        "http://192.168.1.46:9090/api/ats/157industries/send-email",
+        emailData
+      )
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
         console.log("Email sent successfully:", response.data);
+
+        
+         
       })
 
       .catch((error) => {
         setIsMailSending(false);
         setResponse("Error Sending Email");
         console.error("Error sending email:", error);
+        // const mailSendTime = Date.now()/1000;
+
+        const mailSendTime = new Date();
+        const mailTime = mailSendTime.toISOString(); // Use ISO format for consistency
+
+        console.log(`Time of send mail: ${mailTime}`);
+        
+         selectedCandidate.forEach((can) => {
+          const firstDateStr = `${can.date} ${can.candidateAddedTime}`;
+          const firstDate = new Date(firstDateStr); // Assuming firstDateStr is in a valid format
+
+          const date1 = new Date(mailTime);
+          const date2 = firstDate;
+
+          const getDifference = (date1, date2) => {
+            const diffInMs = date1 - date2;
+            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+            const diffInHours = Math.floor((diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const diffInMinutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+            return { days: diffInDays, hours: diffInHours, minutes: diffInMinutes };
+          };
+
+          if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
+            console.log(`Error: Invalid date format for candidate ${can.candidateName}`);
+            return;
+          }
+
+          const { days, hours, minutes } = getDifference(date1, date2);
+          console.log(`Candidate: ${can.candidateName}`);
+          console.log(`Difference: ${days} days, ${hours} hours, and ${minutes} minutes`);
+          
+        });
+
       });
   };
 

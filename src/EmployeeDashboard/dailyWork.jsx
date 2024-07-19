@@ -65,20 +65,20 @@ function DailyWork({
   const [profileImage, setProfileImage] = useState(null);
 
   const navigate = useNavigate();
-  const {userType}=useParams();
+  const { userType } = useParams();
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-
           `http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
         );
         setEmployeeData(response.data);
+        // console.log(response.data);
         //Akash_Pawar_DailyWork_senderinformation_09/07_74
         onCurrentEmployeeJobRoleSet(response.data.jobRole);
         const emailSender = {
-          senderName: response.data.employeeName,
-          senderMail: response.data.employeeEmail,
+          senderName: response.data.name,
+          senderMail: response.data.officialMail,
         };
         emailSenderInformation(emailSender);
         //Akash_Pawar_DailyWork_senderinformation_09/07_81
@@ -721,14 +721,17 @@ function DailyWork({
         </div>
         <div className="user-details">
           <p>
-            {employeeData.name}  - {employeeData.jobRole}<br />
+            {employeeData.name} - {employeeData.jobRole}
+            <br />
             157{employeeId}
           </p>
         </div>
       </div>
-      {jobRole != "SuperUser" ? (
+      {userType != "SuperUser" && userType !="Applicant" && userType !="Vendor" ? (
         <>
-          <div className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}>
+          <div
+            className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}
+          >
             <div className="daily-t-btn">
               <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
                 Target : 10
@@ -803,7 +806,6 @@ function DailyWork({
             src={logoutImg}
             alt="Logout"
           /> */}
-
           </div>
 
           <button

@@ -1,0 +1,21 @@
+.ActionCol{
+    width: 250px;
+    border: 1px solid gray;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+.tableActionCol
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2px 0px;
+}
+.action-button{
+    padding: 2px 2px;
+    background: #ffcb9b;
+    font-size: 16px;
+    border-radius: 15px;
+}
