@@ -10,11 +10,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Form, Table } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 // SwapnilRokade_SendClientEmail_ModifyFilters_11/07
-
  // SwapnilROkade_AddingErrorAndSuccessMessage_19/07
-
 
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
@@ -86,7 +83,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
   useEffect(() => {
     fetch(
-
       `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeId}`
     )
       .then((response) => response.json())
@@ -116,6 +112,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
       setActiveFilterOption(option);
     }
   };
+
   const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector(".tooltip");
@@ -255,7 +252,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
       if (!updatedFilters[option]) {
         updatedFilters[option] = [];
       }
-
       const index = updatedFilters[option].indexOf(value);
       if (index === -1) {
         updatedFilters[option] = [...updatedFilters[option], value];
@@ -264,7 +260,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           (item) => item !== value
         );
       }
-
       return updatedFilters;
     });
   };
@@ -303,10 +298,8 @@ const SendClientEmail = ({ clientEmailSender }) => {
   const convertToDocumentLink = (byteCode, fileName) => {
     if (byteCode) {
       try {
-        // Detect file type based on file name extension or content
         const fileType = fileName.split(".").pop().toLowerCase();
 
-        // Convert PDF
         if (fileType === "pdf") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -317,7 +310,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           return URL.createObjectURL(blob);
         }
 
-        // Convert Word document (assuming docx format)
         if (fileType === "docx") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);

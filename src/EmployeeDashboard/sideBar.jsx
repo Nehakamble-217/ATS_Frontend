@@ -130,7 +130,6 @@ function Sidebar({
   return (
     <>
       <div className={`sidebar ${isActive ? "active" : ""}`}>
-        {/* <div className="sidebar-clouds1"></div> */}
         {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */}
         <div className="head-sidebar">
           <div className="sidebar-menu-btn" onClick={toggleSidebar}>
@@ -184,11 +183,10 @@ function Sidebar({
                   ) : null}
 
                   <li
-                    className={`${
-                      activeSubMenu === "candidate" || isCandidateSectionActive
-                        ? "active"
-                        : ""
-                    }`}
+                    className={`${activeSubMenu === "candidate" || isCandidateSectionActive
+                      ? "active"
+                      : ""
+                      }`}
                     onClick={toggleSubMenu("candidate")}
                   >
                     <a href="#">
@@ -208,9 +206,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu ${
-                        activeSubMenu === "candidate" ? "active" : ""
-                      }`}
+                      className={`sub-menu ${activeSubMenu === "candidate" ? "active" : ""
+                        }`}
                     >
                       <li
                         style={{ marginLeft: "10px" }}
@@ -275,7 +272,6 @@ function Sidebar({
                         }
                       >
                         <a href="#">
-                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                           <span className="sidebar-text">
                             Selected Candidate
                           </span>
@@ -322,13 +318,13 @@ function Sidebar({
                     <img src={Circle} style={{ width: "10px" }} alt="" />
                     <span className="sidebar-text">Self Offer Work</span>
                   </a>
-                </li> */}
+                 </li> */}
                       {/* ---------Arshad Comment this changes dont uncomment-------------- */}
 
                       {userType === "Manager" &&
-                      "SuperUser" &&
-                      userType != "TeamLeader" &&
-                      userType != "Recruiter" ? (
+                        "SuperUser" &&
+                        userType != "TeamLeader" &&
+                        userType != "Recruiter" ? (
                         <li
                           onClick={toggleEmployeeMasterSheet}
                           style={{ marginLeft: "10px" }}
@@ -344,11 +340,10 @@ function Sidebar({
                 </>
 
                 <li
-                  className={`${
-                    activeSubMenu === "Jobdiscription" || isJobDescriptionActive
-                      ? "active"
-                      : ""
-                  }`}
+                  className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
+                    ? "active"
+                    : ""
+                    }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
                   <a href="#">
@@ -361,9 +356,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu ${
-                      activeSubMenu === "Jobdiscription" ? "active" : ""
-                    }`}
+                    className={`sub-menu ${activeSubMenu === "Jobdiscription" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -384,7 +378,7 @@ function Sidebar({
                       </a>
                     </li>
                     {(userType != "Recruiters" && userType != "SuperUser") ||
-                    (userType === "TeamLeader" && userType === "Manager") ? (
+                      (userType === "TeamLeader" && userType === "Manager") ? (
                       <li
                         style={{ marginLeft: "10px" }}
                         onClick={handleButtonClick(
@@ -423,9 +417,8 @@ function Sidebar({
                       </a>
 
                       <ul
-                        className={`sub-menu sub-menu1 ${
-                          activeSubMenu === "employee" ? "active" : ""
-                        }`}
+                        className={`sub-menu sub-menu1 ${activeSubMenu === "employee" ? "active" : ""
+                          }`}
                       >
                         <li
                           style={{ marginLeft: "10px" }}
@@ -482,11 +475,10 @@ function Sidebar({
                           <i className="arrow ph-bold ph-caret-down"></i>
                         </a>
                         <ul
-                          className={`sub-menu sub-menu1 ${
-                            activeSubMenu === "TeamLeader-section"
-                              ? "active"
-                              : ""
-                          }`}
+                          className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section"
+                            ? "active"
+                            : ""
+                            }`}
                         >
                           <li
                             onClick={toggleUpdateResponse}
@@ -532,9 +524,8 @@ function Sidebar({
                     </a>
 
                     <ul
-                      className={`sub-menu sub-menu1 ${
-                        activeSubMenu === "admin-section" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
+                        }`}
                     >
                       {userType != "TeamLeader" ? (
                         <>
@@ -662,7 +653,7 @@ function Sidebar({
                   </li>
                 ) : null}
                 {/* </>
-): null} */}
+                  ): null} */}
 
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_633 */}
                 <li
@@ -678,9 +669,8 @@ function Sidebar({
                     <i className="arrow ph-bold ph-caret-down"></i>
                   </a>
                   <ul
-                    className={`sub-menu sub-menu1 sub-menu2 ${
-                      activeSubMenu === "SuperUser" ? "active" : ""
-                    }`}
+                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "SuperUser" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -709,9 +699,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu sub-menu1 sub-menu2 ${
-                      activeSubMenu === "database" ? "active" : ""
-                    }`}
+                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
+                      }`}
                   >
                     <li
                       onClick={handleButtonClick(
@@ -802,9 +791,8 @@ function Sidebar({
                       </a>
 
                       <ul
-                        className={`sub-menu sub-menu1 sub-menu2 ${
-                          activeSubMenu === "portal" ? "active" : ""
-                        }`}
+                        className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
+                          }`}
                       >
                         <li style={{ marginLeft: "10px" }}>
                           <a href="#">
@@ -873,9 +861,9 @@ function Sidebar({
                     </li>
                   </>
                 ) : null}
+
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">
-                    {/* <i className="icon ph-bold ph-sign-out"></i> */}
                     <i
                       className="fa-solid fa-power-off"
                       style={{ color: "gray" }}
@@ -883,21 +871,16 @@ function Sidebar({
                     <span className="sidebar-text">Logout</span>
                   </a>
                 </li>
+
               </ul>
             </div>
-
-            {/* <div className="sidebar-menu">
-          <ul>
-            
-          </ul>
-        </div> */}
-
             <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
               <ul></ul>
             </div>
           </div>
         </div>
       </div>
+
       {showConfirmation && (
         <div
           className="bg-black bg-opacity-50 modal show"
