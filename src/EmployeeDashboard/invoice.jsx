@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import './invoice.css'; 
 import axios from 'axios';
+import { toast } from 'react-toastify';
 // SwapnilRokade_InvoiceTable_StroreFormDateToDatabase__07_to_654_12/07
 // SwapnilRokade_InvoiceTable_StoringSupplierSection_09To664_15/07
 const InvoiceTable = () => {
@@ -110,12 +111,12 @@ const InvoiceTable = () => {
           'Content-Type': 'application/json'
         }
       });
-      console.log("invoice saved",res.data);
+      toast.success("Invoice Saved Successfully")
       e.target.reset();
     }
     catch(error)
     {
-      console.log("error saving invoice",error);
+      toast.error("Failed to save invoice");
     }
   }
 

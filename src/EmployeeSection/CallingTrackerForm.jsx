@@ -9,6 +9,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
   const { employeeId } = useParams();
@@ -229,7 +230,7 @@ const CallingTrackerForm = ({ onsuccessfulDataAdditions, initialData }) => {
         fetchRecruiterName();
       }, 3000);
     } catch (error) {
-      console.error("Error:", error);
+      toast.error(error);
     }
   };
 
