@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../EmployeeSection/DataComponent.css";
+import { toast } from "react-toastify";
 
 const DataComponent = ({ onClose }) => {
   const [target, setTarget] = useState({ targetValue: 10, archived: 0 });
@@ -31,7 +32,7 @@ const DataComponent = ({ onClose }) => {
 
   useEffect(() => {
     if (target.archived === target.targetValue) {
-      setMessage("Target is completed");
+      toast.success("Target is completed");
     }
   }, [target.archived, target.targetValue]);
 
@@ -56,7 +57,7 @@ const DataComponent = ({ onClose }) => {
           <td style={{padding:"6px",border: "2px solid gray",backgroundColor:"white"}}>{pendings}</td>
         </tr>
       </table>
-      {message && <p>{message}</p>}
+      {/* {message && <p>{message}</p>} */}
     </div>
   );
 };

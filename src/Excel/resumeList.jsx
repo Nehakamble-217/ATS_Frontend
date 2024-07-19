@@ -19,7 +19,7 @@ const ResumeList = ({ handleUpdate }) => {
         const fetchData = async () => {
             try {
 
-                const response = await fetch('http://192.168.1.46:8891/api/ats/157industries/all-resumes-data'); // Replace with your API URL
+                const response = await fetch('http://192.168.1.46:9090/api/ats/157industries/all-resumes-data'); // Replace with your API URL
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -78,15 +78,6 @@ const ResumeList = ({ handleUpdate }) => {
             tooltip.style.visibility = 'hidden';
         }
     };
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
      //Swapnil_Rokade_ResumeList_columnsToInclude_columnsToExclude_18/07/2024//
    const handleExportToExcel = () => {
     // Define columns to include in export

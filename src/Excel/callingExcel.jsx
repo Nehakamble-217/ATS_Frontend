@@ -5,6 +5,7 @@ import LineupExcelData from "./lineupExcelData";
 import "./callingExcel.css";
 import CallingExcelList from "../Excel/callingExcelData";
 import ResumeList from "./resumeList";
+import { toast } from "react-toastify";
 
 const CallingExcel = ({ onClose }) => {
   const [file, setFile] = useState(null);
@@ -49,7 +50,7 @@ const CallingExcel = ({ onClose }) => {
 
   const handleUpload = async () => {
     if (!file) {
-      alert("Please select a file to upload.");
+      toast.error("Please select a file to upload.");
       return;
     }
     const formData = new FormData();
@@ -66,6 +67,7 @@ const CallingExcel = ({ onClose }) => {
         }
       );
       setUploadSuccess(true);
+      toast.success("File Uploaded Successfully")
       setActiveTable("CallingExcelList");
       hideSuccessMessage();
       setFile(null);
@@ -73,14 +75,14 @@ const CallingExcel = ({ onClose }) => {
         fileInputRef.current.value = "";
       }
     } catch (error) {
-      console.error("Upload error:", error);
-      setUploadError("Error uploading file. Please try again.");
+      toast.error("Upload error:", error);
+      // setUploadError("Error uploading file. Please try again.");
     }
   };
 
   const handleUploadLineupFile = async () => {
     if (!file) {
-      alert("Please select a file to upload.");
+      toast.error("Please select a file to upload.");//Swapnil Error&success message 
       return;
     }
     const formData = new FormData();
@@ -98,8 +100,9 @@ const CallingExcel = ({ onClose }) => {
           },
         }
       );
-      console.log(employeeId + " - line Page 02");
+      
       setUploadSuccessLineUp(true);
+      toast.success("File Uploaded Successfully")
       setActiveTable("LineupExcelData");
       hideSuccessMessage();
       setFile(null);
@@ -107,8 +110,8 @@ const CallingExcel = ({ onClose }) => {
         fileInputRef.current.value = "";
       }
     } catch (error) {
-      console.error("Upload error:", error);
-      setUploadErrorLineUp("Error uploading file. Please try again.");
+      toast.error("Upload error:", error);
+      // setUploadErrorLineUp("Error uploading file. Please try again.");
     }
   };
 
@@ -123,6 +126,7 @@ const CallingExcel = ({ onClose }) => {
         formData
       );
       setUploadSuccessResume(true);
+      toast.success("File Uploaded Successfully")
       setActiveTable("ResumeList");
       hideSuccessMessage();
       setSelectedFiles([]);
@@ -130,8 +134,8 @@ const CallingExcel = ({ onClose }) => {
         fileInputRef.current.value = "";
       }
     } catch (error) {
-      console.error("Error uploading files:", error);
-      setUploadErrorResume("Error uploading file. Please try again.");
+      toast.error("Error uploading files:", error);
+      // setUploadErrorResume("Error uploading file. Please try again.");
     }
 
     axios
@@ -191,7 +195,7 @@ const CallingExcel = ({ onClose }) => {
             <div className="gap-2 d-grid">
               <button onClick={handleUpload}>Upload</button>
 
-              {uploadSuccess && (
+              {/* {uploadSuccess && (
                 <center>
                   <h5 className="mt-3 text-success">
                     Excel File Added successfully....
@@ -202,7 +206,7 @@ const CallingExcel = ({ onClose }) => {
                 <center>
                   <h5 className="mt-3 text-danger">{uploadError}</h5>
                 </center>
-              )}
+              )} */}
               <button onClick={() => handleTableChange("CallingExcelList")}>
                 View
               </button>
@@ -231,7 +235,7 @@ const CallingExcel = ({ onClose }) => {
             </div>
             <div className="gap-2 d-grid">
               <button onClick={handleUploadLineupFile}>Upload</button>
-              {uploadSuccessLineUp && (
+              {/* {uploadSuccessLineUp && (
                 <center>
                   <h5 className="mt-3 text-success">
                     Line File added successfully...
@@ -242,7 +246,7 @@ const CallingExcel = ({ onClose }) => {
                 <center>
                   <h5 className="mt-3 text-danger">{uploadErrorLineUp}</h5>
                 </center>
-              )}
+              )} */}
               <button onClick={() => handleTableChange("LineupExcelData")}>
                 View
               </button>
@@ -271,7 +275,7 @@ const CallingExcel = ({ onClose }) => {
             </div>
             <div className="gap-2 d-grid">
               <button onClick={handleUploadResume}>Upload</button>
-              {uploadSuccessResume && (
+              {/* {uploadSuccessResume && (
                 <center>
                   <h5 className="mt-3 text-success">
                     Resume Data added successfully...
@@ -282,7 +286,7 @@ const CallingExcel = ({ onClose }) => {
                 <center>
                   <h5 className="mt-3 text-danger">{uploadErrorResume}</h5>
                 </center>
-              )}
+              )} */}
               <button onClick={() => handleTableChange("ResumeList")}>
                 View
               </button>

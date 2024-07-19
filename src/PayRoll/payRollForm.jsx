@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { addEmployee as addEmployeeService } from '../api/api';
 import '../PayRoll/payRollForm.css';
+import { toast } from 'react-toastify';
 
 const roleSalaries = {
     Admin: 3000,
@@ -71,8 +72,9 @@ const PayRollForm = ({ addEmployee }) => {
                 daysPresent: "",
                 totalSalary: "",
             });
+            toast.success("Employee Added successfully");////Swapnil Error&success message 
         } catch (error) {
-            console.error("Error adding employee:", error);
+            toast.error("Error adding employee:", error);//Swapnil Error&success message
         }
     };
 

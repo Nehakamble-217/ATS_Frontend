@@ -235,8 +235,8 @@ const JobListing = () => {
           <button className="search-button" onClick={filterData}>
             <span className="search-icon">
               <i className="fas fa-search"></i>
+              Search
             </span>
-            <span>Search</span>
           </button>
         </div>
       </div>

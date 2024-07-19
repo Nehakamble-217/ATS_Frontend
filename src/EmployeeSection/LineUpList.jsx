@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({
   updateState,
@@ -498,8 +499,12 @@ const LineUpList = ({
       }
       // Handle success response
       setIsDataSending(false);
+<<<<<<< HEAD
 >>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
       console.log("Candidates forwarded successfully!");
+=======
+      toast.success("Candidates forwarded successfully!");//Swapnil Error&success message 
+>>>>>>> 47310eeeac2e00d977083096f239063679d24024
       fetchCallingTrackerData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -531,8 +536,13 @@ const LineUpList = ({
 <<<<<<< HEAD
 =======
       setIsDataSending(false);
+<<<<<<< HEAD
 >>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
       console.error("Error while forwarding candidates:", error);
+=======
+      setShowForwardPopup(false);//Swapnil Error&success message 
+      toast.error("Error while forwarding candidates:");//Swapnil Error&success message 
+>>>>>>> 47310eeeac2e00d977083096f239063679d24024
       // Handle error scenarios or show error messages to the user
     }
   };

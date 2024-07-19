@@ -14,6 +14,7 @@ import CallingTrackerForm from "./EmployeeSection/CallingTrackerForm";
 import LoginSignup from "./MainDashboard/loginSignup.jsx";
 import RecruiterPage from "./MainDashboard/recruiterPage.jsx"
 import ForgotPasswordsForm from "./MainDashboard/empForgotPasswords.jsx";
+import { ToastContainer } from "react-toastify";
 
 
 
@@ -21,6 +22,7 @@ const App = () => {
 
   return (
     <div>
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -38,6 +40,7 @@ const App = () => {
           <Route path="/forgot-password/:userType" element={<ForgotPasswordsForm />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer/>
     </div>
   );
 }

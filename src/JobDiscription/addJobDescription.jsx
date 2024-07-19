@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./addJobDescription.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const AddJobDescription = () => {
   const [formData, setFormData] = useState({
@@ -93,7 +96,7 @@ const AddJobDescription = () => {
       console.log(response);
       if (response.ok) {
         const result =await response.text();
-        console.log("Success:", result);
+        toast.success(result);
         setFormData({
           companyName: "",
           designation: "",
@@ -134,15 +137,16 @@ const AddJobDescription = () => {
 
         });
       } else {
-        console.error("Error:", response.statusText);
+        toast.error(`Error: ${errorText}`);
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error(`Error: ${error.message}`);
     }
   };
 
   return (
     <main className="job-desc">
+   
       <section className="job-performance">
         <article>
           <b>ADD JOB DESCRIPTION</b>
@@ -159,6 +163,7 @@ const AddJobDescription = () => {
                   value={formData.companyName}
                   onChange={handleChange}
                   placeholder="Enter Company Name"
+                  required
                 />
               </div>
               <div className="field">
@@ -169,6 +174,7 @@ const AddJobDescription = () => {
                   value={formData.designation}
                   onChange={handleChange}
                   placeholder="Enter Designation"
+                  required
                 />
               </div>
             </div>
@@ -235,6 +241,7 @@ const AddJobDescription = () => {
                   value={formData.location}
                   onChange={handleChange}
                   placeholder="Enter Location"
+                  required
                 />
               </div>
             </div>
@@ -247,6 +254,7 @@ const AddJobDescription = () => {
                   value={formData.salary}
                   onChange={handleChange}
                   placeholder="Enter Salary"
+                  required
                 />
               </div>
               <div className="field">
@@ -273,6 +281,7 @@ const AddJobDescription = () => {
                   value={formData.experience}
                   onChange={handleChange}
                   placeholder="Enter Experience"
+                  required
                 />
               </div>
               <div className="field">
@@ -305,6 +314,7 @@ const AddJobDescription = () => {
                   value={formData.skills}
                   onChange={handleChange}
                   placeholder="Enter Skills"
+                  required
                 />
               </div>
             </div>
