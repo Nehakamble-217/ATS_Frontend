@@ -1,59 +1,181 @@
+
+
 import React, { useState } from 'react';
+import { RWebShare } from 'react-web-share';
 import './scheduleInterview.css';
 
+import googleMeetLogo from '../LogoImages/googlemeet.png';
+import microsoftTeamsLogo from '../LogoImages/microsoftteam.jpeg';
+import zoomLogo from '../LogoImages/zoom.jpg';
+
 function ScheduleInterview() {
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [meetingLink, setMeetingLink] = useState(null);
+  const [selectedJobId, setSelectedJobId] = useState('');
+  const [candidateName, setCandidateName] = useState('');
+  const [candidateEmail, setCandidateEmail] = useState('');
+  const [candidateContact, setCandidateContact] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [interviewer, setInterviewer] = useState('');
 
   const platforms = [
-    { name: 'Microsoft Teams', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg', color: '#0078d4' },
-    { name: 'Google Meet', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Google_Meet_icon_%282020%29.svg', color: '#34a853' },
-    { name: 'Skype', logo: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Skype_logo_%282019%29.svg', color: '#00aff0' },
-    { name: 'BlueJeans', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/36/BlueJeans_Logo.png', color: '#0072c6' },
-    { name: 'Zoom', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Zoom_Communications_Logo.svg', color: '#2d8cff' },
-    { name: 'Cisco Webex', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Cisco_Webex_Meetings_Logo.png', color: '#0075ff' },
-    { name: 'Doodle', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Doodle_logo.svg', color: '#f28c38' },
-    { name: 'GoToMeeting', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/LogMeIn_GoToMeeting_Logo.png', color: '#ff7f00' },
-    { name: 'Slack', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png', color: '#4a154b' },
-    { name: 'Jitsi Meet', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Jitsi-logo.png', color: '#0d47a1' },
+    { name: 'Google Meet', logo: googleMeetLogo, baseUrl: 'https://meet.google.com/new' },
+    { name: 'Microsoft Teams', logo: microsoftTeamsLogo, baseUrl: 'https://teams.microsoft.com/' },
+    { name: 'Zoom', logo: zoomLogo, baseUrl: 'https://zoom.us/' }
   ];
 
-  const createNewMeeting = (platform) => {
-    const newLink = `https://${platform.toLowerCase().replace(/\s+/g, '')}.com/${Math.random().toString(36).substr(2, 10)}`;
-    setMeetingLink(newLink);
+  const jobIds = ['Job1', 'Job2', 'Job3']; // Replace with actual job IDs
+
+  const createNewMeeting = () => {
+    const platform = platforms.find(p => p.name === selectedPlatform);
+    if (platform) {
+      const newLink = platform.baseUrl;
+      setMeetingLink(newLink);
+    }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(meetingLink);
-    alert('Meeting link copied to clipboard');
-  };
+  const handleJobIdChange = (e) => {
+    const jobId = e.target.value;
+    setSelectedJobId(jobId);
 
-  const dismissMeeting = () => {
-    setMeetingLink(null);
+    // Here you can add logic to fetch and set the client info based on the selected job ID
+    if (jobId === 'Job1') {
+      setClientName('Client 1');
+      setClientEmail('client1@example.com');
+      setInterviewer('Hr in TCS');
+    } else if (jobId === 'Job2') {
+      setClientName('Client 2');
+      setClientEmail('client2@example.com');
+      setInterviewer('Hr in Wipro');
+    } else if (jobId === 'Job3') {
+      setClientName('Client 3');
+      setClientEmail('client3@example.com');
+      setInterviewer('Hr in Infosys');
+    } else {
+      setClientName('');
+      setClientEmail('');
+      setInterviewer('');
+    }
   };
 
   return (
-    <div>
-      <div className='interviewbox'>
-        {platforms.map((platform, index) => (
-          <div key={index} className='interviewboxs' style={{ borderColor: platform.color }}>
-            <h1>
-              <img src={platform.logo} alt={`${platform.name} Logo`} className="platform-logo" />
-              {platform.name}
-            </h1>
-            <button className="platform-button" style={{ backgroundColor: platform.color }} onClick={() => createNewMeeting(platform.name)}>
-              Create new meeting
-            </button>
+    <div className="Interview-App">
+      {!selectedPlatform ? (
+        <div className="platform-selection">
+          <h1 style={{ textDecoration: "underline" }}>Select a Platform</h1>
+          <div className="platforms">
+            {platforms.map(platform => (
+              <div key={platform.name} className="platform-card" onClick={() => setSelectedPlatform(platform.name)}>
+                <img 
+                  src={platform.logo} 
+                  alt={`${platform.name} logo`} 
+                  className="platform-logo"
+                />
+                <h2>{platform.name}</h2>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      {meetingLink && (
-        <div className="meeting-options">
-          <p>Meeting Link: {meetingLink}</p>
-          <button className="platform-button" onClick={copyToClipboard}>Copy Link</button>
-          <button className="platform-button">Share</button>
-          <button className="platform-button">Join</button>
-          <button className="platform-button" onClick={dismissMeeting}>Dismiss</button>
         </div>
+      ) : (
+        <form className="interview-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="interview-form-header">{selectedPlatform} Meeting</div>
+          <div className="interview-form-content">
+      
+            <div className="Interview-form-group">
+        
+              <label className="user-type-label">
+                Job ID:
+                <select 
+                  value={selectedJobId} 
+                  onChange={handleJobIdChange} 
+                >
+                  <option value="">Select Job ID</option>
+                  {jobIds.map(jobId => (
+                    <option key={jobId} value={jobId}>{jobId}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            
+            <div className="form-fields">
+              <label>Candidate Name:</label>
+              <input 
+                type="text" 
+                value={candidateName} 
+                onChange={e => setCandidateName(e.target.value)} 
+                placeholder="Candidate Name" 
+              />
+              <label>Email ID:</label>
+              <input 
+                type="email" 
+                value={candidateEmail} 
+                onChange={e => setCandidateEmail(e.target.value)} 
+                placeholder="Candidate Email ID" 
+              />
+              <label>Contact No:</label>
+              <input 
+                type="text" 
+                value={candidateContact} 
+                onChange={e => setCandidateContact(e.target.value)} 
+                placeholder="Candidate Contact No" 
+              />
+            </div>
+           
+            {selectedJobId && (
+              <div className="form-fields">
+                <label>Client Name:</label>
+                <input 
+                  type="text" 
+                  value={clientName} 
+                  onChange={e => setClientName(e.target.value)} 
+                  placeholder="Client Name" 
+                />
+                <label>Email ID:</label>
+                <input 
+                  type="email" 
+                  value={clientEmail} 
+                  onChange={e => setClientEmail(e.target.value)} 
+                  placeholder="Client Email ID" 
+                />
+                <label>Interviewer Name:</label>
+                <input 
+                  type="text" 
+                  value={interviewer} 
+                  onChange={e => setInterviewer(e.target.value)} 
+                  placeholder="Interviewer Name" 
+                />
+              </div>
+            )}
+            <div className="interview-button-container">
+              <button 
+                className="interview-form-button" 
+                type="button" 
+                onClick={createNewMeeting} 
+                disabled={!selectedJobId}
+              >
+                Create New Meeting
+              </button>
+            </div>
+            {meetingLink && (
+              <div className="meeting-details">
+                <p className="meeting-link">Meeting Link: <a href={meetingLink} target="_blank" rel="noopener noreferrer">{meetingLink}</a></p>
+                <div className="share-buttons">
+                  <RWebShare
+                    data={{
+                      title: 'Meeting Invitation',
+                      text: 'Join the meeting using this link:',
+                      url: meetingLink
+                    }}
+                  >
+                    <button className="share-button">Share Link</button>
+                  </RWebShare>
+                  <button className="share-button" style={{ marginLeft: "10px" }}>Save</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </form>
       )}
     </div>
   );

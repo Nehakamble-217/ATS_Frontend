@@ -145,11 +145,7 @@ const LineUpList = ({
     fetchCallingTrackerData();
   }, [employeeIdnew]);
 
-<<<<<<< HEAD
-  //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_171
-=======
   //akash_pawar_LineUpList_ShareFunctionality_17/07_144
->>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
   const fetchManager = async () => {
     try {
       const response = await fetch(
@@ -161,11 +157,7 @@ const LineUpList = ({
       console.error("Error fetching shortlisted data:", error);
     }
   };
-<<<<<<< HEAD
-  //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_183
-=======
   //akash_pawar_LineUpList_ShareFunctionality_17/07_156
->>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
 
   const fetchTeamLeader = async (empId) => {
     try {
@@ -452,10 +444,7 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_475
   const handleShare = async () => {
-<<<<<<< HEAD
-=======
     setIsDataSending(true);
->>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
     let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
@@ -489,22 +478,12 @@ const LineUpList = ({
       };
       const response = await fetch(url, requestOptions);
       if (!response.ok) {
-<<<<<<< HEAD
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      // Handle success response
-=======
         setIsDataSending(false);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       // Handle success response
       setIsDataSending(false);
-<<<<<<< HEAD
->>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
-      console.log("Candidates forwarded successfully!");
-=======
       toast.success("Candidates forwarded successfully!");//Swapnil Error&success message 
->>>>>>> 47310eeeac2e00d977083096f239063679d24024
       fetchCallingTrackerData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -533,16 +512,9 @@ const LineUpList = ({
       });
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
-<<<<<<< HEAD
-=======
       setIsDataSending(false);
-<<<<<<< HEAD
->>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
-      console.error("Error while forwarding candidates:", error);
-=======
       setShowForwardPopup(false);//Swapnil Error&success message 
       toast.error("Error while forwarding candidates:");//Swapnil Error&success message 
->>>>>>> 47310eeeac2e00d977083096f239063679d24024
       // Handle error scenarios or show error messages to the user
     }
   };
@@ -791,36 +763,6 @@ const LineUpList = ({
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
                     </button>
-<<<<<<< HEAD
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-close-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                          setAllSelected(false);
-                        }}
-                      >
-                        Close
-                      </button>
-                      {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_793 */}
-                      {userType === "TeamLeader" && (
-                        <button
-                          className="callingList-share-btn"
-                          onClick={handleSelectAll}
-                        >
-                          {allSelected ? "Deselect All" : "Select All"}
-                        </button>
-                      )}
-                      {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_801 */}
-                      <button
-                        className="lineUp-forward-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-=======
 
                     {showExportConfirmation && (
                       <div className="popup-containers">
@@ -882,7 +824,6 @@ const LineUpList = ({
                           </button>
                         </div>
                       )}
->>>>>>> 1b8bc08d8543c5888ff5c5dab812b5c6285a5aab
                     </div>
                   )}
                   <button

@@ -1,58 +1,427 @@
-.interviewbox {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
+/* 
+
+.Interview-App {
+  text-align: center;
+  background-color: #FFE5B5;
+  height: 90vh;
+  padding-top: 50px;
+}
+
+.platform-selection {
+  margin-top: 50px;
+  color: gray;
+}
+
+.platforms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.platform-card {
+  background: white;
+  border: 1px solid gray;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 20px;
+  width: 170px;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: gray;
+}
+
+.platform-card:hover {
+  transform: scale(1.10);
+ 
+}
+
+.platform-logo {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.interview-form {
+  display: flex;
+  flex-direction: column;
+  width: 1100px;
+ 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+
+.interview-form-header {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: gray;
+  padding-top: 8px;
+}
+
+.interview-form-content {
+  padding: 15px;
+}
+
+.Interview-form-group{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  gap: 20px;
+  color: gray;
+  font-size: 18px;
+}
+
+.user-type-label {
+  margin-right: 10px;
+  font-size: 18px;
+  display: flex;
+  margin-left: 20px;
   
-  .interviewboxs {
-    border: 2px solid #ccc;
-    padding: 20px;
-    border-radius: 8px;
-    width: 200px;
-    text-align: center;
-    margin: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  margin-left: 5px;
   
-  .interviewboxs h1 {
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+ 
+}
+
+.form-fields label {
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: gray;
+  margin-left: 20px;
+  line-height: 2;
   
+}
+
+.form-fields input {
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  width: 200px;
+  color: gray;
+}
+
+.interview-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.interview-form-button {
+  background-color: #ffcb9b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.form-button:disabled {
+  background-color: #ccc;
+}
+
+.meeting-details {
+  margin-top: 20px;
+}
+
+.meeting-link {
+  margin-bottom: 10px;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.share-button {
+  background-color: #ffcb9b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  .interview-form {
+    width: 100%;
+    padding: 15px;
+  }
+}
+  
+*/
+
+
+
+
+
+/* Existing styles */
+
+.Interview-App {
+  text-align: center;
+  background-color: #FFE5B5;
+  height: 90vh;
+  padding-top: 50px;
+}
+
+.platform-selection {
+  margin-top: 50px;
+  color: gray;
+}
+
+.platforms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.platform-card {
+  background: white;
+  border: 1px solid gray;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 20px;
+  width: 170px;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: gray;
+}
+
+.platform-card:hover {
+  transform: scale(1.10);
+}
+
+.platform-logo {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.interview-form {
+  display: flex;
+  flex-direction: column;
+  width: 1100px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+
+.interview-form-header {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: gray;
+  padding-top: 8px;
+}
+
+.interview-form-content {
+  padding: 15px;
+}
+
+.Interview-form-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  gap: 20px;
+  color: gray;
+  font-size: 18px;
+}
+
+.user-type-label {
+  margin-right: 10px;
+  font-size: 18px;
+  display: flex;
+  margin-left: 20px;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  margin-left: 5px;
+}
+
+.form-fields label {
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: gray;
+  margin-left: 20px;
+  line-height: 2;
+}
+
+.form-fields input {
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  width: 200px;
+  color: gray;
+}
+
+.interview-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.interview-form-button {
+  background-color: #ffcb9b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.form-button:disabled {
+  background-color: #ccc;
+}
+
+.meeting-details {
+  margin-top: 20px;
+}
+
+.meeting-link {
+  margin-bottom: 10px;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.share-button {
+  background-color: #ffcb9b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Responsive styles */
+
+@media (max-width: 1024px) {
+  .interview-form {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .platform-card {
+    width: 150px;
+    height: 180px;
+  }
+
   .platform-logo {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
+    width: 80px;
+    height: 80px;
   }
-  
-  .platform-button {
-    display: block;
-    margin: 5px auto;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .interview-form {
+    width: 100%;
+    margin-left: 0;
+    padding: 10px;
   }
-  
-  .platform-button:hover {
-    opacity: 0.8;
+
+  .platform-card {
+    width: 120px;
+    height: 150px;
+    padding: 10px;
   }
-  
-  .meeting-options {
-    text-align: center;
-    margin-top: 20px;
+
+  .platform-logo {
+    width: 60px;
+    height: 60px;
   }
-  
-  .meeting-options p {
-    margin: 10px 0;
+
+  .form-fields {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .meeting-options button {
-    margin: 5px;
+
+  .form-fields input {
+    width: 100%;
+    margin-left: 0;
   }
-  
+
+  .interview-form-header {
+    font-size: 16px;
+  }
+
+  .interview-form-button {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .share-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .platform-card {
+    width: 100px;
+    height: 130px;
+  }
+
+  .platform-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .interview-form {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .form-fields {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-fields input {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .interview-form-header {
+    font-size: 14px;
+  }
+
+  .interview-form-button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .share-button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}

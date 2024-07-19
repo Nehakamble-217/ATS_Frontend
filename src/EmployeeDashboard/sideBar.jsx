@@ -53,7 +53,7 @@ function Sidebar({
 
   toggleCapex,
   toggleEmployeeDetails,
-
+  toggelResumeData,
   toggleQuestionPaper,
 }) {
   const [error, setError] = useState("");
@@ -642,16 +642,7 @@ function Sidebar({
                         </>
                       ) : null}
 
-                      <li
-                        onClick={handleButtonClick("allMasterSheet", toggleAllMasterSheet)}
-                        style={{ marginLeft: "10px" }}
-                        className={activeButton === "allMasterSheet" ? "active" : ""}
-                      >
-                        <a href="#">
-                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                          <span className="sidebar-text">All Master Sheet</span>
-                        </a>
-                      </li>
+                 
                       <li
 
                         onClick={toggleEmployeeDetails}
