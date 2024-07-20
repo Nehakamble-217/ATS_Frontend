@@ -56,9 +56,9 @@ function Sidebar({
   toggleEmployeeDetails,
 
   toggleQuestionPaper,
-    /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-61 */
+    /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-60 */
   toggelSubscriptions,
-  toggelCompanyPolicy
+  toggleBilling
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -170,9 +170,8 @@ function Sidebar({
                     </li>
                      ): null}
                   <>
-                  {userType != "SuperUser" ? (
                     <>
-                     {userType != "Applicant" && userType != "Vendor" ? (
+                     {userType != "Applicant" && userType != "Vendor" &&  userType != "SuperUser" ? (
                     <li
                       onClick={handleButtonClick(
                         "interviewDate",
@@ -196,7 +195,8 @@ function Sidebar({
                      ): null}
                   
                   
-                     {userType === "Applicant" || userType === "Vendor" || userType === "SuperUser" || userType === "Manager" || userType === "TeamLeadder" || userType === "Recruiter"? (
+                     {userType === "Applicant" || userType === "Vendor" || userType === "SuperUser" || userType === "Manager" || userType === "TeamLeadder" || userType === "Recruiter" ? (
+                      
                     <li
                       onClick={handleButtonClick(
                         "callingTrackerForm",
@@ -368,7 +368,6 @@ function Sidebar({
                         {/* ---------Arshad Comment this changes dont uncomment-------------- */}
 
                         {userType === "Manager" &&
-                          "SuperUser" &&
                           userType != "TeamLeader" &&
                           userType != "Recruiter" ? (
                           <li
@@ -390,7 +389,6 @@ function Sidebar({
                     
                     ): null}
                     </>
-                    ): null}
                   </>
                
 
@@ -587,6 +585,14 @@ function Sidebar({
                         <>
                           { /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
                           <li
+                            onClick={toggleBilling}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <a href="#">
+                              <span className="sidebar-text">Billing dashboard</span>
+                            </a>
+                          </li>
+                          <li
                             onClick={togglePayRoll}
                             style={{ marginLeft: "10px" }}
                           >
@@ -716,7 +722,7 @@ function Sidebar({
                 ) : null}
                 {/* </>
 ): null} */}
-                {userType != "Applicant" && userType != "Vendor" && userType != "TeamLeader" && userType != "Recruiters"? ( 
+                {userType != "Applicant" && userType != "Vendor" && userType != "Recruiters"? ( 
   <>
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_633 */}
                 <li
@@ -940,26 +946,7 @@ function Sidebar({
                </>
                 ) : null}
                 </>
-                     <li
-                      onClick={handleButtonClick(
-                        "companyPolicy",
-                        toggelCompanyPolicy
-                      )}
-                      className={
-                        activeButton === "companyPolicy" ? "active" : ""
-                      }
-                    >
-                      <a href="#">
-                        {/* <i className="icon ph-bold ph-house-simple"></i> */}
-
-                        <i
-                          className="xyz-icon"
-                          class="fa-solid fa-user-check"
-                          style={{ color: "gray" }}
-                        ></i>
-                        <span className="sidebar-text">Company Policy </span>
-                      </a>
-                    </li>
+                     
                 
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">

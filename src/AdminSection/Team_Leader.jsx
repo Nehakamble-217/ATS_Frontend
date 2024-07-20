@@ -3,6 +3,7 @@ import "../AdminSection/Team_Leader.css";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import { json, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Accesstable() {
   const { employeeId } = useParams();
@@ -236,11 +237,12 @@ function Accesstable() {
         setSelectedManager({ managerId: "", managerJobRole: "" });
         setSelectedTeamLeader({ teamLeaderId: "", teamLeaderJobRole: "" });
         setSelectedOptions([]);
+        toast.success("assigning columns successfully"); //Swapnil Error&success message 
         setResponse("");
-      }, 5000);
+      }, 2000);
       // Handle success, update state or show a success message
     } catch (error) {
-      console.error("Error assigning columns:", error);
+      toast.error("Error assigning columns"); //Swapnil Error&success message 
       // Handle error, show an error message or retry logic
     }
   };
@@ -571,9 +573,9 @@ function Accesstable() {
             </div>
           </div>
           <div className="assignOptionBtnCss">
-            {response != "" ? (
+            {/* {response != "" ? (
               <div className="response-msg">{response}</div>
-            ) : null}
+            ) : null} */}
             <button onClick={handleAssignColumns} className="assignoptionbtn">
               Assign Options
             </button>
@@ -694,9 +696,11 @@ const UpdateAccessTable = ({
       setTimeout(() => {
         setResponse("");
         setOpenupdateModal(false);
+        toast.success("Assign Column Successfully")
       }, 3000);
       onSetResponse(true);
     } catch (error) {
+      toast.success("Failed To Assign Column")
       onSetResponse(false);
     }
   };
@@ -849,9 +853,9 @@ const UpdateAccessTable = ({
               </div>
             </div>
           </div>
-          <div style={{ textAlign: "center", padding: "10px" }}>
+          {/* <div style={{ textAlign: "center", padding: "10px" }}>
             {response != "" && response}
-          </div>
+          </div> */}
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
           <button

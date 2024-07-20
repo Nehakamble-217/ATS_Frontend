@@ -3,6 +3,7 @@ import './shareEDM.css'
 import profileImage from '../LogoImages/157logo.jpeg';
 import { useParams } from 'react-router-dom';
 import html2canvas from "html2canvas";
+import { toast } from 'react-toastify';
 
 
 
@@ -14,7 +15,7 @@ function ShareEDM({ Descriptions, onShareEdm }) {
     useEffect(() => {
         fetch(`http://192.168.1.46:9090/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
 
-            .then((response) => response.json())
+            .then((response) => response.text())    
             .then((data) => {
                 console.log(data);
                 setData(data);
@@ -55,7 +56,7 @@ function ShareEDM({ Descriptions, onShareEdm }) {
                 link.click();
             }
         } catch (error) {
-            console.error("Error generating image:", error);
+            toast.error("Error generating image:", error);
         }
     };
 

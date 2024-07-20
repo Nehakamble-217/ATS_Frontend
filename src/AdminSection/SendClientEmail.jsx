@@ -11,8 +11,12 @@ import HashLoader from "react-spinners/HashLoader";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Form, Table } from "react-bootstrap";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // SwapnilRokade_SendClientEmail_ModifyFilters_11/07
+
+ // SwapnilROkade_AddingErrorAndSuccessMessage_19/07
+
 
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
@@ -108,14 +112,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
     );
     setFilterOptions(options);
   }, [filteredCallingList]);
-
-  useEffect(() => {}, [selectedFilters]);
-
-  useEffect(() => {}, [filteredCallingList]);
-
-  useEffect(() => {
-    setFilterOptions(limitedOptions);
-  }, [callingList]);
 
   const handleFilterOptionClick = (option) => {
     if (activeFilterOption === option) {
@@ -1232,6 +1228,7 @@ const SendEmailPopup = ({
 
         
          
+        toast.log("Email sent successfully");
       })
 
       .catch((error) => {
@@ -1271,6 +1268,7 @@ const SendEmailPopup = ({
           
         });
 
+        toast.error("Failed to send email");
       });
   };
 
@@ -1439,13 +1437,13 @@ const SendEmailPopup = ({
           </div>
         </Modal.Body>
         <Modal.Footer style={{ justifyContent: "space-between" }}>
-          {getResponse != "" ? (
+          {/* {getResponse != "" ? (
             <p style={{ color: "red" }}>
               <i>{getResponse}</i>
             </p>
           ) : (
             <p></p>
-          )}
+          )} */}
           <div className="d-flex gap-2 align-items-center">
             <button
               className="SCE-share-forward-popup-btn"

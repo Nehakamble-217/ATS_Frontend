@@ -20,7 +20,7 @@ import Home from "./JobList";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
 import Profile from "../LogoImages/ProfilePic.png";
-import MasterSheet from "../EmployeeSection/masterSheet";
+
 import EmployeeMasterSheet from "../EmployeeSection/employeeMasterSheet";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
@@ -50,6 +50,7 @@ import EmployeeDetails from "../EmployeeDetails/EmployeeDetails";
 import SubscriptionPlans from "../Subscription/subscription";
 import WorkplacePolicy from "../CompanyPolicy/companyPolicy";
 import PaymentForm from "../Subscription/subscriptionPayment";
+import Billing from "../EmployeeSection/billing";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -73,7 +74,6 @@ const EmpDashboard = ({ userGroup }) => {
   const [showShortlistedCandidateData, setShortlistedCandidateData] =
     useState(false);
   const [addJobDescription, setAddJobDescription] = useState(false);
-  const [showMasterSheet, setShowMasterSheet] = useState(false);
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
   const [showShortListedCandidates, setShowShortListedCandidates] =
     useState(false);
@@ -124,7 +124,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
   const [logoutTimestamp, setLogoutTimestamp] = useState(null);
   const [showSubscription,setShowSubscription]=useState(false);
-  const [showCompanyPolicy, setShowCompanyPolicy]=useState(false)
+  const [showBilling, setShowBilling]=useState(false)
   const [showPayment,setShowPayment]=useState(false)
 
   const handleLogoutTime = (timestamp) => {
@@ -226,7 +226,6 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCallingExcel(false);
     setAttendanceSheet(false);
     setShowEmployeeMasterSheet(false);
-    setShowMasterSheet(false);
     setAddJobDescription(false);
     setShowShortListdNav(false);
     setShowAddEmployee(false);
@@ -264,7 +263,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCapex(false);
     setShowEmployeeDetails(false); /*Swapnil_AddedEmployeeDetails_16/07*/
     setShowSubscription(false); /*Arbaz_AddSubscriptions_19/07*/
-    setShowCompanyPolicy(false)
+    setShowBilling(false)
     setShowPayment(false)
     
   };
@@ -311,11 +310,6 @@ const EmpDashboard = ({ userGroup }) => {
   const toggleInterviewDate = () => {
     resetAllToggles();
     setShowShortListdNav(!showShortListedNav);
-  };
-
-  const toggleAllMasterSheet = () => {
-    resetAllToggles();
-    setShowMasterSheet(!showMasterSheet);
   };
 
   const toggleEmployeeMasterSheet = () => {
@@ -478,9 +472,9 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowSubscription(!showSubscription)
   }
-  const toggelCompanyPolicy =()=>{
+  const toggleBilling =()=>{
     resetAllToggles();
-    setShowCompanyPolicy(!showCompanyPolicy)
+    setShowBilling(!showBilling)
   }
  const  togglePayment=()=>{
     resetAllToggles();
@@ -509,7 +503,6 @@ const EmpDashboard = ({ userGroup }) => {
         toggleResumeData={toggelResumeData}
         toggleJobDescription={toggleJobDescription}
         toggleInterviewDate={toggleInterviewDate}
-        toggleAllMasterSheet={toggleAllMasterSheet}
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
@@ -546,7 +539,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleEmployeeDetails={toggleEmployeeDetails}
             /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_525-526*/
   toggelSubscriptions={toggelSubscriptions}
-  toggelCompanyPolicy={toggelCompanyPolicy}
+  toggleBilling={toggleBilling}
   
 
       />
@@ -577,14 +570,22 @@ const EmpDashboard = ({ userGroup }) => {
             <CallingList
               updateState={handleUpdateComplete}
               funForGettingCandidateId={gettingCandidateIdForUpdate}
+              onSuccessAdd={handleSuccessAdd}
               loginEmployeeName={loginEmployeeName} //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_545
             />
           )}
         </div>
-        <div>{showShortListedNav && <ShortlistedNavbar />}</div>
+        <div>
+          {showShortListedNav && (
+            <ShortlistedNavbar loginEmployeeName={loginEmployeeName} />
+          )}
+        </div>
         <div>
           {showShortlistedCandidateData && (
-            <ShortListedCandidates viewUpdatedPage={viewUpdatedPage} />
+            <ShortListedCandidates
+              viewUpdatedPage={viewUpdatedPage}
+              loginEmployeeName={loginEmployeeName}
+            />
           )}
         </div>
         <div>
@@ -609,9 +610,6 @@ const EmpDashboard = ({ userGroup }) => {
             <EmployeeMasterSheet loginEmployeeName={loginEmployeeName} /> //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_574
           )}
         </div>
-
-        <div>{showMasterSheet && <MasterSheet />}</div>
-
         <div>{incentive && <Incentive />}</div>
         <div>{attendancesheet && <Attendancesheet />}</div>
 
@@ -663,7 +661,6 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showJobDiscriptions && <Home />}</div>
         <div>{showHome && <Home />}</div>
         <div>{showAddedResumes && <AddResumes></AddResumes>}</div>
-        <div>{showShortListedCandidates && <ShortListedCandidates />}</div>
         <div>{showInvoice && <InvoiceTable />}</div>
         <div>
           {showInvoiceReport && (
@@ -679,7 +676,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{assignColumns && <Team_Leader />}</div>
         <div>{showSubscription && <SubscriptionPlans togglePayment={togglePayment}/>}</div>
         <div>{showPayment && <PaymentForm />}</div>
-        <div>{showCompanyPolicy && <WorkplacePolicy/>}</div>
+        <div>{showBilling && <Billing/>}</div>
         <div>
           {showUpdateResponse && (
             <UpdateResponse onSuccessAdd={handleSuccessAdd} />

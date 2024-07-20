@@ -16,6 +16,8 @@ import RecruiterPage from "./MainDashboard/recruiterPage.jsx"
 import ForgotPasswordsForm from "./MainDashboard/empForgotPasswords.jsx";
 import ApplicantRegistraion from "./Applicant/ApplicantRegistration.jsx";
 import SelfTechnicalUser from "./MainDashboard/selfTechnicalUser.jsx";
+import { ToastContainer } from "react-toastify";
+
 
 
 
@@ -23,6 +25,7 @@ const App = () => {
 
   return (
     <div>
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -42,6 +45,7 @@ const App = () => {
           <Route path="/manager/technicalUser" element={<SelfTechnicalUser/>}></Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer/>
     </div>
   );
 }
