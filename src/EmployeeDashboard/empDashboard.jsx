@@ -46,8 +46,10 @@ import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar
 import QuestionPaper from "./questionPaper";
 import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
 import EmployeeDetails from "../EmployeeDetails/EmployeeDetails";
+import SubscriptionPlans from "../Subscription/subscription";
+import PaymentForm from "../Subscription/subscriptionPayment";
+import Billing from "../EmployeeSection/billing";
 import ScheduleInterview from "../TeamLeader/scheduleInterview"; /* neha_scheduleinterview_18/07_lineno_50*/ 
-
 import IssueSolving from "../AboutUs/issueSolving";
 import WorkplacePolicy from "../AboutUs/companyPolicy";
 import PainAreaSolving from "../AboutUs/painAreaSolving";
@@ -111,6 +113,9 @@ const EmpDashboard = ({ userGroup }) => {
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
   const [logoutTimestamp, setLogoutTimestamp] = useState(null);
+  const [showSubscription,setShowSubscription]=useState(false);
+  const [showBilling, setShowBilling]=useState(false)
+  const [showPayment,setShowPayment]=useState(false)
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -252,6 +257,10 @@ const EmpDashboard = ({ userGroup }) => {
     setShowQuestionpaper(false);
     setShowCapex(false);
     setShowEmployeeDetails(false); /*Swapnil_AddedEmployeeDetails_16/07*/
+    setShowSubscription(false); /*Arbaz_AddSubscriptions_19/07*/
+    setShowBilling(false)
+    setShowPayment(false)
+    
     setscheduleinterview(false);  /*neha_addScheduleinterview_18/07_lineno_245*/
 
     setShowRightsInstruction(false);
@@ -479,6 +488,18 @@ const EmpDashboard = ({ userGroup }) => {
     setShowPainArea(!showPainArea)
     
   };
+  const toggelSubscriptions = ()=>{
+    resetAllToggles();
+    setShowSubscription(!showSubscription)
+  }
+  const toggleBilling =()=>{
+    resetAllToggles();
+    setShowBilling(!showBilling)
+  }
+ const  togglePayment=()=>{
+    resetAllToggles();
+    setShowPayment(!showPayment)
+  }
 
   return (
     <div
@@ -536,6 +557,11 @@ const EmpDashboard = ({ userGroup }) => {
         toggleQuestionPaper={toggleQuestionPaper}
         toggleCapex={toggleCapex}
         toggleEmployeeDetails={toggleEmployeeDetails}
+            /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_525-526*/
+  toggelSubscriptions={toggelSubscriptions}
+  toggleBilling={toggleBilling}
+  
+
         togglescheduleinterview={togglescheduleinterview}
         toggeleRightsInstructions={toggeleRightsInstructions}
         toggeleCompanyPolicy={toggeleCompanyPolicy}
@@ -651,7 +677,7 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        <div>
+        <div >
           {updateSelfCalling && (
             <UpdateCallingTracker candidateId={candidateIdForUpdate} />
           )}
@@ -673,11 +699,19 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
+        <div>{showSubscription && <SubscriptionPlans togglePayment={togglePayment}/>}</div>
+        <div>{showPayment && <PaymentForm />}</div>
+        <div>{showBilling && <Billing/>}</div>
+        <div>
+          {showUpdateResponse && (
+            <UpdateResponse onSuccessAdd={handleSuccessAdd} />
+          )}
+        </div>
         <div>{showUpdateResponse && (<UpdateResponse onSuccessAdd={handleSuccessAdd} />)}</div>
         <div>{showscheduleinterview && (<ScheduleInterview />)}</div>
         <div>
           {showSendClientMail && (
-            <SendClientEmail clientEmailSender={clientEmailSender} />
+            <SendClientEmail  clientEmailSender={clientEmailSender} />
           )}
         </div>
         <div>{showAddCompany && <AddCompanyDetails />}</div>

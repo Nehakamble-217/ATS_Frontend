@@ -160,6 +160,7 @@ const LineUpList = ({
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_183
   //akash_pawar_LineUpList_ShareFunctionality_17/07_156
 
+
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
@@ -514,6 +515,7 @@ const LineUpList = ({
       });
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
+      console.error("Error while forwarding candidates:", error);
       setIsDataSending(false);
       setShowForwardPopup(false);//Swapnil Error&success message 
       toast.error("Error while forwarding candidates:");//Swapnil Error&success message 

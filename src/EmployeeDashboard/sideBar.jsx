@@ -6,7 +6,6 @@ import logoutImg from "../photos/download.jpeg";
 import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
-
 // Swapnil_Sidebar_AddingEmployeeDetailsinto_ManagerSection_17/07
 
 function Sidebar({
@@ -27,6 +26,7 @@ function Sidebar({
   toggleInterviewDate,
   toggleIncentive,
   toggleAttendance,
+  toggleAllMasterSheet,
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
   toggleReports,
@@ -44,7 +44,7 @@ function Sidebar({
   successAddUpdateResponse,
   togglePayRoll /* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_42 */,
   toggleSendCandidate,
-  toggeleProfitChart /* ArshadAttar_EmpDashboard_Added_toggeleProfitChart_11/07/2024_LineNo_46 */,
+  toggeleProfitChart, /* ArshadAttar_EmpDashboard_Added_toggeleProfitChart_11/07/2024_LineNo_46 */
   toggleInvoice,
   toggleInvoiceReport,
   /*ArbazPathan_EmpDashboard_AddedInvoice_&_InoviceReportToggeleFunction_11/07/2024_LineNo_45-46 */
@@ -53,11 +53,13 @@ function Sidebar({
   toggleEmployeeDetails,
   toggelResumeData,
   toggleQuestionPaper,
-
-  // toggeleRightsInstructions,
+  toggeleRightsInstructions,
   toggeleCompanyPolicy,
   toggeleIssueSolving,
   toggelePainArea,
+  /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-60 */
+  toggelSubscriptions,
+  toggleBilling
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -105,6 +107,8 @@ function Sidebar({
     setActiveButton(buttonKey);
 
     callback(e);
+
+
   };
 
   const isCandidateSectionActive = [
@@ -133,6 +137,7 @@ function Sidebar({
     navigator("/employee-login/recruiter");
   };
 
+
   return (
     <>
       <div className={`sidebar ${isActive ? "active" : ""}`}>
@@ -145,6 +150,25 @@ function Sidebar({
             <div className="sidebar-menu">
               <ul>
                 <>
+                  {userType === "SuperUser" ? (
+                    <li
+                      onClick={handleButtonClick(
+                        "subscription",
+                        toggelSubscriptions
+                      )}
+                      className={
+                        activeButton === "subscription" ? "active" : ""
+                      }
+                    >
+                      <a href="#">
+                        <i
+                          className="fa-solid fa-user-plus"
+                          style={{ color: "gray" }}
+                        ></i>
+                        <span className="sidebar-text">Subscription</span>
+                      </a>
+                    </li>
+                  ) : null}
                   {userType != "SuperUser" ? (
                     <>
                       <li
@@ -160,8 +184,7 @@ function Sidebar({
                           {/* <i className="icon ph-bold ph-house-simple"></i> */}
 
                           <i
-                            className="xyz-icon"
-                            class="fa-solid fa-user-check"
+                            className="fa-solid fa-user-check"
                             style={{ color: "gray" }}
                           ></i>
                           <span className="sidebar-text">Shortlisted </span>
@@ -179,7 +202,7 @@ function Sidebar({
                       >
                         <a href="#">
                           <i
-                            class="fa-solid fa-user-plus"
+                            className="fa-solid fa-user-plus"
                             style={{ color: "gray" }}
                           ></i>
                           <span className="sidebar-text">Add Candidate</span>
@@ -198,7 +221,7 @@ function Sidebar({
                   >
                     <a href="#">
                       <i
-                        class="fa-solid fa-users"
+                        className="fa-solid fa-users"
                         style={{ color: "gray" }}
                       ></i>
 
@@ -237,21 +260,14 @@ function Sidebar({
                         onClick={handleButtonClick("lineUp", toggelLineUp)}
                         className={activeButton === "lineUp" ? "active" : ""}
                       >
-                        <a href="#"
-                          className="flex items-center justify-center w-full"
-                        >
-                          <a
-                            href="#"
-                            className="flex items-center justify-center w-full"
-                          />
-                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                          <span className="sidebar-text">Lineup Tracker</span>
-                          {successAddUpdateResponse ? (
-                            <span className="text-xl font-bold text-red-600">
-                              *
-                            </span>
-                          ) : null}
-                        </a>
+
+
+                        <span className="sidebar-text">Lineup Tracker</span>
+                        {successAddUpdateResponse ? (
+                          <span className="text-xl font-bold text-red-600">
+                            *
+                          </span>
+                        ) : null}
                       </li>
                       <li
                         style={{ marginLeft: "10px" }}
@@ -341,14 +357,6 @@ function Sidebar({
                           </span>
                         </a>
                       </li>
-
-                      {/* ---------Arshad Comment this changes dont uncomment-------------- */}
-                      {/* <li>
-                  <a href="#">
-                    <img src={Circle} style={{ width: "10px" }} alt="" />
-                    <span className="sidebar-text">Self Offer Work</span>
-                  </a>
-                 </li> */}
                       {/* ---------Arshad Comment this changes dont uncomment-------------- */}
                       {userType === "Manager" &&
                         "SuperUser" &&
@@ -377,7 +385,7 @@ function Sidebar({
                 >
                   <a href="#">
                     <i
-                      class="fa-solid fa-pen-to-square"
+                      className="fa-solid fa-pen-to-square"
                       style={{ color: "gray" }}
                     ></i>
                     <span className="sidebar-text">Job Description</span>
@@ -561,6 +569,15 @@ function Sidebar({
                       {userType != "TeamLeader" ? (
                         <>
                           {/* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
+                          <li
+                            onClick={handleButtonClick("billing", toggleBilling)}
+                            style={{ marginLeft: "10px" }}
+                            className={activeButton === "billing" ? "active" : ""}
+                          >
+                            <a href="#">
+                              <span className="sidebar-text">Billing Dashboard</span>
+                            </a>
+                          </li>
                           <li
                             onClick={handleButtonClick("payRoll", togglePayRoll)}
                             style={{ marginLeft: "10px" }}
@@ -882,15 +899,15 @@ function Sidebar({
                       </a>
                       <ul className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "aboutus" ? "active" : ""}`}
                       >
-                        {/* <li style={{ marginLeft: "10px" }}>
+                        <li style={{ marginLeft: "10px" }}>
                           <span
                             className="sidebar-text"
-                            onClick={toggeleRightsInstructions} 
+                            onClick={toggeleRightsInstructions}
                           >
                             Rights & Instructions
                           </span>
 
-                        </li> */}
+                        </li>
                         <li style={{ marginLeft: "10px" }}>
                           <span
                             className="sidebar-text"
@@ -917,6 +934,7 @@ function Sidebar({
                         </li>
                       </ul>
                     </li>
+
 
                     <li onClick={handleButtonClick(
                       "notepad",
@@ -1018,4 +1036,4 @@ function Sidebar({
   );
 }
 
-export default Sidebar;
+export default Sidebar

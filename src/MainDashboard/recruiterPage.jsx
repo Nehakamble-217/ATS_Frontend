@@ -7,6 +7,7 @@ const RecruiterPage = () => {
 
   const handleLoginClick = (userType) => {
     navigate(`/login/${userType}`);
+    
   };
 
   return (
@@ -39,6 +40,7 @@ const RecruiterPage = () => {
             <button className="recpage-login1" onClick={() => handleLoginClick("SuperUser")}>Login</button>
           </div>
         </div>
+        
       </div>
     </div>
   );

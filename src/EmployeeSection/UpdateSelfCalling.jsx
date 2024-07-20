@@ -3,6 +3,7 @@ import "../EmployeeSection/CallingTrackerForm.css";
 import { useParams } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -59,6 +60,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [recruiterName, setRecruiterName] = useState("");
+  const [resumeUploaded, setResumeUploaded] = useState(false);
   const [candidateFetched, setCandidateFetched] = useState(initialData);
   const [showAlert, setShowAlert] = useState(false);
   const [requirementOptions, setRequirementOptions] = useState([]);
@@ -200,12 +202,10 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
       }));
     }
   };
-
- 
   
   //neha_updateselfcalling_designing_start_lineno_205_date_16/07/24
   return (
-    <div>
+    <div className="update-main-div">
       <form onSubmit={handleSubmit}>
       <div className="calling-tracker-row-gray">
               <div className="calling-tracker-field">
@@ -215,7 +215,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     type="text"
                     //id="currentDate"
                     name="date"
-                    value={callingTracker.date}
+                    value={callingTracker?.date}
                     className="calling-tracker-two-input"
                     readOnly
                   />
@@ -235,7 +235,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   <input
                     type="text"
                     name="recruiterName"
-                    value={callingTracker.recruiterName}
+                    value={callingTracker?.recruiterName}
                     readOnly
                     onChange={handleChange}
                     className="plain-input"
@@ -259,9 +259,8 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   <input
                     type="text"
                     name="candidateName"
-                    value={callingTracker.candidateName}
+                    value={callingTracker?.candidateName}
                     onChange={handleChange}
-                   
                   />
                   
                 </div>
@@ -272,7 +271,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   <input
                     type="email"
                     name="candidateEmail"
-                    value={callingTracker.candidateEmail}
+                    value={callingTracker?.candidateEmail}
                     onChange={handleChange}
                   />
                 </div>
@@ -308,7 +307,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   />
                 </div>
               </div>
-           
               </div>
 
 
@@ -343,7 +341,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     className="calling-tracker-two-input"
                     id="requirementId"
                     name="requirementId"
-                    value={callingTracker.requirementId}
+                    value={callingTracker?.requirementId}
                     onChange={handleRequirementChange}
                     required={callingTracker.selectYesOrNo === "Interested"}
                   >
@@ -368,7 +366,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 </div>
               </div>
             </div>
-            <div className="calling-tracker-row-white">
+            <div className="calling-tracker-row-gray">
               <div className="calling-tracker-field">
                 <label>Applying For Position</label>
                 <div className="calling-tracker-field-sub-div">
@@ -387,8 +385,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                       placeholder="Company"
                       id="requirementCompany"
                       name="requirementCompany"
-                    
-                      
                       value={callingTracker?.requirementCompany}
                       readOnly
                     />
@@ -462,6 +458,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     onChange={handleChange}
                     className="calling-tracker-two-input"
                   />
+
                   <div className="calling-check-box-container">
                     <div className="calling-check-box">
                       <input
@@ -500,7 +497,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 <div className="calling-tracker-field-sub-div">
                   <input
                     type="text"
-                      name="lineUp.msgForTeamLeader"
+                    name="lineUp.msgForTeamLeader"
                     value={callingTracker.lineUp?.msgForTeamLeader}
                     onChange={handleChange}
                   />
@@ -932,7 +929,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     <input
                       type="text"
                       name="education"
-                      value={lineUpData.qualification}
+                      value={callingTracker.lineUp?.qualification}
                       onChange={handleChange}
                     />
                   )}
@@ -948,6 +945,41 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
               </div>
               </div>
 
+
+              <div className="calling-tracker-row-white">
+              <div className="calling-tracker-field">
+                <label>
+                  Upload Resume
+                  {resumeUploaded && (
+                    <FaCheckCircle className="upload-success-icon" />
+                  )}
+                </label>
+                <div className="calling-tracker-field-sub-div">
+                  <input
+                    type="file"
+                    name="resume"
+                    // onChange={handleResumeFileChange}
+                    accept=".pdf,.doc,.docx"
+                    className="plain-input"
+                  />
+                </div>
+              </div>
+              <div className="calling-tracker-field">
+                <label>Any Extra Certification</label>
+                <div className="calling-tracker-field-sub-div">
+                  <input
+                    type="text"
+                    name="extraCerification"
+                    value={callingTracker.lineUp?.extraCertification}
+                    onChange={handleChange}
+                    className="plain-input"
+                    placeholder="Enter Extra Certification"
+                  />
+                </div>
+              </div>
+            </div>
+
+
               <div className=" calling-tracker-row-gray">
               <div className="calling-tracker-field">
                 <label>Current Company</label>
@@ -955,19 +987,14 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   <input
                     type="text"
                     name="currentcompany"
-                   
                     value={callingTracker.lineUp?.companyName}
-                    onChange={handleChange
-                    }
-                    
+                    onChange={handleChange}
                     required={callingTracker.selectYesOrNo === "Interested"}
-
                   />
                 </div>
               </div>
               <div className="calling-tracker-field">
                 <label>Total Experience</label>
-
                 <div
                   className="calling-tracker-two-input-container"
                   required={callingTracker.selectYesOrNo === "Interested"}
@@ -1190,7 +1217,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     name="interviewTime"
                     value={callingTracker.lineUp?.interviewTime}
                     onChange={handleChange}
-                    
                     className="calling-tracker-two-input"
                   />
                 </div>
