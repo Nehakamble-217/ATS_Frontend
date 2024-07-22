@@ -75,6 +75,20 @@
 .input-message{
   width:90%;
   border-radius: 50px;
+  padding-left: 10px;
+  border: 1px solid #000;
+
+
+}
+.chat-Send-btn{
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 100px;
+  gap: 5px;
+}
+
+.chat-Send-file{
+  width:150px;
 }
 
 /* ul {

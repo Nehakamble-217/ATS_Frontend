@@ -66,7 +66,9 @@ function ScheduleInterview() {
     <div className="Interview-App">
       {!selectedPlatform ? (
         <div className="platform-selection">
-          <h1 style={{ textDecoration: "underline", fontSize: "18px"  }}>Select a Platform</h1>
+
+          <h1 style={{ textDecoration: "underline",fontSize:"18px" }}>Select a Platform</h1>
+          <br />
           <div className="platforms">
             {platforms.map(platform => (
               <div key={platform.name} className="platform-card" onClick={() => setSelectedPlatform(platform.name)}>

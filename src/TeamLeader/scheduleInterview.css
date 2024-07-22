@@ -33,6 +33,34 @@
  margin-right: 30px;
 
 }
+
+
+@media (max-width: 480px) {
+  .interview-form {
+    width: 100%;
+    padding: 15px;
+  }
+}
+/* Existing styles */
+
+.Interview-App {
+  text-align: center;
+  /* background-color: #FFE5B5; */
+  height: 90vh;
+  /* padding-top: 50px; */
+}
+
+.platform-selection {
+  margin-top: 50px;
+  color: gray;
+}
+
+.platforms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #ffcb9b;
+}
 .platform-card {
   background: white;
   border: 1px solid gray;
@@ -44,11 +72,11 @@
   cursor: pointer;
   transition: transform 0.2s;
   color: gray;
-  display: block;
+
   align-items: center;
-  justify-content: center;
-  padding-top: 30px;
-  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+
 }
 
 .platform-card:hover {
@@ -59,7 +87,8 @@
 .platform-logo {
   width: 100px;
   height: 100px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  /* border: 1px solid black; */
 }
 
 .interview-form {

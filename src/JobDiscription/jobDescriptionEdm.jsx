@@ -54,31 +54,6 @@ function JobDescriptionEdm({ Descriptions, onJobDescriptionEdm }) {
   }, [synth]);
 
 
-
-  // const shareVideo = async () => {
-  //   if (!videoBlob) return;
-
-  //   const file = new File([videoBlob], "video.webm", { type: "video/webm" });
-  //   if (navigator.canShare && navigator.canShare({ files: [file] })) {
-  //     try {
-  //       await navigator.share({
-  //         title: "Check out this video",
-  //         files: [file],
-  //       });
-  //     } catch (error) {
-  //       console.error("Error sharing video:", error);
-  //     }
-  //   } else {
-  //     console.warn("Sharing not supported, downloading the video instead.");
-  //     const url = URL.createObjectURL(videoBlob);
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.download = "video.webm";
-  //     link.click();
-  //     URL.revokeObjectURL(url);
-  //   }
-  // };
-
   const generateAndShareVideo = async () => {
     try {
       const input = document.getElementById("jobEDM");
