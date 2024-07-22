@@ -936,6 +936,7 @@ const LineUpList = ({
                           </td>
                         ) : null}
 
+                  
                         <td className="tabledata">{index + 1}</td>
 
                         <td

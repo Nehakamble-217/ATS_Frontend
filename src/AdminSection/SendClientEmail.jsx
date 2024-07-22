@@ -1179,7 +1179,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.46:9090/api/ats/157industries/add-client-details",
+        "http://192.168.1.46:9090/api/ats/157industries/  ",
         clientData
       );
       if (response) {

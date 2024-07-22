@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { addEmployee as addEmployeeService } from '../api/api';
-import '../PayRoll/payRollForm.css'
+import '../PayRoll/payRollForm.css';
 
 const roleSalaries = {
     Admin: 3000,
@@ -11,7 +11,7 @@ const roleSalaries = {
 
 const PayRollForm = ({ addEmployee }) => {
     const [employee, setEmployee] = useState({
-        empid: "",
+        empId: "",
         empName: "",
         empDept: "Development",
         jobRole: "Admin",
@@ -77,30 +77,26 @@ const PayRollForm = ({ addEmployee }) => {
     };
 
     return (
-
         <form onSubmit={handleSubmit} className="employee-form">
             <div className="form-header">Pay Roll Form</div>
             <div className='payrolemain'>
 
-                <div className="payrollfields" >
+                <div className="payrollfields">
                     <label htmlFor="id">ID</label>
                     <input name="empId" id="id" placeholder="ID" value={employee.empId} onChange={handleChange} required />
 
-
                     <label htmlFor="name">Name</label>
                     <input name="empName" id="name" placeholder="Name" value={employee.empName} onChange={handleChange} required />
-
                 </div>
 
                 <div className="payrollfields">
                     <label htmlFor="department">Department</label>
                     <select name="empDept" id="department" value={employee.empDept} onChange={handleChange}>
-                        <option value="Developement">Developement</option>
-                        <option value="Recruitement">Recruitement</option>
-                        <option value="BPO ">BPO </option>
-                        <option value=" Production">Production </option>
+                        <option value="Development">Development</option>
+                        <option value="Recruitment">Recruitment</option>
+                        <option value="BPO">BPO</option>
+                        <option value="Production">Production</option>
                     </select>
-                    {/* <input name="department" id="department" placeholder="Department" value={employee.department} onChange={handleChange} /> */}
 
                     <label htmlFor="position">Job Role</label>
                     <select name="jobRole" id="position" value={employee.jobRole} onChange={handleChange}>
@@ -110,7 +106,6 @@ const PayRollForm = ({ addEmployee }) => {
                         <option value="Super User">Super User</option>
                     </select>
                 </div>
-
 
                 <div className="payrollfields">
                     <label htmlFor="basicSalary">Basic Salary</label>
@@ -134,7 +129,6 @@ const PayRollForm = ({ addEmployee }) => {
                     />
                 </div>
 
-
                 <div className="payrollfields">
                     <label htmlFor="daysPresent">Days Present</label>
                     <input
@@ -148,7 +142,6 @@ const PayRollForm = ({ addEmployee }) => {
                     <label htmlFor="bonuses">Bonuses</label>
                     <input name="bonuses" id="bonuses" placeholder="Bonuses" type="number" value={employee.bonuses} onChange={handleChange} />
                 </div>
-
 
                 <div className="payrollfields">
                     <label htmlFor="deductions">Deductions</label>
@@ -165,9 +158,6 @@ const PayRollForm = ({ addEmployee }) => {
                         readOnly
                     />
                 </div>
-
-
-
             </div>
             <div className='payrolemainbtn'>
                 <button className='payrolebutton' type="submit">Add Employee</button>
@@ -176,4 +166,4 @@ const PayRollForm = ({ addEmployee }) => {
     );
 };
 
-export default PayRollForm
+export default PayRollForm;

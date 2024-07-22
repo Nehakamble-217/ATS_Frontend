@@ -692,6 +692,7 @@ const cancelExport = () => {
                     >
                       Close
                     </button>
+
                     <button
                       className="rejectedcan-share-select-btn"
                       onClick={handleSelectAll}
@@ -825,6 +826,7 @@ const cancelExport = () => {
                     <th className="attendanceheading">Qualification</th>
                     <th className="attendanceheading">Year Of Passing</th>
                     <th className="attendanceheading">Extra Certification</th>
+                    <th className="attendanceheading">Feed Back</th>
                     <th className="attendanceheading">Holding Any Offer</th>
                     <th className="attendanceheading">Offer Letter Msg</th>
                     <th className="attendanceheading">Resume</th>

@@ -1,7 +1,8 @@
+
 // src/components/PrintPayroll.js
 import React, { useRef } from 'react';
 import ReactToPrint from 'react-to-print';
-import PayrollTable from './payRollTable';
+import PayrollTable from '../PayRoll/payRollTable';
 // import './PrintPayroll.css';
 
 const PrintPayroll = ({ employees }) => {
