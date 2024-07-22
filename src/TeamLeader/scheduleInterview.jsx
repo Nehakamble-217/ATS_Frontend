@@ -1,3 +1,4 @@
+// neha_schedule_interview_all_page_18_07_
 
 
 import React, { useState } from 'react';
@@ -7,6 +8,7 @@ import './scheduleInterview.css';
 import googleMeetLogo from '../LogoImages/googlemeet.png';
 import microsoftTeamsLogo from '../LogoImages/microsoftteam.jpeg';
 import zoomLogo from '../LogoImages/zoom.jpg';
+import slack from '../LogoImages/slack.png'
 
 function ScheduleInterview() {
   const [selectedPlatform, setSelectedPlatform] = useState(null);
@@ -22,7 +24,8 @@ function ScheduleInterview() {
   const platforms = [
     { name: 'Google Meet', logo: googleMeetLogo, baseUrl: 'https://meet.google.com/new' },
     { name: 'Microsoft Teams', logo: microsoftTeamsLogo, baseUrl: 'https://teams.microsoft.com/' },
-    { name: 'Zoom', logo: zoomLogo, baseUrl: 'https://zoom.us/' }
+    { name: 'Zoom', logo: zoomLogo, baseUrl: 'https://zoom.us/' },
+    {name: 'slack', logo :slack ,baseUrl:"https://slack.com/intl/en-in"}
   ];
 
   const jobIds = ['Job1', 'Job2', 'Job3']; // Replace with actual job IDs
@@ -63,7 +66,7 @@ function ScheduleInterview() {
     <div className="Interview-App">
       {!selectedPlatform ? (
         <div className="platform-selection">
-          <h1 style={{ textDecoration: "underline" }}>Select a Platform</h1>
+          <h1 style={{ textDecoration: "underline", fontSize: "18px"  }}>Select a Platform</h1>
           <div className="platforms">
             {platforms.map(platform => (
               <div key={platform.name} className="platform-card" onClick={() => setSelectedPlatform(platform.name)}>
@@ -78,12 +81,11 @@ function ScheduleInterview() {
           </div>
         </div>
       ) : (
+        
         <form className="interview-form" onSubmit={(e) => e.preventDefault()}>
           <div className="interview-form-header">{selectedPlatform} Meeting</div>
           <div className="interview-form-content">
-      
             <div className="Interview-form-group">
-        
               <label className="user-type-label">
                 Job ID:
                 <select 
@@ -97,15 +99,20 @@ function ScheduleInterview() {
                 </select>
               </label>
             </div>
-            
+            <div className='clientorcandidatesection' style={{display:"flex",flexDirection:"row"}}>
+            <div className='candidatesection' style={{display:"flex" , flexDirection:"column" }}>
             <div className="form-fields">
+              <div className='candidatesectionsubdiv' style={{display:"flex",flexDirection:"row"}}>
               <label>Candidate Name:</label>
               <input 
+              style={{}}
                 type="text" 
                 value={candidateName} 
                 onChange={e => setCandidateName(e.target.value)} 
                 placeholder="Candidate Name" 
               />
+              </div>
+              <div  className='candidatesectionsubdiv' style={{display:"flex",flexDirection:"row"}}>
               <label>Email ID:</label>
               <input 
                 type="email" 
@@ -113,6 +120,8 @@ function ScheduleInterview() {
                 onChange={e => setCandidateEmail(e.target.value)} 
                 placeholder="Candidate Email ID" 
               />
+              </div>
+              <div  className='candidatesectionsubdiv' style={{display:"flex",flexDirection:"row"}}>
               <label>Contact No:</label>
               <input 
                 type="text" 
@@ -120,33 +129,47 @@ function ScheduleInterview() {
                 onChange={e => setCandidateContact(e.target.value)} 
                 placeholder="Candidate Contact No" 
               />
+              </div>
+              
             </div>
            
-            {selectedJobId && (
-              <div className="form-fields">
-                <label>Client Name:</label>
+            </div>
+            
+              <div className='clientsection' >
+                <div className="form-fields">
+               <div className='clientsectionsubdiv' style={{display:"flex",flexDirection:"row"}} >
+               <label>Client Name:</label>
                 <input 
                   type="text" 
                   value={clientName} 
                   onChange={e => setClientName(e.target.value)} 
                   placeholder="Client Name" 
                 />
-                <label>Email ID:</label>
+               </div>
+               <div className='clientsectionsubdiv' style={{display:"flex",flexDirection:"row"}}>
+                 <label>Email ID:</label>
                 <input 
                   type="email" 
                   value={clientEmail} 
                   onChange={e => setClientEmail(e.target.value)} 
                   placeholder="Client Email ID" 
                 />
-                <label>Interviewer Name:</label>
+               </div>
+               <div className='clientsectionsubdiv' style={{display:"flex",flexDirection:"row"}}>
+               <label>Interviewer Name:</label>
                 <input 
                   type="text" 
                   value={interviewer} 
                   onChange={e => setInterviewer(e.target.value)} 
                   placeholder="Interviewer Name" 
                 />
+               </div>
+               
               </div>
-            )}
+              </div>
+            
+             
+            </div>
             <div className="interview-button-container">
               <button 
                 className="interview-form-button" 
