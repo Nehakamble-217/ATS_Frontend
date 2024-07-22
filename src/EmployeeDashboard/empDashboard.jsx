@@ -67,8 +67,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showCallingTrackerForm, setShowCallingTrackerForm] = useState(false);
   const [showHome, setShowHome] = useState(false);
   const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
-  const [showShortlistedCandidateData, setShortlistedCandidateData] =
-    useState(false);
+  const [showShortlistedCandidateData, setShortlistedCandidateData] =useState(false);
   const [addJobDescription, setAddJobDescription] = useState(false);
   const [showEmployeeMasterSheet, setShowEmployeeMasterSheet] = useState(false);
   const [showShortListedCandidates, setShowShortListedCandidates] =
