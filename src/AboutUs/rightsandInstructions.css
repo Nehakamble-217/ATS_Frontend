@@ -1,0 +1,65 @@
+
+/* Prachi Parab  component :Rights + instructions + best view + information  19/07/2024 line No 3 to 67 */
+
+.instr-headings{
+    font-size: 18px;
+}
+.instr-headings-span{
+    background-color: #ffcb9b;
+}
+
+.rightsandInstructions{
+    /* display: flex; */
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  height: 100vh;
+  font-size: 16px;
+
+}
+.rightsandInstructionsdiv{
+    max-width: 100%; /* Example: Limit content width */
+    padding: 20px;
+    border: 1px solid #ccc;
+    color: grey;
+   
+
+}
+.rightsandInstructionsdiv ul{
+    list-style-type:disc;
+}
+.liststyletype{
+list-style-type:none;
+
+}
+
+
+.issue-button {
+    margin-top: 20px;
+    margin-right: 10px; /* Added margin-right for spacing between buttons */
+    padding: 10px 20px;
+    background-color: #ffcb9b;
+    color: white;
+    border: none;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    cursor: pointer;
+    
+}
+
+.issue-button:hover {
+    background-color: white;
+    color: #ffcb9b;
+    border: 1px solid #ffcb9b;
+}
+
+.issue-button{
+    display: flex;
+}
+
+.handlePrintDiv{
+    text-align: -webkit-center;
+}
+

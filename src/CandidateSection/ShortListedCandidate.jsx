@@ -271,6 +271,7 @@ const ShortListedCandidates = ({
   };
 
   const handleShare = async () => {
+
     setIsDataSending(true);
     let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
@@ -882,9 +883,9 @@ const ShortListedCandidates = ({
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                    {item.jobId}
+                    {item.requirementId}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.jobId}</span>
+                      <span className="tooltiptext">{item.requirementId}</span>
                     </div>
                   </td>
                   <td
@@ -892,10 +893,10 @@ const ShortListedCandidates = ({
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                    {item.applyingCompany}
+                    {item.requirementCompany}
                     <div className="tooltip">
                       <span className="tooltiptext">
-                        {item.applyingCompany}
+                        {item.requirementCompany}
                       </span>
                     </div>
                   </td>

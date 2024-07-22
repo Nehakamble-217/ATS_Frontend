@@ -6,7 +6,7 @@ import UpdateResponseFrom from "./UpdateResponseFrom";
 import HashLoader from "react-spinners/HashLoader";
 import { useParams } from "react-router-dom";
 
-const UpdateResponse = ({ onSuccessAdd }) => {
+const UpdateResponse = ({ onSuccessAdd,date }) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
   const [showUpdateResponseForm, setShowUpdateResponseForm] = useState(false);
   const [showUpdateResponseID, setShowUpdateResponseID] = useState();
@@ -26,7 +26,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
 
       const {userType}=useParams();
       const {employeeId}=useParams();
-
+ console.log(date);
 
   useEffect(() => {
     fetchUpdateResponseList();
@@ -134,6 +134,7 @@ const UpdateResponse = ({ onSuccessAdd }) => {
     setShowEmployeeId(employeeId);
     setShowRequirementId(requirementId);
     setShowUpdateResponseForm(true);
+    
   };
 
   const closeUpdateForm = () => {

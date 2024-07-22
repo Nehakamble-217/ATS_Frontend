@@ -1,0 +1,110 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+}
+
+.cards {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.card-dhanu h3,
+.card-dhanu2 h3 {
+  color: gray; /* Gray color for card headings */
+}
+
+.card-dhanu {
+  flex: 7;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffe5b5; /* Combination color 1 */
+}
+
+.card-dhanu2 {
+  flex: 2;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f2f2f2; /* Combination color 2 */
+}
+
+.month-table {
+  width: auto; /* Adjust width according to content */
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.view-details-button {
+  background-color: #f2f2f2;
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.highlight {
+  background-color: yellow; /* or any color you prefer */
+  font-weight: bold;
+}
+
+.month-table th,
+.month-table td {
+  padding: 5px;
+  text-align: center; /* Center text */
+  border: 1px solid gray; /* Gray border for table cells */
+  color: gray; /* Gray text color */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.table-container {
+  width: auto; /* Adjust width according to content */
+}
+
+
+
+ .table-container th {
+  background-color: #ffcb9b;
+  padding: 5px;
+  text-align: center; /* Center text */
+  border: 1px solid gray; /* Gray border for table header cells */
+  color: gray; /* Gray text color */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.table-container td {
+  padding: 1px;
+  padding-right: 5px;
+  padding-left: 5px;
+  text-align: center; /* Center text */
+  border: 1px solid gray; /* Gray border for table data cells */
+  color: gray; /* Gray text color */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.table-container tbody tr:hover {
+  background-color: #f2f2f2;
+  color: white;
+}
+
+.status-button, .view-details-button {
+  padding: 1px 10px;
+  margin: 1px;
+  background-color: #ffb282; /* Button background color */
+  color: white; /* Button text color */
+  border: none;
+  border-radius: 15px; /* Button border radius */
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+.status-button:hover, .view-details-button:hover {
+  background-color: white; /* Background color on hover */
+  color: #ffb282; /* Text color on hover */
+}

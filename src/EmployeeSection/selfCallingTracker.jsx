@@ -105,7 +105,7 @@ const CallingList = ({
   const fetchCallingTrackerData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
+        `http://localhost:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
