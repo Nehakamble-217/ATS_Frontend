@@ -56,7 +56,6 @@ const EmpDashboard = ({ userGroup }) => {
   const [attendancesheet, setAttendanceSheet] = useState(false);
   const [incentive, setIncentive] = useState(false);
   const [lineUp, setLineUp] = useState(false);
-  const [shortListed, setShortListed] = useState(false);
   const [selectCandidate, setSelectedCandidate] = useState(false);
   const [rejectedCandidate, setRejectedCandidate] = useState(false);
   const [holdCandidate, setHoldCandidate] = useState(false);
@@ -207,7 +206,7 @@ const EmpDashboard = ({ userGroup }) => {
   const resetAllToggles = () => {
     setUpdateSelfCalling(false);
     setAddCandidate(false);
-    setShortListed(false);
+
     setSelectedCandidate(false);
     setHoldCandidate(false);
     setRejectedCandidate(false);
@@ -220,7 +219,6 @@ const EmpDashboard = ({ userGroup }) => {
     setAttendanceSheet(false);
     setShowEmployeeMasterSheet(false);
     setAddJobDescription(false);
-    setShowShortListdNav(false);
     setShowAddEmployee(false);
     setShowNotePad(false);
     setShowReports(false);
@@ -296,10 +294,10 @@ const EmpDashboard = ({ userGroup }) => {
     setShowUpdateResponse(true);
   };
 
-  const toggleInterviewDate = () => {
-    resetAllToggles();
-    setShowShortListdNav(!showShortListedNav);
-  };
+  // const toggleInterviewDate = () => {
+  //   resetAllToggles();
+  //   setShowShortListdNav(!showShortListedNav);
+  // };
 
   const toggleEmployeeMasterSheet = () => {
     resetAllToggles();
@@ -312,8 +310,10 @@ const EmpDashboard = ({ userGroup }) => {
   };
 
   const toggleShortListed = () => {
+    setShortlistedCandidateData(false);
+    setShowInterviewDate(true);
     resetAllToggles();
-    setShortListed(!shortListed);
+    setIncentive(false);
   };
 
   const toggleSelectCandidate = () => {
@@ -479,7 +479,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleExcelCalling={toggleExcelCalling}
         toggleResumeData={toggelResumeData}
         toggleJobDescription={toggleJobDescription}
-        toggleInterviewDate={toggleInterviewDate}
+        // toggleInterviewDate={toggleInterviewDate}
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
@@ -514,6 +514,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleQuestionPaper={toggleQuestionPaper}
         toggleCapex={toggleCapex}
         toggleEmployeeDetails={toggleEmployeeDetails}
+        toggleShowShortListedCandidateData={toggleShowShortListedCandidateData}
       />
 
       <div className="empDash-main-content">
@@ -547,16 +548,17 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        <div>
+        {/* <div>
           {showShortListedNav && (
             <ShortlistedNavbar loginEmployeeName={loginEmployeeName} />
           )}
-        </div>
+        </div> */}
         <div>
           {showShortlistedCandidateData && (
             <ShortListedCandidates
               viewUpdatedPage={viewUpdatedPage}
               loginEmployeeName={loginEmployeeName}
+              toggleShortListed={toggleShortListed}
             />
           )}
         </div>
@@ -588,7 +590,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showCallingExcelList && <CallingExcelList></CallingExcelList>}
         </div>
-        <div>{shortListed && <InterviewDates />}</div>
+        <div>{showInterviewDate && <InterviewDates />}</div>
         <div>{showAddEmployee && <AddEmployee />}</div>
         <div>
           {selectCandidate && (
@@ -620,6 +622,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {addCandidate && (
             <CallingTrackerForm
+              loginEmployeeName={loginEmployeeName}
               onsuccessfulDataAdditions={handleSuccessfulDataAdditions}
             />
           )}

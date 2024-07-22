@@ -24,7 +24,6 @@ function Sidebar({
   toggleExcelCalling,
   toggelResumeData,
   toggleJobDescription,
-  toggleInterviewDate,
   toggleIncentive,
   toggleAttendance,
   toggleAddJobDescription,
@@ -54,6 +53,7 @@ function Sidebar({
   toggleEmployeeDetails,
 
   toggleQuestionPaper,
+  toggleShowShortListedCandidateData,
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -146,7 +146,7 @@ function Sidebar({
                       <li
                         onClick={handleButtonClick(
                           "interviewDate",
-                          toggleInterviewDate
+                          toggleShowShortListedCandidateData
                         )}
                         className={
                           activeButton === "interviewDate" ? "active" : ""

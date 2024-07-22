@@ -72,3 +72,12 @@
     justify-content: center;
     align-items: center;
   }
+
+  .input-error {
+    border: 1px solid rgba(255, 0, 0, 0.497);  
+    box-shadow: 0 0 5px red;
+  }
+  .error-message {
+    color: red;
+    font-size: 0.875em;
+  }

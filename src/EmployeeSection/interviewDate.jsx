@@ -7,6 +7,7 @@ import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+// import styled from "styled-components";
 
 const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -796,3 +797,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 };
 
 export default InterviewDates;
+
+// const CalendarContainer = styled.div`
+//   /* ~~~ container styles ~~~ */
+//   .react-calendar__tile--range {
+//     box-shadow: 0 0 6px 2px black;
+//   }
+// `;

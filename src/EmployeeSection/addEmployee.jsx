@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../EmployeeSection/addEmployee.css";
+import { useForm } from "react-hook-form";
 
 const AddEmployee = () => {
-  const [formData, setFormData] = useState({
+  const formData = useState({
     employeeName: "",
     dateOfJoining: "",
     designation: "",
@@ -65,126 +66,39 @@ const AddEmployee = () => {
     reportingMangerDesignation: "",
   });
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm({ defaultValues: formData });
+
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [passwordError, setPasswordError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
+  const trainingCompleted = formData.trainingCompletedYesOrNo || "";
 
-  const handleInputChange = (e) => {
-    const { name, value, type, files } = e.target;
-
-    if (type === "file") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: files[0],
-      }));
-    } else {
-      if (
-        name === "employeeName" ||
-        name === "designation" ||
-        name === "department" ||
-        name === "perks" ||
-        name === "lastCompany" ||
-        name === "workLocation" ||
-        name === "entrySource" ||
-        name === "reasonForLeaving" ||
-        name === "inductionComment" ||
-        name === "trainingSource" ||
-        name === "emergencyContactPerson" ||
-        name === "emergencyPersonRelation" ||
-        name === "interviewTakenPerson" ||
-        name === "warningComments" ||
-        name === "performanceIndicator" ||
-        name === "teamLeaderMsg" ||
-        name === "editDeleteAuthority" ||
-        name === "bloodGroup" ||
-        name === "educationalQualification" ||
-        name === "reportingMangerName" ||
-        name === "reportingMangerDesignation"
-      ) {
-        if (/\d/.test(value)) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: "Please enter character value only.",
-          }));
-        } else {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: "",
-          }));
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-          }));
-        }
-      } else if (
-        name === "employeeNumber" ||
-        name === "officialContactNumber" ||
-        name === "alternateContactNo" ||
-        name === "companyMobileNumber" ||
-        name === "whatsAppNumber" ||
-        name === "emergencyContactNumber" ||
-        name === "insuranceNumber" ||
-        name === "aadhaarNo" ||
-        name === "offeredSalary" ||
-        name === "trainingTakenCount" ||
-        name === "professionalPtNo" ||
-        name === "esIcNo" ||
-        name === "pfNo" ||
-        name === "roundsOfInterview"
-      ) {
-        if (/[^0-9]/.test(value)) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: "Please enter numeric value only.",
-          }));
-        } else {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: "",
-          }));
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-          }));
-        }
-      } else {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: value,
-        }));
+  const onSubmit = async (data) => {
+    if (trainingCompleted === "Yes") {
+      const validationResult = await trigger([
+        "trainingSource",
+        "trainingTakenCount",
+      ]);
+      if (!validationResult) {
+        setShowErrors(true);
+        return;
       }
-    }
-  };
-
-  const handleConfirmPasswordBlur = () => {
-    if (formData.employeePassword !== formData.confirmPassword) {
-      setPasswordMatch(false);
-      setPasswordError("Passwords do not match");
-    } else {
-      setPasswordMatch(true);
-      setPasswordError("");
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!passwordMatch) {
-      setPasswordError("Passwords do not match");
-      return;
     }
 
     const formDataToSend = new FormData();
-    for (const key in formData) {
-      if (formData[key] instanceof File) {
-        formDataToSend.append(key, formData[key]);
+    for (const key in data) {
+      if (data[key] instanceof File) {
+        formDataToSend.append(key, data[key]);
       } else {
-        formDataToSend.append(key, formData[key]);
+        formDataToSend.append(key, data[key]);
       }
     }
-    console.log(formData);
     try {
       const response = await fetch(
         "http://192.168.1.46:9090/api/ats/157industries/add-employee",
@@ -193,10 +107,11 @@ const AddEmployee = () => {
           body: formDataToSend,
         }
       );
-      if (response) {
+      if (response.ok) {
+        reset(formData);
         setSuccessMessage("Employee Data Added Successfully.");
       } else {
-        setSuccessMessage(data.message || "Failed to add employee data.");
+        setSuccessMessage("Failed to add employee data.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -212,7 +127,7 @@ const AddEmployee = () => {
     <div className="form-container">
       <form
         className="form-group"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
       >
         <div className="form-row">
@@ -222,11 +137,16 @@ const AddEmployee = () => {
             name="employeeName"
             className="employee-inputs"
             placeholder="Enter Employee Full Name"
-            value={formData.employeeName}
-            onChange={handleInputChange}
+            {...register("employeeName", {
+              required: "Employee name is required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.employeeName && (
-            <div className="error">{errors.employeeName}</div>
+            <div className="error">{errors.employeeName?.message}</div>
           )}
         </div>
 
@@ -235,9 +155,13 @@ const AddEmployee = () => {
           <input
             type="date"
             name="dateOfJoining"
-            value={formData.dateOfJoining}
-            onChange={handleInputChange}
+            {...register("dateOfJoining", {
+              required: "Date of Joining is required",
+            })}
           />
+          {errors.employeeName && (
+            <div className="error">{errors.dateOfJoining?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -246,11 +170,16 @@ const AddEmployee = () => {
             type="text"
             name="designation"
             placeholder="Eg: FrontEnd Developer"
-            value={formData.designation}
-            onChange={handleInputChange}
+            {...register("designation", {
+              required: "Designation is required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.designation && (
-            <div className="error">{errors.designation}</div>
+            <div className="error">{errors.designation?.message}</div>
           )}
         </div>
 
@@ -260,11 +189,16 @@ const AddEmployee = () => {
             type="text"
             name="department"
             placeholder="Enter Department"
-            value={formData.department}
-            onChange={handleInputChange}
+            {...register("department", {
+              required: "Department is required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.department && (
-            <div className="error">{errors.department}</div>
+            <div className="error">{errors.department?.message}</div>
           )}
         </div>
 
@@ -272,8 +206,9 @@ const AddEmployee = () => {
           <label>Job Role:</label>
           <select
             name="jobRole"
-            value={formData.jobRole}
-            onChange={handleInputChange}
+            {...register("jobRole", {
+              required: "Job Role is required",
+            })}
           >
             <option value="">Select Job Role</option>
             <option value="Team Leader">Team Leader</option>
@@ -281,6 +216,9 @@ const AddEmployee = () => {
             <option value="Senior Recruiter">Senior Recruiter</option>
             <option value="Recruiter">recruiter</option>
           </select>
+          {errors.jobRole && (
+            <div className="error">{errors.jobRole?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -289,9 +227,17 @@ const AddEmployee = () => {
             type="email"
             name="officialMail"
             placeholder="Enter Official Email"
-            value={formData.officialMail}
-            onChange={handleInputChange}
+            {...register("officialMail", {
+              required: "Official Mail is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Please enter a valid email address",
+              },
+            })}
           />
+          {errors.officialMail && (
+            <div className="error">{errors.officialMail?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -300,9 +246,17 @@ const AddEmployee = () => {
             type="email"
             name="employeeEmail"
             placeholder="Enter Employee Email"
-            value={formData.employeeEmail}
-            onChange={handleInputChange}
+            {...register("employeeEmail", {
+              required: "Employee Email is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Please enter a valid email address",
+              },
+            })}
           />
+          {errors.employeeEmail && (
+            <div className="error">{errors.employeeEmail?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -311,11 +265,16 @@ const AddEmployee = () => {
             type="text"
             name="employeeNumber"
             placeholder="Enter Mobile Number"
-            value={formData.employeeNumber}
-            onChange={handleInputChange}
+            {...register("employeeNumber", {
+              required: "Employee Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.employeeNumber && (
-            <div className="error">{errors.employeeNumber}</div>
+            <div className="error">{errors.employeeNumber?.message}</div>
           )}
         </div>
 
@@ -326,11 +285,15 @@ const AddEmployee = () => {
             accept="0-9"
             name="alternateContactNo"
             placeholder="Enter Alternate Mobile Number"
-            value={formData.alternateContactNo}
-            onChange={handleInputChange}
+            {...register("alternateContactNo", {
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.alternateContactNo && (
-            <div className="error">{errors.alternateContactNo}</div>
+            <div className="error">{errors.alternateContactNo?.message}</div>
           )}
         </div>
 
@@ -341,11 +304,16 @@ const AddEmployee = () => {
             accept="0-9"
             name="officialContactNumber"
             placeholder="Enter Company Mobile Number"
-            value={formData.officialContactNumber}
-            onChange={handleInputChange}
+            {...register("officialContactNumber", {
+              required: "Official Contact Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.officialContactNumber && (
-            <div className="error">{errors.officialContactNumber}</div>
+            <div className="error">{errors.officialContactNumber?.message}</div>
           )}
         </div>
         <div className="form-row">
@@ -355,11 +323,15 @@ const AddEmployee = () => {
             accept="0-9"
             name="companyMobileNumber"
             placeholder="Enter Company Mobile Number"
-            value={formData.companyMobileNumber}
-            onChange={handleInputChange}
+            {...register("companyMobileNumber", {
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.companyMobileNumber && (
-            <div className="error">{errors.companyMobileNumber}</div>
+            <div className="error">{errors.companyMobileNumber?.message}</div>
           )}
         </div>
 
@@ -370,11 +342,15 @@ const AddEmployee = () => {
             accept="0-9"
             name="whatsAppNumber"
             placeholder="Enter WhatsApp Number"
-            value={formData.whatsAppNumber}
-            onChange={handleInputChange}
+            {...register("whatsAppNumber", {
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.whatsAppNumber && (
-            <div className="error">{errors.whatsAppNumber}</div>
+            <div className="error">{errors.whatsAppNumber?.message}</div>
           )}
         </div>
 
@@ -383,31 +359,33 @@ const AddEmployee = () => {
           <input
             type="date"
             name="dateOfBirth"
-            value={formData.dateOfBirth}
-            onChange={handleInputChange}
+            {...register("dateOfBirth", {
+              required: "Date of Birth is required",
+            })}
           />
+          {errors.dateOfBirth && (
+            <div className="error">{errors.dateOfBirth?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
           <label>Gender:</label>
           <select
             name="gender"
-            value={formData.gender}
-            onChange={handleInputChange}
+            {...register("gender", { required: "Gender Required" })}
           >
             <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
+          {errors.gender && (
+            <div className="error">{errors.gender?.message}</div>
+          )}
         </div>
         <div className="form-row">
           <label>Marital Status:</label>
-          <select
-            name="maritalStatus"
-            value={formData.maritalStatus}
-            onChange={handleInputChange}
-          >
+          <select name="maritalStatus" {...register("maritalStatus")}>
             <option value={""}>Select Marital Status</option>
             <option value="single">Single</option>
             <option value="married">Married</option>
@@ -421,8 +399,7 @@ const AddEmployee = () => {
           <input
             type="date"
             name="anniversaryDate"
-            value={formData.anniversaryDate}
-            onChange={handleInputChange}
+            {...register("anniversaryDate")}
           />
         </div>
 
@@ -432,11 +409,18 @@ const AddEmployee = () => {
             type="text"
             name="emergencyContactPerson"
             placeholder="Enter Emergency Contact Person Name"
-            value={formData.emergencyContactPerson}
-            onChange={handleInputChange}
+            {...register("emergencyContactPerson", {
+              required: "Emergency Contact Person is required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.emergencyContactPerson && (
-            <div className="error">{errors.emergencyContactPerson}</div>
+            <div className="error">
+              {errors.emergencyContactPerson?.message}
+            </div>
           )}
         </div>
 
@@ -446,11 +430,18 @@ const AddEmployee = () => {
             type="text"
             name="emergencyContactNumber"
             placeholder="Enter Emergency Contact Number"
-            value={formData.emergencyContactNumber}
-            onChange={handleInputChange}
+            {...register("emergencyContactNumber", {
+              required: "Emergency Contact Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.emergencyContactNumber && (
-            <div className="error">{errors.emergencyContactNumber}</div>
+            <div className="error">
+              {errors.emergencyContactNumber?.message}
+            </div>
           )}
         </div>
 
@@ -460,21 +451,24 @@ const AddEmployee = () => {
             type="text"
             name="emergencyPersonRelation"
             placeholder="Enter Emergency Person Relation"
-            value={formData.emergencyPersonRelation}
-            onChange={handleInputChange}
+            {...register("emergencyPersonRelation", {
+              required: "Emergency Person Relation is required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.emergencyPersonRelation && (
-            <div className="error">{errors.emergencyPersonRelation}</div>
+            <div className="error">
+              {errors.emergencyPersonRelation?.message}
+            </div>
           )}
         </div>
 
         <div className="form-row">
           <label>T-shirt Size:</label>
-          <select
-            name="tshirtSize"
-            value={formData.tshirtSize}
-            onChange={handleInputChange}
-          >
+          <select name="tshirtSize" {...register("tshirtSize")}>
             <option value={""}>Select T-Shirt Size</option>
             <option value="M">M</option>
             <option value="L">L</option>
@@ -494,8 +488,7 @@ const AddEmployee = () => {
             type="text"
             name="bloodGroup"
             placeholder="Enter Blood Group"
-            value={formData.bloodGroup}
-            onChange={handleInputChange}
+            {...register("bloodGroup")}
           />
         </div>
         <div className="form-row">
@@ -504,10 +497,17 @@ const AddEmployee = () => {
             type="text"
             name="aadhaarNo"
             placeholder="Enter Aadhaar Number"
-            value={formData.aadhaarNo}
-            onChange={handleInputChange}
+            {...register("aadhaarNo", {
+              required: "Adhaar Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
-          {errors.aadhaarNo && <div className="error">{errors.aadhaarNo}</div>}
+          {errors.aadhaarNo && (
+            <div className="error">{errors.aadhaarNo?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -516,8 +516,7 @@ const AddEmployee = () => {
             type="text"
             name="panNo"
             placeholder="Enter PAN Number"
-            value={formData.panNo}
-            onChange={handleInputChange}
+            {...register("panNo")}
           />
         </div>
 
@@ -527,9 +526,18 @@ const AddEmployee = () => {
             type="text"
             name="educationalQualification"
             placeholder="Enter Educational Qualification"
-            value={formData.educationalQualification}
-            onChange={handleInputChange}
+            {...register("educationalQualification", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
+          {errors.educationalQualification && (
+            <div className="error">
+              {errors.educationalQualification?.message}
+            </div>
+          )}
         </div>
 
         <div className="form-row">
@@ -538,27 +546,79 @@ const AddEmployee = () => {
             type="text"
             name="offeredSalary"
             placeholder="Enter Offered Salary"
-            value={formData.offeredSalary}
-            onChange={handleInputChange}
+            {...register("offeredSalary", {
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.offeredSalary && (
-            <div className="error">{errors.offeredSalary}</div>
+            <div className="error">{errors.offeredSalary?.message}</div>
           )}
         </div>
 
         <div className="form-row">
           <label>Upload Profile Image:</label>
-          <input type="file" name="profileImage" onChange={handleInputChange} />
+          <input
+            type="file"
+            name="profileImage"
+            {...register("profileImage", {
+              required: "Profile photo is required",
+              validate: {
+                checkFileType: (value) =>
+                  value[0] &&
+                  ["image/jpeg", "image/png", "image/jpg"].includes(
+                    value[0].type
+                  )
+                    ? true
+                    : "Only JPEG, JPG, and PNG files are allowed",
+              },
+            })}
+          />
+          {errors.profileImage && (
+            <div className="error">{errors.profileImage?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
           <label>Upload Document:</label>
-          <input type="file" name="document" onChange={handleInputChange} />
+          <input
+            type="file"
+            name="document"
+            {...register("document", {
+              required: "Document is required",
+              validate: {
+                checkFileType: (value) =>
+                  value[0] && value[0].type === "application/pdf"
+                    ? true
+                    : "Only PDF files are allowed",
+              },
+            })}
+          />
+          {errors.document && (
+            <div className="error">{errors.document?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
           <label>Upload Resume:</label>
-          <input type="file" name="resumeFile" onChange={handleInputChange} />
+          <input
+            type="file"
+            name="resumeFile"
+            {...register("resumeFile", {
+              required: "Resume is required",
+              validate: {
+                checkFileType: (value) =>
+                  value[0] && value[0].type === "application/pdf"
+                    ? true
+                    : "Only PDF files are allowed",
+              },
+            })}
+          />
+          {errors.resumeFile && (
+            <div className="error">{errors.resumeFile?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -567,9 +627,15 @@ const AddEmployee = () => {
             type="text"
             name="employeePresentAddress"
             placeholder="Enter Present Address"
-            value={formData.employeePresentAddress}
-            onChange={handleInputChange}
+            {...register("employeePresentAddress", {
+              required: "Employee Present Address is required",
+            })}
           />
+          {errors.employeePresentAddress && (
+            <div className="error">
+              {errors.employeePresentAddress?.message}
+            </div>
+          )}
         </div>
 
         <div className="form-row">
@@ -578,9 +644,13 @@ const AddEmployee = () => {
             type="text"
             name="employeeExperience"
             placeholder="Enter Experience"
-            value={formData.employeeExperience}
-            onChange={handleInputChange}
+            {...register("employeeExperience", {
+              required: "Employee Experience is required",
+            })}
           />
+          {errors.employeeExperience && (
+            <div className="error">{errors.employeeExperience?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -589,10 +659,15 @@ const AddEmployee = () => {
             type="text"
             name="perks"
             placeholder="Enter Perks"
-            value={formData.perks}
-            onChange={handleInputChange}
+            {...register("perks", {
+              required: "Perks are required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
-          {errors.perks && <div className="error">{errors.perks}</div>}
+          {errors.perks && <div className="error">{errors.perks?.message}</div>}
         </div>
 
         <div className="form-row">
@@ -601,8 +676,7 @@ const AddEmployee = () => {
             type="text"
             name="lastCompany"
             placeholder="Enter Last Company"
-            value={formData.lastCompany}
-            onChange={handleInputChange}
+            {...register("lastCompany")}
           />
         </div>
 
@@ -612,11 +686,16 @@ const AddEmployee = () => {
             type="text"
             name="workLocation"
             placeholder="Enter Work Location"
-            value={formData.workLocation}
-            onChange={handleInputChange}
+            {...register("workLocation", {
+              required: "Work Location",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.workLocation && (
-            <div className="error">{errors.workLocation}</div>
+            <div className="error">{errors.workLocation?.message}</div>
           )}
         </div>
 
@@ -626,11 +705,15 @@ const AddEmployee = () => {
             type="text"
             name="entrySource"
             placeholder="Enter Entry Source"
-            value={formData.entrySource}
-            onChange={handleInputChange}
+            {...register("entrySource", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.entrySource && (
-            <div className="error">{errors.entrySource}</div>
+            <div className="error">{errors.entrySource?.message}</div>
           )}
         </div>
 
@@ -638,13 +721,17 @@ const AddEmployee = () => {
           <label>Employee Status:</label>
           <select
             name="employeeStatus"
-            value={formData.employeeStatus}
-            onChange={handleInputChange}
+            {...register("employeeStatus", {
+              required: "Employee Status is required",
+            })}
           >
             <option value={""}>Select Employee Status</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
           </select>
+          {errors.employeeStatus && (
+            <div className="error">{errors.employeeStatus?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -652,8 +739,7 @@ const AddEmployee = () => {
           <input
             type="date"
             name="lastWorkingDate"
-            value={formData.lastWorkingDate}
-            onChange={handleInputChange}
+            {...register("lastWorkingDate")}
           />
         </div>
 
@@ -663,11 +749,15 @@ const AddEmployee = () => {
             type="text"
             name="reasonForLeaving"
             placeholder="Enter Reason for Leaving"
-            value={formData.reasonForLeaving}
-            onChange={handleInputChange}
+            {...register("reasonForLeaving", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.reasonForLeaving && (
-            <div className="error">{errors.reasonForLeaving}</div>
+            <div className="error">{errors.reasonForLeaving?.message}</div>
           )}
         </div>
 
@@ -675,13 +765,17 @@ const AddEmployee = () => {
           <label>Induction (Yes/No):</label>
           <select
             name="inductionYesOrNo"
-            value={formData.inductionYesOrNo}
-            onChange={handleInputChange}
+            {...register("inductionYesOrNo", {
+              required: "Induction status is required",
+            })}
           >
             <option value={""}>Select Yes or No</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
+          {errors.inductionYesOrNo && (
+            <div className="error">{errors.inductionYesOrNo?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -690,11 +784,15 @@ const AddEmployee = () => {
             type="text"
             name="inductionComment"
             placeholder="Enter Induction Comment"
-            value={formData.inductionComment}
-            onChange={handleInputChange}
+            {...register("inductionComment", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.inductionComment && (
-            <div className="error">{errors.inductionComment}</div>
+            <div className="error">{errors.inductionComment?.message}</div>
           )}
         </div>
 
@@ -704,11 +802,17 @@ const AddEmployee = () => {
             type="text"
             name="trainingSource"
             placeholder="Enter Training Source"
-            value={formData.trainingSource}
-            onChange={handleInputChange}
+            {...register("trainingSource", {
+              validate: (value) =>
+                trainingCompleted === "Yes"
+                  ? value
+                    ? true
+                    : "Tranining Source required"
+                  : true,
+            })}
           />
           {errors.trainingSource && (
-            <div className="error">{errors.trainingSource}</div>
+            <div className="error">{errors.trainingSource?.message}</div>
           )}
         </div>
 
@@ -716,13 +820,19 @@ const AddEmployee = () => {
           <label>Training Completed (Yes/No):</label>
           <select
             name="trainingCompletedYesOrNo"
-            value={formData.trainingCompletedYesOrNo}
-            onChange={handleInputChange}
+            {...register("trainingCompletedYesOrNo", {
+              required: "Training completion status is required",
+            })}
           >
             <option value={""}>Select Yes or No</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
+          {errors.trainingCompletedYesOrNo && (
+            <div className="error">
+              {errors.trainingCompletedYesOrNo?.message}
+            </div>
+          )}
         </div>
 
         <div className="form-row">
@@ -731,11 +841,25 @@ const AddEmployee = () => {
             type="number"
             name="trainingTakenCount"
             placeholder="Enter Training Taken Count"
-            value={formData.trainingTakenCount}
-            onChange={handleInputChange}
+            {...register("trainingTakenCount", {
+              validate: (value) =>
+                trainingCompleted === "Yes"
+                  ? value
+                    ? true
+                    : "Training Count is required"
+                  : true,
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+              min: {
+                value: 0,
+                message: "Negative values are not allowed",
+              },
+            })}
           />
           {errors.trainingTakenCount && (
-            <div className="error">{errors.trainingTakenCount}</div>
+            <div className="error">{errors.trainingTakenCount?.message}</div>
           )}
         </div>
 
@@ -745,11 +869,16 @@ const AddEmployee = () => {
             type="text"
             name="roundsOfInterview"
             placeholder="Enter Rounds of Interview"
-            value={formData.roundsOfInterview}
-            onChange={handleInputChange}
+            {...register("roundsOfInterview", {
+              required: "Count Of Interview is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.roundsOfInterview && (
-            <div className="error">{errors.roundsOfInterview}</div>
+            <div className="error">{errors.roundsOfInterview?.message}</div>
           )}
         </div>
 
@@ -759,11 +888,16 @@ const AddEmployee = () => {
             type="text"
             name="interviewTakenPerson"
             placeholder="Enter Interview Taken By"
-            value={formData.interviewTakenPerson}
-            onChange={handleInputChange}
+            {...register("interviewTakenPerson", {
+              required: "Interview Taken Name Required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.interviewTakenPerson && (
-            <div className="error">{errors.interviewTakenPerson}</div>
+            <div className="error">{errors.interviewTakenPerson?.message}</div>
           )}
         </div>
 
@@ -773,11 +907,15 @@ const AddEmployee = () => {
             type="text"
             name="warningComments"
             placeholder="Enter Warning Comments"
-            value={formData.warningComments}
-            onChange={handleInputChange}
+            {...register("warningComments", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.warningComments && (
-            <div className="error">{errors.warningComments}</div>
+            <div className="error">{errors.warningComments?.message}</div>
           )}
         </div>
 
@@ -787,11 +925,16 @@ const AddEmployee = () => {
             type="text"
             name="performanceIndicator"
             placeholder="Enter Performance Indicator"
-            value={formData.performanceIndicator}
-            onChange={handleInputChange}
+            {...register("performanceIndicator", {
+              required: "Performance are required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.performanceIndicator && (
-            <div className="error">{errors.performanceIndicator}</div>
+            <div className="error">{errors.performanceIndicator?.message}</div>
           )}
         </div>
 
@@ -801,11 +944,15 @@ const AddEmployee = () => {
             type="text"
             name="teamLeaderMsg"
             placeholder="Enter Team Leader Message"
-            value={formData.teamLeaderMsg}
-            onChange={handleInputChange}
+            {...register("teamLeaderMsg", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.teamLeaderMsg && (
-            <div className="error">{errors.teamLeaderMsg}</div>
+            <div className="error">{errors.teamLeaderMsg?.message}</div>
           )}
         </div>
 
@@ -815,11 +962,16 @@ const AddEmployee = () => {
             type="text"
             name="editDeleteAuthority"
             placeholder="Enter Edit/Delete Authority"
-            value={formData.editDeleteAuthority}
-            onChange={handleInputChange}
+            {...register("editDeleteAuthority", {
+              required: "Authority Required",
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.editDeleteAuthority && (
-            <div className="error">{errors.editDeleteAuthority}</div>
+            <div className="error">{errors.editDeleteAuthority?.message}</div>
           )}
         </div>
 
@@ -829,9 +981,13 @@ const AddEmployee = () => {
             type="text"
             name="linkedInURl"
             placeholder="Enter LinkedIn URL"
-            value={formData.linkedInURl}
-            onChange={handleInputChange}
+            {...register("linkedInURl", {
+              required: "Linkdln Url Required",
+            })}
           />
+          {errors.linkedInURl && (
+            <div className="error">{errors.linkedInURl?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -840,8 +996,7 @@ const AddEmployee = () => {
             type="text"
             name="faceBookURL"
             placeholder="Enter Facebook URL"
-            value={formData.faceBookURL}
-            onChange={handleInputChange}
+            {...register("faceBookURL")}
           />
         </div>
 
@@ -851,8 +1006,7 @@ const AddEmployee = () => {
             type="text"
             name="twitterURl"
             placeholder="Enter Twitter URL"
-            value={formData.twitterURl}
-            onChange={handleInputChange}
+            {...register("twitterURl")}
           />
         </div>
 
@@ -862,8 +1016,7 @@ const AddEmployee = () => {
             type="text"
             name="employeeAddress"
             placeholder="Enter Employee Address"
-            value={formData.employeeAddress}
-            onChange={handleInputChange}
+            {...register("employeeAddress")}
           />
         </div>
 
@@ -873,11 +1026,16 @@ const AddEmployee = () => {
             type="text"
             name="professionalPtNo"
             placeholder="Enter Professional PT Number"
-            value={formData.professionalPtNo}
-            onChange={handleInputChange}
+            {...register("professionalPtNo", {
+              required: "Professional PT Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.professionalPtNo && (
-            <div className="error">{errors.professionalPtNo}</div>
+            <div className="error">{errors.professionalPtNo?.message}</div>
           )}
         </div>
 
@@ -887,10 +1045,17 @@ const AddEmployee = () => {
             type="text"
             name="esIcNo"
             placeholder="Enter ESIC Number"
-            value={formData.esIcNo}
-            onChange={handleInputChange}
+            {...register("esIcNo", {
+              required: "ESIC Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
-          {errors.esIcNo && <div className="error">{errors.esIcNo}</div>}
+          {errors.esIcNo && (
+            <div className="error">{errors.esIcNo?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -899,10 +1064,15 @@ const AddEmployee = () => {
             type="text"
             name="pfNo"
             placeholder="Enter PF Number"
-            value={formData.pfNo}
-            onChange={handleInputChange}
+            {...register("pfNo", {
+              required: "PF Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
-          {errors.pfNo && <div className="error">{errors.pfNo}</div>}
+          {errors.pfNo && <div className="error">{errors.pfNo?.message}</div>}
         </div>
 
         <div className="form-row">
@@ -911,11 +1081,16 @@ const AddEmployee = () => {
             type="text"
             name="insuranceNumber"
             placeholder="Enter Insurance Number"
-            value={formData.insuranceNumber}
-            onChange={handleInputChange}
+            {...register("insuranceNumber", {
+              required: "Insurance Number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Please enter numeric value only",
+              },
+            })}
           />
           {errors.insuranceNumber && (
-            <div className="error">{errors.insuranceNumber}</div>
+            <div className="error">{errors.insuranceNumber?.message}</div>
           )}
         </div>
 
@@ -925,11 +1100,15 @@ const AddEmployee = () => {
             type="text"
             name="reportingMangerName"
             placeholder="Enter Reporting Manager Name"
-            value={formData.reportingMangerName}
-            onChange={handleInputChange}
+            {...register("reportingMangerName", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.reportingMangerName && (
-            <div className="error">{errors.reportingMangerName}</div>
+            <div className="error">{errors.reportingMangerName?.message}</div>
           )}
         </div>
 
@@ -939,11 +1118,17 @@ const AddEmployee = () => {
             type="text"
             name="reportingMangerDesignation"
             placeholder="Enter Reporting Manager Designation"
-            value={formData.reportingMangerDesignation}
-            onChange={handleInputChange}
+            {...register("reportingMangerDesignation", {
+              pattern: {
+                value: /^[A-Za-z ]+$/,
+                message: "Please enter character value only",
+              },
+            })}
           />
           {errors.reportingMangerDesignation && (
-            <div className="error">{errors.reportingMangerDesignation}</div>
+            <div className="error">
+              {errors.reportingMangerDesignation?.message}
+            </div>
           )}
         </div>
 
@@ -954,8 +1139,9 @@ const AddEmployee = () => {
               type={passwordVisible ? "text" : "password"}
               name="employeePassword"
               placeholder="Enter Password"
-              value={formData.employeePassword}
-              onChange={handleInputChange}
+              {...register("employeePassword", {
+                required: "Password is required",
+              })}
             />
             <button
               type="button"
@@ -965,6 +1151,9 @@ const AddEmployee = () => {
               {passwordVisible ? "Hide" : "Show"}
             </button>
           </div>
+          {errors.employeePassword && (
+            <div className="error">{errors.employeePassword?.message}</div>
+          )}
         </div>
 
         <div className="form-row">
@@ -973,11 +1162,15 @@ const AddEmployee = () => {
             type={passwordVisible ? "text" : "password"}
             name="confirmPassword"
             placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-            onBlur={handleConfirmPasswordBlur}
+            {...register("confirmPassword", {
+              required: "Confirm password is required",
+              validate: (value) =>
+                value === watch("employeePassword") || "Passwords do not match",
+            })}
           />
-          {!passwordMatch && <div className="error">{passwordError}</div>}
+          {errors.confirmPassword && (
+            <div className="error">{errors.confirmPassword?.message}</div>
+          )}
         </div>
 
         <div className="add-employee-submit-div">

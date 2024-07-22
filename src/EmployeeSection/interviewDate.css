@@ -82,13 +82,17 @@
   background-color: #ffe5ec;
   border: 2px solid white;
   border-radius: 15px;
-  height: 40px;
-  
+  height: 40px; 
+}
+
+.react-calendar__month-view__days{
+  display: flex;
+  gap: 10px;
 }
 
 button.react-calendar__tile.react-calendar__month-view__days__day {
   color: gray;
-  box-shadow: 1px 2px 3px 1px rgb(167, 164, 164);
+  border: 1px solid #ccc;
   border-radius: 15px;
   
 }

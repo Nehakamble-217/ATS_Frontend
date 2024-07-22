@@ -7,11 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ClipLoader from "react-spinners/ClipLoader";
 // SwapnilRokade_ShortListedCandidates_ModifyFilters_11/07
-const ShortListedCandidates = ({
-  closeComponents,
-  viewUpdatedPage,
-  loginEmployeeName,
-}) => {
+const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
 
@@ -567,79 +563,90 @@ const ShortListedCandidates = ({
 
   return (
     <div className="calling-list-container">
-      {!showUpdateCallingTracker ? (
-        <div className="attendanceTableData">
-          <div className="search">
-            <i
-              className="fa-solid fa-magnifying-glass"
-              onClick={() => {
-                setShowSearchBar(!showSearchBar);
-                setShowFilterSection(false);
-              }}
-              style={{ margin: "10px", width: "auto", fontSize: "15px" }}
-            ></i>
-            <h5 style={{ color: "gray", paddingTop: "5px" }}>
-              Shortlisted Candidate
-            </h5>
+      <div className="search">
+        <div
+          style={{
+            display: "flex",
+            gap: "5px",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "3px",
+          }}
+        >
+          <i
+            className="fa-solid fa-magnifying-glass"
+            onClick={() => {
+              setShowSearchBar(!showSearchBar);
+              setShowFilterSection(false);
+            }}
+            style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+          ></i>
+          <i
+            style={{ fontSize: "22px" }}
+            onClick={toggleShortListed}
+            className="fa-regular fa-calendar"
+          ></i>
+        </div>
+        <h5 style={{ color: "gray", paddingTop: "5px" }}>
+          Shortlisted Candidate
+        </h5>
 
-            <div
-              style={{
-                display: "flex",
-                gap: "5px",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingTop: "3px",
-              }}
-            >
-              {userType !== "Recruiters" && (
-                <div>
-                  {showShareButton ? (
+        <div
+          style={{
+            display: "flex",
+            gap: "5px",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "3px",
+          }}
+        >
+          {userType !== "Recruiters" && (
+            <div>
+              {showShareButton ? (
+                <button
+                  className="lineUp-share-btn"
+                  onClick={() => setShowShareButton(false)}
+                >
+                  Share
+                </button>
+              ) : (
+                <div style={{ display: "flex", gap: "5px" }}>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={() => {
+                      setShowShareButton(true);
+                      setSelectedRows([]);
+                    }}
+                  >
+                    Close
+                  </button>
+                  {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_602 */}
+                  {userType === "TeamLeader" && (
                     <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
+                      className="callingList-share-btn"
+                      onClick={handleSelectAll}
                     >
-                      Share
+                      {allSelected ? "Deselect All" : "Select All"}
                     </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                        }}
-                      >
-                        Close
-                      </button>
-                      {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_602 */}
-                      {userType === "TeamLeader" && (
-                        <button
-                          className="callingList-share-btn"
-                          onClick={handleSelectAll}
-                        >
-                          {allSelected ? "Deselect All" : "Select All"}
-                        </button>
-                      )}
-                      {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_609 */}
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-                    </div>
                   )}
+                  {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_609 */}
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={forwardSelectedCandidate}
+                  >
+                    Forward
+                  </button>
                 </div>
               )}
-              <button
-                className="lineUp-share-btn"
-                onClick={toggleFilterSection}
-              >
-                Filter <i className="fa-solid fa-filter"></i>
-              </button>
             </div>
-          </div>
-
+          )}
+          <button className="lineUp-share-btn" onClick={toggleFilterSection}>
+            Filter <i className="fa-solid fa-filter"></i>
+          </button>
+        </div>
+      </div>
+      {!showUpdateCallingTracker ? (
+        <div className="attendanceTableData">
           {showSearchBar && (
             <input
               type="text"
