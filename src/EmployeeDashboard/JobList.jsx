@@ -5,44 +5,40 @@ import ShareDescription from "./shareDescription";
 import JobDescriptionEdm from "../JobDiscription/jobDescriptionEdm";
 import jobDiscriptions from "../employeeComponents/jobDiscriptions";
 import ShareEDM from "../JobDiscription/shareEDM";
-
+import { values } from "pdf-lib";
+// SwapnilRokade_JobListing_filter_option__18/07
 const JobListing = () => {
   const [jobDescriptions, setJobDescriptions] = useState([]);
-  const [jobDescription, setJobDescription] = useState([]);
+  const [filterOptions, setFilterOptions] = useState([]);
+  const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [selectedJobIndex, setSelectedJobIndex] = useState(-1); // Track which job description is selected
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCities, setSelectedCities] = useState(new Set());
-  const [selectedExperience, setSelectedExperience] = useState(new Set());
-  const [selectedIndustry, setSelectedIndustry] = useState(new Set());
-  const [selectedRole, setSleectedRole] = useState(new Set());
-  const [selectedSalary, setSelectedSalary] = useState(new Set());
-  const [selectedIncentive, setSelectedIncentive] = useState(new Set());
   const [showViewMore, setShowViewMore] = useState(false);
-  const [showCityFilter, setShowCityFilter] = useState(false);
-  const [showExperience, setShowExperience] = useState(false);
-  const [showSalary, setShowSalary] = useState(false);
-  const [showIncentive, setShowIncentive] = useState(false);
   const [showJobDescriptionShare, setShowJobDescriptionShare] = useState(false);
-  const [showIndustry, setShowIndustry] = useState(false);
-  const [showRoles, setShowRoles] = useState(false);
-  const [showJobRole, setShowJobRole] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({});
   const [showJobDescriptionEdm, setShowJobDescriptionEdm] = useState(false);
-  const [filteredJobDescriptions, setFilteredJobDescriptions] =
-    useState(jobDescriptions);
+  const [filteredJobDescriptions, setFilteredJobDescriptions] = useState([]);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
   const [requirementData, setRequirementData] = useState();
   const [showEDM, setShowEDM] = useState(false);
-  const [designation, setDesignation] = useState('');
-const [location, setLocation] = useState('');
-const [experience, setExperience] = useState('');
   const [searchQuery, setSearchQuery] = useState({
-  designation: '',
-  location: '',
-  experience: '',
-});
-
-
-
+    designation: "",
+    location: "",
+    experience: "",
+  });
+  const limitedOption = [
+    "jobRole",
+    "jobType",
+    "designation",
+    "location",
+    "salary",
+    "stream",
+    "requirementId",
+    "experience",
+    "companyName",
+    "field",
+    "companyName",
+  ];
 
   useEffect(() => {
     fetch("http://192.168.1.46:9090/api/ats/157industries/all-job-descriptions")
@@ -54,137 +50,112 @@ const [experience, setExperience] = useState('');
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-useEffect(() => {
-  handleFilter();
-}, [searchQuery, jobDescriptions]);
+  useEffect(() => {
+    handleFilter();
+  }, [searchQuery, selectedFilters, jobDescriptions]);
+  useEffect(() => {
+    filterData();
+  }, [selectedFilters, jobDescriptions]);
 
+  const filterData = () => {
+    let filtereddata = [...jobDescriptions];
+    Object.entries(searchQuery).forEach(([key, value]) => {
+      if (value) {
+        filtereddata = filtereddata.filter((item) =>
+          item[key]?.toString().toLowerCase().includes(value.toLowerCase())
+        );
+      }
+    });
 
-const handleInputSearch = (event) => {
-  const { name, value } = event.target;
-  setSearchQuery((prevQuery) => ({ ...prevQuery, [name]: value }));
-};
+    Object.entries(selectedFilters).forEach(([option, values]) => {
+      if (values.length > 0) {
+        if (option === "requirementId") {
+          filtereddata = filtereddata.filter((item) =>
+            values.some((value) =>
+              item[option]?.toString().toLowerCase().includes(value)
+            )
+          );
+        } else {
+          filtereddata = filtereddata.filter((item) =>
+            values.some((value) =>
+              item[option]
+                ?.toString()
+                .toLowerCase()
+                .includes(value.toLowerCase())
+            )
+          );
+        }
+      }
+    });
+    setFilteredJobDescriptions(filtereddata);
+  };
 
+  const handleFilterSelect = (option, value) => {
+    setSelectedFilters((prev) => {
+      const updatedFilters = { ...prev };
+      if (!updatedFilters[option]) {
+        updatedFilters[option] = [];
+      }
 
-    const handleFilter = () => {
-  const filtered = jobDescriptions.filter((job) => {
-    return (
-      (job.designation && job.designation.toLowerCase().includes(searchQuery.designation.toLowerCase())) ||
-      (job.location && job.location.toLowerCase().includes(searchQuery.location.toLowerCase())) ||
-      (job.experience && job.experience.toLowerCase().includes(searchQuery.experience.toLowerCase()))
+      const index = updatedFilters[option].indexOf(value);
+      if (index === -1) {
+        updatedFilters[option] = [...updatedFilters[option], value];
+      } else {
+        updatedFilters[option] = updatedFilters[option].filter(
+          (item) => item !== value
+        );
+      }
+      return updatedFilters;
+    });
+  };
+
+  const handleInputSearch = (event) => {
+    const { name, value } = event.target;
+    setSearchQuery((prevQuery) => ({ ...prevQuery, [name]: value }));
+  };
+
+  useEffect(() => {
+    const options = Object.keys(jobDescriptions[0] || {}).filter((key) =>
+      limitedOption.includes(key)
     );
-  });
-  setFilteredJobDescriptions(filtered);
-};
+    setFilterOptions(options);
+  }, [jobDescriptions]);
 
- 
+  console.log(filteredJobDescriptions);
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-  const handleCheckboxChange3 = (incentive) => {
-    const newSelectedIncentive = new Set(selectedIncentive);
-    if (newSelectedIncentive.has(incentive)) {
-      newSelectedIncentive.delete(incentive);
-    } else {
-      newSelectedIncentive.add(incentive);
-    }
-    setSelectedIncentive(newSelectedIncentive);
-  };
-
-  const handleCheckboxChange2 = (salary) => {
-    const newSelectedSalary = new Set(selectedSalary);
-    if (newSelectedSalary.has(salary)) {
-      newSelectedSalary.delete(salary);
-    } else {
-      newSelectedSalary.add(salary);
-    }
-    setSelectedSalary(newSelectedSalary);
-  };
-  const handleCheckboxChange1 = (experience) => {
-    const newSelectedExperiences = new Set(selectedExperience);
-    if (newSelectedExperiences.has(experience)) {
-      newSelectedExperiences.delete(experience);
-    } else {
-      newSelectedExperiences.add(experience);
-    }
-    setSelectedExperience(newSelectedExperiences);
-  };
-
-  const handleCheckboxChange = (city) => {
-    const newSelectedCities = new Set(selectedCities);
-
-    if (newSelectedCities.has(city)) {
-      newSelectedCities.delete(city);
-    } else {
-      newSelectedCities.add(city);
-    }
-    setSelectedCities(newSelectedCities);
-  };
-
-  const handleApply = () => {
-    // Logic for applying the selected cities
-    console.log(Array.from(selectedCities));
-    console.log(Array.from(selectedExperience));
-    console.log(Array.from(selectedIndustry));
-    console.log(Array.from(selectedRole));
-    console.log(Array.from(selectedIncentive));
-
-    const filtered = jobDescriptions.filter(
-      (job) =>
-        selectedCities.has(job.location) ||
-        selectedExperience.has(job.experience) ||
-        selectedSalary.has(job.salary) ||
-        selectedIncentive.has(job.incentive)
-    );
+  const handleFilter = () => {
+    const filtered = jobDescriptions.filter((job) => {
+      return (
+        (job.designation &&
+          job.designation
+            .toLowerCase()
+            .includes(searchQuery.designation.toLowerCase())) ||
+        (job.location &&
+          job.location
+            .toLowerCase()
+            .includes(searchQuery.location.toLowerCase())) ||
+        (job.experience &&
+          job.experience
+            .toLowerCase()
+            .includes(searchQuery.experience.toLowerCase()))
+      );
+    });
     setFilteredJobDescriptions(filtered);
-    setShowCityFilter(false);
-    setFilteredJobDescriptions(filtered);
-    if (filtered == "") {
-      setFilteredJobDescriptions(jobDescriptions);
+  };
+
+  const handleFilterOptionClick = (option) => {
+    if (activeFilterOption === option) {
+      setActiveFilterOption(null);
+    } else {
+      setActiveFilterOption(option);
     }
-    setShowCityFilter(false);
-    setShowCityFilter(false);
-    setShowExperience(false);
-    setShowIncentive(false);
-    setShowIndustry(false);
-    setShowRoles(false);
-    setShowJobRole(false);
-    setShowSalary(false);
   };
-
-  const handleReset = () => {
-    setSelectedCities(new Set());
-    setSelectedIndustry(new Set());
-    setSelectedIncentive(new Set());
-    setSelectedExperience(new Set());
-    setSelectedSalary(new Set());
-    // setSelectedRole(new Set());
-    setSearchTerm("");
-    setFilteredJobDescriptions(jobDescriptions);
-    setShowCityFilter(false);
-    setShowCityFilter(false);
-    setShowExperience(false);
-    setShowIncentive(false);
-    setShowIndustry(false);
-    setShowRoles(false);
-    setShowJobRole(false);
-    setShowSalary(false);
-  };
-
-  const filteredCities = jobDescriptions.filter((city) =>
-    city.location.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  // const filteredIndustry= industry.filter(industrys=>
-  //   industrys.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // )
-  // const filteredRoles=role.filter(roles=>
-  //   roles.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // )
 
   const toggleJobDescription = (requirementId) => {
     console.log(requirementId + "before Api");
-    fetch(`http://192.168.1.46:9090/api/ats/157industries/requirement-info/${requirementId}`)
-
+    fetch(
+      `http://192.168.1.46:9090/api/ats/157industries/requirement-info/${requirementId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -196,9 +167,6 @@ const handleInputSearch = (event) => {
       .catch((error) => console.error("Error fetching data:", error));
   };
 
-
-
-
   const toggleEdm2 = () => {
     setShowEDM(!showEDM);
     // document.querySelector(".main-description-share2").style.display = "block";
@@ -206,70 +174,6 @@ const handleInputSearch = (event) => {
 
   const handleclose = () => {
     setShowViewMore(false);
-  };
-
-  const toggleCityFilter = () => {
-    setShowCityFilter(!showCityFilter); // Toggle city filter visibility
-    setShowExperience(false);
-    setShowSalary(false);
-    setShowIncentive(false);
-    setShowIndustry(false);
-    setShowRoles(false);
-    setShowJobRole(false);
-  };
-  const toggleExperience = () => {
-    setShowExperience(!showExperience);
-    setShowCityFilter(false); // Toggle experience filter visibility
-    setShowSalary(false);
-    setShowIncentive(false);
-    setShowIndustry(false);
-    setShowRoles(false);
-    setShowJobRole(false);
-  };
-  const toggleSalary = () => {
-    setShowSalary(!showSalary);
-    setShowCityFilter(false);
-    setShowExperience(false);
-    setShowIncentive(false);
-    setShowIndustry(false);
-    setShowRoles(false);
-    setShowJobRole(false);
-  };
-  const toggleIncentive = () => {
-    setShowIncentive(!showIncentive);
-    setShowCityFilter(false);
-    setShowExperience(false);
-    setShowSalary(false);
-    setShowIndustry(false);
-    setShowRoles(false);
-    setShowJobRole(false);
-  };
-  const toggleIndustry = () => {
-    setShowIndustry(!showIndustry);
-    setShowCityFilter(false);
-    setShowExperience(false);
-    setShowSalary(false);
-    setShowIncentive(false);
-    setShowRoles(false);
-    setShowJobRole(false);
-  };
-  const toggleRoles = () => {
-    setShowRoles(!showRoles);
-    setShowCityFilter(false);
-    setShowExperience(false);
-    setShowSalary(false);
-    setShowIncentive(false);
-    setShowIndustry(false);
-    setShowJobRole(false);
-  };
-  const toggleJobRole = () => {
-    setShowJobRole(!showJobRole);
-    setShowCityFilter(false);
-    setShowExperience(false);
-    setShowSalary(false);
-    setShowIncentive(false);
-    setShowIndustry(false);
-    setShowRoles(false);
   };
 
   const sharejobdescription = (e) => {
@@ -289,23 +193,8 @@ const handleInputSearch = (event) => {
     setShowJobDescriptionEdm(res);
   };
   const handleShareJobDescription = (res) => {
-    setShowJobDescriptionShare(res)
-  }
-  
-  
-
-  const uniqueCities = Array.from(
-    new Set(filteredCities.map((job) => job.location))
-  );
-  const uniqueExperiences = Array.from(
-    new Set(jobDescriptions.map((job) => job.experience))
-  );
-  const uniqueSalary = Array.from(
-    new Set(jobDescriptions.map((job) => job.salary))
-  );
-  const uniqueIncentive = Array.from(
-    new Set(jobDescriptions.map((job) => job.incentive))
-  );
+    setShowJobDescriptionShare(res);
+  };
 
   return (
     <>
@@ -315,17 +204,18 @@ const handleInputSearch = (event) => {
             className="search-input"
             placeholder="Enter keyword / designation / companies"
             type="text"
-              value={searchQuery.designation}
-  onChange={handleInputSearch}
+            name="designation"
+            value={searchQuery.designation}
+            onChange={handleInputSearch}
           />
           <input
             className="search-input"
             list="experienceOptions"
             placeholder="Select experience"
             type="text"
+            name="experience"
             value={searchQuery.experience}
-  onChange={handleInputSearch}
-            
+            onChange={handleInputSearch}
           />
           <datalist id="experienceOptions">
             <option value="0-1 years" />
@@ -338,386 +228,56 @@ const handleInputSearch = (event) => {
             className="search-input"
             placeholder="Enter location"
             type="text"
+            name="location"
             value={searchQuery.location}
-           onChange={handleInputSearch}
+            onChange={handleInputSearch}
           />
-          <button className="search-button" onClick={handleFilter} >
+          <button className="search-button" onClick={filterData}>
             <span className="search-icon">
-              {/* Font Awesome icon for search */}
               <i className="fas fa-search"></i>
+              Search
             </span>
-            <span>Search</span>
           </button>
         </div>
       </div>
-      <div className="filter-buttons">
-        <ul>
-          <li>
-            <button className=" white-Btn" onClick={toggleCityFilter}>
-              Location <span className="filter-icon">&#x25bc;</span>
-            </button>
-            {showCityFilter && (
-              <div className="city-filter">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                  style={{ width: "100%", padding: "5px" }}
-                />
-                <div className="optionDiv">
-                  {uniqueCities.map((city) => (
-                    <div key={city}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={selectedCities.has(city)}
-                          onChange={() => handleCheckboxChange(city)}
-                        />
-                        {city}
-                      </label>
+      <div className="filter-section">
+        <div className="filter-options-container">
+          {filterOptions.map((option) => {
+            const uniqueValues = Array.from(
+              new Set(jobDescriptions.map((item) => item[option]))
+            );
+            return (
+              <div key={option} className="filter-option">
+                <button
+                  className="white-Btn"
+                  onClick={() => handleFilterOptionClick(option)}
+                >
+                  {option}
+                  <span className="filter-icon">&#x25bc;</span>
+                </button>
+                {activeFilterOption === option && (
+                  <div className="city-filter">
+                    <div className="optionDiv">
+                      {uniqueValues.map((value) => (
+                        <label key={value} className="selfcalling-filter-value">
+                          <input
+                            type="checkbox"
+                            checked={
+                              selectedFilters[option]?.includes(value) || false
+                            }
+                            onChange={() => handleFilterSelect(option, value)}
+                          />
+                          {value}
+                        </label>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
-                    padding: "10px 24px",
-                  }}
-                >
-                  <button
-                    onClick={handleReset}
-                    style={{
-                      backgroundColor: "white",
-                      color: "#ffcb9b",
-                      padding: "5px 10px",
-                      border: "none",
-                    }}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    onClick={handleApply}
-                    style={{
-                      backgroundColor: "#ffcb9b",
-                      color: "white",
-                      padding: "5px 10px",
-                      border: "none",
-                      width: "50%",
-                    }}
-                  >
-                    Apply
-                  </button>
-                </div>
+                  </div>
+                )}
               </div>
-            )}
-          </li>
-
-          <li>
-            <button className=" white-Btn" onClick={toggleExperience}>
-              Experience <span className="filter-icon">&#x25bc;</span>
-            </button>
-            {showExperience && (
-              <div className="city-filter">
-                {/* <input
-        type="text"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleSearch}
-        style={{ width: '100%', padding: '5px' }}
-      /> */}
-                <div className="optionDiv">
-                  {uniqueExperiences.map((experience) => (
-                    <div key={experience}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={selectedExperience.has(experience)}
-                          onChange={() => handleCheckboxChange1(experience)}
-                        />
-                        {experience}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
-                    padding: "10px 24px",
-                  }}
-                >
-                  <button
-                    onClick={handleReset}
-                    style={{
-                      backgroundColor: "white",
-                      color: "#ffcb9b",
-                      padding: "5px 10px",
-                      border: "none",
-                    }}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    onClick={handleApply}
-                    style={{
-                      backgroundColor: "#ffcb9b",
-                      color: "white",
-                      padding: "5px 10px",
-                      border: "none",
-                      width: "50%",
-                    }}
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div>
-            )}
-          </li>
-
-          <li>
-            <button className=" white-Btn" onClick={toggleSalary}>
-              Salary <span className="filter-icon">&#x25bc;</span>
-            </button>
-            {showSalary && (
-              <div className="city-filter">
-                {/* <input
-        type="text"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleSearch}
-        style={{ width: '100%', padding: '5px' }}
-      /> */}
-                <div className="optionDiv">
-                  {uniqueSalary.map((salary) => (
-                    <div key={salary}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={selectedSalary.has(salary)}
-                          onChange={() => handleCheckboxChange2(salary)}
-                        />
-                        <i class="fa-solid fa-indian-rupee-sign"></i>
-                        {salary}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
-                    padding: "10px 24px",
-                  }}
-                >
-                  <button
-                    onClick={handleReset}
-                    style={{
-                      backgroundColor: "white",
-                      color: "#ffcb9b",
-                      padding: "5px 10px",
-                      border: "none",
-                    }}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    onClick={handleApply}
-                    style={{
-                      backgroundColor: "#ffcb9b",
-                      color: "white",
-                      padding: "5px 10px",
-                      border: "none",
-                      width: "50%",
-                    }}
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div>
-            )}
-          </li>
-          <li>
-            <button className=" white-Btn" onClick={toggleIncentive}>
-              Incentive <span className="filter-icon">&#x25bc;</span>
-            </button>
-            {showIncentive && (
-              <div className="city-filter">
-                {/* <input
-        type="text"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleSearch}
-        style={{ width: '100%', padding: '5px' }}
-      /> */}
-                <div className="optionDiv">
-                  {uniqueIncentive.map((incentive) => (
-                    <div key={incentive}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={selectedIncentive.has(incentive)}
-                          onChange={() => handleCheckboxChange3(incentive)}
-                        />
-                        <i class="fa-solid fa-indian-rupee-sign"></i>
-                        {incentive}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
-                    padding: "10px 24px",
-                  }}
-                >
-                  <button
-                    onClick={handleReset}
-                    style={{
-                      backgroundColor: "white",
-                      color: "#ffcb9b",
-                      padding: "5px 10px",
-                      border: "none",
-                    }}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    onClick={handleApply}
-                    style={{
-                      backgroundColor: "#ffcb9b",
-                      color: "white",
-                      padding: "5px 10px",
-                      border: "none",
-                      width: "50%",
-                    }}
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div>
-            )}
-          </li>
-          <li>
-            <button className=" white-Btn" onClick={toggleIndustry}>
-              Industry <span className="filter-icon">&#x25bc;</span>
-            </button>
-          </li>
-          <li>
-            <button className=" white-Btn" onClick={toggleRoles}>
-              Role <span className="filter-icon">&#x25bc;</span>
-            </button>
-          </li>
-          <li>
-            <button className=" white-Btn" onClick={toggleJobRole}>
-              Job Type <span className="filter-icon">&#x25bc;</span>
-            </button>
-            {showJobRole && (
-              <div className="city-filter">
-                <div className="optionDiv">
-                  <div>
-                    <label>
-                      <input type="checkbox" />
-                      Permanent Job
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" />
-                      International
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" />
-                      Jobs for Women
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" />
-                      Work From Home
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" />
-                      Contract Job
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" />
-                      Jobs for COVID-19 Layoffs
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" />
-                      Walkin Job
-                    </label>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                    boxShadow: " 0 -4px 5px rgba(0, 0, 0, .05)",
-                    padding: "10px 24px",
-                  }}
-                >
-                  <button
-                    onClick={handleReset}
-                    style={{
-                      backgroundColor: "white",
-                      color: "#ffcb9b",
-                      padding: "5px 10px",
-                      border: "none",
-                    }}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    onClick={handleApply}
-                    style={{
-                      backgroundColor: "#ffcb9b",
-                      color: "white",
-                      padding: "5px 10px",
-                      border: "none",
-                      width: "50%",
-                    }}
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div>
-            )}
-          </li>
-          <li>
-            <button className=" white-Btn">
-              Job Freshness <span className="filter-icon">&#x25bc;</span>
-            </button>
-          </li>
-          <li>
-            <button className=" white-Btn">
-              <span className="filter-icon">&#x2600;</span>
-              All Filters
-            </button>
-          </li>
-        </ul>
+            );
+          })}
+        </div>
       </div>
-
       {!showViewMore && (
         <div className="jdCards">
           {filteredJobDescriptions.map((item, index) => (

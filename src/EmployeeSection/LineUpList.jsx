@@ -7,6 +7,8 @@ import * as XLSX from "xlsx";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
+import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({
   updateState,
@@ -44,6 +46,8 @@ const LineUpList = ({
   const [activeFilterOption, setActiveFilterOption] = useState(null);
   const [count, setCount] = useState(0);
   const navigator = useNavigate();
+  const [showExportConfirmation, setShowExportConfirmation] = useState(false);
+  const [isDataSending, setIsDataSending] = useState(false);
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_48
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -120,7 +124,6 @@ const LineUpList = ({
   //akash_pawar_LineUpList_ShareFunctionality_16/07_128
   const fetchCallingTrackerData = async () => {
     const url = `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
-
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -142,6 +145,8 @@ const LineUpList = ({
   }, [employeeIdnew]);
 
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_171
+
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_144
   const fetchManager = async () => {
     try {
       const response = await fetch(
@@ -154,6 +159,9 @@ const LineUpList = ({
     }
   };
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_183
+
+  //akash_pawar_LineUpList_ShareFunctionality_17/07_156
+
 
   const fetchTeamLeader = async (empId) => {
     try {
@@ -403,11 +411,6 @@ const LineUpList = ({
     return null;
   };
 
-  const handleShortlistedShare = (e) => {
-    e.preventDefault();
-    setShowShareButton(false);
-  };
-
   const handleSelectAll = () => {
     if (allSelected) {
       setSelectedRows([]);
@@ -445,6 +448,8 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_475
   const handleShare = async () => {
+
+    setIsDataSending(true);
     let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
@@ -478,10 +483,14 @@ const LineUpList = ({
       };
       const response = await fetch(url, requestOptions);
       if (!response.ok) {
+
+
+        setIsDataSending(false);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       // Handle success response
-      console.log("Candidates forwarded successfully!");
+      setIsDataSending(false);
+      toast.success("Candidates forwarded successfully!");//Swapnil Error&success message 
       fetchCallingTrackerData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -511,6 +520,10 @@ const LineUpList = ({
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
       console.error("Error while forwarding candidates:", error);
+
+      setIsDataSending(false);
+      setShowForwardPopup(false);//Swapnil Error&success message 
+      toast.error("Error while forwarding candidates:");//Swapnil Error&success message 
       // Handle error scenarios or show error messages to the user
     }
   };
@@ -695,8 +708,29 @@ const LineUpList = ({
 
     // Save the Excel file
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Calling List");
-    XLSX.writeFile(wb, "calling_list.xlsx");
+    XLSX.utils.book_append_sheet(wb, ws, "LineUp List");
+    XLSX.writeFile(wb, "LineUp_list.xlsx");
+  };
+  const showPopup = () => {
+    setShowExportConfirmation(true);
+    document.querySelector(".calling-list-container").classList.add("blurred");
+  };
+
+  const hidePopup = () => {
+    setShowExportConfirmation(false);
+    document
+      .querySelector(".calling-list-container")
+      .classList.remove("blurred");
+  };
+
+  const confirmExport = () => {
+    setShowExportConfirmation(false);
+    handleExportToExcel();
+    hidePopup();
+  };
+
+  const cancelExport = () => {
+    hidePopup();
   };
   //Mohini_Raut_LineUpList_columnsToInclude_columnsToExclude_16/07/2024//
 
@@ -734,48 +768,71 @@ const LineUpList = ({
                     padding: "10px",
                   }}
                 >
-                  <button
-                    className="lineUp-share-close-btn"
-                    onClick={handleExportToExcel}
-                  >
-                    Create Excel
-                  </button>
-
-                  {showShareButton ? (
-                    <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
-                    >
-                      Share
+                  <div>
+                    <button className="lineUp-share-btn" onClick={showPopup}>
+                      Create Excel
                     </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-close-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                          setAllSelected(false);
-                        }}
-                      >
-                        Close
-                      </button>
-                      {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_793 */}
-                      {userType === "TeamLeader" && (
+
+                    {showExportConfirmation && (
+                      <div className="popup-containers">
+                        <p className="confirmation-texts">
+                          Are you sure you want to generate the Excel file?
+                        </p>
                         <button
-                          className="callingList-share-btn"
-                          onClick={handleSelectAll}
+                          onClick={confirmExport}
+                          className="buttoncss-ctn"
                         >
-                          {allSelected ? "Deselect All" : "Select All"}
+                          Yes
                         </button>
+                        <button
+                          onClick={cancelExport}
+                          className="buttoncss-ctn"
+                        >
+                          No
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {userType !== "Recruiters" && (
+                    <div>
+                      {showShareButton ? (
+                        <button
+                          className="lineUp-share-btn"
+                          onClick={() => setShowShareButton(false)}
+                        >
+                          Share
+                        </button>
+                      ) : (
+                        <div style={{ display: "flex", gap: "5px" }}>
+                          <button
+                            className="lineUp-share-close-btn"
+                            onClick={() => {
+                              setShowShareButton(true);
+                              setSelectedRows([]);
+                              setAllSelected(false);
+                            }}
+                          >
+                            Close
+                          </button>
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_793 */}
+                          {userType === "TeamLeader" && (
+                            <button
+                              className="callingList-share-btn"
+                              onClick={handleSelectAll}
+                            >
+                              {allSelected ? "Deselect All" : "Select All"}
+                            </button>
+                          )}
+                          {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_801 */}
+                          <button
+                            className="lineUp-forward-btn"
+                            onClick={forwardSelectedCandidate}
+                          >
+                            Forward
+                          </button>
+                        </div>
                       )}
-                      {/* akash_pawar_SelfCallingTracker_ShareFunctionality_17/07_801 */}
-                      <button
-                        className="lineUp-forward-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
                     </div>
                   )}
                   <button
@@ -936,7 +993,7 @@ const LineUpList = ({
                           </td>
                         ) : null}
 
-                  
+
                         <td className="tabledata">{index + 1}</td>
 
                         <td
@@ -1781,6 +1838,11 @@ const LineUpList = ({
             />
           )}
         </>
+      )}
+      {isDataSending && (
+        <div className="ShareFunc_Loading_Animation">
+          <ClipLoader size={50} color="#ffb281" />
+        </div>
       )}
     </div>
   );

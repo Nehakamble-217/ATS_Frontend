@@ -4,14 +4,12 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./LoginPage.css";
 import LoginImage from "../LogoImages/LoginImge.jpg";
-import { getPasswordFromDB } from "../api/api";
-import ForgotPasswordForms from "./empForgotPasswords"; // Import the ForgotPasswordForm component
+import ForgotPasswordForms from "./empForgotPasswords"; 
 
 const LoginSignup = ({ onLogin }) => {
-  const { userType } = useParams(); // Get the userType from the URL
+  const { userType } = useParams();
   const [employeeId, setEmployeeId] = useState("");
   const [password, setPassword] = useState("");
-  const [usersType, setUsersType] = useState("");
   const [error, setError] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [login, setLogin] = useState("");
@@ -23,20 +21,17 @@ const LoginSignup = ({ onLogin }) => {
   }, []);
 
   useEffect(() => {
-    fetch(
-      `http://192.168.1.46:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
-    )
-      .then((response) => response.text())
-      .then((data) => {
-        setLogin(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        // alert("Failed to Fetch")
-      });
-  }, [employeeId][userType]);
-  console.log(userType);
-  console.log(login + " loginSignUp");
+    if (employeeId && userType) {
+      fetch(`http://192.168.1.34:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`)
+        .then((response) => response.text())
+        .then((data) => {
+          setLogin(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [employeeId, userType]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -44,9 +39,6 @@ const LoginSignup = ({ onLogin }) => {
       setEmployeeId(value);
     } else if (name === "password") {
       setPassword(value);
-    } else if (name === "userType") {
-      // Handle userType change
-      setUsersType(value);
     }
   };
 
@@ -72,28 +64,21 @@ const LoginSignup = ({ onLogin }) => {
 
   return (
     <div className="main-body">
+       
       <div className="main-login-container">
         <div className="main-loginpage-clouds"></div>
-        <div
-          className={`container22 ${showForgotPassword ? "full-width" : ""}`}
-        >
+        <div className={`container22 ${showForgotPassword ? "full-width" : ""}`}>
           {!showForgotPassword && (
             <div className="left-panel" data-aos="fade-right">
               <img src={LoginImage} alt="Logo" className="logo" />
             </div>
           )}
-          <div
-            className={` ${
-              showForgotPassword ? "full-width-panel" : "right-panel"
-            }`}
-            data-aos="fade-left"
-          >
+          <div className={`${showForgotPassword ? "full-width-panel" : "right-panel"}`} data-aos="fade-left">
             {showForgotPassword ? (
               <ForgotPasswordForms userType={userType} />
             ) : (
               <form onSubmit={handleSubmit}>
-                <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2>{" "}
-                {/* Display the userType */}
+                <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2>
                 <div className="input-groups">
                   <i className="fas fa-user"></i>
                   <input
@@ -131,26 +116,14 @@ const LoginSignup = ({ onLogin }) => {
                   />
                 </div>
                 <div className="loginpage-error">{error}</div>
-                <button
-                  className="login-button"
-                  type="submit"
-                  data-aos="fade-top"
-                >
+                <button className="login-button" type="submit" data-aos="fade-top">
                   Login
                 </button>
-                <button
-                  type="button"
-                  className="dashboard-button"
-                  onClick={dashboardLink}
-                  data-aos="fade-top"
-                >
-                  Dashboar
+                <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">
+                  Dashboard 
                 </button>
                 <center>
-                  <span
-                    className="psw"
-                    onClick={() => setShowForgotPassword(true)}
-                  >
+                  <span className="psw" onClick={() => setShowForgotPassword(true)}>
                     Forgot password?
                   </span>
                 </center>
@@ -162,4 +135,5 @@ const LoginSignup = ({ onLogin }) => {
     </div>
   );
 };
+
 export default LoginSignup;

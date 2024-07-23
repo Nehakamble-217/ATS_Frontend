@@ -5,7 +5,7 @@
 .table-container {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  padding-top: 10px;
 }
 .table-header {
   background-color: #ffcb9b;
@@ -26,17 +26,11 @@
   border: 1px solid #ccc;
 }
 
-.filter-section {
-  margin-bottom: 20px;
-}
 
 .filter-dropdowns {
   display: flex;
+  gap: 2px;
   flex-wrap: wrap;
-}
-
-.filter-dropdown {
-  margin-right: 20px;
 }
 
 .filter-dropdown label {
@@ -53,14 +47,14 @@
 }
 
 /* Style the filter section */
-.filter-section {
+/* .filter-section {
   margin-top: 20px;
-}
+} */
 
 /* Style the filter dropdowns */
-.filter-dropdown {
+/* .filter-dropdown {
   margin-bottom: 10px;
-}
+} */
 
 /* Style the dropdown button */
 .dropbtn { 

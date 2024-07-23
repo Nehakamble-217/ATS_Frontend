@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CallingTrackerForm from '../EmployeeSection/CallingTrackerForm';
 import "../Excel/resumeList.css"
 import { useParams } from 'react-router-dom';
+import * as XLSX from "xlsx";
 
 const ResumeList = ({ handleUpdate }) => {
     const [data, setData] = useState([]);
@@ -12,6 +13,7 @@ const ResumeList = ({ handleUpdate }) => {
     console.log(employeeId +"empId in resume List");
 
     const [selectedCandidateId, setSelectedCandidateId] = useState();
+    const [showExportConfirmation, setShowExportConfirmation] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,21 +78,125 @@ const ResumeList = ({ handleUpdate }) => {
             tooltip.style.visibility = 'hidden';
         }
     };
+     //Swapnil_Rokade_ResumeList_columnsToInclude_columnsToExclude_18/07/2024//
+   const handleExportToExcel = () => {
+    // Define columns to include in export
+    const columnsToInclude = [
+      "No.",
+    "Candidate's Name",
+    "Contact Number",
+    "Alternate Number",
+    "Candidate Email",
+    "Education",
+    "Experience",
+    "Current Location"
+    ];
 
-    if (loading) {
-        return <div>Loading...</div>;
+    // Clone the data and map to match columnsToInclude order
+    const dataToExport = data.map((item, index) => {
+      // Create a filtered item without the 'Resume' field
+      const filteredItem = {
+       "No.": index + 1,
+      "Candidate's Name": item.name || "-",
+      "Contact Number": item.phone || "-",
+      "Alternate Number": item.phone || "-",
+      "Candidate Email":item.email||"-",
+       "Education":item.education||"-",
+       "Experience":item.experience||"-",
+       "Current Location":item.location||"-"      
+      };
+
+      return filteredItem;
+    });
+
+    // Define sheet name and create worksheet
+    const ws = XLSX.utils.json_to_sheet(dataToExport, {
+      header: columnsToInclude,
+    });
+
+    // Add conditional formatting for header row
+    const headerRange = XLSX.utils.decode_range(ws["!ref"]);
+    for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+      const cell = ws[XLSX.utils.encode_cell({ r: headerRange.s.r, c: C })];
+      if (cell) {
+        cell.s = {
+          font: {
+            bold: true,
+            color: { rgb: "000000" },
+            sz: 20,
+          },
+          fill: {
+            patternType: "solid",
+            fgColor: { rgb: "FF0000" }, // Red background
+          },
+        };
+      }
     }
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
+    // Save the Excel file
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Resume List");
+    XLSX.writeFile(wb, "ResumeList.xlsx");
+  };
+
+  const showPopup = () => {
+    setShowExportConfirmation(true);
+    document.querySelector('.table-container').classList.add('blurred');
+  };
+
+  const hidePopup = () => {
+    setShowExportConfirmation(false);
+    document.querySelector('.table-container').classList.remove('blurred');
+  };
+
+  const confirmExport = () => {
+    setShowExportConfirmation(false);
+    handleExportToExcel();
+    hidePopup();
+  };
+
+  const cancelExport = () => {
+    hidePopup();
+  };
+//Swapnil_Rokade_ResumeList_columnsToInclude_columnsToExclude_18/07/2024//
+
 
     return (
 
         <>
 
             <div className="table-container">
+                <div className='filterSection'>
+                    <div></div>
                 <h1 className="resume-data-heading">Resume Data</h1>
+                 {/* Swapnil_Rokade_ResumeList_CreateExcel_18/07/2024 */}
+                 <div>
+                    <button className="lineUp-share-btn" onClick={showPopup}>
+                      Create Excel
+                    </button>
+
+                    {showExportConfirmation && (
+                      <div className="popup-containers">
+                        <p className="confirmation-texts">
+                          Are you sure you want to generate the Excel file?
+                        </p>
+                        <button
+                          onClick={confirmExport}
+                          className="buttoncss-ctn"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={cancelExport}
+                          className="buttoncss-ctn"
+                        >
+                          No
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                </div>
                 <div className="attendanceTableData">
                     <table className="attendance-table">
                         <thead>

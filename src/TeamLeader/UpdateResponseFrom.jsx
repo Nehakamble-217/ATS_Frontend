@@ -1,6 +1,7 @@
 /* SwapnilRokade_UpdateResponsePage_05/07 */
 
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 
 const UpdateResponseFrom = ({ candidateId, onClose }) => {
@@ -81,16 +82,23 @@ const handleSubmit = async (e) => {
     );
 
     if (response.ok) {
-      console.log("Form data saved successfully");
-      setSuccessMessage("Response updated successfully.");
+      toast.success("Response updated successfully.");
+
       // Optionally, handle any UI updates or notifications here
     } else {
-      console.log("Failed to save form data");
+      toast.error("Failed to Update Response");
     }
   } catch (err) {
-    console.error("Error saving form data:", err);
+    toast.error("Failed to Update Response");
   }
 };
+
+const timeCalculate =()=>{
+   const updateResponseTime = new Date();
+        const updateResponseTime1 = updateResponseTime.toISOString();
+        console.log(updateResponseTime1);
+}
+
 
 return (
 <div className="p-6 bg-white shadow-md rounded-lg max-w-full">
@@ -266,13 +274,8 @@ return (
           </tbody>
         </table>
       </div>
-      {successMessage && (
-        <div className="mt-4 p-2 bg-green-100 text-green-700 border border-green-700 rounded">
-          {successMessage}
-        </div>
-         )}
          <div className="mt-4 flex justify-end">
-           <button className="lineUp-share-btn" type="submit">
+           <button className="lineUp-share-btn" onClick={timeCalculate} type="submit">
              Update
            </button>
            <button className="lineUp-share-btn" onClick={onClose}>

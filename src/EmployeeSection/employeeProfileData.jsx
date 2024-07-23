@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData = ({ onClose }) => {
+const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -12,18 +12,16 @@ const EmployeeProfileData = ({ onClose }) => {
   const [pdfSrc, setPdfSrc] = useState(null);
   const [employeeData, setEmployeeData] = useState(null);
   const { employeeId } = useParams();
-  const {userType}=useParams();
+  const { userType } = useParams();
 
   const viewMoreProfile = (e) => {
     e.preventDefault();
     setViewMoreProfileShow(true);
   };
 
-
-
   useEffect(() => {
     fetch(
-      `http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `http://192.168.1.34:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -223,9 +221,7 @@ const EmployeeProfileData = ({ onClose }) => {
                     <b>Education Qualification</b>
                   </h1>
                   <ul>
-                    <li>
-                      Qualifications : {employeeData.qualification}
-                    </li>
+                    <li>Qualifications : {employeeData.qualification}</li>
                   </ul>
                 </div>
               </div>
@@ -278,7 +274,9 @@ const EmployeeProfileData = ({ onClose }) => {
                   </h1>
                   <ul>
                     <li>Warning Comments : {employeeData.warningComments}</li>
-                    <li>Team Leader Message : {employeeData.messageForAdmin}</li>
+                    <li>
+                      Team Leader Message : {employeeData.messageForAdmin}
+                    </li>
                     <li>
                       Edit and delete authority :{" "}
                       {employeeData.editDeleteAuthority}
@@ -490,17 +488,33 @@ const EmployeeProfileData = ({ onClose }) => {
             </div>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-            <button
-              onClick={onClose}
-              className="close-profile-popup-btn  white-Btn"
-            >
-              Close
-            </button>
+{/* Ajhar Tamboli - EmployeeProfileData- 22-07-24- lineNo 491 to 510 */}
+            <button onClick={toggleIncentive}
+            className="emp-pro-incentive">
+               Incentive
+              </button>
+
+              <button onClick={toggleAttendance}
+            className="emp-pro-incentive">
+               Attendance
+              </button>
+
+              <button onClick={toggleAttendance}
+            className="emp-pro-incentive">
+               Team Details
+              </button>
+
             <button
               onClick={viewMoreProfile}
               className="display-more-profile-btn daily-tr-btn"
             >
               More
+            </button>
+            <button
+              onClick={onClose}
+              className="close-profile-popup-btn  white-Btn"
+            >
+              Close
             </button>
           </Modal.Footer>
         </Modal.Dialog>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../EmployeeSection/addEmployee.css";
+import { toast } from "react-toastify";
 
 const AddEmployee = () => {
   const [formData, setFormData] = useState({
@@ -194,13 +195,13 @@ const AddEmployee = () => {
         }
       );
       if (response) {
-        setSuccessMessage("Employee Data Added Successfully.");
+        toast.success("Employee Data Added Successfully.");//Swapnil Error&success message 
       } else {
-        setSuccessMessage(data.message || "Failed to add employee data.");
+        toast.error(data.message || "Failed to add employee data.");//Swapnil Error&success message 
       }
     } catch (error) {
       console.error("Error:", error);
-      setSuccessMessage("Error occurred while adding employee data.");
+      toast.error("Error occurred while adding employee data.");  //Swapnil Error&success message 
     }
   };
 
@@ -455,7 +456,7 @@ const AddEmployee = () => {
         </div>
 
         <div className="form-row">
-          <label>Emergency Person Relation:</label>
+          <label>  Relation With Person:</label>
           <input
             type="text"
             name="emergencyPersonRelation"
@@ -511,11 +512,11 @@ const AddEmployee = () => {
         </div>
 
         <div className="form-row">
-          <label>PAN Number:</label>
+          <label>PAN Card Number:</label>
           <input
             type="text"
             name="panNo"
-            placeholder="Enter PAN Number"
+            placeholder="Enter PAN Card Number"
             value={formData.panNo}
             onChange={handleInputChange}
           />
@@ -533,11 +534,11 @@ const AddEmployee = () => {
         </div>
 
         <div className="form-row">
-          <label>Offered Salary:</label>
+          <label>Gross Salary:</label>
           <input
             type="text"
             name="offeredSalary"
-            placeholder="Enter Offered Salary"
+            placeholder="Enter Gross Salary"
             value={formData.offeredSalary}
             onChange={handleInputChange}
           />
@@ -546,20 +547,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
-          <label>Upload Profile Image:</label>
-          <input type="file" name="profileImage" onChange={handleInputChange} />
-        </div>
 
-        <div className="form-row">
-          <label>Upload Document:</label>
-          <input type="file" name="document" onChange={handleInputChange} />
-        </div>
-
-        <div className="form-row">
-          <label>Upload Resume:</label>
-          <input type="file" name="resumeFile" onChange={handleInputChange} />
-        </div>
 
         <div className="form-row">
           <label>Employee Present Address:</label>
@@ -945,6 +933,19 @@ const AddEmployee = () => {
           {errors.reportingMangerDesignation && (
             <div className="error">{errors.reportingMangerDesignation}</div>
           )}
+        </div>
+        <div className="form-row">
+          <label>Upload Resume:</label>
+          <input type="file" name="resumeFile" onChange={handleInputChange} />
+        </div>
+        <div className="form-row">
+          <label>Upload Profile Image:</label>
+          <input type="file" name="profileImage" onChange={handleInputChange} />
+        </div>
+
+        <div className="form-row">
+          <label>Upload Document:</label>
+          <input type="file" name="document" onChange={handleInputChange} />
         </div>
 
         <div className="form-row">

@@ -4,39 +4,51 @@ import React, { useEffect, useState } from 'react';
 import './invoiceReport.css';
 import InvoicePdf from './invoicePdf';
 import { Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import HashLoader from 'react-spinners/HashLoader';
 
 
 // SwapnilRokade_InvoiceReport_FetchDataFromApiAndDisplay_09_to_664_12/07
-// SwapnilRokade_InvoiceReport_FetchDataFromApiAndDisplay_05To664_15/07
+// SwapnilRokade_InvoiceReport_FetchDataFromApiAndDisplay_09To664_15/07
 const InvoiceReport = () => {
-      const [showInvoicePdf,setShowInvoicePdf]=useState(false)
-      const [invoiceReport,setInvoiceReport] = useState([]);
-      const [invoiceId,setInvoiceId] = useState();
+  const [showInvoicePdf, setShowInvoicePdf] = useState(false);
+  const [invoiceReport, setInvoiceReport] = useState([]);
+  const [invoiceId, setInvoiceId] = useState();
+  const [Loading,setLoading] = useState(false);
+  let [color, setColor] = useState("#ffcb9b");
 
-      useEffect(()=>{
-        fetchInvoice();
-      },[])
+  // Fetch invoices on component mount
+  useEffect(() => {
+    fetchInvoice();
+  }, []);
 
-      const fetchInvoice = async()=>{
-        const response = await fetch('http://localhost:8080/api/fetchInvoice')
-        const data = await response.json();
-        setInvoiceReport(data);
-        console.log(data);
-      }
+  // Fetch invoice data from API
+  const fetchInvoice = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/fetchInvoice');
+      const data = await response.json();
+      setInvoiceReport(data);
+      setLoading(true);
+    } catch (error) {
+      setLoading(true);
+      console.error("Unable to fetch Data")
+    }
+  };
 
- const handleMouseOver = (event) => {
+  // Handle mouse over event for displaying tooltips
+  const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector(".tooltip");
-    const tooltiptext = tableData.querySelector(".tooltiptext");
+    const tooltipText = tableData.querySelector(".tooltiptext");
 
-    if (tooltip && tooltiptext) {
+    if (tooltip && tooltipText) {
       const textOverflowing =
         tableData.offsetWidth < tableData.scrollWidth ||
         tableData.offsetHeight < tableData.scrollHeight;
       if (textOverflowing) {
         const rect = tableData.getBoundingClientRect();
         tooltip.style.top = `${rect.top - 10}px`;
-        tooltip.style.left = `${rect.left + rect.width / 100}px`;
+        tooltip.style.left = `${rect.left + rect.width / 2}px`;
         tooltip.style.visibility = "visible";
       } else {
         tooltip.style.visibility = "hidden";
@@ -44,27 +56,32 @@ const InvoiceReport = () => {
     }
   };
 
+  // Handle mouse out event to hide tooltips
   const handleMouseOut = (event) => {
     const tooltip = event.currentTarget.querySelector(".tooltip");
     if (tooltip) {
       tooltip.style.visibility = "hidden";
     }
   };
-  const handleClick =(id)=>{
-      setInvoiceId(id);
-      console.log(id);
-      setShowInvoicePdf(true);
-  }
 
+  // Handle click event to display PDF modal
+  const handleClick = (id) => {
+    setInvoiceId(id);
+    setShowInvoicePdf(true);
+  };
+
+  // Close PDF modal
   const closeInvoicePdf = () => {
     setShowInvoicePdf(false);
-  }
-
-  console.log(invoiceId);
+  };
 
   return (
     <div className="attendanceTableData">
+      {Loading?(
+<>
       {!showInvoicePdf ?(
+        <>
+{invoiceReport.length>0?(<>
       <table className="table-container">
         <thead>
           <tr className="table-header">
@@ -181,6 +198,7 @@ const InvoiceReport = () => {
 
 
         </thead>
+     
         <tbody>
           {invoiceReport.map((item,index)=>(
           <tr key={item.id}>
@@ -763,6 +781,8 @@ const InvoiceReport = () => {
          ))}
         </tbody>
       </table>
+    </>):(<div className='w-full h-full flex justify-center items-center'>No Data Found</div>)}
+    </>
       ):
        (
         <Modal
@@ -781,6 +801,13 @@ const InvoiceReport = () => {
           )
           
           }
+        </>):(<div className="register">
+          <HashLoader
+            color={color}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>)}
     </div>
   );
 };
