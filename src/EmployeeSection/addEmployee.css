@@ -172,3 +172,6 @@ input[type='number'] {
   background-color: white;
   color: #ffb281;
 }
+.error{
+  color: red;
+}
