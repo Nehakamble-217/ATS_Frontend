@@ -10,7 +10,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 
 const CallingTrackerForm = ({
@@ -85,7 +85,6 @@ const CallingTrackerForm = ({
     initialCallingTrackerState
   );
   const [lineUpData, setLineUpData] = useState(initialLineUpState);
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [resumeUploaded, setResumeUploaded] = useState(false);
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(0);
   const [requirementOptions, setRequirementOptions] = useState([]);
@@ -347,33 +346,25 @@ const CallingTrackerForm = ({
       } else if (userType === "TeamLeader") {
         dataToUpdate.teamLeader = { teamLeaderId: employeeId };
       }
-      let message = "";
 
       if (callingTracker.selectYesOrNo === "Interested") {
         dataToUpdate.lineUp = lineUpData;
-        message = "In Calling & Line Up Data Added";
-      } else {
-        message = "Only Calling data added";
       }
-
-      console.log(dataToUpdate);
       const response = await axios.post(
         `http://192.168.1.34:9090/api/ats/157industries/calling-tracker/${userType}`,
         dataToUpdate
       );
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
-      if (response.data.body.lineUp != null) {
+      if (response.ok) {
         onsuccessfulDataAdditions(true);
       } else {
         onsuccessfulDataAdditions(false);
       }
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions End LineNo:-223 Date:-01/07
-      setFormSubmitted(true);
-      setTimeout(() => {
-        setFormSubmitted(false);
-        setCallingTracker(initialCallingTrackerState);
-        setLineUpData(initialLineUpState);
-      }, 3000);
+
+      toast.success("Data Added successfully:");
+      setCallingTracker(initialCallingTrackerState);
+      setLineUpData(initialLineUpState);
     } catch (error) {
       toast.error(error);
     }
@@ -1713,11 +1704,6 @@ const CallingTrackerForm = ({
               </div>
             </div>
           </div>
-          {formSubmitted && (
-            <div className="alert alert-success" role="alert">
-              Data Added successfully!
-            </div>
-          )}
           <center>
             <div className="buttonDiv">
               {callingTracker.selectYesOrNo !== "Interested" && (

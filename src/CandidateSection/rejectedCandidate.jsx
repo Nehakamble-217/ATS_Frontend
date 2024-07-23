@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 import * as XLSX from "xlsx";
+
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
 // SwapnilRokade_RejectedCandidate_ModifyFilters_11/07
@@ -135,6 +136,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       const data = await response.json();
       setCallingList(data);
       setFilteredCallingList(data);
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching shortlisted data:", error);
@@ -621,6 +623,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       "Current Location": item.currentLocation || "-",
       "Full Address": item.fullAddress || "-",
       "Recruiter's Incentive": item.incentive || "-",
+
       "Interested or Not": item.selectYesOrNo || "-",
       "Current Company": item.companyName || "-",
       "Total Experience": item.experienceYear||"-",
@@ -674,6 +677,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
 
   // Save the Excel file
   const wb = XLSX.utils.book_new();
+
   XLSX.utils.book_append_sheet(wb, ws, "RejectedCandidates List");
   XLSX.writeFile(wb, "RejectedCandidates_list.xlsx");
 };
@@ -738,6 +742,7 @@ const cancelExport = () => {
 <div>
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
+
                     </button>
 
                     {showExportConfirmation && (

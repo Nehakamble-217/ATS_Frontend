@@ -13,6 +13,12 @@ const Home = () => {
     } else if (userType === "client") {
       navigate(`/employee-login/${userType}`);
     }
+    else if (userType === "applicant") {
+      navigate(`/employee-login/${userType}`);
+    }
+    else if (userType === "vendor") {
+      navigate(`/employee-login/${userType}`);
+    }
   };
   return (
     <div className="mainDashboard-div">

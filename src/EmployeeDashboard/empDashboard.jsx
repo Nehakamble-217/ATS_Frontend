@@ -394,11 +394,13 @@ const EmpDashboard = ({ userGroup }) => {
 
   const toggleAttendance = () => {
     resetAllToggles();
+    setShowProfile(false);
     setAttendanceSheet(!attendancesheet);
   };
 
   const toggleIncentive = () => {
     resetAllToggles();
+    setShowProfile(false);
     setIncentive(!incentive);
   };
 
@@ -608,6 +610,8 @@ const EmpDashboard = ({ userGroup }) => {
           {showProfile && (
             <EmployeeProfileData
               onClose={handleCloseProfile}
+              toggleIncentive={toggleIncentive}
+              toggleAttendance={toggleAttendance}
             ></EmployeeProfileData>
           )}
         </div>

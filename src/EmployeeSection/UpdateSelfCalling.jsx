@@ -163,7 +163,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
       console.log(candidateId + "  candidateId  in updated method.. After  ");
       if (response.ok) {
         const data = await response.text();
-        toast.log("Data updated successfully:");
+        toast.success("Data updated successfully:");
         setFormSubmitted(true);
         setShowAlert(true);
         setTimeout(() => {
