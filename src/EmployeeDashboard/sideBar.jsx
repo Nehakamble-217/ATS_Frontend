@@ -460,17 +460,13 @@ function Sidebar({
                             "incentive",
                             toggleIncentive
                           )}
-
                           className={activeButton === "incentive" ? "active" : ""}
-
-
                         >
                           <a href="#">
                             {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                             <span className="sidebar-text">My Incentive </span>
                           </a>
                         </li>
-
                         <li
                           style={{ marginLeft: "10px" }}
                           onClick={handleButtonClick(
