@@ -261,9 +261,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowSubscription(false); /*Arbaz_AddSubscriptions_19/07*/
     setShowBilling(false)
     setShowPayment(false)
-    
     setscheduleinterview(false);  /*neha_addScheduleinterview_18/07_lineno_245*/
-
     setShowRightsInstruction(false);
     setShowCompanyPolicy(false);
     setShowPainArea(false);

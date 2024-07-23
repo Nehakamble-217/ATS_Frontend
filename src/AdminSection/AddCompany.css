@@ -1,5 +1,5 @@
-/*  Neha_addCompany.css_all_page_11/07/2024_lineno_2to_200*/
-
+/*  Neha_addCompany.css_all_page_11/07/2024_lineno_2to_241*/
+/*  Neha_addCompany.css_all_page_23/07/2024_lineno_3to_240*/
 .ACD-desc {
   font-family: Arial, sans-serif;
   min-height: 80vh;
@@ -23,6 +23,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
+  border: 1px solid gray;
+  padding: 1px;
  
 }
 

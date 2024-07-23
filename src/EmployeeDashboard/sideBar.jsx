@@ -196,11 +196,7 @@ function Sidebar({
                   ) : null}
 
                   <li
-                    className={`${
-                      activeSubMenu === "candidate" || isCandidateSectionActive
-                        ? "active"
-                        : ""
-                    }`}
+                    className={`${ activeSubMenu === "candidate" || isCandidateSectionActive ? "active" : ""}`}
                     onClick={toggleSubMenu("candidate")}
                     
                   >
