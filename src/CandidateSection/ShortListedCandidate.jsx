@@ -8,9 +8,8 @@ import Button from "react-bootstrap/Button";
 import ClipLoader from "react-spinners/ClipLoader";
 // SwapnilRokade_ShortListedCandidates_ModifyFilters_11/07
 const ShortListedCandidates = ({
-  closeComponents,
-  viewUpdatedPage,
   loginEmployeeName,
+  toggleShortListed /*Akash_Pawar_ShortListedCandidate_toggleShortListed(show interview candidate)_23/07_LineNo_12*/,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
@@ -123,7 +122,7 @@ const ShortListedCandidates = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.34:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -135,7 +134,7 @@ const ShortListedCandidates = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.34:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -146,7 +145,7 @@ const ShortListedCandidates = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.34:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -177,7 +176,7 @@ const ShortListedCandidates = ({
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
+        `http://192.168.1.34:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
       );
       const data = await response.json();
 
@@ -271,7 +270,6 @@ const ShortListedCandidates = ({
   };
 
   const handleShare = async () => {
-
     setIsDataSending(true);
     let url = `http://192.168.1.40:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
@@ -568,79 +566,92 @@ const ShortListedCandidates = ({
 
   return (
     <div className="calling-list-container">
-      {!showUpdateCallingTracker ? (
-        <div className="attendanceTableData">
-          <div className="search">
-            <i
-              className="fa-solid fa-magnifying-glass"
-              onClick={() => {
-                setShowSearchBar(!showSearchBar);
-                setShowFilterSection(false);
-              }}
-              style={{ margin: "10px", width: "auto", fontSize: "15px" }}
-            ></i>
-            <h5 style={{ color: "gray", paddingTop: "5px" }}>
-              Shortlisted Candidate
-            </h5>
+      <div className="search">
+        <div
+          style={{
+            display: "flex",
+            gap: "5px",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "3px",
+          }}
+        >
+          <i
+            className="fa-solid fa-magnifying-glass"
+            onClick={() => {
+              setShowSearchBar(!showSearchBar);
+              setShowFilterSection(false);
+            }}
+            style={{ margin: "10px", width: "auto", fontSize: "15px" }}
+          ></i>
+          <i
+            style={{ fontSize: "22px" }}
+            onClick={
+              toggleShortListed
+            } /*Akash_Pawar_ShortlistedCandidate_toggleShortListed(show interview candidate)_23/07_LineNo_591*/
+            className="fa-regular fa-calendar"
+          ></i>
+        </div>
+        <h5 style={{ color: "gray", paddingTop: "5px" }}>
+          Shortlisted Candidate
+        </h5>
 
-            <div
-              style={{
-                display: "flex",
-                gap: "5px",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingTop: "3px",
-              }}
-            >
-              {userType !== "Recruiters" && (
-                <div>
-                  {showShareButton ? (
+        <div
+          style={{
+            display: "flex",
+            gap: "5px",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "3px",
+          }}
+        >
+          {userType !== "Recruiters" && (
+            <div>
+              {showShareButton ? (
+                <button
+                  className="lineUp-share-btn"
+                  onClick={() => setShowShareButton(false)}
+                >
+                  Share
+                </button>
+              ) : (
+                <div style={{ display: "flex", gap: "5px" }}>
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={() => {
+                      setShowShareButton(true);
+                      setSelectedRows([]);
+                    }}
+                  >
+                    Close
+                  </button>
+                  {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_602 */}
+                  {userType === "TeamLeader" && (
                     <button
-                      className="lineUp-share-btn"
-                      onClick={() => setShowShareButton(false)}
+                      className="callingList-share-btn"
+                      onClick={handleSelectAll}
                     >
-                      Share
+                      {allSelected ? "Deselect All" : "Select All"}
                     </button>
-                  ) : (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={() => {
-                          setShowShareButton(true);
-                          setSelectedRows([]);
-                        }}
-                      >
-                        Close
-                      </button>
-                      {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_602 */}
-                      {userType === "TeamLeader" && (
-                        <button
-                          className="callingList-share-btn"
-                          onClick={handleSelectAll}
-                        >
-                          {allSelected ? "Deselect All" : "Select All"}
-                        </button>
-                      )}
-                      {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_609 */}
-                      <button
-                        className="lineUp-share-btn"
-                        onClick={forwardSelectedCandidate}
-                      >
-                        Forward
-                      </button>
-                    </div>
                   )}
+                  {/* akash_pawar_ShortlistedCandidate_ShareFunctionality_18/07_609 */}
+                  <button
+                    className="lineUp-share-btn"
+                    onClick={forwardSelectedCandidate}
+                  >
+                    Forward
+                  </button>
                 </div>
               )}
-              <button
-                className="lineUp-share-btn"
-                onClick={toggleFilterSection}
-              >
-                Filter <i className="fa-solid fa-filter"></i>
-              </button>
             </div>
-          </div>
-
+          )}
+          <button className="lineUp-share-btn" onClick={toggleFilterSection}>
+            Filter <i className="fa-solid fa-filter"></i>
+          </button>
+        </div>
+      </div>
+      {!showUpdateCallingTracker ? (
+        <div className="attendanceTableData">
           {showSearchBar && (
             <input
               type="text"

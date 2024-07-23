@@ -105,7 +105,7 @@ const CallingList = ({
   const fetchCallingTrackerData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
+        `http://192.168.1.34:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -128,7 +128,7 @@ const CallingList = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.34:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -142,7 +142,7 @@ const CallingList = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.34:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -153,7 +153,7 @@ const CallingList = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.40:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.34:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -337,7 +337,7 @@ const CallingList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.40:9090/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.34:9090/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -432,7 +432,7 @@ const CallingList = ({
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_435
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://192.168.1.40:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://192.168.1.34:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&
@@ -1084,7 +1084,7 @@ const CallingList = ({
                         <td className="tabledata">
                           <i
                             onClick={() =>
-                              handleUpdate(item.candidateId, item.employeeId)
+                              handleUpdate(item.candidateId, item.employeeId,item.userType)
                             }
                             className="fa-regular fa-pen-to-square"
                           ></i>

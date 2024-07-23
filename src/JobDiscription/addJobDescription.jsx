@@ -148,9 +148,10 @@ const AddJobDescription = () => {
     <main className="job-desc">
    
       <section className="job-performance">
-        <article>
-          <b>ADD JOB DESCRIPTION</b>
-        </article>
+        {/* Align AddJobDescription name center and changing color to gray */}
+
+       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add Job Description</h3> 
+
         <form onSubmit={handleSubmit}>
           <div className="job-desc-form">
           <div className="field-column">
@@ -480,7 +481,7 @@ const AddJobDescription = () => {
                 />
               </div>
           </div>
-          <div className="multi-field bg-gray-100">
+          <div className="bg-gray-100 multi-field">
             {/* <h3>Preferred Qualifications</h3> */}
             {formData.RoundOfInterView.map((item, index) => (
               <div key={index}>
@@ -507,7 +508,7 @@ const AddJobDescription = () => {
             </button>
           </div>
 
-          <div className="multi-field bg-white">
+          <div className="bg-white multi-field">
             {/* <h3>Responsibilities</h3> */}
             {formData.responsibilities.map((item, index) => (
               <div key={index}>
@@ -548,7 +549,7 @@ const AddJobDescription = () => {
             </button>
           </div>
 
-          <div className="multi-field bg-gray-100">
+          <div className="bg-gray-100 multi-field">
             {/* <h3>Job Requirements</h3> */}
             {formData.jobRequirements.map((item, index) => (
               <div key={index}>

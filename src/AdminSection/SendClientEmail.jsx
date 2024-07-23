@@ -89,7 +89,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
   useEffect(() => {
     fetch(
       `http://192.168.1.34:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
-
     )
       .then((response) => response.json())
       .then((data) => {

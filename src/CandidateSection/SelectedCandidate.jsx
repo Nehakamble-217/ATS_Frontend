@@ -682,9 +682,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
 
   const hidePopup = () => {
     setShowExportConfirmation(false);
-    document
-      .querySelector(".App-after")
-      .classList.remove("blurred");
+    document.querySelector(".App-after").classList.remove("blurred");
   };
 
   const confirmExport = () => {

@@ -1,5 +1,5 @@
 /* header.css */
-
+/* neha_homepage_content_23/07_line_no_3_to_276*/
 .bigb {
   display: flex;
   justify-content: center;
@@ -157,8 +157,110 @@
   .main-homepage-main-div {
       flex-direction: column;
   }
-
-  .main-homepage-clouds{
-      top: -850px;
-  }
+    .main-homepage-clouds{
+        top: -850px;
+    }
 }
+
+/* header.css */
+
+.main-homepage-heading h1 {
+    font-size: 50px;
+    font-weight: 700;
+    color: #c40b0b;
+}
+.main-homepage-heading {
+    text-align: center; 
+}
+.main-homepage-main-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #ffe5b5;
+    height: 100vh;
+    width: 100%;
+    position: relative;   
+    overflow: hidden;   
+  
+}
+.main-homepage-candidate {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main-homepage-btn {
+    border: 1px solid gray;
+    border-radius: 15px;
+    margin-left: 40px;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    width: 200px;
+    height: 35px;
+    background-color: #c40b0b;
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 5; 
+    position: relative; 
+}
+
+.main-homepage-btn:hover {
+    background-color: #c40b0b;
+    color: white;
+}
+
+.main-homepage-clouds {
+    position: absolute;
+    top: -550px;
+    left: 0;
+    width: 200%;
+    height: 200vh;
+    background: url('/src/LogoImages/clouds.png') repeat-x;
+    background-size: cover;
+    background-position: center;
+    animation: moveclouds 30s linear infinite;
+    z-index: 1; 
+    top: -600px;
+}
+
+@keyframes moveclouds {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.landing-content {
+    position: relative;
+    z-index: 1; 
+    max-width: 100%;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    /* margin-right: 330px; */
+    margin-top: 220px;
+  }
+
+  .landing-content h1 {
+    font-size: 50px;
+    font-weight: 700;
+    color: #c40b0b;
+    white-space: nowrap;
+    margin: auto;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .landing-content h1 {
+      font-size: 35px;
+    }
+  
+    .main-homepage-btn {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  }

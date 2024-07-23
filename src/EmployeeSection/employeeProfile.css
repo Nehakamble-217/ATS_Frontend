@@ -309,3 +309,21 @@
     position: relative;
     top:-45px;
   }
+
+  .emp-pro-incentive{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: #ffcb9b;
+    color: white;
+    padding: 0 10px 0 10px;
+    height: 30px;
+    width: auto;
+  }
+
+  .emp-pro-incentive:hover{
+    background-color:white;
+    color:  #ffcb9b; 
+  }

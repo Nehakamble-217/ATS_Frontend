@@ -727,7 +727,9 @@ function DailyWork({
           </p>
         </div>
       </div>
-      {userType != "SuperUser" && userType !="Applicant" && userType !="Vendor" ? (
+      {userType != "SuperUser" &&
+      userType != "Applicant" &&
+      userType != "Vendor" ? (
         <>
           <div
             className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}

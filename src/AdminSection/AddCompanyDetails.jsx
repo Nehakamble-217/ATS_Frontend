@@ -260,6 +260,8 @@ const AddCompanyDetails = () => {
               <h1>Add Our Company Information</h1>
             </center> */}
             <div className="ACD-desc-form">
+              {/* Align AddJobDescription name center and changing color to gray */}
+       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
               <div className="ACD_Field-column">
                 <div className="ACD_Field-Row-white">
                   <div className="ACD_Field">
@@ -272,13 +274,14 @@ const AddCompanyDetails = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="ACD_Field">
+                  <div className="ACD_Field" >
                     <label>Company Logo</label>
                     <input
                       type="file"
                       name="companyLogoImg"
                       onChange={handleChange}
                       className="uploadcompanydocs"
+                      style={{width:"50%"}}
                       accept=".pdf"
                     />
                   </div>
@@ -531,7 +534,7 @@ const AddCompanyDetails = () => {
 
                 <div className="ACD_Field-Row-white">
                   <div className="ACD_Field">
-                    <label> Upload Professional tax Certificate</label>
+                    <label>  Professional tax Certificate</label>
 
                     <input
                       type="file"
@@ -694,7 +697,7 @@ const AddCompanyDetails = () => {
                     <input
                       type="text"
                       name="igst"
-                      placeholder="Igst"
+                      placeholder="Igst No"
                       value={initialFormData.igst}
                       onChange={handleChange}
                     />
@@ -730,7 +733,7 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                 </div>
-                <div className="ACD_Field-Row-white">
+                <div className="ACD_Field-Row-white" style={{borderBottom:"1px solid gray"}}>
                   <div className="ACD_Field">
                     <label htmlFor="">Branch name</label>
                     <input
@@ -1131,7 +1134,7 @@ const SendEmailPopup = ({
           ) : (
             <p></p>
           )}
-          <div className="d-flex gap-2 align-items-center">
+          <div className="gap-2 d-flex align-items-center">
             <button className="ACD-share-send-popup-btn" onClick={handleClose}>
               Close
             </button>
