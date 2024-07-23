@@ -70,7 +70,7 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+          `http://192.168.1.34:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
         );
         setEmployeeData(response.data);
         // console.log(response.data);
@@ -207,7 +207,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.46:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.34:9090/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);

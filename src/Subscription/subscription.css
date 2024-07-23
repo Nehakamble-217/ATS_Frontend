@@ -1,53 +1,53 @@
 .Container {
+  width: 100%;
+  height: 100vh;
+  padding: 25px 0px;
   display: flex;
   justify-content: center;
+  /* border: 1px solid gray; */
   align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .PlanCard {
   background-color: #fff;
   border-radius: 10px;
-  padding: 20px;
-  margin: 10px;
+  padding: 10px;
   width: 350px;
   text-align: center;
-  border: 1px solid #e0e0e0;
+  border: 5px solid #e0e0e0;
   position: relative;
 
   &:nth-child(2) {
-    border-color: #ffcb9b;
-    border: 5px solid #ffcb9b;
-    background-color: #ffcb9b34;
-  }
-  &:hover{
-    box-shadow: 0 4px 8px #ffcb9b; 
-    background-color: #ffcb9b34;
+    border-color: #ffffff;
+    border: 5px solid #e0e0e0;
+    
   }
 }
 
 .MostPopular {
   background-color: #ffcb9b;
   color: #fff;
-  padding: 5px 10px;
+  padding: 10px 15px;
   position: absolute;
-  top: -10px;
+  top: -25px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .PlanName {
-  margin: 20px 0 10px;
+  margin: 5px 0px;
   font-size: 28px;
   /* color: black; */
   font-weight: bold;
 }
 
 .Price {
-  font-size: 32px;
-  margin: 10px 0;
+  font-size: 24px;
+  margin: 5px 0;
 }
 
 .OldPrice {
@@ -68,7 +68,7 @@
 .FeatureList {
   list-style: none;
   padding: 0;
-  margin: 20px 0;
+  margin: 10px 0;
   text-align: left;
 }
 
@@ -89,14 +89,14 @@
   content: '✓';
   color: green; /* Color for correct */
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .FeatureItem.incorrect::before {
   content: '✗';
   color: red; /* Color for incorrect */
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .Subscription-btn {
@@ -116,7 +116,7 @@
 }
 
 .Subscription-btn:hover {
- background-color: white;
-  color: #ffcb9b;
+ background-color: #ffcb9b;
+  color: white;
   border: 1px solid gray;
 }
