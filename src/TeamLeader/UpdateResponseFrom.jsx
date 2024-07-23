@@ -15,8 +15,8 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     nextInterviewDate: "",
     nextInterviewTiming: "",
     callingTracker: { candidateId: candidateId },
-    requirementInfo: { requirementId: 20 },
-    employee: { employeeId: 16 },
+    requirementInfo: { requirementId: 1 },
+    employee: { employeeId: 1 },
   });
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
 
   const fetchDataToUpdate = async () => {
     try { const response = await fetch(
-      `http://192.168.1.46:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
+      `http://192.168.1.4:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
     );
     const responseData = await response.json();
     console.log(responseData);
@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
   try {
     // Save new interview response
     const response = await fetch(
-      "http://192.168.1.46:9090/api/ats/157industries/save-interview-response",
+      "http://192.168.1.40:9090/api/ats/157industries/save-interview-response",
       {
         method: "POST",
         headers: {

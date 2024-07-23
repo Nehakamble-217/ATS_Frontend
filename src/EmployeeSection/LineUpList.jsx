@@ -123,7 +123,7 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_16/07_128
   const fetchCallingTrackerData = async () => {
-    const url = `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
+    const url = `http://192.168.1.40:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -149,7 +149,7 @@ const LineUpList = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.40:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -164,7 +164,7 @@ const LineUpList = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.40:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -175,7 +175,7 @@ const LineUpList = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.40:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -213,7 +213,7 @@ const LineUpList = ({
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
     fetch(
-      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
+      `http://192.168.1.40:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -447,7 +447,7 @@ const LineUpList = ({
   //akash_pawar_LineUpList_ShareFunctionality_17/07_475
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://192.168.1.40:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&

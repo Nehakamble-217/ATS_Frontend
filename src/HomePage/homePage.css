@@ -1,164 +1,164 @@
 /* header.css */
 
 .bigb {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Arial', sans-serif;
-    position: relative; /*for page overflow*/
-    overflow: hidden;
-    background: url("../LogoImages/vecteezy_abstract-glowing-blue-electric-power-energy-spark-animation_27989120.mp4");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  /* position: relative; /for page overflow/ */
+  overflow: hidden;
+  background: url("../LogoImages/vecteezy_abstract-glowing-blue-electric-power-energy-spark-animation_27989120.mp4");
 }
 
 .bigb {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Arial', sans-serif;
-    position: relative;
-    overflow: hidden;
-    /* padding: 20px; added padding for smaller screens */
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  overflow: hidden;
+  /* padding: 20px; added padding for smaller screens */
+}
 
 .Clint img,
 .main-homepage-Member img,
 .main-homepage-candidate img {
-    width: 100%; /* Adjusted for responsiveness */
+  width: 100%; /* Adjusted for responsiveness */
 }
 
 .main-homepage-heading h1 {
-    position: absolute;
-    left: 43%;
-    top: 10px;
-    font-size: 18px; /* Responsive font size */
-    color: gray;
-    z-index: 999;
-    padding-top: 20px;
+  position: absolute;
+  left: 43%;
+  top: 10px;
+  font-size: 18px; /* Responsive font size */
+  color: gray;
+  z-index: 999;
+  padding-top: 20px;
 }
 
 .main-homepage-heading {
-    text-align: center; /* Adjusted for center alignment */
+  text-align: center; /* Adjusted for center alignment */
 }
 
 .main-homepage-main-div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    background-color: #ffe5b5;
-    height: 100vh;
-    width: 100%;
-    position: relative;   
-    overflow: hidden;   
-   /* bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #ffe5b5;
+  height: 100vh;
+  width: 100%;
+  position: relative;   
+  overflow: hidden;   
+ /* bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb */
 }
 
 .main-homepage-Member,
 .main-homepage-candidate {
-    flex: 1; /* Adjusted for equal distribution */
-    max-width: 50%; /* Adjusted to fit better on smaller screens */
-    height: 180vh;
-    margin-top: 0;
-   
+  flex: 1; /* Adjusted for equal distribution */
+  max-width: 50%; /* Adjusted to fit better on smaller screens */
+  height: 180vh;
+  margin-top: 0;
+ 
 }
 
 .main-homepage-Member {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    background-color: #ffd8a8;
-    margin-top: 0px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #ffd8a8;
+  margin-top: 0px;
 }
 
 .main-homepage-candidate:hover,
 .main-homepage-Member:hover {
-    background-color: #ffcb9b;
+  background-color: #ffcb9b;
 }
 
 .main-homepage-candidate {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .main-homepage-Member img,
 .main-homepage-candidate img {
-    width: 60%;
+  width: 60%;
 }
 
 .main-homepage-Member h1,
 .main-homepage-candidate h1 {
-    text-align: center;
-    font-size: 18px; /* Responsive font size */
-    color: gray;
-    z-index: 5;
-    font-weight: 500;
+  text-align: center;
+  font-size: 18px; /* Responsive font size */
+  color: gray;
+  z-index: 5;
+  font-weight: 500;
 }
 
 .btn {
-    font-size: 16px; /* Responsive font size */
-    width: 50%; /* Adjusted for responsiveness */
-    padding: 10px;
+  font-size: 16px; /* Responsive font size */
+  width: 50%; /* Adjusted for responsiveness */
+  padding: 10px;
 }
 /* Media Queries */
 
 
 .main-homepage-btn {
-    border: 1px solid gray;
-    border-radius: 15px;
-    font-size: 16px;
-    color: white;
-    width: auto;
-    height: 30px;
-    background-color: #ffcb9b;
-    padding-left: 10px;
-    padding-right: 10px;
-    z-index: 5; /* Adjusted z-index to be above clouds */
-    position: relative; /* Ensure position context for z-index */
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 16px;
+  color: white;
+  width: auto;
+  height: 30px;
+  background-color: #ffcb9b;
+  padding-left: 10px;
+  padding-right: 10px;
+  z-index: 5; /* Adjusted z-index to be above clouds */
+  position: relative; /* Ensure position context for z-index */
 }
 
 .main-homepage-btn:hover {
-    background-color: white;
-    color: #ffcb9b;
+  background-color: white;
+  color: #ffcb9b;
 }
 
 .main-homepage-clouds {
-    position: absolute;
-    top: -550px;
-    left: 0;
-    width: 200%;
-    height: 200vh;
-    background: url('/src/LogoImages/clouds.png') repeat-x;
-    background-size: cover;
-    background-position: center;
-    animation: moveclouds 30s linear infinite;
-    z-index: 4; /* Adjusted z-index to be below other elements */
+  position: absolute;
+  top: -550px;
+  left: 0;
+  width: 200%;
+  height: 200vh;
+  background: url('/src/LogoImages/clouds.png') repeat-x;
+  background-size: cover;
+  background-position: center;
+  animation: moveclouds 30s linear infinite;
+  z-index: 4; /* Adjusted z-index to be below other elements */
 }
 
 @keyframes moveclouds {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(-50%);
+  }
 }
 @media screen and (max-width: 768px) {
-    .main-homepage-Member,
-    .main-homepage-candidate {
-        max-width: 100%; /* Adjusted for smaller screens */
-    }
+  .main-homepage-Member,
+  .main-homepage-candidate {
+      max-width: 100%; /* Adjusted for smaller screens */
+  }
 
-    .main-homepage-main-div {
-        flex-direction: column;
-    }
+  .main-homepage-main-div {
+      flex-direction: column;
+  }
 
-    .main-homepage-clouds{
-        top: -850px;
-    }
+  .main-homepage-clouds{
+      top: -850px;
+  }
 }

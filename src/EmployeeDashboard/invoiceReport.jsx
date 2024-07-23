@@ -25,7 +25,7 @@ const InvoiceReport = () => {
   // Fetch invoice data from API
   const fetchInvoice = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/fetchInvoice');
+      const response = await fetch('http://192.168.1.38:8080/api/fetchInvoice');
       const data = await response.json();
       setInvoiceReport(data);
       setLoading(true);
@@ -776,7 +776,7 @@ const InvoiceReport = () => {
                       <span className="tooltiptext">{item.clientDetails.mobile}</span>
                     </div>
             </td>
-            <td className="tabledata"><button onClick={()=>handleClick(item.invoiceNo)}  className='daily-tr-btn'>Print</button></td>
+            <td className="tabledata"><button onClick={()=>handleClick(item.invoiceNo)} ><i className="fa-solid fa-print"></i></button></td>
             </tr>
          ))}
         </tbody>

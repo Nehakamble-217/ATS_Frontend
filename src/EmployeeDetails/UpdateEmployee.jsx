@@ -81,7 +81,7 @@ const UpdateEmployee = ({id,userType}) => {
 
   const fetchEmployeeDetails = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.46:9090/api/ats/157industries/fetch-profile-details/${id}/${userType}`);
+      const response = await axios.get(`http://192.168.1.40:9090/api/ats/157industries/fetch-profile-details/${id}/${userType}`);
       const initialResponse = response.data;
       console.log(initialResponse);
   
@@ -374,7 +374,7 @@ const UpdateEmployee = ({id,userType}) => {
    
     try {
       const response = await fetch(
-       ` http://192.168.1.46:9090/api/ats/157industries/add-employee/432`,
+       ` http://192.168.1.40:9090/api/ats/157industries/add-employee/432`,
         {
           method: "POST",
           body: formDataToSend,
