@@ -149,7 +149,9 @@ const AddJobDescription = () => {
    
       <section className="job-performance">
         {/* Align AddJobDescription name center and changing color to gray */}
-       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add Job Description</h3>
+
+       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add Job Description</h3> 
+
         <form onSubmit={handleSubmit}>
           <div className="job-desc-form">
           <div className="field-column">

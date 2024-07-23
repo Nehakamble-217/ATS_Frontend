@@ -207,7 +207,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.40:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.34:9090/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
