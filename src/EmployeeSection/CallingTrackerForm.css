@@ -115,14 +115,15 @@ align-items: center;
 .calling-tracker-field label
 {
   width: 29%;
+  height: 100%;
   font-weight: 500;
   border-right: 1px solid gray;
-  padding: 10px 0px;
   text-align: center;
   font-size: 1.0vw;
   display: flex;
     align-items: center;
     justify-content: center;
+  
 }
 .calling-tracker-field-sub-div
 {
@@ -130,17 +131,20 @@ align-items: center;
   /* border: 1px solid gray; */
   /* padding: 5px 0px; */
   display: flex;
-   justify-content:center; /* neha change this space around to flex-start date-16/7/24  */
-  align-items: center;
+   justify-content:start; /* neha change this space around to flex-start date-16/7/24  */
+  align-items: start;
+  gap: 6px;
+  flex-direction: column;
+  padding: 10px;
 }
 .calling-tracker-two-input
 {
   width: 40%;
-  border-radius: 5px;
   padding: 1px;
   color: rgba(128, 128, 128, 0.782);
-  border: 1px solid #f2f2f2;
   font-size: 16px;
+  display: flex;
+  flex-direction: column;
 }
 .calling-tracker-input-message{
   width: 80%;
@@ -212,7 +216,7 @@ align-items: center;
   width: 100%;
   font-size: 1em; /* Use em for relative sizing */
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
   color: gray; /* Set font color to gray */
 }
 
@@ -358,7 +362,7 @@ align-items: center;
 /* Set color of bold fonts to gray */
 b,
 strong {
-  color: gray; /* Set font color to gray */
+  color: gray; /* Set font color to gray */
 }
 
 @media screen and (max-width:300px) {
@@ -587,6 +591,105 @@ strong {
   /* Set color of bold fonts to gray */
   b,
   strong {
-    color: gray; /* Set font color to gray */
+    color: gray; /* Set font color to gray */
   }
   }}
+
+
+  .calling-tracker-popup-open-btn{
+    border: none;
+    padding: 2px 5px;
+    width: fit-content;
+    border-radius: 15px;
+    background-color: #ffb281;
+    border: 1px solid #ccc;
+    color: white;
+  }
+  .calling-tracker-popup-open-btn:hover{
+    color: #ffb281;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+  }
+
+  .calling-tracker-popup {
+    display: flex;
+    color: gray;
+  }
+  
+  .calling-tracker-popup-sidebar {
+    width: 20%;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-right: 1px solid #dee2e6;
+  }
+  
+  .sidebar-item {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    color: #495057;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .modal-content{
+    overflow: hidden;
+  }
+  
+  .sidebar-item.active,
+  .sidebar-item:hover {
+    background-color: #ffb281;
+    color: #fff;
+  }
+  
+  .calling-tracker-popup-dashboard {
+    width: 80%;
+    padding: 20px;
+  }
+  
+  .distance-calculation,
+  .salary-calculation {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-control {
+    width: 100%;
+    height: 30px;
+    color: gray;
+    /* padding: 5px; */
+    border: 1px solid #ced4da;
+    border-radius: 15px;
+    box-shadow: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem #ffcb9bd0;
+  }
+  
+  .calling-tracker-popup-calExeCtc,.calling-tracker-popup-calHike ,.callingTracker-popup-close-btn {
+    padding:2px 10px;
+    font-size: 16px;
+    /* line-height: 1.5; */
+    border: none;
+    border-radius: 15px;
+    background-color: #ffb281;
+    border: 1px solid #ccc;
+    color: white;
+  }
+  .calling-tracker-popup-calExeCtc:hover,.calling-tracker-popup-calHike:hover,.callingTracker-popup-close-btn:hover {
+    color: #ffb281;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+  }
+  
+  .callingTracker-calculations{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+  }

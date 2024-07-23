@@ -6,7 +6,6 @@ export const addEmployee = (employee) => {
   return axios.post(`${API_BASE_URL}/add-payroll-details`, employee);
 };
 
-
 export const getPasswordFromDB = (id) =>
   axios.post(`${API_BASE_URL}/fetch-pass/${id}`);
 

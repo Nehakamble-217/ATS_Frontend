@@ -145,6 +145,7 @@ const LineUpList = ({
   }, [employeeIdnew]);
 
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_171
+
   //akash_pawar_LineUpList_ShareFunctionality_17/07_144
   const fetchManager = async () => {
     try {
@@ -158,6 +159,7 @@ const LineUpList = ({
     }
   };
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_183
+
   //akash_pawar_LineUpList_ShareFunctionality_17/07_156
 
 
@@ -446,6 +448,7 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_17/07_475
   const handleShare = async () => {
+
     setIsDataSending(true);
     let url = `http://192.168.1.46:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
@@ -480,6 +483,7 @@ const LineUpList = ({
       };
       const response = await fetch(url, requestOptions);
       if (!response.ok) {
+
 
         setIsDataSending(false);
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -516,6 +520,7 @@ const LineUpList = ({
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
       console.error("Error while forwarding candidates:", error);
+
       setIsDataSending(false);
       setShowForwardPopup(false);//Swapnil Error&success message 
       toast.error("Error while forwarding candidates:");//Swapnil Error&success message 
@@ -767,6 +772,7 @@ const LineUpList = ({
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
                     </button>
+
                     {showExportConfirmation && (
                       <div className="popup-containers">
                         <p className="confirmation-texts">
@@ -986,6 +992,7 @@ const LineUpList = ({
                             />
                           </td>
                         ) : null}
+
 
                         <td className="tabledata">{index + 1}</td>
 

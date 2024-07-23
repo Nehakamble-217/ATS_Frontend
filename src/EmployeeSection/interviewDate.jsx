@@ -178,10 +178,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
           setShowShortlistTable(false);
         }, 2000);
       } else {
-        toast.error(
-          "Failed to save interview response:",
-          response.statusText
-        );
+        toast.error("Failed to save interview response:", response.statusText);
       }
     } catch (error) {
       toast.error("Error saving interview response:", error);
@@ -797,3 +794,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 };
 
 export default InterviewDates;
+
+// const CalendarContainer = styled.div`
+//   /* ~~~ container styles ~~~ */
+//   .react-calendar__tile--range {
+//     box-shadow: 0 0 6px 2px black;
+//   }
+// `;

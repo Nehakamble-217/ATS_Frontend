@@ -45,6 +45,7 @@ const AfterSelection = ({
   const [reasonForRejectionOfferLetter, setReasonForRejectionOfferLetter] =
     useState("");
   const [reasonForNotJoin, setReasonForNotJoin] = useState("");
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,8 +59,6 @@ const AfterSelection = ({
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-
-
         `http://192.168.1.46:9090/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
@@ -78,8 +77,6 @@ const AfterSelection = ({
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-
-
         `http://192.168.1.46:9090/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
       if (!response.ok) {
@@ -182,8 +179,6 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-
-
         "http://192.168.1.46:9090/api/ats/157industries/add-after-selection",
         {
           method: "POST",
@@ -321,6 +316,9 @@ const AfterSelection = ({
                     Not Received
                   </option>
                 </select>
+                {errors.mailReceived && (
+                  <div className="error-message">{errors.mailReceived}</div>
+                )}
               </div>
 
               <div className="after-documnet-main">

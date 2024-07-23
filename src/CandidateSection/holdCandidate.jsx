@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 import * as XLSX from "xlsx";
+
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
 // SwapnilRokade_HoldCandidate_ModifyFilters_47to534_11/07
@@ -619,6 +620,7 @@ const HoldCandidate = ({
         "Current Location": item.currentLocation || "-",
         "Full Address": item.fullAddress || "-",
         "Recruiter's Incentive": item.incentive || "-",
+
         "Interested or Not": item.selectYesOrNo || "-",
         "Current Company": item.companyName || "-",
         "Total Experience": item.experienceYear||"-",
@@ -672,18 +674,21 @@ const HoldCandidate = ({
 
     // Save the Excel file
     const wb = XLSX.utils.book_new();
+
     XLSX.utils.book_append_sheet(wb, ws, "Hold List");
     XLSX.writeFile(wb, "Hold_list.xlsx");
   };
 
   const showPopup = () => {
     setShowExportConfirmation(true);
+
     document.querySelector(".App-after").classList.add("blurred");
   };
 
   const hidePopup = () => {
     setShowExportConfirmation(false);
     document
+
       .querySelector(".App-after")
       .classList.remove("blurred");
   };
@@ -734,6 +739,7 @@ const HoldCandidate = ({
                   <div>
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
+
                     </button>
 
                     {showExportConfirmation && (
