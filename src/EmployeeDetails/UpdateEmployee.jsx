@@ -123,7 +123,6 @@ const UpdateEmployee = ({id,userType}) => {
           byteNumbers[i] = byteCharacters.charCodeAt(i);
         }
         const byteArray = new Uint8Array(byteNumbers);
-  
         const blob = new Blob([byteArray], { type: "application/pdf" });
   
         const url = URL.createObjectURL(blob);

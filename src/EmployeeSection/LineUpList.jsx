@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({
   updateState,
@@ -123,7 +124,6 @@ const LineUpList = ({
   //akash_pawar_LineUpList_ShareFunctionality_16/07_128
   const fetchCallingTrackerData = async () => {
     const url = `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
-
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -144,6 +144,7 @@ const LineUpList = ({
     fetchCallingTrackerData();
   }, [employeeIdnew]);
 
+  //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_171
   //akash_pawar_LineUpList_ShareFunctionality_17/07_144
   const fetchManager = async () => {
     try {
@@ -156,7 +157,9 @@ const LineUpList = ({
       console.error("Error fetching shortlisted data:", error);
     }
   };
+  //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_183
   //akash_pawar_LineUpList_ShareFunctionality_17/07_156
+
 
   const fetchTeamLeader = async (empId) => {
     try {
@@ -477,12 +480,13 @@ const LineUpList = ({
       };
       const response = await fetch(url, requestOptions);
       if (!response.ok) {
+
         setIsDataSending(false);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       // Handle success response
       setIsDataSending(false);
-      console.log("Candidates forwarded successfully!");
+      toast.success("Candidates forwarded successfully!");//Swapnil Error&success message 
       fetchCallingTrackerData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -511,8 +515,10 @@ const LineUpList = ({
       });
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
-      setIsDataSending(false);
       console.error("Error while forwarding candidates:", error);
+      setIsDataSending(false);
+      setShowForwardPopup(false);//Swapnil Error&success message 
+      toast.error("Error while forwarding candidates:");//Swapnil Error&success message 
       // Handle error scenarios or show error messages to the user
     }
   };
@@ -761,7 +767,6 @@ const LineUpList = ({
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
                     </button>
-
                     {showExportConfirmation && (
                       <div className="popup-containers">
                         <p className="confirmation-texts">

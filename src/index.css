@@ -81,3 +81,8 @@
     color: red;
     font-size: 0.875em;
   }
+
+  .Toastify__toast {
+    background-color: black ;
+    color: white !important;
+  }

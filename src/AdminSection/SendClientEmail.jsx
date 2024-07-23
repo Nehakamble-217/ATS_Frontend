@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./SendClientEmail.css";
+import { differenceInDays, differenceInSeconds } from 'date-fns';
+
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -9,12 +11,15 @@ import HashLoader from "react-spinners/HashLoader";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Form, Table } from "react-bootstrap";
 import axios from "axios";
-
+import { toast } from "react-toastify";
 // SwapnilRokade_SendClientEmail_ModifyFilters_11/07
+ // SwapnilROkade_AddingErrorAndSuccessMessage_19/07
 
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
+  const {userType} =useParams();
+
   // const employeeIdnew = parseInt(employeeId);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
@@ -34,6 +39,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [difference,setDifference]=useState();
 
   const navigator = useNavigate();
   const limitedOptions = [
@@ -82,8 +88,8 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
   useEffect(() => {
     fetch(
+      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
 
-      `http://192.168.1.46:9090/api/ats/157industries/calling-lineup/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -112,6 +118,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
       setActiveFilterOption(option);
     }
   };
+
   const handleMouseOver = (event) => {
     const tableData = event.currentTarget;
     const tooltip = tableData.querySelector(".tooltip");
@@ -251,7 +258,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
       if (!updatedFilters[option]) {
         updatedFilters[option] = [];
       }
-
       const index = updatedFilters[option].indexOf(value);
       if (index === -1) {
         updatedFilters[option] = [...updatedFilters[option], value];
@@ -260,7 +266,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           (item) => item !== value
         );
       }
-
       return updatedFilters;
     });
   };
@@ -299,10 +304,8 @@ const SendClientEmail = ({ clientEmailSender }) => {
   const convertToDocumentLink = (byteCode, fileName) => {
     if (byteCode) {
       try {
-        // Detect file type based on file name extension or content
         const fileType = fileName.split(".").pop().toLowerCase();
 
-        // Convert PDF
         if (fileType === "pdf") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -313,7 +316,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           return URL.createObjectURL(blob);
         }
 
-        // Convert Word document (assuming docx format)
         if (fileType === "docx") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -1078,6 +1080,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
                 selectedCandidate={selectedRows}
                 onSuccessFullEmailSend={handleSuccessEmailSend}
                 clientEmailSender={clientEmailSender}
+                // date1={date1}
               />
             ) : null}
             {/* Name:-Akash Pawar Component:-LineUpList
@@ -1122,6 +1125,7 @@ const SendEmailPopup = ({
   selectedCandidate,
   onSuccessFullEmailSend,
   clientEmailSender,
+  // date1
 }) => {
   const [to, setTo] = useState("");
   const [cc, setCc] = useState("");
@@ -1134,18 +1138,7 @@ const SendEmailPopup = ({
   const [emailBody, setEmailBody] = useState(
     "hi Deepak,\n\nSharing 2 more profiles: Dotnet+Azure Developer."
   );
-
-  // const handleSignatureImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       console.log(reader);
-  //       setSignatureImage(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
+  const [difference,setDifference]=useState([])
 
   const handleStoreClientInformation = async () => {
     try {
@@ -1155,7 +1148,6 @@ const SendEmailPopup = ({
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
 
-      // This arrangement can be altered based on how we want the date's format to appear.
       let currentDate = `${day}-${month}-${year}`;
       const clientData = {
         mailReceiverName: emailBody.replace(/Hi\s*,?\s*/i, "").split(",")[0],
@@ -1186,6 +1178,7 @@ const SendEmailPopup = ({
   };
 
   const handleSendEmail = () => {
+    
     setIsMailSending(true);
     const emailData = {
       to,
@@ -1213,12 +1206,50 @@ const SendEmailPopup = ({
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
         console.log("Email sent successfully:", response.data);
+
+        
+         
+        toast.log("Email sent successfully");
       })
 
       .catch((error) => {
         setIsMailSending(false);
         setResponse("Error Sending Email");
         console.error("Error sending email:", error);
+        // const mailSendTime = Date.now()/1000;
+
+        const mailSendTime = new Date();
+        const mailTime = mailSendTime.toISOString(); // Use ISO format for consistency
+
+        console.log(`Time of send mail: ${mailTime}`);
+        
+         selectedCandidate.forEach((can) => {
+          const firstDateStr = `${can.date} ${can.candidateAddedTime}`;
+          const firstDate = new Date(firstDateStr); // Assuming firstDateStr is in a valid format
+
+          const date1 = new Date(mailTime);
+          const date2 = firstDate;
+
+          const getDifference = (date1, date2) => {
+            const diffInMs = date1 - date2;
+            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+            const diffInHours = Math.floor((diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const diffInMinutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+            return { days: diffInDays, hours: diffInHours, minutes: diffInMinutes };
+          };
+
+          if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
+            console.log(`Error: Invalid date format for candidate ${can.candidateName}`);
+            return;
+          }
+
+          const { days, hours, minutes } = getDifference(date1, date2);
+          console.log(`Candidate: ${can.candidateName}`);
+          console.log(`Difference: ${days} days, ${hours} hours, and ${minutes} minutes`);
+          
+        });
+
+        toast.error("Failed to send email");
       });
   };
 
@@ -1272,7 +1303,7 @@ const SendEmailPopup = ({
           <Form.Label className="mt-2">
             <strong>Email Body:</strong>
           </Form.Label>
-          <div className="border p-2 mb-2 rounded">
+          <div className="p-2 mb-2 border rounded">
             <Form.Group>
               <Form.Control
                 as="textarea"
@@ -1340,7 +1371,7 @@ const SendEmailPopup = ({
                 </Table>
               </div>
             </Form.Group>
-            <div className="mt-3 d-flex flex-wrap gap-1">
+            <div className="flex-wrap gap-1 mt-3 d-flex">
               <Form.Label className="mr-1">
                 <strong>Attachments:</strong>{" "}
               </Form.Label>
@@ -1351,7 +1382,7 @@ const SendEmailPopup = ({
                     borderRadius: "15px",
                     padding: "0px 4px",
                   }}
-                  className="d-flex justify-center items-center"
+                  className="items-center justify-center d-flex"
                   key={index}
                   href={`data:application/pdf;base64,${item.resume}`}
                   download={`${item.candidateName}_${item.jobDesignation}.pdf`}
@@ -1387,14 +1418,14 @@ const SendEmailPopup = ({
           </div>
         </Modal.Body>
         <Modal.Footer style={{ justifyContent: "space-between" }}>
-          {getResponse != "" ? (
+          {/* {getResponse != "" ? (
             <p style={{ color: "red" }}>
               <i>{getResponse}</i>
             </p>
           ) : (
             <p></p>
-          )}
-          <div className="d-flex gap-2 align-items-center">
+          )} */}
+          <div className="gap-2 d-flex align-items-center">
             <button
               className="SCE-share-forward-popup-btn"
               onClick={handleClose}

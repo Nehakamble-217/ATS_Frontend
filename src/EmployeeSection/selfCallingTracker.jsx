@@ -8,6 +8,7 @@ import HashLoader from "react-spinners/HashLoader";
 import * as XLSX from "xlsx";
 
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 
 const CallingList = ({
   updateState,
@@ -81,6 +82,7 @@ const CallingList = ({
   const navigator = useNavigate();
   // SwapnilRokade_SelfCallingTracker_ModifyFilters_47to534_11/07
   // SwapnilRokade_SelfCallingTracker_Adding date and jobDescription filter option_18/07
+  // SwapnilROkade_AddingErrorAndSuccessMessage_19/07
   const limitedOptions = [
     "date",
     "candidateId",
@@ -103,7 +105,7 @@ const CallingList = ({
   const fetchCallingTrackerData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
+        `http://localhost:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -468,7 +470,7 @@ const CallingList = ({
       }
       // Handle success response
       setIsDataSending(false);
-      console.log("Candidates forwarded successfully!");
+      toast.success("Candidates forwarded successfully!");//Swapnil Error&success message 
       fetchCallingTrackerData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -498,7 +500,8 @@ const CallingList = ({
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
       setIsDataSending(false);
-      console.error("Error while forwarding candidates:", error);
+      setShowForwardPopup(false);
+      toast.error("Error while forwarding candidates:", error);//Swapnil Error&success message 
       // Handle error scenarios or show error messages to the user
     }
   };

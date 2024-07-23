@@ -7,7 +7,10 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ClipLoader from "react-spinners/ClipLoader";
 // SwapnilRokade_ShortListedCandidates_ModifyFilters_11/07
-const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
+const ShortListedCandidates = ({
+  loginEmployeeName,
+  toggleShortListed /*Akash_Pawar_ShortListedCandidate_toggleShortListed(show interview candidate)_23/07_LineNo_12*/,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
 
@@ -119,7 +122,7 @@ const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.34:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -131,7 +134,7 @@ const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.34:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -142,7 +145,7 @@ const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.34:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -173,7 +176,7 @@ const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
+        `http://192.168.1.34:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
       );
       const data = await response.json();
 
@@ -583,7 +586,9 @@ const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
           ></i>
           <i
             style={{ fontSize: "22px" }}
-            onClick={toggleShortListed}
+            onClick={
+              toggleShortListed
+            } /*Akash_Pawar_ShortlistedCandidate_toggleShortListed(show interview candidate)_23/07_LineNo_591*/
             className="fa-regular fa-calendar"
           ></i>
         </div>
@@ -889,9 +894,9 @@ const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                    {item.jobId}
+                    {item.requirementId}
                     <div className="tooltip">
-                      <span className="tooltiptext">{item.jobId}</span>
+                      <span className="tooltiptext">{item.requirementId}</span>
                     </div>
                   </td>
                   <td
@@ -899,10 +904,10 @@ const ShortListedCandidates = ({ loginEmployeeName, toggleShortListed }) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                    {item.applyingCompany}
+                    {item.requirementCompany}
                     <div className="tooltip">
                       <span className="tooltiptext">
-                        {item.applyingCompany}
+                        {item.requirementCompany}
                       </span>
                     </div>
                   </td>

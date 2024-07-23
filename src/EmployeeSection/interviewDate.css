@@ -110,6 +110,7 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 }
 
 .calender-main-div{
+  margin-top: 20px;
   width: 40%;
   display: flex;
 }

@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 import * as XLSX from "xlsx";
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 // SwapnilRokade_RejectedCandidate_ModifyFilters_11/07
 const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const [showRejectedData, setShowRejectedData] = useState([]);
@@ -265,7 +266,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       }
       // Handle success response
       setIsDataSending(false);
-      console.log("Candidates forwarded successfully!");
+      toast.success("Candidates forwarded successfully!");//Swapnil Error&success message 
       fetchRejectedData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -295,7 +296,8 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
       setIsDataSending(false);
-      console.error("Error while forwarding candidates:", error);
+      setShowForwardPopup(false);
+      toast.error("Error while forwarding candidates");//Swapnil Error&success message 
       // Handle error scenarios or show error messages to the user
     }
   };

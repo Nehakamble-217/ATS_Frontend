@@ -4,13 +4,16 @@ import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './EmployeeDetails.css';
 import UpdateEmployee from './UpdateEmployee';
+import HashLoader from 'react-spinners/HashLoader';
 // SwapnilRokade_UpdateEmployee_fetchingData From DataBase_16/07
 const EmployeeDetails = () => {
   const [employeeData, setEmployeeData] = useState([]);
+  let [color, setColor] = useState("#ffcb9b");
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
   const [deletedEmployees, setDeletedEmployees] = useState([]);
   const [blockedEmployees, setBlockedEmployees] = useState([]);
+  const [Loading,setLoading] = useState(true)
   const [employeeId,setEmployeeId] = useState(null);
   const [employeeRole,setEmployeeRole] = useState("");
   const [showEmployee,setShowEmployee] = useState(false);
@@ -19,9 +22,11 @@ const EmployeeDetails = () => {
       try {
         const response = await axios.get('http://192.168.1.46:9090/api/ats/157industries/detail-for-update/870');
         setEmployeeData(response.data);
-        console.log('Data fetched successfully:', response.data);
+        setLoading(false);
+    
       } catch (error) {
         console.error('Error fetching data:', error);
+        setLoading(false);
       }
     };
 
@@ -97,22 +102,22 @@ const EmployeeDetails = () => {
     }
     return "Document Not Found";
   };
-  const fetchEmployeeDetailsForUpdate = async (employeeId) => {
-    try {
-      const response = await axios.get(`http://192.168.1.48:8891/api/ats/157industries/employee-details/6`);
-      // Process the response data as needed
-      console.log('Employee details fetched for update:', response.data);
-      // Example of how to handle the fetched data:
-      // navigate to update page or set state for form fields
-    } catch (error) {
-      console.error(Error `fetching employee details for ID ${employeeId}:`, error);
-    }
-  };
+  // const fetchEmployeeDetailsForUpdate = async (employeeId) => {
+  //   try {
+  //     const response = await axios.get(`http://192.168.1.48:8891/api/ats/157industries/employee-details/6`);
+  //     // Process the response data as needed
+  //     console.log('Employee details fetched for update:', response.data);
+  //     // Example of how to handle the fetched data:
+  //     // navigate to update page or set state for form fields
+  //   } catch (error) {
+  //     console.error(Error `fetching employee details for ID ${employeeId}:`, error);
+  //   }
+  // };
 
   return (
     <div className="table-container">
-
-        {!showEmployee?(
+   {!Loading?(<>
+      {!showEmployee?(
       <table className='attendance-table'>
         <thead>
           <tr className='attendancerows-head'>
@@ -158,14 +163,21 @@ const EmployeeDetails = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+  </table>
+    
       ):(
         <>
         <div>
             <UpdateEmployee id={employeeId} userType={employeeRole}/>
         </div>
         </>
-      )}
+      )}  </>):(<div className="register">
+        <HashLoader
+          color={color}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>)}
 
       {/* Resume Modal */}
       <Modal show={showResumeModal} onHide={closeResumeModal} size="md">

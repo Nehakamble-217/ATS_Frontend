@@ -20,7 +20,6 @@ import Home from "./JobList";
 import DailyWork from "./dailyWork";
 import { useNavigate } from "react-router-dom";
 import Profile from "../LogoImages/ProfilePic.png";
-
 import EmployeeMasterSheet from "../EmployeeSection/employeeMasterSheet";
 import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
 import ShortlistedNavbar from "./shortlistedNavbar";
@@ -47,6 +46,14 @@ import AddCompanyDetails from "../AdminSection/AddCompanyDetails"; /*Akash_Pawar
 import QuestionPaper from "./questionPaper";
 import Capex from "../AdminSection/capex"; /*Ajhar_EmpDashboard_AddedAddCapex_15/07_LineNo_47*/
 import EmployeeDetails from "../EmployeeDetails/EmployeeDetails";
+import SubscriptionPlans from "../Subscription/subscription";
+import PaymentForm from "../Subscription/subscriptionPayment";
+import Billing from "../EmployeeSection/billing";
+import ScheduleInterview from "../TeamLeader/scheduleInterview"; /* neha_scheduleinterview_18/07_lineno_50*/
+import IssueSolving from "../AboutUs/issueSolving";
+import WorkplacePolicy from "../AboutUs/companyPolicy";
+import PainAreaSolving from "../AboutUs/painAreaSolving";
+import RightsAndInstructions from "../AboutUs/rightsAndInstructions";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -98,26 +105,31 @@ const EmpDashboard = ({ userGroup }) => {
     ); /* ArshadAttar_EmpDashboard_Added_showProfitLoss_11/07/2024_LineNo_89 */
   const [showInvoice, setShowInvoice] = useState(false);
   const [showInvoiceReport, setShowInvoiceReport] = useState(false);
-  const [showInvoicePdf, setShowInvoicePdf] = useState(false);
-  /*ArbazPathan_EmpDashboard_AddedInvoiceToggeleFunction_11/07/2024_LineNo_87-207 */
+  const [showInvoicePdf, setShowInvoicePdf] =
+    useState(
+      false
+    ); /*ArbazPathan_EmpDashboard_AddedInvoiceToggeleFunction_11/07/2024_LineNo_87-207 */
   const [showAddCompany, setShowAddCompany] =
     useState(
       false
     ); /*Akash_Pawar_EmpDashboard_AddedAddCompanyToggle_11/07_LineNo_91*/
   const [showQuestionpaper, setShowQuestionpaper] = useState(false);
-
   const [showCapex, setShowCapex] = useState(false);
   const [showEmployeeDetails, setShowEmployeeDetails] = useState(false);
   const { employeeId } = useParams();
   const [successCount, setSuccessCount] = useState(0);
   const [pending, setPending] = useState(0);
   const [archived, setArchived] = useState(0);
-
+  const [showscheduleinterview, setscheduleinterview] =
+    useState(false); /*neha_scheduleinterview_18/07/24_line_no_104*/
   const [successAddUpdateResponse, setSuccessUpdateResponse] = useState(false);
 
   //Name:-Akash Pawar Component:-empDashboard Subcategory:-AddedLogoutTimeStamp and successfulDataAdditions Start LineNo:-80 Date:-01/07
   const [successfulDataAdditions, setSuccessfulDataAdditions] = useState(false);
   const [logoutTimestamp, setLogoutTimestamp] = useState(null);
+  const [showSubscription, setShowSubscription] = useState(false);
+  const [showBilling, setShowBilling] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -151,8 +163,12 @@ const EmpDashboard = ({ userGroup }) => {
     setClientEmailSender(data);
   };
 
-  const [id, setId] = useState(0);
+  const [showCompanyPolicy, setShowCompanyPolicy] = useState(false);
+  const [showIssueSolving, setShowIssueSolving] = useState(false);
+  const [showPainArea, setShowPainArea] = useState(false);
+  const [showRightsInstruction, setShowRightsInstruction] = useState(false);
 
+  const [id, setId] = useState(0);
   const navigator = useNavigate();
 
   const gettingCandidateIdForUpdate = (id) => {
@@ -162,6 +178,10 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(false);
   };
 
+  const togglescheduleinterview = () => {
+    resetAllToggles();
+    setscheduleinterview(!showscheduleinterview);
+  };
   const toggelAddRecruiter = () => {
     resetAllToggles();
     setShowAddEmployee(!showAddEmployee);
@@ -190,12 +210,14 @@ const EmpDashboard = ({ userGroup }) => {
     setIncentive(false);
   };
 
+  /*Akash_Pawar_EmpDashboard_toggleShowShortListedCandidateData_23/07_LineNo_213*/
   const toggleShowShortListedCandidateData = () => {
+    resetAllToggles();
     setShortlistedCandidateData(true);
     setShowInterviewDate(false);
-    resetAllToggles();
     setIncentive(false);
   };
+  /*Akash_Pawar_EmpDashboard_toggleShowShortListedCandidateData_23/07_LineNo_220*/
 
   const viewUpdatedPage = () => {
     setShortlistedCandidateData(false);
@@ -206,7 +228,7 @@ const EmpDashboard = ({ userGroup }) => {
   const resetAllToggles = () => {
     setUpdateSelfCalling(false);
     setAddCandidate(false);
-
+    setShowInterviewDate(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
     setRejectedCandidate(false);
@@ -218,6 +240,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCallingExcel(false);
     setAttendanceSheet(false);
     setShowEmployeeMasterSheet(false);
+    setShortlistedCandidateData(false);
     setAddJobDescription(false);
     setShowAddEmployee(false);
     setShowNotePad(false);
@@ -253,6 +276,16 @@ const EmpDashboard = ({ userGroup }) => {
     setShowQuestionpaper(false);
     setShowCapex(false);
     setShowEmployeeDetails(false); /*Swapnil_AddedEmployeeDetails_16/07*/
+    setShowSubscription(false); /*Arbaz_AddSubscriptions_19/07*/
+    setShowBilling(false);
+    setShowPayment(false);
+
+    setscheduleinterview(false); /*neha_addScheduleinterview_18/07_lineno_245*/
+
+    setShowRightsInstruction(false);
+    setShowCompanyPolicy(false);
+    setShowPainArea(false);
+    setShowIssueSolving(false);
   };
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -309,12 +342,14 @@ const EmpDashboard = ({ userGroup }) => {
     setAddCandidate(!addCandidate);
   };
 
+  /*Akash_Pawar_EmpDashboard_toggleShortListed(show interview candidate)_23/07_LineNo_345*/
   const toggleShortListed = () => {
+    resetAllToggles();
     setShortlistedCandidateData(false);
     setShowInterviewDate(true);
-    resetAllToggles();
     setIncentive(false);
   };
+  /*Akash_Pawar_EmpDashboard_toggleShortListed(show interview candidate)_23/07_LineNo_352*/
 
   const toggleSelectCandidate = () => {
     resetAllToggles();
@@ -457,6 +492,34 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowCapex(!showCapex);
   };
+  const toggeleRightsInstructions = () => {
+    resetAllToggles();
+    setShowRightsInstruction(!showRightsInstruction);
+  };
+  const toggeleCompanyPolicy = () => {
+    resetAllToggles();
+    setShowCompanyPolicy(!showCompanyPolicy);
+  };
+  const toggeleIssueSolving = () => {
+    resetAllToggles();
+    setShowIssueSolving(!showIssueSolving);
+  };
+  const toggelePainArea = () => {
+    resetAllToggles();
+    setShowPainArea(!showPainArea);
+  };
+  const toggelSubscriptions = () => {
+    resetAllToggles();
+    setShowSubscription(!showSubscription);
+  };
+  const toggleBilling = () => {
+    resetAllToggles();
+    setShowBilling(!showBilling);
+  };
+  const togglePayment = () => {
+    resetAllToggles();
+    setShowPayment(!showPayment);
+  };
 
   return (
     <div
@@ -514,7 +577,17 @@ const EmpDashboard = ({ userGroup }) => {
         toggleQuestionPaper={toggleQuestionPaper}
         toggleCapex={toggleCapex}
         toggleEmployeeDetails={toggleEmployeeDetails}
-        toggleShowShortListedCandidateData={toggleShowShortListedCandidateData}
+        toggleShowShortListedCandidateData={
+          toggleShowShortListedCandidateData
+        } /*Akash_Pawar_EmpDashboard_toggleShowShortListedCandidateData_23/07_LineNo_55*/
+        /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_525-526*/
+        toggelSubscriptions={toggelSubscriptions}
+        toggleBilling={toggleBilling}
+        togglescheduleinterview={togglescheduleinterview}
+        toggeleRightsInstructions={toggeleRightsInstructions}
+        toggeleCompanyPolicy={toggeleCompanyPolicy}
+        toggeleIssueSolving={toggeleIssueSolving}
+        toggelePainArea={toggelePainArea}
       />
 
       <div className="empDash-main-content">
@@ -558,7 +631,9 @@ const EmpDashboard = ({ userGroup }) => {
             <ShortListedCandidates
               viewUpdatedPage={viewUpdatedPage}
               loginEmployeeName={loginEmployeeName}
-              toggleShortListed={toggleShortListed}
+              toggleShortListed={
+                toggleShortListed
+              } /*Akash_Pawar_EmpDashboard_toggleShortListed(show interview candidate)_23/07_LineNo_636*/
             />
           )}
         </div>
@@ -650,10 +725,23 @@ const EmpDashboard = ({ userGroup }) => {
         </div>
         <div>{assignColumns && <Team_Leader />}</div>
         <div>
+          {showSubscription && (
+            <SubscriptionPlans togglePayment={togglePayment} />
+          )}
+        </div>
+        <div>{showPayment && <PaymentForm />}</div>
+        <div>{showBilling && <Billing />}</div>
+        <div>
           {showUpdateResponse && (
             <UpdateResponse onSuccessAdd={handleSuccessAdd} />
           )}
         </div>
+        <div>
+          {showUpdateResponse && (
+            <UpdateResponse onSuccessAdd={handleSuccessAdd} />
+          )}
+        </div>
+        <div>{showscheduleinterview && <ScheduleInterview />}</div>
         <div>
           {showSendClientMail && (
             <SendClientEmail clientEmailSender={clientEmailSender} />
@@ -662,6 +750,15 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showAddCompany && <AddCompanyDetails />}</div>
         <div>{showCapex && <Capex />}</div>
         <div>{showEmployeeDetails && <EmployeeDetails />}</div>
+
+        <div>{showCompanyPolicy && <WorkplacePolicy></WorkplacePolicy>}</div>
+        <div>{showIssueSolving && <IssueSolving></IssueSolving>}</div>
+        <div>{showPainArea && <PainAreaSolving></PainAreaSolving>}</div>
+        <div>
+          {showRightsInstruction && (
+            <RightsAndInstructions></RightsAndInstructions>
+          )}
+        </div>
       </div>
     </div>
   );

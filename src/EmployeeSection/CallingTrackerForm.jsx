@@ -1,7 +1,8 @@
+// Akash_Pawar_CallingTracker_Validation_&_Distance_&_Salary_Calculation_23/07
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -9,7 +10,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
-import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
+import { Button, Modal } from "react-bootstrap";
 
 const CallingTrackerForm = ({
   onsuccessfulDataAdditions,
@@ -21,7 +23,7 @@ const CallingTrackerForm = ({
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: "",
-    recruiterName: loginEmployeeName,
+    recruiterName: "",
     candidateName: "",
     candidateEmail: "",
     jobDesignation: "",
@@ -36,15 +38,12 @@ const CallingTrackerForm = ({
     communicationRating: "",
     selectYesOrNo: "No",
     callingFeedback: "",
-    employee: {
-      employeeId: parseInt(employeeId, 10),
-    },
   };
 
   const initialLineUpState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: "",
-    recruiterName: loginEmployeeName,
+    recruiterName: "",
     candidateName: "",
     candidateEmail: "",
     jobDesignation: "",
@@ -82,15 +81,6 @@ const CallingTrackerForm = ({
     resume: null,
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-    reset,
-  } = useForm({ defaultValues: initialCallingTrackerState });
-
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
   );
@@ -101,10 +91,15 @@ const CallingTrackerForm = ({
   const [requirementOptions, setRequirementOptions] = useState([]);
   const [candidateAddedTime, setCandidateAddedTime] = useState("");
   const [isOtherLocationSelected, setIsOtherLocationSelected] = useState(false);
+  const [startTime, setStartTime] = useState(null);
   const [isOtherEducationSelected, setIsOtherEducationSelected] =
     useState(false);
-
-  const selectYesOrNo = callingTracker.selectYesOrNo || "";
+  const [errors, setErrors] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [convertedExpectedCTC, setconvertedExpectedCTC] = useState("");
+  const [convertedCurrentCTC, setconvertedCurrentCTC] = useState("");
+  const [startpoint, setStartPoint] = useState("");
+  const [endpoint, setendPoint] = useState("");
 
   useEffect(() => {
     // fetchRecruiterName();
@@ -133,7 +128,7 @@ const CallingTrackerForm = ({
   // const fetchRecruiterName = async () => {
   //   try {
   //     const response = await axios.get(
-  //       `http://192.168.1.46:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
+  //       `http://localhost:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
   //     );
   //     const { data } = response;
   //     setCallingTracker((prevState) => ({
@@ -152,7 +147,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.46:9090/api/ats/157industries/company-details`
+        `http://192.168.1.34:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -161,49 +156,282 @@ const CallingTrackerForm = ({
     }
   };
 
-  const handleSubmitForm = async (data) => {
-    if (selectYesOrNo === "Interested") {
-      const validationResult = await trigger([
-        "requirementId",
-        "dateOfBirth",
-        "resume",
-        "holdingAnyOffer",
-        "candidateEmail",
-        "experienceYear",
-        "experienceMonth",
-        "relevantExperience",
-        "currentCTCLakh",
-        "currentCTCThousand",
-        "expectedCTCLakh",
-        "expectedCTCThousand",
-        "qualification",
-        "communicationRating",
-      ]);
-      if (!validationResult) {
-        setShowErrors(true);
-        return;
+  const validateCallingTracker = () => {
+    let errors = {};
+    if (!callingTracker.candidateName) {
+      errors.candidateName = "Candidate Name is required";
+    }
+    if (!callingTracker.contactNumber) {
+      errors.contactNumber = "Contact Number is required";
+    }
+    if (!callingTracker.sourceName) {
+      errors.sourceName = "Source Name is required";
+    }
+    if (!callingTracker.candidateEmail) {
+      errors.candidateEmail = "Email is required";
+    }
+    return errors;
+  };
+
+  const validateLineUpData = () => {
+    let errors = {};
+
+    if (callingTracker.selectYesOrNo === "Interested") {
+      if (!lineUpData.requirementId) {
+        errors.requirementId = "Requirement ID is required";
       }
+      if (!lineUpData.dateOfBirth) {
+        errors.dateOfBirth = "Date of Birth is required";
+      }
+      // if (!lineUpData.resume) {
+      //   errors.resume = "Resume is required";
+      // }
+      if (!lineUpData.experienceYear || !lineUpData.experienceMonth) {
+        errors.experienceYear = "Experience is required";
+      }
+      if (!lineUpData.relevantExperience) {
+        errors.relevantExperience = "Relevent Experience is required";
+      }
+      if (!lineUpData.currentLocation) {
+        errors.currentLocation = "Location is required";
+      }
+      if (!lineUpData.qualification) {
+        errors.qualification = "Education is required";
+      }
+      if (!lineUpData.communicationRating) {
+        errors.communicationRating = "Communication Rating is required";
+      }
+      if (!lineUpData.expectedCTCLakh && !lineUpData.expectedCTCThousand) {
+        errors.expectedCTCLakh = "Expected CTC is required";
+      }
+      if (!lineUpData.currentCTCLakh && !lineUpData.currentCTCThousand) {
+        errors.currentCTCLakh = "Current CTC is required";
+      }
+      if (!lineUpData.holdingAnyOffer) {
+        errors.holdingAnyOffer = "Holding Any Offer is required";
+      }
+    }
+    return errors;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target || e;
+    if (
+      (name === "contactNumber" ||
+        name === "alternateNumber" ||
+        name === "experienceYear" ||
+        name === "experienceMonth") &&
+      !/^\d*$/.test(value)
+    ) {
+      return;
+    }
+
+    if (
+      (name === "candidateName" ||
+        name === "sourceName" ||
+        name === "currentLocation" ||
+        name === "qualification") &&
+      !/^[a-zA-Z\s]*$/.test(value)
+    ) {
+      return;
+    }
+
+    setCallingTracker({ ...callingTracker, [name]: value });
+
+    if (!startTime) {
+      setStartTime(Date.now());
+      console.log("timmer Start");
+    }
+    if (name === "selectYesOrNo" && value === "No") {
+      setLineUpData(initialLineUpState);
+    } else if (name === "selectYesOrNo" && value === "Interested") {
+      //setShowLineUpForm(true);
+    }
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+  };
+
+  const handlePhoneNumberChange = (value, name) => {
+    const sanitizedValue =
+      typeof value === "string" ? value.replace(/\s+/g, "") : value;
+    setCallingTracker((prevState) => ({
+      ...prevState,
+      [name]: sanitizedValue,
+    }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+  };
+
+  const handleLineUpChange = (e) => {
+    const { name, value } = e.target;
+    if (
+      (name === "contactNumber" ||
+        name === "alternateNumber" ||
+        name === "experienceYear" ||
+        name === "experienceMonth" ||
+        name === "currentCTCLakh" ||
+        name === "currentCTCThousand" ||
+        name === "expectedCTCLakh" ||
+        name === "expectedCTCThousand") &&
+      !/^\d*$/.test(value)
+    ) {
+      return;
+    }
+
+    if (
+      (name === "candidateName" ||
+        name === "sourceName" ||
+        name === "qualification") &&
+      !/^[a-zA-Z\s]*$/.test(value)
+    ) {
+      return;
+    }
+
+    setLineUpData({ ...lineUpData, [name]: value });
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    if (name === "currentLocation") {
+      console.log(value);
+      setStartPoint(value);
+    }
+
+    if (name === "dateOfBirth") {
+      const today = new Date();
+      const birthDate = new Date(value);
+
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      const dayDiff = today.getDate() - birthDate.getDate();
+
+      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        age--;
+      }
+
+      if (age < 18 || age > 60) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          dateOfBirth:
+            "Date of birth must make the user between 18 and 60 years old.",
+        }));
+      } else {
+        setErrors((prevErrors) => ({ ...prevErrors, dateOfBirth: "" }));
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let callingTrackerErrors = validateCallingTracker();
+    let lineUpDataErrors = validateLineUpData();
+    if (
+      Object.keys(callingTrackerErrors).length > 0 ||
+      Object.keys(lineUpDataErrors).length > 0
+    ) {
+      setErrors({ ...callingTrackerErrors, ...lineUpDataErrors });
+      return;
+    }
+
+    if (startTime) {
+      const endTime = Date.now();
+      const timeTaken = (endTime - startTime) / 1000; // Time in seconds
+      const minutes = Math.floor(timeTaken / 60);
+      const seconds = Math.floor(timeTaken % 60);
+      console.log(
+        `Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`
+      );
     }
 
     try {
-      console.log(data);
+      let dataToUpdate = {
+        ...callingTracker,
+      };
+      if (userType === "Recruiters") {
+        dataToUpdate.employee = { employeeId: employeeId };
+      } else if (userType === "TeamLeader") {
+        dataToUpdate.teamLeader = { teamLeaderId: employeeId };
+      }
+      let message = "";
 
+      if (callingTracker.selectYesOrNo === "Interested") {
+        dataToUpdate.lineUp = lineUpData;
+        message = "In Calling & Line Up Data Added";
+      } else {
+        message = "Only Calling data added";
+      }
+
+      console.log(dataToUpdate);
+      const response = await axios.post(
+        `http://192.168.1.34:9090/api/ats/157industries/calling-tracker/${userType}`,
+        dataToUpdate
+      );
+      //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
+      if (response.data.body.lineUp != null) {
+        onsuccessfulDataAdditions(true);
+      } else {
+        onsuccessfulDataAdditions(false);
+      }
+      //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions End LineNo:-223 Date:-01/07
       setFormSubmitted(true);
       setTimeout(() => {
         setFormSubmitted(false);
-        reset(initialCallingTrackerState);
+        setCallingTracker(initialCallingTrackerState);
         setLineUpData(initialLineUpState);
       }, 3000);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
+  const handleLocationChange = (e) => {
+    const value = e.target.value;
+    if (value === "Other") {
+      setIsOtherLocationSelected(true);
+      setCallingTracker({ ...callingTracker, currentLocation: "" });
+      setLineUpData({ ...lineUpData, currentLocation: "" });
+    } else {
+      setIsOtherLocationSelected(false);
+      setCallingTracker({ ...callingTracker, currentLocation: value });
+      setLineUpData({ ...lineUpData, currentLocation: value });
+    }
+    setErrors((prevErrors) => ({ ...prevErrors, currentLocation: "" }));
+  };
+
+  // const handleLocationInputChange = (e) => {
+  //   const { value } = e.target;
+  //   setCallingTracker((prevState) => ({
+  //     ...prevState,
+  //     currentLocation: value,
+  //   }));
+  // };
+
+  const handleEducationChange = (e) => {
+    const value = e.target.value;
+    if (value === "Other") {
+      setIsOtherEducationSelected(true);
+      setCallingTracker({ ...callingTracker, qualification: "" });
+      setLineUpData({ ...lineUpData, qualification: "" });
+    } else {
+      setCallingTracker({ ...callingTracker, qualification: value });
+      setLineUpData({ ...lineUpData, qualification: value });
     }
   };
 
   const handleResumeFileChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
-      setLineUpData({ ...lineUpData, resume: file });
-      setResumeUploaded(true);
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const arrayBuffer = event.target.result;
+        const byteArray = new Uint8Array(arrayBuffer);
+
+        setLineUpData((prevState) => ({
+          ...prevState,
+          resume: byteArray,
+        }));
+        setResumeUploaded(true);
+        // setErrors((prevErrors) => ({ ...prevErrors, resume: "" }));
+      };
+
+      reader.readAsArrayBuffer(file);
     }
   };
 
@@ -228,6 +456,7 @@ const CallingTrackerForm = ({
         requirementCompany: selectedRequirement.companyName,
         incentive: selectedRequirement.incentive,
       }));
+      setendPoint(selectedRequirement.detailAddress);
     } else {
       setCallingTracker((prevState) => ({
         ...prevState,
@@ -244,66 +473,102 @@ const CallingTrackerForm = ({
         incentive: "",
       }));
     }
+    setErrors((prevErrors) => ({ ...prevErrors, requirementId: "" }));
+  };
+  const handleShow = () => {
+    setShowModal(true);
+  };
+  const handleClose = () => setShowModal(false);
+  useEffect(() => {
+    // Update currentCTC when lineUpData changes
+    updateCurrentCTC(lineUpData.currentCTCLakh, lineUpData.currentCTCThousand);
+    updateExpectedCTC(
+      lineUpData.expectedCTCLakh,
+      lineUpData.expectedCTCThousand
+    );
+  }, [lineUpData]);
+
+  const updateCurrentCTC = (lakh, thousand) => {
+    // Convert lakh and thousand values to numbers
+    const lakhValue = parseFloat(lakh) || 0;
+    const thousandValue = parseFloat(thousand) || 0;
+    // Combine lakh and thousand to a single CTC value in thousands
+    const combinedCTC = lakhValue * 100000 + thousandValue;
+    // Format the combined CTC
+    setconvertedCurrentCTC(combinedCTC.toFixed(2));
   };
 
-  const calculateAge = (dob) => {
-    const today = new Date();
-    const birthDate = new Date(dob);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
+  const updateExpectedCTC = (lakh, thousand) => {
+    // Convert lakh and thousand values to numbers
+    const lakhValue = parseFloat(lakh) || 0;
+    const thousandValue = parseFloat(thousand) || 0;
+    // Combine lakh and thousand to a single CTC value in thousands
+    const combinedCTC = lakhValue * 100000 + thousandValue;
+    // Format the combined CTC
+    setconvertedExpectedCTC(combinedCTC.toFixed(2));
   };
+  const handleUpdateExpectedCTCLakh = (value) => {
+    setLineUpData({ ...lineUpData, expectedCTCLakh: value });
+  };
+
+  const handleUpdateExpectedCTCThousand = (value) => {
+    setLineUpData({ ...lineUpData, expectedCTCThousand: value });
+  };
+
   return (
     <div className="calling-tracker-main">
       <section className="calling-tracker-submain">
-        <form onSubmit={handleSubmit(handleSubmitForm)}>
+        <form onSubmit={handleSubmit}>
           <div className="calling-tracker-form">
             <div className="calling-tracker-row-gray">
               <div className="calling-tracker-field">
                 <label>Date & Time:</label>
                 <div className="calling-tracker-two-input-container">
-                  <input
-                    type="text"
-                    //id="currentDate"
-                    name="date"
-                    className="calling-tracker-two-input"
-                    readOnly
-                    {...register("date")}
-                  />
-                  <input
-                    type="text"
-                    id="candidateAddedTime"
-                    name="candidateAddedTime"
-                    className="calling-tracker-two-input"
-                    readOnly
-                    {...register("candidateAddedTime")}
-                  />
+                  <div className="calling-tracker-two-input">
+                    <input
+                      type="text"
+                      //id="currentDate"
+                      name="date"
+                      value={callingTracker.date}
+                      readOnly
+                    />
+                  </div>
+                  <div className="calling-tracker-two-input">
+                    <input
+                      type="text"
+                      id="candidateAddedTime"
+                      name="candidateAddedTime"
+                      value={candidateAddedTime}
+                      readOnly
+                    />
+                  </div>
                 </div>
               </div>
               <div className="calling-tracker-field">
                 <label>Recruiter </label>
-                <div className="calling-tracker-field-sub-div">
-                  <input
-                    type="text"
-                    name="recruiterName"
-                    readOnly
-                    className="plain-input"
-                    {...register("recruiterName")}
-                  />
+                <div className="calling-tracker-two-input-container">
+                  <div className="calling-tracker-two-input">
+                    <input
+                      type="text"
+                      name="recruiterName"
+                      value={loginEmployeeName}
+                      readOnly
+                      onChange={handleChange}
+                      className="plain-input"
+                    />
+                  </div>
+                  <div className="calling-tracker-two-input">
+                    <button
+                      type="button"
+                      onClick={handleShow}
+                      className="calling-tracker-popup-open-btn"
+                    >
+                      view more
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div hidden>
-              <input type="text" name="employeeId" readOnly />
-            </div>
-
             <div className="calling-tracker-row-white">
               <div className="calling-tracker-field">
                 <label>Candidate's Full Name</label>
@@ -311,12 +576,13 @@ const CallingTrackerForm = ({
                   <input
                     type="text"
                     name="candidateName"
-                    placeholder="Enter Candidate Name"
+                    value={callingTracker.candidateName}
                     className={`plain-input`}
-                    {...register("candidateName", { required: true })}
+                    onChange={handleChange}
+                    placeholder="Enter Candidate Name"
                   />
                   {errors.candidateName && (
-                    <div className="error-message">Candidate Name Required</div>
+                    <div className="error-message">{errors.candidateName}</div>
                   )}
                 </div>
               </div>
@@ -326,34 +592,13 @@ const CallingTrackerForm = ({
                   <input
                     type="email"
                     name="candidateEmail"
-                    className="plain-input"
+                    value={callingTracker.candidateEmail}
+                    onChange={handleChange}
+                    className={`plain-input`}
                     placeholder="Enter Candidate Email"
-                    {...register("candidateEmail", {
-                      validate: (value) => {
-                        if (selectYesOrNo === "Interested") {
-                          if (!value) {
-                            return "Email required";
-                          }
-                          const emailPattern =
-                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                          if (!emailPattern.test(value)) {
-                            return "Invalid email address";
-                          }
-                        } else {
-                          const emailPattern =
-                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                          if (value && !emailPattern.test(value)) {
-                            return "Invalid email address";
-                          }
-                        }
-                        return true; // No validation errors
-                      },
-                    })}
                   />
                   {errors.candidateEmail && (
-                    <div className="error-message">
-                      {errors.candidateEmail?.message}
-                    </div>
+                    <div className="error-message">{errors.candidateEmail}</div>
                   )}
                 </div>
               </div>
@@ -366,19 +611,16 @@ const CallingTrackerForm = ({
                   <PhoneInput
                     placeholder="Enter phone number"
                     name="contactNumber"
-                    className={`plain-input`}
-                    {...register("contactNumber", { required: true })}
-                    onChange={(value, name = "contactNumber") => {
-                      setCallingTracker((prevState) => ({
-                        ...prevState,
-                        [name]: value,
-                      }));
-                    }}
+                    className="plain-input"
+                    value={callingTracker.contactNumber}
+                    onChange={(value) =>
+                      handlePhoneNumberChange(value, "contactNumber")
+                    }
                     defaultCountry="IN"
                     maxLength={11}
                   />
                   {errors.contactNumber && (
-                    <div className="error-message">Contact Number Required</div>
+                    <div className="error-message">{errors.contactNumber}</div>
                   )}
                 </div>
               </div>
@@ -389,12 +631,9 @@ const CallingTrackerForm = ({
                     placeholder="Enter phone number"
                     name="alternateNumber"
                     className="plain-input"
-                    {...register("alternateNumber")}
-                    onChange={(value, name = "alternateNumber") =>
-                      setCallingTracker((prevState) => ({
-                        ...prevState,
-                        [name]: value,
-                      }))
+                    value={callingTracker.alternateNumber}
+                    onChange={(value) =>
+                      handlePhoneNumberChange(value, "alternateNumber")
                     }
                     defaultCountry="IN"
                     maxLength={11}
@@ -410,7 +649,8 @@ const CallingTrackerForm = ({
                   <select
                     className={`plain-input`}
                     name="sourceName"
-                    {...register("sourceName", { required: true })}
+                    value={callingTracker.sourceName}
+                    onChange={handleChange}
                   >
                     <option value="">Select Source Name</option>
                     <option value="LinkedIn">linkedIn</option>
@@ -424,7 +664,7 @@ const CallingTrackerForm = ({
                     <option value="others">others</option>
                   </select>
                   {errors.sourceName && (
-                    <div className="error-message">Source Name Required</div>
+                    <div className="error-message">{errors.sourceName}</div>
                   )}
                 </div>
               </div>
@@ -435,15 +675,8 @@ const CallingTrackerForm = ({
                     <select
                       id="requirementId"
                       name="requirementId"
-                      onClick={handleRequirementChange}
-                      {...register("requirementId", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Requirement ID is required"
-                            : true,
-                      })}
+                      value={callingTracker.requirementId}
+                      onChange={handleRequirementChange}
                     >
                       <option value="">Select Job Id</option>
                       {requirementOptions.map((option) => (
@@ -457,17 +690,16 @@ const CallingTrackerForm = ({
                     </select>
                     {errors.requirementId && (
                       <div className="error-message">
-                        {errors.requirementId?.message}
+                        {errors.requirementId}
                       </div>
                     )}
                   </div>
                   <div className="calling-tracker-two-input">
                     <input
                       placeholder=" Your Incentive"
+                      value={callingTracker.incentive}
                       readOnly
-                      name="incentive"
                       type="text"
-                      {...register("incentive")}
                     />
                   </div>
                 </div>
@@ -477,26 +709,24 @@ const CallingTrackerForm = ({
               <div className="calling-tracker-field">
                 <label>Applying For Position</label>
                 <div className="calling-tracker-two-input-container">
-                  <div className="calling-tracker-two-input">
-                    <input
-                      type="text"
-                      id="jobDesignation"
-                      name="jobDesignation"
-                      placeholder="Enter Position"
-                      readOnly
-                      {...register("jobDesignation")}
-                    />
-                  </div>
-                  <div className="calling-tracker-two-input">
-                    <input
-                      type="text"
-                      placeholder="Company"
-                      id="requirementCompany"
-                      name="requirementCompany"
-                      readOnly
-                      {...register("requirementCompany")}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    id="jobDesignation"
+                    name="jobDesignation"
+                    className="calling-tracker-two-input"
+                    value={callingTracker.jobDesignation}
+                    placeholder="Enter Position"
+                    readOnly
+                  />
+                  <input
+                    type="text"
+                    placeholder="Company"
+                    id="requirementCompany"
+                    name="requirementCompany"
+                    className="calling-tracker-two-input"
+                    value={callingTracker.requirementCompany}
+                    readOnly
+                  />
                 </div>
               </div>
               <div className="calling-tracker-field">
@@ -506,29 +736,8 @@ const CallingTrackerForm = ({
                     {!isOtherLocationSelected ? (
                       <select
                         name="currentLocation"
-                        {...register("currentLocation", {
-                          validate: (value) =>
-                            selectYesOrNo === "Interested"
-                              ? value
-                                ? true
-                                : "Location Required"
-                              : true,
-                        })}
-                        onChange={(e) => {
-                          if (e.target.value === "Other") {
-                            setIsOtherLocationSelected(true);
-                            setCallingTracker({
-                              ...callingTracker,
-                              currentLocation: "",
-                            });
-                          } else {
-                            setIsOtherLocationSelected(false);
-                            setCallingTracker({
-                              ...callingTracker,
-                              currentLocation: e.target.value,
-                            });
-                          }
-                        }}
+                        value={callingTracker.currentLocation}
+                        onChange={handleLocationChange}
                       >
                         <option value="" style={{ color: "gray" }}>
                           Select Location
@@ -541,26 +750,14 @@ const CallingTrackerForm = ({
                       <input
                         type="text"
                         name="currentLocation"
-                        {...register("currentLocation", {
-                          validate: (value) =>
-                            selectYesOrNo === "Interested"
-                              ? value
-                                ? true
-                                : "Location Required"
-                              : true,
-                        })}
-                        onChange={(e) =>
-                          setCallingTracker((prevState) => ({
-                            ...prevState,
-                            currentLocation: e.target.value,
-                          }))
-                        }
+                        value={lineUpData.currentLocation}
+                        onChange={handleLineUpChange}
                         placeholder="Enter your location"
                       />
                     )}
                     {errors.currentLocation && (
                       <div className="error-message">
-                        {errors.currentLocation?.message}
+                        {errors.currentLocation}
                       </div>
                     )}
                   </div>
@@ -569,7 +766,8 @@ const CallingTrackerForm = ({
                       type="text"
                       name="fullAddress"
                       placeholder="Full Address"
-                      {...register("fullAddress")}
+                      value={callingTracker.fullAddress}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -585,7 +783,8 @@ const CallingTrackerForm = ({
                   <select
                     className="plain-input"
                     name="callingFeedback"
-                    {...register("callingFeedback")}
+                    value={callingTracker.callingFeedback}
+                    onChange={handleChange}
                   >
                     <option value="">Feedback</option>
                     <option value="Call Done">Call Done</option>
@@ -611,31 +810,21 @@ const CallingTrackerForm = ({
                     <input
                       type="date"
                       name="dateOfBirth"
-                      {...register("dateOfBirth", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? calculateAge(value) >= 18 &&
-                                calculateAge(value) <= 60
-                                ? true
-                                : "Age must be between 18 and 60"
-                              : "Date of Birth is required"
-                            : true,
-                      })}
+                      value={lineUpData.dateOfBirth}
+                      onChange={handleLineUpChange}
                     />
                     {errors.dateOfBirth && (
-                      <div className="error-message">
-                        {errors.dateOfBirth?.message}
-                      </div>
+                      <div className="error-message">{errors.dateOfBirth}</div>
                     )}
                   </div>
+
                   <div className="calling-check-box-container">
                     <div className="calling-check-box">
                       <input
                         type="checkbox"
                         name="male"
+                        value="male"
                         className="gender"
-                        {...register("male")}
                         checked={lineUpData.gender === "male"}
                         onChange={(e) =>
                           setLineUpData({
@@ -651,7 +840,7 @@ const CallingTrackerForm = ({
                       <input
                         type="checkbox"
                         name="female"
-                        {...register("female")}
+                        value="female"
                         className="gender"
                         style={{ paddingLeft: "auto" }}
                         checked={lineUpData.gender === "female"}
@@ -676,7 +865,8 @@ const CallingTrackerForm = ({
                   <input
                     type="text"
                     name="Call Summary"
-                    {...register("extraCertification")}
+                    value={callingTracker.extraCertification}
+                    onChange={handleChange}
                     className="plain-input"
                     placeholder="Enter Call Summary"
                   />
@@ -689,29 +879,8 @@ const CallingTrackerForm = ({
                     {!isOtherEducationSelected ? (
                       <select
                         name="qualification"
-                        {...register("qualification", {
-                          validate: (value) =>
-                            selectYesOrNo === "Interested"
-                              ? value
-                                ? true
-                                : "Education Required"
-                              : true,
-                        })}
-                        onClick={(value) => {
-                          if (value === "Other") {
-                            setIsOtherEducationSelected(true);
-                            setCallingTracker({
-                              ...callingTracker,
-                              currentEducation: "",
-                            });
-                          } else {
-                            setIsOtherEducationSelected(false);
-                            setCallingTracker({
-                              ...callingTracker,
-                              currentEducation: value,
-                            });
-                          }
-                        }}
+                        value={lineUpData.qualification}
+                        onChange={handleEducationChange}
                       >
                         <option value="">Select</option>
                         <option value="Other">Other</option>
@@ -1127,50 +1296,37 @@ const CallingTrackerForm = ({
                       <input
                         type="text"
                         name="qualification"
-                        {...register("qualification", {
-                          validate:
-                            selectYesOrNo === "Interested"
-                              ? {
-                                  required: "Education Required",
-                                }
-                              : {},
-                        })}
-                        onChange={(e) =>
-                          setCallingTracker((prevState) => ({
-                            ...prevState,
-                            currentEducation: e.target.value,
-                          }))
-                        }
+                        value={lineUpData.qualification}
+                        onChange={handleLineUpChange}
                         placeholder="Enter your Education"
                       />
                     )}
                     {errors.qualification && (
                       <div className="error-message">
-                        {errors.qualification?.message}
+                        {errors.qualification}
                       </div>
                     )}
                   </div>
-                  <div className="calling-tracker-two-input">
-                    <input
-                      type="text"
-                      name="yearOfPassing"
-                      placeholder="YOP"
-                      {...register("yearOfPassing")}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (/^\d{0,4}$/.test(value)) {
-                          if (value === "" || parseInt(value) <= 2025) {
-                            setLineUpData({
-                              ...lineUpData,
-                              yearOfPassing: value,
-                            });
-                          } else {
-                            alert("Cannot enter year above 2025");
-                          }
+                  <input
+                    type="text"
+                    name="yearOfPassing"
+                    placeholder="YOP"
+                    value={lineUpData.yearOfPassing}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^\d{0,4}$/.test(value)) {
+                        if (value === "" || parseInt(value) <= 2025) {
+                          setLineUpData({
+                            ...lineUpData,
+                            yearOfPassing: value,
+                          });
+                        } else {
+                          alert("Cannot enter year above 2025");
                         }
-                      }}
-                    />
-                  </div>
+                      }
+                    }}
+                    className="calling-tracker-two-input"
+                  />
                 </div>
               </div>
             </div>
@@ -1185,22 +1341,12 @@ const CallingTrackerForm = ({
                 <div className="calling-tracker-field-sub-div">
                   <input
                     type="file"
-                    name="resume"
-                    {...register("resume", {
-                      validate: (value) =>
-                        selectYesOrNo === "Interested"
-                          ? value
-                            ? true
-                            : "Resume is required"
-                          : true,
-                    })}
+                    onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="plain-input"
                   />
                   {errors.resume && (
-                    <div className="error-message">
-                      {errors.resume?.message}
-                    </div>
+                    <div className="error-message">{errors.resume}</div>
                   )}
                 </div>
               </div>
@@ -1210,7 +1356,7 @@ const CallingTrackerForm = ({
                   <input
                     type="text"
                     name="extraCerification"
-                    {...register("extraCerification")}
+                    value={lineUpData.extraCertification}
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1231,7 +1377,7 @@ const CallingTrackerForm = ({
                     type="text"
                     name="currentcompany"
                     placeholder="Current Company"
-                    {...register("currentcompany")}
+                    value={lineUpData.currentcompany}
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1244,48 +1390,34 @@ const CallingTrackerForm = ({
               </div>
               <div className="calling-tracker-field">
                 <label>Total Experience</label>
-
                 <div className="calling-tracker-two-input-container">
                   <div className="calling-tracker-two-input">
                     <input
                       type="text"
                       name="experienceYear"
-                      {...register("experienceYear", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Experience Required"
-                            : true,
-                      })}
+                      value={lineUpData.experienceYear}
+                      onChange={handleLineUpChange}
                       placeholder="Years"
                       maxLength="2"
                     />
+                    {(errors.experienceYear || errors.experienceMonth) && (
+                      <div className="error-message error-two-input-box">
+                        {errors.experienceYear || errors.experienceMonth}
+                      </div>
+                    )}
                   </div>
                   <div className="calling-tracker-two-input">
                     <input
                       type="text"
                       name="experienceMonth"
-                      {...register("experienceMonth", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Experience Required"
-                            : true,
-                      })}
+                      value={lineUpData.experienceMonth}
+                      onChange={handleLineUpChange}
                       placeholder="Months"
                       maxLength="2"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
+                      min="1"
+                      max="12"
                     />
                   </div>
-                  {(errors.experienceYear || errors.experienceMonth) && (
-                    <div className="error-message error-two-input-box">
-                      {errors.experienceYear?.message ||
-                        errors.experienceMonth?.message}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -1298,19 +1430,13 @@ const CallingTrackerForm = ({
                     <input
                       type="text"
                       name="relevantExperience"
-                      {...register("relevantExperience", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Relevent Experience Required"
-                            : true,
-                      })}
+                      value={lineUpData.relevantExperience}
+                      onChange={handleLineUpChange}
                       placeholder="Enter Relevant Experience"
                     />
                     {errors.relevantExperience && (
-                      <div className="text-danger">
-                        {errors.relevantExperience?.message}
+                      <div className="error-message">
+                        {errors.relevantExperience || errors.relevantExperience}
                       </div>
                     )}
                   </div>
@@ -1319,7 +1445,17 @@ const CallingTrackerForm = ({
                       type="text"
                       name="noticePeriod"
                       placeholder="Notice Period"
-                      {...register("noticePeriod")}
+                      value={lineUpData.noticePeriod}
+                      onChange={handleLineUpChange}
+                      // onChange={(e) => {
+                      //   const value = e.target.value;
+                      //   if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
+                      //     setLineUpData({
+                      //       ...lineUpData,
+                      //       noticePeriod: value,
+                      //     });
+                      //   }
+                      // }}
                       min="0"
                       max="90"
                     />
@@ -1332,20 +1468,14 @@ const CallingTrackerForm = ({
                   <input
                     type="text"
                     name="communicationRating"
-                    {...register("communicationRating", {
-                      validate: (value) =>
-                        selectYesOrNo === "Interested"
-                          ? value
-                            ? true
-                            : "Communication Rating required"
-                          : true,
-                    })}
+                    value={callingTracker.communicationRating}
+                    onChange={handleLineUpChange}
                     className="plain-input"
                     placeholder="Enter Communication Rating"
                   />
                   {errors.communicationRating && (
-                    <div className="error-message">
-                      {errors.communicationRating?.message}
+                    <div className="error-message error-two-input-box">
+                      {errors.communicationRating}
                     </div>
                   )}
                 </div>
@@ -1359,43 +1489,30 @@ const CallingTrackerForm = ({
                     <input
                       type="text"
                       name="currentCTCLakh"
-                      {...register("currentCTCLakh", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Current CTC Required"
-                            : true,
-                      })}
+                      value={lineUpData.currentCTCLakh}
+                      onChange={handleLineUpChange}
                       placeholder="Lakh"
                       maxLength="2"
                       pattern="\d*"
                     />
+                    {errors.currentCTCLakh && (
+                      <div className="error-message error-two-input-box">
+                        {errors.currentCTCLakh}
+                      </div>
+                    )}
                   </div>
                   <div className="calling-tracker-two-input">
                     <input
                       type="text"
                       name="currentCTCThousand"
-                      {...register("currentCTCThousand", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Current CTC Required"
-                            : true,
-                      })}
+                      value={lineUpData.currentCTCThousand}
+                      onChange={handleLineUpChange}
                       placeholder="Thousand"
                       maxLength="2"
                       pattern="\d*"
                       inputMode="numeric"
                     />
                   </div>
-                  {(errors.currentCTCLakh || errors.currentCTCThousand) && (
-                    <div className="error-message">
-                      {errors.currentCTCLakh?.message ||
-                        errors.currentCTCThousand?.message}
-                    </div>
-                  )}
                 </div>
               </div>
               <div className="calling-tracker-field">
@@ -1405,43 +1522,30 @@ const CallingTrackerForm = ({
                     <input
                       type="text"
                       name="expectedCTCLakh"
-                      {...register("expectedCTCLakh", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Expected CTC Required"
-                            : true,
-                      })}
+                      value={lineUpData.expectedCTCLakh}
+                      onChange={handleLineUpChange}
                       placeholder="Lakh"
                       maxLength="2"
                       pattern="\d*"
                     />
+                    {errors.expectedCTCLakh && (
+                      <div className="error-message error-two-input-box">
+                        {errors.expectedCTCLakh}
+                      </div>
+                    )}
                   </div>
                   <div className="calling-tracker-two-input">
                     <input
                       type="text"
                       name="expectedCTCThousand"
-                      {...register("expectedCTCThousand", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Expected CTC Required"
-                            : true,
-                      })}
+                      value={lineUpData.expectedCTCThousand}
+                      onChange={handleLineUpChange}
                       placeholder="Thousand"
                       maxLength="2"
                       pattern="\d*"
                       inputMode="numeric"
                     />
                   </div>
-                  {(errors.expectedCTCLakh || errors.expectedCTCThousand) && (
-                    <div className="error-message">
-                      {errors.expectedCTCLakh?.message ||
-                        errors.expectedCTCThousand?.message}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -1453,7 +1557,7 @@ const CallingTrackerForm = ({
                     type="text"
                     name="noticePeriod"
                     value={lineUpData.noticePeriod}
-                    onChange={handleChange}
+                    onChange={handleLineUpChange}
                     required={callingTracker.selectYesOrNo === "Interested"}
                     // onChange={(e) => {
                     //   const value = e.target.value;
@@ -1476,28 +1580,16 @@ const CallingTrackerForm = ({
                     <select
                       type="text"
                       name="holdingAnyOffer"
-                      {...register("holdingAnyOffer", {
-                        validate: (value) =>
-                          selectYesOrNo === "Interested"
-                            ? value
-                              ? true
-                              : "Holding Any Offer Required"
-                            : true,
-                      })}
-                      onChange={(e) =>
-                        setLineUpData({
-                          ...lineUpData,
-                          holdingAnyOffer: e.target.value,
-                        })
-                      }
+                      value={lineUpData.holdingAnyOffer}
+                      onChange={handleLineUpChange}
                     >
                       <option value="">Select</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
                     {errors.holdingAnyOffer && (
-                      <div className="error-message">
-                        {errors.holdingAnyOffer?.message}
+                      <div className="error-message error-two-input-box">
+                        {errors.holdingAnyOffer}
                       </div>
                     )}
                   </div>
@@ -1506,8 +1598,8 @@ const CallingTrackerForm = ({
                       type="text"
                       name="offerLetterMsg"
                       placeholder="Letter Message"
-                      {...register("offerLetterMsg")}
-                      // onChange={handleChange}
+                      value={lineUpData.offerLetterMsg}
+                      // onChange={handleLineUpChange}
                       onChange={(e) =>
                         setLineUpData({
                           ...lineUpData,
@@ -1525,7 +1617,8 @@ const CallingTrackerForm = ({
                     type="text"
                     name="msgForTeamLeader"
                     placeholder="Comment For TL"
-                    {...register("msgForTeamLeader")}
+                    value={lineUpData.msgForTeamLeader}
+                    //onChange={handleLineUpChange}
                     onChange={(e) =>
                       setLineUpData({
                         ...lineUpData,
@@ -1537,29 +1630,6 @@ const CallingTrackerForm = ({
                 </div>
               </div>
             </div>
-
-            {/* <tr>
-               
-
-                <th scope="col" style={{textAlign:"left"}}>Comment For Eevaluter/TL</th>
-                <td>
-                  <input
-                    type="text"
-
-                    name="msgForTeamLeader"
-                    placeholder="comment For TL"
-                    value={lineUpData.msgForTeamLeader}
-                    //onChange={handleChange}
-                    onChange={(e) =>
-                      setLineUpData({
-                        ...lineUpData,
-                        msgForTeamLeader: e.target.value,
-                      })
-                    }
-                    className="form-control"
-                  />
-                </td>
-              </tr> */}
             <div className="calling-tracker-row-gray">
               <div className="calling-tracker-field">
                 <label>Status Type</label>
@@ -1568,13 +1638,8 @@ const CallingTrackerForm = ({
                     <select
                       name="selectYesOrNo"
                       placeholder="Candidate Interested"
-                      {...register("selectYesOrNo")}
-                      onChange={(e) =>
-                        setCallingTracker({
-                          ...callingTracker,
-                          selectYesOrNo: e.target.value,
-                        })
-                      }
+                      value={callingTracker.selectYesOrNo}
+                      onChange={handleChange}
                     >
                       <option value="">Select</option>
                       <option value="Interested">Interested</option>
@@ -1593,7 +1658,7 @@ const CallingTrackerForm = ({
                     <select
                       type="text"
                       name="finalStatus"
-                      {...register("finalStatus")}
+                      value={lineUpData.finalStatus}
                       onChange={(e) =>
                         setLineUpData({
                           ...lineUpData,
@@ -1620,8 +1685,8 @@ const CallingTrackerForm = ({
                     <input
                       type="date"
                       name="availabilityForInterview"
-                      {...register("availabilityForInterview")}
-                      //onChange={handleChange}
+                      value={lineUpData.availabilityForInterview}
+                      //onChange={handleLineUpChange}
                       onChange={(e) =>
                         setLineUpData({
                           ...lineUpData,
@@ -1634,8 +1699,8 @@ const CallingTrackerForm = ({
                     <input
                       type="time"
                       name="interviewTime"
-                      {...register("interviewTime")}
-                      //onChange={handleChange}
+                      value={lineUpData.interviewTime}
+                      //onChange={handleLineUpChange}
                       onChange={(e) =>
                         setLineUpData({
                           ...lineUpData,
@@ -1648,7 +1713,6 @@ const CallingTrackerForm = ({
               </div>
             </div>
           </div>
-
           {formSubmitted && (
             <div className="alert alert-success" role="alert">
               Data Added successfully!
@@ -1656,16 +1720,299 @@ const CallingTrackerForm = ({
           )}
           <center>
             <div className="buttonDiv">
-              <button type="submit" className="ctf-btn">
-                {callingTracker.selectYesOrNo !== "Interested"
-                  ? "Add To Calling"
-                  : " Add To LineUp"}
-              </button>
+              {callingTracker.selectYesOrNo !== "Interested" && (
+                <button type="submit" className="ctf-btn">
+                  Add To Calling
+                </button>
+              )}
+              {callingTracker.selectYesOrNo === "Interested" && (
+                <button type="submit" className="ctf-btn" id="uploadbtn2">
+                  Add To LineUp
+                </button>
+              )}
             </div>
           </center>
         </form>
       </section>
+      <ModalComponent
+        show={showModal}
+        handleClose={handleClose}
+        startingPoint={startpoint}
+        endingPoint={endpoint}
+        currentCTCInLakh={lineUpData.currentCTCLakh}
+        currentCTCInThousand={lineUpData.currentCTCThousand}
+        expectedCTCInLakh={lineUpData.expectedCTCLakh}
+        expectedCTCInThousand={lineUpData.expectedCTCThousand}
+        convertedCurrentCTC={convertedCurrentCTC}
+        convertedExpectedCTC={convertedExpectedCTC}
+        onUpdateExpectedCTCLakh={handleUpdateExpectedCTCLakh}
+        onUpdateExpectedCTCThousand={handleUpdateExpectedCTCThousand}
+      />
     </div>
+  );
+};
+
+const ModalComponent = ({
+  show,
+  handleClose,
+  startingPoint,
+  endingPoint,
+  currentCTCInLakh = "",
+  currentCTCInThousand = "",
+  expectedCTCInLakh = "",
+  expectedCTCInThousand = "",
+  convertedCurrentCTC,
+  convertedExpectedCTC,
+  onUpdateExpectedCTCLakh,
+  onUpdateExpectedCTCThousand,
+}) => {
+  const [activeField, setActiveField] = useState("distance");
+  const [origin, setOrigin] = useState(startingPoint);
+  const [destination, setDestination] = useState(endingPoint);
+  const [expectedHike, setExpectedHike] = useState("");
+  const [calculatedHike, setCalculatedHike] = useState("");
+  const [expectedCTC, setExpectedCTC] = useState("");
+  const [expectedCTCLakh, setExpectedCTCLakh] = useState(expectedCTCInLakh);
+  const [expectedCTCThousand, setExpectedCTCThousand] = useState(
+    expectedCTCInThousand
+  );
+  const [showHikeInput, setShowHikeInput] = useState(false);
+
+  useEffect(() => {
+    // Update state when props change
+    setOrigin(startingPoint);
+    setDestination(endingPoint);
+    setExpectedCTCLakh(expectedCTCInLakh);
+    setExpectedCTCThousand(expectedCTCInThousand);
+    setExpectedCTC("");
+    setShowHikeInput(true); // Reset hike input visibility on prop change
+  }, [startingPoint, endingPoint, expectedCTCInLakh, expectedCTCInThousand]);
+
+  const handleExpectedCTCCalculation = () => {
+    setShowHikeInput(true);
+    if (!expectedHike) {
+      return;
+    }
+
+    const currentCTCNum = parseFloat(convertedCurrentCTC);
+    const expectedHikeNum = parseFloat(expectedHike);
+    const expectedCTCNum =
+      currentCTCNum + (currentCTCNum * expectedHikeNum) / 100;
+    setExpectedCTC(expectedCTCNum.toFixed(2));
+    setCalculatedHike("");
+  };
+
+  const updateExpectedCTC = (lakh, thousand) => {
+    // Convert lakh and thousand values to numbers
+    const lakhValue = parseFloat(lakh) || 0;
+    const thousandValue = parseFloat(thousand) || 0;
+    // Combine lakh and thousand to a single CTC value in thousands
+    const combinedCTC = lakhValue * 100000 + thousandValue;
+    // Format the combined CTC
+    return combinedCTC.toFixed(2);
+  };
+
+  const handleHikeCalculation = () => {
+    if (!convertedExpectedCTC) {
+      alert("Please enter the expected CTC.");
+      return;
+    }
+    const convertedExpected = updateExpectedCTC(
+      expectedCTCLakh,
+      expectedCTCThousand
+    );
+    const currentCTCNum = parseFloat(convertedCurrentCTC);
+    const expectedCTCNum = parseFloat(convertedExpected);
+    const hikePercentage =
+      ((expectedCTCNum - currentCTCNum) / currentCTCNum) * 100;
+    setCalculatedHike(hikePercentage.toFixed(2));
+    setExpectedHike("");
+    setShowHikeInput(false);
+  };
+
+  return (
+    <Modal size="lg" centered show={show} onHide={handleClose}>
+      {/* <Modal.Header closeButton>
+        <Modal.Title>Modal Heading</Modal.Title>
+      </Modal.Header> */}
+      <Modal.Body className="p-0">
+        <div className="calling-tracker-popup">
+          <div className="calling-tracker-popup-sidebar">
+            <p
+              className={`sidebar-item ${
+                activeField === "distance" ? "active" : ""
+              }`}
+              onClick={() => setActiveField("distance")}
+            >
+              Distance Calculation
+            </p>
+            <p
+              className={`sidebar-item ${
+                activeField === "salary" ? "active" : ""
+              }`}
+              onClick={() => setActiveField("salary")}
+            >
+              Salary Calculation
+            </p>
+          </div>
+          <div className="calling-tracker-popup-dashboard">
+            {activeField === "distance" && (
+              <div className="distance-calculation">
+                <h5>Distance Calculation</h5>
+                <div className="form-group">
+                  <label htmlFor="origin">Origin</label>
+                  <input
+                    type="text"
+                    id="origin"
+                    className="form-control"
+                    placeholder="Enter origin"
+                    value={origin}
+                    onChange={(e) => setOrigin(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="destination">Destination</label>
+                  <input
+                    type="text"
+                    id="destination"
+                    className="form-control"
+                    placeholder="Enter destination"
+                    value={destination}
+                    onChange={(e) => setDestination(e.target.value)}
+                  />
+                </div>
+                {origin && destination && (
+                  <iframe
+                    title="Google Maps"
+                    width="100%"
+                    height="450"
+                    frameBorder="0"
+                    style={{ border: 0 }}
+                    src={`https://maps.google.com/maps?q=${origin}+to+${destination}&output=embed`}
+                    allowFullScreen
+                  ></iframe>
+                )}
+              </div>
+            )}
+            {activeField === "salary" && (
+              <div className="salary-calculation">
+                <div className="form-group">
+                  <label htmlFor="currentCTCLakh">Current CTC (Lakh)</label>
+                  <input
+                    type="number"
+                    id="currentCTCLakh"
+                    className="form-control"
+                    placeholder="Enter current CTC in lakh"
+                    value={currentCTCInLakh}
+                    readOnly
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="currentCTCThousand">
+                    Current CTC (Thousand)
+                  </label>
+                  <input
+                    type="number"
+                    id="currentCTCThousand"
+                    className="form-control"
+                    placeholder="Enter current CTC in thousand"
+                    value={currentCTCInThousand}
+                    readOnly
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="expectedCTCLakh">Expected CTC (Lakh)</label>
+                  <input
+                    type="number"
+                    id="expectedCTCLakh"
+                    className="form-control"
+                    placeholder="Enter expected CTC in lakh"
+                    value={expectedCTCLakh}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setExpectedCTCLakh(value);
+                      onUpdateExpectedCTCLakh(value); // Send to parent
+                    }}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="expectedCTCThousand">
+                    Expected CTC (Thousand)
+                  </label>
+                  <input
+                    type="number"
+                    id="expectedCTCThousand"
+                    className="form-control"
+                    placeholder="Enter expected CTC in thousand"
+                    value={expectedCTCThousand}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setExpectedCTCThousand(value);
+                      onUpdateExpectedCTCThousand(value); // Send to parent
+                    }}
+                  />
+                </div>
+                {showHikeInput && (
+                  <div className="form-group">
+                    <label htmlFor="expectedHike">Expected Hike (%)</label>
+                    <input
+                      type="number"
+                      id="expectedHike"
+                      className="form-control"
+                      placeholder="Enter expected hike percentage"
+                      value={expectedHike}
+                      onChange={(e) => setExpectedHike(e.target.value)}
+                    />
+                  </div>
+                )}
+                <div className="callingTracker-calculations">
+                  <button
+                    className="calling-tracker-popup-calExeCtc"
+                    onClick={handleExpectedCTCCalculation}
+                  >
+                    Calculate Expected CTC
+                  </button>
+                  <p>
+                    Expected CTC:{" "}
+                    <input
+                      type="text"
+                      className="border-1 rounded-lg"
+                      readOnly
+                      value={expectedCTC}
+                    />
+                  </p>
+                </div>
+                <div className="callingTracker-calculations">
+                  <button
+                    className="calling-tracker-popup-calHike"
+                    onClick={handleHikeCalculation}
+                  >
+                    Calculate Hike Percentage
+                  </button>
+                  <p>
+                    Calculated Hike:{" "}
+                    <input
+                      type="text"
+                      className="border-1 rounded-lg"
+                      readOnly
+                      value={calculatedHike}
+                    />
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <button
+          className="callingTracker-popup-close-btn"
+          onClick={handleClose}
+        >
+          Close
+        </button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

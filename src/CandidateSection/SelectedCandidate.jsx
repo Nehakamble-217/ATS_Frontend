@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 import * as XLSX from "xlsx";
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 
 // SwapnilRokade_SelectedCandidate_ModifyFilters_47to534_11/07
 const SelectedCandidate = ({ loginEmployeeName }) => {
@@ -123,7 +124,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
+        `http://192.168.1.34:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);
@@ -143,7 +144,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.34:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -155,7 +156,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.34:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -166,7 +167,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.34:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -458,7 +459,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
       }
       // Handle success response
       setIsDataSending(false);
-      console.log("Candidates forwarded successfully!");
+      toast.success("Candidates forwarded successfully!");
       fetchShortListedData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -488,7 +489,8 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
       // fetchShortListedData(); // Uncomment this if you want to refresh the data after forwarding
     } catch (error) {
       setIsDataSending(false);
-      console.error("Error while forwarding candidates:", error);
+      setShowForwardPopup(false);
+      toast.error("Error while forwarding candidates:", error);
       // Handle error scenarios or show error messages to the user
     }
   };
@@ -680,9 +682,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
 
   const hidePopup = () => {
     setShowExportConfirmation(false);
-    document
-      .querySelector(".App-after")
-      .classList.remove("blurred");
+    document.querySelector(".App-after").classList.remove("blurred");
   };
 
   const confirmExport = () => {
