@@ -61,6 +61,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [addCandidate, setAddCandidate] = useState(false);
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
+  const [successShare,setSuccessShare] = useState(false); //neha_add_this_state_bcz_came_error_to_console
   const [attendancesheet, setAttendanceSheet] = useState(false);
   const [incentive, setIncentive] = useState(false);
   const [lineUp, setLineUp] = useState(false);
