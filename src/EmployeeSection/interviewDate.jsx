@@ -39,7 +39,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     console.log("02 " + requirementId);
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
+        `http://192.168.1.34:9090/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
       );
 
       const data = await response.json();
@@ -58,7 +58,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://192.168.1.34:9090/api/ats/157industries/interview-date/${employeeIdNew}`
       );
       const data = await response.json();
       setInterviewDates(data);
@@ -81,7 +81,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.46:9090/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://192.168.1.34:9090/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -106,7 +106,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://192.168.1.46:9090/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://192.168.1.34:9090/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -161,7 +161,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.46:9090/api/ats/157industries/save-interview-response",
+        "http://192.168.1.34:9090/api/ats/157industries/save-interview-response",
         {
           method: "POST",
           headers: {
@@ -178,10 +178,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
           setShowShortlistTable(false);
         }, 2000);
       } else {
-        toast.error(
-          "Failed to save interview response:",
-          response.statusText
-        );
+        toast.error("Failed to save interview response:", response.statusText);
       }
     } catch (error) {
       toast.error("Error saving interview response:", error);
@@ -797,3 +794,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 };
 
 export default InterviewDates;
+
+// const CalendarContainer = styled.div`
+//   /* ~~~ container styles ~~~ */
+//   .react-calendar__tile--range {
+//     box-shadow: 0 0 6px 2px black;
+//   }
+// `;

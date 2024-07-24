@@ -20,7 +20,7 @@ const EmployeeDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.46:9090/api/ats/157industries/detail-for-update/870');
+        const response = await axios.get('http://192.168.1.40:9090/api/ats/157industries/detail-for-update/870');
         setEmployeeData(response.data);
         setLoading(false);
     

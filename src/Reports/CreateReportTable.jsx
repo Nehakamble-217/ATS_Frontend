@@ -1042,7 +1042,7 @@
          import PdfModal from './pdfModal';
          import {createPdf } from './pdfUtils';
          import PieChart from './PieChartReport';
-         import PDFGenerator from './PdfMain';
+         import PDFGenerator from './PDFMain';
          import SliderReport from './SliderReports';
          
          const LineUpDataDummy=[

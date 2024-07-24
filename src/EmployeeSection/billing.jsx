@@ -72,8 +72,8 @@ const Billing = () => {
             </thead>
             <tbody>
               <tr>
-                <td>${monthlyGST['January'] || '0.00'}</td>
-                <td>${monthlyGST['February'] || '0.00'}</td>
+                <td><i style={{fontSize:"16px",marginRight:"5px"}} class="fa-solid fa-indian-rupee-sign"></i>{monthlyGST['January'] || '0.00'}</td>
+                <td><i style={{fontSize:"16px",marginRight:"5px"}} class="fa-solid fa-indian-rupee-sign"></i>{monthlyGST['February'] || '0.00'}</td>
                 <td>${monthlyGST['March'] || '0.00'}</td>
                 <td>${monthlyGST['April'] || '0.00'}</td>
                 <td>${monthlyGST['May'] || '0.00'}</td>
@@ -131,20 +131,15 @@ const Billing = () => {
                 <td>{invoice.client}</td>
                 <td>${invoice.amount}</td>
                 <td>${calculateGST(invoice.amount)}</td> {/* Display GST amount */}
-                <td>
-                  <button 
-                    className="status-button" 
-                    onClick={() => handleStatusChange(invoice.id, 'Paid')}
-                  >
-                    Paid
-                  </button>
-                  <button 
-                    className="status-button" 
+                
+                
+                  <td 
+                   
                     onClick={() => handleStatusChange(invoice.id, 'Unpaid')}
                   >
                     Unpaid
-                  </button>
-                </td>
+                  </td>
+              
                 <td>
                   <button 
                     className="view-details-button" 

@@ -1084,7 +1084,7 @@ const CallingList = ({
                         <td className="tabledata">
                           <i
                             onClick={() =>
-                              handleUpdate(item.candidateId, item.employeeId)
+                              handleUpdate(item.candidateId, item.employeeId,item.userType)
                             }
                             className="fa-regular fa-pen-to-square"
                           ></i>

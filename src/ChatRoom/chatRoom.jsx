@@ -398,7 +398,7 @@ const ChatRoom = () => {
       console.log('User Type:', userType);
 
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
+        `http://192.168.1.40:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
       );
 
       let result;
@@ -421,7 +421,7 @@ const ChatRoom = () => {
   };
 
   const connect = (username) => {
-    let Sock = new SockJS("http://localhost:9090/ws");
+    let Sock = new SockJS("http:///192.168.1.40:9090/ws");
     stompClient = over(Sock);
     stompClient.connect({}, () => onConnected(username), onError);
   };
@@ -526,7 +526,7 @@ const ChatRoom = () => {
     formData.append("file", userData.file);
     formData.append("senderName", userData.username);
 
-    fetch("http://localhost:9090/upload", {
+    fetch("http:///192.168.1.40:9090/upload", {
       method: "POST",
       body: formData,
     })

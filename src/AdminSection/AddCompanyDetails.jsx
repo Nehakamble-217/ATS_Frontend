@@ -68,7 +68,7 @@ const AddCompanyDetails = () => {
 
   const fetchPreviousCompanyDetailsId = async () => {
     const response = await axios.get(
-      "http://192.168.1.46:9090/api/ats/157industries/fetch-details-ids"
+      "http://192.168.1.40:9090/api/ats/157industries/fetch-details-ids"
     );
     if (addedCompanyDetailsId < response.data.length) {
       setLatestAddedCompanyData(response.data[0]);
@@ -224,7 +224,7 @@ const AddCompanyDetails = () => {
     try {
       // Send the form data to the backend
       const response = await axios.post(
-        "http://192.168.1.46:9090/api/ats/157industries/save-our-company",
+        "http://192.168.1.40:9090/api/ats/157industries/save-our-company",
         initialFormData,
         {
           headers: {
@@ -260,6 +260,8 @@ const AddCompanyDetails = () => {
               <h1>Add Our Company Information</h1>
             </center> */}
             <div className="ACD-desc-form">
+              {/* Align AddJobDescription name center and changing color to gray */}
+       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
               <div className="ACD_Field-column">
                 <div className="ACD_Field-Row-white">
                   <div className="ACD_Field">
@@ -272,13 +274,14 @@ const AddCompanyDetails = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="ACD_Field">
+                  <div className="ACD_Field" >
                     <label>Company Logo</label>
                     <input
                       type="file"
                       name="companyLogoImg"
                       onChange={handleChange}
                       className="uploadcompanydocs"
+                      style={{width:"50%"}}
                       accept=".pdf"
                     />
                   </div>
@@ -531,7 +534,7 @@ const AddCompanyDetails = () => {
 
                 <div className="ACD_Field-Row-white">
                   <div className="ACD_Field">
-                    <label> Upload Professional tax Certificate</label>
+                    <label>  Professional tax Certificate</label>
 
                     <input
                       type="file"
@@ -694,7 +697,7 @@ const AddCompanyDetails = () => {
                     <input
                       type="text"
                       name="igst"
-                      placeholder="Igst"
+                      placeholder="Igst No"
                       value={initialFormData.igst}
                       onChange={handleChange}
                     />
@@ -730,7 +733,7 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                 </div>
-                <div className="ACD_Field-Row-white">
+                <div className="ACD_Field-Row-white" style={{borderBottom:"1px solid gray"}}>
                   <div className="ACD_Field">
                     <label htmlFor="">Branch name</label>
                     <input
@@ -853,11 +856,11 @@ const SendEmailPopup = ({
       let response;
       if (onOptionChange != null) {
         response = await axios.get(
-          `http://192.168.1.46:9090/api/ats/157industries/details-by-Id/${onOptionChange}`
+          `http://192.168.1.40:9090/api/ats/157industries/details-by-Id/${onOptionChange}`
         );
       } else {
         response = await axios.get(
-          `http://192.168.1.46:9090/api/ats/157industries/details-by-Id/${latestAddedData}`
+          `http://192.168.1.40:9090/api/ats/157industries/details-by-Id/${latestAddedData}`
         );
       }
       setCompanyDetails(response.data);
@@ -885,7 +888,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.46:9090/api/ats/157industries/save-send-details",
+        "http://192.168.1.40:9090/api/ats/157industries/save-send-details",
         clientData
       );
       if (response) {
@@ -1131,7 +1134,7 @@ const SendEmailPopup = ({
           ) : (
             <p></p>
           )}
-          <div className="d-flex gap-2 align-items-center">
+          <div className="gap-2 d-flex align-items-center">
             <button className="ACD-share-send-popup-btn" onClick={handleClose}>
               Close
             </button>

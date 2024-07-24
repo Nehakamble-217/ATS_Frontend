@@ -188,20 +188,20 @@ const AddEmployee = () => {
     console.log(formData);
     try {
       const response = await fetch(
-        "http://192.168.1.46:9090/api/ats/157industries/add-employee",
+        "http://192.168.1.40:9090/api/ats/157industries/add-employee",
         {
           method: "POST",
           body: formDataToSend,
         }
       );
       if (response) {
-        toast.success("Employee Data Added Successfully.");//Swapnil Error&success message 
+        toast.success("Employee Data Added Successfully."); //Swapnil Error&success message
       } else {
-        toast.error(data.message || "Failed to add employee data.");//Swapnil Error&success message 
+        toast.error(data.message || "Failed to add employee data."); //Swapnil Error&success message
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Error occurred while adding employee data.");  //Swapnil Error&success message 
+      toast.error("Error occurred while adding employee data."); //Swapnil Error&success message
     }
   };
 

@@ -106,7 +106,7 @@ const InvoiceTable = () => {
   const handleSubmit =async(e)=>{
     e.preventDefault();
     try{
-      const res = await axios.post('http://localhost:8080/api/saveInvoice',formData,{
+      const res = await axios.post('http://192.168.1.38:8080/api/saveInvoice',formData,{
         headers: {
           'Content-Type': 'application/json'
         }
@@ -128,7 +128,7 @@ const InvoiceTable = () => {
         <div className="field-column">
           <div className="field-Row-Gray">
             <div className="field">
-              <label>Invoice Date</label>
+              <label >Invoice Date</label>
               <input
                 type="date"
                 name='invoiceDate'

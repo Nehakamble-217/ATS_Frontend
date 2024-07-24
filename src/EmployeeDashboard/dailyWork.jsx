@@ -71,6 +71,7 @@ function DailyWork({
       try {
         const response = await axios.get(
           `http://192.168.1.36:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+
         );
         setEmployeeData(response.data);
         // console.log(response.data);
@@ -178,6 +179,7 @@ function DailyWork({
         );
         await axios.post(
           "http://192.168.1.36:9090/api/ats/157industries/save-daily-work",
+
           formData
         );
 
@@ -208,6 +210,7 @@ function DailyWork({
       try {
         const response = await axios.get(
           `http://192.168.1.36:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+
         );
 
         setFetchWorkId(response.data);
@@ -598,6 +601,7 @@ function DailyWork({
 
       await axios.put(
         `http://192.168.1.36:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+
         formData
       );
 
@@ -727,7 +731,9 @@ function DailyWork({
           </p>
         </div>
       </div>
-      {userType != "SuperUser" && userType !="Applicant" && userType !="Vendor" ? (
+      {userType != "SuperUser" &&
+      userType != "Applicant" &&
+      userType != "Vendor" ? (
         <>
           <div
             className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}
