@@ -21,7 +21,7 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.34:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `http://192.168.1.36:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -452,8 +452,9 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
     >
       {employeeData != null ? (
         <Modal.Dialog
+        // size="lg"
           style={{
-            width: "500px",
+            
             padding: "10px",
           }}
         >
@@ -461,6 +462,17 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
             style={{ fontSize: "18px", backgroundColor: "#f2f2f2" }}
           >
             Employee Profile
+            <button
+              onClick={onClose}
+              style={{
+            marginLeft:"270px",
+                padding: "8px",
+                color:"red"
+              }}
+              className="close-profile-popup-btn  white-Btn"
+            >
+              X
+            </button>
           </Modal.Header>
           <Modal.Body
             style={{
@@ -510,12 +522,12 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
             >
               More
             </button>
-            <button
+            {/* <button
               onClick={onClose}
               className="close-profile-popup-btn  white-Btn"
             >
               Close
-            </button>
+            </button> */}
           </Modal.Footer>
         </Modal.Dialog>
       ) : (

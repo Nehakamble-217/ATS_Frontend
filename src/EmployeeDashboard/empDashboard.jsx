@@ -26,7 +26,8 @@ import ShortlistedNavbar from "./shortlistedNavbar";
 import AddJobDescription from "../JobDiscription/addJobDescription";
 import AddEmployee from "../EmployeeSection/addEmployee";
 import NotePad from "../notPad/notePad";
-import Reports from "../Reports/reports";
+// import Reports from "../Reports/reports";
+import MainReportDatapage from "../Reports/MainReportDatapage";
 import EmployeeProfileData from "../EmployeeSection/employeeProfileData";
 import AddResumes from "../ResumeData/addMultipleResumes";
 import ChatRoom from "../ChatRoom/chatRoom";
@@ -84,6 +85,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showAddEmployee, setShowAddEmployee] = useState(false);
   const [showNotePad, setShowNotePad] = useState(false);
   const [showReports, setShowReports] = useState(false);
+  const [showMainReportDatapage, setshowMainReportDatapage] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showAddedResumes, setShowAddedResumes] = useState(false);
   const [showChatRoom, setShowChatRoom] = useState(false);
@@ -188,6 +190,11 @@ const EmpDashboard = ({ userGroup }) => {
     setShowReports(!showReports);
     setIncentive(false);
   };
+  const toggleMainReportDatapage = () => {
+    resetAllToggles();
+    setshowMainReportDatapage(!showMainReportDatapage);
+    setIncentive(false);
+  };
 
   const toggleAddJobDescription = () => {
     resetAllToggles();
@@ -234,6 +241,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowAddEmployee(false);
     setShowNotePad(false);
     setShowReports(false);
+    setshowMainReportDatapage(false);
     setShowProfile(false);
     setShowAddedResumes(false);
     setIncentive(false);
@@ -531,6 +539,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggelAddRecruiter={toggelAddRecruiter}
         toggelDisplayNotPad={toggelDisplayNotPad}
         toggleReports={toggleReports}
+        toggleMainReportDatapage={toggleMainReportDatapage}
         toggelResumeData={toggelResumeData}
         toggelAddResumes={toggelAddResumes}
         toggleChatRoom={toggleChatRoom}
@@ -668,7 +677,8 @@ const EmpDashboard = ({ userGroup }) => {
           {showResumeData && <ResumeList handleUpdate={handleUpdate} />}
         </div>
         <div>{showNotePad && <NotePad />}</div>
-        <div>{showReports && <Reports />}</div>
+        {/* <div>{showReports && <Reports />}</div> */}
+        <div>{showMainReportDatapage && <MainReportDatapage />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
         <div>
           {showShareLink && <ShareLink toggleResumeLink={toggleResumeLink} />}

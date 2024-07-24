@@ -30,6 +30,7 @@ function Sidebar({
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
   toggleReports,
+  toggleMainReportDatapage,
   handleLogout,
   toggelAddRecruiter,
   toggelDisplayNotPad,
@@ -839,7 +840,7 @@ function Sidebar({
                     ) : null}
 
 
-                {userType != "SuperUser" ? (
+                {userType != "SuperUser" && userType != "Vendor" ? (
                   <>
                     <li
                       className={activeSubMenu === "portal" ? "active" : ""}
@@ -976,7 +977,8 @@ function Sidebar({
                     }
                       onClick={handleButtonClick(
                         "report",
-                        toggleReports
+                        // toggleReports
+                        toggleMainReportDatapage
                       )}>
                       <a href="#">
                         <i
