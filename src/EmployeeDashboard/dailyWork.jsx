@@ -70,7 +70,12 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
+<<<<<<< HEAD
           `http://localhost:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+=======
+          `http://192.168.1.36:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+
+>>>>>>> 8f423469f4e899b1fc29da5d1f58c11bc368153c
         );
         setEmployeeData(response.data);
         //Akash_Pawar_DailyWork_senderinformation_09/07_74
@@ -175,7 +180,12 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
+<<<<<<< HEAD
           "http://localhost:9090/api/ats/157industries/save-daily-work",
+=======
+          "http://192.168.1.36:9090/api/ats/157industries/save-daily-work",
+
+>>>>>>> 8f423469f4e899b1fc29da5d1f58c11bc368153c
           formData
         );
 
@@ -205,7 +215,12 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
+<<<<<<< HEAD
           `http://localhost:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+=======
+          `http://192.168.1.36:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+
+>>>>>>> 8f423469f4e899b1fc29da5d1f58c11bc368153c
         );
 
         setFetchWorkId(response.data);
@@ -427,7 +442,8 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.34:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.36:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+
         formData
       );
 

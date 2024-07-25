@@ -101,8 +101,10 @@ const LoginSignup = ({ onLogin }) => {
                 <div className="loginpage-error">{error}</div>
                 <button className="login-button" type="submit" data-aos="fade-top">Login</button>
               
-                {/* <button className="login-button" onClick={createAccount}>Create account</button> */}
+                <button className="login-button" onClick={createAccount} data-aos="fade-top">Create account</button>
+                {userType === "vendor" && 
                 <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Vendor</button>
+              }
                 <center>
                   <span className="psw" onClick={() => setShowForgotPassword(true)}>Forgot password?</span>
                 </center>

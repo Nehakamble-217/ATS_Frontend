@@ -1,34 +1,66 @@
-/* Ajhar-pdfModal.jsx-10-07-2024-lineNo-1-to-28 */
+// /* Ajhar-pdfModal.jsx-10-07-2024-lineNo-1-to-28 */
 
 
-import React from 'react';
-import Modal from 'react-modal';
-import PieChart from '../Reports/reportsPieChart'
+// import React from 'react';
+// import Modal from 'react-modal';
+// import PieChart from '../Reports/reportsPieChart'
 
 
-Modal.setAppElement('#root'); // Set the root element for accessibility
+// Modal.setAppElement('#root'); // Set the root element for accessibility
 
-const PdfModal = ({ isOpen, closeModal, pdfContent }) => {
-  return (
+// const PdfModal = ({ isOpen, closeModal, pdfContent }) => {
+//   return (
     
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={closeModal}
-      contentLabel="PDF Modal"
-      className="pdf-modal"
-    >
-      <div>
-        <button onClick={closeModal}>Close</button>
+//     <Modal
+//       isOpen={isOpen}
+//       onRequestClose={closeModal}
+//       contentLabel="PDF Modal"
+//       className="pdf-modal"
+//     >
+//       <div>
+//         <button onClick={closeModal}>Close</button>
         
-        <embed src={pdfContent} type="application/pdf" width="100%" height="500px" />
+//         <embed src={pdfContent} type="application/pdf" width="100%" height="500px" />
         
-      </div>
+//       </div>
       
-    </Modal>
+//     </Modal>
 
 
 
-  );
-};
+//   );
+// };
 
-export default PdfModal;
+// export default PdfModal;
+
+ /* Name:-Prachi Parab Component:-Create Report Table page 
+         End LineNo:-4 to 28 Date:-09/07 */
+
+         import React from 'react';
+         import Modal from 'react-modal';
+         import PieChartReport from './PieChartReport';
+         import SliderReport from './SliderReports';
+         
+         Modal.setAppElement('#root'); // Set the root element for accessibility
+         
+         const PdfModal = ({ isOpen, closeModal, pdfContent }) => {
+           return (
+             <Modal
+               isOpen={isOpen}
+               onRequestClose={closeModal}
+               contentLabel="PDF Modal"
+               className="pdf-modal"
+             >
+               <div>
+                 <button onClick={closeModal}>Close</button>
+                
+                 {/* <embed src={pdfContent} type="application/pdf" width="100%" height="500px" /> */}
+                 
+                <div>root.render(<PieChartReport />);  </div>
+                 <SliderReport/>
+               </div>
+             </Modal>
+           );
+         };
+         
+         export default PdfModal;

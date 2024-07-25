@@ -1,6 +1,11 @@
 import axios from "axios";
 
 const API_BASE_URL = "http://192.168.1.36:9090/api/ats/157industries";
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8f423469f4e899b1fc29da5d1f58c11bc368153c
 export const addEmployee = (employee) => {
   return axios.post(`${API_BASE_URL}/add-payroll-details`, employee);
 };

@@ -29,6 +29,7 @@ function Sidebar({
   toggleAddJobDescription,
   toggleEmployeeMasterSheet,
   toggleReports,
+  toggleMainReportDatapage,
   handleLogout,
   toggelAddRecruiter,
   toggelDisplayNotPad,
@@ -933,7 +934,7 @@ function Sidebar({
                   </li>
                 ) : null}
 
-                {userType != "SuperUser" ? (
+                {userType != "SuperUser" && userType != "Vendor" ? (
                   <>
                     <li
                       className={activeSubMenu === "portal" ? "active" : ""}
@@ -1069,20 +1070,25 @@ function Sidebar({
                         <span className="sidebar-text">Note Pad</span>
                       </a>
                     </li>
-                    {userType != "Vendor" ? (
-                      <li
-                        className={activeButton === "report" ? "active" : ""}
-                        onClick={handleButtonClick("report", toggleReports)}
-                      >
-                        <a href="#">
-                          <i
-                            className="fa-regular fa-address-book"
-                            style={{ color: "gray" }}
-                          ></i>
-                          <span className="sidebar-text">Reports</span>
-                        </a>
-                      </li>
-                    ) : null}
+                    { userType !="Vendor"? (
+                    <li className={
+                      activeButton === "report" ? "active" : ""
+                    }
+                      onClick={handleButtonClick(
+                        "report",
+                        // toggleReports
+                        toggleMainReportDatapage
+                      )}>
+                      <a href="#">
+                        <i
+                          className="fa-regular fa-address-book"
+                          style={{ color: "gray" }}
+                        ></i>
+                        <span className="sidebar-text">Reports</span>
+                      </a>
+                    </li>
+                  ) : null}
+
                   </>
                 ) : null}
 

@@ -17,7 +17,6 @@ import ForgotPasswordsForm from "./MainDashboard/empForgotPasswords.jsx";
 import ApplicantRegistraion from "./Applicant/ApplicantRegistration.jsx";
 import SelfTechnicalUser from "./MainDashboard/selfTechnicalUser.jsx";
 import { ToastContainer } from "react-toastify";
-import MyComponent from "./TeamLeader/distance.jsx";
 
 
 
