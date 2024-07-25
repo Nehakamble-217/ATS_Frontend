@@ -40,7 +40,7 @@ const AddUser = ({selectedPlan}) => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       try {
-        const response = await fetch('http://localhost:8081/SaveUser', {
+        const response = await fetch('http://192.168.1.36:9090/api/ats/157industries/SaveUser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const AddUser = ({selectedPlan}) => {
 
   return (
     <div className="form-main-container">
-      {!paymentForm?( <form onSubmit={handleSubmit} className="form-container">
+      {!paymentForm?( <form onSubmit={handleSubmit} className="addUser-form-container">
         <div className="form-group-main">
           <label htmlFor="userName">User Name</label>
           <input

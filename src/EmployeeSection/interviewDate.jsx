@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./interviewDate.css";
-import ShortListedCandidates from "../CandidateSection/ShortListedCandidate";
-import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
@@ -19,14 +17,12 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [interviewResponses, setInterviewResponses] = useState([]);
   const [showShortlistTable, setShowShortlistTable] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-
   const [candidateId, setCandidateId] = useState("");
   const [requirementId, setRequirementId] = useState("");
 
   const navigate = useNavigate();
-  const { employeeId } = useParams();
+  const { employeeId, userType } = useParams();
   const employeeIdNew = parseInt(employeeId, 10);
-  console.log(employeeIdNew + " Interview Page Employe ID");
 
   useEffect(() => {
     fetchInterviewDates();
@@ -36,10 +32,9 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
     candidateId,
     requirementId
   ) => {
-    console.log("02 " + requirementId);
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
+        `http://localhost:9090/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
       );
 
       const data = await response.json();
@@ -58,8 +53,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/interview-date/${employeeIdNew}`
+        `http://localhost:9090/api/ats/157industries/interview-date/${employeeIdNew}/${userType}`
       );
+      console.log(employeeIdNew + " ---01--- Interview Dates");
+      console.log(userType + " ---01--- User Type");
       const data = await response.json();
       setInterviewDates(data);
     } catch (error) {
@@ -81,7 +78,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/today-interview/${employeeIdNew}?date=${formattedDate}`
+        `http://localhost:9090/api/ats/157industries/today-interview/${formattedDate}/${employeeId}/${userType}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -106,7 +103,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://192.168.1.34:9090/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://localhost:9090/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -161,7 +158,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.34:9090/api/ats/157industries/save-interview-response",
+        "http://localhost:9090/api/ats/157industries/save-interview-response",
         {
           method: "POST",
           headers: {
@@ -304,10 +301,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                    {item.lineUp.availabilityForInterview || "-"}
+                    {item.availabilityForInterview || "-"}
                     <div className="tooltip">
                       <span className="tooltiptext">
-                        {item.lineUp.availabilityForInterview}
+                        {item.availabilityForInterview}
                       </span>
                     </div>
                   </td>
@@ -317,10 +314,10 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >
-                    {item.lineUp.interviewTime || "-"}
+                    {item.interviewTime || "-"}
                     <div className="tooltip">
                       <span className="tooltiptext">
-                        {item.lineUp.interviewTime}
+                        {item.interviewTime}
                       </span>
                     </div>
                   </td>
@@ -404,97 +401,91 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                       </span>
                     </div>
                   </td>
-                  {item.lineUp && (
-                    <>
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {item.lineUp.companyName || "-"}
-                        <div className="tooltip">
-                          <span className="tooltiptext">
-                            {item.lineUp.companyName}
-                          </span>
-                        </div>
-                      </td>
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {item.lineUp.experienceYear || "0"}
-                        <div className="tooltip">
-                          <span className="tooltiptext">
-                            {item.lineUp.experienceYear}{" "}
-                          </span>
-                        </div>
-                        Years
-                        {item.lineUp.experienceMonth || "0"}
-                        <div className="tooltip">
-                          <span className="tooltiptext">
-                            {item.lineUp.experienceMonth}
-                          </span>
-                        </div>
-                        Months
-                      </td>
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {`${item.lineUp.currentCTCLakh || 0} Lakh ${
-                          item.lineUp.currentCTCThousand || 0
+                  {/* {item.lineUp && ( */}
+                  <>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.companyName || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.companyName}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.experienceYear || "0"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.experienceYear}{" "}
+                        </span>
+                      </div>
+                      Years
+                      {item.experienceMonth || "0"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.experienceMonth}
+                        </span>
+                      </div>
+                      Months
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {`${item.currentCTCLakh || 0} Lakh ${item.currentCTCThousand || 0
                         } Thousand`}
-                        <div className="tooltip">
-                          <span className="tooltiptext">{`${
-                            item.lineUp.expectedCTCLakh || 0
-                          } Lakh ${
-                            item.lineUp.expectedCTCThousand || 0
+                      <div className="tooltip">
+                        <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                          } Lakh ${item.expectedCTCThousand || 0
                           } Thousand`}</span>
-                        </div>
-                      </td>
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {`${item.lineUp.expectedCTCLakh || 0} Lakh ${
-                          item.lineUp.expectedCTCThousand || 0
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {`${item.expectedCTCLakh || 0} Lakh ${item.expectedCTCThousand || 0
                         } Thousand`}
-                        <div className="tooltip">
-                          <span className="tooltiptext">{`${
-                            item.lineUp.expectedCTCLakh || 0
-                          } Lakh ${
-                            item.lineUp.expectedCTCThousand || 0
+                      <div className="tooltip">
+                        <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                          } Lakh ${item.expectedCTCThousand || 0
                           } Thousand`}</span>
-                        </div>
-                      </td>
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {item.lineUp.noticePeriod || "-"}
-                        <div className="tooltip">
-                          <span className="tooltiptext">
-                            {item.lineUp.noticePeriod}
-                          </span>
-                        </div>
-                      </td>
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {item.lineUp.holdingAnyOffer || "-"}
-                        <div className="tooltip">
-                          <span className="tooltiptext">
-                            {item.lineUp.holdingAnyOffer}
-                          </span>
-                        </div>
-                      </td>
-                      {/* <td
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.noticePeriod || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.noticePeriod}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.holdingAnyOffer || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.holdingAnyOffer}
+                        </span>
+                      </div>
+                    </td>
+                    {/* <td
                         className="tabledata"
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
@@ -507,56 +498,56 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                         </div>
                       </td> */}
 
-                      {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                    {/* Name:-Akash Pawar Component:-ShortListedCandidate
                   Subcategory:-ResumeViewButton(added) start LineNo:-546
                   Date:-02/07 */}
-                      <td className="tabledata">
-                        <button
-                          className="text-secondary"
-                          onClick={() => openResumeModal(item.lineUp?.resume)}
-                        >
-                          <i className="fas fa-eye"></i>
-                        </button>
-                      </td>
-                      {/* Name:-Akash Pawar Component:-ShortListedCandidate
+                    <td className="tabledata">
+                      <button
+                        className="text-secondary"
+                        onClick={() => openResumeModal(item.resume)}
+                      >
+                        <i className="fas fa-eye"></i>
+                      </button>
+                    </td>
+                    {/* Name:-Akash Pawar Component:-ShortListedCandidate
                   Subcategory:-ResumeViewButton(added) End LineNo:-558
                   Date:-02/07 */}
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {item.incentive || "-"}
-                        <div className="tooltip">
-                          <span className="tooltiptext">{item.incentive}</span>
-                        </div>
-                      </td>
-                      <td
-                        className="tabledata"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                      >
-                        {item.lineUp.finalStatus || "-"}
-                        <div className="tooltip">
-                          <span className="tooltiptext">
-                            {item.lineUp.finalStatus}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="tabledata">
-                        <i
-                          onClick={() => {
-                            fetchAndUpdateInterviewResponse(
-                              item.candidateId,
-                              item.requirementId
-                            );
-                            setShowShortlistTable(!showShortlistTable);
-                          }}
-                          className="fa-regular fa-pen-to-square"
-                        ></i>
-                      </td>
-                    </>
-                  )}
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.incentive || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.incentive}</span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.finalStatus || "-"}
+                      <div className="tooltip">
+                        <span className="tooltiptext">
+                          {item.finalStatus}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="tabledata">
+                      <i
+                        onClick={() => {
+                          fetchAndUpdateInterviewResponse(
+                            item.candidateId,
+                            item.requirementId
+                          );
+                          setShowShortlistTable(!showShortlistTable);
+                        }}
+                        className="fa-regular fa-pen-to-square"
+                      ></i>
+                    </td>
+                  </>
+
                 </tr>
               ))}
             </tbody>
@@ -795,9 +786,3 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
 export default InterviewDates;
 
-// const CalendarContainer = styled.div`
-//   /* ~~~ container styles ~~~ */
-//   .react-calendar__tile--range {
-//     box-shadow: 0 0 6px 2px black;
-//   }
-// `;

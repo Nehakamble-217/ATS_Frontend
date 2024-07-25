@@ -22,7 +22,7 @@ const ShareLink = ({ toggleResumeLink }) => {
     >
       <RWebShare
         data={{
-          url: `http://192.168.1.48:5173/shareResumeLink`,
+          url: `http://192.168.1.36:5173/shareResumeLink`,
         }}
         onClick={() => alert("Shared successfully!")}
       >

@@ -58,7 +58,7 @@ const CallingExcel = ({ onClose }) => {
     try {
       await axios.post(
 
-        `http://192.168.1.40:9090/api/ats/157industries/uploadData/${employeeId}`,
+        `http://192.168.1.36:9090/api/ats/157industries/uploadData/${employeeId}`,
         formData,
         {
           headers: {
@@ -91,7 +91,7 @@ const CallingExcel = ({ onClose }) => {
     try {
       await axios.post(
 
-        `http://192.168.1.40:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
+        `http://192.168.1.36:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
 
         formData,
         {
@@ -122,7 +122,7 @@ const CallingExcel = ({ onClose }) => {
     }
     try {
       await axios.post(
-        "http://192.168.1.40:9090/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.36:9090/api/ats/157industries/add-multiple-resume",
         formData
       );
       setUploadSuccessResume(true);
@@ -141,7 +141,7 @@ const CallingExcel = ({ onClose }) => {
     axios
       .post(
 
-        "http://192.168.1.46:9090/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.36:9090/api/ats/157industries/add-multiple-resume",
         formData
       )
 

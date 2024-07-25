@@ -128,7 +128,7 @@ const InvoiceTable = () => {
         <div className="field-column">
           <div className="field-Row-Gray">
             <div className="field">
-              <label >Invoice Date</label>
+              <label>Invoice Date</label>
               <input
                 type="date"
                 name='invoiceDate'
@@ -523,10 +523,10 @@ const InvoiceTable = () => {
           <div className="field">
           <label>Hard Copy Sent</label>
         <label>
-          <input type="radio" name="hardCopySent" checked={formData.hardCopySent === 'Yes'}value="Yes" onChange={handleChange} /> Yes
+          <input type="radio" className="invoice-radio" name="hardCopySent" checked={formData.hardCopySent === 'Yes'}value="Yes" onChange={handleChange} /> Yes
         </label>
         <label>
-          <input type="radio" name="hardCopySent" checked={formData.hardCopySent==='No'} value="No" onChange={handleChange} /> No
+          <input type="radio"  className="invoice-radio"  name="hardCopySent" checked={formData.hardCopySent==='No'} value="No" onChange={handleChange} /> No
         </label>
             
          </div>
