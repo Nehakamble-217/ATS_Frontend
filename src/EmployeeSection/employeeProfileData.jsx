@@ -21,11 +21,7 @@ const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => 
 
   useEffect(() => {
     fetch(
-<<<<<<< HEAD
        `http://localhost:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
-=======
-      `http://192.168.1.36:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
->>>>>>> 8f423469f4e899b1fc29da5d1f58c11bc368153c
     )
       .then((response) => response.json())
       .then((data) => {
@@ -515,8 +511,7 @@ const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => 
               Attendance
             </button>
 
-            <button onClick={toggleAttendance}
-              className="emp-pro-incentive">
+            <button   className="emp-pro-incentive">
               Team Details
             </button>
 

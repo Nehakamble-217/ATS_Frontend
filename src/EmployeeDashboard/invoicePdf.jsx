@@ -10,7 +10,7 @@ const InvoicePdf = ({id, onClose}) => {
     },[id])
     const fetchInvoice = async () => {
         try {
-            const res = await fetch(`http://192.168.1.38:8080/api/fetchById/${id}`);
+            const res = await fetch(`http://192.168.1.36:8080/api/fetchById/${id}`);
             const data = await res.json();
             setInvoiceData([data]);
             console.log(data);

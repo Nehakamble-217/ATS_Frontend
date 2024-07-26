@@ -106,7 +106,7 @@ const InvoiceTable = () => {
   const handleSubmit =async(e)=>{
     e.preventDefault();
     try{
-      const res = await axios.post('http://192.168.1.38:8080/api/saveInvoice',formData,{
+      const res = await axios.post('http://192.168.1.36:8080/api/saveInvoice',formData,{
         headers: {
           'Content-Type': 'application/json'
         }
@@ -526,7 +526,7 @@ const InvoiceTable = () => {
           <input type="radio" className="invoice-radio" name="hardCopySent" checked={formData.hardCopySent === 'Yes'}value="Yes" onChange={handleChange} /> Yes
         </label>
         <label>
-          <input type="radio"  className="invoice-radio"  name="hardCopySent" checked={formData.hardCopySent==='No'} value="No" onChange={handleChange} /> No
+          <input type="radio"  className="invoice-radio" name="hardCopySent" checked={formData.hardCopySent==='No'} value="No" onChange={handleChange} /> No
         </label>
             
          </div>

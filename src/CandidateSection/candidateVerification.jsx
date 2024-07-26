@@ -14,7 +14,7 @@ function CandidateVerification() {
         console.log(location);
 
 
-        axios.get(`http://192.168.1.36:9090/api/ats/157industries/verify${location.search}`);
+        axios.get(`http://192.168.1.42:9090/api/ats/157industries/verify${location.search}`);
 
     }, [location.search]);
 
@@ -23,7 +23,7 @@ function CandidateVerification() {
             .get(
 
 
-                `http://192.168.1.36:9090/api/ats/157industries/verify/${location.search.split("email=")[1]
+                `http://192.168.1.42:9090/api/ats/157industries/verify/${location.search.split("email=")[1]
                 }`
             )
             .then((resolve) => {

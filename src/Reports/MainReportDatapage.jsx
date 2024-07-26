@@ -76,7 +76,7 @@
             useEffect(()=>{
               const fetchManagerNames=async()=>{
                 const response=await axios.get(
-                  `http://192.168.1.36:9090/api/ats/157industries/get-all-managers`
+                  `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
                   
                 );
           
@@ -100,7 +100,7 @@
               const fetchTeamLeaderNames=async()=>{
                 const response=await axios.get(
                
-                   `http://192.168.1.36:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
+                   `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
                 );
                 setTeamLeaderUnderManager(response.data);
          
@@ -114,7 +114,7 @@
           
             const fetchRecruiterUnderTeamLeaderData=useCallback(async ()=>{
               const response=await axios.get(
-                `http://192.168.1.36:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+                `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
           
               );
               setRecruiterUnderTeamLeaderData(response.data);
@@ -193,7 +193,7 @@
                   // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
 
                   const response=await axios.get(
-                    `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastMonthStartDate}/${lastMonthEndDate}`
+                    `http://192.168.1.42:9090/api/ats/157industries/report-count/${baseURL}/${lastMonthStartDate}/${lastMonthEndDate}`
                     // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
                   )
                   setReportDataDatewise(response.data);
@@ -232,7 +232,7 @@
                   // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
 
                   const response=await axios.get(
-                    `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
+                    `http://192.168.1.42:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
                     // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
                   )
                   setReportDataDatewise(response.data);
@@ -275,7 +275,7 @@
                   // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
 
                   const response=await axios.get(
-                    `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastSixMonthStartDate}/${lastSixMonthEndDate}`
+                    `http://192.168.1.42:9090/api/ats/157industries/report-count/${baseURL}/${lastSixMonthStartDate}/${lastSixMonthEndDate}`
                     // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
                   )
                   setReportDataDatewise(response.data);
@@ -316,7 +316,7 @@
                 // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
 
                 const response=await axios.get(
-                  `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
+                  `http://192.168.1.42:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
                   // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
                 )
                 setReportDataDatewise(response.data);
@@ -357,7 +357,7 @@
                 // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
 
                 const response=await axios.get(
-                  `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
+                  `http://192.168.1.42:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
                   // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
                 )
                 setReportDataDatewise(response.data);
@@ -398,7 +398,7 @@
                 // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
 
                 const response=await axios.get(
-                  `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
+                  `http://192.168.1.42:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
                  
                 )
                 setReportDataDatewise(response.data);
@@ -438,10 +438,9 @@
                 }
                 
 
-                // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
 
                 const response=await axios.get(
-                  `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
+                  `http://192.168.1.42:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
                  
                 )
                 setReportDataDatewise(response.data);
@@ -453,10 +452,8 @@
             }
             
           
-            // Handler function for radio button change
             const handleMonthChange = (event) => {
               setSelectedMonth(event.target.value);
-              // alert(event.target.value);
               
               if(event.target.value==='LastMonth'){ 
                 fetchLastMonthData();
@@ -478,21 +475,15 @@
           
             const showCustomDateDiv=()=>{
               setShowCustomDiv(true);
-          
             }
             const hideCustomDateDiv=()=>{
               setShowCustomDiv(false);
             }
           
-          
-          
-            // Filtered data based on selected month
-            // const filteredData = data.find(entry => entry.month === selectedMonth);
-          
             useEffect(() => {
               const fetchTeamLeaderNames = async () => {
                 const response = await axios.get(
-                  `http://192.168.1.36:9090/api/ats/157industries/tl-namesIds`
+                  `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds`
                 
                 );
                 setTeamLeaderNames(response.data);
@@ -500,12 +491,9 @@
               fetchTeamLeaderNames();
             }, []);
             const fetchRecruiterUnderTeamLeader = useCallback(async () => {
-              //   const response = await axios.get(
-              //     ` http://192.168.1.42:7676/emp-stats/api/dailywork/api/work-summary/${selectedTeamLeader}`
-              
-              //   );
+     
                 const response = await axios.get(
-                  `http://192.168.1.36:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+                  `http://192.168.1.42:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
               
                 );
                 setRecruiterUnderTeamLeader(response.data);
