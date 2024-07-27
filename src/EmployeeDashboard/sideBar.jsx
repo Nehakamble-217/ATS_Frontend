@@ -15,6 +15,7 @@ function Sidebar({
   toggleSelfCalling,
   toggelLineUp,
   toggleCallingTrackerForm,
+  toggelHelp,
   toggeladminsection,
   toggleShortListed,
   toggleSelectCandidate,
@@ -550,7 +551,7 @@ function Sidebar({
                           >
                             <a href="#">
                               <span className="sidebar-text">
-                                Create Question paper's
+                                Create Question paper
                               </span>
                             </a>
                           </li>
@@ -680,7 +681,7 @@ function Sidebar({
                             <a href="#">
                               {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                               <span className="sidebar-text">
-                                Create Question paper's
+                                Create Question paper
                               </span>
                             </a>
                           </li>
@@ -1094,6 +1095,23 @@ function Sidebar({
   </li>
 ) : null}
 
+                <li 
+                onClick={handleButtonClick(
+                  "help",
+                  toggelHelp
+                )}
+                >
+                  <a href="#">
+
+                    <i
+                      className="fa-regular fa-circle-question"
+                      style={{ color: "gray" }}
+                      ></i>
+                    <span className="sidebar-text">Help</span>
+                  </a>
+                </li>
+
+
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">
                     <i
@@ -1103,6 +1121,8 @@ function Sidebar({
                     <span className="sidebar-text">Logout</span>
                   </a>
                 </li>
+              
+              
               </ul>
             </div>
             <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
