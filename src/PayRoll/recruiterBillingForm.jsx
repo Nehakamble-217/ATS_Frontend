@@ -1,31 +1,31 @@
 /* Mohini_15/07/2024_RecruiterBillingForm_Whole_page */
 
-import React, { useState } from 'react';
-import './recruiterBillingForm.css';
+import React, { useState } from "react";
+import "./recruiterBillingForm.css";
 
-const RecruiterBillingForm = ({employees}) => {
+const RecruiterBillingForm = ({ employees }) => {
   const [formData, setFormData] = useState({
-    date: '',
-    accountNumber: '',
-    branchName: '',
-    ifcCode: '',
-    empId: '',
-    jobRole: '',
-    totalWorkingDays: '',
-    presentDays: '',
-    unpaidLeaves: '',
-    lateMark: '',
-    incentive: '',
-    salary: '',
-    providentFund: '',
-    professionalCharges: '',
-    emptyField: '',
-    totalSalary: ''
+    date: "",
+    accountNumber: "",
+    branchName: "",
+    ifcCode: "",
+    empId: "",
+    jobRole: "",
+    totalWorkingDays: "",
+    presentDays: "",
+    unpaidLeaves: "",
+    lateMark: "",
+    incentive: "",
+    salary: "",
+    providentFund: "",
+    professionalCharges: "",
+    emptyField: "",
+    totalSalary: "",
   });
 
-  const [paymentStatus, setPaymentStatus] = useState('unpaid');
+  const [paymentStatus, setPaymentStatus] = useState("unpaid");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,39 +34,38 @@ const RecruiterBillingForm = ({employees}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    console.log("Form Data:", formData);
     // Handle form submission, e.g., send data to an API
   };
 
   const handlePayClick = () => {
-    if (paymentStatus === 'unpaid') {
+    if (paymentStatus === "unpaid") {
       setShowPaymentModal(true);
     } else {
-      setPaymentStatus('unpaid');
+      setPaymentStatus("unpaid");
     }
   };
 
   const handlePaymentSubmit = () => {
-    setPaymentStatus('paid');
+    setPaymentStatus("paid");
     setShowPaymentModal(false);
-    console.log('Selected Payment Method:', paymentMethod);
+    console.log("Selected Payment Method:", paymentMethod);
     // Handle payment method submission
   };
 
   return (
     <div className="recruiterBilling-container">
-      <h1 className='recruiterBilling-heading'>Recruiter Billing Form</h1>
-      <form className='recruiterBilling-headingForm' onSubmit={handleSubmit}>
+      <h1 className="recruiterBilling-heading">Recruiter Billing Form</h1>
+      <form className="recruiterBilling-headingForm" onSubmit={handleSubmit}>
         <div className="field-Row-Gray">
           <div className="form-group">
             <label>Date</label>
             <input
               type="date"
               name="date"
-              className='form-group-date'
+              className="form-group-date"
               value={formData.date}
               onChange={handleChange}
-              
             />
           </div>
           <div className="form-group">
@@ -76,7 +75,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="ifcCode"
               value={formData.ifcCode}
               onChange={handleChange}
-              placeholder='Enter Account Number'
+              placeholder="Enter Account Number"
             />
           </div>
         </div>
@@ -88,7 +87,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="accountNumber"
               value={formData.accountNumber}
               onChange={handleChange}
-              placeholder='Enter IFC Code'
+              placeholder="Enter IFC Code"
             />
           </div>
           <div className="form-group">
@@ -98,7 +97,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="branchName"
               value={formData.branchName}
               onChange={handleChange}
-              placeholder='Enter Branch Name'
+              placeholder="Enter Branch Name"
             />
           </div>
         </div>
@@ -110,8 +109,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="branchName"
               value={formData.branchName}
               onChange={handleChange}
-              placeholder='Enter Employee Id'
-
+              placeholder="Enter Employee Id"
             />
           </div>
           <div className="form-group">
@@ -121,8 +119,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="empId"
               value={formData.empId}
               onChange={handleChange}
-              placeholder='Enter Job Role'
-
+              placeholder="Enter Job Role"
             />
           </div>
         </div>
@@ -134,8 +131,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="jobRole"
               value={formData.jobRole}
               onChange={handleChange}
-              placeholder='Total Working Days'
-
+              placeholder="Total Working Days"
             />
           </div>
           <div className="form-group">
@@ -145,8 +141,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="totalWorkingDays"
               value={formData.totalWorkingDays}
               onChange={handleChange}
-              placeholder='Enter Present Days'
-
+              placeholder="Enter Present Days"
             />
           </div>
         </div>
@@ -158,8 +153,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="presentDays"
               value={formData.presentDays}
               onChange={handleChange}
-              placeholder='Enter Unpaid Leaves'
-
+              placeholder="Enter Unpaid Leaves"
             />
           </div>
           <div className="form-group">
@@ -169,8 +163,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="unpaidLeaves"
               value={formData.unpaidLeaves}
               onChange={handleChange}
-              placeholder='Enter Late Mark'
-
+              placeholder="Enter Late Mark"
             />
           </div>
         </div>
@@ -182,8 +175,7 @@ const RecruiterBillingForm = ({employees}) => {
               name="lateMark"
               value={formData.lateMark}
               onChange={handleChange}
-              placeholder='Enter Incentive'
-
+              placeholder="Enter Incentive"
             />
           </div>
           <div className="form-group">
@@ -193,24 +185,22 @@ const RecruiterBillingForm = ({employees}) => {
               name="incentive"
               value={formData.incentive}
               onChange={handleChange}
-              placeholder='Enter Tax'
-
+              placeholder="Enter Tax"
             />
           </div>
         </div>
         <div className="field-Row-Gray">
-        <div className="form-group">
+          <div className="form-group">
             <label>Professional Charges</label>
             <input
               type="text"
               name="professionalCharges"
               value={formData.professionalCharges}
               onChange={handleChange}
-              placeholder='Enter Professional Charges'
-
+              placeholder="Enter Professional Charges"
             />
           </div>
-          
+
           <div className="form-group">
             <label>Provident Fund</label>
             <input
@@ -218,21 +208,19 @@ const RecruiterBillingForm = ({employees}) => {
               name="providentFund"
               value={formData.providentFund}
               onChange={handleChange}
-              placeholder='Enter Provident Fund'
-
+              placeholder="Enter Provident Fund"
             />
           </div>
         </div>
         <div className="field-Row-white">
-        <div className="form-group">
+          <div className="form-group">
             <label>Total Salary</label>
             <input
               type="text"
               name="salary"
               value={formData.salary}
               onChange={handleChange}
-              placeholder='Enter Total Salary'
-
+              placeholder="Enter Total Salary"
             />
           </div>
           <div className="form-group">
@@ -242,15 +230,14 @@ const RecruiterBillingForm = ({employees}) => {
               name="emptyField"
               value={formData.emptyField}
               onChange={handleChange}
-              placeholder='Enter Empty Feild'
-
+              placeholder="Enter Empty Feild"
             />
           </div>
         </div>
 
         <div className="buttonDiv">
-          <button className='ctf-btn' type="button" onClick={handlePayClick}>
-            {paymentStatus === 'paid' ? 'Paid' : 'Pay'}
+          <button className="ctf-btn" type="button" onClick={handlePayClick}>
+            {paymentStatus === "paid" ? "Paid" : "Pay"}
           </button>
           {/* <button className="cancelButton" type="button" >
             Cancel
@@ -263,7 +250,12 @@ const RecruiterBillingForm = ({employees}) => {
           <div className="recruiter-modal-content">
             <div className="modal-header">
               <h2 className="modal-header">Payment Method</h2>
-              <button className="close" onClick={() => setShowPaymentModal(false)}>&times;</button>
+              <button
+                className="close"
+                onClick={() => setShowPaymentModal(false)}
+              >
+                &times;
+              </button>
             </div>
             <div className="recruiter-modal-body">
               <div>
@@ -308,7 +300,9 @@ const RecruiterBillingForm = ({employees}) => {
               </div>
             </div>
             <div className="buttonDiv">
-              <button className='ctf-btn' onClick={handlePaymentSubmit}>Submit</button>
+              <button className="ctf-btn" onClick={handlePaymentSubmit}>
+                Submit
+              </button>
             </div>
           </div>
         </div>

@@ -44,16 +44,12 @@ const ShareDescription = ({ Descriptions }) => {
     }
   };
 
-  // if (!setShowJobDescriptionShare) {
-  //   return null;
-  // }
 
   return (
     <main className="main-description-share">
       <div className="job-post-share" id="job-description-share">
         <section className="job-details-section-share">
           <h2 className="job-title-share">
-            {/* <b>Job Title:</b>  */}
             {Descriptions.designation}
           </h2>
           <div className="job-details-share">

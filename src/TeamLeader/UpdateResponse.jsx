@@ -50,7 +50,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/shortListed-date/${employeeId}/${userType}`
+        `http://192.168.1.42:9090/api/ats/157industries/shortListed-date/${employeeId}/${userType}`
       );
       const data = await res.json();
       setCallingList(data);
@@ -271,7 +271,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
                   >
                     <i className="fa-solid fa-magnifying-glass"></i>
                   </div>
-                  <h1>Update Response</h1>
+                  <h1 style={{ color: "gray" }}>Update Response</h1>
                   <div>
                     <button
                       className="lineUp-share-btn"

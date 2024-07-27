@@ -1,19 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 // SwapnilRokade_UpdateEmployee_AutoFeildFunctionality_16/07
-const UpdateEmployee = ({id,userType}) => {
+const UpdateEmployee = ({ id, userType }) => {
   const [profileImage, setProfileImage] = useState("");
   const [pdfSrc, setPdfSrc] = useState("");
   const [pdf, setPdf] = useState("");
   const [formData, setFormData] = useState({
-    employeeId:"",
+    employeeId: "",
     employeeName: "",
     dateOfJoining: "",
     designation: "",
     department: "",
     officialMail: "",
     employeeEmail: "",
-    officialContactNumber: "",  
+    officialContactNumber: "",
     alternateContactNo: "",
     dateOfBirth: "",
     gender: "",
@@ -72,23 +72,25 @@ const UpdateEmployee = ({id,userType}) => {
   const [fileNames, setFileNames] = useState({
     profileImage: "",
     document: "",
-    resumeFile: ""
+    resumeFile: "",
   });
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     fetchEmployeeDetails();
-  },[id])
+  }, [id]);
 
   const fetchEmployeeDetails = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.40:9090/api/ats/157industries/fetch-profile-details/${id}/${userType}`);
+      const response = await axios.get(
+        `http://192.168.1.40:9090/api/ats/157industries/fetch-profile-details/${id}/${userType}`
+      );
       const initialResponse = response.data;
       console.log(initialResponse);
-  
+
       let profileImageFile = null;
       let resumeFileFile = null;
       let documentFile = null;
-  
+
       if (initialResponse.profileImage) {
         const byteCharacters = atob(initialResponse.profileImage);
         const byteNumbers = new Array(byteCharacters.length);
@@ -97,10 +99,12 @@ const UpdateEmployee = ({id,userType}) => {
         }
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "image/jpeg" });
-  
+
         const url = URL.createObjectURL(blob);
         setProfileImage(url);
-        profileImageFile = new File([blob], "profileImage.jpg", { type: "image/jpeg" });
+        profileImageFile = new File([blob], "profileImage.jpg", {
+          type: "image/jpeg",
+        });
       }
       if (initialResponse.resumeFile) {
         const byteCharacters = atob(initialResponse.resumeFile);
@@ -109,12 +113,14 @@ const UpdateEmployee = ({id,userType}) => {
           byteNumbers[i] = byteCharacters.charCodeAt(i);
         }
         const byteArray = new Uint8Array(byteNumbers);
-  
+
         const blob = new Blob([byteArray], { type: "application/pdf" });
-  
+
         const url = URL.createObjectURL(blob);
         setPdfSrc(url);
-        resumeFileFile = new File([blob], "resumeFile.pdf", { type: "application/pdf" });
+        resumeFileFile = new File([blob], "resumeFile.pdf", {
+          type: "application/pdf",
+        });
       }
       if (initialResponse.document) {
         const byteCharacters = atob(initialResponse.document);
@@ -124,12 +130,14 @@ const UpdateEmployee = ({id,userType}) => {
         }
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "application/pdf" });
-  
+
         const url = URL.createObjectURL(blob);
         setPdf(url);
-        documentFile = new File([blob], "document.pdf", { type: "application/pdf" });
+        documentFile = new File([blob], "document.pdf", {
+          type: "application/pdf",
+        });
       }
-  
+
       // Update form data and file names
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -173,7 +181,8 @@ const UpdateEmployee = ({id,userType}) => {
         inductionYesOrNo: initialResponse.inductionYesOrNo || "",
         inductionComment: initialResponse.inductionComment || "",
         trainingSource: initialResponse.trainingSource || "",
-        trainingCompletedYesOrNo: initialResponse.trainingCompletedYesOrNo || "",
+        trainingCompletedYesOrNo:
+          initialResponse.trainingCompletedYesOrNo || "",
         trainingTakenCount: initialResponse.trainingTakenCount || "",
         roundsOfInterview: initialResponse.roundsOfInterview || "",
         interviewTakenPerson: initialResponse.interviewTakenPerson || "",
@@ -190,70 +199,64 @@ const UpdateEmployee = ({id,userType}) => {
         employeePassword: initialResponse.password || "",
         confirmPassword: initialResponse.confirmPassword || "",
       }));
-  
+
       setFileNames({
         profileImage: profileImageFile ? profileImageFile.name : "",
         document: documentFile ? documentFile.name : "",
-        resumeFile: resumeFileFile ? resumeFileFile.name : ""
+        resumeFile: resumeFileFile ? resumeFileFile.name : "",
       });
     } catch (err) {
       console.log(err);
     }
   };
-  
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     if (files.length > 0) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: files[0]
+        [name]: files[0],
       }));
       setFileNames((prevFileNames) => ({
         ...prevFileNames,
-        [name]: files[0].name
+        [name]: files[0].name,
       }));
     }
   };
-
-
 
   const formatDate = (dateString) => {
     let year, month, day;
 
-    if (dateString.includes('/')) {
+    if (dateString.includes("/")) {
       // Handle dd/MM/yyyy format
-      [day, month, year] = dateString.split('/');
-    } else if (dateString.includes('-')) {
+      [day, month, year] = dateString.split("/");
+    } else if (dateString.includes("-")) {
       // Handle yyyy-MM-dd format
-      [year, month, day] = dateString.split('-');
+      [year, month, day] = dateString.split("-");
     } else {
       return "Unsupported date format";
     }
-  
+
     // Ensure day, month, and year are two digits and four digits respectively
-    const formattedDay = String(day).padStart(2, '0');
-    const formattedMonth = String(month).padStart(2, '0');
-    const formattedYear = String(year).padStart(4, '0');
-  
+    const formattedDay = String(day).padStart(2, "0");
+    const formattedMonth = String(month).padStart(2, "0");
+    const formattedYear = String(year).padStart(4, "0");
+
     // Construct and return the date in yyyy-MM-dd format
     return `${formattedYear}-${formattedMonth}-${formattedDay}`;
   };
 
-
   const formatDate1 = (dateString) => {
     const date = new Date(dateString);
-    
+
     // Ensure month is converted to a zero-based index for Date object
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding 1 because getMonth() returns 0-11
-    const day = String(date.getDate()).padStart(2, '0');
-    
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Adding 1 because getMonth() returns 0-11
+    const day = String(date.getDate()).padStart(2, "0");
+
     // Construct and return the date in yyyy-MM-dd format
     return `${year}-${month}-${day}`;
   };
-
-  
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -265,7 +268,7 @@ const UpdateEmployee = ({id,userType}) => {
       }));
       setFileNames((prevFileNames) => ({
         ...prevFileNames,
-        [name]: files[0].name
+        [name]: files[0].name,
       }));
     } else {
       if (
@@ -287,8 +290,7 @@ const UpdateEmployee = ({id,userType}) => {
         name === "teamLeaderMsg" ||
         name === "editDeleteAuthority" ||
         name === "bloodGroup" ||
-        name === "educationalQualification" 
-       
+        name === "educationalQualification"
       ) {
         if (/\d/.test(value)) {
           setErrors((prevErrors) => ({
@@ -318,8 +320,7 @@ const UpdateEmployee = ({id,userType}) => {
         name === "esIcNo" ||
         name === "pfNo" ||
         name === "roundsOfInterview"
-      )
-      {
+      ) {
         if (/[^0-9]/.test(value)) {
           setErrors((prevErrors) => ({
             ...prevErrors,
@@ -335,8 +336,7 @@ const UpdateEmployee = ({id,userType}) => {
             [name]: value,
           }));
         }
-      }
-       else {
+      } else {
         setFormData((prevFormData) => ({
           ...prevFormData,
           [name]: value,
@@ -371,10 +371,10 @@ const UpdateEmployee = ({id,userType}) => {
         formDataToSend.append(key, formData[key]);
       }
     }
-   
+
     try {
       const response = await fetch(
-       ` http://192.168.1.40:9090/api/ats/157industries/add-employee/432`,
+        ` http://192.168.1.40:9090/api/ats/157industries/add-employee/432`,
         {
           method: "POST",
           body: formDataToSend,
@@ -390,7 +390,7 @@ const UpdateEmployee = ({id,userType}) => {
     } catch (error) {
       console.error("Error:", error);
       setSuccessMessage("Error occurred while adding employee data.");
-    } 
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -480,7 +480,7 @@ const UpdateEmployee = ({id,userType}) => {
             <option value="Recruiters">recruiter</option>
           </select>
         </div>
- 
+
         <div className="form-row">
           <label>Official Email:</label>
           <input
@@ -502,21 +502,6 @@ const UpdateEmployee = ({id,userType}) => {
             onChange={handleInputChange}
           />
         </div>
-
-        {/* <div className="form-row">
-          <label>Mobile Number:</label>
-          <input
-            type="text"
-            name="employeeNumber"
-            placeholder="Enter Mobile Number"
-            value={formData.employeeNumber}
-            onChange={handleInputChange}
-          />
-          {errors.employeeNumber && (
-            <div className="error">{errors.employeeNumber}</div>
-          )}
-        </div> */}
-
         <div className="form-row">
           <label>Alternate Mobile Number:</label>
           <input
@@ -747,21 +732,23 @@ const UpdateEmployee = ({id,userType}) => {
         <div className="form-row">
           <label>Upload Profile Image:</label>
           <input type="file" name="profileImage" onChange={handleFileChange} />
-          {fileNames.profileImage && <p>Selected Profile Image: {fileNames.profileImage}</p>}
+          {fileNames.profileImage && (
+            <p>Selected Profile Image: {fileNames.profileImage}</p>
+          )}
         </div>
 
         <div className="form-row">
           <label>Upload Document:</label>
           <input type="file" name="document" onChange={handleFileChange} />
           {fileNames.document && <p>Selected Document: {fileNames.document}</p>}
-          
-      
         </div>
 
         <div className="form-row">
           <label>Upload Resume:</label>
           <input type="file" name="resumeFile" onChange={handleFileChange} />
-          {fileNames.resumeFile && <p>Selected Resume File: {fileNames.resumeFile}</p>}
+          {fileNames.resumeFile && (
+            <p>Selected Resume File: {fileNames.resumeFile}</p>
+          )}
         </div>
 
         <div className="form-row">
@@ -998,20 +985,6 @@ const UpdateEmployee = ({id,userType}) => {
           )}
         </div>
 
-        {/* <div className="form-row">
-          <label>Team Leader Message:</label>
-          <input
-            type="text"
-            name="teamLeaderMsg"
-            placeholder="Enter Team Leader Message"
-            value={formData.teamLeaderMsg}
-            onChange={handleInputChange}
-          />
-          {errors.teamLeaderMsg && (
-            <div className="error">{errors.teamLeaderMsg}</div>
-          )}
-        </div> */}
-
         <div className="form-row">
           <label>Edit/Delete Authority:</label>
           <input
@@ -1107,49 +1080,6 @@ const UpdateEmployee = ({id,userType}) => {
           />
           {errors.pfNo && <div className="error">{errors.pfNo}</div>}
         </div>
-
-        {/* <div className="form-row">
-          <label>Insurance Number:</label>
-          <input
-            type="text"
-            name="insuranceNumber"
-            placeholder="Enter Insurance Number"
-            value={formData.insuranceNumber}
-            onChange={handleInputChange}
-          />
-          {errors.insuranceNumber && (
-            <div className="error">{errors.insuranceNumber}</div>
-          )}
-        </div>
-
-        <div className="form-row">
-          <label>Reporting Manager Name:</label>
-          <input
-            type="text"
-            name="reportingMangerName"
-            placeholder="Enter Reporting Manager Name"
-            value={formData.reportingMangerName}
-            onChange={handleInputChange}
-          />
-          {errors.reportingMangerName && (
-            <div className="error">{errors.reportingMangerName}</div>
-          )}
-        </div>
-
-        <div className="form-row">
-          <label>Reporting Manager Designation:</label>
-          <input
-            type="text"
-            name="reportingMangerDesignation"
-            placeholder="Enter Reporting Manager Designation"
-            value={formData.reportingMangerDesignation}
-            onChange={handleInputChange}
-          />
-          {errors.reportingMangerDesignation && (
-            <div className="error">{errors.reportingMangerDesignation}</div>
-          )}
-        </div> */}
-
         <div className="form-row">
           <label>Password:</label>
           <div className="password-input-container">

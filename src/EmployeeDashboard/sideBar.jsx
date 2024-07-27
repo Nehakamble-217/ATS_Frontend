@@ -793,7 +793,7 @@ function Sidebar({
                   >
                     <a href="#">
                       <i
-                        className="fa-solid fa-database"
+                        className="fa-solid fa-user-tie"
                         style={{ color: "gray" }}
                       ></i>
                       <span className="sidebar-text">Super User</span>
@@ -936,7 +936,47 @@ function Sidebar({
 
                 {userType != "SuperUser" && userType != "Vendor" ? (
                   <>
+                    
+
+
                     <li
+                      onClick={handleButtonClick(
+                        "notepad",
+                        toggelDisplayNotPad
+                      )}
+                      className={activeButton === "notepad" ? "active" : ""}
+                      >
+                      <a href="#">
+                        <i
+                          className="fa-regular fa-clipboard"
+                          style={{ color: "gray" }}
+                          ></i>
+                        <span className="sidebar-text">Note Pad</span>
+                      </a>
+                    </li>
+                    { userType !="Vendor"? (
+                      <li className={
+                        activeButton === "report" ? "active" : ""
+                      }
+                      onClick={handleButtonClick(
+                        "report",
+                        // toggleReports
+                        toggleMainReportDatapage
+                      )}>
+                      <a href="#">
+                        <i
+                          className="fa-regular fa-address-book"
+                          style={{ color: "gray" }}
+                          ></i>
+                        <span className="sidebar-text">Reports</span>
+                      </a>
+                    </li>
+                  ) : null}
+
+
+                  </>
+                ) : null}
+                <li
                       className={activeSubMenu === "portal" ? "active" : ""}
                       onClick={toggleSubMenu("portal")}
                     >
@@ -1000,104 +1040,66 @@ function Sidebar({
                         </li>
                       </ul>
                     </li>
-
-                    {userType != "Vendor" ? (
-                      <li
-                        className={activeSubMenu === "aboutus" ? "active" : ""}
-                        onClick={toggleSubMenu("aboutus")}
-                      >
-                        <a href="#">
-                          <i
-                            className="fa-brands fa-linkedin"
-                            style={{ color: "gray" }}
-                          ></i>
-                          <span className="sidebar-text">About Us</span>
-                          <i className="arrow ph-bold ph-caret-down"></i>
-                        </a>
-                        <ul
-                          className={`sub-menu sub-menu1 sub-menu2 ${
-                            activeSubMenu === "aboutus" ? "active" : ""
-                          }`}
-                        >
-                          <li style={{ marginLeft: "10px" }}>
-                            <span
-                              className="sidebar-text"
-                              onClick={toggeleRightsInstructions}
-                            >
-                              Rights & Instructions
-                            </span>
-                          </li>
-                          <li style={{ marginLeft: "10px" }}>
-                            <span
-                              className="sidebar-text"
-                              onClick={toggeleCompanyPolicy}
-                            >
-                              Company Policy
-                            </span>
-                          </li>
-                          <li style={{ marginLeft: "10px" }}>
-                            <span
-                              className="sidebar-text"
-                              onClick={toggeleIssueSolving}
-                            >
-                              Issues Solving
-                            </span>
-                          </li>
-                          <li style={{ marginLeft: "10px" }}>
-                            <span
-                              className="sidebar-text"
-                              onClick={toggelePainArea}
-                            >
-                              Recruites Pain Area
-                            </span>
-                          </li>
-                        </ul>
-                      </li>
-                    ) : null}
-
-                    <li
-                      onClick={handleButtonClick(
-                        "notepad",
-                        toggelDisplayNotPad
-                      )}
-                      className={activeButton === "notepad" ? "active" : ""}
-                    >
-                      <a href="#">
-                        <i
-                          className="fa-regular fa-clipboard"
-                          style={{ color: "gray" }}
-                        ></i>
-                        <span className="sidebar-text">Note Pad</span>
-                      </a>
-                    </li>
-                    { userType !="Vendor"? (
-                    <li className={
-                      activeButton === "report" ? "active" : ""
-                    }
-                      onClick={handleButtonClick(
-                        "report",
-                        // toggleReports
-                        toggleMainReportDatapage
-                      )}>
-                      <a href="#">
-                        <i
-                          className="fa-regular fa-address-book"
-                          style={{ color: "gray" }}
-                        ></i>
-                        <span className="sidebar-text">Reports</span>
-                      </a>
-                    </li>
-                  ) : null}
-
-                  </>
-                ) : null}
+                {userType != "Vendor" ? (
+  <li
+    className={activeSubMenu === "aboutus" ? "active" : ""}
+    onClick={toggleSubMenu("aboutus")}
+  >
+    <a href="#">
+      <i
+        className="fa-solid fa-circle-info"
+        style={{ color: "gray" }}
+      ></i>
+      <span className="sidebar-text">About Us</span>
+      <i className="arrow ph-bold ph-caret-down"></i>
+    </a>
+    <ul
+      className={`sub-menu sub-menu1 sub-menu2 ${
+        activeSubMenu === "aboutus" ? "active" : ""
+      }`}
+    >
+      <li style={{ marginLeft: "10px" }}>
+        <span
+          className="sidebar-text"
+          onClick={toggeleRightsInstructions}
+        >
+          Rights & Instructions
+        </span>
+      </li>
+      <li style={{ marginLeft: "10px" }}>
+        <span
+          className="sidebar-text"
+          onClick={toggeleCompanyPolicy}
+        >
+          Company Policy
+        </span>
+      </li>
+      <li style={{ marginLeft: "10px" }}>
+        <span
+          className="sidebar-text"
+          onClick={toggeleIssueSolving}
+        >
+          Issues Solving
+        </span>
+      </li>
+      <li style={{ marginLeft: "10px" }}>
+        <span
+          className="sidebar-text"
+          onClick={toggelePainArea}
+        >
+          Recruites Pain Area
+        </span>
+      </li>
+    </ul>
+  </li>
+) : null}
 
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">
                     <i
                       className="fa-solid fa-power-off"
                       style={{ color: "gray" }}
-                    ></i>
+                      ></i>
                     <span className="sidebar-text">Logout</span>
                   </a>
                 </li>
@@ -1112,15 +1114,15 @@ function Sidebar({
 
       {showConfirmation && (
         <div
-          className="bg-black bg-opacity-50 modal show"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "fixed",
-            width: "100%",
-            height: "100vh",
-          }}
+        className="bg-black bg-opacity-50 modal show"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "fixed",
+          width: "100%",
+          height: "100vh",
+        }}
         >
           <Modal.Dialog
             style={{
@@ -1128,7 +1130,7 @@ function Sidebar({
               alignItems: "center",
               justifyContent: "center",
             }}
-          >
+            >
             <Modal.Body>
               <p className="confirmation-text">
                 Are you sure you want to logout?
@@ -1139,14 +1141,14 @@ function Sidebar({
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-              >
+                >
                 <button onClick={handleLogoutLocal} className="buttoncss">
                   Yes
                 </button>
                 <button
                   onClick={() => setShowConfirmation(false)}
                   className="buttoncss"
-                >
+                  >
                   No
                 </button>
               </div>

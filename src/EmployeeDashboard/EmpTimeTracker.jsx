@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect } from "react";
-import './EmpTimeTracker.css';
+import "./EmpTimeTracker.css";
 import { useNavigate } from "react-router-dom";
-
 
 const Stopwatch = () => {
   const getStoredTime = () => {
@@ -73,28 +71,31 @@ const Stopwatch = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <div style={{ marginRight:"20px" , marginTop:"5px"}}>
+      <div style={{ marginRight: "20px", marginTop: "5px" }}>
         <h3 style={{ color: "black" }}>
           Time: {time.hours.toString().padStart(2, "0")}:
           {time.minutes.toString().padStart(2, "0")}:
           {time.seconds.toString().padStart(2, "0")}
         </h3>
       </div>
-      <div style={{ marginLeft: "20px", position: "fixed", top: "5px", right: "1px" }}>
+      <div
+        style={{
+          marginLeft: "20px",
+          position: "fixed",
+          top: "5px",
+          right: "1px",
+        }}
+      >
         {running ? (
           <button className="timer-break-btn" onClick={handleBreak}>
             Take Break
           </button>
         ) : (
-          <button className="timer-break-btn" onClick={handleResume} >
+          <button className="timer-break-btn" onClick={handleResume}>
             End Breake
           </button>
 
-         /* <button className={`timer-break-btn ${onBreak ? 'on-break' : ''}`} onClick={handleBreak}>
-               {onBreak ? 'End Break' : 'Start Break'}
-           </button> */
-
-
+         
         )}
       </div>
     </div>

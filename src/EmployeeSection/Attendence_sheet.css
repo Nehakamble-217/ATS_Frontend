@@ -25,12 +25,10 @@
   border-radius: 5px;
 }
 
-/* Style the filter section */
 .filter-section {
   margin-top: 20px;
 }
 
-/* Style the filter dropdowns */
 .filter-dropdown {
   margin-bottom: 10px;
 }
@@ -51,12 +49,6 @@
   justify-content: center;
   align-items: center;
 }
-
-/* .dropbtn:hover{
-  background-color: white;
-
-  border: 1px solid gray;
-} */
 
 /* Style the dropdown content (hidden by default) */
 .dropdown-content {
@@ -173,18 +165,6 @@
   /* text-overflow: clip; */
   /* width: 100px; */
 }
-
-/* .attendancerowsdata,
-.tabledata {
-  text-align: center;
-  font-size: 16px;
-  border: 1px solid gray;
-  padding: 1px;
-  overflow: hidden;
-  max-width: 200px;
-  text-overflow: clip;
-  visibility: visible;
-} */
 
 .attendanceTableData::-webkit-scrollbar {
   display: none;

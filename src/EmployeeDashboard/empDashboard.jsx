@@ -61,7 +61,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [addCandidate, setAddCandidate] = useState(false);
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
-  const [successShare,setSuccessShare] = useState(false); //neha_add_this_state_bcz_came_error_to_console
+  const [successShare, setSuccessShare] = useState(false); //neha_add_this_state_bcz_came_error_to_console
   const [attendancesheet, setAttendanceSheet] = useState(false);
   const [incentive, setIncentive] = useState(false);
   const [lineUp, setLineUp] = useState(false);
@@ -286,9 +286,9 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCapex(false);
     setShowEmployeeDetails(false); /*Swapnil_AddedEmployeeDetails_16/07*/
     setShowSubscription(false); /*Arbaz_AddSubscriptions_19/07*/
-    setShowBilling(false)
-    setShowPayment(false)
-    setscheduleinterview(false);  /*neha_addScheduleinterview_18/07_lineno_245*/
+    setShowBilling(false);
+    setShowPayment(false);
+    setscheduleinterview(false); /*neha_addScheduleinterview_18/07_lineno_245*/
     setShowRightsInstruction(false);
     setShowCompanyPolicy(false);
     setShowPainArea(false);
@@ -333,12 +333,6 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowUpdateResponse(true);
   };
-
-  // const toggleInterviewDate = () => {
-  //   resetAllToggles();
-  //   setShowShortListdNav(!showShortListedNav);
-  // };
-
   const toggleEmployeeMasterSheet = () => {
     resetAllToggles();
     setShowEmployeeMasterSheet(!showEmployeeMasterSheet);
@@ -633,11 +627,7 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        {/* <div>
-          {showShortListedNav && (
-            <ShortlistedNavbar loginEmployeeName={loginEmployeeName} />
-          )}
-        </div> */}
+        
         <div>
           {showShortlistedCandidateData && (
             <ShortListedCandidates

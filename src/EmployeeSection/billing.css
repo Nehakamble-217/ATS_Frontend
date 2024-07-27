@@ -14,7 +14,7 @@
 
 .card-dhanu h3,
 .card-dhanu2 h3 {
-  color: gray; /* Gray color for card headings */
+  color: gray;
 }
 
 .card-dhanu {
@@ -23,7 +23,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #ffe5b5; /* Combination color 1 */
+  background-color: #ffe5b5;
 }
 
 .card-dhanu2 {
@@ -32,11 +32,11 @@
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #f2f2f2; /* Combination color 2 */
+  background-color: #f2f2f2;
 }
 
 .month-table {
-  width: auto; /* Adjust width according to content */
+  width: auto;
   border-collapse: collapse;
   margin-top: 20px;
 }
@@ -50,42 +50,42 @@
 }
 
 .highlight {
-  background-color: yellow; /* or any color you prefer */
+  background-color: yellow;
   font-weight: bold;
 }
 
 .month-table th,
 .month-table td {
   padding: 5px;
-  text-align: center; /* Center text */
-  border: 1px solid gray; /* Gray border for table cells */
-  color: gray; /* Gray text color */
-  white-space: nowrap; /* Prevent text wrapping */
+  text-align: center;
+  border: 1px solid gray;
+  color: gray;
+  white-space: nowrap;
 }
 
 .table-container {
-  width: auto; /* Adjust width according to content */
+  width: auto;
 }
 
 
 
- .table-container th {
+.table-container th {
   background-color: #ffcb9b;
   padding: 5px;
-  text-align: center; /* Center text */
-  border: 1px solid gray; /* Gray border for table header cells */
-  color: gray; /* Gray text color */
-  white-space: nowrap; /* Prevent text wrapping */
+  text-align: center;
+  border: 1px solid gray;
+  color: gray;
+  white-space: nowrap;
 }
 
 .table-container td {
   padding: 1px;
   padding-right: 5px;
   padding-left: 5px;
-  text-align: center; /* Center text */
-  border: 1px solid gray; /* Gray border for table data cells */
-  color: gray; /* Gray text color */
-  white-space: nowrap; /* Prevent text wrapping */
+  text-align: center;
+  border: 1px solid gray;
+  color: gray;
+  white-space: nowrap;
 }
 
 .table-container tbody tr:hover {
@@ -93,18 +93,20 @@
   color: white;
 }
 
-.status-button, .view-details-button {
+.status-button,
+.view-details-button {
   padding: 1px 10px;
   margin: 1px;
-  background-color: #ffb282; /* Button background color */
-  color: white; /* Button text color */
+  background-color: #ffb282;
+  color: white;
   border: none;
-  border-radius: 15px; /* Button border radius */
+  border-radius: 15px;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.status-button:hover, .view-details-button:hover {
-  background-color: white; /* Background color on hover */
-  color: #ffb282; /* Text color on hover */
+.status-button:hover,
+.view-details-button:hover {
+  background-color: white;
+  color: #ffb282;
 }

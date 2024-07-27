@@ -2,25 +2,21 @@ import React, { useState, useRef } from "react";
 import ReactToPrint from "react-to-print";
 import ResumeForm from "./ResumeFrom";
 import ResumePreview from "./ResumePreview";
-import '../ResumeData/printStyle.css';
+import "../ResumeData/printStyle.css";
 // import './App.css';
 
 const CandidateResumeLink = () => {
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    phone: '',
-    email: '',
-    summary: '',
+    firstname: "",
+    lastname: "",
+    phone: "",
+    email: "",
+    summary: "",
     experiences: [],
-    projects: [
-      { title: '', description: '' }
-    ],
-    educations: [
-      { institution: '', degree: '', startDate: '', endDate: '' }
-    ],
-    technicalSkills: '',
-    softSkills: ''
+    projects: [{ title: "", description: "" }],
+    educations: [{ institution: "", degree: "", startDate: "", endDate: "" }],
+    technicalSkills: "",
+    softSkills: "",
   });
 
   const previewRef = useRef();
@@ -50,4 +46,3 @@ const CandidateResumeLink = () => {
 };
 
 export default CandidateResumeLink;
-

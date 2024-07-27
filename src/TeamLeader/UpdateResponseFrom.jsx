@@ -27,12 +27,11 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   const fetchDataToUpdate = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
+        `http://192.168.1.42:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
       );
       const responseData = await response.json();
       console.log(responseData);
       setData(responseData);
-
     } catch (err) {
       console.log("Error fetching UpdateResponse data:", err);
     }
@@ -53,45 +52,6 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   };
 
   
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   try {
-//     // Save new interview response
-//     const response = await fetch(
-//       "http://192.168.1.40:9090/api/ats/157industries/save-interview-response",
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData),
-//       }
-//     );
-    
-
-//     if (response.ok) {
-//       toast.success("Response updated successfully.");
-
-//       // Optionally, handle any UI updates or notifications here
-//   const handleInputChange = (e, index) => {
-//     const { name, value } = e.target;
-//     if (index !== undefined) {
-//       const updatedData = [...data];
-//       updatedData[index] = {
-//         ...updatedData[index],
-//         [name]: value,
-//       };
-//       setData(updatedData);
-//     } else {
-//       setFormData({
-//         ...formData,
-//         [name]: value,
-//       });
-//     }
-//     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-//   };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -102,7 +62,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     try {
       // Save new interview response
       const response = await fetch(
-        "http://192.168.1.34:9090/api/ats/157industries/save-interview-response",
+        "http://192.168.1.42:9090/api/ats/157industries/save-interview-response",
         {
           method: "POST",
           headers: {

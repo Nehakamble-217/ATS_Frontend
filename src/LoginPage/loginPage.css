@@ -45,10 +45,12 @@
     0% {
         transform: translateX(0);
     }
+
     100% {
         transform: translateX(-50%);
     }
 }
+
 /* for adjust with screen size fixed height */
 .container22 {
     display: flex;
@@ -89,6 +91,7 @@
 .full-width {
     flex-direction: column;
 }
+
 .full-width-panel {
     width: 100%;
     padding: 5px 0px;
@@ -183,6 +186,7 @@
     color: #ffb281;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
+
 /* Hover styles for buttons */
 .button-hover {
     background-color: #ffcb9b;
@@ -192,13 +196,13 @@
     padding: 5px;
     transition: all 0.3s ease;
     cursor: pointer;
-  }
-  
-  .button-hover:hover {
+}
+
+.button-hover:hover {
     background-color: white;
     color: #ffcb9b;
-  }
-  
+}
+
 
 .psw {
     margin-top: 2px;
@@ -207,20 +211,26 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 5; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 5;
+    }
 }
 
 @keyframes slideIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* @media (max-width: 1000px) {
-    .container22 {
-        width: 90%;
+    from {
+        transform: translateY(20px);
+        opacity: 0;
     }
-} */
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
 @media (max-width: 666px) {
     .container22 {

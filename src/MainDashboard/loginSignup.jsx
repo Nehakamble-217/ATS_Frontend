@@ -4,7 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./LoginPage.css";
 import LoginImage from "../LogoImages/LoginImge.jpg";
-import ForgotPasswordForms from "./empForgotPasswords"; 
+import ForgotPasswordForms from "./empForgotPasswords";
 
 const LoginSignup = ({ onLogin }) => {
   const { userType } = useParams();
@@ -22,7 +22,9 @@ const LoginSignup = ({ onLogin }) => {
 
   useEffect(() => {
     if (employeeId && userType) {
-      fetch(`http://192.168.1.34:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`)
+      fetch(
+        `http://192.168.1.42:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+      )
         .then((response) => response.text())
         .then((data) => {
           setLogin(data);
@@ -64,16 +66,22 @@ const LoginSignup = ({ onLogin }) => {
 
   return (
     <div className="main-body">
-       
       <div className="main-login-container">
         <div className="main-loginpage-clouds"></div>
-        <div className={`container22 ${showForgotPassword ? "full-width" : ""}`}>
+        <div
+          className={`container22 ${showForgotPassword ? "full-width" : ""}`}
+        >
           {!showForgotPassword && (
             <div className="left-panel" data-aos="fade-right">
               <img src={LoginImage} alt="Logo" className="logo" />
             </div>
           )}
-          <div className={`${showForgotPassword ? "full-width-panel" : "right-panel"}`} data-aos="fade-left">
+          <div
+            className={`${
+              showForgotPassword ? "full-width-panel" : "right-panel"
+            }`}
+            data-aos="fade-left"
+          >
             {showForgotPassword ? (
               <ForgotPasswordForms userType={userType} />
             ) : (
@@ -116,14 +124,26 @@ const LoginSignup = ({ onLogin }) => {
                   />
                 </div>
                 <div className="loginpage-error">{error}</div>
-                <button className="login-button" type="submit" data-aos="fade-top">
+                <button
+                  className="login-button"
+                  type="submit"
+                  data-aos="fade-top"
+                >
                   Login
                 </button>
-                <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">
-                  Dashboard 
+                <button
+                  type="button"
+                  className="dashboard-button"
+                  onClick={dashboardLink}
+                  data-aos="fade-top"
+                >
+                  Dashboard
                 </button>
                 <center>
-                  <span className="psw" onClick={() => setShowForgotPassword(true)}>
+                  <span
+                    className="psw"
+                    onClick={() => setShowForgotPassword(true)}
+                  >
                     Forgot password?
                   </span>
                 </center>

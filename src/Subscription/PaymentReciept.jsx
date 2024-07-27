@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import Confetti from 'react-confetti';
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import Confetti from "react-confetti";
 
 const GST_RATE = 0.18;
 
 const PaymentReciept = ({ userId, plan }) => {
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
-  const [upiId, setUpiId] = useState('');
-  const [paypalEmail, setPaypalEmail] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [selectedPayment, setSelectedPayment] = useState('credit-card');
-  const [message, setMessage] = useState('');
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvc, setCardCvc] = useState("");
+  const [upiId, setUpiId] = useState("");
+  const [paypalEmail, setPaypalEmail] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [selectedPayment, setSelectedPayment] = useState("credit-card");
+  const [message, setMessage] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
 
   const containerRef = useRef(null);
@@ -29,8 +29,8 @@ const PaymentReciept = ({ userId, plan }) => {
 
       handleResize(); // Set initial size
 
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
 
@@ -52,12 +52,13 @@ const PaymentReciept = ({ userId, plan }) => {
 
   const handleStartMembership = async () => {
     if (
-      (selectedPayment === 'credit-card' && (!cardNumber || !cardExpiry || !cardCvc)) ||
-      (selectedPayment === 'upi' && !upiId) ||
-      (selectedPayment === 'paypal' && !paypalEmail) ||
-      (selectedPayment === 'net-banking' && (!bankName || !accountNumber))
+      (selectedPayment === "credit-card" &&
+        (!cardNumber || !cardExpiry || !cardCvc)) ||
+      (selectedPayment === "upi" && !upiId) ||
+      (selectedPayment === "paypal" && !paypalEmail) ||
+      (selectedPayment === "net-banking" && (!bankName || !accountNumber))
     ) {
-      setMessage('Please fill in all required details.');
+      setMessage("Please fill in all required details.");
       return;
     }
 
@@ -71,16 +72,18 @@ const PaymentReciept = ({ userId, plan }) => {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
     } catch (error) {
-      setMessage('Failed to subscribe. Please try again.');
+      setMessage("Failed to subscribe. Please try again.");
     }
   };
 
   const renderPaymentDetails = () => {
     switch (selectedPayment) {
-      case 'credit-card':
+      case "credit-card":
         return (
           <div className="payment-details mt-4">
-            <h4 className="text-lg font-medium mb-2">Enter Credit Card Details:</h4>
+            <h4 className="text-lg font-medium mb-2">
+              Enter Credit Card Details:
+            </h4>
             <input
               type="text"
               placeholder="Card Number"
@@ -104,7 +107,7 @@ const PaymentReciept = ({ userId, plan }) => {
             />
           </div>
         );
-      case 'upi':
+      case "upi":
         return (
           <div className="payment-details mt-4">
             <h4 className="text-lg font-medium mb-2">Enter UPI ID:</h4>
@@ -117,7 +120,7 @@ const PaymentReciept = ({ userId, plan }) => {
             />
           </div>
         );
-      case 'paypal':
+      case "paypal":
         return (
           <div className="payment-details mt-4">
             <h4 className="text-lg font-medium mb-2">Enter PayPal Email:</h4>
@@ -130,10 +133,12 @@ const PaymentReciept = ({ userId, plan }) => {
             />
           </div>
         );
-      case 'net-banking':
+      case "net-banking":
         return (
           <div className="payment-details mt-4">
-            <h4 className="text-lg font-medium mb-2">Enter Net Banking Details:</h4>
+            <h4 className="text-lg font-medium mb-2">
+              Enter Net Banking Details:
+            </h4>
             <input
               type="text"
               placeholder="Bank Name"
@@ -156,8 +161,13 @@ const PaymentReciept = ({ userId, plan }) => {
   };
 
   return (
-    <div ref={containerRef} className="p-4 w-full border max-w-lg bg-white rounded-lg shadow-md relative">
-      {showConfetti && <Confetti width={containerWidth} height={containerHeight} />}
+    <div
+      ref={containerRef}
+      className="p-4 w-full border max-w-lg bg-white rounded-lg shadow-md relative"
+    >
+      {showConfetti && (
+        <Confetti width={containerWidth} height={containerHeight} />
+      )}
       <div className="text-center">
         <h1 className="text-2xl font-bold">{plan.name}</h1>
         <span className="text-red-500 font-semibold">{plan.discount}</span>
@@ -171,11 +181,14 @@ const PaymentReciept = ({ userId, plan }) => {
             name="payment"
             id="credit-card"
             value="credit-card"
-            checked={selectedPayment === 'credit-card'}
-            onChange={() => handlePaymentSelection('credit-card')}
+            checked={selectedPayment === "credit-card"}
+            onChange={() => handlePaymentSelection("credit-card")}
             className="mr-2"
           />
-          <label htmlFor="credit-card" className="flex items-center justify-between">
+          <label
+            htmlFor="credit-card"
+            className="flex items-center justify-between"
+          >
             Credit Card
             <img
               src="https://cart.hostinger.com/assets/payments/razorpay.card.svg"
@@ -190,11 +203,14 @@ const PaymentReciept = ({ userId, plan }) => {
             name="payment"
             id="upi"
             value="upi"
-            checked={selectedPayment === 'upi'}
-            onChange={() => handlePaymentSelection('upi')}
+            checked={selectedPayment === "upi"}
+            onChange={() => handlePaymentSelection("upi")}
             className="mr-2"
           />
-          <label htmlFor="upi" className="w-full flex items-center justify-between">
+          <label
+            htmlFor="upi"
+            className="w-full flex items-center justify-between"
+          >
             UPI
             <img
               src="https://cart.hostinger.com/assets/payments/razorpay.upi.svg"
@@ -209,11 +225,14 @@ const PaymentReciept = ({ userId, plan }) => {
             name="payment"
             id="paypal"
             value="paypal"
-            checked={selectedPayment === 'paypal'}
-            onChange={() => handlePaymentSelection('paypal')}
+            checked={selectedPayment === "paypal"}
+            onChange={() => handlePaymentSelection("paypal")}
             className="mr-2"
           />
-          <label htmlFor="paypal" className="w-full flex items-center justify-between">
+          <label
+            htmlFor="paypal"
+            className="w-full flex items-center justify-between"
+          >
             PayPal
             <img
               src="https://cart.hostinger.com/assets/payments/braintree_paypal.svg"
@@ -228,11 +247,14 @@ const PaymentReciept = ({ userId, plan }) => {
             name="payment"
             id="net-banking"
             value="net-banking"
-            checked={selectedPayment === 'net-banking'}
-            onChange={() => handlePaymentSelection('net-banking')}
+            checked={selectedPayment === "net-banking"}
+            onChange={() => handlePaymentSelection("net-banking")}
             className="mr-2"
           />
-          <label htmlFor="net-banking" className="w-full flex items-center justify-between">
+          <label
+            htmlFor="net-banking"
+            className="w-full flex items-center justify-between"
+          >
             Net Banking
             <img
               src="https://cart.hostinger.com/assets/payments/dlocal_apm.NB.svg"
@@ -249,13 +271,11 @@ const PaymentReciept = ({ userId, plan }) => {
         <p className="mt-2">GST (18%): {gstAmount.toFixed(2)}</p>
         <p className="mt-2 font-bold">Total Amount: {finalAmount.toFixed(2)}</p>
       </div>
-      {message && <p className="mt-4 text-lg font-medium text-red-400">{message}</p>}
-      <div className='form-group-main'>
-      <button
-        onClick={handleStartMembership}
-      >
-        Start Membership
-      </button>
+      {message && (
+        <p className="mt-4 text-lg font-medium text-red-400">{message}</p>
+      )}
+      <div className="form-group-main">
+        <button onClick={handleStartMembership}>Start Membership</button>
       </div>
     </div>
   );

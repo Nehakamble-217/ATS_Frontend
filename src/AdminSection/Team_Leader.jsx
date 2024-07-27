@@ -50,7 +50,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.34:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
       );
       if (userType === "SuperUser") {
         // Show all managers for the superuser
@@ -69,7 +69,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.34:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
+        `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
       );
       setTeamLeaderUnderManager(response.data);
     };
@@ -80,7 +80,7 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-      `http://192.168.1.34:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+      `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -95,7 +95,7 @@ function Accesstable() {
 
   const fetchColumnsNames = async () => {
     const response = await axios.get(
-      `http://192.168.1.34:9090/api/ats/157industries/fetch-columns-names`
+      `http://192.168.1.42:9090/api/ats/157industries/fetch-columns-names`
     );
     setColumnName(response.data);
   };
@@ -159,31 +159,12 @@ function Accesstable() {
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_158_165
   const fetchAssignedColumn = async (assigneID, assigneeJobRole) => {
     const response = await axios.get(
-      `http://192.168.1.34:9090/api/ats/157industries/column-by-id/${assigneID}/${assigneeJobRole}`
+      `http://192.168.1.42:9090/api/ats/157industries/column-by-id/${assigneID}/${assigneeJobRole}`
     );
     setFetchupdateAssignedColumn(response.data);
     // console.log(response.data);
   };
 
-  // const handleRemoveClick = (recruiter) => {
-  //   setSelectedRecruiters((prev) => prev.filter((item) => item !== recruiter));
-  //   const updatedAssignments = { ...assignments };
-  //   delete updatedAssignments[recruiter];
-  //   setAssignments(updatedAssignments);
-  // };
-
-  // function getClassForCategory(category) {
-  //   switch (category) {
-  //     case "Common Assign":
-  //       return "common-assign";
-  //     case "Important Assign":
-  //       return "important-assign";
-  //     case "Most Important Assign":
-  //       return "most-important-assign";
-  //     default:
-  //       return "";
-  //   }
-  // }
   const handleOkClick = () => {
     if (selectedManager.managerId != "") {
       setDropdownOpen(false);
@@ -197,7 +178,7 @@ function Accesstable() {
     try {
       if (selectedRecruiters.recruiterId != "") {
         response = await axios.post(
-          `http://192.168.1.34:9090/api/ats/157industries/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
+          `http://192.168.1.42:9090/api/ats/157industries/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
 
           JSON.stringify(selectedOptions),
           {
@@ -208,7 +189,7 @@ function Accesstable() {
         );
       } else if (selectedTeamLeader.teamLeaderId != "") {
         response = await axios.post(
-          `http://192.168.1.34:9090/api/ats/157industries/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
+          `http://192.168.1.42:9090/api/ats/157industries/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
 
           JSON.stringify(selectedOptions),
           {
@@ -219,7 +200,7 @@ function Accesstable() {
         );
       } else {
         response = await axios.post(
-          `http://192.168.1.34:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
+          `http://192.168.1.42:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
 
           JSON.stringify(selectedOptions),
           {
@@ -240,12 +221,12 @@ function Accesstable() {
         setSelectedManager({ managerId: "", managerJobRole: "" });
         setSelectedTeamLeader({ teamLeaderId: "", teamLeaderJobRole: "" });
         setSelectedOptions([]);
-        toast.success("assigning columns successfully"); //Swapnil Error&success message 
+        toast.success("assigning columns successfully"); //Swapnil Error&success message
         setResponse("");
       }, 2000);
       // Handle success, update state or show a success message
     } catch (error) {
-      toast.error("Error assigning columns"); //Swapnil Error&success message 
+      toast.error("Error assigning columns"); //Swapnil Error&success message
       // Handle error, show an error message or retry logic
     }
   };
@@ -265,7 +246,7 @@ function Accesstable() {
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_260_269
   const fetchAssignedColumnCount = async () => {
     const response = await axios.get(
-      `http://192.168.1.34:9090/api/ats/157industries/column-category-counts/${employeeId}/${userType}`
+      `http://192.168.1.42:9090/api/ats/157industries/column-category-counts/${employeeId}/${userType}`
     );
     setAssignedColumnsCount(response.data);
   };
@@ -685,8 +666,7 @@ const UpdateAccessTable = ({
   const handleUpdateClick = async () => {
     try {
       const response = await axios.post(
-
-        `http://192.168.1.40:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
+        `http://192.168.1.42:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
 
         JSON.stringify(selectedOptions),
         {
@@ -699,11 +679,11 @@ const UpdateAccessTable = ({
       setTimeout(() => {
         setResponse("");
         setOpenupdateModal(false);
-        toast.success("Assign Column Successfully")
+        toast.success("Assign Column Successfully");
       }, 3000);
       onSetResponse(true);
     } catch (error) {
-      toast.success("Failed To Assign Column")
+      toast.success("Failed To Assign Column");
       onSetResponse(false);
     }
   };

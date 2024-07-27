@@ -1,32 +1,20 @@
-.data-table-div{
-    /* border: 2px solid black; */
-    /* height: 88px; */
+.data-table-div {
     width: 400px;
     margin-top: 20px;
-    /* background-color: white; */
 }
-.table-data-row
-{
+
+.table-data-row {
     align-items: center;
     color: gray;
-    /* background-color: white; */
 }
-/* .data-table{
-    color: white;
-    background-color: white;
-} */
-/* .table-dark d-flex{
-    
-} */
-
-.data-table th{
+.data-table th {
     background-color: #ffcb9b;
     color: gray;
     font-size: 18px;
 
 }
 
-.data-table tr td{
+.data-table tr td {
     background-color: #f2f2f2;
     color: gray;
     font-size: 18px;

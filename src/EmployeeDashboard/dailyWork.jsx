@@ -70,8 +70,7 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.36:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
-
+          `http://192.168.1.42:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
         );
         setEmployeeData(response.data);
         // console.log(response.data);
@@ -178,7 +177,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://192.168.1.36:9090/api/ats/157industries/save-daily-work",
+          "http://192.168.1.42:9090/api/ats/157industries/save-daily-work",
 
           formData
         );
@@ -209,8 +208,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.36:9090/api/ats/157industries/fetch-work-id/${employeeId}`
-
+          `http://192.168.1.42:9090/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -298,127 +296,6 @@ function DailyWork({
       return "00:00:00";
     }
   };
-  //Name:-Akash Pawar Component:-DailyWork Subcategory:-CalculateTotalHoursWork(changed) Start LineNo:-269  Date:-01/07
-
-  // const updateDailyWorkLog = async () => {
-  //   try {
-  //     const totalHoursWork = calculateTotalHoursWork(
-  //       localStorage.getItem(`loginTimeSaved_${employeeId}`),
-  //       logoutTime,
-  //       null
-  //     );
-
-  //     const now = new Date();
-  //     const day = now.getDate().toString().padStart(2, "0");
-  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
-  //     const year = now.getFullYear();
-
-  //     const formData = {
-  //       employeeId,
-  //       date: `${year}-${month}-${day}`,
-  //       loginTime,
-  //       logoutTime: currentTime,
-  //       totalHoursWork,
-  //       dailyHours: breaks,
-  //       lateMark,
-  //       leaveType,
-  //       paidLeave,
-  //       unpaidLeave,
-  //       dayPresentPaid,
-  //       dayPresentUnpaid,
-  //       remoteWork,
-  //       dailyTarget: data.pending + data.archived,
-  //       dailyArchived: data.archived,
-  //       dailyPending: data.pending,
-  //     };
-
-  //     await axios.put(
-  //       `http://localhost:8082/api/ats/157industries/update-daily-work/986`,
-  //       formData
-  //     );
-  //     console.log("Daily work data updated successfully.");
-  //   } catch (error) {
-  //     console.error("Error updating daily work data:", error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   const interval = setInterval(updateDailyWorkLog, 60000); // 1 minute interval
-
-  //   return () => clearInterval(interval);
-  // }, [
-  //   loginTime,
-  //   logoutTime,
-  //   breaks,
-  //   lateMark,
-  //   leaveType,
-  //   paidLeave,
-  //   unpaidLeave,
-  //   dayPresentPaid,
-  //   dayPresentUnpaid,
-  //   remoteWork,
-  //   data,
-  // ]);
-
-  // useEffect(() => {
-  //   console.log(archived, pending);
-  // }, []);
-  // const updateArchieved = async () => {
-  //   try {
-  //     const totalHoursWork = calculateTotalHoursWork(
-  //       JSON.parse(localStorage.getItem(`loginTimeSaved_${employeeId}`))
-  //     );
-
-  //     const now = new Date();
-  //     const day = now.getDate().toString().padStart(2, "0");
-  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
-  //     const year = now.getFullYear();
-
-  //     const formData = {
-  //       employeeId,
-  //       date: `${day}/${month}/${year}`,
-  //       dailyTarget: data.pending + data.archived,
-  //       dailyArchived: data.archived,
-  //       dailyPending: data.pending,
-  //       loginTime: JSON.parse(
-  //         localStorage.getItem(`loginTimeSaved_${employeeId}`)
-  //       ),
-  //       logoutTime: logoutTimestamp,
-  //       totalHoursWork,
-  //       dailyHours: breaks,
-  //       lateMark,
-  //       leaveType,
-  //       paidLeave,
-  //       unpaidLeave,
-  //       dayPresentPaid,
-  //       dayPresentUnpaid,
-  //       remoteWork,
-  //     };
-
-  //     await axios.put(
-  //       `http://localhost:8082/api/ats/157industries/update-daily-work/989`,
-  //       formData
-  //     );
-
-  //     localStorage.removeItem(`loginTimeSaved_${employeeId}`);
-  //     localStorage.removeItem(`loginDetailsSaved_${employeeId}`);
-  //     localStorage.removeItem(`stopwatchTime_${employeeId}`);
-  //     localStorage.removeItem(`dailyWorkData_${employeeId}`);
-  //     localStorage.removeItem("employeeId");
-
-  //     setTime({ hours: 0, minutes: 0, seconds: 0 });
-  //     setData({ archived: 0, pending: 10 });
-
-  //     console.log("Logged out successfully.");
-
-  //     navigate("/employee-login/recruiter");
-  //   } catch (error) {
-  //     console.error("Error logging out:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   console.log(updateCount(archived, pending));
-  // }, [archived, pending]);
 
   useEffect(() => {
     let interval;
@@ -447,28 +324,6 @@ function DailyWork({
     return () => clearInterval(interval);
   }, [running, employeeId]);
 
-  // const updateCount = (archivedIncrement, pendingDecrement) => {
-  //   setData((prevData) => {
-  //     const updatedData = {
-  //       archived: prevData.archived + archivedIncrement,
-  //       pending: prevData.pending - pendingDecrement,
-  //     };
-
-  //     if (updatedData.archived >= 3) {
-  //       setDayPresentPaid("Yes");
-  //       setDayPresentUnpaid("No");
-  //     } else {
-  //       setDayPresentPaid("No");
-  //       setDayPresentUnpaid("Yes");
-  //     }
-
-  //     localStorage.setItem(
-  //       `dailyWorkData_${employeeId}`,
-  //       JSON.stringify(updatedData)
-  //     );
-  //     return updatedData;
-  //   });
-  // };
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchievedPendingCount(changed) Start LineNo:-441 Date:-01/07
   const updateArchievedPendingCount = (archivedIncrement, pendingDecrement) => {
@@ -477,10 +332,6 @@ function DailyWork({
       pending: pendingDecrement - 1,
     };
     setData(updatedData);
-    // setData((prevData) => {
-    //   };
-
-    // console.log("Previous Data:", prevData);
     console.log("Archived Increment:", archivedIncrement);
     console.log("Pending Decrement:", pendingDecrement);
     console.log("Updated Data:", updatedData);
@@ -517,29 +368,7 @@ function DailyWork({
     updateArchieved();
   }, [successfulDataAdditions]);
 
-  //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchieved(changed) End LineNo:-351 Date:-01/07
-
-  // const handlePause = () => {
-  //   setRunning(false);
-  //   const breakStartTime = new Date().toLocaleTimeString("en-IN");
-  //   setBreaks((prevBreaks) => [
-  //     ...prevBreaks,
-  //     { breakStartTime, breakEndTime: null },
-  //   ]);
-  // };
-
-  // const handleResume = () => {
-  //   setRunning(true);
-  //   const breakEndTime = new Date().toLocaleTimeString("en-IN");
-  //   setBreaks((prevBreaks) => {
-  //     const lastBreak = prevBreaks[prevBreaks.length - 1];
-  //     if (lastBreak && !lastBreak.breakEndTime) {
-  //       lastBreak.breakEndTime = breakEndTime;
-  //     }
-  //     return [...prevBreaks];
-  //   });
-  // };
-
+ 
   const handlePause = () => {
     setRunning(false);
     const now = new Date().toLocaleTimeString("en-IN");
@@ -600,7 +429,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.36:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
 
         formData
       );
@@ -621,84 +450,7 @@ function DailyWork({
     }
   };
 
-  //Name:-Akash Pawar Component:-DailyWork Subcategory:-handleLogoutLocal(changed) End LineNo:-593 Date:-01/07
-
-  // const handleLogoutLocal = async () => {
-  //   try {
-  //     const logoutTime = new Date().toLocaleTimeString("en-IN");
-  //     setLogoutTime(logoutTime);
-
-  //     const totalHoursWork = calculateTotalHoursWork(loginTime, logoutTime);
-
-  //     const now = new Date();
-  //     const day = now.getDate().toString().padStart(2, "0");
-  //     const month = (now.getMonth() + 1).toString().padStart(2, "0");
-  //     const year = now.getFullYear();
-
-  //     const formData = {
-  //       employeeId,
-  //       date: ${day}/${month}/${year},
-  //       dailyTarget: data.pending + data.archived,
-  //       dailyArchived: data.archived,
-  //       dailyPending: data.pending,
-  //       loginTime,
-  //       logoutTime,
-  //       totalHoursWork,
-  //       dailyHours: breaks,
-  //       lateMark,
-  //       leaveType,
-  //       paidLeave,
-  //       unpaidLeave,
-  //       dayPresentPaid,
-  //       dayPresentUnpaid,
-  //       remoteWork,
-  //     };
-
-  //     await axios.post(
-  //       "http://localhost:8891/api/ats/157industries/save-daily-work",
-  //       formData
-  //     );
-
-  //     localStorage.removeItem(stopwatchTime_${employeeId});
-  //     localStorage.removeItem(dailyWorkData_${employeeId});
-  //     localStorage.removeItem("employeeId");
-
-  //     setTime({ hours: 0, minutes: 0, seconds: 0 });
-  //     setData({ archived: 0, pending: 10 });
-
-  //     console.log("Logged out successfully.");
-
-  //     navigate("/employee-login/recruiter");
-  //   } catch (error) {
-  //     console.error("Error logging out:", error);
-  //   }
-  // };
-  // const calculateTotalHoursWork = (loginTime, logoutTime) => {
-  //   const login = new Date(01/01/2022 ${loginTime});
-  //   const logout = new Date(01/01/2022 ${logoutTime});
-
-  //   let totalWorkTime = (logout - login) / 1000;
-
-  //   breaks.forEach((b) => {
-  //     if (b.breakEndTime) {
-  //       const breakStart = new Date(01/01/2022 ${b.breakStartTime});
-  //       const breakEnd = new Date(01/01/2022 ${b.breakEndTime});
-  //       const breakDuration = (breakEnd - breakStart) / 1000;
-  //       totalWorkTime -= breakDuration;
-  //     }
-  //   });
-
-  //   const hours = Math.floor(totalWorkTime / 3600);
-  //   const minutes = Math.floor((totalWorkTime % 3600) / 60);
-  //   const seconds = Math.floor(totalWorkTime % 60);
-
-  //   const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
-  //     .toString()
-  //     .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
-  //   return formattedTime;
-  // };
-
+ 
   const handleImageClick = () => {
     setPopupVisible(true);
     setModalEmployeeData(employeeData);
@@ -800,18 +552,6 @@ function DailyWork({
               {running ? "Pause" : "Resume"}
             </button>
 
-            {/* Dont Remove this 2 comment ...Arshad */}
-
-            {/* <button className="show-daily-t-btn" onClick={toggleDailyTBtn}>
-          {showDetails ? "Hide" : "Show"}
-        </button> */}
-
-            {/* <img className="logout-btn"
-            onClick={handleLogoutLocal}
-            // style={{ width: "30px", borderRadius: "60%" }}
-            src={logoutImg}
-            alt="Logout"
-          /> */}
           </div>
 
           <button
