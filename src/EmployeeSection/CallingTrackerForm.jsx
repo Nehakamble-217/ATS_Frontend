@@ -126,7 +126,7 @@ const CallingTrackerForm = ({
 
   const fetchRecruiterName = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.40:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`);
+      const response = await axios.get(`http://localhost:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`);
       const { data } = response;
       setCallingTracker(prevState => ({
         ...prevState,
@@ -144,7 +144,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.34:9090/api/ats/157industries/company-details`
+        `http://localhost:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -349,7 +349,7 @@ const CallingTrackerForm = ({
         dataToUpdate.lineUp = lineUpData;
       }
       const response = await axios.post(
-        `http://192.168.1.34:9090/api/ats/157industries/calling-tracker/${userType}`,
+        `http://localhost:9090/api/ats/157industries/calling-tracker/${userType}`,
         dataToUpdate
       );
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07

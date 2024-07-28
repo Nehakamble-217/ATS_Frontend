@@ -617,16 +617,13 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
         "Recruiter's Incentive": item.incentive || "-",
         "Interested and Eligible": item.selectYesOrNo || "-",
         "Current Company": item.lineUp?.companyName || "-",
-        "Total Experience": `${item.lineUp?.experienceYear || "0"} Years ${
-          item.lineUp?.experienceMonth || "0"
-        } Month`,
+        "Total Experience": `${item.lineUp?.experienceYear || "0"} Years ${item.lineUp?.experienceMonth || "0"
+          } Month`,
         "Relevant Experience": item.lineUp?.relevantExperience || "-",
-        "Current CTC": `${item.lineUp?.currentCTCLakh || "0"} Lakh ${
-          item.lineUp?.currentCTCThousand || "0"
-        } Thousand`,
-        "Expected CTC": `${item.lineUp?.expectedCTCLakh || "0"} Lakh ${
-          item.lineUp?.expectedCTCThousand || "0"
-        } Thousand`,
+        "Current CTC": `${item.lineUp?.currentCTCLakh || "0"} Lakh ${item.lineUp?.currentCTCThousand || "0"
+          } Thousand`,
+        "Expected CTC": `${item.lineUp?.expectedCTCLakh || "0"} Lakh ${item.lineUp?.expectedCTCThousand || "0"
+          } Thousand`,
         "Date Of Birth": item.lineUp?.dateOfBirth || "-",
         Gender: item.lineUp?.gender || "-",
         Education: item.lineUp?.qualification || "-",
@@ -958,6 +955,8 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                               onChange={() => handleSelectRow(item.candidateId)}
                             />
                           </td>
+
+
                         ) : null}
                         <td
                           className="tabledata "
