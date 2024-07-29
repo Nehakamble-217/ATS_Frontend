@@ -36,6 +36,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   let [color, setColor] = useState("#ffcb9b");
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
   const [isDataSending, setIsDataSending] = useState(false);
+  const [clickedTime,setClickedTime] = useState();
 
   //akash_pawar_SelectedCandidate_ShareFunctionality_18/07_34
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -124,7 +125,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
+        `http://192.168.1.42:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);
@@ -144,7 +145,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -156,7 +157,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -167,7 +168,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -349,6 +350,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
     setSelectedCandidateId(candidateId);
     setSelectedEmployeeId(employeeId);
     setSelectedRequirementId(requirementId);
+    setClickedTime(new Date());
   };
 
   const handleReturn = () => {
@@ -421,7 +423,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
 
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://192.168.1.34:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://192.168.1.42:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&
@@ -695,7 +697,6 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
     hidePopup();
   };
   //Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
-
   return (
     <div className="App-after">
       {loading ? (
@@ -1434,7 +1435,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                         </td>
                         <td className="tabledata ">
                           <i
-                            onClick={() => viewPage(item.candidateId)}
+                            onClick={() => viewPage(item.candidateId,item.requirementId)}
                             className="fa-solid fa-person-walking-arrow-right"
                           ></i>
                         </td>
@@ -1764,6 +1765,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
               candidateId={selectedCandidateId}
               employeeId={selectedEmployeeId}
               requirementId={selectedRequirementId}
+              prevtime = {clickedTime}
               onReturn={handleReturn}
             />
           )}

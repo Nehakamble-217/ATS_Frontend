@@ -68,7 +68,7 @@ const AddCompanyDetails = () => {
 
   const fetchPreviousCompanyDetailsId = async () => {
     const response = await axios.get(
-      "http://192.168.1.40:9090/api/ats/157industries/fetch-details-ids"
+      "http://192.168.1.36:9090/api/ats/157industries/fetch-details-ids"
     );
     if (addedCompanyDetailsId < response.data.length) {
       setLatestAddedCompanyData(response.data[0]);
@@ -224,7 +224,7 @@ const AddCompanyDetails = () => {
     try {
       // Send the form data to the backend
       const response = await axios.post(
-        "http://192.168.1.40:9090/api/ats/157industries/save-our-company",
+        "http://192.168.1.36:9090/api/ats/157industries/save-our-company",
         initialFormData,
         {
           headers: {
