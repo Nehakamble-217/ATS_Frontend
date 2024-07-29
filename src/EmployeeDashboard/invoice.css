@@ -1,203 +1,147 @@
 /* Mohini_InvoiceTable_WholePage_09/07/2024_StartLine_1 _to_EndLine_189 */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .job-desc {
-    font-family: Arial, sans-serif;
-    /* background-color: gray; */
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* padding: 20px; */
-  }
-  .job-desc-form
-  {
-    border: 1px solid gray;
-    margin-bottom:5px ;
-  }
-  
-  .job-performance {
-    /* background-color: #ffe5b5; */
-    border-radius: 5px;
-    width: 100%;
-  }
-  
-  .job-performance article {
-    text-align: center;
-    color: gray;
-    font-size: 18px;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  }
-  
-  
-  .field-column {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
-    /* height: 650px; */
-    /* max-height: 100vh; */
-  }
-  .field-Row-Gray{
-    width: 100%;
-    display: flex;
-    background-color: #F2F2F2;
-    justify-content: space-around;
-    align-items: center;
-    /* padding: 3px 0px ; */
-  }
-  .field-Row-white
-  {
-    width: 100%;
-    display: flex;
-    background-color: white;
-    justify-content: space-around;
-    align-items: center;
-    /* padding: 3px 0px ; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  }
-  .field {
-    width: 100%;
-    display: flex;
-    padding: 5px 0px;
-    border: 1px solid gray;
-  }
-  
-  .field label {
-    width: 29%;
-    font-size: 18px;
-    /* border: 1px solid orange; */
-    padding: 0px 5px;
-    display: flex;
-    /* justify-content: center; */
-    border-radius: 5px;
-    /* font-weight:500; */
-    align-items: center;
-     color:gray;
-    /* font-weight: bold; */
-  }
-  
-  .field input {
-    padding: 4px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    color: gray;
-    border-radius: 5px;
-    width:69%;
-  }
-  /* .field select{
-    padding: 5.5px 5px 5.5px 5px ;
-    font-size: 16px;
-    color: gray;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width:69%;
-  } */
-  
-  /* .save {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  } */
-  
-  /* .apply {
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: white;
-    color: gray;
-    cursor: pointer;
-    border-radius: 15px;
-    font-size: 1em;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-    border: 1px solid #ccc;
-    height: 35px;
-  } */
-  
-  /* button:hover {
-    background-color: #ffb281;
-    color: white;
-    border: #f2f2f2;
-  } */
-  .textarea{
-    width: 69%; 
-    height: 34px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    margin-bottom: 0; 
-    resize: vertical;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-  }
-  .multi-field
-  {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    /* border: 1px solid gray; */
-    gap: 2px;
-    padding-bottom:5px;
-    margin-bottom: 2px;
-    overflow: hidden;
-  }
-  .inner-field label
-  {
-    width: 20%;
-    font-size: 16px;
-    display: flex;
-    justify-content: center;
-    border-radius: 5px;
-    align-items: center;
-     color:gray;
-  }
-  .inner-field input{
-    width: 80%;
-    padding: 4px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .job-button
-  {
-    margin-left: 2px;
-    width: 25%;
-    height: 30px;
-    background-color: #ffcb9b;
-    border-radius: 15px;
-    color: white;
-    border: 1px solid gray;
-    padding: 2px 15px;
-  }
-  .job-button:hover
-  {
-    color: #ffcb9b;
-    background-color: white;
-  }
-  .job-submit-button
-  {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-    /* 
-  .daily-tr-bt:hover {
-    background-color: red;
-  }
-  /* .loging-hr{
-    width:26%!important;
-  } */
+.job-desc {
+  font-family: Arial, sans-serif;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  /* @media (max-width: 1260px) {
-    .field input .field select{
-        width: 320 px!important;
-    }
+.job-desc-form {
+  border: 1px solid gray;
+  margin-bottom: 5px;
+}
 
-  } */
+.job-performance {
+  border-radius: 5px;
+  width: 100%;
+}
 
-  /* Mohini_InvoiceTable_WholePage_09/07/2024_StartLine_1 _to_EndLine_189 */
+.job-performance article {
+  text-align: center;
+  color: gray;
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+
+.field-column {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.field-Row-Gray {
+  width: 100%;
+  display: flex;
+  background-color: #F2F2F2;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.field-Row-white {
+  width: 100%;
+  display: flex;
+  background-color: white;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
+.field {
+  width: 100%;
+  display: flex;
+  padding: 5px 0px;
+  border: 1px solid gray;
+}
+
+.field label {
+  width: 29%;
+  font-size: 18px;
+  padding: 0px 5px;
+  display: flex;
+  border-radius: 5px;
+  align-items: center;
+  color: gray;
+}
+
+.field input {
+  padding: 4px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  color: gray;
+  border-radius: 5px;
+  width: 69%;
+}
+
+.textarea {
+  width: 69%;
+  height: 34px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-bottom: 0;
+  resize: vertical;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.multi-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+  overflow: hidden;
+}
+
+.inner-field label {
+  width: 20%;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  align-items: center;
+  color: gray;
+}
+
+.inner-field input {
+  width: 80%;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.job-button {
+  margin-left: 2px;
+  width: 25%;
+  height: 30px;
+  background-color: #ffcb9b;
+  border-radius: 15px;
+  color: white;
+  border: 1px solid gray;
+  padding: 2px 15px;
+}
+
+.job-button:hover {
+  color: #ffcb9b;
+  background-color: white;
+}
+
+.job-submit-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Mohini_InvoiceTable_WholePage_09/07/2024_StartLine_1 _to_EndLine_189 */

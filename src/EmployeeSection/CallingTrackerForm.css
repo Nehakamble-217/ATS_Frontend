@@ -1,119 +1,100 @@
 /* Swapnil_CallingTrackerForm_responsive_05/07 */
 /* og */
 .calling-tracker-main {
-  height: 100%; /* Allow height to adjust based on content */
-  width: 100%; 
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 5px;
   color: gray;
-  margin-top: 10px; /* Set font color to gray */
+  margin-top: 10px;
 }
-
-.update-main-div{
+.update-main-div {
   padding-top: 10px;
-
 }
-
 .calling-tracker-main::-webkit-scrollbar {
   display: none;
 }
-
-/* .table-striped th {
-  color: gray;
-} */
-/* 
-.update-page-head {
-  width: 100%;
-  color: gray; Set font color to gray
-  text-transform: uppercase;
-  align-self: center;
-  display: flex;
-  justify-content: center;
-  padding-top: 10px;
-} */
-
 .calling-tracker-submain {
   width: 100%;
   height: 100%;
 }
-.calling-tracker-form
-{
+.calling-tracker-form {
   width: 100%;
   margin-bottom: 20px;
   border: 1px solid #f2f2f2;
 }
-.calling-tracker-row-gray
-{
+
+.calling-tracker-row-gray {
   width: 100%;
   background-color: #f2f2f2;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
 }
-.calling-tracker-row-white{
+
+.calling-tracker-row-white {
   width: 100%;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
 }
-.calling-tracker-field
-{
+
+.calling-tracker-field {
   width: 50%;
-  /* height: 100%; */
   border: 1px solid gray;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.calling-tracker-field-inner-div
-{
+
+.calling-tracker-field-inner-div {
   width: 70%;
   border: 1px solid gray;
-  /* padding: 5px 0px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.calling-tracker-field-inner-sub-div
-{
-width: 48%;
-display: flex;
-/* padding: 2px; */
-align-items: center;
+
+.calling-tracker-field-inner-sub-div {
+  width: 48%;
+  display: flex;
+  /* padding: 2px; */
+  align-items: center;
 }
-.plain-input
-{
+
+.plain-input {
   width: 90%;
   color: gray;
   font-size: 16px;
   padding: 1px;
   border-radius: 5px;
-   border: 1px solid #f2f2f2; 
+  border: 1px solid #f2f2f2;
 }
-.calling-check-box-main-container{
+
+.calling-check-box-main-container {
   width: 70%;
   /* border: 1px solid gray; */
   padding: 5px 3px;
   display: flex;
   justify-content: space-around;
 }
-.calling-check-box-container
-{
+
+.calling-check-box-container {
   width: 48%;
   display: flex;
   justify-content: space-around;
 }
-.inner-sub-div-input
-{
-  width:90% ;
+
+.inner-sub-div-input {
+  width: 90%;
   border-radius: 5px;
   color: gray;
   padding: 5px 0px;
   /* border: 1px solid gray; */
 }
-.calling-tracker-field label
-{
+
+.calling-tracker-field label {
   width: 29%;
   height: 100%;
   font-weight: 500;
@@ -121,24 +102,22 @@ align-items: center;
   text-align: center;
   font-size: 1.0vw;
   display: flex;
-    align-items: center;
-    justify-content: center;
-  
+  align-items: center;
+  justify-content: center;
+
 }
-.calling-tracker-field-sub-div
-{
+
+.calling-tracker-field-sub-div {
   width: 69%;
-  /* border: 1px solid gray; */
-  /* padding: 5px 0px; */
   display: flex;
-   justify-content:start; /* neha change this space around to flex-start date-16/7/24  */
+  justify-content: start;
   align-items: start;
   gap: 6px;
   flex-direction: column;
   padding: 10px;
 }
-.calling-tracker-two-input
-{
+
+.calling-tracker-two-input {
   width: 40%;
   padding: 1px;
   color: rgba(128, 128, 128, 0.782);
@@ -146,120 +125,120 @@ align-items: center;
   display: flex;
   flex-direction: column;
 }
-.calling-tracker-input-message{
+
+.calling-tracker-input-message {
   width: 80%;
   border-radius: 5px;
-  /* border: 1px solid gray; */
   display: flex;
   justify-content: center;
 }
-.calling-tracker-two-input-container
-{
+
+.calling-tracker-two-input-container {
   width: 69%;
-  /* border: 1px solid gray; */
   padding: 5px 0px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+
 .studTables th,
 .studTables td {
   border: 1px solid gray;
-  color: gray; /* Set font color to gray */
+  color: gray;
   text-align: left;
-  padding: 5px; /* Adjust padding as needed */
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
-  overflow: hidden; /* Hide overflow text */
-  white-space: nowrap; /* Prevent text wrapping */
-  vertical-align: middle; /* Vertically center content */
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 .studTables th {
   background-color: white;
-  font-size: 1em; /* Use em for relative sizing */
-  color: gray; /* Set font color to gray */
+  font-size: 1em;
+  color: gray;
 }
 
 .studTables td {
   text-align: center;
-  font-size: 1em; /* Use em for relative sizing */
-  color: gray; /* Set font color to gray */
+  font-size: 1em;
+  color: gray;
 }
 
 .studTables input[type="text"],
 .studTables input[type="email"],
 .studTables select {
-  height: auto; /* Allow height to adjust based on content */
+  height: auto;
   width: 100%;
   border-radius: 4px;
   box-sizing: border-box;
-  color: gray; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
+  color: gray;
+  font-size: 1em;
 }
 
 .studTables .onlyselect select {
-  height: auto; /* Allow height to adjust based on content */
+  height: auto;
   width: 100%;
   border-radius: 4px;
-  color: gray; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
+  color: gray;
+  font-size: 1em;
 }
 
 .header {
   text-align: center;
   margin-bottom: 20px;
-  color: gray; /* Set font color to gray */
+  color: gray;
 }
 
 .form-group input[type="text"],
 .form-group select {
   width: 100%;
-  font-size: 1em; /* Use em for relative sizing */
+  font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 5px;
-  color: gray; /* Set font color to gray */
+  color: gray;
 }
 
 .PhoneInputInput {
   width: 100%;
-  height: auto; /* Allow height to adjust based on content */
+  height: auto;
   border: none !important;
-  color: gray !important; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
+  color: gray !important;
+  font-size: 1em;
 }
 
 .buttons {
   text-align: center;
-  color: gray; /* Set font color to gray */
+  color: gray;
   display: flex;
 }
 
 .main-gender {
   width: 60%;
-  font-size:16px;
+  font-size: 16px;
   display: flex;
   justify-content: start;
-  align-items: center; /* Use em for relative sizing */
-  color: gray; /* Set font color to gray */
+  align-items: center;
+  color: gray;
 }
 
 .gender-checkboxes {
   display: flex;
   justify-content: start;
   align-items: center;
-  color: gray; /* Set font color to gray */
+  color: gray;
 }
 
 .gender-checkboxes input[type="checkbox"] {
-  margin-right: 0px; /* Adjust spacing between checkbox and label */
-  color: gray; /* Set font color to gray */
+  margin-right: 0px;
+  color: gray;
 }
 
 #resumeUpload {
-  height: auto; /* Allow height to adjust based on content */
+  height: auto;
   width: 200px;
-  color: gray; /* Set font color to gray */
-  font-size: 1em; /* Use em for relative sizing */
+  color: gray;
+  font-size: 1em;
 }
 
 .buttons {
@@ -270,35 +249,19 @@ align-items: center;
   margin: 20px;
   text-align: center;
   justify-content: space-around;
-  color: gray; /* Set font color to gray */
+  color: gray;
 }
-/* .candidate-table-row
-{
-  width: 100%;
-  display: flex;
-  border: 2px solid red;
-}
-.left-side-tableRow
-{
-  width: 50%;
-  display: flex;
-}
-.right-side-tableRow
-{
-  width: 50%;
-  display: flex;
-} */
+
 
 .ctf-btn {
   background-color: #ffcb9b;
   color: white;
   border-radius: 15px;
   border: 1px solid gray;
-  /* cursor: pointer; */
-  font-size: 16px; /* Use em for relative sizing */
+  font-size: 16px;
   text-align: center;
   width: auto;
-  height: 30px; /* Allow height to adjust based on content */
+  height: 30px;
   backdrop-filter: blur(2px);
   transition: 0.5s;
   line-height: 0.7;
@@ -314,7 +277,7 @@ align-items: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: gray; /* Set font color to gray */
+  color: gray;
 }
 
 .upload-success-icon {
@@ -330,11 +293,11 @@ align-items: center;
 #currentDate {
   width: 75%;
   padding: 10px;
-  font-size: 1em; /* Use em for relative sizing */
+  font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  color: gray; /* Set font color to gray */
+  color: gray;
 
 }
 
@@ -345,351 +308,354 @@ align-items: center;
 
 .studTables th {
   background-color: white;
-  color: gray; /* Set font color to gray */
+  color: gray;
   padding: 5px;
   text-align: center;
-  font-size: 1em; /* Use em for relative sizing */
+  font-size: 1em;
 }
 
 .studTables td {
-  padding: 1px; /* Adjust padding as needed */
+  padding: 1px;
   text-align: center;
-  font-size: 1em; /* Use em for relative sizing */
-  border: 1px solid gray; /* Ensure consistent border */
-  color: gray; /* Set font color to gray */
+  font-size: 1em;
+  border: 1px solid gray;
+  color: gray;
 }
 
-/* Set color of bold fonts to gray */
 b,
 strong {
-  color: gray; /* Set font color to gray */
+  color: gray;
 }
 
 @media screen and (max-width:300px) {
-  
-  .studTables tbody tr{
+
+  .studTables tbody tr {
     width: 100%;
 
-  /* og */
-  .maintable1 {
-    height: auto; /* Allow height to adjust based on content */
-    width: auto; /* Allow width to adjust based on content */
-    border-collapse: collapse;
-    overflow-x: auto; /* Adds horizontal scroll if table is too wide */
-    margin: 0 auto; /* Center align if needed */
-    max-width: 100%; /* Ensures it doesn't exceed the container width */
-    padding: 10px;
-    color: gray; /* Set font color to gray */
+    /* og */
+    .maintable1 {
+      height: auto;
+      width: auto;
+      border-collapse: collapse;
+      overflow-x: auto;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 10px;
+      color: gray;
 
-  }
+    }
 
-  .maintable::-webkit-scrollbar {
-    display: none;
-  }
+    .maintable::-webkit-scrollbar {
+      display: none;
+    }
 
-  .table-striped th {
-    color: gray;
-  }
+    .table-striped th {
+      color: gray;
+    }
 
-  .update-page-head {
-    width: 100%;
-    color: gray; /* Set font color to gray */
-    text-transform: uppercase;
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-  }
+    .update-page-head {
+      width: 100%;
+      color: gray;
+      text-transform: uppercase;
+      align-self: center;
+      display: flex;
+      justify-content: center;
+      padding-top: 10px;
+    }
 
-  .studTables {
-    width: 100%;
-    max-width: 100%; /* Ensures it doesn't exceed the container width */
-    margin: 0 auto; /* Center align if needed */
-    border-collapse: collapse; /* Remove space between cells */
-    table-layout: auto; /* Allow the table to adjust based on content */
-    white-space: nowrap;
-    color: gray; /* Set font color to gray */
-  }
+    .studTables {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      table-layout: auto;
+      white-space: nowrap;
+      color: gray;
+    }
 
-  .studTables th,
-  .studTables td {
-    border: 1px solid gray;
-    color: gray; /* Set font color to gray */
-    text-align: left;
-    padding: 10px; /* Adjust padding as needed */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    overflow: hidden; /* Hide overflow text */
-    white-space: nowrap; /* Prevent text wrapping */
-    vertical-align: middle; /* Vertically center content */
-  }
+    .studTables th,
+    .studTables td {
+      border: 1px solid gray;
+      color: gray;
+      text-align: left;
+      padding: 10px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
 
-  .studTables th {
-    background-color: white;
-    font-size: 1em; /* Use em for relative sizing */
-    color: gray; /* Set font color to gray */
-  }
+    .studTables th {
+      background-color: white;
+      font-size: 1em;
+      color: gray;
+    }
 
-  .studTables td {
-    text-align: center;
-    font-size: 1em; /* Use em for relative sizing */
-    color: gray; /* Set font color to gray */
-  }
+    .studTables td {
+      text-align: center;
+      font-size: 1em;
+      color: gray;
+    }
 
-  .studTables input[type="text"],
-  .studTables input[type="email"],
-  .studTables select {
-    height: auto; /* Allow height to adjust based on content */
-    width: 100%;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: gray; /* Set font color to gray */
-    font-size: 1em; /* Use em for relative sizing */
-  }
+    .studTables input[type="text"],
+    .studTables input[type="email"],
+    .studTables select {
+      height: auto;
+      width: 100%;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: gray;
+      font-size: 1em;
+    }
 
-  .studTables .onlyselect select {
-    height: auto; /* Allow height to adjust based on content */
-    width: 100%;
-    border-radius: 4px;
-    color: gray; /* Set font color to gray */
-    font-size: 1em; /* Use em for relative sizing */
-  }
+    .studTables .onlyselect select {
+      height: auto;
+      width: 100%;
+      border-radius: 4px;
+      color: gray;
+      font-size: 1em;
+    }
 
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-    color: gray; /* Set font color to gray */
-  }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: gray;
+    }
 
-  .form-group input[type="text"],
-  .form-group select {
-    width: 100%;
-    font-size: 1em; /* Use em for relative sizing */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: gray; /* Set font color to gray */
-  }
+    .form-group input[type="text"],
+    .form-group select {
+      width: 100%;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      color: gray;
+    }
 
-  .PhoneInputInput {
-    width: 100%;
-    height: auto; /* Allow height to adjust based on content */
-    border: none !important;
-    color: gray !important; /* Set font color to gray */
-    font-size: 1em; /* Use em for relative sizing */
-  }
+    .PhoneInputInput {
+      width: 100%;
+      height: auto;
+      border: none !important;
+      color: gray !important;
+      font-size: 1em;
+    }
 
-  .buttons {
-    text-align: center;
-    color: gray; /* Set font color to gray */
-    display: flex;
-  }
+    .buttons {
+      text-align: center;
+      color: gray;
+      display: flex;
+    }
 
-  .main-gender {
-    font-size: 1em; /* Use em for relative sizing */
-    color: gray; /* Set font color to gray */
-  }
+    .main-gender {
+      font-size: 1em;
+      color: gray;
+    }
 
-  .gender-checkboxes {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: gray; /* Set font color to gray */
-  }
+    .gender-checkboxes {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: gray;
+    }
 
-  .gender-checkboxes input[type="checkbox"] {
-    margin-right: 0px; /* Adjust spacing between checkbox and label */
-    color: gray; /* Set font color to gray */
-  }
+    .gender-checkboxes input[type="checkbox"] {
+      margin-right: 0px;
+      color: gray;
+    }
 
-  #resumeUpload {
-    height: auto; /* Allow height to adjust based on content */
-    width: 200px;
-    color: gray; /* Set font color to gray */
-    font-size: 1em; /* Use em for relative sizing */
-  }
+    #resumeUpload {
+      height: auto;
+      width: 200px;
+      color: gray;
+      font-size: 1em;
+    }
 
-  .buttons {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 8px;
-    margin: 20px;
-    text-align: center;
-    justify-content: space-around;
-    color: gray; /* Set font color to gray */
-  }
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      padding: 8px;
+      margin: 20px;
+      text-align: center;
+      justify-content: space-around;
+      color: gray;
+    }
 
-  .ctf-btn {
-    background-color: #ffcb9b;
-    color: white;
-    border-radius: 15px;
-    border: 1px solid gray;
-    /* cursor: pointer; */
-    font-size: 16px; /* Use em for relative sizing */
-    text-align: center;
-    width: auto;
-    height: 30px; /* Allow height to adjust based on content */
-    backdrop-filter: blur(2px);
-    transition: 0.5s;
-    line-height: 0.7;
-  }
+    .ctf-btn {
+      background-color: #ffcb9b;
+      color: white;
+      border-radius: 15px;
+      border: 1px solid gray;
+      font-size: 16px;
+      text-align: center;
+      width: auto;
+      height: 30px;
+      backdrop-filter: blur(2px);
+      transition: 0.5s;
+      line-height: 0.7;
+    }
 
-  .ctf-btn:hover {
-    background-color: white;
-    color: #ffcb9b;
-    border: 1px solid gray;
-  }
+    .ctf-btn:hover {
+      background-color: white;
+      color: #ffcb9b;
+      border: 1px solid gray;
+    }
 
-  .buttonDiv {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: gray; /* Set font color to gray */
-  }
+    .buttonDiv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: gray;
+    }
 
-  .upload-success-icon {
-    color: green;
-    margin-left: 10px;
-    margin-top: 3px;
-  }
+    .upload-success-icon {
+      color: green;
+      margin-left: 10px;
+      margin-top: 3px;
+    }
 
-  .upload-success-icons {
-    color: green;
-  }
+    .upload-success-icons {
+      color: green;
+    }
 
-  #currentDate {
-    width: 75%;
-    padding: 10px;
-    font-size: 1em; /* Use em for relative sizing */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: gray; /* Set font color to gray */
+    #currentDate {
+      width: 75%;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: gray;
 
-  }
+    }
 
-  .custom-datepicker-container {
-    position: relative;
-    display: inline-block;
-  }
+    .custom-datepicker-container {
+      position: relative;
+      display: inline-block;
+    }
 
-  .studTables th {
-    background-color: white;
-    color: gray; /* Set font color to gray */
-    padding: 10px;
-    text-align: center;
-    font-size: 1em; /* Use em for relative sizing */
-  }
+    .studTables th {
+      background-color: white;
+      color: gray;
+      padding: 10px;
+      text-align: center;
+      font-size: 1em;
+    }
 
-  .studTables td {
-    padding: 10px; /* Adjust padding as needed */
-    text-align: center;
-    font-size: 1em; /* Use em for relative sizing */
-    border: 1px solid gray; /* Ensure consistent border */
-    color: gray; /* Set font color to gray */
-  }
+    .studTables td {
+      padding: 10px;
+      text-align: center;
+      font-size: 1em;
+      border: 1px solid gray;
+      color: gray;
+    }
 
-  /* Set color of bold fonts to gray */
-  b,
-  strong {
-    color: gray; /* Set font color to gray */
+    b,
+    strong {
+      color: gray;
+    }
   }
-  }}
+}
 
 
-  .calling-tracker-popup-open-btn{
-    border: none;
-    padding: 2px 5px;
-    width: fit-content;
-    border-radius: 15px;
-    background-color: #ffb281;
-    border: 1px solid #ccc;
-    color: white;
-  }
-  .calling-tracker-popup-open-btn:hover{
-    color: #ffb281;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid #ccc;
-  }
+.calling-tracker-popup-open-btn {
+  border: none;
+  padding: 2px 5px;
+  width: fit-content;
+  border-radius: 15px;
+  background-color: #ffb281;
+  border: 1px solid #ccc;
+  color: white;
+}
 
-  .calling-tracker-popup {
-    display: flex;
-    color: gray;
-  }
-  
-  .calling-tracker-popup-sidebar {
-    width: 20%;
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-right: 1px solid #dee2e6;
-  }
-  
-  .sidebar-item {
-    cursor: pointer;
-    padding: 10px;
-    margin-bottom: 5px;
-    color: #495057;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  .modal-content{
-    overflow: hidden;
-  }
-  
-  .sidebar-item.active,
-  .sidebar-item:hover {
-    background-color: #ffb281;
-    color: #fff;
-  }
-  
-  .calling-tracker-popup-dashboard {
-    width: 80%;
-    padding: 20px;
-  }
-  
-  .distance-calculation,
-  .salary-calculation {
-    padding: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-control {
-    width: 100%;
-    height: 30px;
-    color: gray;
-    /* padding: 5px; */
-    border: 1px solid #ced4da;
-    border-radius: 15px;
-    box-shadow: none;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-  
-  .form-control:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem #ffcb9bd0;
-  }
-  
-  .calling-tracker-popup-calExeCtc,.calling-tracker-popup-calHike ,.callingTracker-popup-close-btn {
-    padding:2px 10px;
-    font-size: 16px;
-    /* line-height: 1.5; */
-    border: none;
-    border-radius: 15px;
-    background-color: #ffb281;
-    border: 1px solid #ccc;
-    color: white;
-  }
-  .calling-tracker-popup-calExeCtc:hover,.calling-tracker-popup-calHike:hover,.callingTracker-popup-close-btn:hover {
-    color: #ffb281;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid #ccc;
-  }
-  
-  .callingTracker-calculations{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 10px;
-  }
+.calling-tracker-popup-open-btn:hover {
+  color: #ffb281;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ccc;
+}
+
+.calling-tracker-popup {
+  display: flex;
+  color: gray;
+}
+
+.calling-tracker-popup-sidebar {
+  width: 20%;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-right: 1px solid #dee2e6;
+}
+
+.sidebar-item {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  color: #495057;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.modal-content {
+  overflow: hidden;
+}
+
+.sidebar-item.active,
+.sidebar-item:hover {
+  background-color: #ffb281;
+  color: #fff;
+}
+
+.calling-tracker-popup-dashboard {
+  width: 80%;
+  padding: 20px;
+}
+
+.distance-calculation,
+.salary-calculation {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  height: 30px;
+  color: gray;
+  border: 1px solid #ced4da;
+  border-radius: 15px;
+  box-shadow: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem #ffcb9bd0;
+}
+
+.calling-tracker-popup-calExeCtc,
+.calling-tracker-popup-calHike,
+.callingTracker-popup-close-btn {
+  padding: 2px 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  background-color: #ffb281;
+  border: 1px solid #ccc;
+  color: white;
+}
+
+.calling-tracker-popup-calExeCtc:hover,
+.calling-tracker-popup-calHike:hover,
+.callingTracker-popup-close-btn:hover {
+  color: #ffb281;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ccc;
+}
+
+.callingTracker-calculations {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+}

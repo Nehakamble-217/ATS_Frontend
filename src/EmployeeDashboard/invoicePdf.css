@@ -2,17 +2,20 @@
 
 .invoice-container {
   width: 100%;
-  padding: 10px; /* Increase padding for better spacing */
+  padding: 10px;
+  /* Increase padding for better spacing */
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Align items to the right */
+  align-items: flex-end;
+  /* Align items to the right */
 }
 
 .invoice-header {
   width: 100%;
   display: flex;
-  justify-content: space-between; /* Align items at the ends */
+  justify-content: space-between;
+  /* Align items at the ends */
   align-items: center;
   margin-bottom: 10px;
 }
@@ -21,7 +24,8 @@
   display: table-column;
   padding-right: 30px;
   align-items: center;
-  margin-left: auto; /* Push logo to the right */
+  margin-left: auto;
+  /* Push logo to the right */
 }
 
 .logo {
@@ -30,8 +34,10 @@
 }
 
 .company-name {
-  text-align: left; /* Align text left */
-  margin-left: 10px; /* Add some space between logo and company name */
+  text-align: left;
+  /* Align text left */
+  margin-left: 10px;
+  /* Add some space between logo and company name */
   font-size: 10px;
 }
 
@@ -48,7 +54,8 @@
 .invoice-table td {
   border: 1px solid #000;
   padding: 1px;
-  text-align: center; /* Align all text center */
+  text-align: center;
+  /* Align all text center */
 }
 
 .tax-invoice {
@@ -61,15 +68,17 @@
   text-align: left;
 }
 
-.invoice-table .supplier-details{
+.invoice-table .supplier-details {
   text-align: left;
 }
 
 /* Dhanashree_InvoiceTable_Date(11/07)_Css Start line no. 68*/
 
-.receiver-details, .supplier-details {
+.receiver-details,
+.supplier-details {
   vertical-align: top;
-  text-align: left; /* Align text left for these columns */
+  text-align: left;
+  /* Align text left for these columns */
 }
 
 /* Dhanashree_InvoiceTable_Date(11/07)_Css Start line no. 75*/
@@ -84,7 +93,9 @@
   white-space: nowrap;
 }
 
-.invoice-date, .invoice-number, .brief-description {
+.invoice-date,
+.invoice-number,
+.brief-description {
   font-weight: bold;
 }
 
@@ -93,11 +104,13 @@
   font-weight: bold;
 }
 
-.total-label, .total-amount {
+.total-label,
+.total-amount {
   font-weight: bold;
 }
 
-.gst-breakup, .amount-in-words {
+.gst-breakup,
+.amount-in-words {
   font-weight: bold;
 }
 
@@ -107,11 +120,11 @@
 
 /* Dhanashree_InvoiceTable_Date(11/07)_Css Start line no. 102*/
 
-.amount-in-words td{
+.amount-in-words td {
   text-align: left;
 }
 
-.bank-details td{
+.bank-details td {
   vertical-align: top;
   text-align: left;
 }
@@ -143,14 +156,23 @@
     font-size: 18px;
   }
 
-  .receiver-details, .supplier-details {
+  .receiver-details,
+  .supplier-details {
     font-size: 12px;
   }
 
-  .original-recipient, .invoice-date, .invoice-number, .brief-description, .total-label, .total-amount, .gst-breakup, .amount-in-words, .bank-details {
+  .original-recipient,
+  .invoice-date,
+  .invoice-number,
+  .brief-description,
+  .total-label,
+  .total-amount,
+  .gst-breakup,
+  .amount-in-words,
+  .bank-details {
     font-size: 16px;
 
-}
+  }
 }
 
 

@@ -1,4 +1,3 @@
-
 /* Mohini_IssueSolving_19/07/2024_wholePage_CSS_startLine_1_EndLine_117 */
 
 .issue-container {
@@ -9,33 +8,37 @@
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #fff;        
+    background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
 }
+
 .issue-header h1 {
     font-size: 18px;
     text-align: center;
 }
 
-.issue-header  {
-    
+.issue-header {
+
     height: 40px;
     width: 100%;
     display: flex;
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    justify-content: center;
+    /* Center horizontally */
     position: sticky;
     top: 0;
     padding-top: 10px;
-    z-index: 1000; /* Ensure header stays above content */
+    z-index: 1000;
+    /* Ensure header stays above content */
     /* border-bottom: 3px solid #f0f0f0; */
-    background: linear-gradient(90deg, #ffb281,  #ffe5b5,  #ffb281);
+    background: linear-gradient(90deg, #ffb281, #ffe5b5, #ffb281);
     font-size: 18px;
 }
 
 
-.issue-content h1{
+.issue-content h1 {
     font-size: 18px;
     align-items: center;
 }
@@ -50,13 +53,14 @@
 
 .issue-content h5 {
     font-size: 16px;
-    color:black;
+    color: black;
     margin-top: 20px;
     font-weight: bold;
 }
+
 .issue-content h3 {
     font-size: 16px;
-    color:black;
+    color: black;
     margin-top: 20px;
     font-weight: bold;
 
@@ -94,7 +98,8 @@
 
 .issue-button {
     margin-top: 20px;
-    margin-right: 10px; /* Added margin-right for spacing between buttons */
+    margin-right: 10px;
+    /* Added margin-right for spacing between buttons */
     padding: 10px 20px;
     background-color: #ffcb9b;
     color: white;
@@ -112,7 +117,7 @@
     color: #ffcb9b;
 }
 
-.issue-button{
+.issue-button {
     display: flex;
 }
 
@@ -120,7 +125,8 @@
 @media print {
     .issue-content {
         padding: 10px;
-       margin-left: 20px;
+        margin-left: 20px;
     }
 }
+
 /* Mohini_IssueSolving_19/07/2024_wholePage_CSS_startLine_1_EndLine_117 */

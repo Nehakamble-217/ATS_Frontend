@@ -1,13 +1,17 @@
-/* Ajhar-CreateReportTable.jsx-10-07-2024-lineNo-1-to-341 */
+// /* Ajhar-CreateReportTable.jsx-10-07-2024-lineNo-1-to-341 */
+/* Name:-Prachi Parab Component:-Create Report Table page 
+         End LineNo:-4 to 319 Date:-06/07 */
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../Reports/CreateReportTable.css";
 import ShortListedCandidates from "../Reports/LineUpDataReport";
-import ReportsPieChart from "../Reports/reportsPieChart";
 
-import PdfModal from "../Reports/pdfModal";
-import { createPdf } from "../Reports/pdfUtils";
-import ProgressBar from "./progressBar";
+import PdfModal from "./pdfModal";
+import { createPdf } from "./pdfUtils";
+import PieChart from "./PieChartReport";
+import PDFGenerator from "./PDFMain";
+import SliderReport from "./SliderReports";
 
 const LineUpDataDummy = [
   {
@@ -483,14 +487,14 @@ const LineUpDataDummy = [
     date: "1/2/2024",
     status: "yettoschedule",
     Time: "12:00",
-    CandidateId: 104,
-    RecruiterName: "Sanika Tendulkar",
+    CandidateId: 103,
+    RecruiterName: "Sachin Tendulkar",
     CandidateName: "Sarika Shetye",
     CandidateEmail: "abc@gmail.com",
     ContactNo: "9823456781",
     WhatsappNo: "9823456781",
     SourceName: "ABC",
-    JobDesignation: "Asp.Net Developer",
+    JobDesignation: "Backend Developer",
     JobId: 22,
     ApplyingCompany: "Infosys",
     CommunicationRating: 5,
@@ -517,7 +521,7 @@ const LineUpDataDummy = [
 ];
 // Data for pdf
 
-// const DateReportData=Last 6 months report from 1/2/2004 to 1/7/2004;
+const DateReportData = `Last 6 months report from 1/2/2004 to 1/7/2004`;
 const SuperUserName = "SuperUser Name : Avni Deshpande";
 const ManagerName = "Manager Name : Amit Deshpande";
 const TeamLeaderName = "TeamLeader Name : Shreya Sawant";
@@ -593,8 +597,8 @@ const totalCandidateCount =
   LineUpl6Count +
   LineUpyettoScheduleCount +
   LineUpnoshowCount;
-const totalCandidatepdf = "Total Candidate :" + totalCandidateCount;
 
+const totalCandidatepdf = "Total Candidate :" + totalCandidateCount;
 const datadistributed = [
   { status: "Selected Candidate", CandidateCount: LineUpselectedCount },
   { status: "Rejected Candidate", CandidateCount: LineUprejectedCount },
@@ -623,12 +627,11 @@ const Attendance = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [LineUpDataReport, setLineUpDataReport] = useState(false);
-
   const [LineUpItems, setLineUpItems] = useState(LineUpDataDummy);
   const [FilterLineUpItems, setFilterLineUpItems] = useState("selected");
+  // Prachi
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [pdfUrl, setPdfUrl] = useState("");
-  const [imageURL, setImageURL] = useState("");
 
   const { workId } = useParams();
   const navigator = useNavigate();
@@ -695,66 +698,17 @@ const Attendance = () => {
   const LineUpl6Count = LineUpItems.filter(
     (item) => item.status === "l6"
   ).length;
-  const LineUpyettoscheduleCount = LineUpItems.filter(
+  const LineUpyettoScheduleCount = LineUpItems.filter(
     (item) => item.status === "yettoschedule"
   ).length;
   const LineUpnoshowCount = LineUpItems.filter(
     (item) => item.status === "noshow"
   ).length;
 
-  const handleUrl = (url) => {
-    setImageURL(url);
-    console.log("Image URL:", url);
-    // You can now use the imageURL as needed
-  };
-
+  // Prachi pdf download
   const handleDownloadPdf = async () => {
     try {
       // Replace this with your logic to create or fetch the PDF content
-
-      const pieChartData = {
-        labels: [
-          "Red",
-          "Blue",
-          "Yellow",
-          "Green",
-          "Purple",
-          "Orange",
-          "Cyan",
-          "Magenta",
-          "Lime",
-          "Pink",
-          "Teal",
-          "Lavender",
-        ],
-        datasets: [
-          {
-            label: "My First Dataset",
-            data: [12, 19, 10, 20, 10, 15, 9, 6, 4, 7, 11, 14],
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.6)",
-              "rgba(54, 162, 235, 0.6)",
-              "rgba(255, 206, 86, 0.6)",
-              "rgba(75, 192, 192, 0.6)",
-              "rgba(153, 102, 255, 0.6)",
-              "rgba(255, 159, 64, 0.6)",
-              "rgba(0, 255, 255, 0.6)",
-              "rgba(255, 0, 255, 0.6)",
-              "rgba(0, 255, 0, 0.6)",
-              "rgba(255, 192, 203, 0.6)",
-              "rgba(0, 128, 128, 0.6)",
-              "rgba(230, 230, 250, 0.6)",
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-      };
-
       const pdfContent = await createPdf(
         datadistributed,
         SuperUserName,
@@ -764,6 +718,8 @@ const Attendance = () => {
         DateReportData,
         totalCandidatepdf
       ); // Example function to create PDF content
+
+      window.open(pdfContent, "_blank");
 
       // Open the modal
       setModalIsOpen(true);
@@ -777,36 +733,37 @@ const Attendance = () => {
     setModalIsOpen(false);
   };
 
-  const getLineUpData = () => {
-    setLineUpDataReport(!LineUpDataReport);
-  };
-
   return (
-    <>
-      <div className="createReport-App-after">
-        <div>
-          <div className="crt-Heading-div">
-            <div className="createReportTable-heading">
-              <h3>Filter Data </h3>
+    <div className="App-after">
+      <div className="container-after1">
+        <div className="attendanceTableData">
+          <div className="filter-bar-btn">
+            <h3>Filter Data By</h3>
+            <div
+            // style={{textAlign:"-webkit-center"}}
+            >
+              <SliderReport totalCandidateCount={totalCandidateCount} />
             </div>
-            <ProgressBar />
-            <div className="crt-shareDownloadbtn-div">
-              <button
-                className="crt-shareDownloadbtn"
-                onClick={handleRadioChange}
-              >
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                justifyContent: "right",
+
+                paddingBottom: "5px",
+              }}
+            >
+              <button className="shareDownloadbtn" onClick={handleRadioChange}>
                 Share
               </button>
-              <button
-                className="crt-shareDownloadbtn"
-                onClick={handleDownloadPdf}
-              >
+              <button className="shareDownloadbtn" onClick={handleDownloadPdf}>
                 Download PDF
               </button>
               {/* <PdfModal isOpen={modalIsOpen} closeModal={closeModal} pdfContent={pdfUrl} /> */}
             </div>
           </div>
-          <table className="createReportTable-attendance-table">
+
+          <table className="attendance-table">
             <thead>
               <tr className="attendancerows-head">
                 <th className="attendanceheading">Selected</th>
@@ -818,14 +775,14 @@ const Attendance = () => {
                 <th className="attendanceheading">Not Join</th>
                 <th className="attendanceheading">Active</th>
                 <th className="attendanceheading">InActive</th>
-                <th className="attendanceheading">Round1</th>
-                <th className="attendanceheading">Round2</th>
-                <th className="attendanceheading">Round3</th>
-                <th className="attendanceheading">Round4</th>
-                <th className="attendanceheading">Round5</th>
-                <th className="attendanceheading">Round6</th>
-                <th className="attendanceheading">Yet To Schedule</th>
-                <th className="attendanceheading">No Show</th>
+                <th className="attendanceheading">Round 1</th>
+                <th className="attendanceheading">Round 2</th>
+                <th className="attendanceheading">Round 3</th>
+                <th className="attendanceheading">Round 4</th>
+                <th className="attendanceheading">Round 5</th>
+                <th className="attendanceheading">Round 6</th>
+                <th className="attendanceheading">Yet to schedule</th>
+                <th className="attendanceheading">No show</th>
               </tr>
             </thead>
             <tbody>
@@ -989,7 +946,7 @@ const Attendance = () => {
                   className="tabledata"
                   onClick={() => handleFilterLineUpChange("yettoschedule")}
                 >
-                  {LineUpyettoscheduleCount}
+                  {LineUpyettoScheduleCount}
                   <i class="fa fa-caret-down" aria-hidden="true"></i>
                   <div className="tooltip">
                     <span className="tooltiptext"></span>
@@ -1008,24 +965,21 @@ const Attendance = () => {
               </tr>
             </tbody>
           </table>
+
+          <div>
+            <PieChart data={datadistributed} />
+          </div>
+
+          <div className="shortlisted-candidates-css">
+            {LineUpDataReport && (
+              <ShortListedCandidates
+                filteredLineUpItems={filteredLineUpItems}
+              />
+            )}
+          </div>
         </div>
       </div>
-
-      <div>
-      <ReportsPieChart  data={datadistributed} />
-
-
-      </div>
-      {/* <PieChart /> */}
-
-      <div className="crt-shortlisted-candidates-css">
-        {LineUpDataReport && (
-          <ShortListedCandidates filteredLineUpItems={filteredLineUpItems} />
-        )}
-        {/* {LineUpDataReport &&<ReportsPieChart/>
-          } */}
-      </div>
-    </>
+    </div>
   );
 };
 

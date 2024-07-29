@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./subscription.css";
-import AddUser from './AddUser';
+import AddUser from "./AddUser";
 
 const SubscriptionPlans = () => {
   const [plans, setPlans] = useState([]);
@@ -11,12 +11,13 @@ const SubscriptionPlans = () => {
 
   useEffect(() => {
     // Fetch subscription plans from the backend
-    axios.get('http://localhost:8081/fetchAllPlans')
-      .then(response => {
+    axios
+      .get("http://localhost:8081/fetchAllPlans")
+      .then((response) => {
         setPlans(response.data);
       })
-      .catch(error => {
-        console.error('Error fetching subscription plans:', error);
+      .catch((error) => {
+        console.error("Error fetching subscription plans:", error);
       });
   }, []);
 
@@ -30,44 +31,58 @@ const SubscriptionPlans = () => {
   };
 
   return (
-    <div className='Container'>
+    <div className="Container">
       {showPaymentForm ? (
         <AddUser selectedPlan={selectedPlan} />
       ) : (
         plans.map((plan, index) => (
-          <div className='PlanCard' key={index}>
-            {plan.popular && <div className='MostPopular'>Most Popular</div>}
-            <h2 className='PlanName'>{plan.name}</h2>
-            <div className='OldPrice'>₹{plan.oldPrice}</div>
-            <div className='Price'>
+          <div className="PlanCard" key={index}>
+            {plan.popular && <div className="MostPopular">Most Popular</div>}
+            <h2 className="PlanName">{plan.name}</h2>
+            <div className="OldPrice">₹{plan.oldPrice}</div>
+            <div className="Price">
               ₹{plan.price}/Month
-              <span className='DiscountBadge'>{plan.discount}</span>
+              <span className="DiscountBadge">{plan.discount}</span>
             </div>
-            <ul className='FeatureList'>
+            <ul className="FeatureList">
               {plan.features.slice(0, 6).map((feature, idx) => (
-                <li className={`FeatureItem ${feature.correct ? 'correct' : 'incorrect'}`} key={idx}>
+                <li
+                  className={`FeatureItem ${
+                    feature.correct ? "correct" : "incorrect"
+                  }`}
+                  key={idx}
+                >
                   {feature.name}
                 </li>
               ))}
               {plan.features.length > 6 && (
                 <>
-                  {expandedPlanId === plan.id && (
+                  {expandedPlanId === plan.id &&
                     plan.features.slice(6).map((feature, idx) => (
-                      <li className={`FeatureItem ${feature.correct ? 'correct' : 'incorrect'}`} key={idx + 4}>
+                      <li
+                        className={`FeatureItem ${
+                          feature.correct ? "correct" : "incorrect"
+                        }`}
+                        key={idx + 4}
+                      >
                         {feature.name}
                       </li>
-                    ))
-                  )}
+                    ))}
                   <span
-                    className='ViewMore'
+                    className="ViewMore"
                     onClick={() => toggleViewMore(plan.id)}
                   >
-                    {expandedPlanId === plan.id ? 'View Less' : 'View More'}
+                    {expandedPlanId === plan.id ? "View Less" : "View More"}
                   </span>
                 </>
               )}
             </ul>
-            <button className='Subscription-btn' onClick={() => togglePayment(plan)}>Choose Plan</button>
+            <button
+              className="Subscription-btn"
+              onClick={() => togglePayment(plan)}
+            >
+              Choose Plan
+            </button>
           </div>
         ))
       )}

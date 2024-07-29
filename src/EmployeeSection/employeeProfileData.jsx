@@ -4,7 +4,11 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) => {
+const EmployeeProfileData = ({
+  onClose,
+  toggleIncentive,
+  toggleAttendance,
+}) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,7 +25,7 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.34:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `http://192.168.1.42:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -452,8 +456,8 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
     >
       {employeeData != null ? (
         <Modal.Dialog
+          // size="lg"
           style={{
-            width: "500px",
             padding: "10px",
           }}
         >
@@ -461,6 +465,17 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
             style={{ fontSize: "18px", backgroundColor: "#f2f2f2" }}
           >
             Employee Profile
+            <button
+              onClick={onClose}
+              style={{
+                marginLeft: "270px",
+                padding: "8px",
+                color: "red",
+              }}
+              className="close-profile-popup-btn  white-Btn"
+            >
+              X
+            </button>
           </Modal.Header>
           <Modal.Body
             style={{
@@ -488,21 +503,18 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
             </div>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
-{/* Ajhar Tamboli - EmployeeProfileData- 22-07-24- lineNo 491 to 510 */}
-            <button onClick={toggleIncentive}
-            className="emp-pro-incentive">
-               Incentive
-              </button>
+            {/* Ajhar Tamboli - EmployeeProfileData- 22-07-24- lineNo 491 to 510 */}
+            <button onClick={toggleIncentive} className="emp-pro-incentive">
+              Incentive
+            </button>
 
-              <button onClick={toggleAttendance}
-            className="emp-pro-incentive">
-               Attendance
-              </button>
+            <button onClick={toggleAttendance} className="emp-pro-incentive">
+              Attendance
+            </button>
 
-              <button onClick={toggleAttendance}
-            className="emp-pro-incentive">
-               Team Details
-              </button>
+            <button onClick={toggleAttendance} className="emp-pro-incentive">
+              Team Details
+            </button>
 
             <button
               onClick={viewMoreProfile}
@@ -510,12 +522,7 @@ const EmployeeProfileData = ({ onClose , toggleIncentive ,toggleAttendance }) =>
             >
               More
             </button>
-            <button
-              onClick={onClose}
-              className="close-profile-popup-btn  white-Btn"
-            >
-              Close
-            </button>
+           
           </Modal.Footer>
         </Modal.Dialog>
       ) : (

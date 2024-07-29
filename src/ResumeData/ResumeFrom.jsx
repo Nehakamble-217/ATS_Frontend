@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const ResumeForm = ({ formData, onChange }) => {
@@ -73,8 +72,7 @@ const ResumeForm = ({ formData, onChange }) => {
     e.preventDefault();
     console.log(JSON.stringify(formData));
     try {
-      const response = await fetch("http://192.168.1.51:8891/api/resume", {
-
+      const response = await fetch("http://192.168.1.42:8891/api/resume", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +92,6 @@ const ResumeForm = ({ formData, onChange }) => {
       alert("An error occurred while saving the resume.");
     }
   };
-
 
   return (
     <form className="w-full" onSubmit={handleSubmit}>

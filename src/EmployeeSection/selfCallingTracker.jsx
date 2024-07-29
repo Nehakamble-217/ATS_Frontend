@@ -46,7 +46,6 @@ const CallingList = ({
 
   const [isDataSending, setIsDataSending] = useState(false);
 
-
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_41
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
     oldTeamLeaderId: "",
@@ -470,7 +469,7 @@ const CallingList = ({
       }
       // Handle success response
       setIsDataSending(false);
-      toast.success("Candidates forwarded successfully!");//Swapnil Error&success message 
+      toast.success("Candidates forwarded successfully!"); //Swapnil Error&success message
       fetchCallingTrackerData();
       onSuccessAdd(true);
       setShowForwardPopup(false); // Close the modal or handle any further UI updates
@@ -501,7 +500,7 @@ const CallingList = ({
     } catch (error) {
       setIsDataSending(false);
       setShowForwardPopup(false);
-      toast.error("Error while forwarding candidates:", error);//Swapnil Error&success message 
+      toast.error("Error while forwarding candidates:", error); //Swapnil Error&success message
       // Handle error scenarios or show error messages to the user
     }
   };
@@ -512,53 +511,52 @@ const CallingList = ({
   // After share btn click ->close ,select-all, and forword btn
   // 01/07/2024
 
-
-   //Swapnil_Rokade_SelfCallingTracker_columnsToInclude_columnsToExclude_17/07/2024//
-   const handleExportToExcel = () => {
+  //Swapnil_Rokade_SelfCallingTracker_columnsToInclude_columnsToExclude_17/07/2024//
+  const handleExportToExcel = () => {
     // Define columns to include in export
     const columnsToInclude = [
       "No.",
-    "Date & Time",
-    "Candidate's Id",
-    "Recruiter's Name",
-    "Candidate's Name",
-    "Candidate's Email",
-    "Contact Number",
-    "Whatsapp Number",
-    "Source Name",
-    "Designation",
-    "Job Id",
-    "Applying Company",
-    "Communication Rating",
-    "Current Location",
-    "Full Address",
-    "Calling Remark",
-    "Recruiter's Incentive",
-    "Interested or Not"
+      "Date & Time",
+      "Candidate's Id",
+      "Recruiter's Name",
+      "Candidate's Name",
+      "Candidate's Email",
+      "Contact Number",
+      "Whatsapp Number",
+      "Source Name",
+      "Designation",
+      "Job Id",
+      "Applying Company",
+      "Communication Rating",
+      "Current Location",
+      "Full Address",
+      "Calling Remark",
+      "Recruiter's Incentive",
+      "Interested or Not",
     ];
 
     // Clone the data and map to match columnsToInclude order
     const dataToExport = filteredCallingList.map((item, index) => {
       // Create a filtered item without the 'Resume' field
       const filteredItem = {
-       "No.": index + 1,
-      "Date & Time": `${item.date} ${item.candidateAddedTime}` || "-",
-      "Candidate's Id": item.candidateId || "-",
-      "Recruiter's Name": item.recruiterName || "-",
-      "Candidate's Name": item.candidateName || "-",
-      "Candidate's Email": item.candidateEmail || "-",
-      "Contact Number": item.contactNumber || "-",
-      "Whatsapp Number": item.alternateNumber || "-",
-      "Source Name": item.sourceName || "-",
-      "Designation": item.jobDesignation || "-",
-      "Job Id": item.requirementId || "-",
-      "Applying Company": item.requirementCompany || "-",
-      "Communication Rating": item.communicationRating || "-",
-      "Current Location": item.currentLocation || "-",
-      "Full Address": item.fullAddress || "-",
-      "Calling Remark": item.callingFeedback || "-",
-      "Recruiter's Incentive": item.incentive || "-",
-     "Interested or Not": item.selectYesOrNo || "-",
+        "No.": index + 1,
+        "Date & Time": `${item.date} ${item.candidateAddedTime}` || "-",
+        "Candidate's Id": item.candidateId || "-",
+        "Recruiter's Name": item.recruiterName || "-",
+        "Candidate's Name": item.candidateName || "-",
+        "Candidate's Email": item.candidateEmail || "-",
+        "Contact Number": item.contactNumber || "-",
+        "Whatsapp Number": item.alternateNumber || "-",
+        "Source Name": item.sourceName || "-",
+        Designation: item.jobDesignation || "-",
+        "Job Id": item.requirementId || "-",
+        "Applying Company": item.requirementCompany || "-",
+        "Communication Rating": item.communicationRating || "-",
+        "Current Location": item.currentLocation || "-",
+        "Full Address": item.fullAddress || "-",
+        "Calling Remark": item.callingFeedback || "-",
+        "Recruiter's Incentive": item.incentive || "-",
+        "Interested or Not": item.selectYesOrNo || "-",
       };
 
       return filteredItem;
@@ -596,12 +594,14 @@ const CallingList = ({
 
   const showPopup = () => {
     setShowExportConfirmation(true);
-    document.querySelector('.calling-list-container').classList.add('blurred');
+    document.querySelector(".calling-list-container").classList.add("blurred");
   };
 
   const hidePopup = () => {
     setShowExportConfirmation(false);
-    document.querySelector('.calling-list-container').classList.remove('blurred');
+    document
+      .querySelector(".calling-list-container")
+      .classList.remove("blurred");
   };
 
   const confirmExport = () => {
@@ -613,9 +613,7 @@ const CallingList = ({
   const cancelExport = () => {
     hidePopup();
   };
-//Swapnil_Rokade_SelfCallingTracker_columnsToInclude_columnsToExclude_17/07/2024//
-
-
+  //Swapnil_Rokade_SelfCallingTracker_columnsToInclude_columnsToExclude_17/07/2024//
 
   return (
     <div className="calling-list-container">
@@ -1084,7 +1082,11 @@ const CallingList = ({
                         <td className="tabledata">
                           <i
                             onClick={() =>
-                              handleUpdate(item.candidateId, item.employeeId,item.userType)
+                              handleUpdate(
+                                item.candidateId,
+                                item.employeeId,
+                                item.userType
+                              )
                             }
                             className="fa-regular fa-pen-to-square"
                           ></i>

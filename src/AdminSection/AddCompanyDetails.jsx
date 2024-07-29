@@ -68,7 +68,8 @@ const AddCompanyDetails = () => {
 
   const fetchPreviousCompanyDetailsId = async () => {
     const response = await axios.get(
-      "http://192.168.1.36:9090/api/ats/157industries/fetch-details-ids"
+
+      "http://192.168.1.42:9090/api/ats/157industries/fetch-details-ids"
     );
     if (addedCompanyDetailsId < response.data.length) {
       setLatestAddedCompanyData(response.data[0]);
@@ -408,10 +409,10 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                   <div className="ACD_Field">
-                    <label> Enter Pancard No</label>
+                    <label> Enter Pan Card No</label>
                     <input
                       type="text"
-                      placeholder="Enter Pan No."
+                      placeholder="Enter Pan Card No."
                       name="companyPanCardNumber"
                       value={initialFormData.companyPanCardNumber}
                       onChange={handleChange}
@@ -717,7 +718,7 @@ const AddCompanyDetails = () => {
                     <input
                       type="text"
                       name="grandTotal"
-                      placeholder="GrandTotal"
+                      placeholder="Grand Total"
                       value={initialFormData.grandTotal}
                       onChange={handleChange}
                     />
@@ -735,11 +736,11 @@ const AddCompanyDetails = () => {
                 </div>
                 <div className="ACD_Field-Row-white" style={{borderBottom:"1px solid gray"}}>
                   <div className="ACD_Field">
-                    <label htmlFor="">Branch name</label>
+                    <label htmlFor="">Branch Name</label>
                     <input
                       type="text"
                       name="branchName"
-                      placeholder="Enter bank branch name."
+                      placeholder="Enter Bank Branch Name."
                       value={initialFormData.branchName}
                       onChange={handleChange}
                     />
@@ -856,11 +857,11 @@ const SendEmailPopup = ({
       let response;
       if (onOptionChange != null) {
         response = await axios.get(
-          `http://192.168.1.40:9090/api/ats/157industries/details-by-Id/${onOptionChange}`
+          `http://192.168.1.42:9090/api/ats/157industries/details-by-Id/${onOptionChange}`
         );
       } else {
         response = await axios.get(
-          `http://192.168.1.40:9090/api/ats/157industries/details-by-Id/${latestAddedData}`
+          `http://192.168.1.42:9090/api/ats/157industries/details-by-Id/${latestAddedData}`
         );
       }
       setCompanyDetails(response.data);

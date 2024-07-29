@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AOS from "aos";
@@ -6,7 +5,7 @@ import "aos/dist/aos.css";
 import "./loginPage.css";
 import LoginImage from "../LogoImages/LoginImge.jpg";
 import { getPasswordFromDB } from "../api/api";
-import ForgotPasswordForm from './ForgotPasswordForm'; // Import the ForgotPasswordForm component
+import ForgotPasswordForm from "./ForgotPasswordForm"; // Import the ForgotPasswordForm component
 import JobList from "../EmployeeDashboard/JobList";
 
 const LoginSignup = ({ onLogin }) => {
@@ -15,13 +14,12 @@ const LoginSignup = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [login, setLogin]=useState("")
+  const [login, setLogin] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     AOS.init({ duration: 3000 });
   }, []);
- 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -51,29 +49,37 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const dashboardLink = () => {
-    navigate('/empDash/1/Vendor');
+    navigate("/empDash/1/Vendor");
   };
   console.log(userType);
-  const createAccount =()=>{
-    navigate("/createAccount/Applicant")
-  }
+  const createAccount = () => {
+    navigate("/createAccount/Applicant");
+  };
 
   return (
     <div className="main-body">
       <div className="main-login-container">
         <div className="main-loginpage-clouds"></div>
-        <div className={`container22 ${showForgotPassword ? 'full-width' : ''}`}>
+        <div
+          className={`container22 ${showForgotPassword ? "full-width" : ""}`}
+        >
           {!showForgotPassword && (
             <div className="left-panel" data-aos="fade-right">
               <img src={LoginImage} alt="Logo" className="logo" />
             </div>
           )}
-          <div className={` ${showForgotPassword ? 'full-width-panel' : 'right-panel'}`} data-aos="fade-left">
+          <div
+            className={` ${
+              showForgotPassword ? "full-width-panel" : "right-panel"
+            }`}
+            data-aos="fade-left"
+          >
             {showForgotPassword ? (
               <ForgotPasswordForm userType={userType} />
             ) : (
               <form onSubmit={handleSubmit}>
-                <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2> {/* Display the userType */}
+                <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2>{" "}
+                {/* Display the userType */}
                 <div className="input-groups">
                   <i className="fas fa-user"></i>
                   <input
@@ -99,12 +105,37 @@ const LoginSignup = ({ onLogin }) => {
                   />
                 </div>
                 <div className="loginpage-error">{error}</div>
-                <button className="login-button" type="submit" data-aos="fade-top">Login</button>
-              
-                {/* <button className="login-button" onClick={createAccount}>Create account</button> */}
-                <button type="button" className="dashboard-button" onClick={dashboardLink} data-aos="fade-top">Vendor</button>
+                <button
+                  className="login-button"
+                  type="submit"
+                  data-aos="fade-top"
+                >
+                  Login
+                </button>
+                <button
+                  className="login-button"
+                  onClick={createAccount}
+                  data-aos="fade-top"
+                >
+                  Create account
+                </button>
+                {userType === "vendor" && (
+                  <button
+                    type="button"
+                    className="dashboard-button"
+                    onClick={dashboardLink}
+                    data-aos="fade-top"
+                  >
+                    Vendor
+                  </button>
+                )}
                 <center>
-                  <span className="psw" onClick={() => setShowForgotPassword(true)}>Forgot password?</span>
+                  <span
+                    className="psw"
+                    onClick={() => setShowForgotPassword(true)}
+                  >
+                    Forgot password?
+                  </span>
                 </center>
               </form>
             )}
@@ -115,6 +146,3 @@ const LoginSignup = ({ onLogin }) => {
   );
 };
 export default LoginSignup;
-
-
-

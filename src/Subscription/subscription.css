@@ -22,7 +22,7 @@
   &:nth-child(2) {
     border-color: #ffffff;
     border: 5px solid #e0e0e0;
-    
+
   }
 }
 
@@ -77,7 +77,7 @@
   color: #333;
   display: flex;
   align-items: center;
-  
+
 }
 
 .FeatureItem::before {
@@ -87,20 +87,22 @@
 
 .FeatureItem.correct::before {
   content: '✓';
-  color: green; /* Color for correct */
+  color: green;
+  /* Color for correct */
   font-weight: bold;
   font-size: 15px;
 }
 
 .FeatureItem.incorrect::before {
   content: '✗';
-  color: red; /* Color for incorrect */
+  color: red;
+  /* Color for incorrect */
   font-weight: bold;
   font-size: 15px;
 }
 
 .Subscription-btn {
-   border: 1px solid gray;
+  border: 1px solid gray;
   border-radius: 15px;
   background-color: white;
   color: #ffcb9b;
@@ -116,7 +118,7 @@
 }
 
 .Subscription-btn:hover {
- background-color: #ffcb9b;
+  background-color: #ffcb9b;
   color: white;
   border: 1px solid gray;
 }

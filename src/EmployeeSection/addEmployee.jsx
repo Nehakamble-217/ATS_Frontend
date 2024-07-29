@@ -456,7 +456,7 @@ const AddEmployee = () => {
         </div>
 
         <div className="form-row">
-          <label>  Relation With Person:</label>
+          <label> Relation With Person:</label>
           <input
             type="text"
             name="emergencyPersonRelation"
@@ -546,8 +546,6 @@ const AddEmployee = () => {
             <div className="error">{errors.offeredSalary}</div>
           )}
         </div>
-
-
 
         <div className="form-row">
           <label>Employee Present Address:</label>

@@ -12,18 +12,21 @@ CSS
     font-family: Arial, sans-serif;
 }
 
-.policy-header  {
+.policy-header {
     height: 60px;
     width: 100%;
     display: flex;
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    justify-content: center;
+    /* Center horizontally */
     position: sticky;
     top: 0;
     padding-top: 10px;
-    z-index: 1000; /* Ensure header stays above content */
+    z-index: 1000;
+    /* Ensure header stays above content */
     border-bottom: 3px solid #f0f0f0;
-    background: linear-gradient(90deg, #ffb281,  #ffe5b5,  #ffb281);
+    background: linear-gradient(90deg, #ffb281, #ffe5b5, #ffb281);
     font-size: 18px;
 }
 
@@ -37,13 +40,14 @@ CSS
 
 .policy-content h5 {
     font-size: 16px;
-    color:black;
+    color: black;
     margin-top: 20px;
     font-weight: bold;
 }
+
 .policy-content h3 {
     font-size: 16px;
-    color:black;
+    color: black;
     margin-top: 20px;
     font-weight: bold;
 
@@ -81,7 +85,8 @@ CSS
 
 .policy-button {
     margin-top: 20px;
-    margin-right: 10px; /* Added margin-right for spacing between buttons */
+    margin-right: 10px;
+    /* Added margin-right for spacing between buttons */
     padding: 10px 20px;
     background-color: #ffcb9b;
     color: white;
@@ -99,7 +104,7 @@ CSS
     color: #ffcb9b;
 }
 
-.vefify-button{
+.vefify-button {
     display: flex;
 }
 
@@ -109,12 +114,14 @@ CSS
     font-size: 16px;
     /* color: green; */
     /* color: #ffcb9b; */
-    
+
 }
+
 @media print {
     .policy-content {
         padding: 10px;
-       
+
     }
 }
+
 /* Mohini_WorkplacePolicy_19/07/2024_wholePage_CSS_startLine_1_EndLine_117 */

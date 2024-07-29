@@ -68,6 +68,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   };
 
   
+
 // const handleSubmit = async (e) => {
 //   e.preventDefault();
 //   try {
@@ -105,6 +106,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
 //     }
 //     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
 //   };
+
 
   const handleSubmit = async (e) => {
     setSubmited(true);

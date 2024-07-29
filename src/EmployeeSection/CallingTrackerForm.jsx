@@ -614,7 +614,7 @@ const CallingTrackerForm = ({
                       onClick={handleShow}
                       className="calling-tracker-popup-open-btn"
                     >
-                      view more
+                      View More
                     </button>
                   </div>
                 </div>
@@ -712,7 +712,7 @@ const CallingTrackerForm = ({
                     <option value="Company Page">Company Page</option>
                     <option value="Excel">Excel</option>
                     <option value="Friends">Friends</option>
-                    <option value="others">others</option>
+                    <option value="others">Others</option>
                   </select>
                   {errors.sourceName && (
                     <div className="error-message">{errors.sourceName}</div>
@@ -1498,15 +1498,7 @@ const CallingTrackerForm = ({
                       placeholder="Notice Period"
                       value={lineUpData.noticePeriod}
                       onChange={handleLineUpChange}
-                      // onChange={(e) => {
-                      //   const value = e.target.value;
-                      //   if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
-                      //     setLineUpData({
-                      //       ...lineUpData,
-                      //       noticePeriod: value,
-                      //     });
-                      //   }
-                      // }}
+                      
                       min="0"
                       max="90"
                     />
@@ -1602,28 +1594,7 @@ const CallingTrackerForm = ({
             </div>
 
             <div className="calling-tracker-row-white">
-              {/* <th scope="col" style={{textAlign:"left"}}>Notice Period(Days)</th>
-                <td >
-                  <input
-                    type="text"
-                    name="noticePeriod"
-                    value={lineUpData.noticePeriod}
-                    onChange={handleLineUpChange}
-                    required={callingTracker.selectYesOrNo === "Interested"}
-                    // onChange={(e) => {
-                    //   const value = e.target.value;
-                    //   if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
-                    //     setLineUpData({
-                    //       ...lineUpData,
-                    //       noticePeriod: value,
-                    //     });
-                    //   }
-                    // }}
-                    className="form-control"
-                    min="0"
-                    max="90"
-                  />
-                </td> */}
+              
               <div className="calling-tracker-field">
                 <label>Holding Offer Letter</label>
                 <div className="calling-tracker-two-input-container">
@@ -1724,7 +1695,7 @@ const CallingTrackerForm = ({
                       <option value="Attending After Some time">
                         Attending After Some time
                       </option>
-                      <option value="hold">hold</option>
+                      <option value="hold">Hold</option>
                     </select>
                   </div>
                 </div>
@@ -1879,10 +1850,7 @@ const ModalComponent = ({
 
   return (
     <Modal size="lg" centered show={show} onHide={handleClose}>
-      {/* <Modal.Header closeButton>
-        <Modal.Title>Modal Heading</Modal.Title>
-      </Modal.Header> */}
-      <Modal.Body className="p-0">
+            <Modal.Body className="p-0">
         <div className="calling-tracker-popup">
           <div className="calling-tracker-popup-sidebar">
             <p

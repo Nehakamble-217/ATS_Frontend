@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./SendClientEmail.css";
-import { differenceInDays, differenceInSeconds } from 'date-fns';
-
+import { differenceInDays, differenceInSeconds } from "date-fns";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -13,7 +12,7 @@ import { Form, Table } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 // SwapnilRokade_SendClientEmail_ModifyFilters_11/07
- // SwapnilROkade_AddingErrorAndSuccessMessage_19/07
+// SwapnilROkade_AddingErrorAndSuccessMessage_19/07
 
 // SwapnilRokade_SendClientEmail_addedProcessImprovmentEvaluatorFunctionalityStoringInterviweResponse_18_to_1251_29/07/2024
 
@@ -21,7 +20,7 @@ import { toast } from "react-toastify";
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
-  const {userType} =useParams();
+  const { userType } = useParams();
 
   // const employeeIdnew = parseInt(employeeId);
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
@@ -42,7 +41,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
   const [showShareButton, setShowShareButton] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [difference,setDifference]=useState();
+  const [difference, setDifference] = useState();
 
   const navigator = useNavigate();
   const limitedOptions = [
@@ -388,7 +387,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
               onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
-            <h5 style={{ color: "gray" }}>Candidate Data</h5>
+            <h5 style={{ color: "gray" , fontSize:"18px" }}>Candidate Data</h5>
 
             <div
               style={{
@@ -1141,7 +1140,7 @@ const SendEmailPopup = ({
   const [emailBody, setEmailBody] = useState(
     "hi Deepak,\n\nSharing 2 more profiles: Dotnet+Azure Developer."
   );
-  const [difference,setDifference]=useState([])
+  const [difference, setDifference] = useState([]);
 
   const handleStoreClientInformation = async () => {
     try {
@@ -1181,7 +1180,6 @@ const SendEmailPopup = ({
   };
 
   const handleSendEmail = () => {
-    
     setIsMailSending(true);
     const emailData = {
       to,
@@ -1222,13 +1220,14 @@ const SendEmailPopup = ({
             }
         });
         
+        toast.log("Email sent successfully");
+
       })
 
       .catch((error) => {
         setIsMailSending(false);
         setResponse("Error Sending Email");
         console.error("Error sending email:", error);
-        // const mailSendTime = Date.now()/1000;
         toast.error("Failed to send email");
       });
   };

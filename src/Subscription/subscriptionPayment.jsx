@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./subscriptionPayment.css"
+import "./subscriptionPayment.css";
 
 function PaymentForm() {
   const [selectedPayment, setSelectedPayment] = useState(null);
@@ -195,10 +195,7 @@ function PaymentForm() {
           />
           <label htmlFor="coingate">
             Coingate
-            <img
-              src="https://coingate.com/favicon.ico"
-              alt="Coingate"
-            />
+            <img src="https://coingate.com/favicon.ico" alt="Coingate" />
           </label>
         </div>
       </div>
@@ -213,7 +210,8 @@ function PaymentForm() {
             <i className="fa fa-check-circle"></i> Domain Name
           </li>
           <li>
-            <i className="fa fa-check-circle"></i> Domain WHOIS Privacy Protection
+            <i className="fa fa-check-circle"></i> Domain WHOIS Privacy
+            Protection
           </li>
         </ul>
 
@@ -240,20 +238,12 @@ function PaymentForm() {
             onChange={handlePhoneNumberChange}
           />
           <label htmlFor="country">Country of residence</label>
-          <select
-            id="country"
-            value={country}
-            onChange={handleCountryChange}
-          >
+          <select id="country" value={country} onChange={handleCountryChange}>
             <option value="India">India</option>
             {/* Add other countries here */}
           </select>
           <label htmlFor="state">State</label>
-          <select
-            id="state"
-            value={state}
-            onChange={handleStateChange}
-          >
+          <select id="state" value={state} onChange={handleStateChange}>
             {/* Add states here */}
           </select>
           <label htmlFor="city">City</label>
@@ -324,10 +314,9 @@ function PaymentForm() {
       </div>
 
       <p className="terms">
-        By checking out you agree with our{" "}
-        <a href="#">Terms of Service</a> and confirm that you have read our{" "}
-        <a href="#">Privacy Policy</a>. You can cancel recurring payments at any
-        time.
+        By checking out you agree with our <a href="#">Terms of Service</a> and
+        confirm that you have read our <a href="#">Privacy Policy</a>. You can
+        cancel recurring payments at any time.
       </p>
     </div>
   );
