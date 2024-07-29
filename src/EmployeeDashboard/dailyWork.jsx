@@ -205,7 +205,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.42:9090/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -294,6 +294,7 @@ function DailyWork({
     }
   };
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-CalculateTotalHoursWork(changed) Start LineNo:-269  Date:-01/07
+
   useEffect(() => {
     let interval;
     if (running) {
@@ -320,6 +321,7 @@ function DailyWork({
 
     return () => clearInterval(interval);
   }, [running, employeeId]);
+
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchievedPendingCount(changed) Start LineNo:-441 Date:-01/07
   const updateArchievedPendingCount = (archivedIncrement, pendingDecrement) => {
@@ -366,6 +368,7 @@ function DailyWork({
   }, [successfulDataAdditions]);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchieved(changed) End LineNo:-351 Date:-01/07
+
 
   const handlePause = () => {
     setRunning(false);
@@ -427,7 +430,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.36:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
 
         formData
       );
@@ -449,6 +452,7 @@ function DailyWork({
   };
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-handleLogoutLocal(changed) End LineNo:-593 Date:-01/07
+
   const handleImageClick = () => {
     setPopupVisible(true);
     setModalEmployeeData(employeeData);

@@ -557,8 +557,7 @@ const HoldCandidate = ({
   };
   //Name:-Akash Pawar Component:-HoldCandidate Subcategory:-ResumeViewButton(added) End LineNo:-356 Date:-02/07
 
-
-    //Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
+  //Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
   const handleExportToExcel = () => {
     // Define columns to include in export
     const columnsToInclude = [
@@ -623,8 +622,8 @@ const HoldCandidate = ({
 
         "Interested or Not": item.selectYesOrNo || "-",
         "Current Company": item.companyName || "-",
-        "Total Experience": item.experienceYear||"-",
-        "Relevant Experience": item.relevantExperience  || "-",
+        "Total Experience": item.experienceYear || "-",
+        "Relevant Experience": item.relevantExperience || "-",
         "Current CTC": `${item.currentCTCLakh || "0"} Lakh ${
           item.currentCTCThousand || "0"
         } Thousand`,
@@ -640,7 +639,7 @@ const HoldCandidate = ({
         "Offer Letter Message": item.offerLetterMsg || "-",
         "Notice Period": item.noticePeriod || "-",
         "Message For Team Leader": item.msgForTeamLeader || "-",
-        "Availability For Interview":item.availabilityForInterview || "-",
+        "Availability For Interview": item.availabilityForInterview || "-",
         "Interview Time": item.interviewTime || "-",
         "Final Status": item.finalStatus || "-",
       };
@@ -687,10 +686,7 @@ const HoldCandidate = ({
 
   const hidePopup = () => {
     setShowExportConfirmation(false);
-    document
-
-      .querySelector(".App-after")
-      .classList.remove("blurred");
+    document.querySelector(".App-after").classList.remove("blurred");
   };
 
   const confirmExport = () => {
@@ -739,7 +735,6 @@ const HoldCandidate = ({
                   <div>
                     <button className="lineUp-share-btn" onClick={showPopup}>
                       Create Excel
-
                     </button>
 
                     {showExportConfirmation && (

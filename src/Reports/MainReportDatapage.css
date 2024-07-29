@@ -162,8 +162,6 @@
    display: flex;
    align-items: center;
    flex-direction: column;
-   /* justify-content: space-between; */
-   /* flex-wrap: wrap; */
  }
 
  /* Style the dropdown content (hidden by default) */
@@ -186,7 +184,6 @@
  .filter-dropdown:hover .dropdown-content {
    display: block;
    width: 100%;
-   /* z-index: 99999999999999999; */
  }
 
  /* Style the checkbox input */
@@ -282,9 +279,6 @@
    font-size: 18px;
    border: 1px solid gray;
    max-width: 300px;
-   /* padding: 10px 15px; */
-   /* text-overflow: clip; */
-   /* width: 100px; */
  }
 
 
@@ -367,12 +361,6 @@
    align-items: center;
  }
 
- /* .dropbtn:hover{
-              background-color: white;
-            
-              border: 1px solid gray;
-            } */
-
  /* Style the dropdown content (hidden by default) */
  .dropdown-content {
    display: none;
@@ -406,24 +394,8 @@
    cursor: pointer;
  }
 
-
-
-
-
-
-
-
-
  /* End of CSS table */
-
-
-
-
-
  /* Prachi ChatSection 28/06 line no 235 to 244 */
-
-
-
  .attendanceTableData1::-webkit-scrollbar {
    display: none;
  }
@@ -431,40 +403,24 @@
  .attendanceTableData1 {
    height: 85vh;
    width: 95%;
-
    margin-right: 2px;
  }
 
  /*End Prachi ChatSection 28/06 line no 235 to 244 */
-
-
-
-
-
-
-
-
  /* Overall container */
  .report-AppsTL {
    display: flex;
    flex-direction: row;
-   /* align-items: center; */
    margin-top: 20px;
    height: 83vh;
-
  }
 
  /* Selection container */
  .reports-selection-containerTL {
    display: flex;
-   /* justify-content: space-around; */
-   width:00px;
-   /* width: 50%; */
+   width: 00px;
    flex-direction: column;
-   /* margin-bottom: 20px; */
-   /* margin-left: 5%; */
  }
-
 
  .assignments-tableTL {
    width: 100%;
@@ -476,7 +432,6 @@
    width: 30%;
    /* Prachi TeamLeader 1/7 */
    margin-right: 20px;
-
  }
 
  .reports-Admin-Dropdown {
@@ -492,7 +447,6 @@
    border: 1px solid gray;
    border-radius: 15px;
    font-size: 16px;
-
  }
 
  /* Prachi parab TeamLeader 1/7 */
@@ -548,8 +502,6 @@
    margin-bottom: 5px;
  }
 
-
-
  .recruitersTL label {
    display: block;
    margin-bottom: 5px;
@@ -581,9 +533,6 @@
    text-align: center;
    border: 1px solid gray;
    border-radius: 15px;
-
-
-
  }
 
  .options-category.common-assign {
@@ -631,8 +580,6 @@
    border-radius: 15px;
    text-align: center;
 
-
-
  }
 
  .checkbox-teamleader-assign input[type="checkbox" i] {
@@ -647,8 +594,6 @@
    height: 20px;
    width: 20px;
    margin-right: 9px;
-
-
  }
 
  .form-check-input {

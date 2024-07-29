@@ -17,10 +17,10 @@
   align-items: center;
   /* padding: 20px; */
 }
-.job-desc-form
-{
+
+.job-desc-form {
   /* border: 1px solid gray; */
-  margin-bottom:5px ;
+  margin-bottom: 5px;
 }
 
 .job-performance {
@@ -50,18 +50,19 @@
   /* height: 650px; */
   /* max-height: 100vh; */
 }
-.field-Row-Gray{
+
+.field-Row-Gray {
   width: 100%;
   display: flex;
   background-color: #F2F2F2;
   justify-content: space-around;
   align-items: center;
   padding: 0%;
-  
+
   /* padding: 3px 0px ; */
 }
-.field-Row-white
-{
+
+.field-Row-white {
   width: 100%;
   display: flex;
   background-color: white;
@@ -70,6 +71,7 @@
   /* padding: 3px 0px ; */
 
 }
+
 .field {
   width: 100%;
   display: flex;
@@ -87,9 +89,9 @@
   padding: 0px 5px;
   display: flex;
   border-radius: 5px;
-  font-weight:500;
+  font-weight: 500;
   align-items: center;
-    
+
 }
 
 .field input {
@@ -99,20 +101,21 @@
   height: 29px;
 
 }
-.field select{
-  padding: 5.5px 5px 5.5px 5px ;
+
+.field select {
+  padding: 5.5px 5px 5.5px 5px;
   font-size: 16px;
   color: gray;
   /* border: 1px solid #ccc; */
   border-radius: 5px;
-  width:69%;
+  width: 69%;
   padding-left: 5px;
 }
 
 .save {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
@@ -129,52 +132,48 @@
   height: 35px;
 }
 
-/* button:hover {
-  background-color: #ffb281;
-  color: white;
-  border: #f2f2f2;
-} */
-.textarea{
-  width: 69%; 
+.textarea {
+  width: 69%;
   height: 34px;
   border: 1px solid gray;
   border-radius: 5px;
-  margin-bottom: 0; 
+  margin-bottom: 0;
   resize: vertical;
   font-family: Arial, sans-serif;
   font-size: 16px;
   padding-left: 5px;
   padding-top: 4px;
 }
-.multi-field
-{
+
+.multi-field {
   width: 100%;
   display: flex;
   flex-direction: column;
   /* border: 1px solid gray; */
   gap: 2px;
-  padding-bottom:5px;
+  padding-bottom: 5px;
   margin-bottom: 2px;
   overflow: hidden;
 }
-.inner-field label
-{
+
+.inner-field label {
   width: 20%;
   font-size: 18px;
   display: flex;
   justify-content: center;
   border-radius: 5px;
   align-items: center;
-   color:gray;
+  color: gray;
 }
-.inner-field input{
+
+.inner-field input {
   width: 80%;
   padding: 4px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-.job-button
-{
+
+.job-button {
   margin-left: 2px;
   width: 25%;
   height: 30px;
@@ -184,28 +183,14 @@
   border: 1px solid gray;
   padding: 2px 15px;
 }
-.job-button:hover
-{
+
+.job-button:hover {
   color: #ffcb9b;
   background-color: white;
 }
-.job-submit-button
-{
+
+.job-submit-button {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-  /* 
-.daily-tr-bt:hover {
-  background-color: red;
-}
-/* .loging-hr{
-  width:26%!important;
-} */
-
-/* @media (max-width: 1260px) {
-  .field input .field select{
-      width: 320 px!important;
-  }
-
-} */

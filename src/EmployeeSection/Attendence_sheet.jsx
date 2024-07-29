@@ -13,7 +13,7 @@ const Attendance = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.42:9090/api/ats/157industries/attendance-data/${employeeId}/${userType}`
+          `http://localhost:9090/api/ats/157industries/attendance-data/${employeeId}/${userType}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

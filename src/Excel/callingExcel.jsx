@@ -58,7 +58,7 @@ const CallingExcel = ({ onClose }) => {
     try {
       await axios.post(
 
-        `http://192.168.1.36:9090/api/ats/157industries/uploadData/${employeeId}`,
+        `http://192.168.1.42:9090/api/ats/157industries/uploadData/${employeeId}`,
         formData,
         {
           headers: {
@@ -67,7 +67,7 @@ const CallingExcel = ({ onClose }) => {
         }
       );
       setUploadSuccess(true);
-      toast.success("File Uploaded Successfully")
+      toast.success("File Uploaded Successfully");
       setActiveTable("CallingExcelList");
       hideSuccessMessage();
       setFile(null);
@@ -82,7 +82,7 @@ const CallingExcel = ({ onClose }) => {
 
   const handleUploadLineupFile = async () => {
     if (!file) {
-      toast.error("Please select a file to upload.");//Swapnil Error&success message 
+      toast.error("Please select a file to upload."); //Swapnil Error&success message
       return;
     }
     const formData = new FormData();
@@ -91,7 +91,7 @@ const CallingExcel = ({ onClose }) => {
     try {
       await axios.post(
 
-        `http://192.168.1.36:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
+        `http://192.168.1.42:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
 
         formData,
         {
@@ -100,9 +100,9 @@ const CallingExcel = ({ onClose }) => {
           },
         }
       );
-      
+
       setUploadSuccessLineUp(true);
-      toast.success("File Uploaded Successfully")
+      toast.success("File Uploaded Successfully");
       setActiveTable("LineupExcelData");
       hideSuccessMessage();
       setFile(null);
@@ -122,11 +122,11 @@ const CallingExcel = ({ onClose }) => {
     }
     try {
       await axios.post(
-        "http://192.168.1.36:9090/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.42:9090/api/ats/157industries/add-multiple-resume",
         formData
       );
       setUploadSuccessResume(true);
-      toast.success("File Uploaded Successfully")
+      toast.success("File Uploaded Successfully");
       setActiveTable("ResumeList");
       hideSuccessMessage();
       setSelectedFiles([]);
@@ -140,8 +140,7 @@ const CallingExcel = ({ onClose }) => {
 
     axios
       .post(
-
-        "http://192.168.1.36:9090/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.42:9090/api/ats/157industries/add-multiple-resume",
         formData
       )
 
@@ -162,141 +161,108 @@ const CallingExcel = ({ onClose }) => {
   };
 
   return (
-
-    <div className="callingfiel"
+    <div
+      className="callingfiel"
       style={{
         display: "flex",
-        
+
         justifyContent: "center",
         flexWrap: "wrap",
         paddingTop: "15px",
         gap: "12px",
       }}
     >
-    <div className="fileupload">
-      <div>
-        <div
-          className="card fixed-card"
-          style={{ width: "90%", border: "1px solid gray" }}
-        >
-          <div className="card-header">
-            <h5 className="mb-0 card-title">Upload Calling Excel </h5>
-          </div>
-          <div className="card-body">
-            <div className="mb-3">
-              <input
-                type="file"
-                className="form-control"
-                accept=".xls,.xlsx"
-                onChange={handleFileChange}
-                ref={fileInputRef}
-              />
+      <div className="fileupload">
+        <div>
+          <div
+            className="card fixed-card"
+            style={{ width: "90%", border: "1px solid gray" }}
+          >
+            <div className="card-header">
+              <h5 className="mb-0 card-title">Upload Calling Excel </h5>
             </div>
-            <div className="gap-2 d-grid">
-              <button onClick={handleUpload}>Upload</button>
+            <div className="card-body">
+              <div className="mb-3">
+                <input
+                  type="file"
+                  className="form-control"
+                  accept=".xls,.xlsx"
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                />
+              </div>
+              <div className="gap-2 d-grid">
+                <button onClick={handleUpload}>Upload</button>
 
-              {/* {uploadSuccess && (
-                <center>
-                  <h5 className="mt-3 text-success">
-                    Excel File Added successfully....
-                  </h5>
-                </center>
-              )}
-              {uploadError && (
-                <center>
-                  <h5 className="mt-3 text-danger">{uploadError}</h5>
-                </center>
+                
+                <button onClick={() => handleTableChange("CallingExcelList")}>
+                  View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div
+            className="card fixed-card"
+            style={{ width: "90%", border: "1px solid gray" }}
+          >
+            <div className="card-header">
+              <h5 className="mb-0 card-title">Upload LineUp Excel </h5>
+            </div>
+            <div className="card-body">
+              <div className="mb-3">
+                <input
+                  type="file"
+                  className="form-control"
+                  accept=".xls,.xlsx"
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                />
+              </div>
+              <div className="gap-2 d-grid">
+                <button onClick={handleUploadLineupFile}>Upload</button>
+                
+                <button onClick={() => handleTableChange("LineupExcelData")}>
+                  View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            className="card fixed-card"
+            style={{ width: "90%", border: "1px solid gray" }}
+          >
+            <div className="card-header">
+              <h5 className="mb-0 card-title">Upload Resume </h5>
+            </div>
+            <div className="card-body">
+              <div className="mb-3">
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleResumeFileChange}
+                  className="form-control"
+                  ref={fileInputRef}
+                />
+              </div>
+              <div className="gap-2 d-grid">
+                <button onClick={handleUploadResume}>Upload</button>
+                {/* {uploadSuccessResume && (
+               
               )} */}
-              <button onClick={() => handleTableChange("CallingExcelList")}>
-                View
-              </button>
+                <button onClick={() => handleTableChange("ResumeList")}>
+                  View
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
-      <div>
-        <div
-          className="card fixed-card"
-          style={{ width: "90%", border: "1px solid gray" }}
-        >
-          <div className="card-header">
-            <h5 className="mb-0 card-title">Upload LineUp Excel </h5>
-          </div>
-          <div className="card-body">
-            <div className="mb-3">
-              <input
-                type="file"
-                className="form-control"
-                accept=".xls,.xlsx"
-                onChange={handleFileChange}
-                ref={fileInputRef}
-              />
-            </div>
-            <div className="gap-2 d-grid">
-              <button onClick={handleUploadLineupFile}>Upload</button>
-              {/* {uploadSuccessLineUp && (
-                <center>
-                  <h5 className="mt-3 text-success">
-                    Line File added successfully...
-                  </h5>
-                </center>
-              )}
-              {uploadErrorLineUp && (
-                <center>
-                  <h5 className="mt-3 text-danger">{uploadErrorLineUp}</h5>
-                </center>
-              )} */}
-              <button onClick={() => handleTableChange("LineupExcelData")}>
-                View
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        
-        <div
-          className="card fixed-card"
-          style={{ width: "90%", border: "1px solid gray" }}
-        >
-          <div className="card-header">
-            <h5 className="mb-0 card-title">Upload Resume </h5>
-          </div>
-          <div className="card-body">
-            <div className="mb-3">
-              <input
-                type="file"
-                multiple
-                onChange={handleResumeFileChange}
-                className="form-control"
-                ref={fileInputRef}
-              />
-            </div>
-            <div className="gap-2 d-grid">
-              <button onClick={handleUploadResume}>Upload</button>
-              {/* {uploadSuccessResume && (
-                <center>
-                  <h5 className="mt-3 text-success">
-                    Resume Data added successfully...
-                  </h5>
-                </center>
-              )}
-              {uploadErrorResume && (
-                <center>
-                  <h5 className="mt-3 text-danger">{uploadErrorResume}</h5>
-                </center>
-              )} */}
-              <button onClick={() => handleTableChange("ResumeList")}>
-                View
-              </button>
-            </div>
-          </div>
-        </div>
-        </div>
-        </div>
-       
-      
+
       {activeTable === "CallingExcelList" && (
         <CallingExcelList onCloseTable={() => setActiveTable("")} />
       )}
@@ -307,7 +273,6 @@ const CallingExcel = ({ onClose }) => {
         <ResumeList onCloseTable={() => setActiveTable("")} />
       )}
     </div>
-    
   );
 };
 

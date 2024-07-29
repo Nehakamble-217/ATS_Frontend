@@ -41,7 +41,7 @@ const JobListing = () => {
   ];
 
   useEffect(() => {
-    fetch("http://192.168.1.36:9090/api/ats/157industries/all-job-descriptions")
+    fetch("http://localhost:9090/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -154,7 +154,7 @@ const JobListing = () => {
   const toggleJobDescription = (requirementId) => {
     console.log(requirementId + "before Api");
     fetch(
-      `http://192.168.1.36:9090/api/ats/157industries/requirement-info/${requirementId}`
+      `http://localhost:9090/api/ats/157industries/requirement-info/${requirementId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -202,7 +202,7 @@ const JobListing = () => {
         <div className="search-bar">
           <input
             className="search-input"
-            placeholder="Enter keyword / designation / companies"
+            placeholder=" Enter keyword/Designation/Companies"
             type="text"
             name="designation"
             value={searchQuery.designation}
@@ -211,7 +211,7 @@ const JobListing = () => {
           <input
             className="search-input"
             list="experienceOptions"
-            placeholder="Select experience"
+            placeholder="  Select Experience"
             type="text"
             name="experience"
             value={searchQuery.experience}
@@ -226,7 +226,7 @@ const JobListing = () => {
 
           <input
             className="search-input"
-            placeholder="Enter location"
+            placeholder="  Enter Location"
             type="text"
             name="location"
             value={searchQuery.location}

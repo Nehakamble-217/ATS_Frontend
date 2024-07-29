@@ -102,7 +102,7 @@ function Accesstable() {
     useEffect(() => {
       const fetchTeamLeaderNames = async () => {
         const response = await axios.get(
-          `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds`
+          `http://localhost:9090/api/ats/157industries/tl-namesIds`
         );
         setTeamLeaderNames(response.data);
       };
@@ -115,7 +115,7 @@ function Accesstable() {
     
     //   );
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+        `http://localhost:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
     
       );
       setRecruiterUnderTeamLeader(response.data);

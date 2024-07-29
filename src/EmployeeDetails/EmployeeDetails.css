@@ -1,21 +1,26 @@
-.ActionCol{
+.ActionCol {
     width: 250px;
     border: 1px solid gray;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
 }
-.tableActionCol
-{
+
+.tableActionCol {
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 2px 0px;
 }
-.action-button{
+
+.action-button {
     padding: 2px 2px;
     background: #ffcb9b;
     font-size: 16px;
     border-radius: 15px;
+    border: 1px solid gray;
+    padding: 0px 10px;
+}
+
+.emp-details-act-btn {
+    display: flex;
+    justify-content: space-evenly;
 }

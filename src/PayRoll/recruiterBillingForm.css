@@ -1,76 +1,14 @@
 /* Mohini_15/07/2024_RecruiterBillingForm_Whole_page */
-------------------------------------------------------------
-CSS
-
+------------------------------------------------------------ CSS
 /* RecruiterBillingForm.css */
 /* Mohini_15/07/2024_RecruiterBillingForm_Whole_page_css_StartLine_1_EndLine_206 */
-/* .recruiterBilling-container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: white;
-  height: 100%;
-} */
 
-/* .recruiterBilling-heading {
-  text-align: center;
-  font-size: 18px;
-  color: gray;
-} */
 
 .recruiterBilling-headingForm {
   width: 100%;
-  /* display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px; */
 }
 
-/* .field-Row-Gray {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  background-color: #f2f2f2;
-  border-radius: 8px;
-} */
-
-/* .field-Row-white {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-} */
-
-/* .form-group {
-  width: 50%;
-  display: flex;
-  height: 40px; */
-  /* padding: 5px; */
-  /* border: 1px solid gray;
-  align-items: center;
-  justify-content: space-around;
-} */
-
-/* .form-group label {
-  width: 28%;
-  display: flex;
-  align-items: center;
-  justify-content: center; */
-  /* border-right: 1px solid gray; */
-  /* color: gray;
-} */
-
-/* .form-group input {
-  width: 48%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  height: 30px;
-  padding: 10px;
-  margin-right: 20px;
-} */
-.form-group-date{
+.form-group-date {
   width: 68%;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -111,7 +49,8 @@ CSS
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.recruiter-modal-body{
+
+.recruiter-modal-body {
   padding: 1px;
 }
 
@@ -138,27 +77,15 @@ CSS
   margin: 0;
 }
 
-
-
-
-/* .modal-body {
-  margin-bottom: 20px;
-} */
-
-/* .modal-body div {
-  margin-bottom: 10px;
-} */
-
-/* .modal-footer {
-  text-align: right;
-} */
 .buttonDiv {
-  padding-top:5px ;
+  padding-top: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: gray; /* Set font color to gray */
+  color: gray;
+  /* Set font color to gray */
 }
+
 .ctf-btn {
   background-color: #ffcb9b;
   color: white;
@@ -166,11 +93,12 @@ CSS
   padding-right: 15px;
   border-radius: 15px;
   border: 1px solid gray;
-  /* cursor: pointer; */
-  font-size: 16px; /* Use em for relative sizing */
+  font-size: 16px;
+  /* Use em for relative sizing */
   text-align: center;
   width: auto;
-  height: 30px; /* Allow height to adjust based on content */
+  height: 30px;
+  /* Allow height to adjust based on content */
   backdrop-filter: blur(2px);
   transition: 0.5s;
   line-height: 0.7;
@@ -181,21 +109,26 @@ CSS
   color: #ffcb9b;
   border: 1px solid gray;
 }
+
 .cancelButton {
-  background-color: #ffcb9b; /* Different background color for cancel button */
+  background-color: #ffcb9b;
+  /* Different background color for cancel button */
   color: white;
   padding-left: 15px;
   padding-right: 15px;
   border-radius: 15px;
   border: 1px solid darkgray;
-  font-size: 16px; /* Use em for relative sizing */
+  font-size: 16px;
+  /* Use em for relative sizing */
   text-align: center;
   width: auto;
-  height: 30px; /* Allow height to adjust based on content */
+  height: 30px;
+  /* Allow height to adjust based on content */
   backdrop-filter: blur(2px);
   transition: 0.5s;
   line-height: 0.7;
-  margin: 0 10px; /* Add horizontal margin for spacing between buttons */
+  margin: 0 10px;
+  /* Add horizontal margin for spacing between buttons */
 }
 
 .cancelButton:hover {
@@ -206,10 +139,11 @@ CSS
 
 
 .modal-body input[type="radio"] {
-  margin-right: 5px; 
+  margin-right: 5px;
 }
 
 .modal-body div {
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
+
 /* Mohini_15/07/2024_RecruiterBillingForm_Whole_page_css_StartLine_1_EndLine_206 */

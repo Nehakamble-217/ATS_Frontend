@@ -220,12 +220,12 @@ function Accesstable() {
         setSelectedManager({ managerId: "", managerJobRole: "" });
         setSelectedTeamLeader({ teamLeaderId: "", teamLeaderJobRole: "" });
         setSelectedOptions([]);
-        toast.success("assigning columns successfully"); //Swapnil Error&success message 
+        toast.success("assigning columns successfully"); //Swapnil Error&success message
         setResponse("");
       }, 2000);
       // Handle success, update state or show a success message
     } catch (error) {
-      toast.error("Error assigning columns"); //Swapnil Error&success message 
+      toast.error("Error assigning columns"); //Swapnil Error&success message
       // Handle error, show an error message or retry logic
     }
   };
@@ -665,9 +665,7 @@ const UpdateAccessTable = ({
   const handleUpdateClick = async () => {
     try {
       const response = await axios.post(
-
-        `http://192.168.1.36:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
-
+        `http://192.168.1.42:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
         JSON.stringify(selectedOptions),
         {
           headers: {
@@ -679,11 +677,11 @@ const UpdateAccessTable = ({
       setTimeout(() => {
         setResponse("");
         setOpenupdateModal(false);
-        toast.success("Assign Column Successfully")
+        toast.success("Assign Column Successfully");
       }, 3000);
       onSetResponse(true);
     } catch (error) {
-      toast.success("Failed To Assign Column")
+      toast.success("Failed To Assign Column");
       onSetResponse(false);
     }
   };

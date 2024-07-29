@@ -36,8 +36,7 @@ const LineupExcelData = ({
 
   useEffect(() => {
     fetch(
-
-      `http://192.168.1.36:9090/api/ats/157industries/lineup-excel-data/${employeeId}`
+      `http://192.168.1.42:9090/api/ats/157industries/lineup-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -201,7 +200,7 @@ const LineupExcelData = ({
   };
 
   const handleUpdateSuccess = () => {
-    fetch(`http://192.168.1.36:9090/api/ats/157industries/lineup-excel-data/16`)
+    fetch(`http://192.168.1.42:9090/api/ats/157industries/lineup-excel-data/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setLineUpList(data);
@@ -283,7 +282,7 @@ const LineupExcelData = ({
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
             {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
-            <h1 style={{ color: "grey", fontSize: "18pt" }}>LineUp Data</h1>{" "}
+            <h1 style={{ color: "grey", fontSize: "18px" }}>LineUp Data</h1>{" "}
             {/* Prachi UploadLineUpData 3/7 */}
             <button
               onClick={toggleFilterSection}
@@ -302,11 +301,6 @@ const LineupExcelData = ({
               Filter <i className="fa-solid fa-filter"></i>
             </button>
           </div>
-          {/* <div style={{ display: 'flex' }}>
-            <button onClick={onCloseTable} className="close-button">
-              Close
-            </button>
-          </div> */}
 
           {showSearchBar && (
             <input
@@ -406,7 +400,7 @@ const LineupExcelData = ({
                   <th className="attendanceheading">Contact Number</th>
                   <th className="attendanceheading">Whatsapp Number</th>
                   <th className="attendanceheading">Source Name</th>
-                  <th className="attendanceheading">job Designation</th>
+                  <th className="attendanceheading">Job Designation</th>
                   <th
                     className="attendanceheading"
                     onClick={() => handleSort("requirementId")}

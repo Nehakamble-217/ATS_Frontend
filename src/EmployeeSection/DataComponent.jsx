@@ -42,22 +42,69 @@ const DataComponent = ({ onClose }) => {
   };
 
   if (!visible) return null;
-  
+
   return (
     <div className="data-table-div">
       <table className="data-table">
-        <tr style={{padding:"13px",}}>
-          <th style={{padding:"6px",border: "2px solid gray",backgroundColor:"#ffcbgb"}}>Daily Target</th>
-          <td style={{padding:"6px",border: "2px solid gray",backgroundColor:"white"}}>{target.targetValue}</td>
+        <tr style={{ padding: "13px" }}>
+          <th
+            style={{
+              padding: "6px",
+              border: "2px solid gray",
+              backgroundColor: "#ffcbgb",
+            }}
+          >
+            Daily Target
+          </th>
+          <td
+            style={{
+              padding: "6px",
+              border: "2px solid gray",
+              backgroundColor: "white",
+            }}
+          >
+            {target.targetValue}
+          </td>
 
-          <th style={{padding:"6px",border: "2px solid gray",backgroundColor:"#ffcbgb"}}>Archived</th>
-          <td style={{padding:"6px",border: "2px solid gray",backgroundColor:"white"}} >{target.archived}</td>
+          <th
+            style={{
+              padding: "6px",
+              border: "2px solid gray",
+              backgroundColor: "#ffcbgb",
+            }}
+          >
+            Archived
+          </th>
+          <td
+            style={{
+              padding: "6px",
+              border: "2px solid gray",
+              backgroundColor: "white",
+            }}
+          >
+            {target.archived}
+          </td>
 
-          <th style={{padding:"6px",border: "2px solid gray",backgroundColor:"#ffcbgb"}}>Pendings</th>
-          <td style={{padding:"6px",border: "2px solid gray",backgroundColor:"white"}}>{pendings}</td>
+          <th
+            style={{
+              padding: "6px",
+              border: "2px solid gray",
+              backgroundColor: "#ffcbgb",
+            }}
+          >
+            Pendings
+          </th>
+          <td
+            style={{
+              padding: "6px",
+              border: "2px solid gray",
+              backgroundColor: "white",
+            }}
+          >
+            {pendings}
+          </td>
         </tr>
       </table>
-      {/* {message && <p>{message}</p>} */}
     </div>
   );
 };

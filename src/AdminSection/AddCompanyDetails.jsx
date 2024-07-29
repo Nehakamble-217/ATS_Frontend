@@ -408,10 +408,10 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                   <div className="ACD_Field">
-                    <label> Enter Pancard No</label>
+                    <label> Enter Pan Card No</label>
                     <input
                       type="text"
-                      placeholder="Enter Pan No."
+                      placeholder="Enter Pan Card No."
                       name="companyPanCardNumber"
                       value={initialFormData.companyPanCardNumber}
                       onChange={handleChange}
@@ -717,7 +717,7 @@ const AddCompanyDetails = () => {
                     <input
                       type="text"
                       name="grandTotal"
-                      placeholder="GrandTotal"
+                      placeholder="Grand Total"
                       value={initialFormData.grandTotal}
                       onChange={handleChange}
                     />
@@ -735,11 +735,11 @@ const AddCompanyDetails = () => {
                 </div>
                 <div className="ACD_Field-Row-white" style={{borderBottom:"1px solid gray"}}>
                   <div className="ACD_Field">
-                    <label htmlFor="">Branch name</label>
+                    <label htmlFor="">Branch Name</label>
                     <input
                       type="text"
                       name="branchName"
-                      placeholder="Enter bank branch name."
+                      placeholder="Enter Bank Branch Name."
                       value={initialFormData.branchName}
                       onChange={handleChange}
                     />

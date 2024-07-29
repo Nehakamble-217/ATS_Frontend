@@ -1,4 +1,3 @@
-
 /* src/components/EmployeeForm.css */
 
 .employee-form {
@@ -17,12 +16,13 @@
   font-weight: bold;
   text-align: center;
   color: gray;
-  padding-top: 8px  ;
+  padding-top: 8px;
 }
 
 .employee-form .form-group {
   margin-bottom: 15px;
 }
+
 .payrolemain {
   width: 90%;
   margin: 10px;
@@ -86,6 +86,7 @@
   padding: 10px;
   white-space: nowrap;
 }
+
 .payrollfields input {
   padding: 4px;
   border: 1px solid #ccc;

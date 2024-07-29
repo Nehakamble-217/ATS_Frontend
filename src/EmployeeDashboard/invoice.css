@@ -8,33 +8,29 @@
 
 .job-desc {
   font-family: Arial, sans-serif;
-  /* background-color: gray; */
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10px;
-  /* padding: 20px; */
 }
-.job-desc-form
-{
+
+.job-desc-form {
   border: 1px solid gray;
-  /* margin-bottom:5px ; */
+  margin-bottom: 5px;
 }
-/*   
+
 .job-performance {
-  
   border-radius: 5px;
   width: 100%;
-} */
+}
 
-/* .job-performance article {
+.job-performance article {
   text-align: center;
   color: gray;
   font-size: 18px;
   margin-bottom: 20px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-} */
+}
 
 
 .field-column {
@@ -44,47 +40,39 @@
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-  /* height: 650px; */
-  /* max-height: 100vh; */
 }
-.field-Row-Gray{
+
+.field-Row-Gray {
   width: 100%;
   display: flex;
   background-color: #F2F2F2;
   justify-content: space-around;
   align-items: center;
-  /* padding: 3px 0px ; */
 }
-.field-Row-white
-{
+
+.field-Row-white {
   width: 100%;
   display: flex;
   background-color: white;
   justify-content: space-around;
   align-items: center;
-  /* padding: 3px 0px ; */
-
 }
+
 .field {
   width: 100%;
   display: flex;
   padding: 5px 0px;
   border: 1px solid gray;
-  white-space: nowrap;
 }
 
 .field label {
-  width: 30%;
+  width: 29%;
   font-size: 18px;
-  /* border: 1px solid orange; */
   padding: 0px 5px;
   display: flex;
-  /* justify-content: center; */
   border-radius: 5px;
-  /* font-weight:500; */
   align-items: center;
-   color:gray;
-  /* font-weight: bold; */
+  color: gray;
 }
 
 .field input {
@@ -93,227 +81,67 @@
   border: 1px solid #ccc;
   color: gray;
   border-radius: 5px;
-  width:69%;
-  margin-right: 15px;
-}
-.field select{
-  padding: 5.5px 5px 5.5px 5px ;
-  font-size: 16px;
-  color: gray;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width:69%;
+  width: 69%;
 }
 
-.invoice-info {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 5px 0px;
-  border: 1px solid gray;
-  white-space: nowrap;
-}
-
-.info label {
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  color: gray;
-}
-
-.info label:first-child {
-  width: 100%;
-  padding-right: 80px;
-}
-
-.info label:not(:first-child) {
-  margin-right: 80px;
-}
-
-.info input[type="checkbox"] {
-  margin-right: 5px;
-}
-
-/* .save {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-} */
-
-/* .apply {
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: white;
-  color: gray;
-  cursor: pointer;
-  border-radius: 15px;
-  font-size: 1em;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-  border: 1px solid #ccc;
-  height: 35px;
-} */
-
-/* button:hover {
-  background-color: #ffb281;
-  color: white;
-  border: #f2f2f2;
-} */
-.textarea{
-  width: 69%; 
-  height: 30px;
+.textarea {
+  width: 69%;
+  height: 34px;
   border: 1px solid gray;
   border-radius: 5px;
-  margin-bottom: 0; 
+  margin-bottom: 0;
   resize: vertical;
-
+  font-family: Arial, sans-serif;
   font-size: 16px;
 }
-.multi-field
-{
+
+.multi-field {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* border: 1px solid gray; */
   gap: 2px;
-  padding-bottom:5px;
+  padding-bottom: 5px;
   margin-bottom: 2px;
   overflow: hidden;
 }
-.inner-field label
-{
+
+.inner-field label {
   width: 20%;
   font-size: 16px;
   display: flex;
   justify-content: center;
   border-radius: 5px;
   align-items: center;
-  color:gray;
-  height: 30px;
+  color: gray;
 }
-.inner-field input{
-  width: 60%;
+
+.inner-field input {
+  width: 80%;
   padding: 4px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  height: 30px;
-}
-.buttonDiv {
-  padding-top: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: gray; /* Set font color to gray */
 }
 
-.ctf-btn {
+.job-button {
+  margin-left: 2px;
+  width: 25%;
+  height: 30px;
   background-color: #ffcb9b;
-  color: white;
-  padding-left: 15px;
-  padding-right: 15px;
   border-radius: 15px;
+  color: white;
   border: 1px solid gray;
-  /* cursor: pointer; */
-  font-size: 16px; /* Use em for relative sizing */
-  text-align: center;
-  width: auto;
-  height: 30px; /* Allow height to adjust based on content */
-  backdrop-filter: blur(2px);
-  transition: 0.5s;
-  line-height: 0.7;
-  margin: 0 10px; /* Add horizontal margin for spacing between buttons */
+  padding: 2px 15px;
 }
 
-.ctf-btn:hover {
-  background-color: white;
+.job-button:hover {
   color: #ffcb9b;
-  border: 1px solid gray;
-}
-
-.cancelButton {
-  background-color: gray; /* Different background color for cancel button */
-  color: white;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 15px;
-  border: 1px solid darkgray;
-  font-size: 16px; /* Use em for relative sizing */
-  text-align: center;
-  width: auto;
-  height: 30px; /* Allow height to adjust based on content */
-  backdrop-filter: blur(2px);
-  transition: 0.5s;
-  line-height: 0.7;
-  margin: 0 10px; /* Add horizontal margin for spacing between buttons */
-}
-
-.cancelButton:hover {
   background-color: white;
-  color: gray;
-  border: 1px solid darkgray;
 }
 
-
-.file {
-  width: 50%;
+.job-submit-button {
+  width: 100%;
   display: flex;
-  padding: 5px 0px;
-  border: 1px solid gray;
-  white-space: nowrap;
+  justify-content: center;
 }
 
-.file label {
-  width: 32%;
-  font-size: 18px;
-  /* border: 1px solid orange; */
-  padding: 0px 5px;
-  display: flex;
-  /* justify-content: center; */
-  border-radius: 5px;
-  /* font-weight:500; */
-  align-items: center;
-   color:gray;
-  /* font-weight: bold; */
-}
-
-.file input {
-  padding: 4px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  color: gray;
-  border-radius: 5px;
-  width:60%;
-  margin-right: 15px;
-}
-
-.invoice-radio{
-  height: 10px;
-  width: auto;
-}
-
-
-
-/* .field select{
-  padding: 5.5px 5px 5.5px 5px ;
-  font-size: 16px;
-  color: gray;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width:69%;
-} */
-  /* 
-.daily-tr-bt:hover {
-  background-color: red;
-}
-/* .loging-hr{
-  width:26%!important;
-} */
-
-/* @media (max-width: 1260px) {
-  .field input .field select{
-      width: 320 px!important;
-  }
-
-} */
-
-/* Mohini_InvoiceTable_WholePage_11/07/2024_StartLine_1 _to_EndLine_189 */
+/* Mohini_InvoiceTable_WholePage_09/07/2024_StartLine_1 _to_EndLine_189 */

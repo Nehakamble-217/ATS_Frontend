@@ -4,7 +4,11 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 
-const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => {
+const EmployeeProfileData = ({
+  onClose,
+  toggleIncentive,
+  toggleAttendance,
+}) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,7 +25,7 @@ const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => 
 
   useEffect(() => {
     fetch(
-       `http://localhost:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `http://localhost:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -452,9 +456,8 @@ const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => 
     >
       {employeeData != null ? (
         <Modal.Dialog
-        // size="lg"
+          // size="lg"
           style={{
-            
             padding: "10px",
           }}
         >
@@ -465,9 +468,9 @@ const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => 
             <button
               onClick={onClose}
               style={{
-            marginLeft:"270px",
+                marginLeft: "270px",
                 padding: "8px",
-                color:"red"
+                color: "red",
               }}
               className="close-profile-popup-btn  white-Btn"
             >
@@ -501,17 +504,15 @@ const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => 
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#f2f2f2" }}>
             {/* Ajhar Tamboli - EmployeeProfileData- 22-07-24- lineNo 491 to 510 */}
-            <button onClick={toggleIncentive}
-              className="emp-pro-incentive">
+            <button onClick={toggleIncentive} className="emp-pro-incentive">
               Incentive
             </button>
 
-            <button onClick={toggleAttendance}
-              className="emp-pro-incentive">
+            <button onClick={toggleAttendance} className="emp-pro-incentive">
               Attendance
             </button>
 
-            <button   className="emp-pro-incentive">
+            <button onClick={toggleAttendance} className="emp-pro-incentive">
               Team Details
             </button>
 
@@ -521,12 +522,7 @@ const EmployeeProfileData = ({ onClose, toggleIncentive, toggleAttendance }) => 
             >
               More
             </button>
-            {/* <button
-              onClick={onClose}
-              className="close-profile-popup-btn  white-Btn"
-            >
-              Close
-            </button> */}
+           
           </Modal.Footer>
         </Modal.Dialog>
       ) : (

@@ -126,15 +126,18 @@ const CallingTrackerForm = ({
 
   const fetchRecruiterName = async () => {
     try {
-      const response = await axios.get(`http://localhost:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`);
+
+      const response = await axios.get(
+        `http://192.168.1.42:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+      );
       const { data } = response;
-      setCallingTracker(prevState => ({
+      setCallingTracker((prevState) => ({
         ...prevState,
-        recruiterName: data
+        recruiterName: data,
       }));
-      setLineUpData(prevState => ({
+      setLineUpData((prevState) => ({
         ...prevState,
-        recruiterName: data
+        recruiterName: data,
       }));
     } catch (error) {
       console.error("Error fetching employee name:", error);
@@ -339,17 +342,17 @@ const CallingTrackerForm = ({
       let dataToUpdate = {
         ...callingTracker,
       };
+
       if (userType === "Recruiters") {
         dataToUpdate.employee = { employeeId: employeeId };
       } else if (userType === "TeamLeader") {
         dataToUpdate.teamLeader = { teamLeaderId: employeeId };
       }
-
       if (callingTracker.selectYesOrNo === "Interested") {
         dataToUpdate.lineUp = lineUpData;
       }
       const response = await axios.post(
-        `http://localhost:9090/api/ats/157industries/calling-tracker/${userType}`,
+        `http://192.168.1.42:9090/api/ats/157industries/calling-tracker/${userType}`,
         dataToUpdate
       );
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
@@ -359,7 +362,6 @@ const CallingTrackerForm = ({
         onsuccessfulDataAdditions(false);
       }
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions End LineNo:-223 Date:-01/07
-
       toast.success("Data Added successfully:");
       setCallingTracker(initialCallingTrackerState);
       setLineUpData(initialLineUpState);
@@ -381,14 +383,6 @@ const CallingTrackerForm = ({
     }
     setErrors((prevErrors) => ({ ...prevErrors, currentLocation: "" }));
   };
-
-  // const handleLocationInputChange = (e) => {
-  //   const { value } = e.target;
-  //   setCallingTracker((prevState) => ({
-  //     ...prevState,
-  //     currentLocation: value,
-  //   }));
-  // };
 
   const handleEducationChange = (e) => {
     const value = e.target.value;
@@ -552,7 +546,7 @@ const CallingTrackerForm = ({
                       onClick={handleShow}
                       className="calling-tracker-popup-open-btn"
                     >
-                      view more
+                      View More
                     </button>
                   </div>
                 </div>
@@ -650,7 +644,7 @@ const CallingTrackerForm = ({
                     <option value="Company Page">Company Page</option>
                     <option value="Excel">Excel</option>
                     <option value="Friends">Friends</option>
-                    <option value="others">others</option>
+                    <option value="others">Others</option>
                   </select>
                   {errors.sourceName && (
                     <div className="error-message">{errors.sourceName}</div>
@@ -1436,15 +1430,7 @@ const CallingTrackerForm = ({
                       placeholder="Notice Period"
                       value={lineUpData.noticePeriod}
                       onChange={handleLineUpChange}
-                      // onChange={(e) => {
-                      //   const value = e.target.value;
-                      //   if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
-                      //     setLineUpData({
-                      //       ...lineUpData,
-                      //       noticePeriod: value,
-                      //     });
-                      //   }
-                      // }}
+
                       min="0"
                       max="90"
                     />
@@ -1540,28 +1526,7 @@ const CallingTrackerForm = ({
             </div>
 
             <div className="calling-tracker-row-white">
-              {/* <th scope="col" style={{textAlign:"left"}}>Notice Period(Days)</th>
-                <td >
-                  <input
-                    type="text"
-                    name="noticePeriod"
-                    value={lineUpData.noticePeriod}
-                    onChange={handleLineUpChange}
-                    required={callingTracker.selectYesOrNo === "Interested"}
-                    // onChange={(e) => {
-                    //   const value = e.target.value;
-                    //   if (value === '' || (Number(value) >= 0 && Number(value) <= 90)) {
-                    //     setLineUpData({
-                    //       ...lineUpData,
-                    //       noticePeriod: value,
-                    //     });
-                    //   }
-                    // }}
-                    className="form-control"
-                    min="0"
-                    max="90"
-                  />
-                </td> */}
+
               <div className="calling-tracker-field">
                 <label>Holding Offer Letter</label>
                 <div className="calling-tracker-two-input-container">
@@ -1662,7 +1627,7 @@ const CallingTrackerForm = ({
                       <option value="Attending After Some time">
                         Attending After Some time
                       </option>
-                      <option value="hold">hold</option>
+                      <option value="hold">Hold</option>
                     </select>
                   </div>
                 </div>
@@ -1812,24 +1777,19 @@ const ModalComponent = ({
 
   return (
     <Modal size="lg" centered show={show} onHide={handleClose}>
-      {/* <Modal.Header closeButton>
-        <Modal.Title>Modal Heading</Modal.Title>
-      </Modal.Header> */}
       <Modal.Body className="p-0">
         <div className="calling-tracker-popup">
           <div className="calling-tracker-popup-sidebar">
             <p
-              className={`sidebar-item ${
-                activeField === "distance" ? "active" : ""
-              }`}
+              className={`sidebar-item ${activeField === "distance" ? "active" : ""
+                }`}
               onClick={() => setActiveField("distance")}
             >
               Distance Calculation
             </p>
             <p
-              className={`sidebar-item ${
-                activeField === "salary" ? "active" : ""
-              }`}
+              className={`sidebar-item ${activeField === "salary" ? "active" : ""
+                }`}
               onClick={() => setActiveField("salary")}
             >
               Salary Calculation

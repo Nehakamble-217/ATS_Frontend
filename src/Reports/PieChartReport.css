@@ -1,18 +1,18 @@
 .chart-container {
-  width: 1100px !important; 
+  width: 1100px !important;
   height: 600px;
   display: flex;
   justify-content: start;
   align-items: center;
   margin-top: 25px;
-  }
+}
 
-  .piechart-container{
-    width: 600px;
-    height: 500px;
-    display: flex;
-    flex-direction: row;
-  }
+.piechart-container {
+  width: 600px;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+}
 
 .legend {
   list-style-type: none;
@@ -21,17 +21,20 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .legend-item {
   display: flex;
   align-items: center;
   margin-right: 20px;
 }
+
 .legend-color {
   width: 20px;
   height: 20px;
   margin-right: 5px;
 }
-.piechrt-legends{
+
+.piechrt-legends {
   width: 355px;
   height: 280px;
   position: relative;
@@ -39,13 +42,14 @@
   border: 1px solid grey;
   box-shadow: 5px 3px 5px grey
 }
-.piechart-legend-flex{
+
+.piechart-legend-flex {
   display: flex;
- 
+
 
 }
 
-.text-index-piechart{
+.text-index-piechart {
   text-align: center;
   color: grey;
   padding-top: 5px;
@@ -57,10 +61,11 @@
   color: white;
   padding: 5px;
   border-radius: 5px;
-  pointer-events: none; 
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
-.pie-segment:hover .tooltip-piechart{
-  opacity: 1; 
+
+.pie-segment:hover .tooltip-piechart {
+  opacity: 1;
 }

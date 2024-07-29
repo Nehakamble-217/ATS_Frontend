@@ -2,10 +2,9 @@
   display: none;
 }
 
-.react-calendar
-{
+.react-calendar {
   width: 100%;
-  padding: 10px;  
+  padding: 10px;
 }
 
 .custom-calendar .react-datepicker__month-container {
@@ -59,11 +58,13 @@
 .react-calendar .react-calendar__tile--note {
   background-color: rgba(255, 0, 0, 0.2);
 }
+
 .abbr {
   position: absolute !important;
   z-index: 999 !important;
 }
-.fa-regular{
+
+.fa-regular {
   color: gray;
 }
 
@@ -82,10 +83,10 @@
   background-color: #ffe5ec;
   border: 2px solid white;
   border-radius: 15px;
-  height: 40px; 
+  height: 40px;
 }
 
-.react-calendar__month-view__days{
+.react-calendar__month-view__days {
   display: flex;
   gap: 10px;
 }
@@ -94,93 +95,54 @@ button.react-calendar__tile.react-calendar__month-view__days__day {
   color: gray;
   border: 1px solid #ccc;
   border-radius: 15px;
-  
+
 }
 
-.calendar-div{
+.calendar-div {
   padding-top: 55px;
 }
 
-button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day{
+button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day {
   background-color: #ffb281;
 }
 
-button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view__days__day{
+button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view__days__day {
   background-color: #ffe5b5;
 }
 
-.calender-main-div{
+.calender-main-div {
   margin-top: 20px;
   width: 40%;
   display: flex;
 }
 
-#table-shortlisted{ 
+#table-shortlisted {
   height: 150px;
 
 }
 
-@media screen and (max-width: 992px)
-{
-  .react-calendar
-  {
+@media screen and (max-width: 992px) {
+  .react-calendar {
     width: 300px;
   }
 
 }
-/* hitun Khalis Arshad Ne css dilyaa */
-
-/* #interviewDates-id{
-  margin-top: 20px;
-  
-}
-.shortlist-table-div{
-  width: 100%;
-  overflow-x: auto;
-
-}
-
-.interview-response-update{
-  display: flex;
-  gap: 50px ;
-}
-
-.shortlisted-submite-btn{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  border-radius: 15px;
-    height: 35px;
-   
-}
-
-.shortlisted-submite-btn button{
-  width: 150px;
-} */
-
 
 .shortlist-table-div {
   margin-top: 20px;
   padding-top: 30px;
   padding-left: 10px;
-  padding-right: 20px; 
+  padding-right: 20px;
 
-  
+
 }
-/* .shortlist-table-div {
-  overflow-y: auto; 
-  max-height: 500px; 
-} */
 
-/* Optionally, add padding to improve appearance */
 .shortlist-table-div table {
   padding: 10px;
 }
 
-
 .interview-response-update {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .interview-response-update h6 {
@@ -188,7 +150,7 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   margin-top: 5px;
   margin-bottom: -15px;
   font-size: 18px;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 #table-shortlisted {
@@ -196,16 +158,18 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   border-collapse: collapse;
   background-color: #ffcb9b;
   margin-bottom: 2px;
-  overflow: hidden; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #table-shortlisted th,
 #table-shortlisted td {
-  padding: 12px; 
-  border: 1px solid gray; /* Darker border for better contrast */
+  padding: 12px;
+  border: 1px solid gray;
+  /* Darker border for better contrast */
   font-size: 16px;
-  transition: background-color 0.3s, color 0.3s; /* Smooth transitions for hover effects */
+  transition: background-color 0.3s, color 0.3s;
+  /* Smooth transitions for hover effects */
 }
 
 #table-shortlisted thead th {
@@ -224,13 +188,13 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 }
 
 #table-shortlisted tbody tr:hover td {
-  background-color: #f2f2f2; 
-  color: gray; 
+  background-color: #f2f2f2;
+  color: gray;
 }
 
 .shortlisted-submite-btn {
-  text-align: center; 
-  margin-top: 20px; 
+  text-align: center;
+  margin-top: 20px;
 }
 
 .shortlisted-submite-btn button {
@@ -239,7 +203,7 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   border-radius: 15px;
   padding: 0 20px;
   margin: 5px;
-  margin-top: -10px; 
+  margin-top: -10px;
   font-size: 16px;
   margin-bottom: 10px;
   background-color: #ffcb9b;
@@ -253,12 +217,13 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 .shortlisted-submite-btn button:hover {
   background-color: white;
   color: #ffcb9b;
-  transform: translateY(-2px); 
+  transform: translateY(-2px);
 }
 
 .shortlisted-submite-btn button:focus {
   outline: none;
 }
+
 /* Table */
 #table-shortlisted {
   width: 100%;
@@ -269,28 +234,25 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 .react-calendar__month-view__weekdays {
   color: black;
   font-weight: 300;
-  text-decoration:none !important ;
+  text-decoration: none !important;
 }
 
-/* .calender-main-div h3 {
-  margin-top: 20px;
-} */
 
-/* Table Header */
 #table-shortlisted thead {
-  background-color: gray; 
+  background-color: gray;
   color: white;
 }
 
 /* Table Body */
 #table-shortlisted tbody {
-  background-color: white; 
+  background-color: white;
 }
 
 /* Table Rows */
 #table-shortlisted tbody tr {
-  height: 10px; 
+  height: 10px;
 }
+
 .table-responsive {
   overflow-x: auto;
   max-width: 100%;
@@ -300,8 +262,9 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 }
 
 /* Table Cells */
-#table-shortlisted td, #table-shortlisted th {
-  padding: 6px; 
+#table-shortlisted td,
+#table-shortlisted th {
+  padding: 6px;
   height: 20px;
 }
 
@@ -313,11 +276,11 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   height: 30px;
 
   padding: 5px;
-  
-  
+
+
 }
 
 .highlighted-row {
-  background-color: #ffd8a8; /* or any other highlighting style */
+  background-color: #ffd8a8;
+  /* or any other highlighting style */
 }
-

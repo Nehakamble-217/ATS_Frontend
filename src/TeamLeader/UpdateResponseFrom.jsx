@@ -27,7 +27,8 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   const fetchDataToUpdate = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.36:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
+        `http://192.168.1.42:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
+
       );
       const responseData = await response.json();
       console.log(responseData);
@@ -51,7 +52,6 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     return errors;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -61,7 +61,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     }
     try {
       const response = await fetch(
-        "http://192.168.1.36:9090/api/ats/157industries/save-interview-response",
+        "http://192.168.1.42:9090/api/ats/157industries/save-interview-response",
         {
           method: "POST",
           headers: {

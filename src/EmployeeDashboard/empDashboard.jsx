@@ -5,6 +5,7 @@ import LineUpList from "../EmployeeSection/LineUpList";
 import "./empDashboard.css";
 import EmpTimeTracker from "./EmpTimeTracker";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
+import Help from "../Help/help"
 import { Outlet, useParams } from "react-router-dom";
 import DataComponent from "../EmployeeSection/DataComponent";
 import Incentive from "../EmployeeSection/Incentive";
@@ -59,9 +60,10 @@ import RightsAndInstructions from "../AboutUs/rightsAndInstructions";
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
   const [addCandidate, setAddCandidate] = useState(false);
+  const[showHelp, setshowHelp] = useState(false)
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
-  const [successShare,setSuccessShare] = useState(false); //neha_add_this_state_bcz_came_error_to_console
+  const [successShare, setSuccessShare] = useState(false); //neha_add_this_state_bcz_came_error_to_console
   const [attendancesheet, setAttendanceSheet] = useState(false);
   const [incentive, setIncentive] = useState(false);
   const [lineUp, setLineUp] = useState(false);
@@ -140,6 +142,7 @@ const EmpDashboard = ({ userGroup }) => {
   const handleSuccessfulDataAdditions = (check) => {
     setSuccessfulDataAdditions(check);
   };
+ 
   useEffect(() => {
     setSuccessfulDataAdditions(false);
   }, [successfulDataAdditions]);
@@ -236,6 +239,7 @@ const EmpDashboard = ({ userGroup }) => {
   const resetAllToggles = () => {
     setUpdateSelfCalling(false);
     setAddCandidate(false);
+    setshowHelp(false)
     setShowInterviewDate(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -286,9 +290,9 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCapex(false);
     setShowEmployeeDetails(false); /*Swapnil_AddedEmployeeDetails_16/07*/
     setShowSubscription(false); /*Arbaz_AddSubscriptions_19/07*/
-    setShowBilling(false)
-    setShowPayment(false)
-    setscheduleinterview(false);  /*neha_addScheduleinterview_18/07_lineno_245*/
+    setShowBilling(false);
+    setShowPayment(false);
+    setscheduleinterview(false); /*neha_addScheduleinterview_18/07_lineno_245*/
     setShowRightsInstruction(false);
     setShowCompanyPolicy(false);
     setShowPainArea(false);
@@ -333,12 +337,6 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowUpdateResponse(true);
   };
-
-  // const toggleInterviewDate = () => {
-  //   resetAllToggles();
-  //   setShowShortListdNav(!showShortListedNav);
-  // };
-
   const toggleEmployeeMasterSheet = () => {
     resetAllToggles();
     setShowEmployeeMasterSheet(!showEmployeeMasterSheet);
@@ -348,6 +346,12 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setAddCandidate(!addCandidate);
   };
+  const toggelHelp = () => {
+    resetAllToggles();
+    setshowHelp(!showHelp)
+  };
+
+
 
   /*Akash_Pawar_EmpDashboard_toggleShortListed(show interview candidate)_23/07_LineNo_345*/
   const toggleShortListed = () => {
@@ -543,6 +547,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleSelfCalling={toggleSelfCalling}
         toggelLineUp={toggelLineUp}
         toggleCallingTrackerForm={toggleCallingTrackerForm}
+        toggelHelp={toggelHelp}
         toggleAttendance={toggleAttendance}
         toggleShortListed={toggleShortListed}
         toggleSelectCandidate={toggleSelectCandidate}
@@ -633,11 +638,7 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        {/* <div>
-          {showShortListedNav && (
-            <ShortlistedNavbar loginEmployeeName={loginEmployeeName} />
-          )}
-        </div> */}
+        
         <div>
           {showShortlistedCandidateData && (
             <ShortListedCandidates
@@ -713,6 +714,11 @@ const EmpDashboard = ({ userGroup }) => {
               loginEmployeeName={loginEmployeeName}
               onsuccessfulDataAdditions={handleSuccessfulDataAdditions}
             />
+          )}
+        </div>
+        <div>
+          {showHelp && (
+            <Help/>
           )}
         </div>
         <div>

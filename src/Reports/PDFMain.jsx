@@ -1,7 +1,14 @@
 // PDFGenerator.jsx
-import React from 'react';
-import { Document, Page, PDFViewer, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { format, subMonths, startOfMonth, endOfMonth } from 'date-fns';
+import React from "react";
+import {
+  Document,
+  Page,
+  PDFViewer,
+  Text,
+  View,
+  StyleSheet,
+} from "@react-pdf/renderer";
+import { format, subMonths, startOfMonth, endOfMonth } from "date-fns";
 
 const styles = StyleSheet.create({
   page: {
@@ -45,15 +52,20 @@ const styles = StyleSheet.create({
 });
 
 const PDFGenerator = ({ selectedDate }) => {
-  const lastMonthDate = format(subMonths(new Date(selectedDate), 1), 'yyyy-MM-dd');
-  const startDate = format(startOfMonth(new Date(lastMonthDate)), 'yyyy-MM-dd');
-  const endDate = format(endOfMonth(new Date(lastMonthDate)), 'yyyy-MM-dd');
+  const lastMonthDate = format(
+    subMonths(new Date(selectedDate), 1),
+    "yyyy-MM-dd"
+  );
+  const startDate = format(startOfMonth(new Date(lastMonthDate)), "yyyy-MM-dd");
+  const endDate = format(endOfMonth(new Date(lastMonthDate)), "yyyy-MM-dd");
 
   return (
-    <PDFViewer style={{ width: '100%', height: '100vh' }}>
+    <PDFViewer style={{ width: "100%", height: "100vh" }}>
       <Document>
         <Page size="A4" style={styles.page}>
-          <Text style={styles.title}>Monthly Report for Last Month ({lastMonthDate})</Text>
+          <Text style={styles.title}>
+            Monthly Report for Last Month ({lastMonthDate})
+          </Text>
 
           <View style={styles.table}>
             <View style={styles.tableRow}>
@@ -66,7 +78,6 @@ const PDFGenerator = ({ selectedDate }) => {
               <Text style={styles.tableCol}>100</Text>
             </View>
           </View>
-
         </Page>
       </Document>
     </PDFViewer>
