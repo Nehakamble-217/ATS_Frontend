@@ -14,15 +14,13 @@ function CandidateVerification() {
         console.log(location);
 
 
-        axios.get(`http://192.168.1.42:9090/api/ats/157industries/verify${location.search}`);
 
+        axios.get(`http://192.168.1.42:9090/api/ats/157industries/verify${location.search}`);
     }, [location.search]);
 
     useEffect(() => {
         axios
             .get(
-
-
                 `http://192.168.1.42:9090/api/ats/157industries/verify/${location.search.split("email=")[1]
                 }`
             )

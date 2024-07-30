@@ -1,4 +1,5 @@
 // Akash_Pawar_CallingTracker_Validation_&_Distance_&_Salary_Calculation_23/07
+// SwapnilRokade_CallingTrackerForm_addedProcessImprovmentEvaluatorFunctionalityStoringInterviweResponse_03_to_1802_29/07/2024
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -12,6 +13,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../EmployeeSection/CallingTrackerForm.css";
 import { toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
+import Confetti from "react-confetti";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const CallingTrackerForm = ({
   onsuccessfulDataAdditions,
@@ -19,11 +22,13 @@ const CallingTrackerForm = ({
   loginEmployeeName,
 }) => {
   const { employeeId } = useParams();
+  const [submited,setSubmited]=useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const { userType } = useParams();
   const initialCallingTrackerState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: "",
-    recruiterName: "",
+    recruiterName: loginEmployeeName,
     candidateName: "",
     candidateEmail: "",
     jobDesignation: "",
@@ -43,7 +48,7 @@ const CallingTrackerForm = ({
   const initialLineUpState = {
     date: new Date().toISOString().slice(0, 10),
     candidateAddedTime: "",
-    recruiterName: "",
+    recruiterName: loginEmployeeName,
     candidateName: "",
     candidateEmail: "",
     jobDesignation: "",
@@ -80,6 +85,8 @@ const CallingTrackerForm = ({
     finalStatus: "",
     resume: null,
   };
+
+  
 
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
@@ -239,6 +246,7 @@ const CallingTrackerForm = ({
 
     if (!startTime) {
       setStartTime(Date.now());
+
       console.log("timmer Start");
     }
     if (name === "selectYesOrNo" && value === "No") {
@@ -316,6 +324,7 @@ const CallingTrackerForm = ({
   };
 
   const handleSubmit = async (e) => {
+    setSubmited(true);
     e.preventDefault();
     let callingTrackerErrors = validateCallingTracker();
     let lineUpDataErrors = validateLineUpData();
@@ -327,6 +336,7 @@ const CallingTrackerForm = ({
       return;
     }
 
+    let fromFillingTime = null;
     if (startTime) {
       const endTime = Date.now();
       const timeTaken = (endTime - startTime) / 1000; // Time in seconds
@@ -335,18 +345,41 @@ const CallingTrackerForm = ({
       console.log(
         `Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`
       );
+      fromFillingTime = `${minutes} minutes and ${seconds} seconds`;
     }
 
     try {
       let dataToUpdate = {
         ...callingTracker,
+          performanceIndicator: {
+          employeeId: employeeId,
+          employeeName: loginEmployeeName,
+          jobRole: userType,
+          candidateName: callingTracker.candidateName,
+          jobId: callingTracker.requirementId,
+          salary: convertedCurrentCTC,
+          experience: `${lineUpData.experienceYear} years ${lineUpData.experienceMonth} months`,
+          companyName: callingTracker.requirementCompany,
+          designation: callingTracker.jobDesignation,
+          candidateFormFillingDuration: fromFillingTime,
+          callingTacker: formatDateToIST(new Date()),
+          lineup: formatDateToIST(new Date()),
+          mailToClient: null,
+          mailResponse: null,
+          sendingDocument: null,
+          issueOfferLetter: null,
+          letterResponse: null,
+          joiningProcess: null,
+          joinDate: null,
+      },
       };
       if (userType === "Recruiters") {
+        console.log(employeeId);
         dataToUpdate.employee = { employeeId: employeeId };
       } else if (userType === "TeamLeader") {
+        console.log(employeeId);
         dataToUpdate.teamLeader = { teamLeaderId: employeeId };
       }
-
       if (callingTracker.selectYesOrNo === "Interested") {
         dataToUpdate.lineUp = lineUpData;
       }
@@ -354,21 +387,46 @@ const CallingTrackerForm = ({
         `http://192.168.1.42:9090/api/ats/157industries/calling-tracker/${userType}`,
         dataToUpdate
       );
+    
+      console.log(response);
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
-      if (response.ok) {
+      if (callingTracker.selectYesOrNo === "Interested") {
         onsuccessfulDataAdditions(true);
       } else {
         onsuccessfulDataAdditions(false);
       }
-      //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions End LineNo:-223 Date:-01/07
-
-      toast.success("Data Added successfully:");
-      setCallingTracker(initialCallingTrackerState);
-      setLineUpData(initialLineUpState);
+      // Name:-Swapnil Rokade Componenet;-callingTracker Adding time Taken Functionality Date:-26/07
+      if (response.data) {
+        console.log(response.data.body);
+        setSubmited(false);
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 5000);
+        toast.success("Data Added successfully:");
+        setCallingTracker(initialCallingTrackerState);
+        setLineUpData(initialLineUpState);
+      }
     } catch (error) {
+      setSubmited(false);
       toast.error(error);
     }
   };
+
+  function formatDateToIST(date) {
+    // Convert to IST
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istDate = new Date(date.getTime() + istOffset);
+  
+    // Extract the components
+    const year = istDate.getUTCFullYear();
+    const month = String(istDate.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(istDate.getUTCDate()).padStart(2, '0');
+    const hours = String(istDate.getUTCHours()).padStart(2, '0');
+    const minutes = String(istDate.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(istDate.getUTCSeconds()).padStart(2, '0');
+  
+    // Format as yyyy-mm-dd hh:mm:ss
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
 
   const handleLocationChange = (e) => {
     const value = e.target.value;
@@ -502,6 +560,16 @@ const CallingTrackerForm = ({
     <div className="calling-tracker-main">
       <section className="calling-tracker-submain">
         <form onSubmit={handleSubmit}>
+          {showConfetti && (
+            <Confetti
+              width={window.innerWidth * (100 / 100)}
+              height={window.innerHeight * (100 / 100)}
+              colors={["#f44336", "#f44336", "#f44336", "#f44336"]}
+              numberOfPieces={400}
+              gravity={0.3}
+              wind={0.01}
+            />
+          )}
           <div className="calling-tracker-form">
             <div className="calling-tracker-row-gray">
               <div className="calling-tracker-field">
@@ -1443,7 +1511,7 @@ const CallingTrackerForm = ({
                   <input
                     type="text"
                     name="communicationRating"
-                    value={callingTracker.communicationRating}
+                    value={lineUpData.communicationRating}
                     onChange={handleLineUpChange}
                     className="plain-input"
                     placeholder="Enter Communication Rating"
@@ -1697,6 +1765,11 @@ const CallingTrackerForm = ({
         onUpdateExpectedCTCLakh={handleUpdateExpectedCTCLakh}
         onUpdateExpectedCTCThousand={handleUpdateExpectedCTCThousand}
       />
+      {submited && (
+        <div className="SCE_Loading_Animation">
+          <ClipLoader size={50} color="#ffb281" />
+        </div>
+      )}
     </div>
   );
 };

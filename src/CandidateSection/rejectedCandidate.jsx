@@ -131,7 +131,9 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const fetchRejectedData = async () => {
     try {
       const response = await fetch(
+
         `http://192.168.1.42:9090/api/ats/157industries/rejected-candidate/${employeeId}/${userType}`
+
       );
       const data = await response.json();
       setCallingList(data);
@@ -152,6 +154,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const fetchManager = async () => {
     try {
       const response = await fetch(
+
         `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
@@ -164,6 +167,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
+
         `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
@@ -175,6 +179,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
+
         `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
@@ -230,6 +235,7 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
 
   const handleShare = async () => {
     setIsDataSending(true);
+
     let url = `http://192.168.1.42:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (

@@ -50,6 +50,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
+
         `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
       );
       if (userType === "SuperUser") {
@@ -80,7 +81,9 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
+
       `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -95,7 +98,9 @@ function Accesstable() {
 
   const fetchColumnsNames = async () => {
     const response = await axios.get(
+
       `http://192.168.1.42:9090/api/ats/157industries/fetch-columns-names`
+
     );
     setColumnName(response.data);
   };
@@ -159,7 +164,9 @@ function Accesstable() {
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_158_165
   const fetchAssignedColumn = async (assigneID, assigneeJobRole) => {
     const response = await axios.get(
+
       `http://192.168.1.42:9090/api/ats/157industries/column-by-id/${assigneID}/${assigneeJobRole}`
+
     );
     setFetchupdateAssignedColumn(response.data);
     // console.log(response.data);
@@ -178,7 +185,9 @@ function Accesstable() {
     try {
       if (selectedRecruiters.recruiterId != "") {
         response = await axios.post(
+
           `http://192.168.1.42:9090/api/ats/157industries/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
+
 
           JSON.stringify(selectedOptions),
           {
@@ -189,7 +198,9 @@ function Accesstable() {
         );
       } else if (selectedTeamLeader.teamLeaderId != "") {
         response = await axios.post(
+
           `http://192.168.1.42:9090/api/ats/157industries/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
+
 
           JSON.stringify(selectedOptions),
           {
@@ -200,7 +211,9 @@ function Accesstable() {
         );
       } else {
         response = await axios.post(
+
           `http://192.168.1.42:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
+
 
           JSON.stringify(selectedOptions),
           {
@@ -246,7 +259,9 @@ function Accesstable() {
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_260_269
   const fetchAssignedColumnCount = async () => {
     const response = await axios.get(
+
       `http://192.168.1.42:9090/api/ats/157industries/column-category-counts/${employeeId}/${userType}`
+
     );
     setAssignedColumnsCount(response.data);
   };

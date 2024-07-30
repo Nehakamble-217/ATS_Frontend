@@ -120,6 +120,7 @@ const LineUpList = ({
     "yearOfPassing",
   ];
   const { userType } = useParams();
+  console.log(userType);
 
   //akash_pawar_LineUpList_ShareFunctionality_16/07_128
   const fetchCallingTrackerData = async () => {
