@@ -56,6 +56,7 @@ import IssueSolving from "../AboutUs/issueSolving";
 import WorkplacePolicy from "../AboutUs/companyPolicy";
 import PainAreaSolving from "../AboutUs/painAreaSolving";
 import RightsAndInstructions from "../AboutUs/rightsAndInstructions";
+// import TeamDetails from "../TeamDetails/teamDetails";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -173,6 +174,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showIssueSolving, setShowIssueSolving] = useState(false);
   const [showPainArea, setShowPainArea] = useState(false);
   const [showRightsInstruction, setShowRightsInstruction] = useState(false);
+   const [showTeamDetails, setShowTeamDetails] = useState(false);
 
   const [id, setId] = useState(0);
   const navigator = useNavigate();
@@ -294,6 +296,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowPayment(false);
     setscheduleinterview(false); /*neha_addScheduleinterview_18/07_lineno_245*/
     setShowRightsInstruction(false);
+    setShowTeamDetails(false);
     setShowCompanyPolicy(false);
     setShowPainArea(false);
     setShowIssueSolving(false);
@@ -509,6 +512,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowRightsInstruction(!showRightsInstruction);
   };
+  // const toggleTeamDetails = () => {
+  //   resetAllToggles();
+  //   setShowTeamDetails(!showTeamDetails);
+  // };
   const toggeleCompanyPolicy = () => {
     resetAllToggles();
     setShowCompanyPolicy(!showCompanyPolicy);
@@ -600,6 +607,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleBilling={toggleBilling}
         togglescheduleinterview={togglescheduleinterview}
         toggeleRightsInstructions={toggeleRightsInstructions}
+        // toggleTeamDetails={toggleTeamDetails}
         toggeleCompanyPolicy={toggeleCompanyPolicy}
         toggeleIssueSolving={toggeleIssueSolving}
         toggelePainArea={toggelePainArea}
@@ -625,6 +633,7 @@ const EmpDashboard = ({ userGroup }) => {
               onClose={handleCloseProfile}
               toggleIncentive={toggleIncentive}
               toggleAttendance={toggleAttendance}
+              // toggleTeamDetails={toggleTeamDetails}
             ></EmployeeProfileData>
           )}
         </div>
@@ -776,6 +785,11 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showRightsInstruction && (
             <RightsAndInstructions></RightsAndInstructions>
+          )}
+        </div>
+        <div>
+          {showTeamDetails && (
+            <TeamDetails></TeamDetails>
           )}
         </div>
       </div>

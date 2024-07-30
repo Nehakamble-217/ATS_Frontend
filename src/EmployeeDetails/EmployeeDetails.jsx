@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, OverlayTrigger, Tooltip  } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./EmployeeDetails.css";
 import UpdateEmployee from "./UpdateEmployee";
@@ -66,6 +66,32 @@ const EmployeeDetails = () => {
     setSelectedCandidateResume("");
     setShowResumeModal(false);
   };
+  const handleMouseOver = (event) => {
+    const tableData = event.currentTarget;
+    const tooltip = tableData.querySelector(".tooltip");
+    const tooltiptext = tableData.querySelector(".tooltiptext");
+
+    if (tooltip && tooltiptext) {
+      const textOverflowing =
+        tableData.offsetWidth < tableData.scrollWidth ||
+        tableData.offsetHeight < tableData.scrollHeight;
+      if (textOverflowing) {
+        const rect = tableData.getBoundingClientRect();
+        tooltip.style.top = `${rect.top - 10}px`;
+        tooltip.style.left = `${rect.left + rect.width / 100}px`;
+        tooltip.style.visibility = "visible";
+      } else {
+        tooltip.style.visibility = "hidden";
+      }
+    }
+  };
+
+  const handleMouseOut = (event) => {
+    const tooltip = event.currentTarget.querySelector(".tooltip");
+    if (tooltip) {
+      tooltip.style.visibility = "hidden";
+    }
+  };
 
   const convertToDocumentLink = (byteCode, fileName) => {
     if (byteCode) {
@@ -117,8 +143,9 @@ const EmployeeDetails = () => {
                   <th className="attendanceheading">Employee Number</th>
                   <th className="attendanceheading">Date of Joining</th>
                   <th className="attendanceheading">Designation</th>
+                 
                   <th className="attendanceheading">Job Role</th>
-                  <th className="attendanceheading">Department</th>
+                  <th className="attendanceheading">Department  </th>
                   <th className="attendanceheading">Reporting Manager Name</th>
                   <th className="attendanceheading">Resume File</th>
                   <th className="attendanceheading">Employee Status</th>
@@ -128,20 +155,109 @@ const EmployeeDetails = () => {
               <tbody>
                 {employeeData.map((employee, index) => (
                   <tr key={index} className="attendancerows">
-                    <td className="tabledata">{employee.id}</td>
-                    <td className="tabledata">{employee.name}</td>
-                    <td className="tabledata">{employee.contact}</td>
-                    <td className="tabledata">{employee.joinDate}</td>
-                    <td className="tabledata">{employee.designation}</td>
-                    <td className="tabledata">{employee.jobRole}</td>
-                    <td className="tabledata">{employee.department}</td>
-                    <td className="tabledata">{employee.reportingManger}</td>
+                    
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.id}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.id}</span>
+                    </div>
+                      
+                    </td>
+
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.name}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.name}</span>
+                    </div>
+                      
+                    </td> 
+
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.contact}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.contact}</span>
+                    </div>
+                      
+                    </td> 
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.joinDate}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.joinDate}</span>
+                    </div>
+                      
+                    </td>
+                     
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.designation}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.designation}</span>
+                    </div>
+                      
+                    </td>
+
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.jobRole}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.jobRole}</span>
+                    </div>
+                      
+                    </td>
+
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.department}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.department}</span>
+                    </div>
+                      
+                    </td>
+                    
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.reportingManger}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.reportingManger}</span>
+                    </div>
+                      
+                    </td>           
+
                     <td className="tabledata">
                       <button onClick={() => openResumeModal(employee.resume)}>
                         <i className="fas fa-eye"></i>
                       </button>
                     </td>
-                    <td className="tabledata">{employee.status}</td>
+                    <td className="tabledata"
+                     onMouseOver={handleMouseOver}
+                     onMouseOut={handleMouseOut}>
+
+                    {employee.status}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{employee.status}</span>
+                    </div>
+                      
+                    </td>  
                     <td className="tabledata">
                       <div className="emp-details-act-btn">
                         <button

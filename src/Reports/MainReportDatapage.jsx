@@ -65,6 +65,7 @@ const MonthReport = () => {
   const [selectedMonth, setSelectedMonth] = useState("lastMonth");
   const [reportDataDatewise, setReportDataDatewise] = useState(null);
 
+
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
@@ -608,9 +609,11 @@ const MonthReport = () => {
       setDropdownOpen(false);
       setShowReport(true);
     }
+
   };
 
   const handleSearchChange = useCallback((event) => {
+  
     setSearchTerm(event.target.value);
   }, []);
 
@@ -910,6 +913,7 @@ const MonthReport = () => {
         {showReport && (
           <div>
             <div className="month-report">
+             
               <div className="month-selector">
                 {selectedDate && <PDFGenerator selectedDate={selectedDate} />}
 
