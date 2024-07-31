@@ -98,14 +98,11 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
         const responseUpdatedDate = new Date(responseUpdatedDateStr);
         const currentDateTime = new Date(); // Current date and time
     
-        // Calculate the difference in milliseconds
         const timeDifference = currentDateTime - responseUpdatedDate;
         const absoluteTimeDifference = Math.abs(timeDifference);
     
-        // Calculate the difference in days
         const daysDifference = Math.floor(absoluteTimeDifference / (1000 * 60 * 60 * 24));
     
-        // Calculate the remaining time difference in hours and minutes
         const hoursDifference = Math.floor((absoluteTimeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutesDifference = Math.floor((absoluteTimeDifference % (1000 * 60 * 60)) / (1000 * 60));
         const difference = `${daysDifference} days, ${hoursDifference} hours, and ${minutesDifference} minutes.`;

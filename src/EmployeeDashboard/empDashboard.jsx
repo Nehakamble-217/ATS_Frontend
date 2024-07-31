@@ -57,11 +57,11 @@ import WorkplacePolicy from "../AboutUs/companyPolicy";
 import PainAreaSolving from "../AboutUs/painAreaSolving";
 import RightsAndInstructions from "../AboutUs/rightsAndInstructions";
 // import TeamDetails from "../TeamDetails/teamDetails";
+import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
   const [addCandidate, setAddCandidate] = useState(false);
-  const[showHelp, setshowHelp] = useState(false)
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
   const [successShare, setSuccessShare] = useState(false); //neha_add_this_state_bcz_came_error_to_console
@@ -136,6 +136,8 @@ const EmpDashboard = ({ userGroup }) => {
   const [showSubscription, setShowSubscription] = useState(false);
   const [showBilling, setShowBilling] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [showCandidateHistory, setShowCandidateHistory] = useState(false);
+
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -143,7 +145,7 @@ const EmpDashboard = ({ userGroup }) => {
   const handleSuccessfulDataAdditions = (check) => {
     setSuccessfulDataAdditions(check);
   };
- 
+
   useEffect(() => {
     setSuccessfulDataAdditions(false);
   }, [successfulDataAdditions]);
@@ -174,7 +176,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showIssueSolving, setShowIssueSolving] = useState(false);
   const [showPainArea, setShowPainArea] = useState(false);
   const [showRightsInstruction, setShowRightsInstruction] = useState(false);
-   const [showTeamDetails, setShowTeamDetails] = useState(false);
+  const [showTeamDetails, setShowTeamDetails] = useState(false);
 
   const [id, setId] = useState(0);
   const navigator = useNavigate();
@@ -241,7 +243,6 @@ const EmpDashboard = ({ userGroup }) => {
   const resetAllToggles = () => {
     setUpdateSelfCalling(false);
     setAddCandidate(false);
-    setshowHelp(false)
     setShowInterviewDate(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -300,6 +301,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCompanyPolicy(false);
     setShowPainArea(false);
     setShowIssueSolving(false);
+    setShowCandidateHistory(false)
   };
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -423,10 +425,7 @@ const EmpDashboard = ({ userGroup }) => {
     setAssignColumns(!assignColumns);
   };
 
-  const toggleHome = () => {
-    resetAllToggles();
-    setShowHome(!showHome);
-  };
+
   const toggleResumeLink = () => {
     resetAllToggles();
     setResumeLink(!resumeLink);
@@ -541,11 +540,16 @@ const EmpDashboard = ({ userGroup }) => {
     setShowPayment(!showPayment);
   };
 
+  const toggelCandidateHistory = () => {
+    resetAllToggles();
+    setShowCandidateHistory(!showCandidateHistory)
+  }
+
+
   return (
     <div
-      className={`grid-container ${
-        openSidebarToggle ? "sidebar-open" : "sidebar-closed"
-      }`}
+      className={`grid-container ${openSidebarToggle ? "sidebar-open" : "sidebar-closed"
+        }`}
     >
       <Sidebar
         userGroup={userGroup}
@@ -554,7 +558,6 @@ const EmpDashboard = ({ userGroup }) => {
         toggleSelfCalling={toggleSelfCalling}
         toggelLineUp={toggelLineUp}
         toggleCallingTrackerForm={toggleCallingTrackerForm}
-        toggelHelp={toggelHelp}
         toggleAttendance={toggleAttendance}
         toggleShortListed={toggleShortListed}
         toggleSelectCandidate={toggleSelectCandidate}
@@ -562,8 +565,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleHoldCandidate={toggleHoldCandidate}
         toggleExcelCalling={toggleExcelCalling}
         toggleResumeData={toggelResumeData}
-        toggleJobDescription={toggleJobDescription}
-        // toggleInterviewDate={toggleInterviewDate}
+        toggleJobDescription={toggleJobDescription}// toggleInterviewDate={toggleInterviewDate}
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
@@ -611,6 +613,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggeleCompanyPolicy={toggeleCompanyPolicy}
         toggeleIssueSolving={toggeleIssueSolving}
         toggelePainArea={toggelePainArea}
+        toggelCandidateHistory={toggelCandidateHistory}
       />
 
       <div className="empDash-main-content">
@@ -633,7 +636,7 @@ const EmpDashboard = ({ userGroup }) => {
               onClose={handleCloseProfile}
               toggleIncentive={toggleIncentive}
               toggleAttendance={toggleAttendance}
-              // toggleTeamDetails={toggleTeamDetails}
+            // toggleTeamDetails={toggleTeamDetails}
             ></EmployeeProfileData>
           )}
         </div>
@@ -647,7 +650,7 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        
+
         <div>
           {showShortlistedCandidateData && (
             <ShortListedCandidates
@@ -726,11 +729,6 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>
-          {showHelp && (
-            <Help/>
-          )}
-        </div>
-        <div>
           {updateSelfCalling && (
             <UpdateCallingTracker candidateId={candidateIdForUpdate} />
           )}
@@ -787,6 +785,13 @@ const EmpDashboard = ({ userGroup }) => {
             <RightsAndInstructions></RightsAndInstructions>
           )}
         </div>
+
+        <div>
+          {showCandidateHistory && (
+            <CandidateHistoryTracker></CandidateHistoryTracker>
+          )}
+        </div>
+
         <div>
           {showTeamDetails && (
             <TeamDetails></TeamDetails>

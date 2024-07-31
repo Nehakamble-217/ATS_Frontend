@@ -1,23 +1,21 @@
-// Prachi Parab  component :Rights + instructions + best view + information  19/07/2024 line No 4 to 325
+// Prachi Parab  component :Rights + instructions + best view + information  19/07/2024 wholepage
 
-import React, { useRef } from "react";
-import { useReactToPrint } from "react-to-print";
-import "../AboutUs/rightsandInstructions.css";
+
+import React, { useRef } from 'react';
+import '../AboutUs/rightsandInstructions.css';
+import { useReactToPrint } from 'react-to-print';
 
 const RightsAndInstructions = () => {
   const policyRef = useRef();
-
   const handleGeneratePDF = async () => {
-    const issueContainer = document.getElementById("issue-containers");
+    const issueContainer = document.getElementById('issue-containers');
     const canvas = await html2canvas(issueContainer, { scale: 2 });
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "pt", "a4");
-
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'pt', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
-    const margin = 20; // Set margin size (in points)
-    const borderWidth = 1; // Set border width (in points)
-
+    const margin = 20;  // Set margin size (in points)
+    const borderWidth = 1;  // Set border width (in points)
     const contentWidth = pdfWidth - 2 * margin;
     const imgProps = pdf.getImageProperties(imgData);
     const imgHeight = (imgProps.height * contentWidth) / imgProps.width;
@@ -32,420 +30,269 @@ const RightsAndInstructions = () => {
       if (page > 1) {
         pdf.addPage();
       }
-      pdf.addImage(imgData, "PNG", margin, position, contentWidth, imgHeight);
-      pdf.rect(margin, margin, contentWidth, pdfHeight - 2 * margin); // Add border
+      pdf.addImage(imgData, 'PNG', margin, position, contentWidth, imgHeight);
+      pdf.rect(margin, margin, contentWidth, pdfHeight - 2 * margin);  // Add border
 
-      heightLeft -= pdfHeight - 2 * margin;
-      position -= pdfHeight - 2 * margin; // Adjust position for next page
+      heightLeft -= (pdfHeight - 2 * margin);
+      position -= (pdfHeight - 2 * margin);  // Adjust position for next page
 
       page++;
     }
 
     // Saving the PDF
-    pdf.save("WorkplacePolicy.pdf");
+    pdf.save('Instructions.pdf');
   };
+
 
   const handlePrint = useReactToPrint({
     content: () => policyRef.current,
-    documentTitle: "WorkplacePolicy",
+    documentTitle: 'WorkplacePolicy',
   });
 
+
   return (
-    <div className="rightsandInstructions">
-      <div ref={policyRef} className="issue-containers" id="issue-containers">
-        <div id="instructions" className="rightsandInstructionsdiv">
-          <h3 className="instr-headings">
-            <span className="instr-headings-span">
-              Instructions for Using the Recruitment's Gear Software
-            </span>
-          </h3>
-          <p>
+    <div className='rightsandInstructions'>
+
+      <div ref={policyRef} className="issue-containers" id='issue-containers'>
+
+        <div id='instructions' className='rightsandInstructionsdiv'>
+          <div className="policy-header">
+            <h3 >Instructions</h3>
+          </div>
+          <p className='Instruction-soft'>
             <ul>
-              <li className="liststyletype">
-                <ul>
-                  <li>
-                    {" "}
-                    <b>Login:</b> Use your assigned credentials to access the
-                    software platform.
-                  </li>
-                  <li>
-                    <b>Navigation:</b> Familiarize yourself with the dashboard
-                    and navigation menus for easy access to different
-                    functionalities.
-                  </li>
-                  <li>
-                    After Login, you can find four segments{" "}
-                    <b>1.Client 2.Employee 3.Applicants 4.Vendor</b>{" "}
-                  </li>
 
-                  <b>1. Client</b>
-                  <li className="liststyletype">
-                    <ul>
-                      <li className="liststyletype"> &rarr; Instructions :</li>
-                      <ul>
-                        <li className="liststyletype">
-                          &#x25CB; Schedule interview as early as possible
-                        </li>
-                        <li className="liststyletype">
-                          &#x25CB; If lay off, give valid reason
-                        </li>
-                        <li className="liststyletype">
-                          &#x25CB; After completion of 90 days, payment must be
-                          within 15 days.
-                        </li>
-                      </ul>
-                    </ul>
-                  </li>
+              <li> <span className='innerText'>Strictly use your assigned credentials to access the software platform.Multiple attempts on different devices will block System.</span></li>
+              <li> <span className='innerText'> Familiarize yourself with the dashboard and navigation menus for easy access to different functionalities.</span></li>
+              <li><span className='innerText'>After Login, you can find four segments 1.Client 2.Employee 3.Applicants 4.Vendor </span></li>
 
-                  <li className="liststyletype">
-                    <b>2. Employee</b>
-                    <ul>
-                      <li className="liststyletype">
-                        &#x25CB; After clicking Employee Section,it displays{" "}
-                        <b>Recruiter, TeamLeader, Manager, Super User </b>{" "}
-                        categories.
-                      </li>
-                    </ul>
-                  </li>
+              <span className='headingPage'>1. Client</span>
 
-                  <li className="liststyletype">
-                    {" "}
-                    <b> &nbsp; &rArr; Recruiter</b>
-                    <ul>
-                      <li className="liststyletype"> &rarr; Instructions :</li>
-                      <ul>
-                        <li className="liststyletype">
-                          &#x25CB; <b>Login:</b> Use your assigned credentials
-                          to access the software platform.
-                        </li>
-                        <li className="liststyletype">
-                          &#x25CB; As per dashboard and navigation menus,we can
-                          find -
-                          <ul>
-                            <li className="liststyletype">
-                              &#x2605; <b>Job Desciption </b>- Display all
-                              requirements
-                            </li>
-                            <li className="liststyletype">
-                              &#x2605; <b>Add Candidate </b>- Adds all required
-                              information about Candidate
-                            </li>
-                            <li className="liststyletype">
-                              &#x2605; <b>Find Candidate </b>- Display
-                              candidates as per Job Description
-                            </li>
-                            <li className="liststyletype">
-                              &#x2605; <b>Calling Tracker </b>- Once added
-                              Candidate, it displays in Calling Tracker page.
-                            </li>
-                            <li className="liststyletype">
-                              &#x2605; <b>LineUp Data </b>-When interview
-                              schedule as per client,particular Calling Tracker
-                              data added to Lineup{" "}
-                            </li>
-                            <li className="liststyletype">
-                              &#x2605; After interview, data will categeries
-                              into Selected,Rejected,Hold,Dropout,Join,Not Join
-                              etc. categories{" "}
-                            </li>
-                            <li className="liststyletype">
-                              &#x2605; Once Candidate selected, send him for
-                              background verification also take follow up for 90
-                              days{" "}
-                            </li>
-                            <li className="liststyletype">
-                              &#x2605; After completion of 90 days, payment must
-                              be within 15 days.{" "}
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </ul>
-                  </li>
 
-                  <li className="liststyletype">
-                    {" "}
-                    <b> &nbsp; &rArr; TeamLeader</b>
-                    <ul>
-                      <li className="liststyletype"> &rarr; Instructions :</li>
-                      <ul>
-                        <li className="liststyletype">
-                          &#x25CB; <b>Login:</b> Use your assigned credentials
-                          to access the software platform.
-                        </li>
-                        <li className="liststyletype">
-                          &#x25CB; Team Leader has authority to
-                          Update,Delete,Block candidate
-                        </li>
-                      </ul>
-                    </ul>
-                  </li>
+              <li className='liststyletype'><span className='headingPage'>2. Employee</span>
 
-                  <li className="liststyletype">
-                    {" "}
-                    <b> &nbsp; &rArr; Manager</b>
-                    <ul>
-                      <li className="liststyletype"> &rarr; Instructions :</li>
-                      <ul>
-                        <li className="liststyletype">
-                          &#x25CB; <b>Login:</b> Use your assigned credentials
-                          to access the software platform.
-                        </li>
-                        <li className="liststyletype">
-                          &#x25CB; Manager has authority to Update,Delete,Block
-                          candidate also,can view reports of performance of
-                          recruiters,teamLeader
-                        </li>
-                      </ul>
-                    </ul>
-                  </li>
+                <li className='liststyletype'><span className='innerText'> After clicking Employee Section,it displays Recruiter, TeamLeader, Manager, Super User categories.</span></li>
 
-                  <li className="liststyletype">
-                    {" "}
-                    <b> &nbsp; &rArr; Super User</b>
-                    <ul>
-                      <li className="liststyletype"> &rarr; Instructions :</li>
-                      <ul>
-                        <li className="liststyletype">
-                          &#x25CB; <b>Login:</b> Use your assigned credentials
-                          to access the software platform.
-                        </li>
-                        <li className="liststyletype">
-                          &#x25CB; Super User has authority to
-                          Update,Delete,Block candidate also,can view reports of
-                          performance of Recruiters,TeamLeader,Manager
-                        </li>
-                      </ul>
-                    </ul>
-                  </li>
-
-                  <li className="liststyletype">
-                    {" "}
-                    <b>3. Applicant</b>
-                    <ul>
-                      <li className="liststyletype">&rarr; Instructions :</li>
-                      <ul></ul>
-                    </ul>
-                  </li>
-                  <li className="liststyletype">
-                    {" "}
-                    <b>4. Vendor</b>
-                    <ul>
-                      <li className="liststyletype">&rarr; Instructions :</li>
-                      <ul>
-                        <li className="liststyletype">
-                          {" "}
-                          &#x25CB; <b>Login:</b> Use your assigned credentials
-                          to access the software platform.
-                        </li>
-                        <li className="liststyletype">
-                          {" "}
-                          &#x25CB; Vendor can add Candidate and keep track of
-                          it.
-                        </li>
-                      </ul>
-                    </ul>
-                  </li>
-
-                  <li>Database menu gives all uploaded resumes.</li>
-                  <li>Resume menu,creates resume for applicant.</li>
-                  <li>
-                    Based on attendence and over all work performance report
-                    will be generated
-                  </li>
-                  <li>Chat section is added for internal chat</li>
-                </ul>
               </li>
+              <li className='liststyletype'> <span className='headingPage'>A. Recruiter</span>
+                <li className='liststyletype'> <span className='headingPage'>Login:</span><span className='innerText'>Strictly use your recruiter's credentials to access the software platform.Multiple attempts on different devices will block System.</span></li>
+                <li className='liststyletype'> <span className='innerText'>After Login, Navigation menus on the dashboard - </span>
+
+                  <li> <span className='headingPage'>Job Description </span>-
+                    <span className='innerText'>
+                      Look for a "Job Description" button and click on it. It will display submenus 1.Add Job Description and 2. view Job Description.<br></br>
+                      1.On click of Add Job Description, form will display .Enter Company Name, position, year of passing,and any other relevant details. Click on Submit to add them to your database.
+                      <br></br>2.On click of view Job Description ,we can find jobs by designation, by experience also by location.
+                      On Click of search button, display popup of relevant Job Description.
+                    </span></li>
+                  <li > <span className='headingPage'>Add Candidate </span>-
+                    <span className='innerText'>
+                      Look for an "Add Candidate" button and click on it.It will display a form. Enter the candidate’s name, contact information, resume, cover letter, and any other relevant details.Link the candidate to a specific job Id.Save the candidate’s profile to add them to your database.
+                    </span></li>
+                  <li> <span className='headingPage'>Find Candidate </span>-
+                    <span className='innerText'>
+
+                      It will popup five sub menus Calling Tracker, Lineup Tracker, Selected Candidate, Hold Candidate, Rejected Candidate.<br></br>
+                      <span className='headingPage'>Calling Tracker </span>- It keeps track of all added Candidates. Here, We can filter candidate as per ID, name, email, contact number, Job Description, location, etc.<br></br>
+                      <span className='headingPage'>Lineup Tracker</span> - When interview schedule as per client, particular Calling Tracker data added to Lineup page.<br></br>
+                      <span className='headingPage'>Selected Candidate </span>- When candidate selected, LineUp candidate comes under selected candidate category. <br></br>
+                      <span className='headingPage'>Hold Candidate </span>- When candidate on hold, LineUp candidate comes under hold candidate category.<br></br>
+                      <span className='headingPage'>Rejected Candidate</span> - When candidate rejected, LineUp candidate comes under rejected candidate category.
+
+                    </span></li>
+
+                  <li > <span className='headingPage'>Database </span>-
+                    <span className='innerText'>
+                      Look at the button "Database", click on it to display submenus "Upload Files" ,"Excel Calling Data","ExcelLineup Data", "Resume Data", "Send Link" menu.
+                      <br></br>
+                      In Upload Files,we can find 3 sections - Upload Calling Excel(To upload bulk of Calling data excel file), Upload Lineup Excel(To upload bulk of Lineup data excel file),Upload Resume(To upload bulk of resumes).
+                      <br></br>
+                      On click of view button we can view relevant data in tabular form.<br></br>
+
+                      <span className='headingPage'>Excel Calling Data</span>,it shows Calling data in tabular form.We can add different filter to it.<br></br>
+                      <span className='headingPage'>Excel Lineup Data</span>,it shows Lineup data in tabular form.We can add different filter to it.<br></br>
+                      <span className='headingPage'>Resume Data</span>,it shows Resume data in tabular form.We can add different filter to it.<br></br>
+                      <span className='headingPage'>Send Link</span>,it sends a link to create and/or Upload Resume.
+                    </span></li>
+                </li>
+              </li>
+              <li className='liststyletype'> <span className='headingPage'>B. TeamLeader</span>
+
+                <li className='liststyletype'><span className='headingPage'>Login:</span><span className='innerText'>  Use your assigned credentials to access the software platform.</span></li>
+                <li className='liststyletype'><span className='innerText'>  Team Leader has authority to Update,Delete,Block candidate</span></li>
+
+              </li>
+              <li className='liststyletype'> &nbsp;<span className='headingPage'>C. Manager</span>
+
+                <li className='liststyletype'> <span className='headingPage'>Login:</span><span className='innerText'>  Use your assigned credentials to access the software platform.</span></li>
+                <li className='liststyletype'><span className='innerText'>  Manager has authority to Update,Delete,Block candidate also,can view reports of performance of recruiters,teamLeader.</span></li>
+              </li>
+
+              <li className='liststyletype'> &nbsp;<span className='headingPage'>D. Super User</span>
+
+                <li className='liststyletype'><span className='headingPage'> Login:</span><span className='innerText'>  Use your assigned credentials to access the software platform.</span></li>
+                <li className='liststyletype'><span className='innerText'> Super User has authority to Update,Delete,Block candidate also,can view reports of performance of Recruiters,TeamLeader,Manager.</span></li>
+
+              </li>
+
+              <li className='liststyletype'> <span className='headingPage'> 3. Applicant </span>
+
+              </li>
+              <li className='liststyletype'> <span className='headingPage'>4. Vendor</span>
+
+                <li className='liststyletype'><span className='headingPage'>Login:</span> <span className='innerText'> Use your assigned credentials to access the software platform.</span></li>
+                <li className='liststyletype'><span className='innerText'>  Vendor can add Candidate and keep track of it.</span></li>
+
+              </li>
+
+              <li><span className='innerText'> Database menu gives all uploaded resumes.</span></li>
+              <li><span className='innerText'> Resume menu,creates resume for applicant.</span></li>
+              <li><span className='innerText'> Based on attendence and over all work performance report will be generated.</span></li>
+              <li><span className='innerText'> Chat section is added for internal chat.</span></li>
+
+
             </ul>
+
+
           </p>
         </div>
 
-        <div id="bestView" className="rightsandInstructionsdiv">
-          <h3 className="instr-headings">
-            <span className="instr-headings-span">Best View</span>
-          </h3>
-          <p>
+        <div id='bestView' className='rightsandInstructionsdiv'>
+          <div className="policy-header">
+            <h3 >Best View</h3>
+          </div>
+
+
+          <p className='Instruction-soft'>
             <ul>
-              <li>
-                <b>Job Listings </b>
+              <li><span className='headingPage'>Job Listings </span></li>
+              <li className='liststyletype'><span className='innerText'>
+
+                Display job listings in a clear and concise manner with essential details.
+                Filters and Sorting Allow recruiters to filter jobs by status, location, date posted, etc.
+              </span>
               </li>
-              <li className="liststyletype">
-                Display job listings in a clear and concise manner with
-                essential details. Filters and Sorting Allow recruiters to
-                filter jobs by status, location, date posted, etc.
-              </li>
-              <li>
-                <b>Candidate Management </b>
-              </li>
-              <li className="liststyletype">
-                Provide a detailed view of each candidate's profile including
-                resume, contact details, and application history.
+              <li><span className='headingPage'>Candidate Management </span></li>
+              <li className='liststyletype'>
+                <span className='innerText'>
+                  Provide a detailed view of each candidate's profile including resume, contact details, and application history.
+                </span>
               </li>
 
-              <li>
-                <b>Status Tracking </b>
-              </li>
-              <li className="liststyletype">
-                Enable recruiters to track candidate progress (e.g., application
-                stage, interview status) with clear visual indicators.
-              </li>
-
-              <li>
-                <b>Analytics and Reporting </b>
-              </li>
-              <li className="liststyletype">
-                Provide insights into recruitment efficiency and effectiveness
-                based on collected data.
+              <li><span className='headingPage'>Status Tracking </span></li>
+              <li className='liststyletype'>
+                <span className='innerText'>
+                  Enable recruiters to track candidate progress (e.g., application stage, interview status) with clear visual indicators.
+                </span>
               </li>
 
-              <li>
-                <b>Automated Mails </b>
-              </li>
-              <li className="liststyletype">
-                Send mail to recruiters and candidates about upcoming
-                interviews.
+
+
+              <li><span className='headingPage'>Analytics and Reporting </span></li>
+              <li className='liststyletype'>
+                <span className='innerText'>
+                  Provide insights into recruitment efficiency and effectiveness based on collected data.
+                </span>
               </li>
 
-              <li>
-                <b>Security and Compliance </b>
+
+              <li><span className='headingPage'>Automated Mails </span></li>
+              <li className='liststyletype'>
+                <span className='innerText'>
+                  Send mail to recruiters and candidates about upcoming interviews.
+                </span>
               </li>
-              <li className="liststyletype">
-                Ensure robust security measures to protect sensitive candidate
-                and client information.
+
+              <li><span className='headingPage'>Security and Compliance </span></li>
+              <li className='liststyletype'>
+                <span className='innerText'>
+                  Ensure robust security measures to protect sensitive candidate and client information.
+                </span>
               </li>
+
             </ul>
+
           </p>
         </div>
 
-        <div id="information" className="rightsandInstructionsdiv">
-          <h3 className="instr-headings">
-            <span className="instr-headings-span">
-              Information about Software
-            </span>
-          </h3>
-          <p>
-            <p>
-              An applicant tracking system (ATS) is software for recruiters and
-              employers to track candidates throughout the recruiting and hiring
-              process. This software can come equipped with capabilities ranging
-              from simple database functionality to a full-service suite of
-              tools that makes it easy for businesses of any size to filter,
-              manage, and analyze candidates. Moving a candidate through the
-              journey from first contact to start date can be a high-touch
-              process. It can be all too easy to lose a top candidate because of
-              slow response times or poor engagement around interview schedules.
-              An ATS creates greater visibility across the applicant lifecycle,
-              so touchpoints don’t fall through the cracks. An ATS creates
-              opportunities to automate manual processes, increase visibility
-              into the hiring cycle for the entire recruiting team, and increase
-              opportunities for communication throughout the candidate journey.
+        <div id='information' className='rightsandInstructionsdiv'>
+
+          <div className="policy-header">
+            <h3 >Information about Software</h3>
+          </div>
+
+          <span className='innerText'>
+            <p className='Information-soft'>
+
+              <p>
+
+                An applicant tracking system (ATS) is software for recruiters and employers to track candidates throughout the recruiting and hiring process. This software can come equipped with capabilities ranging from simple database functionality to a full-service suite of tools that makes it easy for businesses of any size to filter, manage, and analyze candidates.
+                Moving a candidate through the journey from first contact to start date can be a high-touch process. It can be all too easy to lose a top candidate because of slow response times or poor engagement around interview schedules. An ATS creates greater visibility across the applicant lifecycle, so touchpoints don’t fall through the cracks.
+                An ATS creates opportunities to automate manual processes, increase visibility into the hiring cycle for the entire recruiting team, and increase opportunities for communication throughout the candidate journey.
+
+              </p>
+              <p>
+                Recruiter Gear's Software display job listings in a clear and concise manner with essential details. Filters and Sorting Allow recruiters to filter jobs by status, location, date posted, etc. Also Provide a detailed view of each candidate's profile including resume, contact details, and application history. Enable recruiters to track candidate progress with clear visual indicators. Send mail to recruiters and candidates about upcoming interviews. In employee point of view, it displays the progress of all employees and show report by pie chart and by Progress Indicator.
+              </p>
+
             </p>
-            <p>
-              Recruiter Gear's Software display job listings in a clear and
-              concise manner with essential details. Filters and Sorting Allow
-              recruiters to filter jobs by status, location, date posted, etc.
-              Also Provide a detailed view of each candidate's profile including
-              resume, contact details, and application history. Enable
-              recruiters to track candidate progress with clear visual
-              indicators. Send mail to recruiters and candidates about upcoming
-              interviews. In employee point of view, it displays the progress of
-              all employees and show report by pie chart and by Progress
-              Indicator.
-            </p>
-          </p>
+          </span>
         </div>
 
-        <div id="Rights" className="rightsandInstructionsdiv">
-          <h3 className="instr-headings">
-            <span className="instr-headings-span">
-              Rights and Responsibilities for Recruiter's Gear Software
-            </span>
-          </h3>
-          <p>
+        <div id='Rights' className='rightsandInstructionsdiv'>
+          <div className="policy-header">
+            <h3 >Rights and Responsibilities for Recruiter's Gear Software</h3>
+          </div>
+          <p className='Instruction-soft'>
             <ul>
-              <h3 className="instr-headings">Access and Usage Rights</h3>
 
-              <li className="liststyletype">
+              <h3 className='instr-headings'><span className='headingPage'>Access and Usage Rights</span></h3>
+
+              <li className='liststyletype'>
                 <ul>
-                  <li>
-                    <b>Access: </b>Users (employees of the recruitment company)
-                    have the right to access the software platform during their
-                    employment tenure.
-                  </li>
-                  <li>
-                    <b>Usage:</b> Users are granted the right to use the
-                    software for the purpose of managing recruitment processes,
-                    including but not limited to:
-                  </li>
+                  <li><span className='headingPage'>Access: </span> <span className='innerText'> Users (employees of the recruitment company) have the right to access the software platform during their employment tenure.</span></li>
+                  <li><span className='headingPage'>Usage:</span> <span className='innerText'>  Users are granted the right to use the software for the purpose of managing recruitment processes, including but not limited to:</span></li>
                   <ul>
-                    <li>Posting job openings</li>
-                    <li>Reviewing candidate applications</li>
-                    <li>Communicating with candidates and clients</li>
-                    <li>Managing candidate profiles and data</li>
+                    <li> <span className='innerText'> Posting job openings</span></li>
+                    <li> <span className='innerText'> Reviewing candidate applications</span></li>
+                    <li> <span className='innerText'> Communicating with candidates and clients</span></li>
+                    <li> <span className='innerText'> Managing candidate profiles and data</span></li>
+
                   </ul>
-                  <li>
-                    <b>Accountability:</b> Users are accountable for maintaining
-                    the confidentiality and security of their login credentials.
-                    They must not share their credentials with unauthorized
-                    individuals.
-                  </li>
+                  <li><span className='headingPage'>Accountability:</span> <span className='innerText'>  Users are accountable for maintaining the confidentiality and security of their login credentials. They must not share their credentials with unauthorized individuals.</span></li>
                 </ul>
+
               </li>
 
-              <h3 className="instr-headings">
-                Data Handling and Privacy Rights
-              </h3>
-              <li className="liststyletype">
+              <h3 className='instr-headings'><span className='headingPage'>Data Handling and Privacy Rights</span></h3>
+              <li className='liststyletype'>
                 <ul>
-                  <li>
-                    <b>Data Privacy:</b> The software ensures compliance with
-                    data protection regulations concerning the collection,
-                    storage, and processing of personal data of candidates and
-                    clients.
-                  </li>
-                  <li>
-                    <b>Data Ownership:</b> The recruitment company retains
-                    ownership of all data entered into or generated by the
-                    software platform.
-                  </li>
+                  <li><span className='headingPage'>Data Privacy:</span> <span className='innerText'>  The software ensures compliance with data protection regulations concerning the collection, storage, and processing of personal data of candidates and clients.</span></li>
+                  <li><span className='headingPage'>Data Ownership:</span> <span className='innerText'>  The recruitment company retains ownership of all data entered into or generated by the software platform.</span></li>
 
-                  <li>
-                    <b>Data Access: </b>Authorized personnel within the
-                    recruitment company have access to candidate and client data
-                    for recruitment purposes only.
-                  </li>
+                  <li><span className='headingPage'>Data Access: </span>  <span className='innerText'> Authorized personnel within the recruitment company have access to candidate and client data for recruitment purposes only.</span></li>
                 </ul>
+
               </li>
-              <h3 className="instr-headings">Responsibilities</h3>
-              <li className="liststyletype">
+
+              <h3 className='instr-headings'><span className='headingPage'>Responsibilities</span></h3>
+              <li className='liststyletype'>
                 <ul>
-                  <li>
-                    <b>Compliance:</b> Users must comply with company policies,
-                    as well as local and international laws and regulations,
-                    while using the software platform.
-                  </li>
-                  <li>
-                    <b>Data Integrity:</b> Users are responsible for ensuring
-                    the accuracy and integrity of data entered into the
-                    software. They must promptly update information as
-                    necessary.
-                  </li>
+                  <li><span className='headingPage'>Compliance:</span>  <span className='innerText'> Users must comply with company policies, as well as local and international laws and regulations, while using the software platform.</span></li>
+                  <li><span className='headingPage'>Data Integrity:</span> <span className='innerText'>  Users are responsible for ensuring the accuracy and integrity of data entered into the software. They must promptly update information as necessary.</span></li>
 
-                  <li>
-                    <b>Security: </b>Users must report any security incidents or
-                    suspected breaches promptly to the appropriate IT or
-                    security personnel.
-                  </li>
+                  <li><span className='headingPage'>Security: </span> <span className='innerText'> Users must report any security incidents or suspected breaches promptly to the appropriate IT or security personnel.</span></li>
                 </ul>
+
               </li>
+
+
             </ul>
           </p>
         </div>
       </div>
-      <div className="handlePrintDiv">
-        <button className="issue-button" onClick={handlePrint}>
-          Export PDF
-        </button>
+      <div className='handlePrintDiv'>
+        <button className='issue-button' onClick={handlePrint}>Export PDF</button>
       </div>
     </div>
   );

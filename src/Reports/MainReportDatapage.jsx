@@ -775,9 +775,9 @@ const MonthReport = () => {
                           teamLeaderUnderManager && (
                             <div className="recruitersTL">
                               {teamLeaderUnderManager.map(
-                                (teamleader, tIndex) => (
+                                (teamleader) => (
                                   <div>
-                                    <label key={tIndexx}>
+                                    <label key={tIndex}>
                                       <input
                                         type="radio"
                                         name="teamleader"

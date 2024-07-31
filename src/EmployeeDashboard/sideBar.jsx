@@ -15,7 +15,6 @@ function Sidebar({
   toggleSelfCalling,
   toggelLineUp,
   toggleCallingTrackerForm,
-  toggelHelp,
   toggeladminsection,
   toggleShortListed,
   toggleSelectCandidate,
@@ -61,8 +60,8 @@ function Sidebar({
   toggelePainArea,
   /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-60 */
   toggelSubscriptions,
-  toggleBilling,
-  // toggleTeamDetails,
+  toggleBilling,// toggleTeamDetails,
+  toggelCandidateHistory,
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -72,10 +71,7 @@ function Sidebar({
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
-  // const { userGroup } = useParams();
-  // console.log(userGroup);
   const { userType } = useParams();
-
   console.log(userType + "userType");
 
   const toggleSubMenu = (subMenuKey) => (e) => {
@@ -212,11 +208,10 @@ function Sidebar({
                   ) : null}
 
                   <li
-                    className={`${
-                      activeSubMenu === "candidate" || isCandidateSectionActive
+                    className={`${activeSubMenu === "candidate" || isCandidateSectionActive
                         ? "active"
                         : ""
-                    }`}
+                      }`}
                     onClick={toggleSubMenu("candidate")}
                   >
                     <a href="#">
@@ -236,9 +231,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu ${
-                        activeSubMenu === "candidate" ? "active" : ""
-                      }`}
+                      className={`sub-menu ${activeSubMenu === "candidate" ? "active" : ""
+                        }`}
                     >
                       <li
                         style={{ marginLeft: "10px" }}
@@ -261,7 +255,9 @@ function Sidebar({
                         onClick={handleButtonClick("lineUp", toggelLineUp)}
                         className={activeButton === "lineUp" ? "active" : ""}
                       >
+                           <a href="#">
                         <span className="sidebar-text">Lineup Tracker</span>
+                        </a>
                         {successAddUpdateResponse ? (
                           <span className="text-xl font-bold text-red-600">
                             *
@@ -358,9 +354,9 @@ function Sidebar({
 
                       {/* ---------Arshad Comment this changes dont uncomment-------------- */}
                       {userType === "Manager" &&
-                      "SuperUser" &&
-                      userType != "TeamLeader" &&
-                      userType != "Recruiter" ? (
+                        "SuperUser" &&
+                        userType != "TeamLeader" &&
+                        userType != "Recruiter" ? (
                         <li
                           onClick={toggleEmployeeMasterSheet}
                           style={{ marginLeft: "10px" }}
@@ -375,11 +371,10 @@ function Sidebar({
                   </li>
                 </>
                 <li
-                  className={`${
-                    activeSubMenu === "Jobdiscription" || isJobDescriptionActive
+                  className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
                       ? "active"
                       : ""
-                  }`}
+                    }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
                   <a href="#">
@@ -392,9 +387,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu ${
-                      activeSubMenu === "Jobdiscription" ? "active" : ""
-                    }`}
+                    className={`sub-menu ${activeSubMenu === "Jobdiscription" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -418,7 +412,7 @@ function Sidebar({
                     {(userType != "Recruiters" &&
                       userType != "SuperUser" &&
                       userType != "Vendor") ||
-                    (userType === "TeamLeader" && userType === "Manager") ? (
+                      (userType === "TeamLeader" && userType === "Manager") ? (
                       <li
                         style={{ marginLeft: "10px" }}
                         onClick={handleButtonClick(
@@ -459,9 +453,8 @@ function Sidebar({
                       </a> */}
 
                       <ul
-                        className={`sub-menu sub-menu1 ${
-                          activeSubMenu === "employee" ? "active" : ""
-                        }`}
+                        className={`sub-menu sub-menu1 ${activeSubMenu === "employee" ? "active" : ""
+                          }`}
                       >
                         <li
                           style={{ marginLeft: "10px" }}
@@ -517,11 +510,10 @@ function Sidebar({
                           <i className="arrow ph-bold ph-caret-down"></i>
                         </a>
                         <ul
-                          className={`sub-menu sub-menu1 ${
-                            activeSubMenu === "TeamLeader-section"
+                          className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section"
                               ? "active"
                               : ""
-                          }`}
+                            }`}
                         >
                           <li
                             onClick={handleButtonClick(
@@ -597,9 +589,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 ${
-                        activeSubMenu === "admin-section" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
+                        }`}
                     >
                       {userType != "TeamLeader" ? (
                         <>
@@ -787,6 +778,7 @@ function Sidebar({
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_633 */}
 
                 {userType != "Vendor" ? (
+
                   <li
                     onClick={handleButtonClick(
                       "SuperUser",
@@ -802,14 +794,13 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "SuperUser" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "SuperUser" ? "active" : ""
+                        }`}
                     >
                       <li
                         style={{ marginLeft: "10px" }}
                         className={activeButton === "SuperUser" ? "active" : ""}
-                        onClick={toggeleProfitChart}
+                        // onClick={toggeleProfitChart}
                       >
                         <a href="#">
                           <span className="sidebar-text">P & L Chart</span>
@@ -817,11 +808,13 @@ function Sidebar({
                       </li>
                     </ul>
                   </li>
-                ) : null}
-                {/* toggeleProfitChart */}
-                {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_660 */}
 
-                {userType != "Vendor" ? (
+                  
+                   ) : null}
+                   {/* toggeleProfitChart */}
+                   {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_660 */}
+
+                  {userType != "Vendor" ? (
                   <li
                     className={activeSubMenu === "database" ? "active" : ""}
                     onClick={toggleSubMenu("database")}
@@ -835,9 +828,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "database" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
+                        }`}
                     >
                       <li
                         onClick={handleButtonClick(
@@ -938,7 +930,7 @@ function Sidebar({
 
                 {userType != "SuperUser" && userType != "Vendor" ? (
                   <>
-                    
+
 
 
                     <li
@@ -947,167 +939,160 @@ function Sidebar({
                         toggelDisplayNotPad
                       )}
                       className={activeButton === "notepad" ? "active" : ""}
-                      >
+                    >
                       <a href="#">
                         <i
                           className="fa-regular fa-clipboard"
                           style={{ color: "gray" }}
-                          ></i>
+                        ></i>
                         <span className="sidebar-text">Note Pad</span>
                       </a>
                     </li>
-                    { userType !="Vendor"? (
+                    {userType != "Vendor" ? (
                       <li className={
                         activeButton === "report" ? "active" : ""
                       }
-                      onClick={handleButtonClick(
-                        "report",
-                        // toggleReports
-                        toggleMainReportDatapage
-                      )}>
-                      <a href="#">
-                        <i
-                          className="fa-regular fa-address-book"
-                          style={{ color: "gray" }}
+                        onClick={handleButtonClick(
+                          "report",
+                          // toggleReports
+                          toggleMainReportDatapage
+                        )}>
+                        <a href="#">
+                          <i
+                            className="fa-regular fa-address-book"
+                            style={{ color: "gray" }}
                           ></i>
-                        <span className="sidebar-text">Reports</span>
-                      </a>
-                    </li>
-                  ) : null}
+                          <span className="sidebar-text">Reports</span>
+                        </a>
+                      </li>
+                    ) : null}
 
 
                   </>
                 ) : null}
                 <li
-                      className={activeSubMenu === "portal" ? "active" : ""}
-                      onClick={toggleSubMenu("portal")}
-                    >
-                      <a href="#">
-                        {/* <i className="icon ph-bold ph-chart-bar"></i> */}
-                        <i
-                          className="fa-brands fa-linkedin"
-                          style={{ color: "gray" }}
-                        ></i>
-                        <span className="sidebar-text">Portal</span>
-                        <i className="arrow ph-bold ph-caret-down"></i>
-                      </a>
-                      <ul
-                        className={`sub-menu sub-menu1 sub-menu2 ${
-                          activeSubMenu === "portal" ? "active" : ""
-                        }`}
-                      >
-                        <li style={{ marginLeft: "10px" }}>
-                          <a href="#">
-                            {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span
-                              className="sidebar-text"
-                              onClick={openNaukriPlatform}
-                            >
-                              Naukri
-                            </span>
-                          </a>
-                        </li>
-                        <li style={{ marginLeft: "10px" }}>
-                          <a href="#">
-                            {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span
-                              className="sidebar-text"
-                              onClick={openLinkedinPlatform}
-                            >
-                              LinkedIn
-                            </span>
-                          </a>
-                        </li>
-                        <li style={{ marginLeft: "10px" }}>
-                          <a href="#">
-                            {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span
-                              className="sidebar-text"
-                              onClick={openTimesPlatform}
-                            >
-                              Times Jobs
-                            </span>
-                          </a>
-                        </li>
-                        <li style={{ marginLeft: "10px" }}>
-                          <a href="#">
-                            {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span
-                              className="sidebar-text"
-                              onClick={openIndeedPlatform}
-                            >
-                              Indeed
-                            </span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                {userType != "Vendor" ? (
-  <li
-    className={activeSubMenu === "aboutus" ? "active" : ""}
-    onClick={toggleSubMenu("aboutus")}
-  >
-    <a href="#">
-      <i
-        className="fa-solid fa-circle-info"
-        style={{ color: "gray" }}
-      ></i>
-      <span className="sidebar-text">About Us</span>
-      <i className="arrow ph-bold ph-caret-down"></i>
-    </a>
-    <ul
-      className={`sub-menu sub-menu1 sub-menu2 ${
-        activeSubMenu === "aboutus" ? "active" : ""
-      }`}
-    >
-      <li style={{ marginLeft: "10px" }}>
-        <span
-          className="sidebar-text"
-          onClick={toggeleRightsInstructions}
-        >
-          Rights & Instructions
-        </span>
-      </li>
-      <li style={{ marginLeft: "10px" }}>
-        <span
-          className="sidebar-text"
-          onClick={toggeleCompanyPolicy}
-        >
-          Company Policy
-        </span>
-      </li>
-      <li style={{ marginLeft: "10px" }}>
-        <span
-          className="sidebar-text"
-          onClick={toggeleIssueSolving}
-        >
-          Issues Solving
-        </span>
-      </li>
-      <li style={{ marginLeft: "10px" }}>
-        <span
-          className="sidebar-text"
-          onClick={toggelePainArea}
-        >
-          Recruites Pain Area
-        </span>
-      </li>
-    </ul>
-  </li>
-) : null}
-
-                <li 
-                onClick={handleButtonClick(
-                  "help",
-                  toggelHelp
-                )}
+                  className={activeSubMenu === "portal" ? "active" : ""}
+                  onClick={toggleSubMenu("portal")}
                 >
+                  <a href="#">
+                    {/* <i className="icon ph-bold ph-chart-bar"></i> */}
+                    <i
+                      className="fa-brands fa-linkedin"
+                      style={{ color: "gray" }}
+                    ></i>
+                    <span className="sidebar-text">Portal</span>
+                    <i className="arrow ph-bold ph-caret-down"></i>
+                  </a>
+                  <ul
+                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
+                      }`}
+                  >
+                    <li style={{ marginLeft: "10px" }}>
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span
+                          className="sidebar-text"
+                          onClick={openNaukriPlatform}
+                        >
+                          Naukri
+                        </span>
+                      </a>
+                    </li>
+                    <li style={{ marginLeft: "10px" }}>
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span
+                          className="sidebar-text"
+                          onClick={openLinkedinPlatform}
+                        >
+                          LinkedIn
+                        </span>
+                      </a>
+                    </li>
+                    <li style={{ marginLeft: "10px" }}>
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span
+                          className="sidebar-text"
+                          onClick={openTimesPlatform}
+                        >
+                          Times Jobs
+                        </span>
+                      </a>
+                    </li>
+                    <li style={{ marginLeft: "10px" }}>
+                      <a href="#">
+                        {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                        <span
+                          className="sidebar-text"
+                          onClick={openIndeedPlatform}
+                        >
+                          Indeed
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                {userType != "Vendor" ? (
+                  <li
+                    className={activeSubMenu === "aboutus" ? "active" : ""}
+                    onClick={toggleSubMenu("aboutus")}
+                  >
+                    <a href="#">
+                      <i
+                        className="fa-solid fa-circle-info"
+                        style={{ color: "gray" }}
+                      ></i>
+                      <span className="sidebar-text">About Us</span>
+                      <i className="arrow ph-bold ph-caret-down"></i>
+                    </a>
+                    <ul
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "aboutus" ? "active" : ""
+                        }`}
+                    >
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggeleRightsInstructions}
+                        >
+                          Rights & Instructions
+                        </span>
+                      </li>
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggeleCompanyPolicy}
+                        >
+                          Company Policy
+                        </span>
+                      </li>
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggeleIssueSolving}
+                        >
+                          Issues Solving
+                        </span>
+                      </li>
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggelePainArea}
+                        >
+                          Recruites Pain Area
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                ) : null}
+
+                <li onClick={toggelCandidateHistory}>
                   <a href="#">
 
                     <i
                       className="fa-regular fa-circle-question"
                       style={{ color: "gray" }}
-                      ></i>
+                    ></i>
                     <span className="sidebar-text">Help</span>
                   </a>
                 </li>
@@ -1118,12 +1103,12 @@ function Sidebar({
                     <i
                       className="fa-solid fa-power-off"
                       style={{ color: "gray" }}
-                      ></i>
+                    ></i>
                     <span className="sidebar-text">Logout</span>
                   </a>
                 </li>
-              
-              
+
+
               </ul>
             </div>
             <div className="sidebar-menu" style={{ paddingLeft: "20px" }}>
@@ -1135,15 +1120,15 @@ function Sidebar({
 
       {showConfirmation && (
         <div
-        className="bg-black bg-opacity-50 modal show"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          position: "fixed",
-          width: "100%",
-          height: "100vh",
-        }}
+          className="bg-black bg-opacity-50 modal show"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "fixed",
+            width: "100%",
+            height: "100vh",
+          }}
         >
           <Modal.Dialog
             style={{
@@ -1151,7 +1136,7 @@ function Sidebar({
               alignItems: "center",
               justifyContent: "center",
             }}
-            >
+          >
             <Modal.Body>
               <p className="confirmation-text">
                 Are you sure you want to logout?
@@ -1162,14 +1147,14 @@ function Sidebar({
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                >
+              >
                 <button onClick={handleLogoutLocal} className="buttoncss">
                   Yes
                 </button>
                 <button
                   onClick={() => setShowConfirmation(false)}
                   className="buttoncss"
-                  >
+                >
                   No
                 </button>
               </div>
