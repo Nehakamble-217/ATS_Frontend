@@ -205,7 +205,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.42:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://192.168.1.42:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
         );
 
         setFetchWorkId(response.data);
@@ -366,9 +366,7 @@ function DailyWork({
   useEffect(() => {
     updateArchieved();
   }, [successfulDataAdditions]);
-
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchieved(changed) End LineNo:-351 Date:-01/07
-
 
   const handlePause = () => {
     setRunning(false);
@@ -430,7 +428,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId}`,
 
         formData
       );
@@ -445,7 +443,7 @@ function DailyWork({
       setTime({ hours: 0, minutes: 0, seconds: 0 });
       setData({ archived: 0, pending: 10 });
       console.log("Logged out successfully.");
-      navigate("/employee-login/recruiter");
+      navigate(`/login/${userType}`);
     } catch (error) {
       console.error("Error logging out:", error);
     }

@@ -173,6 +173,8 @@ const CallingTrackerForm = ({
     return errors;
   };
 
+
+
   const validateLineUpData = () => {
     let errors = {};
 
@@ -329,12 +331,13 @@ const CallingTrackerForm = ({
     }
 
     if (startTime) {
-      const endTime = Date.now();
+      const endTime = ((new Date()).getDate() + 2)
       const timeTaken = (endTime - startTime) / 1000; // Time in seconds
       const minutes = Math.floor(timeTaken / 60);
       const seconds = Math.floor(timeTaken % 60);
+      const days = Math.floor(timeTaken / (1000 * 60 * 60 * 24))
       console.log(
-        `Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`
+        `Time taken to fill the form:${days} days, ${minutes} minutes and ${seconds} seconds`
       );
     }
 

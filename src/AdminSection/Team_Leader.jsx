@@ -264,7 +264,7 @@ function Accesstable() {
   return (
     <div className="AppsTL">
       <div className="selection-containerTL">
-        <div className="hierarchy-sectionTL">
+        <div className="hierarchy-sectionTL" style={{border:"1px solid black"}}>
           <div className="custom-dropdownTL">
             <div className="dropdown-headerTL" onClick={toggleDropdown}>
               {selectedRecruiters.index === ""
@@ -291,7 +291,7 @@ function Accesstable() {
                 >
                   {allSelected ? "Deselect All" : "Select All"}
                 </button> */}
-                <div className="team-leadersTL">
+                <div className="team-leadersTL" >
                   {manager.map((id, index) => (
                     <div
                       key={index}
@@ -315,7 +315,7 @@ function Accesstable() {
 
                       {selectedManager.managerId === id.managerId &&
                         teamLeaderUnderManager && (
-                          <div className="recruitersTL">
+                          <div className="recruitersTL" >
                             {teamLeaderUnderManager.map(
                               (teamleader, tIndex) => (
                                 <div>
