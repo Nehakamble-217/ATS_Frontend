@@ -68,6 +68,8 @@ const AddEmployee = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [confirmpasswordVisible, setconfirmPasswordVisible] = useState(false);
+  // const [confirmpasswordMatch, setconfirmPasswordMatch] = useState(true);
   const [passwordError, setPasswordError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
@@ -158,6 +160,7 @@ const AddEmployee = () => {
       }
     }
   };
+  
 
   const handleConfirmPasswordBlur = () => {
     if (formData.employeePassword !== formData.confirmPassword) {
@@ -208,6 +211,14 @@ const AddEmployee = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
   };
+  const toggleconfirmPasswordVisibility = () => {
+    setconfirmPasswordVisible((prev) => !prev);
+  };
+
+  const showPassword = () => setPasswordVisible(true);
+  const hidePassword = () => setPasswordVisible(false);
+  const showconfirmPassword = () => setconfirmPasswordVisible(true);
+  const hideconfirmPassword = () => setconfirmPasswordVisible(false);
 
   return (
     <div className="form-container">
@@ -216,7 +227,7 @@ const AddEmployee = () => {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Employee Name:</label>
           <input
             type="text"
@@ -231,7 +242,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Date of Joining:</label>
           <input
             type="date"
@@ -241,7 +252,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Designation:</label>
           <input
             type="text"
@@ -255,7 +266,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Department:</label>
           <input
             type="text"
@@ -269,7 +280,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Job Role:</label>
           <select
             name="jobRole"
@@ -284,7 +295,7 @@ const AddEmployee = () => {
           </select>
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Official Email:</label>
           <input
             type="email"
@@ -295,7 +306,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Personal Email:</label>
           <input
             type="email"
@@ -306,7 +317,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Mobile Number:</label>
           <input
             type="text"
@@ -320,7 +331,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Alternate Mobile Number:</label>
           <input
             type="text"
@@ -335,7 +346,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Official Contact Number:</label>
           <input
             type="text"
@@ -349,7 +360,7 @@ const AddEmployee = () => {
             <div className="error">{errors.officialContactNumber}</div>
           )}
         </div>
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Company Mobile Number:</label>
           <input
             type="text"
@@ -364,7 +375,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>WhatsApp Number:</label>
           <input
             type="text"
@@ -379,7 +390,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Date of Birth:</label>
           <input
             type="date"
@@ -389,7 +400,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Gender:</label>
           <select
             name="gender"
@@ -402,7 +413,7 @@ const AddEmployee = () => {
             <option value="other">Other</option>
           </select>
         </div>
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Marital Status:</label>
           <select
             name="maritalStatus"
@@ -417,7 +428,7 @@ const AddEmployee = () => {
           </select>
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Anniversary Date:</label>
           <input
             type="date"
@@ -427,7 +438,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Emergency Contact Person:</label>
           <input
             type="text"
@@ -441,7 +452,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Emergency Contact Number:</label>
           <input
             type="text"
@@ -455,7 +466,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label> Relation With Person:</label>
           <input
             type="text"
@@ -469,7 +480,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>T-shirt Size:</label>
           <select
             name="tshirtSize"
@@ -489,7 +500,7 @@ const AddEmployee = () => {
           </select>
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Blood Group:</label>
           <input
             type="text"
@@ -499,7 +510,7 @@ const AddEmployee = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Aadhaar Number:</label>
           <input
             type="text"
@@ -511,7 +522,7 @@ const AddEmployee = () => {
           {errors.aadhaarNo && <div className="error">{errors.aadhaarNo}</div>}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>PAN Card Number:</label>
           <input
             type="text"
@@ -522,7 +533,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Educational Qualification:</label>
           <input
             type="text"
@@ -533,7 +544,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Gross Salary:</label>
           <input
             type="text"
@@ -547,7 +558,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Employee Present Address:</label>
           <input
             type="text"
@@ -558,7 +569,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Employee Experience:</label>
           <input
             type="text"
@@ -569,7 +580,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Perks:</label>
           <input
             type="text"
@@ -581,7 +592,7 @@ const AddEmployee = () => {
           {errors.perks && <div className="error">{errors.perks}</div>}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Last Company:</label>
           <input
             type="text"
@@ -592,7 +603,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Work Location:</label>
           <input
             type="text"
@@ -606,7 +617,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Entry Source:</label>
           <input
             type="text"
@@ -620,7 +631,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Employee Status:</label>
           <select
             name="employeeStatus"
@@ -633,7 +644,7 @@ const AddEmployee = () => {
           </select>
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Last Working Date:</label>
           <input
             type="date"
@@ -643,7 +654,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Reason for Leaving:</label>
           <input
             type="text"
@@ -657,7 +668,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Induction (Yes/No):</label>
           <select
             name="inductionYesOrNo"
@@ -670,7 +681,7 @@ const AddEmployee = () => {
           </select>
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Induction Comment:</label>
           <input
             type="text"
@@ -684,7 +695,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Training Source:</label>
           <input
             type="text"
@@ -698,7 +709,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Training Completed (Yes/No):</label>
           <select
             name="trainingCompletedYesOrNo"
@@ -711,7 +722,7 @@ const AddEmployee = () => {
           </select>
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Training Taken Count:</label>
           <input
             type="number"
@@ -725,7 +736,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Rounds of Interview:</label>
           <input
             type="text"
@@ -739,7 +750,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Interview Taken By:</label>
           <input
             type="text"
@@ -753,7 +764,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Warning Comments:</label>
           <input
             type="text"
@@ -767,7 +778,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Performance Indicator:</label>
           <input
             type="text"
@@ -781,7 +792,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Team Leader Message:</label>
           <input
             type="text"
@@ -795,7 +806,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Edit/Delete Authority:</label>
           <input
             type="text"
@@ -809,7 +820,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>LinkedIn URL:</label>
           <input
             type="text"
@@ -820,7 +831,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Facebook URL:</label>
           <input
             type="text"
@@ -831,7 +842,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Twitter URL:</label>
           <input
             type="text"
@@ -842,7 +853,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Employee Address:</label>
           <input
             type="text"
@@ -853,7 +864,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Professional PT Number:</label>
           <input
             type="text"
@@ -867,7 +878,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>ESIC Number:</label>
           <input
             type="text"
@@ -879,7 +890,7 @@ const AddEmployee = () => {
           {errors.esIcNo && <div className="error">{errors.esIcNo}</div>}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>PF Number:</label>
           <input
             type="text"
@@ -891,7 +902,7 @@ const AddEmployee = () => {
           {errors.pfNo && <div className="error">{errors.pfNo}</div>}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Insurance Number:</label>
           <input
             type="text"
@@ -905,7 +916,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Reporting Manager Name:</label>
           <input
             type="text"
@@ -919,7 +930,7 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Reporting Manager Designation:</label>
           <input
             type="text"
@@ -932,22 +943,38 @@ const AddEmployee = () => {
             <div className="error">{errors.reportingMangerDesignation}</div>
           )}
         </div>
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Upload Resume:</label>
-          <input type="file" name="resumeFile" onChange={handleInputChange} />
+          <input type="file" 
+          multiple
+          name="resumeFile" onChange={handleInputChange} />
         </div>
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Upload Profile Image:</label>
-          <input type="file" name="profileImage" onChange={handleInputChange} />
+          <input
+            type="file"
+            name="profileImage"
+            onChange={handleInputChange}
+          />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Upload Document:</label>
-          <input type="file" name="document" onChange={handleInputChange} />
+          <input type="file" 
+          multiple
+          name="document" onChange={handleInputChange} />
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Password:</label>
+
+        <div class="wrapper-eye">
+          <div className="password-eye-icon"
+             onMouseEnter={showPassword}
+             onMouseLeave={hidePassword}> 
+          <i className="fas fa-eye"></i>
+          </div>
+
           <div className="password-input-container">
             <input
               type={passwordVisible ? "text" : "password"}
@@ -956,18 +983,28 @@ const AddEmployee = () => {
               value={formData.employeePassword}
               onChange={handleInputChange}
             />
-            <button
+            {/* <button
               type="button"
               onClick={togglePasswordVisibility}
               className="show-pass-btn"
             >
               {passwordVisible ? "Hide" : "Show"}
-            </button>
+            </button> */}
           </div>
+
+          </div>
+
+
         </div>
 
-        <div className="form-row">
+        <div className="addRec-form-row">
           <label>Confirm Password:</label>
+          <div class="wrapper-eye">
+          <div className="password-eye-icon"
+          onMouseEnter={showPassword}
+          onMouseLeave={hidePassword}> 
+          <i className="fas fa-eye"></i>
+          </div>
           <input
             type={passwordVisible ? "text" : "password"}
             name="confirmPassword"
@@ -976,6 +1013,8 @@ const AddEmployee = () => {
             onChange={handleInputChange}
             onBlur={handleConfirmPasswordBlur}
           />
+          </div>
+
           {!passwordMatch && <div className="error">{passwordError}</div>}
         </div>
 

@@ -3,11 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RightTick from "../photos/greenTick.jpg";
 import "./afterSelection.css";
-
+import { toast } from "react-toastify";
+import axios from "axios";
+// SwapnilRokade_AfterSelection_addedProcessImprovmentEvaluatorFunctionalityStoringInterviweResponse_08_to_386_29/07/2024
 const AfterSelection = ({
   candidateId,
   employeeId,
   requirementId,
+  prevtime,
   onReturn,
 }) => {
   useEffect(() => {
@@ -39,13 +42,17 @@ const AfterSelection = ({
   const [degreeMarkSheet, setDegreeMarksheetUploaded] = useState(false);
   const [hscMarkSheet, setHscMarksheetUploaded] = useState(false);
   const [sscMarkSheet, setSscMarksheetUploaded] = useState(false);
-
   const [shortListedData, setShortListedData] = useState([]);
   const [candidateData, setCandidateData] = useState(null);
   const [reasonForRejectionOfferLetter, setReasonForRejectionOfferLetter] =
     useState("");
   const [reasonForNotJoin, setReasonForNotJoin] = useState("");
   const [errors, setErrors] = useState({});
+  const [performanceId,setPerformanceId]=useState();
+  const [updatedTime,setUpdatedTime] = useState();
+  const [JoiningStatus,setJoiningStatus] =useState();
+  const [offerLatter,setOfferLatter] =useState();
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +61,7 @@ const AfterSelection = ({
     };
     fetchData();
     JoininghandleSubmit();
+    fetchPerformaceId();
   }, [candidateId]);
 
   const fetchCandidateData = async () => {
@@ -66,10 +74,22 @@ const AfterSelection = ({
       }
       const data = await response.json();
       setCandidateData(data);
+      // console.log(data);
     } catch (error) {
       console.error("Failed to fetch candidate data:", error);
     }
   };
+
+  const fetchPerformaceId = async()=>{
+    try {
+      const performanceId = await axios.get(
+        `http://192.168.1.42:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
+      );
+      setPerformanceId(performanceId.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const fetchCandidateTableData = async () => {
     console.log(candidateId + "---candidateId");
@@ -89,9 +109,23 @@ const AfterSelection = ({
     }
   };
 
-  const handleAdharCardUpload = (e) => {
+  // console.log(shortListedData);
+  const handleAdharCardUpload = async (e) => {
     const file = e.target.files[0];
     setAdharCardUploaded(file);
+    try {
+      const additionalData = {
+        sendingDocument:formatDateToIST(new Date()),
+      };
+      console.log(additionalData);
+      const response1 = await axios.put(
+        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        additionalData
+      );
+      console.log("Second API Response:", response1.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handlePanCardUpload = (e) => {
@@ -127,7 +161,7 @@ const AfterSelection = ({
     }
   };
 
-  const handleOfferLetterReceivedChange = (e) => {
+  const handleOfferLetterReceivedChange =async (e) => {
     const received = e.target.value;
     setOfferLetterReceived(received);
     if (received === "yes") {
@@ -135,27 +169,85 @@ const AfterSelection = ({
     } else {
       setOfferLetterAccepted("");
     }
-  };
-
-  const handleOfferLetterAcceptedChange = (e) => {
-    const accepted = e.target.value;
-    setOfferLetterAccepted(accepted);
-    if (accepted === "accepted") {
-      setJoinStatus("join");
-    } else {
-      setJoinStatus("");
+    try {
+      const additionalData = {
+        letterResponse:formatDateToIST(new Date()),
+      };
+      console.log(additionalData);
+      const response1 = await axios.put(
+        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        additionalData
+      );
+      console.log("Second API Response:", response1.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleJoinStatusChange = (e) => {
+  const handleOfferLetterAcceptedChange =async (e) => {
+    const accepted = e.target.value;
+    setOfferLetterAccepted(accepted);
+    // if (accepted === "accepted") {
+    //   setJoinStatus("join");
+    // } else {
+    //   setJoinStatus("");
+    // }
+    try {
+      const additionalData = {
+        issueOfferLetter:formatDateToIST(new Date()),
+      };
+      console.log(additionalData);
+      const response1 = await axios.put(
+        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        additionalData
+      );
+      console.log("Second API Response:", response1.data);
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const handleJoinStatusChange = async(e) => {
     const status = e.target.value;
     setJoinStatus(status);
     if (status === "join") {
-      setJoinReason("");
-    } else {
       setJoinDate("");
+    } else {
+      setJoinReason("");
+    }
+    try {
+      const additionalData = {
+        joiningProcess:formatDateToIST(new Date())
+      };
+      console.log(additionalData);
+      const response1 = await axios.put(
+        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        additionalData
+      );
+      console.log("Second API Response:", response1.data);
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  const handleJoiningDateChange =async (e)=>{
+    const date = e.target.value;
+    setJoinDate(date);
+    try {
+      const additionalData = {
+        joinDate:date,
+      };
+      console.log(additionalData);
+      const response1 = await axios.put(
+        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        additionalData
+      );
+      console.log("Second API Response:", response1.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleInactiveReasonChange = (e) => {
     const reason = e.target.value;
@@ -188,6 +280,7 @@ const AfterSelection = ({
           body: JSON.stringify(formData),
         }
       );
+      console.log(response);
 
       setInquiryFormSubmitted(true);
       setFormSubmitted(true);
@@ -200,12 +293,13 @@ const AfterSelection = ({
       setOtherReason("");
       setShowSuccessMessage(true);
       setShortListedData([...shortListedData, formData]);
+      toast.success("Form submitted successfully");
       setTimeout(() => {
         setInquiryFormSubmitted(false);
       }, 3000);
     } catch (error) {
       console.error("Failed to submit form:", error);
-      alert("An error occurred while submitting the form");
+      toast.error("An error occurred while submitting the form");
     }
   };
 
@@ -271,7 +365,25 @@ const AfterSelection = ({
     } catch (error) {
       console.error("Failed to submit form:", error);
     }
+
   };
+  
+  function formatDateToIST(date) {
+    // Convert to IST
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istDate = new Date(date.getTime() + istOffset);
+  
+    // Extract the components
+    const year = istDate.getUTCFullYear();
+    const month = String(istDate.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(istDate.getUTCDate()).padStart(2, '0');
+    const hours = String(istDate.getUTCHours()).padStart(2, '0');
+    const minutes = String(istDate.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(istDate.getUTCSeconds()).padStart(2, '0');
+  
+    // Format as yyyy-mm-dd hh:mm:ss
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
 
   return (
     <div>
@@ -552,7 +664,7 @@ const AfterSelection = ({
                         className="after-input"
                         id="joinDate"
                         value={joinDate}
-                        onChange={(e) => setJoinDate(e.target.value)}
+                        onChange={handleJoiningDateChange}
                       />
                     </div>
                   </div>
@@ -828,7 +940,7 @@ const AfterSelection = ({
                     <div className="alert alert-success" role="alert">
                       Follow Up Data Added successfully!
                     </div>
-                  )}
+                  )} 
                   <button
                     type="submit"
                     style={{ marginTop: "25px" }}

@@ -231,6 +231,7 @@ const CallingExcel = ({ onClose }) => {
             </div>
           </div>
         </div>
+        
         <div>
           <div
             className="card fixed-card"
@@ -261,6 +262,7 @@ const CallingExcel = ({ onClose }) => {
             </div>
           </div>
         </div>
+
       </div>
 
       {activeTable === "CallingExcelList" && (

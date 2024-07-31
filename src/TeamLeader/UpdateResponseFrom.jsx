@@ -1,13 +1,16 @@
 /* SwapnilRokade_UpdateResponsePage_05/07 */
 // Akash_pawar_updateResponse_validation_23/07
 
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
-
+// SwapnilRokade_UpdateResponseFrom_addedProcessImprovmentEvaluatorFunctionalityStoringInterviweResponse_08_to_486_29/07/2024
 const UpdateResponseFrom = ({ candidateId, onClose }) => {
   const [data, setData] = useState([]);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [submited,setSubmited]=useState(false);
   const [errors, setErrors] = useState({});
+  const [performanceId,setPerformanceId]=useState();
   const [formData, setFormData] = useState({
     interviewRound: "",
     interviewResponse: "",
@@ -33,10 +36,23 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
       const responseData = await response.json();
       console.log(responseData);
       setData(responseData);
+      fetchPerformanceId();
     } catch (err) {
       console.log("Error fetching UpdateResponse data:", err);
     }
   };
+
+
+  const fetchPerformanceId = async()=>{
+    try {
+      const performanceId = await axios.get(
+        `http://192.168.1.42:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
+      );
+      setPerformanceId(performanceId.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const validateForm = () => {
     let errors = {};
@@ -52,7 +68,9 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     return errors;
   };
 
+
   const handleSubmit = async (e) => {
+    setSubmited(true);
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -60,34 +78,128 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
       return;
     }
     try {
-      const response = await fetch(
+      // Save new interview response
+      const response = await axios.post(
         "http://192.168.1.42:9090/api/ats/157industries/save-interview-response",
+        formData,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
         }
       );
-
-      if (response.ok) {
-        toast.success("Response updated successfully.");
-        onClose(true);
-      } else {
+      console.log(response);
+      if (response) {
+        console.log("response received");
+        const firstResponse = response.data;
+        console.log(firstResponse); // Assuming you want the first response's date
+    
+        const responseUpdatedDateStr = firstResponse.responseUpdatedDate;
+        const responseUpdatedDate = new Date(responseUpdatedDateStr);
+        const currentDateTime = new Date(); // Current date and time
+    
+        // Calculate the difference in milliseconds
+        const timeDifference = currentDateTime - responseUpdatedDate;
+        const absoluteTimeDifference = Math.abs(timeDifference);
+    
+        // Calculate the difference in days
+        const daysDifference = Math.floor(absoluteTimeDifference / (1000 * 60 * 60 * 24));
+    
+        // Calculate the remaining time difference in hours and minutes
+        const hoursDifference = Math.floor((absoluteTimeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutesDifference = Math.floor((absoluteTimeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const difference = `${daysDifference} days, ${hoursDifference} hours, and ${minutesDifference} minutes.`;
+    
+        console.log(data.length);
+    
+        if (data.length===0) {
+          const additionalData = {
+            mailResponse: formatDateToIST(currentDateTime),
+            interviewRoundsList: [
+                {
+                    interviewRound: "shortListed For Technical Round",
+                    roundResponse: "shortListed For Technical Round",
+                    time: formatDateToIST(currentDateTime),
+                    diffBTNRoundToNextRound: 0
+                }
+            ]
+        };
+        console.log("Sending additional data:", additionalData);
+        try {
+            const response1 = await axios.put(
+                `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+                additionalData
+            );
+            console.log("Second API Response:", response1.data);
+            toast.success("Response updated successfully.");
+            setSubmited(false)
+            onClose(true);
+        } catch (error) {
+            console.error("Error updating performance data:", error);
+            toast.error("Failed to Update Response");
+            setSubmited(false)
+        }
+        } else {
+          const additionalData = {
+              interviewRoundsList: [
+                  {
+                      interviewRound: firstResponse.interviewRound,
+                      roundResponse: firstResponse.interviewResponse,
+                      time: formatDateToIST(currentDateTime),
+                      diffBTNRoundToNextRound: difference
+                  }
+              ]
+          };
+          console.log("2 additional data:", additionalData);
+          try {
+              const response1 = await axios.put(
+                  `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+                  additionalData
+              );
+              console.log("Second API Response:", response1.data);
+              toast.success("Response updated successfully.");
+              setSubmited(false)
+              onClose(true);
+          } catch (error) {
+              console.error("Error updating performance data:", error);
+              toast.error("Failed to Update Response");
+          }
+        }   
+    } else {
+      setSubmited(false)
         toast.error("Failed to Update Response");
-      }
+    }
     } catch (err) {
+      setSubmited(false)
       toast.error("Failed to Update Response");
     }
   };
 
-  const timeCalculate = () => {
-    const updateResponseTime = new Date();
-    const updateResponseTime1 = updateResponseTime.toISOString();
-    console.log(updateResponseTime1);
-  };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  }; 
 
+  function formatDateToIST(date) {
+    // Convert to IST
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istDate = new Date(date.getTime() + istOffset);
+  
+    // Extract the components
+    const year = istDate.getUTCFullYear();
+    const month = String(istDate.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(istDate.getUTCDate()).padStart(2, '0');
+    const hours = String(istDate.getUTCHours()).padStart(2, '0');
+    const minutes = String(istDate.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(istDate.getUTCSeconds()).padStart(2, '0');
+  
+    // Format as yyyy-mm-dd hh:mm:ss
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+  
   return (
     <div className="p-6 bg-white shadow-md rounded-lg max-w-full">
       <div className="mb-4">
@@ -125,43 +237,43 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                   <td className="p-2 text-xs sm:text-base">{index + 1}</td>
                   <td className="p-2">
                     <select
-                      className="form-select w-full px-3 py-1.5 border rounded text-xs sm:text-base"
+                      className="form-select w-full  border rounded text-xs sm:text-base"
                       name="interviewRound"
                       value={response.interviewRound}
-                      onChange={(e) => handleInputChange(e, index)}
+                      onChange={handleInputChange}
                     >
                       <option value="">Select Interview</option>
                       <option value="Shortlisted For Hr Round">Hr Round</option>
                       <option value="Shortlisted For Technical Round">
                         Technical Round
                       </option>
-                      <option value="L1 Round">L1 Round</option>
-                      <option value="L2 Round">L2 Round</option>
-                      <option value="L3 Round">L3 Round</option>
+                      <option value="Shortlisted For L1 Round">L1 Round</option>
+                      <option value="Shortlisted For L2 Round">L2 Round</option>
+                      <option value="Shortlisted For L3 Round">L3 Round</option>
                     </select>
                   </td>
                   <td className="p-2">
                     <select
-                      className="form-select w-full px-3 py-1.5 border rounded text-xs sm:text-base"
+                      className="form-select w-full border rounded text-xs sm:text-base"
                       name="interviewResponse"
                       value={response.interviewResponse}
-                      onChange={(e) => handleInputChange(e, index)}
+                      onChange={handleInputChange}
                     >
                       <option value="">Update Response</option>
                       <option value="Shortlisted For Hr Round">
-                        Shortlisted For Hr Round
+                         Hr Round
                       </option>
                       <option value="Shortlisted For Technical Round">
-                        Shortlisted For Technical Round
+                         Technical Round
                       </option>
                       <option value="Shortlisted For L1 Round">
-                        Shortlisted For L1 Round
+                         L1 Round
                       </option>
                       <option value="Shortlisted For L2 Round">
-                        Shortlisted For L2 Round
+                        L2 Round
                       </option>
                       <option value="Shortlisted For L3 Round">
-                        Shortlisted For L3 Round
+                         L3 Round
                       </option>
                       <option value="Selected">Selected</option>
                       <option value="Rejected">Rejected</option>
@@ -175,7 +287,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                       type="text"
                       name="commentForTl"
                       value={response.commentForTl}
-                      onChange={(e) => handleInputChange(e, index)}
+                      onChange={handleInputChange}
                       placeholder="Enter Comment here..."
                     />
                   </td>
@@ -185,7 +297,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                       type="date"
                       name="responseUpdatedDate"
                       value={response.responseUpdatedDate}
-                      onChange={(e) => handleInputChange(e, index)}
+                      onChange={handleInputChange}
                     />
                   </td>
                   <td className="p-2">
@@ -194,7 +306,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                       type="date"
                       name="nextInterviewDate"
                       value={response.nextInterviewDate}
-                      onChange={(e) => handleInputChange(e, index)}
+                      onChange={handleInputChange}
                     />
                   </td>
                   <td className="p-2">
@@ -203,7 +315,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                       type="time"
                       name="nextInterviewTiming"
                       value={response.nextInterviewTiming}
-                      onChange={(e) => handleInputChange(e, index)}
+                      onChange={handleInputChange}
                     />
                   </td>
                 </tr>
@@ -212,10 +324,10 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                 <td className="p-2 text-xs sm:text-base"></td>
                 <td className="p-2">
                   <select
-                    className="form-select w-full px-4 py-1.5 border rounded text-xs sm:text-base"
+                    className="form-select w-full border rounded text-xs sm:text-base"
                     name="interviewRound"
                     value={formData.interviewRound}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                   >
                     <option value="">Select interview Round</option>
                     <option value="Shortlisted For Hr Round">
@@ -240,10 +352,10 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                 </td>
                 <td className="p-2">
                   <select
-                    className="form-select w-full px-3 py-1.5 border rounded text-xs sm:text-base"
+                    className="form-select w-full border rounded text-xs sm:text-base"
                     name="interviewResponse"
                     value={formData.interviewResponse}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                   >
                     <option value="">Update Response</option>
                     <option value="Shortlisted For Hr Round">
@@ -278,7 +390,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                     type="text"
                     name="commentForTl"
                     value={formData.commentForTl}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                     placeholder="Enter Comment here..."
                   />
                 </td>
@@ -288,7 +400,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                     type="date"
                     name="responseUpdatedDate"
                     value={formData.responseUpdatedDate}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                   />
                   {errors.responseUpdatedDate && (
                     <div className="error-message">
@@ -302,7 +414,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                     type="date"
                     name="nextInterviewDate"
                     value={formData.nextInterviewDate}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                   />
                 </td>
                 <td className="p-2">
@@ -311,17 +423,16 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                     type="time"
                     name="nextInterviewTiming"
                     value={formData.nextInterviewTiming}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                   />
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex gap-2 justify-end">
           <button
             className="lineUp-share-btn"
-            onClick={timeCalculate}
             type="submit"
           >
             Update
@@ -331,7 +442,13 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
           </button>
         </div>
       </form>
+      {submited && (
+      <div className="SCE_Loading_Animation">
+        <ClipLoader size={50} color="#ffb281" />
+      </div>
+    )}
     </div>
+    
   );
 };
 

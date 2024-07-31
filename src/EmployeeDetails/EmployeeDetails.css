@@ -24,3 +24,26 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+/* EmployeeDetails.css */
+
+.custom-tooltip .tooltip-inner {
+    background-color: #ffcb9b; /* Background color */
+    color: #000; /* Text color */
+    font-size: 16px; /* Font size */
+    /* height: 2px; */
+    text-align: center;
+    /* position: fixed; */
+    border-radius: 5px; /* Border radius */
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); Box shadow */
+    /* opacity: 0; */
+    transition: opacity 0.3s;
+    text-overflow: clip;
+    z-index: 1000;
+  }
+  
+  .custom-tooltip .arrow::before {
+    /* border-top-color: #ffcb9b;
+     */
+  }
+  

@@ -175,7 +175,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          `http://localhost:9090/api/ats/157industries/save-daily-work/${employeeId}/${userType}`,
+          `http://192.168.1.42:9090/api/ats/157industries/save-daily-work/${employeeId}/${userType}`,
           formData
         );
 
@@ -428,8 +428,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId}`,
-
+        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
         formData
       );
 

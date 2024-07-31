@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ClipLoader from "react-spinners/ClipLoader";
 // SwapnilRokade_ShortListedCandidates_ModifyFilters_11/07
+
 const ShortListedCandidates = ({
   loginEmployeeName,
   toggleShortListed /*Akash_Pawar_ShortListedCandidate_toggleShortListed(show interview candidate)_23/07_LineNo_12*/,
@@ -223,6 +224,7 @@ const ShortListedCandidates = ({
       tooltip.style.visibility = "hidden";
     }
   };
+
   const getSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
       return sortOrder === "asc" ? (
@@ -784,6 +786,7 @@ const ShortListedCandidates = ({
                     </td>
                   ) : null}
                   <td className="tabledata">{index + 1}</td>
+                  
                   <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
@@ -794,6 +797,7 @@ const ShortListedCandidates = ({
                       <span className="tooltiptext">{item.date}</span>
                     </div>
                   </td>
+                  
                   <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}

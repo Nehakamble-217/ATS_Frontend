@@ -149,7 +149,9 @@ const HoldCandidate = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
+
         `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -178,7 +180,9 @@ const HoldCandidate = ({
   const fetchHoldCandidateData = async () => {
     try {
       const response = await fetch(
+
         `http://192.168.1.42:9090/api/ats/157industries/hold-candidate/${employeeId}/${userType}`
+
       );
       const data = await response.json();
       setCallingList(data);
@@ -426,7 +430,9 @@ const HoldCandidate = ({
 
   const handleShare = async () => {
     setIsDataSending(true);
+
     let url = `http://192.168.1.42:9090/api/ats/157industries/updateIds/${userType}`;
+
     let requestData;
     if (
       userType === "TeamLeader" &&

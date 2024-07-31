@@ -62,6 +62,7 @@ function Sidebar({
   /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-60 */
   toggelSubscriptions,
   toggleBilling,
+  // toggleTeamDetails,
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
