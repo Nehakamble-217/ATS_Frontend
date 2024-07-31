@@ -165,8 +165,6 @@
   text-overflow: clip;
   visibility: visible;
 }
-
-
 .tabledata:hover .tooltip {
   visibility: visible;
   opacity: 1;

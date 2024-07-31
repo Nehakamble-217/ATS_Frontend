@@ -225,6 +225,7 @@ const ShortListedCandidates = ({
       tooltip.style.visibility = "hidden";
     }
   };
+
   const getSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
       return sortOrder === "asc" ? (
@@ -786,6 +787,7 @@ const ShortListedCandidates = ({
                     </td>
                   ) : null}
                   <td className="tabledata">{index + 1}</td>
+                  
                   <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
@@ -796,6 +798,7 @@ const ShortListedCandidates = ({
                       <span className="tooltiptext">{item.date}</span>
                     </div>
                   </td>
+                  
                   <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
