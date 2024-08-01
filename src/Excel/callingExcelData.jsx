@@ -27,7 +27,6 @@ const CallingExcelList = ({
 
   const { employeeId } = useParams();
   const employeeIdw = parseInt(employeeId);
-  console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
 
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
@@ -36,6 +35,7 @@ const CallingExcelList = ({
   const navigator = useNavigate();
 
   useEffect(() => {
+    console.log(employeeId+"---00---");
     fetch(
 
       `http://192.168.1.42:9090/api/ats/157industries/calling-excel-data/${employeeId}`

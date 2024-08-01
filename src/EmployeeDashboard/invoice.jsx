@@ -113,7 +113,7 @@ const InvoiceTable = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://192.168.1.42:8080/api/saveInvoice",
+        `http://localhost:9090/api/ats/157industries/saveInvoice`,
         formData,
         {
           headers: {
