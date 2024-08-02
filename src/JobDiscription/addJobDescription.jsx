@@ -105,6 +105,13 @@ const AddJobDescription = () => {
     };
   }, []);
 
+  const handleRemove = (field, index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: prevData[field].filter((_, i) => i !== index),
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -506,6 +513,7 @@ const AddJobDescription = () => {
                   />
                 </div>
               </div>
+
               <div className="bg-gray-100 multi-field">
                 {/* <h3>Preferred Qualifications</h3> */}
                 {formData.RoundOfInterView.map((item, index) => (
@@ -521,7 +529,15 @@ const AddJobDescription = () => {
                         }
                         placeholder="Enter Round Of Interview"
                       />
+                       <button
+                        type="button"
+                        className="job-remove-button"
+                        onClick={() => handleRemove("RoundOfInterView", index)}
+                      >
+                        X
+                      </button>
                     </div>
+                   
                   </div>
                 ))}
                 <button
@@ -560,6 +576,13 @@ const AddJobDescription = () => {
                         }
                         placeholder="Enter Responsibility Message"
                       />
+                      <button
+                        type="button"
+                        className="job-remove-button"
+                        onClick={() => handleRemove("responsibilities", index)}
+                      >
+                        X
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -586,6 +609,7 @@ const AddJobDescription = () => {
                           handleInputChange(e, "jobRequirements", index)
                         }
                       />
+                     
                     </div>
                     <div className="field">
                       <label>Job Requirement Message:</label>
@@ -598,6 +622,13 @@ const AddJobDescription = () => {
                         }
                         placeholder="Enter Job Requirement Message"
                       />
+                       <button
+                        type="button"
+                        className="job-remove-button"
+                        onClick={() => handleRemove("jobRequirements", index)}
+                      >
+                        X
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -636,6 +667,13 @@ const AddJobDescription = () => {
                         }
                         placeholder="Enter Preferred Qualification Message"
                       />
+                       <button
+                        type="button"
+                        className="job-remove-button"
+                        onClick={() => handleRemove("preferredQualifications", index)}
+                      >
+                        X
+                      </button>
                     </div>
                   </div>
                 ))}

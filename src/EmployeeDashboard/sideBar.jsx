@@ -64,6 +64,7 @@ function Sidebar({
   toggleBilling,
     /*ArbazPathan_EmpDashboard_AddedInterviewForm_29/07/2024_LineNo_65-66 */
   toggeleInterviewForm
+  // toggleTeamDetails,
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);

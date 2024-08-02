@@ -36,6 +36,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   let [color, setColor] = useState("#ffcb9b");
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
   const [isDataSending, setIsDataSending] = useState(false);
+  const [clickedTime,setClickedTime] = useState();
 
   //akash_pawar_SelectedCandidate_ShareFunctionality_18/07_34
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -349,6 +350,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
     setSelectedCandidateId(candidateId);
     setSelectedEmployeeId(employeeId);
     setSelectedRequirementId(requirementId);
+    setClickedTime(new Date());
   };
 
   const handleReturn = () => {
@@ -695,7 +697,6 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
     hidePopup();
   };
   //Swapnil_Rokade_SelectedCandidate_columnsToInclude_columnsToExclude_17/07/2024//
-
   return (
     <div className="App-after">
       {loading ? (
@@ -1434,7 +1435,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                         </td>
                         <td className="tabledata ">
                           <i
-                            onClick={() => viewPage(item.candidateId)}
+                            onClick={() => viewPage(item.candidateId,item.requirementId)}
                             className="fa-solid fa-person-walking-arrow-right"
                           ></i>
                         </td>
@@ -1764,6 +1765,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
               candidateId={selectedCandidateId}
               employeeId={selectedEmployeeId}
               requirementId={selectedRequirementId}
+              prevtime = {clickedTime}
               onReturn={handleReturn}
             />
           )}

@@ -14,6 +14,9 @@ import { toast } from "react-toastify";
 // SwapnilRokade_SendClientEmail_ModifyFilters_11/07
 // SwapnilROkade_AddingErrorAndSuccessMessage_19/07
 
+// SwapnilRokade_SendClientEmail_addedProcessImprovmentEvaluatorFunctionalityStoringInterviweResponse_18_to_1251_29/07/2024
+
+
 const SendClientEmail = ({ clientEmailSender }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
@@ -97,7 +100,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        // alert("Error For fetching")
         setLoading(false);
       });
   }, [employeeId]);
@@ -1202,62 +1204,49 @@ const SendEmailPopup = ({
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
-        console.log("Email sent successfully:", response.data);
+        console.log("Email sent successfully:", response.data); 
+        toast.success("Email sent successfully");
 
-        toast.log("Email sent successfully");
+        selectedCandidate.forEach(async (can) => {
+            try {
+              const performanceId = await axios.get(
+                `http://192.168.1.42:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
+              );
+              UpdatePerformace(performanceId.data);
+            } catch (error) {
+              console.log(error);
+            }
+        });
+        
+        toast.success("Email sent successfully");
+
       })
 
       .catch((error) => {
         setIsMailSending(false);
         setResponse("Error Sending Email");
         console.error("Error sending email:", error);
-        // const mailSendTime = Date.now()/1000;
-
-        const mailSendTime = new Date();
-        const mailTime = mailSendTime.toISOString(); // Use ISO format for consistency
-
-        console.log(`Time of send mail: ${mailTime}`);
-
-        selectedCandidate.forEach((can) => {
-          const firstDateStr = `${can.date} ${can.candidateAddedTime}`;
-          const firstDate = new Date(firstDateStr); // Assuming firstDateStr is in a valid format
-
-          const date1 = new Date(mailTime);
-          const date2 = firstDate;
-
-          const getDifference = (date1, date2) => {
-            const diffInMs = date1 - date2;
-            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-            const diffInHours = Math.floor(
-              (diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-            );
-            const diffInMinutes = Math.floor(
-              (diffInMs % (1000 * 60 * 60)) / (1000 * 60)
-            );
-            return {
-              days: diffInDays,
-              hours: diffInHours,
-              minutes: diffInMinutes,
-            };
-          };
-
-          if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
-            console.log(
-              `Error: Invalid date format for candidate ${can.candidateName}`
-            );
-            return;
-          }
-
-          const { days, hours, minutes } = getDifference(date1, date2);
-          console.log(`Candidate: ${can.candidateName}`);
-          console.log(
-            `Difference: ${days} days, ${hours} hours, and ${minutes} minutes`
-          );
-        });
-
         toast.error("Failed to send email");
       });
   };
+
+
+  const UpdatePerformace =async(id)=>{
+    try {
+      const additionalData = {
+        mailToClient:new Date()
+      };
+      // console.log("Sending additional data:", additionalData);
+      const response1 = await axios.put(
+        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${id}`,
+        additionalData
+      );
+      console.log("Second API Response:", response1.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <>

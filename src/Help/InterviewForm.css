@@ -6,7 +6,7 @@
 .dhann-container {
   display: flex;
   width: 100%;
-  height: 100%; /* Ensure container takes full viewport height */
+  height: auto; /* Ensure container takes full viewport height */
   max-width: 1800px;
   margin: 0 auto; 
 }
@@ -28,8 +28,9 @@
 /* Left and Right Cards */
 .left-card {
   flex: 0 0 25%; /* 25% width for left card */
-  height: 90%; /* Ensure it takes full height of the container */
+  height: 100%; /* Ensure it takes full height of the container */
   background-color: #ffe5b5;
+  height: 100%;
 }
 
 
@@ -39,7 +40,7 @@
 .right-card {
   flex: 0 0 75%; /* 75% width for right card */
   width: 910px; /* Set a fixed width for the right card */
-  height: 90%; /* Ensure it takes full height of the container */
+  height: 100%; /* Ensure it takes full height of the container */
   max-width: 100%; /* Ensure it does not exceed the container width */
 }
 
@@ -161,11 +162,14 @@ h1, h2, h3, h4, h5, h6 {
     flex: 1 1 100%;
     width: auto; /* Remove fixed width */
     max-width: 100%;
+    height: auto;
+    max-height: fit-content;
   }
 
   .left-card {
-    flex: 1 1 100%;
-    height: auto; /* Allow height to adjust */
+    height: 100vh; /* Allow height to adjust */
+        max-height: fit-content;
+
   }
 
   .dhann-container {

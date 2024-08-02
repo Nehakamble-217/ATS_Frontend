@@ -317,7 +317,7 @@ html::-webkit-scrollbar {
 .selection-containerTL {
   display: flex;
   /* justify-content: space-around; */
-  width: 45%;
+  width: 41%;
   flex-direction: column;
   margin-bottom: 20px;
 }
@@ -461,6 +461,8 @@ html::-webkit-scrollbar {
   font-size: 16px;
   max-height: 70vh;
   overflow-y: auto;
+  text-transform: capitalize;
+
   /* height: 30px;
     */
 }
@@ -481,6 +483,8 @@ html::-webkit-scrollbar {
   font-size: 18px;
   max-height: 70vh;
   overflow-y: auto;
+  text-transform: capitalize;
+
 
 }
 
@@ -496,6 +500,8 @@ html::-webkit-scrollbar {
   font-size: 18px;
   max-height: 70vh;
   overflow-y: auto;
+  text-transform: capitalize;
+
 }
 
 .category-header {

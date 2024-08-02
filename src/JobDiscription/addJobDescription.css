@@ -175,7 +175,7 @@
 
 .job-button {
   margin-left: 2px;
-  width: 25%;
+  width: 20%;
   height: 30px;
   background-color: #ffcb9b;
   border-radius: 15px;
@@ -193,4 +193,11 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.job-remove-button{
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 0 10px 0 10px;
+  color: red;
+  margin: 0px 14px 0px 8px;
 }
