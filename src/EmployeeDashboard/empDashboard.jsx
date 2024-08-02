@@ -56,6 +56,8 @@ import IssueSolving from "../AboutUs/issueSolving";
 import WorkplacePolicy from "../AboutUs/companyPolicy";
 import PainAreaSolving from "../AboutUs/painAreaSolving";
 import RightsAndInstructions from "../AboutUs/rightsAndInstructions";
+import InterviewForm from "../Help/InterviewForm";
+import InterviewDataTables from "../Help/InterviewTable";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -135,6 +137,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showSubscription, setShowSubscription] = useState(false);
   const [showBilling, setShowBilling] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [showInterviewForm,setShowInterviewForm]=useState(false);
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -164,6 +167,7 @@ const EmpDashboard = ({ userGroup }) => {
 
   const [loginEmployeeName, setLoginEmployeeName] = useState("");
   const [clientEmailSender, setClientEmailSender] = useState();
+  const [showAllInterviewResponses,setShowAllInterviewResponses]=useState(false)
   const handleEmailSenderInformation = (data) => {
     setLoginEmployeeName(data.senderName); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_151
     setClientEmailSender(data);
@@ -297,6 +301,8 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCompanyPolicy(false);
     setShowPainArea(false);
     setShowIssueSolving(false);
+    setShowInterviewForm(false);
+    setShowAllInterviewResponses(false)
   };
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -533,6 +539,14 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowPayment(!showPayment);
   };
+  const toggeleInterviewForm=()=>{
+    resetAllToggles();
+    setShowInterviewForm(!showInterviewForm)
+  }
+  const toggleAllInterviewResponse=()=>{
+    resetAllToggles();
+    setShowAllInterviewResponses(!showAllInterviewResponses)
+  }
 
   return (
     <div
@@ -603,6 +617,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggeleCompanyPolicy={toggeleCompanyPolicy}
         toggeleIssueSolving={toggeleIssueSolving}
         toggelePainArea={toggelePainArea}
+        toggeleInterviewForm={toggeleInterviewForm}
       />
 
       <div className="empDash-main-content">
@@ -776,6 +791,16 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showRightsInstruction && (
             <RightsAndInstructions></RightsAndInstructions>
+          )}
+        </div>
+        <div>
+          {showInterviewForm && (
+            <InterviewForm  toggleAllInterviewResponse={toggleAllInterviewResponse}/>
+          )}
+        </div>
+        <div>
+          {showAllInterviewResponses && (
+            <InterviewDataTables/>
           )}
         </div>
       </div>

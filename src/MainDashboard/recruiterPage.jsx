@@ -15,7 +15,7 @@ const RecruiterPage = () => {
       <div className="recpage-pricing-plan">
         <div className="recpage-square-box">
           <div className="recpage-content">
-            <h1>Recruiter</h1>
+            <h1 style={{color:"#c40b0b"}}>Recruiter</h1>
             <button
               className="recpage-login"
               onClick={() => handleLoginClick("Recruiters")}
@@ -26,7 +26,7 @@ const RecruiterPage = () => {
         </div>
         <div className="recpage-square-box">
           <div className="recpage-content">
-            <h1>Team Leader</h1>
+            <h1 style={{color:"#c40b0b"}}>Team Leader</h1>
             <button
               className="recpage-login"
               onClick={() => handleLoginClick("TeamLeader")}
@@ -37,7 +37,7 @@ const RecruiterPage = () => {
         </div>
         <div className="recpage-square-box">
           <div className="recpage-content">
-            <h1>Manager</h1>
+            <h1 style={{color:"#c40b0b"}}>Manager</h1>
             <button
               className="recpage-login1"
               onClick={() => handleLoginClick("Manager")}
@@ -48,7 +48,7 @@ const RecruiterPage = () => {
         </div>
         <div className="recpage-square-box">
           <div className="recpage-content">
-            <h1>Super User</h1>
+            <h1 style={{color:"#c40b0b"}}>Super User</h1>
             <button
               className="recpage-login1"
               onClick={() => handleLoginClick("SuperUser")}

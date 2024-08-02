@@ -70,7 +70,7 @@ function DailyWork({
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.42:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+          `http://localhost:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
         );
         setEmployeeData(response.data);
         // console.log(response.data);
@@ -177,7 +177,7 @@ function DailyWork({
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
         await axios.post(
-          "http://192.168.1.42:9090/api/ats/157industries/save-daily-work",
+          "http://localhost:9090/api/ats/157industries/save-daily-work",
 
           formData
         );
@@ -208,7 +208,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.42:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+          `http://localhost:9090/api/ats/157industries/fetch-work-id/${employeeId}`
         );
 
         setFetchWorkId(response.data);
@@ -429,7 +429,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `http://localhost:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
 
         formData
       );
@@ -449,6 +449,8 @@ function DailyWork({
       console.error("Error logging out:", error);
     }
   };
+
+ 
 
  
   const handleImageClick = () => {
@@ -482,6 +484,7 @@ function DailyWork({
             157{employeeId}
           </p>
         </div>
+        
       </div>
       {userType != "SuperUser" &&
       userType != "Applicant" &&

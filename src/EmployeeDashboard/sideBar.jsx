@@ -62,6 +62,8 @@ function Sidebar({
   /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-60 */
   toggelSubscriptions,
   toggleBilling,
+    /*ArbazPathan_EmpDashboard_AddedInterviewForm_29/07/2024_LineNo_65-66 */
+  toggeleInterviewForm
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -1095,7 +1097,7 @@ function Sidebar({
   </li>
 ) : null}
 
-                <li 
+                {/* <li 
                 onClick={handleButtonClick(
                   "help",
                   toggelHelp
@@ -1109,8 +1111,34 @@ function Sidebar({
                       ></i>
                     <span className="sidebar-text">Help</span>
                   </a>
-                </li>
-
+                </li> */}
+                <li
+    className={activeSubMenu === "help" ? "active" : ""}
+    onClick={toggleSubMenu("help")}
+  >
+    <a href="#">
+      <i className="fa-regular fa-circle-question" style={{ color: "gray" }}></i>
+      <span className="sidebar-text">Help</span>
+      <i className="arrow ph-bold ph-caret-down"></i>
+    </a>
+    <ul
+      className={`sub-menu sub-menu1 sub-menu2 ${
+        activeSubMenu === "help" ? "active" : ""
+      }`}
+    >
+      
+      
+      <li style={{ marginLeft: "10px" }}>
+        <span
+          className="sidebar-text"
+          onClick={toggeleInterviewForm}
+        >
+          Interview Form
+        </span>
+      </li>
+      
+    </ul>
+  </li>
 
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">

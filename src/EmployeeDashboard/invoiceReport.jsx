@@ -24,7 +24,7 @@ const InvoiceReport = () => {
   // Fetch invoice data from API
   const fetchInvoice = async () => {
     try {
-      const response = await fetch("http://192.168.1.42:8080/api/fetchInvoice");
+      const response = await fetch("http://localhost:8080/api/fetchInvoice");
       const data = await response.json();
       setInvoiceReport(data);
       setLoading(true);
