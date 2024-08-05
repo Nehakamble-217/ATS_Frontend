@@ -516,6 +516,7 @@ const AddJobDescription = () => {
                    
                   </div>
                 ))}
+                <div className="ajd-btndiv-div">
                 <button
                   type="button"
                   className="job-button"
@@ -523,6 +524,7 @@ const AddJobDescription = () => {
                 >
                   Add More Interview Rounds
                 </button>
+              </div>
               </div>
 
               <div className="bg-white multi-field">
@@ -562,6 +564,8 @@ const AddJobDescription = () => {
                     </div>
                   </div>
                 ))}
+
+<div className="ajd-btndiv-div">
                 <button
                   type="button"
                   className="job-button"
@@ -569,6 +573,7 @@ const AddJobDescription = () => {
                 >
                   Add More Responsibilities
                 </button>
+              </div>
               </div>
 
               <div className="bg-gray-100 multi-field">
@@ -608,6 +613,8 @@ const AddJobDescription = () => {
                     </div>
                   </div>
                 ))}
+
+<div className="ajd-btndiv-div">
                 <button
                   type="button"
                   className="job-button"
@@ -615,6 +622,7 @@ const AddJobDescription = () => {
                 >
                   Add More Job Requirements
                 </button>
+              </div>
               </div>
 
               <div className="multi-field">
@@ -653,6 +661,7 @@ const AddJobDescription = () => {
                     </div>
                   </div>
                 ))}
+                <div className="ajd-btndiv-div">
                 <button
                   type="button"
                   className="job-button"
@@ -660,6 +669,7 @@ const AddJobDescription = () => {
                 >
                   Add More Preferred Qualifications
                 </button>
+                </div>
               </div>
             </div>
           </div>

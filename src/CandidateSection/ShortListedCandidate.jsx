@@ -123,7 +123,7 @@ const ShortListedCandidates = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -135,7 +135,7 @@ const ShortListedCandidates = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -146,7 +146,7 @@ const ShortListedCandidates = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.50:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -177,7 +177,7 @@ const ShortListedCandidates = ({
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
+        `http://192.168.1.43:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
       );
       const data = await response.json();
 
@@ -273,7 +273,7 @@ const ShortListedCandidates = ({
 
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://192.168.1.42:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://192.168.1.43:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&
@@ -988,12 +988,16 @@ const ShortListedCandidates = ({
                   <td className="tabledata">{item.interviewTime}</td>
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
-                    <button
+                    {/* <button
                       className="lineUp-share-btn"
                       onClick={() => handleUpdate(item.candidateId)}
                     >
-                      Update
-                    </button>
+                      Up
+                    </button> */}
+                    <i
+                              onClick={() => handleUpdate(item.candidateId)}
+                              className="fa-regular fa-pen-to-square"
+                            ></i>
                   </td>
                 </tr>
               ))}

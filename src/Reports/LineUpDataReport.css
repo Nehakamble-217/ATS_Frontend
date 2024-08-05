@@ -54,7 +54,13 @@
             align-items: center;
         }
         
-       
+        /* .dropbtn:hover{
+          background-color: white;
+        
+          border: 1px solid gray;
+        } */
+        
+        /* Style the dropdown content (hidden by default) */
         .dropdown-content {
           display: none;
           position: absolute;
@@ -64,21 +70,25 @@
           z-index: 1;
         }
         
+        /* Style the dropdown options */
         .dropdown-content div {
           padding: 0px 10px;
           cursor: pointer;
         }
         
+        /* Show the dropdown content when the dropdown button is clicked */
         .filter-dropdown:hover .dropdown-content {
           display: block;
           width: 100%;
           z-index: 99999999999999999;
         }
         
+        /* Style the checkbox input */
         .dropdown-content input[type="checkbox"] {
           margin-right: 5px;
         }
         
+        /* Style the checkbox label */
         .dropdown-content label {
           cursor: pointer;
         }
@@ -117,6 +127,7 @@
           width: auto !important;
           height: 30px;
           
+          /* text-overflow: ellipsis; */
         }
         .tabledata {
           
@@ -135,12 +146,15 @@
           color: #000;
           text-align: center;
           border-radius: 5px;
+          /* padding: 5px; */
           position: fixed;  /* Use fixed positioning */
           z-index: 1000;
           opacity: 0;
           transition: opacity 0.3s;
           text-overflow: clip;
           visibility: visible;
+          /* white-space: nowrap; */
+          /* width: 200px; */
         }
         
         
@@ -155,17 +169,30 @@
         
         
           
-        .lineUp-attendancerows-head {
+        .attendancerows-head {
           background-color: #ffcb9b;
           color: gray;
+          /* font-weight: 100; */
           text-align: center;
           font-size: 18px;
           border: 1px solid gray;
           max-width: 300px ;
-         
+          /* padding: 10px 15px; */
+          /* text-overflow: clip; */
+          /* width: 100px; */
         }
         
-      
+        /* .attendancerowsdata,
+        .tabledata {
+          text-align: center;
+          font-size: 16px;
+          border: 1px solid gray;
+          padding: 1px;
+          overflow: hidden;
+          max-width: 200px;
+          text-overflow: clip;
+          visibility: visible;
+        } */
         
         .attendanceTableData::-webkit-scrollbar {
           display: none;
@@ -175,20 +202,21 @@
           width: 100%;
           overflow-y: auto;
         }
-        .lineUp-attendancerows{
+        .attendancerows{
           height: 30px;
         }
         
         
-        .lineUp-attendancerows:hover {
+        .attendancerows:hover {
           background-color: #f2f2f2;
         }
         
         html::-webkit-scrollbar{
           display: none;
         }  
-        .lineUp-attendancerows i{
-          font-size: 30px;
+        .attendancerows i{
+          font-size: 15px;
+          /* color: #ffcb9b; */
           margin-left: 15px;
         }
       
@@ -204,7 +232,7 @@
         .shareDownloadbtn {
           background: #ffcb9b;
           border: 1px solid grey;
-          height: 30px;
+          height: 35px;
           width: auto; /* Adjust width as needed */
           border-radius: 15px;
           color: white;
