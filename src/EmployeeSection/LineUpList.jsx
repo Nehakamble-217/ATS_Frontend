@@ -152,6 +152,7 @@ const LineUpList = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
+
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -168,6 +169,7 @@ const LineUpList = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${empId}`
+
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -179,6 +181,7 @@ const LineUpList = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -217,6 +220,7 @@ const LineUpList = ({
     setShowUpdateCallingTracker(false);
     fetch(
       `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
+
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -452,6 +456,7 @@ const LineUpList = ({
 
     setIsDataSending(true);
     let url = `http://192.168.1.43:9090/api/ats/157industries/updateIds/${userType}`;
+
     let requestData;
     if (
       userType === "TeamLeader" &&

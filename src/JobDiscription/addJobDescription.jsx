@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./addJobDescription.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import WebSocketService from '../websocket/WebSocketService';
 
 const AddJobDescription = () => {
   const [formData, setFormData] = useState({
@@ -80,6 +81,29 @@ const AddJobDescription = () => {
       ],
     }));
   };
+   
+  useEffect(() => {
+    let subscription;
+    const setupWebSocket = async () => {
+      try {
+        subscription = await WebSocketService.subscribeToNotifications((notification) => {
+          if (notification.type === 'ADD') {
+            toast.info(notification.message);
+          }
+        });
+      } catch (error) {
+        console.error('Failed to subscribe to notifications:', error);
+      }
+    };
+
+    setupWebSocket();
+
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
+  }, []);
 
   const handleRemove = (field, index) => {
     setFormData((prevData) => ({
@@ -92,7 +116,7 @@ const AddJobDescription = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://192.168.1.42:9090/api/ats/157industries/add-requirement",
+        "http://localhost:9090/api/ats/157industries/add-requirement",
         {
           method: "POST",
           headers: {

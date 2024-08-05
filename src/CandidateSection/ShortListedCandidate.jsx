@@ -124,6 +124,7 @@ const ShortListedCandidates = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
+
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -136,6 +137,7 @@ const ShortListedCandidates = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${empId}`
+
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -146,7 +148,8 @@ const ShortListedCandidates = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.50:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -178,6 +181,7 @@ const ShortListedCandidates = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
+
       );
       const data = await response.json();
 
@@ -274,6 +278,7 @@ const ShortListedCandidates = ({
   const handleShare = async () => {
     setIsDataSending(true);
     let url = `http://192.168.1.43:9090/api/ats/157industries/updateIds/${userType}`;
+
     let requestData;
     if (
       userType === "TeamLeader" &&

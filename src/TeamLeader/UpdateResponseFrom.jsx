@@ -30,7 +30,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   const fetchDataToUpdate = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
+        `http://localhost:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
       );
       const responseData = await response.json();
       console.log(responseData);
@@ -184,7 +184,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                   {
                       interviewRound: firstResponse.interviewRound,
                       roundResponse: firstResponse.interviewResponse,
-                      time: formatDateToIST(currentDateTime),
+                      time: currentDateTime,
                       diffBTNRoundToNextRound: difference
                   }
               ]
@@ -222,22 +222,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     });
   }; 
 
-  function formatDateToIST(date) {
-    // Convert to IST
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-    const istDate = new Date(date.getTime() + istOffset);
-  
-    // Extract the components
-    const year = istDate.getUTCFullYear();
-    const month = String(istDate.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(istDate.getUTCDate()).padStart(2, '0');
-    const hours = String(istDate.getUTCHours()).padStart(2, '0');
-    const minutes = String(istDate.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(istDate.getUTCSeconds()).padStart(2, '0');
-  
-    // Format as yyyy-mm-dd hh:mm:ss
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
+ 
   
   return (
     <div className="p-6 bg-white shadow-md rounded-lg max-w-full">

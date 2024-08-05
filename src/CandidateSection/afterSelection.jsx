@@ -67,7 +67,7 @@ const AfterSelection = ({
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.50:9090/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -97,7 +97,7 @@ const AfterSelection = ({
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+        `http://192.168.1.50:9090/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -171,7 +171,7 @@ const AfterSelection = ({
     }
     try {
       const additionalData = {
-        letterResponse:formatDateToIST(new Date()),
+        letterResponse:new Date(),
       };
       console.log(additionalData);
       const response1 = await axios.put(
@@ -194,7 +194,7 @@ const AfterSelection = ({
     // }
     try {
       const additionalData = {
-        issueOfferLetter:formatDateToIST(new Date()),
+        issueOfferLetter:new Date(),
       };
       console.log(additionalData);
       const response1 = await axios.put(
@@ -218,7 +218,7 @@ const AfterSelection = ({
     }
     try {
       const additionalData = {
-        joiningProcess:formatDateToIST(new Date())
+        joiningProcess:new Date()
       };
       console.log(additionalData);
       const response1 = await axios.put(
@@ -271,7 +271,7 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-        "http://192.168.1.42:9090/api/ats/157industries/add-after-selection",
+        "http://192.168.1.50:9090/api/ats/157industries/add-after-selection",
         {
           method: "POST",
           headers: {
@@ -331,7 +331,7 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-        "http://192.168.1.42:9090/api/ats/157industries/save-join-data",
+        "http://192.168.1.50:9090/api/ats/157industries/save-join-data",
         {
           method: "POST",
           body: formData,
@@ -367,23 +367,6 @@ const AfterSelection = ({
     }
 
   };
-  
-  function formatDateToIST(date) {
-    // Convert to IST
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-    const istDate = new Date(date.getTime() + istOffset);
-  
-    // Extract the components
-    const year = istDate.getUTCFullYear();
-    const month = String(istDate.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(istDate.getUTCDate()).padStart(2, '0');
-    const hours = String(istDate.getUTCHours()).padStart(2, '0');
-    const minutes = String(istDate.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(istDate.getUTCSeconds()).padStart(2, '0');
-  
-    // Format as yyyy-mm-dd hh:mm:ss
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
 
   return (
     <div>

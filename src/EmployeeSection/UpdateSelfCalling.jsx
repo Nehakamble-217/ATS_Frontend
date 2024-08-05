@@ -95,6 +95,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/specific-data/${candidateId}`
+
       );
       const data = await response.json();
       setCallingTracker(data);
@@ -108,6 +109,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     try {
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/company-details`
+
       );
       const { data } = response;
       setRequirementOptions(data);

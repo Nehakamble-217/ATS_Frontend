@@ -6,7 +6,7 @@ import Profile from "../photos/profileImg.webp";
 import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
-
+// SwapnilRokade_DailyWork_LogoutFunctionalityWorking_31/07
 function DailyWork({
   onCurrentEmployeeJobRoleSet,
   successCount,
@@ -21,7 +21,7 @@ function DailyWork({
   const [showDetails, setShowDetails] = useState(false);
   const [fetchWorkId, setFetchWorkId] = useState(null);
   const [employeeData, setEmployeeData] = useState({});
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [employeeName, setEmployeeName] = useState();
   const [modalEmployeeData, setModalEmployeeData] = useState(null);
   const [profileImageBase64, setProfileImageBase64] = useState(null);
   const [modalShow, setModalShow] = useState(false);
@@ -67,10 +67,12 @@ function DailyWork({
   const navigate = useNavigate();
   const { userType } = useParams();
   useEffect(() => {
+
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
           `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+
         );
         setEmployeeData(response.data);
         // console.log(response.data);
@@ -99,8 +101,47 @@ function DailyWork({
       }
     };
 
+
     fetchEmployeeData();
-  }, [employeeId]);
+  }, [lateMark, leaveType, paidLeave, unpaidLeave, loginTime, data]);
+
+
+
+  const fetchEmployeeData = async () => {
+    try {
+      console.log("2-------------");
+      const response = await axios.get(
+        `http://192.168.1.42:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      );
+      setEmployeeData(response.data);
+      if(response.data)
+      {
+        saveUserDetails(response.data.name);
+      }
+      //Akash_Pawar_DailyWork_senderinformation_09/07_74
+      onCurrentEmployeeJobRoleSet(response.data.jobRole);
+      const emailSender = {
+        senderName: response.data.name,
+        senderMail: response.data.officialMail,
+      };
+      emailSenderInformation(emailSender);
+      //Akash_Pawar_DailyWork_senderinformation_09/07_81
+      if (response.data.profileImage) {
+        const byteCharacters = atob(response.data.profileImage);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "image/jpeg" });
+        const url = URL.createObjectURL(blob);
+        setProfileImage(url);
+        return () => URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error("Error fetching employee details:", error);
+    }
+  };
 
   useEffect(() => {
     const now = new Date();
@@ -136,14 +177,14 @@ function DailyWork({
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-  // console.log(lateMark);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-SaveLoginFunctionality Start  LineNo:-128  Date:-01/07
-  useEffect(() => {
+  const saveUserDetails=(name) => {
     const storedLoginDetailsSaved = localStorage.getItem(
       `loginDetailsSaved_${employeeId}`
     );
     if (storedLoginDetailsSaved === "true") {
+      
       setLoginDetailsSaved(true);
     }
 
@@ -151,17 +192,24 @@ function DailyWork({
 
     const saveLoginDetails = async () => {
       if (loginDetailsSaved) {
+        
+        fetchCurrentEmployerWorkId();
+        console.log(userType+"   "+employeeId+ " " +name);
         console.log("Login details already saved.");
         return; // Exit early if login details are already saved
       }
 
       try {
+        console.log("1------");
+        console.log(name);
         const now = new Date();
         const day = now.getDate().toString().padStart(2, "0");
         const month = (now.getMonth() + 1).toString().padStart(2, "0");
         const year = now.getFullYear();
         const formData = {
           employeeId,
+          jobRole:userType,
+          employeeName:name,
           date: `${day}/${month}/${year}`,
           loginTime: now.toLocaleTimeString("en-IN"),
           lateMark,
@@ -176,11 +224,18 @@ function DailyWork({
           `dailyWorkData_${employeeId}`,
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
-        await axios.post(
-          "http://192.168.1.43:9090/api/ats/157industries/save-daily-work",
+
+
+        console.log(formData);
+        const response = await axios.post(
+          `http://192.168.1.43:9090/api/ats/157industries/save-daily-work/${employeeId}/${userType}`,
           formData
         );
 
+        if(response.data)
+        {
+          fetchCurrentEmployerWorkId();
+        }
         console.log("Login details saved successfully.");
         localStorage.setItem(
           `loginDetailsSaved_${employeeId}`,
@@ -200,24 +255,22 @@ function DailyWork({
       saveLoginDetails();
       executed = true;
     }
-  }, [lateMark, leaveType, paidLeave, unpaidLeave, loginTime, data]);
+  };
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-SaveLoginFunctionality End LineNo:-191  Date:-01/07
 
-  useEffect(() => {
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.43:9090/api/ats/157industries/fetch-work-id/${employeeId}`
+
+          `http://192.168.1.43:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
         );
 
         setFetchWorkId(response.data);
-        // console.log(response.data);
+        console.log(response.data+"hello-------------");
       } catch (error) {
         console.error("Error fetching work ID:", error);
       }
     };
-    fetchCurrentEmployerWorkId();
-  }, [employeeId]);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-CalculateTotalHoursWork(changed) Start LineNo:-193  Date:-01/07
   const calculateTotalHoursWork = (
@@ -295,6 +348,7 @@ function DailyWork({
       return "00:00:00";
     }
   };
+  //Name:-Akash Pawar Component:-DailyWork Subcategory:-CalculateTotalHoursWork(changed) Start LineNo:-269  Date:-01/07
 
   useEffect(() => {
     let interval;
@@ -331,6 +385,7 @@ function DailyWork({
       pending: pendingDecrement - 1,
     };
     setData(updatedData);
+
     console.log("Archived Increment:", archivedIncrement);
     console.log("Pending Decrement:", pendingDecrement);
     console.log("Updated Data:", updatedData);
@@ -367,7 +422,9 @@ function DailyWork({
     updateArchieved();
   }, [successfulDataAdditions]);
 
- 
+  //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchieved(changed) End LineNo:-351 Date:-01/07
+
+
   const handlePause = () => {
     setRunning(false);
     const now = new Date().toLocaleTimeString("en-IN");
@@ -405,7 +462,11 @@ function DailyWork({
       const day = now.getDate().toString().padStart(2, "0");
       const month = (now.getMonth() + 1).toString().padStart(2, "0");
       const year = now.getFullYear();
-
+      let present = "absent";
+      if(data.pending>=5 && data.archived>=5)
+      {
+        present = "present";
+      }
       const formData = {
         employeeId,
         date: `${day}/${month}/${year}`,
@@ -418,6 +479,7 @@ function DailyWork({
         logoutTime: logoutTimestamp,
         totalHoursWork,
         dailyHours: breaks,
+        dayPresentStatus:present,
         lateMark,
         leaveType,
         paidLeave,
@@ -429,6 +491,7 @@ function DailyWork({
 
       await axios.put(
         `http://192.168.1.43:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+
         formData
       );
 
@@ -442,13 +505,14 @@ function DailyWork({
       setTime({ hours: 0, minutes: 0, seconds: 0 });
       setData({ archived: 0, pending: 10 });
       console.log("Logged out successfully.");
-      navigate("/employee-login/recruiter");
+      navigate(`/login/${userType}`);
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
 
- 
+  //Name:-Akash Pawar Component:-DailyWork Subcategory:-handleLogoutLocal(changed) End LineNo:-593 Date:-01/07
+
   const handleImageClick = () => {
     setPopupVisible(true);
     setModalEmployeeData(employeeData);
@@ -480,10 +544,11 @@ function DailyWork({
             157{employeeId}
           </p>
         </div>
+        
       </div>
       {userType != "SuperUser" &&
-      userType != "Applicant" &&
-      userType != "Vendor" ? (
+        userType != "Applicant" &&
+        userType != "Vendor" ? (
         <>
           <div
             className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}
@@ -549,7 +614,6 @@ function DailyWork({
             >
               {running ? "Pause" : "Resume"}
             </button>
-
           </div>
 
           <button
