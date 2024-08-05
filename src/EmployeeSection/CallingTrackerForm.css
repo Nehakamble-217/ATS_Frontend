@@ -70,6 +70,7 @@
   padding: 1px;
   border-radius: 5px;
   border: 1px solid #f2f2f2;
+  padding-left: 10px;
 }
 
 .calling-check-box-main-container {
@@ -112,9 +113,9 @@
   display: flex;
   justify-content: start;
   align-items: start;
-  gap: 6px;
   flex-direction: column;
   padding: 10px;
+  gap: 6px;
 }
 
 .calling-tracker-two-input {
@@ -448,6 +449,7 @@ strong {
     .main-gender {
       font-size: 1em;
       color: gray;
+      padding: 10px;
     }
 
     .gender-checkboxes {
@@ -455,11 +457,15 @@ strong {
       align-items: center;
       gap: 10px;
       color: gray;
+      padding: 10px;
+
     }
 
     .gender-checkboxes input[type="checkbox"] {
       margin-right: 0px;
       color: gray;
+      padding: 10px;
+
     }
 
     #resumeUpload {
@@ -658,4 +664,9 @@ strong {
   align-items: center;
   gap: 5px;
   margin-top: 10px;
+}
+.callingTracker-male-div{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

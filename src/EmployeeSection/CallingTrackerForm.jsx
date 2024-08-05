@@ -616,7 +616,7 @@ const CallingTrackerForm = ({
                     value={callingTracker.candidateName}
                     className={`plain-input`}
                     onChange={handleChange}
-                    placeholder="Enter Candidate Name"
+                    placeholder="Enter Candidate Name" 
                   />
                   {errors.candidateName && (
                     <div className="error-message">{errors.candidateName}</div>
@@ -856,8 +856,9 @@ const CallingTrackerForm = ({
                   </div>
 
                   <div className="calling-check-box-container">
+                   <div className="callingTracker-male-div"> 
                     <div className="calling-check-box">
-                      <input
+                      <input 
                         type="checkbox"
                         name="male"
                         value="male"
@@ -869,10 +870,15 @@ const CallingTrackerForm = ({
                             gender: e.target.value,
                           })
                         }
+                        
                       />
+                      
+                    </div>
+                    <div>
                       Male
                     </div>
-
+                    </div>
+                    <div className="callingTracker-male-div">
                     <div className="calling-check-box">
                       <input
                         type="checkbox"
@@ -888,7 +894,9 @@ const CallingTrackerForm = ({
                           })
                         }
                       />
-                      Female
+                      
+                    </div>
+                    <div>Female</div>
                     </div>
                   </div>
                 </div>

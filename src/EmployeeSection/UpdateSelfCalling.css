@@ -1,3 +1,19 @@
+.update-main-div{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  padding: 5px;
+  color: gray;
+  margin-top: 5px;
+}
+.update-main-div::-webkit-scrollbar{
+  display: none;
+} 
+
+
 .update-page-head {
   width: 100%;
   color: gray;
@@ -9,49 +25,47 @@
   padding-top: 10px;
 }
 
-.calling-tracker-submain {
+/* .calling-tracker-submain {
   width: 100%;
   height: 100%;
-}
+} */
 
-.calling-tracker-form {
+.update-calling-tracker-form {
   width: 100%;
   margin-bottom: 20px;
   border: 1px solid #f2f2f2;
 }
 
-.calling-tracker-row-gray {
+.update-calling-tracker-row-gray {
   width: 100%;
   background-color: #f2f2f2;
   display: flex;
   justify-content: space-between;
 }
 
-.calling-tracker-row-white {
+.update-calling-tracker-row-white {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.calling-tracker-field {
+.update-calling-tracker-field {
   width: 50%;
-  /* height: 100%; */
   border: 1px solid gray;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.calling-tracker-field-inner-div {
+.update-calling-tracker-field-inner-div {
   width: 70%;
   border: 1px solid gray;
-  /* padding: 5px 0px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.calling-tracker-field-inner-sub-div {
+.update-calling-tracker-field-inner-sub-div {
   width: 48%;
   display: flex;
   /* padding: 2px; */
@@ -67,7 +81,7 @@
   border: 1px solid #f2f2f2;
 }
 
-.calling-check-box-main-container {
+.update-calling-check-box-main-container {
   width: 70%;
   /* border: 1px solid gray; */
   padding: 5px 3px;
@@ -89,49 +103,46 @@
   /* border: 1px solid gray; */
 }
 
-.calling-tracker-field label {
+.update-calling-tracker-field label {
   width: 29%;
+  height: 100%;
   font-weight: 500;
   border-right: 1px solid gray;
-  padding: 10px 0px;
   text-align: center;
-  font-size: 2.1vh;
+  font-size: 1.0vw;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
-}
-
-.calling-tracker-field-sub-div {
-  width: 69%;
-  /* border: 1px solid gray; */
-  /* padding: 5px 0px; */
-  display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
 }
 
-.calling-tracker-two-input {
+.update-calling-tracker-field-sub-div {
+  width: 69%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  /* flex-direction: column; */
+  padding: 10px;
+  gap: 6px;
+}
+
+.update-calling-tracker-two-input {
   width: 40%;
-  border-radius: 5px;
   padding: 1px;
   color: rgba(128, 128, 128, 0.782);
-  border: 1px solid #f2f2f2;
   font-size: 16px;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .calling-tracker-input-message {
   width: 80%;
-  border-radius: 5px;
-  /* border: 1px solid gray; */
+  border: 1px solid gray;
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
 }
 
-.calling-tracker-two-input-container {
+.update-calling-tracker-two-input-container {
   width: 69%;
-  /* border: 1px solid gray; */
   padding: 5px 0px;
   display: flex;
   justify-content: space-around;
@@ -141,30 +152,28 @@
 .buttons {
   text-align: center;
   color: gray;
-  /* Set font color to gray */
   display: flex;
 }
 
 .main-gender {
-  font-size: 1em;
-  /* Use em for relative sizing */
+  width: 60%;
+  font-size: 16px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
   color: gray;
-  /* Set font color to gray */
 }
 
 .gender-checkboxes {
   display: flex;
+  justify-content: start;
   align-items: center;
-  gap: 10px;
   color: gray;
-  /* Set font color to gray */
 }
 
 .gender-checkboxes input[type="checkbox"] {
   margin-right: 0px;
-  /* Adjust spacing between checkbox and label */
   color: gray;
-  /* Set font color to gray */
 }
 
 
@@ -177,7 +186,6 @@
   text-align: center;
   justify-content: space-around;
   color: gray;
-  /* Set font color to gray */
 }
 
 .ctf-btn {
@@ -185,13 +193,10 @@
   color: white;
   border-radius: 15px;
   border: 1px solid gray;
-  /* cursor: pointer; */
   font-size: 16px;
-  /* Use em for relative sizing */
   text-align: center;
   width: auto;
   height: 30px;
-  /* Allow height to adjust based on content */
   backdrop-filter: blur(2px);
   transition: 0.5s;
   line-height: 0.7;
@@ -208,20 +213,16 @@
   align-items: center;
   justify-content: center;
   color: gray;
-  margin-top: 20px;
 }
 
 #currentDate {
   width: 75%;
   padding: 10px;
   font-size: 1em;
-  /* Use em for relative sizing */
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
   color: gray;
-  /* Set font color to gray */
-
 }
 
 .custom-datepicker-container {
@@ -233,4 +234,18 @@ b,
 strong {
   color: gray;
   /* Set font color to gray */
+}
+/* .update-calling-tracker-field-sub-div input [type="placeholder"]
+{
+  margin-left: 100px;
+  padding-left: 100px;
+} */
+
+::placeholder{
+  padding-left: 10px;
+}
+.update-callingTracker-male-div{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
