@@ -28,18 +28,18 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     fullAddress: "",
     communicationRating: "",
     selectYesOrNo: "No",
-    callingFeedback: "",
+  
 
     lineUp: {
       companyName: "",
       experienceYear: "",
       experienceMonth: "",
       relevantExperience: "",
-      currentCTCLakh: "",
-      currentCTCThousand: "",
-      expectedCTCLakh: "",
-      expectedCTCThousand: "",
-      dateOfBirth: "",
+      currentCtCLakh: "",
+      currentCtCThousand: "",
+      expectedCtCLakh: "",
+      expectedCtCThousand: "",
+      dateOfBirth: "", 
       gender: "",
       qualification: "",
       yearOfPassing: "",
@@ -381,7 +381,9 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
 
                 // className="form-control"
                 value={callingTracker?.jobDesignation}
-                readOnly
+                // readOnly
+                onChange={handleChange}
+
               />
 
                 <input
@@ -390,7 +392,9 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   id="requirementCompany"
                   name="requirementCompany"
                   value={callingTracker?.requirementCompany}
-                  readOnly
+                  // readOnly
+                onChange={handleChange}
+
                 />
             </div>
           </div>
@@ -399,7 +403,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
             <div className="update-calling-check-box-main-container">
               <select
                 name="currentLocation"
-                value={callingTracker?.currentLocation}
+                value={callingTracker.currentLocation}
                 onChange={handleChange}
               >
                 <option value="" style={{ color: "gray" }}>
@@ -428,8 +432,8 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
               <select
                 required={callingTracker.selectYesOrNo === "Interested"}
                 className="plain-input"
-                name="callingFeedback"
-                value={callingTracker.callingFeedback}
+                name="feedBack"
+                value={callingTracker.feedBack}
                 onChange={handleChange}
               >
                 <option value="">Feedback</option>
@@ -463,7 +467,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 <div className="calling-check-box">
                   <input
                     type="checkbox"
-                    name="lineUp.gender"
+                    name="gender"
                     className="gender"
                     checked={callingTracker.gender === "Male"}
                     onChange={handleChange}
@@ -480,7 +484,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                     name="female"
                     value="female"
                     className="gender"
-                    checked={callingTracker.lineUp?.gender === "Female"}
+                    checked={callingTracker.gender === "Female"}
                     onChange={handleChange}
                   />
                   
@@ -498,11 +502,12 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
             <div className="update-calling-tracker-field-sub-div">
               <input
                 type="text"
-                name="lineUp.msgForTeamLeader"
+                name="msgForTeamLeader"
                 placeholder="Enter Call Summary"
                 value={callingTracker.msgForTeamLeader}
                 onChange={handleChange}
                 className="plain-input"
+                
 
               />
             </div>
@@ -967,7 +972,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
             <div className="update-calling-tracker-field-sub-div">
               <input
                 type="text"
-                name="extraCerification"
+                name="extraCertification"
                 value={callingTracker.extraCertification}
                 onChange={handleChange}
                 className="plain-input"
@@ -983,7 +988,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
             <div className="update-calling-tracker-field-sub-div">
               <input
                 type="text"
-                name="currentcompany"
+                name="companyName"
                 placeholder="Current Company"
                 value={callingTracker.companyName}
                 onChange={handleChange}
@@ -1077,8 +1082,8 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
             >
               <input
                 type="text"
-                name="currentCTCLakh"
-                value={callingTracker.currentCTCLakh}
+                name="currentCtCLakh"
+                value={callingTracker.currentCtCLakh}
                 onChange={handleChange}
                 className="update-calling-tracker-two-input"
                 placeholder="Lakh"
@@ -1087,8 +1092,8 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
               />
               <input
                 type="text"
-                name="currentCTCThousand"
-                value={callingTracker.currentCTCThousand}
+                name="currentCtCThousand"
+                value={callingTracker.currentCtCThousand}
                 onChange={handleChange}
                 className="update-calling-tracker-two-input"
                 placeholder="Thousand"
@@ -1106,8 +1111,8 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
             >
               <input
                 type="text"
-                name="expectedCTCLakh"
-                value={callingTracker.expectedCTCLakh}
+                name="expectedCtCLakh"
+                value={callingTracker.expectedCtCLakh}
                 onChange={handleChange}
                 className="update-calling-tracker-two-input"
                 placeholder="Lakh"
@@ -1116,8 +1121,8 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
               />
               <input
                 type="text"
-                name="expectedCTCThousand"
-                value={callingTracker.expectedCTCThousand}
+                name="expectedCtCThousand"
+                value={callingTracker.expectedCtCThousand}
                 onChange={handleChange}
                 className="update-calling-tracker-two-input"
                 placeholder="Thousand"
@@ -1160,7 +1165,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 type="text"
                 name="msgForTeamLeader"
                 placeholder="Comment For TL"
-                value={callingTracker.feedBack}
+                value={callingTracker.msgForTeamLeader}
                 //onChange={handleLineUpChange}
                 onChange={handleChange}
                 className="plain-input"

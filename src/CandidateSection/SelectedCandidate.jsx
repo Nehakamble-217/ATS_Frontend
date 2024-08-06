@@ -125,7 +125,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
+        `http://192.168.1.43:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);
