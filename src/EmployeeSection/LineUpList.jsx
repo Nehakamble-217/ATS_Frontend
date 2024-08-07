@@ -451,7 +451,7 @@ const LineUpList = ({
   const handleShare = async () => {
 
     setIsDataSending(true);
-    let url = `http://192.168.1.42:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://localhost:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&

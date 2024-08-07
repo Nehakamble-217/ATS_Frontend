@@ -88,9 +88,10 @@ const SendClientEmail = ({ clientEmailSender }) => {
     "sourceName",
     "yearOfPassing",
   ];
+  
   useEffect(() => {
     fetch(
-      `http://192.168.1.42:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
+      `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -305,7 +306,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
     if (byteCode) {
       try {
         const fileType = fileName.split(".").pop().toLowerCase();
-
         if (fileType === "pdf") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -315,7 +315,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           const blob = new Blob([array], { type: "application/pdf" });
           return URL.createObjectURL(blob);
         }
-
         if (fileType === "docx") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -327,10 +326,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           });
           return URL.createObjectURL(blob);
         }
-
-        // Handle other document types here if needed
-
-        // If file type is not supported
         console.error(`Unsupported document type: ${fileType}`);
         return "Unsupported Document";
       } catch (error) {
@@ -340,6 +335,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
     }
     return "Document Not Found";
   };
+
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
 
@@ -1163,7 +1159,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.42:9090/api/ats/157industries/add-client-details",
+        "http://192.168.1.50:9090/api/ats/157industries/add-client-details",
         clientData
       );
       if (response) {
@@ -1198,7 +1194,7 @@ const SendEmailPopup = ({
 
     axios
       .post(
-        "http://192.168.1.42:9090/api/ats/157industries/send-email",
+        "http://192.168.1.50:9090/api/ats/157industries/send-email",
         emailData
       )
       .then((response) => {
@@ -1210,7 +1206,7 @@ const SendEmailPopup = ({
         selectedCandidate.forEach(async (can) => {
             try {
               const performanceId = await axios.get(
-                `http://192.168.1.42:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
+                `http://192.168.1.50:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
               );
               UpdatePerformace(performanceId.data);
             } catch (error) {
@@ -1238,7 +1234,7 @@ const SendEmailPopup = ({
       };
       // console.log("Sending additional data:", additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${id}`,
+        `http://192.168.1.50:9090/api/ats/157industries/update-performance/${id}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);

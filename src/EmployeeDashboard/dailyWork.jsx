@@ -75,7 +75,7 @@ function DailyWork({
     try {
       console.log("2-------------");
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+        `http://192.168.1.50:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
       );
       setEmployeeData(response.data);
       if(response.data)
@@ -190,7 +190,7 @@ function DailyWork({
         );
         console.log(formData);
         const response = await axios.post(
-          `http://192.168.1.42:9090/api/ats/157industries/save-daily-work/${employeeId}/${userType}`,
+          `http://192.168.1.50:9090/api/ats/157industries/save-daily-work/${employeeId}/${userType}`,
           formData
         );
 
@@ -223,7 +223,7 @@ function DailyWork({
     const fetchCurrentEmployerWorkId = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.42:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
+          `http://192.168.1.50:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
         );
 
         setFetchWorkId(response.data);
@@ -449,7 +449,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-daily-work/${fetchWorkId}`,
+        `http://192.168.1.50:9090/api/ats/157industries/update-daily-work/${fetchWorkId}`,
         formData
       );
 

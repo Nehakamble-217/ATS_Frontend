@@ -1,3 +1,4 @@
+//This is Vendor , Clinet And Applicaint loging page 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AOS from "aos";
@@ -51,6 +52,7 @@ const LoginSignup = ({ onLogin }) => {
   const dashboardLink = () => {
     navigate("/empDash/1/Vendor");
   };
+
   console.log(userType);
   const createAccount = () => {
     navigate("/createAccount/Applicant");
@@ -79,7 +81,6 @@ const LoginSignup = ({ onLogin }) => {
             ) : (
               <form onSubmit={handleSubmit}>
                 <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)}</h2>{" "}
-                {/* Display the userType */}
                 <div className="input-groups">
                   <i className="fas fa-user"></i>
                   <input
@@ -110,7 +111,7 @@ const LoginSignup = ({ onLogin }) => {
                   type="submit"
                   data-aos="fade-top"
                 >
-                  Login
+                  Login 
                 </button>
                 <button
                   className="login-button"

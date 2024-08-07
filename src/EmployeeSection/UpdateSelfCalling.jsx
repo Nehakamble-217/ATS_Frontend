@@ -94,7 +94,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchCandidateData = async (candidateId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.36:9090/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.43:9090/api/ats/157industries/specific-data/${candidateId}`
       );
       const data = await response.json();
       setCallingTracker(data);
@@ -147,15 +147,13 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
         recruiterName: recruiterName,
       };
 
-      console.log(candidateId + "  candidateId  in updated method..  ");
       const response = await fetch(
-        `http://192.168.1.36:9090/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.43:9090/api/ats/157industries/update-callingData/${candidateId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-
           body: JSON.stringify(dataToUpdate),
         }
       );
