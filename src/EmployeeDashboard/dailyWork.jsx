@@ -66,6 +66,7 @@ function DailyWork({
 
   const navigate = useNavigate();
   const { userType } = useParams();
+
   useEffect(() => {
 
     const fetchEmployeeData = async () => {
@@ -105,17 +106,14 @@ function DailyWork({
     fetchEmployeeData();
   }, [lateMark, leaveType, paidLeave, unpaidLeave, loginTime, data]);
 
-
-
   const fetchEmployeeData = async () => {
     try {
       console.log("2-------------");
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+        `http://192.168.1.50:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
       );
       setEmployeeData(response.data);
-      if(response.data)
-      {
+      if (response.data) {
         saveUserDetails(response.data.name);
       }
       //Akash_Pawar_DailyWork_senderinformation_09/07_74
@@ -179,12 +177,12 @@ function DailyWork({
   }, []);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-SaveLoginFunctionality Start  LineNo:-128  Date:-01/07
-  const saveUserDetails=(name) => {
+  const saveUserDetails = (name) => {
     const storedLoginDetailsSaved = localStorage.getItem(
       `loginDetailsSaved_${employeeId}`
     );
     if (storedLoginDetailsSaved === "true") {
-      
+
       setLoginDetailsSaved(true);
     }
 
@@ -192,9 +190,9 @@ function DailyWork({
 
     const saveLoginDetails = async () => {
       if (loginDetailsSaved) {
-        
+
         fetchCurrentEmployerWorkId();
-        console.log(userType+"   "+employeeId+ " " +name);
+        console.log(userType + "   " + employeeId + " " + name);
         console.log("Login details already saved.");
         return; // Exit early if login details are already saved
       }
@@ -208,8 +206,8 @@ function DailyWork({
         const year = now.getFullYear();
         const formData = {
           employeeId,
-          jobRole:userType,
-          employeeName:name,
+          jobRole: userType,
+          employeeName: name,
           date: `${day}/${month}/${year}`,
           loginTime: now.toLocaleTimeString("en-IN"),
           lateMark,
@@ -232,8 +230,7 @@ function DailyWork({
           formData
         );
 
-        if(response.data)
-        {
+        if (response.data) {
           fetchCurrentEmployerWorkId();
         }
         console.log("Login details saved successfully.");
@@ -258,19 +255,18 @@ function DailyWork({
   };
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-SaveLoginFunctionality End LineNo:-191  Date:-01/07
 
-    const fetchCurrentEmployerWorkId = async () => {
-      try {
-        const response = await axios.get(
+  const fetchCurrentEmployerWorkId = async () => {
+    try {
+      const response = await axios.get(
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
+      );
 
-          `http://192.168.1.43:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
-        );
-
-        setFetchWorkId(response.data);
-        console.log(response.data+"hello-------------");
-      } catch (error) {
-        console.error("Error fetching work ID:", error);
-      }
-    };
+      setFetchWorkId(response.data);
+      console.log(response.data + "hello-------------");
+    } catch (error) {
+      console.error("Error fetching work ID:", error);
+    }
+  };
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-CalculateTotalHoursWork(changed) Start LineNo:-193  Date:-01/07
   const calculateTotalHoursWork = (
@@ -423,8 +419,6 @@ function DailyWork({
   }, [successfulDataAdditions]);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchieved(changed) End LineNo:-351 Date:-01/07
-
-
   const handlePause = () => {
     setRunning(false);
     const now = new Date().toLocaleTimeString("en-IN");
@@ -463,8 +457,7 @@ function DailyWork({
       const month = (now.getMonth() + 1).toString().padStart(2, "0");
       const year = now.getFullYear();
       let present = "absent";
-      if(data.pending>=5 && data.archived>=5)
-      {
+      if (data.pending >= 5 && data.archived >= 5) {
         present = "present";
       }
       let checkHalfDay = "No";
@@ -481,7 +474,7 @@ function DailyWork({
         logoutTime: logoutTimestamp,
         totalHoursWork,
         dailyHours: breaks,
-        dayPresentStatus:present,
+        dayPresentStatus: present,
         lateMark,
         leaveType,
         paidLeave,
@@ -493,7 +486,6 @@ function DailyWork({
 
       await axios.put(
         `http://192.168.1.43:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
-
         formData
       );
 
@@ -546,7 +538,7 @@ function DailyWork({
             157{employeeId}
           </p>
         </div>
-        
+
       </div>
       {userType != "SuperUser" &&
         userType != "Applicant" &&

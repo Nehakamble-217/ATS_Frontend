@@ -124,7 +124,6 @@ const ShortListedCandidates = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
-
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -137,7 +136,6 @@ const ShortListedCandidates = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${empId}`
-
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -149,7 +147,6 @@ const ShortListedCandidates = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
-
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -180,11 +177,9 @@ const ShortListedCandidates = ({
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.43:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
-
+        `http://localhost:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
       );
       const data = await response.json();
-
       setShortListedData(data);
       setFilteredShortListed(data);
       console.log(data);
@@ -278,7 +273,6 @@ const ShortListedCandidates = ({
   const handleShare = async () => {
     setIsDataSending(true);
     let url = `http://192.168.1.43:9090/api/ats/157industries/updateIds/${userType}`;
-
     let requestData;
     if (
       userType === "TeamLeader" &&
@@ -792,7 +786,7 @@ const ShortListedCandidates = ({
                     </td>
                   ) : null}
                   <td className="tabledata">{index + 1}</td>
-                  
+
                   <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
@@ -803,7 +797,7 @@ const ShortListedCandidates = ({
                       <span className="tooltiptext">{item.date}</span>
                     </div>
                   </td>
-                  
+
                   <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
@@ -1000,9 +994,9 @@ const ShortListedCandidates = ({
                       Up
                     </button> */}
                     <i
-                              onClick={() => handleUpdate(item.candidateId)}
-                              className="fa-regular fa-pen-to-square"
-                            ></i>
+                      onClick={() => handleUpdate(item.candidateId)}
+                      className="fa-regular fa-pen-to-square"
+                    ></i>
                   </td>
                 </tr>
               ))}

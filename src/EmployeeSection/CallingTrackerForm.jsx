@@ -22,7 +22,7 @@ const CallingTrackerForm = ({
   loginEmployeeName,
 }) => {
   const { employeeId } = useParams();
-  const [submited,setSubmited]=useState(false);
+  const [submited, setSubmited] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const { userType } = useParams();
   const initialCallingTrackerState = {
@@ -85,8 +85,6 @@ const CallingTrackerForm = ({
     finalStatus: "",
     resume: null,
   };
-
-
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
   );
@@ -132,6 +130,7 @@ const CallingTrackerForm = ({
 
   const fetchRecruiterName = async () => {
     try {
+
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
 
@@ -153,8 +152,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.43:9090/api/ats/157industries/company-details`
-
+        `http://localhost:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -179,6 +177,8 @@ const CallingTrackerForm = ({
     }
     return errors;
   };
+
+
 
   const validateLineUpData = () => {
     let errors = {};
@@ -339,12 +339,13 @@ const CallingTrackerForm = ({
 
     let fromFillingTime = null;
     if (startTime) {
-      const endTime = Date.now();
+      const endTime = ((new Date()).getDate() + 2)
       const timeTaken = (endTime - startTime) / 1000; // Time in seconds
       const minutes = Math.floor(timeTaken / 60);
       const seconds = Math.floor(timeTaken % 60);
+      const days = Math.floor(timeTaken / (1000 * 60 * 60 * 24))
       console.log(
-        `Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`
+        `Time taken to fill the form:${days} days, ${minutes} minutes and ${seconds} seconds`
       );
       fromFillingTime = `${minutes} minutes and ${seconds} seconds`;
     }
@@ -352,7 +353,7 @@ const CallingTrackerForm = ({
     try {
       let dataToUpdate = {
         ...callingTracker,
-          performanceIndicator: {
+        performanceIndicator: {
           employeeId: employeeId,
           employeeName: loginEmployeeName,
           jobRole: userType,
@@ -372,8 +373,9 @@ const CallingTrackerForm = ({
           letterResponse: null,
           joiningProcess: null,
           joinDate: null,
-      },
+        },
       };
+
       if (userType === "Recruiters") {
         console.log(employeeId);
         dataToUpdate.employee = { employeeId: employeeId };
@@ -389,7 +391,7 @@ const CallingTrackerForm = ({
 
         dataToUpdate
       );
-    
+
       console.log(response);
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
       if (callingTracker.selectYesOrNo === "Interested") {
@@ -615,7 +617,7 @@ const CallingTrackerForm = ({
                     value={callingTracker.candidateName}
                     className={`plain-input`}
                     onChange={handleChange}
-                    placeholder="Enter Candidate Name" 
+                    placeholder="Enter Candidate Name"
                   />
                   {errors.candidateName && (
                     <div className="error-message">{errors.candidateName}</div>
@@ -855,47 +857,47 @@ const CallingTrackerForm = ({
                   </div>
 
                   <div className="calling-check-box-container">
-                   <div className="callingTracker-male-div"> 
-                    <div className="calling-check-box">
-                      <input 
-                        type="checkbox"
-                        name="male"
-                        value="male"
-                        className="gender"
-                        checked={lineUpData.gender === "male"}
-                        onChange={(e) =>
-                          setLineUpData({
-                            ...lineUpData,
-                            gender: e.target.value,
-                          })
-                        }
-                        
-                      />
-                      
-                    </div>
-                    <div>
-                      Male
-                    </div>
+                    <div className="callingTracker-male-div">
+                      <div className="calling-check-box">
+                        <input
+                          type="checkbox"
+                          name="male"
+                          value="male"
+                          className="gender"
+                          checked={lineUpData.gender === "male"}
+                          onChange={(e) =>
+                            setLineUpData({
+                              ...lineUpData,
+                              gender: e.target.value,
+                            })
+                          }
+
+                        />
+
+                      </div>
+                      <div>
+                        Male
+                      </div>
                     </div>
                     <div className="callingTracker-male-div">
-                    <div className="calling-check-box">
-                      <input
-                        type="checkbox"
-                        name="female"
-                        value="female"
-                        className="gender"
-                        style={{ paddingLeft: "auto" }}
-                        checked={lineUpData.gender === "female"}
-                        onChange={(e) =>
-                          setLineUpData({
-                            ...lineUpData,
-                            gender: e.target.value,
-                          })
-                        }
-                      />
-                      
-                    </div>
-                    <div>Female</div>
+                      <div className="calling-check-box">
+                        <input
+                          type="checkbox"
+                          name="female"
+                          value="female"
+                          className="gender"
+                          style={{ paddingLeft: "auto" }}
+                          checked={lineUpData.gender === "female"}
+                          onChange={(e) =>
+                            setLineUpData({
+                              ...lineUpData,
+                              gender: e.target.value,
+                            })
+                          }
+                        />
+
+                      </div>
+                      <div>Female</div>
                     </div>
                   </div>
                 </div>
@@ -1491,7 +1493,7 @@ const CallingTrackerForm = ({
                       placeholder="Notice Period"
                       value={lineUpData.noticePeriod}
                       onChange={handleLineUpChange}
-                      
+
                       min="0"
                       max="90"
                     />
@@ -1587,7 +1589,7 @@ const CallingTrackerForm = ({
             </div>
 
             <div className="calling-tracker-row-white">
-              
+
               <div className="calling-tracker-field">
                 <label>Holding Offer Letter</label>
                 <div className="calling-tracker-two-input-container">
@@ -1688,7 +1690,7 @@ const CallingTrackerForm = ({
                       <option value="Attending After Some time">
                         Attending After Some time
                       </option>
-                      <option value="hold">Hold</option>
+                      <option value="">Response On Hold</option>
                     </select>
                   </div>
                 </div>
@@ -1843,21 +1845,19 @@ const ModalComponent = ({
 
   return (
     <Modal size="lg" centered show={show} onHide={handleClose}>
-            <Modal.Body className="p-0">
+      <Modal.Body className="p-0">
         <div className="calling-tracker-popup">
           <div className="calling-tracker-popup-sidebar">
             <p
-              className={`sidebar-item ${
-                activeField === "distance" ? "active" : ""
-              }`}
+              className={`sidebar-item ${activeField === "distance" ? "active" : ""
+                }`}
               onClick={() => setActiveField("distance")}
             >
               Distance Calculation
             </p>
             <p
-              className={`sidebar-item ${
-                activeField === "salary" ? "active" : ""
-              }`}
+              className={`sidebar-item ${activeField === "salary" ? "active" : ""
+                }`}
               onClick={() => setActiveField("salary")}
             >
               Salary Calculation

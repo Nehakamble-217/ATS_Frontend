@@ -36,7 +36,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   let [color, setColor] = useState("#ffcb9b");
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
   const [isDataSending, setIsDataSending] = useState(false);
-  const [clickedTime,setClickedTime] = useState();
+  const [clickedTime, setClickedTime] = useState();
 
   //akash_pawar_SelectedCandidate_ShareFunctionality_18/07_34
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -125,7 +125,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.43:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
+        `http://localhost:9090/api/ats/157industries/selected-candidate/${employeeId}/${userType}`
       );
       const data = await response.json();
       setCallingList(data);
@@ -619,16 +619,13 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
         "Recruiter's Incentive": item.incentive || "-",
         "Interested and Eligible": item.selectYesOrNo || "-",
         "Current Company": item.lineUp?.companyName || "-",
-        "Total Experience": `${item.lineUp?.experienceYear || "0"} Years ${
-          item.lineUp?.experienceMonth || "0"
-        } Month`,
+        "Total Experience": `${item.lineUp?.experienceYear || "0"} Years ${item.lineUp?.experienceMonth || "0"
+          } Month`,
         "Relevant Experience": item.lineUp?.relevantExperience || "-",
-        "Current CTC": `${item.lineUp?.currentCTCLakh || "0"} Lakh ${
-          item.lineUp?.currentCTCThousand || "0"
-        } Thousand`,
-        "Expected CTC": `${item.lineUp?.expectedCTCLakh || "0"} Lakh ${
-          item.lineUp?.expectedCTCThousand || "0"
-        } Thousand`,
+        "Current CTC": `${item.lineUp?.currentCTCLakh || "0"} Lakh ${item.lineUp?.currentCTCThousand || "0"
+          } Thousand`,
+        "Expected CTC": `${item.lineUp?.expectedCTCLakh || "0"} Lakh ${item.lineUp?.expectedCTCThousand || "0"
+          } Thousand`,
         "Date Of Birth": item.lineUp?.dateOfBirth || "-",
         Gender: item.lineUp?.gender || "-",
         Education: item.lineUp?.qualification || "-",
@@ -959,6 +956,8 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                               onChange={() => handleSelectRow(item.candidateId)}
                             />
                           </td>
+
+
                         ) : null}
                         <td
                           className="tabledata "
@@ -1435,7 +1434,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                         </td>
                         <td className="tabledata ">
                           <i
-                            onClick={() => viewPage(item.candidateId,item.requirementId)}
+                            onClick={() => viewPage(item.candidateId, item.requirementId)}
                             className="fa-solid fa-person-walking-arrow-right"
                           ></i>
                         </td>
@@ -1765,7 +1764,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
               candidateId={selectedCandidateId}
               employeeId={selectedEmployeeId}
               requirementId={selectedRequirementId}
-              prevtime = {clickedTime}
+              prevtime={clickedTime}
               onReturn={handleReturn}
             />
           )}

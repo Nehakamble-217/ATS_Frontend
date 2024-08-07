@@ -113,7 +113,7 @@ const InvoiceTable = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/saveInvoice",
+        `http://localhost:9090/api/ats/157industries/saveInvoice`,
         formData,
         {
           headers: {
@@ -246,7 +246,6 @@ const InvoiceTable = () => {
                     placeholder="Product Type"
                   />
                 </div>
-
                 <div className="field">
                   <label>Candidate Name</label>
                   <input

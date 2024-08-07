@@ -61,11 +61,11 @@ import InterviewForm from "../Help/InterviewForm";
 import InterviewDataTables from "../Help/InterviewTable";
 
 // import TeamDetails from "../TeamDetails/teamDetails";
+import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
   const [addCandidate, setAddCandidate] = useState(false);
-  const[showHelp, setshowHelp] = useState(false)
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
   const [successShare, setSuccessShare] = useState(false); //neha_add_this_state_bcz_came_error_to_console
@@ -140,7 +140,8 @@ const EmpDashboard = ({ userGroup }) => {
   const [showSubscription, setShowSubscription] = useState(false);
   const [showBilling, setShowBilling] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
-  const [showInterviewForm,setShowInterviewForm]=useState(false);
+  const [showCandidateHistory, setShowCandidateHistory] = useState(false);
+  const [showInterviewForm, setShowInterviewForm] = useState(false);
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -148,7 +149,7 @@ const EmpDashboard = ({ userGroup }) => {
   const handleSuccessfulDataAdditions = (check) => {
     setSuccessfulDataAdditions(check);
   };
- 
+
   useEffect(() => {
     setSuccessfulDataAdditions(false);
   }, [successfulDataAdditions]);
@@ -170,7 +171,7 @@ const EmpDashboard = ({ userGroup }) => {
 
   const [loginEmployeeName, setLoginEmployeeName] = useState("");
   const [clientEmailSender, setClientEmailSender] = useState();
-  const [showAllInterviewResponses,setShowAllInterviewResponses]=useState(false)
+  const [showAllInterviewResponses, setShowAllInterviewResponses] = useState(false)
   const handleEmailSenderInformation = (data) => {
     setLoginEmployeeName(data.senderName); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_151
     setClientEmailSender(data);
@@ -247,7 +248,6 @@ const EmpDashboard = ({ userGroup }) => {
   const resetAllToggles = () => {
     setUpdateSelfCalling(false);
     setAddCandidate(false);
-    setshowHelp(false)
     setShowInterviewDate(false);
     setSelectedCandidate(false);
     setHoldCandidate(false);
@@ -306,6 +306,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCompanyPolicy(false);
     setShowPainArea(false);
     setShowIssueSolving(false);
+    setShowCandidateHistory(false)
     setShowInterviewForm(false);
     setShowAllInterviewResponses(false)
   };
@@ -431,10 +432,7 @@ const EmpDashboard = ({ userGroup }) => {
     setAssignColumns(!assignColumns);
   };
 
-  const toggleHome = () => {
-    resetAllToggles();
-    setShowHome(!showHome);
-  };
+
   const toggleResumeLink = () => {
     resetAllToggles();
     setResumeLink(!resumeLink);
@@ -548,20 +546,25 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowPayment(!showPayment);
   };
-  const toggeleInterviewForm=()=>{
+  const toggeleInterviewForm = () => {
     resetAllToggles();
     setShowInterviewForm(!showInterviewForm)
   }
-  const toggleAllInterviewResponse=()=>{
+  const toggleAllInterviewResponse = () => {
     resetAllToggles();
     setShowAllInterviewResponses(!showAllInterviewResponses)
   }
 
+  const toggelCandidateHistory = () => {
+    resetAllToggles();
+    setShowCandidateHistory(!showCandidateHistory)
+  }
+
+
   return (
     <div
-      className={`grid-container ${
-        openSidebarToggle ? "sidebar-open" : "sidebar-closed"
-      }`}
+      className={`grid-container ${openSidebarToggle ? "sidebar-open" : "sidebar-closed"
+        }`}
     >
       <Sidebar
         userGroup={userGroup}
@@ -570,7 +573,6 @@ const EmpDashboard = ({ userGroup }) => {
         toggleSelfCalling={toggleSelfCalling}
         toggelLineUp={toggelLineUp}
         toggleCallingTrackerForm={toggleCallingTrackerForm}
-        toggelHelp={toggelHelp}
         toggleAttendance={toggleAttendance}
         toggleShortListed={toggleShortListed}
         toggleSelectCandidate={toggleSelectCandidate}
@@ -578,8 +580,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleHoldCandidate={toggleHoldCandidate}
         toggleExcelCalling={toggleExcelCalling}
         toggleResumeData={toggelResumeData}
-        toggleJobDescription={toggleJobDescription}
-        // toggleInterviewDate={toggleInterviewDate}
+        toggleJobDescription={toggleJobDescription}// toggleInterviewDate={toggleInterviewDate}
         toggleEmployeeMasterSheet={toggleEmployeeMasterSheet}
         toggleShortListedCandidates={toggleShortListedCandidates}
         toggleAddJobDescription={toggleAddJobDescription}
@@ -627,6 +628,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggeleCompanyPolicy={toggeleCompanyPolicy}
         toggeleIssueSolving={toggeleIssueSolving}
         toggelePainArea={toggelePainArea}
+        toggelCandidateHistory={toggelCandidateHistory}
         toggeleInterviewForm={toggeleInterviewForm}
       />
 
@@ -650,6 +652,7 @@ const EmpDashboard = ({ userGroup }) => {
               onClose={handleCloseProfile}
               toggleIncentive={toggleIncentive}
               toggleAttendance={toggleAttendance}
+              // toggleTeamDetails={toggleTeamDetails}
               toggleTeamDetails={toggleTeamDetails}
             ></EmployeeProfileData>
           )}
@@ -664,7 +667,7 @@ const EmpDashboard = ({ userGroup }) => {
             />
           )}
         </div>
-        
+
         <div>
           {showShortlistedCandidateData && (
             <ShortListedCandidates
@@ -743,11 +746,6 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>
-          {showHelp && (
-            <Help/>
-          )}
-        </div>
-        <div>
           {updateSelfCalling && (
             <UpdateCallingTracker candidateId={candidateIdForUpdate} />
           )}
@@ -804,14 +802,21 @@ const EmpDashboard = ({ userGroup }) => {
             <RightsAndInstructions></RightsAndInstructions>
           )}
         </div>
+
+        <div>
+          {showCandidateHistory && (
+            <CandidateHistoryTracker></CandidateHistoryTracker>
+          )}
+        </div>
+
         <div>
           {showInterviewForm && (
-            <InterviewForm  toggleAllInterviewResponse={toggleAllInterviewResponse}/>
+            <InterviewForm toggleAllInterviewResponse={toggleAllInterviewResponse} />
           )}
         </div>
         <div>
           {showAllInterviewResponses && (
-            <InterviewDataTables/>
+            <InterviewDataTables />
           )}</div>
         {/* <div>
           {showTeamDetails && (

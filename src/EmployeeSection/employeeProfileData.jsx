@@ -28,7 +28,6 @@ const EmployeeProfileData = ({
   useEffect(() => {
     fetch(
       `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
-
     )
       .then((response) => response.json())
       .then((data) => {
@@ -515,9 +514,9 @@ const EmployeeProfileData = ({
               Attendance
             </button>
 
-            <button 
-            onClick={toggleTeamDetails} 
-            className="emp-pro-incentive">
+            <button
+              onClick={toggleTeamDetails}
+              className="emp-pro-incentive">
               Team Details
             </button>
 
@@ -527,7 +526,7 @@ const EmployeeProfileData = ({
             >
               More
             </button>
-           
+
           </Modal.Footer>
         </Modal.Dialog>
       ) : (

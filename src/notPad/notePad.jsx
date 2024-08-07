@@ -207,7 +207,7 @@ const NotePad = () => {
                         onMouseOut={handleMouseOut}
                         className="tooltip"
                       >
-                        <span class="tooltiptext">{note.message}</span>
+                        <span className="tooltiptext">{note.message}</span>
                       </div>
                     </td>
                     <td>{note.timeDate}</td>

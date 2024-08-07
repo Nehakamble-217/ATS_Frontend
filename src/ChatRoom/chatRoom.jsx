@@ -39,7 +39,6 @@ const ChatRoom = () => {
 
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
-
       );
 
       let result;
@@ -63,7 +62,6 @@ const ChatRoom = () => {
 
   const connect = (username) => {
     let Sock = new SockJS("http:///192.168.1.43:9090/ws");
-
     stompClient = over(Sock);
     stompClient.connect({}, () => onConnected(username), onError);
   };
@@ -168,6 +166,7 @@ const ChatRoom = () => {
     formData.append("file", userData.file);
     formData.append("senderName", userData.username);
 
+
     fetch("http:///192.168.1.43:9090/upload", {
 
       method: "POST",
@@ -245,9 +244,8 @@ const ChatRoom = () => {
               <ul className="chat-messages">
                 {publicChats.map((chat, index) => (
                   <li
-                    className={`message ${
-                      chat.senderName === userData.username && "self"
-                    }`}
+                    className={`message ${chat.senderName === userData.username && "self"
+                      }`}
                     key={index}
                   >
                     {chat.senderName !== userData.username && (
@@ -283,11 +281,11 @@ const ChatRoom = () => {
                   value={userData.message}
                   onChange={handleMessage}
                 />
-                 <button  className="chat-Send-btn"  onClick={sendValue}>
+                <button className="chat-Send-btn" onClick={sendValue}>
                   Send
                 </button>
                 <input type="file" className="chat-Send-file" onChange={handleFileChange} />
-               
+
               </div>
             </div>
           )}
@@ -296,9 +294,8 @@ const ChatRoom = () => {
               <ul className="chat-messages">
                 {[...privateChats.get(tab)].map((chat, index) => (
                   <li
-                    className={`message ${
-                      chat.senderName === userData.username && "self"
-                    }`}
+                    className={`message ${chat.senderName === userData.username && "self"
+                      }`}
                     key={index}
                   >
                     {chat.senderName !== userData.username && (
@@ -329,7 +326,7 @@ const ChatRoom = () => {
                   onChange={handleMessage}
                 />
                 <input type="file" onChange={handleFileChange} />
-                <button  className="chat-Send-btn" onClick={sendValue}>
+                <button className="chat-Send-btn" onClick={sendValue}>
                   Send
                 </button>
               </div>

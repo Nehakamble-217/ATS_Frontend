@@ -24,7 +24,7 @@ const CallingExcel = ({ onClose }) => {
     setActiveTable(tableName);
   };
 
-  useEffect(() => {}, [file]);
+  useEffect(() => { }, [file]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -90,7 +90,6 @@ const CallingExcel = ({ onClose }) => {
     try {
       await axios.post(
         `http://localhost:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
-
         formData,
         {
           headers: {
@@ -192,7 +191,7 @@ const CallingExcel = ({ onClose }) => {
               <div className="gap-2 d-grid">
                 <button onClick={handleUpload}>Upload</button>
 
-                
+
                 <button onClick={() => handleTableChange("CallingExcelList")}>
                   View
                 </button>
@@ -221,7 +220,7 @@ const CallingExcel = ({ onClose }) => {
               </div>
               <div className="gap-2 d-grid">
                 <button onClick={handleUploadLineupFile}>Upload</button>
-                
+
                 <button onClick={() => handleTableChange("LineupExcelData")}>
                   View
                 </button>
@@ -229,7 +228,7 @@ const CallingExcel = ({ onClose }) => {
             </div>
           </div>
         </div>
-        
+
         <div>
           <div
             className="card fixed-card"

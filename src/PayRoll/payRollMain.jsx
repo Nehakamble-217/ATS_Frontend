@@ -5,7 +5,6 @@ import axios from "axios";
 
 const PayRollMain = () => {
   const [employees, setEmployees] = useState([]);
-
   useEffect(() => {
     const fetchEmployees = async () => {
       try {

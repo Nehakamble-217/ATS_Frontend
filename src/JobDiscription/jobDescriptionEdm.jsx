@@ -89,8 +89,8 @@ function JobDescriptionEdm({ Descriptions, onJobDescriptionEdm }) {
 
   const closeJobDescrptionShare = () => {
     onJobDescriptionEdm(false)
-    if (isPlaying){
-     if (synth.speaking) {
+    if (isPlaying) {
+      if (synth.speaking) {
         synth.cancel();
       }
     }

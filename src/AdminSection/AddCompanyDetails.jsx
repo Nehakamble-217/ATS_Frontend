@@ -167,8 +167,7 @@ const AddCompanyDetails = () => {
     doc.text(`PF Certificate: ${formData.pfCertificateNumber || ""}`, 10, yPos);
     yPos += fontSize * lineHeightFactor;
     doc.text(
-      `Professional Tax Certificate: ${
-        formData.professionalTaxCertificateNumber || ""
+      `Professional Tax Certificate: ${formData.professionalTaxCertificateNumber || ""
       }`,
       10,
       yPos
@@ -224,9 +223,7 @@ const AddCompanyDetails = () => {
     try {
       // Send the form data to the backend
       const response = await axios.post(
-
-        "http://192.168.1.50:9090/api/ats/157industries/save-our-company",
-
+        "http://192.168.1.42:9090/api/ats/157industries/save-our-company",
         initialFormData,
         {
           headers: {
@@ -263,7 +260,7 @@ const AddCompanyDetails = () => {
             </center> */}
             <div className="ACD-desc-form">
               {/* Align AddJobDescription name center and changing color to gray */}
-       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
+              <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
               <div className="ACD_Field-column">
                 <div className="ACD_Field-Row-white">
                   <div className="ACD_Field">
@@ -283,7 +280,7 @@ const AddCompanyDetails = () => {
                       name="companyLogoImg"
                       onChange={handleChange}
                       className="uploadcompanydocs"
-                      style={{width:"50%"}}
+                      style={{ width: "50%" }}
                       accept=".pdf"
                     />
                   </div>
@@ -735,7 +732,7 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                 </div>
-                <div className="ACD_Field-Row-white" style={{borderBottom:"1px solid gray"}}>
+                <div className="ACD_Field-Row-white" style={{ borderBottom: "1px solid gray" }}>
                   <div className="ACD_Field">
                     <label htmlFor="">Branch Name</label>
                     <input
@@ -890,7 +887,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.40:9090/api/ats/157industries/save-send-details",
+        "http://192.168.1.42:9090/api/ats/157industries/save-send-details",
         clientData
       );
       if (response) {
@@ -1004,7 +1001,7 @@ const SendEmailPopup = ({
 
     axios
       .post(
-        "http://localhost:8082/api/ats/157industries/company-detail-email",
+        "http://192.168.1.42:9090/api/ats/157industries/company-detail-email",
         emailData
       )
       .then((response) => {
