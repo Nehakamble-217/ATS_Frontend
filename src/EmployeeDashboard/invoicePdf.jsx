@@ -3,6 +3,7 @@ import "./invoicePdf.css";
 import logo from "../LogoImages/LoginImge.jpg";
 import { format, parseISO } from "date-fns";
 // SwapnilRokade_InvoicePdf_FetchingDataFromBackend_05To188_15/07
+
 const InvoicePdf = ({ id, onClose }) => {
   const [invoiceData, setInvoiceData] = useState([]);
   useEffect(() => {
@@ -10,7 +11,7 @@ const InvoicePdf = ({ id, onClose }) => {
   }, [id]);
   const fetchInvoice = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/api/fetchById/${id}`);
+      const res = await fetch(`http://192.168.1.43:9090/api/ats/157industries/fetchById/${id}`);
       const data = await res.json();
       setInvoiceData([data]);
       console.log(data);

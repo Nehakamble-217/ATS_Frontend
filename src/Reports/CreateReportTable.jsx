@@ -740,7 +740,7 @@
            };
          
            return (
-             <div className="App-after">
+             <div className="report-App-after">
                <div className="container-after1">
                  <div className="attendanceTableData">
                    <div style={{ textAlign: "-webkit-center" }}>
@@ -772,7 +772,7 @@
                    </div>
                    </div>
          
-                   <table className="attendance-table">
+                   <table className="report-attendance-table">
                      <thead>
                        <tr className="attendancerows-head">
                          <th className="attendanceheading">Selected</th>

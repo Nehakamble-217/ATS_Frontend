@@ -68,7 +68,7 @@ const AddCompanyDetails = () => {
 
   const fetchPreviousCompanyDetailsId = async () => {
     const response = await axios.get(
-      "http://192.168.1.50:9090/api/ats/157industries/fetch-details-ids"
+      "http://192.168.1.43:9090/api/ats/157industries/fetch-details-ids"
     );
     if (addedCompanyDetailsId < response.data.length) {
       setLatestAddedCompanyData(response.data[0]);
@@ -167,8 +167,7 @@ const AddCompanyDetails = () => {
     doc.text(`PF Certificate: ${formData.pfCertificateNumber || ""}`, 10, yPos);
     yPos += fontSize * lineHeightFactor;
     doc.text(
-      `Professional Tax Certificate: ${
-        formData.professionalTaxCertificateNumber || ""
+      `Professional Tax Certificate: ${formData.professionalTaxCertificateNumber || ""
       }`,
       10,
       yPos
@@ -224,9 +223,7 @@ const AddCompanyDetails = () => {
     try {
       // Send the form data to the backend
       const response = await axios.post(
-
-        "http://192.168.1.50:9090/api/ats/157industries/save-our-company",
-
+        "http://192.168.1.43:9090/api/ats/157industries/save-our-company",
         initialFormData,
         {
           headers: {
@@ -263,7 +260,7 @@ const AddCompanyDetails = () => {
             </center> */}
             <div className="ACD-desc-form">
               {/* Align AddJobDescription name center and changing color to gray */}
-       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
+              <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
               <div className="ACD_Field-column">
                 <div className="ACD_Field-Row-white">
                   <div className="ACD_Field">
@@ -283,7 +280,7 @@ const AddCompanyDetails = () => {
                       name="companyLogoImg"
                       onChange={handleChange}
                       className="uploadcompanydocs"
-                      style={{width:"50%"}}
+                      style={{ width: "50%" }}
                       accept=".pdf"
                     />
                   </div>
@@ -735,7 +732,7 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                 </div>
-                <div className="ACD_Field-Row-white" style={{borderBottom:"1px solid gray"}}>
+                <div className="ACD_Field-Row-white" style={{ borderBottom: "1px solid gray" }}>
                   <div className="ACD_Field">
                     <label htmlFor="">Branch Name</label>
                     <input
@@ -845,6 +842,7 @@ const SendEmailPopup = ({
 }) => {
   const [to, setTo] = useState("");
   const [cc, setCc] = useState("");
+  const [bcc, setBcc] = useState("");
   const [subject, setSubject] = useState("");
   const [isMailSending, setIsMailSending] = useState(false);
   const [getResponse, setResponse] = useState("");
@@ -858,11 +856,11 @@ const SendEmailPopup = ({
       let response;
       if (onOptionChange != null) {
         response = await axios.get(
-          `http://192.168.1.42:9090/api/ats/157industries/details-by-Id/${onOptionChange}`
+          `http://192.168.1.43:9090/api/ats/157industries/details-by-Id/${onOptionChange}`
         );
       } else {
         response = await axios.get(
-          `http://192.168.1.42:9090/api/ats/157industries/details-by-Id/${latestAddedData}`
+          `http://192.168.1.43:9090/api/ats/157industries/details-by-Id/${latestAddedData}`
         );
       }
       setCompanyDetails(response.data);
@@ -890,7 +888,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.40:9090/api/ats/157industries/save-send-details",
+        "http://192.168.1.43:9090/api/ats/157industries/save-send-details",
         clientData
       );
       if (response) {
@@ -907,6 +905,8 @@ const SendEmailPopup = ({
   const handleSendEmail = () => {
     const emailData = {
       to,
+      cc,
+      bcc,
       subject,
       body: emailBody.replace(/\n/g, "<br>"),
     };
@@ -1004,7 +1004,7 @@ const SendEmailPopup = ({
 
     axios
       .post(
-        "http://localhost:8082/api/ats/157industries/company-detail-email",
+        "http://192.168.1.43:9090/api/ats/157industries/company-detail-email",
         emailData
       )
       .then((response) => {
@@ -1100,16 +1100,28 @@ const SendEmailPopup = ({
               onChange={(e) => setCc(e.target.value)}
             />
           </Form.Group>
-          <Form.Group controlId="subject">
-            <Form.Label>
-              <strong>Subject:</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              className="text-secondary"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
+          <Form.Group style={{ display: "flex", gap: "5px" }}>
+            <div style={{ width: "100%" }}>
+              <Form.Label>
+                <strong>BCC</strong>
+              </Form.Label>
+              <Form.Control
+                type="email"
+                value={bcc}
+                onChange={(e) => setBcc(e.target.value)}
+              />
+            </div>
+            <div style={{ width: "100%" }}>
+              <Form.Label>
+                <strong>Subject:</strong>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                className="text-secondary"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+            </div>
           </Form.Group>
           <Form.Group controlId="emailBody">
             <Form.Label>

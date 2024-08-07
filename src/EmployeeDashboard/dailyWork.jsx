@@ -7,6 +7,7 @@ import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 // SwapnilRokade_DailyWork_LogoutFunctionalityWorking_31/07
+
 function DailyWork({
   onCurrentEmployeeJobRoleSet,
   successCount,
@@ -17,6 +18,7 @@ function DailyWork({
   jobRole,
   emailSenderInformation,
 }) {
+
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
   const [fetchWorkId, setFetchWorkId] = useState(null);
@@ -28,8 +30,32 @@ function DailyWork({
   const [showAllDailyBtns, setShowAllDailyBtns] = useState(true);
 
   const [loginDetailsSaved, setLoginDetailsSaved] = useState(false);
-  const [showAlreadyLoggedInMessage, setShowAlreadyLoggedInMessage] =
-    useState(false);
+  const [showAlreadyLoggedInMessage, setShowAlreadyLoggedInMessage] = useState(false);
+
+  const [buttonColor, setButtonColor] = useState(() => {
+    return localStorage.getItem('buttonColor') || '#ffb281';
+  });
+
+
+  const handleColorChange = (color, btnColor) => {
+    setBackgroundColor(color);
+    setButtonColor(btnColor);
+    localStorage.setItem('sidebarBackgroundColor', color);
+    localStorage.setItem('buttonColor', btnColor);
+  };
+
+  const [backgroundColor, setBackgroundColor] = useState(() => {
+    return localStorage.getItem('sidebarBackgroundColor') || '#ffe5b5';
+  });
+
+  useEffect(() => {
+    setButtonColor('#ffb281');
+    setBackgroundColor('#ffe5b5');
+    localStorage.setItem('buttonColor', '#ffb281');
+    localStorage.setItem('sidebarBackgroundColor', '#ffe5b5');
+  }, []);
+
+
 
   const toggleDailyTBtn = () => {
     setShowDetails(!showDetails);
@@ -66,56 +92,18 @@ function DailyWork({
 
   const navigate = useNavigate();
   const { userType } = useParams();
+
   useEffect(() => {
-
-    const fetchEmployeeData = async () => {
-      try {
-        const response = await axios.get(
-          `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
-
-        );
-        setEmployeeData(response.data);
-        // console.log(response.data);
-        //Akash_Pawar_DailyWork_senderinformation_09/07_74
-        onCurrentEmployeeJobRoleSet(response.data.jobRole);
-        const emailSender = {
-          senderName: response.data.name,
-          senderMail: response.data.officialMail,
-        };
-        emailSenderInformation(emailSender);
-        //Akash_Pawar_DailyWork_senderinformation_09/07_81
-        if (response.data.profileImage) {
-          const byteCharacters = atob(response.data.profileImage);
-          const byteNumbers = new Array(byteCharacters.length);
-          for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-          }
-          const byteArray = new Uint8Array(byteNumbers);
-          const blob = new Blob([byteArray], { type: "image/jpeg" });
-          const url = URL.createObjectURL(blob);
-          setProfileImage(url);
-          return () => URL.revokeObjectURL(url);
-        }
-      } catch (error) {
-        console.error("Error fetching employee details:", error);
-      }
-    };
-
-
     fetchEmployeeData();
   }, [lateMark, leaveType, paidLeave, unpaidLeave, loginTime, data]);
 
-
-
   const fetchEmployeeData = async () => {
     try {
-      console.log("2-------------");
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
       );
       setEmployeeData(response.data);
-      if(response.data)
-      {
+      if (response.data) {
         saveUserDetails(response.data.name);
       }
       //Akash_Pawar_DailyWork_senderinformation_09/07_74
@@ -179,22 +167,19 @@ function DailyWork({
   }, []);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-SaveLoginFunctionality Start  LineNo:-128  Date:-01/07
-  const saveUserDetails=(name) => {
+  const saveUserDetails = (name) => {
     const storedLoginDetailsSaved = localStorage.getItem(
       `loginDetailsSaved_${employeeId}`
     );
     if (storedLoginDetailsSaved === "true") {
-      
       setLoginDetailsSaved(true);
     }
 
     let executed = false;
-
     const saveLoginDetails = async () => {
       if (loginDetailsSaved) {
-        
         fetchCurrentEmployerWorkId();
-        console.log(userType+"   "+employeeId+ " " +name);
+        console.log(userType + "   " + employeeId + " " + name);
         console.log("Login details already saved.");
         return; // Exit early if login details are already saved
       }
@@ -208,8 +193,8 @@ function DailyWork({
         const year = now.getFullYear();
         const formData = {
           employeeId,
-          jobRole:userType,
-          employeeName:name,
+          jobRole: userType,
+          employeeName: name,
           date: `${day}/${month}/${year}`,
           loginTime: now.toLocaleTimeString("en-IN"),
           lateMark,
@@ -232,8 +217,7 @@ function DailyWork({
           formData
         );
 
-        if(response.data)
-        {
+        if (response.data) {
           fetchCurrentEmployerWorkId();
         }
         console.log("Login details saved successfully.");
@@ -258,19 +242,17 @@ function DailyWork({
   };
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-SaveLoginFunctionality End LineNo:-191  Date:-01/07
 
-    const fetchCurrentEmployerWorkId = async () => {
-      try {
-        const response = await axios.get(
+  const fetchCurrentEmployerWorkId = async () => {
+    try {
+      const response = await axios.get(
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
+      );
 
-          `http://192.168.1.43:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
-        );
-
-        setFetchWorkId(response.data);
-        console.log(response.data+"hello-------------");
-      } catch (error) {
-        console.error("Error fetching work ID:", error);
-      }
-    };
+      setFetchWorkId(response.data);
+    } catch (error) {
+      console.error("Error fetching work ID:", error);
+    }
+  };
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-CalculateTotalHoursWork(changed) Start LineNo:-193  Date:-01/07
   const calculateTotalHoursWork = (
@@ -423,8 +405,6 @@ function DailyWork({
   }, [successfulDataAdditions]);
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-updateArchieved(changed) End LineNo:-351 Date:-01/07
-
-
   const handlePause = () => {
     setRunning(false);
     const now = new Date().toLocaleTimeString("en-IN");
@@ -463,8 +443,7 @@ function DailyWork({
       const month = (now.getMonth() + 1).toString().padStart(2, "0");
       const year = now.getFullYear();
       let present = "absent";
-      if(data.pending>=5 && data.archived>=5)
-      {
+      if (data.pending >= 5 && data.archived >= 5) {
         present = "present";
       }
       const formData = {
@@ -479,7 +458,7 @@ function DailyWork({
         logoutTime: logoutTimestamp,
         totalHoursWork,
         dailyHours: breaks,
-        dayPresentStatus:present,
+        dayPresentStatus: present,
         lateMark,
         leaveType,
         paidLeave,
@@ -491,7 +470,6 @@ function DailyWork({
 
       await axios.put(
         `http://192.168.1.43:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
-
         formData
       );
 
@@ -531,8 +509,7 @@ function DailyWork({
   };
 
   return (
-    <div className="daily-timeanddate">
-      {/* <div className="header-clouds"></div> */}
+    <div className="daily-timeanddate" style={{ backgroundColor: backgroundColor }}>
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
@@ -544,8 +521,29 @@ function DailyWork({
             157{employeeId}
           </p>
         </div>
-        
       </div>
+
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#7ab3ef", "#5a9be8")}>
+        Blue
+      </button>
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#c8e1cc", "#a3d2a8")}>
+        Green
+      </button>
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#fff77d", "Yellow")}>
+        Yellow
+      </button>
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#f8d1ee", "#f3a9dc")}>
+        Pink
+      </button>
+      
+      <button
+        className="toggle-all-daily-btns"
+        onClick={toggleAllDailyBtns}
+        style={{ backgroundColor: buttonColor }}
+      >
+        {!showAllDailyBtns ? "Show" : "Hide"} All Buttons
+      </button>
+
       {userType != "SuperUser" &&
         userType != "Applicant" &&
         userType != "Vendor" ? (
@@ -554,14 +552,14 @@ function DailyWork({
             className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}
           >
             <div className="daily-t-btn">
-              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
+              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }}>
                 Target : 10
               </button>
               <button
                 className="daily-tr-btn"
                 style={{
                   color: data.archived <= 3 ? "red" : "green",
-                  background: "#ffcb9b",
+                  backgroundColor: buttonColor,
                 }}
               >
                 Archived : {data.archived}
@@ -570,13 +568,13 @@ function DailyWork({
                 className="daily-tr-btn"
                 style={{
                   color: data.pending < 7 ? "green" : "red",
-                  background: "#ffcb9b",
+                  backgroundColor: buttonColor,
                 }}
               >
                 Pending : {data.pending}
               </button>
             </div>
-            <button className="loging-hr">
+            <button className="loging-hr" style={{ backgroundColor: buttonColor }}>
               <h6 hidden>Time: {currentTime}</h6>
               <h6 hidden>Date: {currentDate}</h6>
               Login Hours : {time.hours.toString().padStart(2, "0")}:
@@ -610,7 +608,7 @@ function DailyWork({
             <button
               className={running ? "timer-break-btn" : "timer-break-btn"}
               onClick={running ? handlePause : handleResume}
-              style={{ height: "30px" }}
+              style={{ height: "30px", backgroundColor: buttonColor }}
             >
               {running ? "Pause" : "Resume"}
             </button>

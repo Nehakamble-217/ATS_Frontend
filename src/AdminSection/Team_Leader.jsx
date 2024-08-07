@@ -32,8 +32,8 @@ function Accesstable() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   // const [assignments, setAssignments] = useState({});
   const [allSelected, setAllSelected] = useState(false);
-  
-  
+
+
   // const [editRecruiter, setEditRecruiter] = useState(null);
   const [openCategory, setOpenCategory] = useState(""); // New state for open category
   // const [showSelection, setShowSelection] = useState(true);
@@ -50,7 +50,7 @@ function Accesstable() {
   const [fetchUpdateAssignedColumn, setFetchupdateAssignedColumn] = useState(
     []
   );
-  
+
   const [assignedColumnRecruiterUpdate, setAssignedColumnRecruiterUpdate] =
     useState([]);
 
@@ -89,7 +89,7 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-      `http://192.168.1.50:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+      `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
 
     );
     setRecruiterUnderTeamLeader(response.data);
@@ -183,7 +183,6 @@ function Accesstable() {
 
     );
     setFetchupdateAssignedColumn(response.data);
-    // console.log(response.data);
   };
 
   const handleOkClick = () => {
@@ -297,7 +296,7 @@ function Accesstable() {
     }
     setAllSelected(!allSelected);
   }
-  
+
 
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_260_269
   const fetchAssignedColumnCount = async () => {
@@ -322,7 +321,7 @@ function Accesstable() {
   return (
     <div className="AppsTL">
       <div className="selection-containerTL">
-        <div className="hierarchy-sectionTL">
+        <div className="hierarchy-sectionTL" style={{ border: "1px solid black" }}>
           <div className="custom-dropdownTL">
             <div className="dropdown-headerTL" onClick={toggleDropdown}>
               {selectedRecruiters.index === ""
@@ -343,7 +342,7 @@ function Accesstable() {
                   onChange={handleSearchChange}
                   className="search-inputTL"
                 />
-                
+
                 <div className="team-leadersTL">
                   {manager.map((id, index) => (
                     <div
@@ -368,7 +367,7 @@ function Accesstable() {
 
                       {selectedManager.managerId === id.managerId &&
                         teamLeaderUnderManager && (
-                          <div className="recruitersTL">
+                          <div className="recruitersTL" >
                             {teamLeaderUnderManager.map(
                               (teamleader, tIndex) => (
                                 <div>
@@ -401,9 +400,9 @@ function Accesstable() {
                                                 type="checkbox"
                                                 name={`recruiter${recruiter.employeeId}`}
                                                 value={recruiter.employeeId}
-                                                
+
                                                 onChange={() =>
-                                                  setSelectedRecruiters((prevRecruiters)=>[...prevRecruiters,recruiter.employeeId])
+                                                  setSelectedRecruiters((prevRecruiters) => [...prevRecruiters, recruiter.employeeId])
                                                 }
                                               />
                                               {recruiter.employeeName}
@@ -422,14 +421,14 @@ function Accesstable() {
                 </div>
 
                 <div className="TLR-buttons-div">
-                <button
-                  className="select-all-buttonTL"
-                  // onClick={toggleSelectAll}
-                  onClick={handleSelectAll}
-                >
-                  {allSelected ? "Deselect All" : "Select All"}
-                </button>
-                
+                  <button
+                    className="select-all-buttonTL"
+                    // onClick={toggleSelectAll}
+                    onClick={handleSelectAll}
+                  >
+                    {allSelected ? "Deselect All" : "Select All"}
+                  </button>
+
                   <button className="ok-button" onClick={handleOkClick}>
                     OK
                   </button>
@@ -659,12 +658,12 @@ function Accesstable() {
                           className="all_assignbtn-Action"
                         >
                           <i
-                              // onClick={() => handleUpdate(item.candidateId)}
-                              className="fa-regular fa-pen-to-square"
-                            ></i>
-                          
+                            // onClick={() => handleUpdate(item.candidateId)}
+                            className="fa-regular fa-pen-to-square"
+                          ></i>
+
                         </button>
-                        
+
                         {/* <button onClick={() => handleRemoveClick(assignee)} className='remove_assignbtn'>
                           Remove
                         </button> */}
@@ -723,7 +722,6 @@ const UpdateAccessTable = ({
     try {
       const response = await axios.post(
         `http://192.168.1.43:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
-
         JSON.stringify(selectedOptions),
         {
           headers: {

@@ -69,7 +69,6 @@
   grid-column: 1/-1;
   display: flex;
   justify-content: end;
-
 }
 
 .profile-back-button button {
@@ -117,7 +116,6 @@
   position: relative;
   /* Establishes a stacking context */
 
-
   margin: 0 auto;
 
   overflow-y: scroll;
@@ -148,7 +146,6 @@
   /* Rounded corners of the thumb */
 }
 
-
 .employee-profile-scrollsection {
   grid-column: span 2;
   display: flex;
@@ -176,7 +173,6 @@
   z-index: 1;
   overflow-y: hidden;
   background-color: #f2f2f2;
-
 }
 
 .employee-profile-details img {
@@ -283,7 +279,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFFF00;
+  background-color: #ffff00;
   width: 25%;
   color: black;
   font-size: 16px;

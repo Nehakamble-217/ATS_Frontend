@@ -1,3 +1,4 @@
+//login Page ise used to user  wise
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AOS from "aos";
@@ -23,7 +24,7 @@ const LoginSignup = ({ onLogin }) => {
   useEffect(() => {
     if (employeeId && userType) {
       fetch(
-        `http://localhost:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -34,6 +35,7 @@ const LoginSignup = ({ onLogin }) => {
         });
     }
   }, [employeeId, userType]);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -77,9 +79,8 @@ const LoginSignup = ({ onLogin }) => {
             </div>
           )}
           <div
-            className={`${
-              showForgotPassword ? "full-width-panel" : "right-panel"
-            }`}
+            className={`${showForgotPassword ? "full-width-panel" : "right-panel"
+              }`}
             data-aos="fade-left"
           >
             {showForgotPassword ? (

@@ -10,6 +10,7 @@ const EmployeeProfileData = ({
   toggleIncentive,
   toggleAttendance,
   toggleTeamDetails,
+  togglePerformanceImprovement,
 }) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +29,6 @@ const EmployeeProfileData = ({
   useEffect(() => {
     fetch(
       `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
-
     )
       .then((response) => response.json())
       .then((data) => {
@@ -192,6 +192,41 @@ const EmployeeProfileData = ({
             </div>
 
             <div className="employee-profile-scrollsection">
+
+              {/* Employee Performance Indicator */}
+              <div className="employee-profile-performance-indicator">
+                <h1>
+                  <b>Performance Indicator</b>
+                </h1>
+
+                <div className="emp-pro-data-progress-bar">
+                  <div className="emp-pro-data-progress-bar-inner">
+                    <div className="emp-pro-data-poor">
+                      <h6>Poor</h6>
+                    </div>
+
+                    <div className="emp-pro-data-average">
+                      <h6>Average</h6>
+                    </div>
+
+                    <div className="emp-pro-data-good">
+                      <h6>Good</h6>
+                    </div>
+
+                    <div className="emp-pro-data-best">
+                      <h6>Best</h6>
+                    </div>
+                  </div>
+
+                  <div className="indicator-123">
+                    <i className="fa-solid fa-i"></i>
+                  </div>
+                </div>
+                <div className="profile-back-button" style={{ padding: "5px" }}>
+                  <button onClick={togglePerformanceImprovement}>Team Performance</button>
+                  <button onClick={toggleAttendance}> Team Attendance </button>
+                </div>
+              </div>
               <div className="employee-profile-emergency-education-details">
                 {/* Prachi EmployeeProfile 1/07 line no 205 to 210  */}
 
@@ -201,6 +236,8 @@ const EmployeeProfileData = ({
                     <i className="fas fa-times"></i>
                   </button>
                 </div>
+
+
 
                 {/*End Prachi EmployeeProfile 1/07 line no 205 to 210  */}
 
@@ -370,36 +407,6 @@ const EmployeeProfileData = ({
               </div>
               {/* Ajhar-11-07-2024 jsx.LineNo-370  */}
 
-              {/* Employee Performance Indicator */}
-              <div className="employee-profile-performance-indicator">
-                <h1>
-                  <b>Performance Indicator</b>
-                </h1>
-
-                <div className="emp-pro-data-progress-bar">
-                  <div className="emp-pro-data-progress-bar-inner">
-                    <div className="emp-pro-data-poor">
-                      <h6>Poor</h6>
-                    </div>
-
-                    <div className="emp-pro-data-average">
-                      <h6>Average</h6>
-                    </div>
-
-                    <div className="emp-pro-data-good">
-                      <h6>Good</h6>
-                    </div>
-
-                    <div className="emp-pro-data-best">
-                      <h6>Best</h6>
-                    </div>
-                  </div>
-
-                  <div className="indicator-123">
-                    <i class="fa-solid fa-i"></i>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
         </main>
@@ -515,9 +522,9 @@ const EmployeeProfileData = ({
               Attendance
             </button>
 
-            <button 
-            onClick={toggleTeamDetails} 
-            className="emp-pro-incentive">
+            <button
+              onClick={toggleTeamDetails}
+              className="emp-pro-incentive">
               Team Details
             </button>
 
@@ -527,7 +534,7 @@ const EmployeeProfileData = ({
             >
               More
             </button>
-           
+
           </Modal.Footer>
         </Modal.Dialog>
       ) : (

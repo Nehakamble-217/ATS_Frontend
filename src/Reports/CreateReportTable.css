@@ -95,7 +95,7 @@
         
         
         
-        .App-after {
+        .report-App-after {
           width: 100%;
           background-attachment: fixed;
           height: 92vh;
@@ -103,13 +103,13 @@
           margin-left: -120px;
         }
         
-        .attendance-table {
+        .report-attendance-table {
           width: 100%;
           border-collapse: collapse;
           margin-top: -70px;
         }
         
-        .attendance-table thead th {
+        .report-attendance-table thead th {
           position: sticky;
           top: 0;
           background-color: #ffcb9b;

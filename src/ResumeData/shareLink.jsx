@@ -14,18 +14,17 @@ const ShareLink = ({ toggleResumeLink }) => {
   return (
     <div
       className="shareLink-mainDiv"
-      >
+    >
       <RWebShare
         data={{
-          url: `http://192.168.1.42:5173/shareResumeLink`,
+          url: `http://192.168.1.43:5173/shareResumeLink`,
         }}
         onClick={() => alert("Shared successfully!")}
       >
         <div className="shareLink-share-btn-Div">
           <h1>Share Link To Candidate</h1>
           <button className="shareLink-share-btn">Share 🔗</button>
-          <h4>Share Link To Candidate</h4>
-          
+
         </div>
       </RWebShare>
       <div className="shareLink-view-btn-Div">

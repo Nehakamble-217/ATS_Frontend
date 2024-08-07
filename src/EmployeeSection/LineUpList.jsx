@@ -151,6 +151,7 @@ const LineUpList = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
+
         `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
 
       );
@@ -168,6 +169,7 @@ const LineUpList = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
+
         `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${empId}`
 
       );
@@ -181,7 +183,6 @@ const LineUpList = ({
     try {
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
-
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -219,6 +220,7 @@ const LineUpList = ({
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
     fetch(
+
       `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
 
     )
@@ -456,7 +458,6 @@ const LineUpList = ({
 
     setIsDataSending(true);
     let url = `http://192.168.1.43:9090/api/ats/157industries/updateIds/${userType}`;
-
     let requestData;
     if (
       userType === "TeamLeader" &&
@@ -661,16 +662,13 @@ const LineUpList = ({
         "Recruiter Incentive": item.incentive || "-",
         "Interested or Not": item.selectYesOrNo || "-",
         "Current Company": item.companyName || "-",
-        "Total Experience": `${item.experienceYear || 0} Years ${
-          item.experienceMonth || 0
-        } Months`,
+        "Total Experience": `${item.experienceYear || 0} Years ${item.experienceMonth || 0
+          } Months`,
         "Relevant Experience": item.relevantExperience || "-",
-        "Current CTC": `${item.currentCtcLakh || 0} Lakh ${
-          item.currentCtcThousand || 0
-        } Thousand`,
-        "Expected CTC": `${item.expectedCtcLakh || 0} Lakh ${
-          item.expectedCtcThousand || 0
-        } Thousand`,
+        "Current CTC": `${item.currentCtcLakh || 0} Lakh ${item.currentCtcThousand || 0
+          } Thousand`,
+        "Expected CTC": `${item.expectedCtcLakh || 0} Lakh ${item.expectedCtcThousand || 0
+          } Thousand`,
         "Date Of Birth": item.dateOfBirth || "-",
         Gender: item.gender || "-",
         Education: item.qualification || "-",
@@ -799,7 +797,7 @@ const LineUpList = ({
                       </div>
                     )}
                   </div>
-                  
+
                   {userType !== "Recruiters" && (
                     <div>
                       {showShareButton ? (
@@ -1287,15 +1285,12 @@ const LineUpList = ({
                             onMouseOver={handleMouseOver}
                             onMouseOut={handleMouseOut}
                           >
-                            {`${item.currentCtcLakh || 0} Lakh ${
-                              item.currentCtcThousand || 0
-                            } Thousand`}
+                            {`${item.currentCtcLakh || 0} Lakh ${item.currentCtcThousand || 0
+                              } Thousand`}
                             <div className="tooltip">
-                              <span className="tooltiptext">{`${
-                                item.expectedCtcLakh || 0
-                              } Lakh ${
-                                item.expectedCtcThousand || 0
-                              } Thousand`}</span>
+                              <span className="tooltiptext">{`${item.expectedCtcLakh || 0
+                                } Lakh ${item.expectedCtcThousand || 0
+                                } Thousand`}</span>
                             </div>
                           </td>
 
@@ -1304,15 +1299,12 @@ const LineUpList = ({
                             onMouseOver={handleMouseOver}
                             onMouseOut={handleMouseOut}
                           >
-                            {`${item.expectedCtcLakh || 0} Lakh ${
-                              item.expectedCtcThousand || 0
-                            } Thousand`}
+                            {`${item.expectedCtcLakh || 0} Lakh ${item.expectedCtcThousand || 0
+                              } Thousand`}
                             <div className="tooltip">
-                              <span className="tooltiptext">{`${
-                                item.expectedCtcLakh || 0
-                              } Lakh ${
-                                item.expectedCtcThousand || 0
-                              } Thousand`}</span>
+                              <span className="tooltiptext">{`${item.expectedCtcLakh || 0
+                                } Lakh ${item.expectedCtcThousand || 0
+                                } Thousand`}</span>
                             </div>
                           </td>
 

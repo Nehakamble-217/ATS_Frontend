@@ -36,7 +36,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   let [color, setColor] = useState("#ffcb9b");
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
   const [isDataSending, setIsDataSending] = useState(false);
-  const [clickedTime,setClickedTime] = useState();
+  const [clickedTime, setClickedTime] = useState();
 
   //akash_pawar_SelectedCandidate_ShareFunctionality_18/07_34
   const [oldselectedTeamLeader, setOldSelectedTeamLeader] = useState({
@@ -145,7 +145,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -157,7 +157,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -168,7 +168,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -423,7 +423,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
 
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://localhost:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://192.168.1.43:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&
@@ -619,16 +619,13 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
         "Recruiter's Incentive": item.incentive || "-",
         "Interested and Eligible": item.selectYesOrNo || "-",
         "Current Company": item.lineUp?.companyName || "-",
-        "Total Experience": `${item.lineUp?.experienceYear || "0"} Years ${
-          item.lineUp?.experienceMonth || "0"
-        } Month`,
+        "Total Experience": `${item.lineUp?.experienceYear || "0"} Years ${item.lineUp?.experienceMonth || "0"
+          } Month`,
         "Relevant Experience": item.lineUp?.relevantExperience || "-",
-        "Current CTC": `${item.lineUp?.currentCTCLakh || "0"} Lakh ${
-          item.lineUp?.currentCTCThousand || "0"
-        } Thousand`,
-        "Expected CTC": `${item.lineUp?.expectedCTCLakh || "0"} Lakh ${
-          item.lineUp?.expectedCTCThousand || "0"
-        } Thousand`,
+        "Current CTC": `${item.lineUp?.currentCTCLakh || "0"} Lakh ${item.lineUp?.currentCTCThousand || "0"
+          } Thousand`,
+        "Expected CTC": `${item.lineUp?.expectedCTCLakh || "0"} Lakh ${item.lineUp?.expectedCTCThousand || "0"
+          } Thousand`,
         "Date Of Birth": item.lineUp?.dateOfBirth || "-",
         Gender: item.lineUp?.gender || "-",
         Education: item.lineUp?.qualification || "-",
@@ -959,6 +956,8 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                               onChange={() => handleSelectRow(item.candidateId)}
                             />
                           </td>
+
+
                         ) : null}
                         <td
                           className="tabledata "
@@ -1437,6 +1436,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           <i
                             onClick={() => viewPage(item.candidateId,item.requirementId)}
                             className="fa-regular fa-pen-to-square"
+
                           ></i>
                         </td>
                       </tr>
@@ -1765,7 +1765,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
               candidateId={selectedCandidateId}
               employeeId={selectedEmployeeId}
               requirementId={selectedRequirementId}
-              prevtime = {clickedTime}
+              prevtime={clickedTime}
               onReturn={handleReturn}
             />
           )}

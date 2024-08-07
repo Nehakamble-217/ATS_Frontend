@@ -125,7 +125,7 @@ useEffect(() => {
 const fetchRequirementIdCandidate = async (requirementId) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/candidate-details/${requirementId}`
+        `http://192.168.1.43:9090/api/ats/157industries/candidate-details/${requirementId}`
       );
       const { data } = response;
 
@@ -192,7 +192,7 @@ const fetchRequirementIdCandidate = async (requirementId) => {
 const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/company-details`
+        `http://192.168.1.43:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);

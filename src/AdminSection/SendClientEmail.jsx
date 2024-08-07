@@ -88,9 +88,10 @@ const SendClientEmail = ({ clientEmailSender }) => {
     "sourceName",
     "yearOfPassing",
   ];
+
   useEffect(() => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
+      `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -305,7 +306,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
     if (byteCode) {
       try {
         const fileType = fileName.split(".").pop().toLowerCase();
-
         if (fileType === "pdf") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -315,7 +315,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           const blob = new Blob([array], { type: "application/pdf" });
           return URL.createObjectURL(blob);
         }
-
         if (fileType === "docx") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
@@ -327,10 +326,6 @@ const SendClientEmail = ({ clientEmailSender }) => {
           });
           return URL.createObjectURL(blob);
         }
-
-        // Handle other document types here if needed
-
-        // If file type is not supported
         console.error(`Unsupported document type: ${fileType}`);
         return "Unsupported Document";
       } catch (error) {
@@ -340,6 +335,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
     }
     return "Document Not Found";
   };
+
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [selectedCandidateResume, setSelectedCandidateResume] = useState("");
 
@@ -385,7 +381,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
               onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
-            <h5 style={{ color: "gray" , fontSize:"18px" }}>Candidate Data</h5>
+            <h5 style={{ color: "gray", fontSize: "18px" }}>Candidate Data</h5>
 
             <div
               style={{
@@ -852,15 +848,12 @@ const SendClientEmail = ({ clientEmailSender }) => {
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
                       >
-                        {`${item.currentCTCLakh || 0} Lakh ${
-                          item.currentCTCThousand || 0
-                        } Thousand`}
+                        {`${item.currentCTCLakh || 0} Lakh ${item.currentCTCThousand || 0
+                          } Thousand`}
                         <div className="tooltip">
-                          <span className="tooltiptext">{`${
-                            item.expectedCTCLakh || 0
-                          } Lakh ${
-                            item.expectedCTCThousand || 0
-                          } Thousand`}</span>
+                          <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                            } Lakh ${item.expectedCTCThousand || 0
+                            } Thousand`}</span>
                         </div>
                       </td>
 
@@ -869,15 +862,12 @@ const SendClientEmail = ({ clientEmailSender }) => {
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
                       >
-                        {`${item.expectedCTCLakh || 0} Lakh ${
-                          item.expectedCTCThousand || 0
-                        } Thousand`}
+                        {`${item.expectedCTCLakh || 0} Lakh ${item.expectedCTCThousand || 0
+                          } Thousand`}
                         <div className="tooltip">
-                          <span className="tooltiptext">{`${
-                            item.expectedCTCLakh || 0
-                          } Lakh ${
-                            item.expectedCTCThousand || 0
-                          } Thousand`}</span>
+                          <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                            } Lakh ${item.expectedCTCThousand || 0
+                            } Thousand`}</span>
                         </div>
                       </td>
 
@@ -1080,7 +1070,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
                 selectedCandidate={selectedRows}
                 onSuccessFullEmailSend={handleSuccessEmailSend}
                 clientEmailSender={clientEmailSender}
-                // date1={date1}
+              // date1={date1}
               />
             ) : null}
             {/* Name:-Akash Pawar Component:-LineUpList
@@ -1129,6 +1119,8 @@ const SendEmailPopup = ({
 }) => {
   const [to, setTo] = useState("");
   const [cc, setCc] = useState("");
+  const [bcc, setBcc] = useState("");
+  const [emailFooter, setEmailFooter] = useState("Best Regards,\n157 Careers.");
   const [subject, setSubject] = useState("");
   const [signatureImage, setSignatureImage] = useState(
     "https://lh3.googleusercontent.com/fife/ALs6j_HDFuzYstiAW8Rt_7NmtAoegg6nGerpkvbiAITq-mNL70gNXONQuJwnZdbiAbsKMNAYMt9iBnvsFWx8EaOOWV43cjOjDvFOAiw1XacANQb0MDBtFO1ag1TuVwCbwbzrLDnOiniRQ5hD7kGCCVjTNGsNdx6RQLsrKyZlpJ6meA1NIT1vXloRcFwlfbTjDBG14YC809U_0FGn9pOII8lbH-I_ZZLBI6kfh0Q43j4evix8AbIxnvw0Soesevgycz4jRqrAA4Fjjd67Pb0vIVBkeEgSp_Sfz_v9joDcBiMe2sLP6_iEvB7N4il1qgBgTHBRM6qp6IuNFov7hMdcyx8Jp1oCfQX7753pO2x3FGg3tyW5RI0l-1h01JWKdybFECo19c7o3Z_01lJ-dF1TABxyPTdT9eztvkSfDXOvfoQIP_oEny3ORR-8wfjijnlUFylwT7MhsCwTcaeQR6tWaPYJ9rX7AQVGOmMyJbLS_0tFLn0_UzX7NuQx6-W2TeC9aXM0ajJYJ5cLPusvMlAhgFBB0WdZfbtuOat0-rd2qP_L0MqJPfTYBdTgYyO4LoTD0dV6QRo5UJhvyDW5Ru8IBz-bB4QWhPMjs2_PFnQ9K-GLvAPCOYIk4TQPhkCK4UgOyGL8bRE4bPBIYMddVxfWdePCOb6V5JhGmYfvsYzEhAwquNmsZkMv9lEJfQV-Frs0DrF63XWlD5ieprbz4CLMs3WHh42I06Kpw2aCXfQchCDoJawTYljfozJ_QHq58UIAdMniaLvrKKYRyYfZohAFVdekMzArxrobd4e3Pac9cHm1Orz2_lAob5diRJCZxapdTOPfiT_ro-1qhbtmKua4kXr5Z_TWgBV9CwaactlqLFMnnbN3TtDOqKNDEFBGhg1pKC2NUu2Jw6IyawDyCU6VCdrnhizrHhvhPY8u0uXOxspsqfvQaU_PT0e0v-f2RPDESxSwIz3H6DEzmk5hOrbOmXFCPG8Q9bUu_5I3kL11z_loIveKwfWD3YGIkOjOvXAUomdEqw7DIXIbjcfDQflq7L45gJ3-BWuTkRmicaQL3GAtwVpYbmNUi649NpUC5JvKN_iqIxeNzhKdn1jBXEGl2-rbmzYXbPolNUmrQWwaFYKBzVzgWIcCjaaKpgSR444mFTx3mFEuSJxfjMTJtumbYGZkGrFkEE1rNaXMvF6XFT6JO63BtAfQzd5nFl31OctaJ6nf7_UbshOlPFeUNoRFpc-gB9LWyZck_V9jIToDHY8mij11-IK-9DFLdZZfNxeOhbha8DYljvTj9R6spXM006lRZmBsP6WugvIvvG5Pv_kiXoORCBbrCFAIk3vpZIEx3zDoayqgUNwctyrf7cJvfSiyWokjM0NNHRTCy0eldMfb0LLX5X6BftzMt128n5f6-Q60zmQ_kyuHSnyLGJawrCATfhHu-_ABtuuTWopOBib9gG__Vsa06z5SKZs5LM8eD8TwgUMeIRfWGfZBAy2qobuMt9ZVDrQDlPejp1tBg3Dm8Ke85TK7HFFfDqA-dJ2jCwzOq2ipybePn2kxLg911_lfaHPIXpF0LJdNwNyzfH_6IuB3IGI0nelUgtPnQbxXFMYd8xLaiVhfx9f0GLlDLkalvTQ8UPk92nprBDiYn8GdmV3zoVuWZbXwqQ4nmLaB9LIxDieP2kLO7V2igrEsBxXZHT309KauEgReDc1p7ahNkSiDjAOt3cDoEnlXhXjLXiBy"
@@ -1163,7 +1155,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://localhost:9090/api/ats/157industries/add-client-details",
+        "http://192.168.1.43:9090/api/ats/157industries/add-client-details",
         clientData
       );
       if (response) {
@@ -1182,6 +1174,7 @@ const SendEmailPopup = ({
     const emailData = {
       to,
       cc,
+      bcc,
       subject,
       body: emailBody.replace(/\n/g, "<br>"),
       signatureImage,
@@ -1198,26 +1191,26 @@ const SendEmailPopup = ({
 
     axios
       .post(
-        "http://localhost:9090/api/ats/157industries/send-email",
+        "http://192.168.1.43:9090/api/ats/157industries/send-email",
         emailData
       )
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
-        console.log("Email sent successfully:", response.data); 
+        console.log("Email sent successfully:", response.data);
         toast.success("Email sent successfully");
 
         selectedCandidate.forEach(async (can) => {
-            try {
-              const performanceId = await axios.get(
-                `http://192.168.1.42:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
-              );
-              UpdatePerformace(performanceId.data);
-            } catch (error) {
-              console.log(error);
-            }
+          try {
+            const performanceId = await axios.get(
+              `http://192.168.1.43:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
+            );
+            UpdatePerformace(performanceId.data);
+          } catch (error) {
+            console.log(error);
+          }
         });
-        
+
         toast.success("Email sent successfully");
 
       })
@@ -1231,14 +1224,14 @@ const SendEmailPopup = ({
   };
 
 
-  const UpdatePerformace =async(id)=>{
+  const UpdatePerformace = async (id) => {
     try {
       const additionalData = {
-        mailToClient:new Date()
+        mailToClient: new Date()
       };
       // console.log("Sending additional data:", additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${id}`,
+        `http://192.168.1.43:9090/api/ats/157industries/update-performance/${id}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -1284,16 +1277,28 @@ const SendEmailPopup = ({
               />
             </div>
           </Form.Group>
-          <Form.Group>
-            <Form.Label>
-              <strong>Subject:</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              className="text-secondary"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
+          <Form.Group style={{ display: "flex", gap: "5px" }}>
+            <div style={{ width: "100%" }}>
+              <Form.Label>
+                <strong>BCC</strong>
+              </Form.Label>
+              <Form.Control
+                type="email"
+                value={bcc}
+                onChange={(e) => setBcc(e.target.value)}
+              />
+            </div>
+            <div style={{ width: "100%" }}>
+              <Form.Label>
+                <strong>Subject:</strong>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                className="text-secondary"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+            </div>
           </Form.Group>
           <Form.Label className="mt-2">
             <strong>Email Body:</strong>
@@ -1388,6 +1393,20 @@ const SendEmailPopup = ({
                 </a>
               ))}
             </div>
+            <Form.Group controlId="formBasicFooter">
+              <Form.Label>
+                <strong>Email Footer</strong>
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                className="text-secondary"
+                rows={3}
+                style={{ minHeight: "70px" }}
+                placeholder=""
+                value={emailFooter}
+                onChange={(e) => setEmailFooter(e.target.value)}
+              />
+            </Form.Group>
             {signatureImage && (
               <div className="mt-3">
                 <strong>Signature:</strong>
@@ -1413,13 +1432,7 @@ const SendEmailPopup = ({
           </div>
         </Modal.Body>
         <Modal.Footer style={{ justifyContent: "space-between" }}>
-          {/* {getResponse != "" ? (
-            <p style={{ color: "red" }}>
-              <i>{getResponse}</i>
-            </p>
-          ) : (
-            <p></p>
-          )} */}
+
           <div className="gap-2 d-flex align-items-center">
             <button
               className="SCE-share-forward-popup-btn"
