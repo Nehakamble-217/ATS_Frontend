@@ -486,7 +486,7 @@ const Attendance = () => {
   const renderManagers = () => {
     return managers.map((manager) => (
       <div key={manager.managerId} className="dropdown-section">
-        <div className="dropdown-row">
+        <div className="PI-dropdown-row">
           <input
             type="checkbox"
             checked={selectedManagers.some(
@@ -508,7 +508,7 @@ const Attendance = () => {
           </label>
         </div>
         {expandedManagerId === manager.managerId && (
-          <div className="dropdown-column">
+          <div className="PI-dropdown-column ">
             {renderTeamLeaders(manager.managerId)}
           </div>
         )}
@@ -518,8 +518,8 @@ const Attendance = () => {
 
   const renderTeamLeaders = (managerId) => {
     return teamLeaders.map((teamLeader) => (
-      <div key={teamLeader.teamLeaderId} className="dropdown-section">
-        <div className="dropdown-row">
+      <div key={teamLeader.teamLeaderId} className="PI-dropdown-section">
+        <div className="PI-dropdown-row">
           <input
             type="checkbox"
             checked={selectedTeamLeaders.some(
@@ -541,7 +541,7 @@ const Attendance = () => {
           </label>
         </div>
         {expandedTeamLeaderId === teamLeader.teamLeaderId && (
-          <div className="dropdown-column">{renderRecruiters()}</div>
+          <div className="PI-dropdown-column ">{renderRecruiters()}</div>
         )}
       </div>
     ));
@@ -549,7 +549,7 @@ const Attendance = () => {
 
   const renderRecruiters = () => {
     return recruiters.map((recruiter) => (
-      <div key={recruiter.employeeId} className="dropdown-row">
+      <div key={recruiter.employeeId} className="PI-dropdown-row">
         <input
           type="checkbox"
           checked={selectedRecruiters.some(
@@ -609,12 +609,12 @@ const Attendance = () => {
   };
 
   return (
-    <div className="w-full h-screen">
-      <div className="full-width half-height">
-        <div className="container">
-          <div className="dropdown-container-main">
-            <div className="header">{userType}</div>
-            <div className="dropdown-container">
+    <div>
+      <div className="PI-full-width PI-half-height">
+        <div className="PI-container">
+          <div className="PI-dropdown-container-main">
+            <div className="PI-header">{userType}</div>
+            <div className="PI-dropdown-container">
               <div className="PI-Dropdown" onClick={toggleDropdown}>
                 {userType === "SuperUser" && <span>Select Manager</span>}
                 {userType === "Manager" && <span>Select Team Leader</span>}
@@ -724,9 +724,9 @@ const Attendance = () => {
             )}
           </div>
 
-          <div className="attendance-form">
-            <div className="radio-buttons">
-              <label className="radio-label">
+          <div className="PI-attendance-form">
+            <div className="PI-radio-buttons">
+              <label className="PI-radio-label">
                 <input
                   type="radio"
                   id="currentMonth"
@@ -738,7 +738,7 @@ const Attendance = () => {
                 />
                 <span>Current Month</span>
               </label>
-              <label className="radio-label">
+              <label className="PI-radio-label">
                 <input
                   type="radio"
                   id="lastMonth"
@@ -750,7 +750,7 @@ const Attendance = () => {
                 />
                 <span>Last Month</span>
               </label>
-              <label className="radio-label">
+              <label className="PI-radio-label">
                 <input
                   type="radio"
                   id="last3Months"
@@ -762,7 +762,7 @@ const Attendance = () => {
                 />
                 <span>Last 3 Months</span>
               </label>
-              <label className="radio-label">
+              <label className="PI-radio-label">
                 <input
                   type="radio"
                   id="last6Months"
@@ -774,7 +774,7 @@ const Attendance = () => {
                 />
                 <span>Last 6 Months</span>
               </label>
-              <label className="radio-label">
+              <label className="PI-radio-label">
                 <input
                   type="radio"
                   id="lastYear"
@@ -786,7 +786,7 @@ const Attendance = () => {
                 />
                 <span>Last 1 Year</span>
               </label>
-              <label className="radio-label">
+              <label className="PI-radio-label">
                 <input
                   type="radio"
                   id="custom"
@@ -800,18 +800,18 @@ const Attendance = () => {
               </label>
             </div>
             {dateRange === "custom" && (
-              <div className="date-inputs">
+              <div className="PI-date-inputs">
                 <input
                   type="date"
                   value={customStartDate}
                   onChange={handleCustomStartDateChange}
-                  className="date-input"
+                  className="PI-date-input"
                 />
                 <input
                   type="date"
                   value={customEndDate}
                   onChange={handleCustomEndDateChange}
-                  className="date-input"
+                  className="PI-date-input"
                 />
               </div>
             )}
@@ -819,28 +819,6 @@ const Attendance = () => {
         <p className="date-info-p-s" >Start Date: {startDate}</p>
         <p className="date-info-p">End Date: {endDate}</p>
       </div> */}
-            {showCustomDiv && (
-              <div className="custom-dates">
-                <label className="date-label">
-                  <span>Start Date:</span>
-                  <input
-                    type="date"
-                    value={startDate}
-                    onChange={handleStartDateChange}
-                    className="form-input"
-                  />
-                </label>
-                <label className="date-label">
-                  <span>End Date:</span>
-                  <input
-                    type="date"
-                    value={endDate}
-                    onChange={handleEndDateChange}
-                    className="form-input"
-                  />
-                </label>
-              </div>
-            )}
             <div className="PI-filters">
               <button className="PI-attendence-btn" onClick={showDataReport}>
                 Get Attendance
@@ -904,35 +882,35 @@ const Attendance = () => {
           </div>
         </div>
       </div>
-      <div className="w-full overflow-x-scroll">
-        <table className="attendance-table">
+      <div className="PI-attendance-container">
+        <table className="PI-attendance-table">
           <thead>
-            <tr className="attendancerows-head">
-              <th className="attendanceheading">Sr No</th>
-              <th className="attendanceheading">Working Date</th>
-              <th className="attendanceheading">Employee Name</th>
-              <th className="attendanceheading">Job Role</th>
-              <th className="attendanceheading">Login Time</th>
-              <th className="attendanceheading">Late Mark</th>
-              <th className="attendanceheading">Calling Count</th>
-              <th className="attendanceheading">Target</th>
-              <th className="attendanceheading">Archived</th>
-              <th className="attendanceheading">Pending</th>
-              <th className="attendanceheading">Leave Type</th>
-              <th className="attendanceheading">Half Days</th>
-              <th className="attendanceheading">Holiday Leave</th>
-              <th className="attendanceheading">Work Type</th>
-              <th className="attendanceheading">Day Status</th>
-              {/* <th className="attendanceheading">Breaks</th> */}
-              <th className="attendanceheading">Working Hours</th>
-              <th className="attendanceheading">Logout Time</th>
-              <th className="attendanceheading">Employee Id</th>
-              <th className="attendanceheading">Team Leader Id</th>
+            <tr className="PI-attendancerows-head">
+              <th className="PI-attendanceheading">Sr No</th>
+              <th className="PI-attendanceheading">Working Date</th>
+              <th className="PI-attendanceheading">Employee Name</th>
+              <th className="PI-attendanceheading">Job Role</th>
+              <th className="PI-attendanceheading">Login Time</th>
+              <th className="PI-attendanceheading">Late Mark</th>
+              <th className="PI-attendanceheading">Calling Count</th>
+              <th className="PI-attendanceheading">Target</th>
+              <th className="PI-attendanceheading">Archived</th>
+              <th className="PI-attendanceheading">Pending</th>
+              <th className="PI-attendanceheading">Leave Type</th>
+              <th className="PI-attendanceheading">Half Days</th>
+              <th className="PI-attendanceheading">Holiday Leave</th>
+              <th className="PI-attendanceheading">Work Type</th>
+              <th className="PI-attendanceheading">Day Status</th>
+              {/* <th className="PI-attendanceheading">Breaks</th> */}
+              <th className="PI-attendanceheading">Working Hours</th>
+              <th className="PI-attendanceheading">Logout Time</th>
+              <th className="PI-attendanceheading">Employee Id</th>
+              <th className="PI-attendanceheading">Team Leader Id</th>
             </tr>
           </thead>
           <tbody>
             {attendanceData.map((data, index) => (
-              <tr key={data.workId} className="attendancerows">
+              <tr key={data.workId} className="PI-attendancerows">
                 <td
                   className="tabledata"
                   onMouseOver={handleMouseOver}

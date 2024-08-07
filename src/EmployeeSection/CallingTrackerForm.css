@@ -101,11 +101,10 @@
   font-weight: 500;
   border-right: 1px solid gray;
   text-align: center;
-  font-size: 1.0vw;
+  font-size: 1vw;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .calling-tracker-field-sub-div {
@@ -253,7 +252,6 @@
   color: gray;
 }
 
-
 .ctf-btn {
   background-color: #ffcb9b;
   color: white;
@@ -299,7 +297,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   color: gray;
-
 }
 
 .custom-datepicker-container {
@@ -328,8 +325,7 @@ strong {
   color: gray;
 }
 
-@media screen and (max-width:300px) {
-
+@media screen and (max-width: 300px) {
   .studTables tbody tr {
     width: 100%;
 
@@ -343,7 +339,6 @@ strong {
       max-width: 100%;
       padding: 10px;
       color: gray;
-
     }
 
     .maintable::-webkit-scrollbar {
@@ -458,14 +453,12 @@ strong {
       gap: 10px;
       color: gray;
       padding: 10px;
-
     }
 
     .gender-checkboxes input[type="checkbox"] {
       margin-right: 0px;
       color: gray;
       padding: 10px;
-
     }
 
     #resumeUpload {
@@ -531,7 +524,6 @@ strong {
       border-radius: 4px;
       box-sizing: border-box;
       color: gray;
-
     }
 
     .custom-datepicker-container {
@@ -561,7 +553,6 @@ strong {
     }
   }
 }
-
 
 .calling-tracker-popup-open-btn {
   border: none;
@@ -639,8 +630,6 @@ strong {
   box-shadow: 0 0 0 0.2rem #ffcb9bd0;
 }
 
-.calling-tracker-popup-calExeCtc,
-.calling-tracker-popup-calHike,
 .callingTracker-popup-close-btn {
   padding: 2px 10px;
   font-size: 16px;
@@ -651,8 +640,6 @@ strong {
   color: white;
 }
 
-.calling-tracker-popup-calExeCtc:hover,
-.calling-tracker-popup-calHike:hover,
 .callingTracker-popup-close-btn:hover {
   color: #ffb281;
   background-color: rgb(255, 255, 255);
@@ -665,8 +652,7 @@ strong {
   gap: 5px;
   margin-top: 10px;
 }
-.callingTracker-male-div{
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+.sal-cal-th {
+  color: white !important;
+  background-color: #ffb281 !important;
 }

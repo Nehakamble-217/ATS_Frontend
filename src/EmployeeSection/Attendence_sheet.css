@@ -1,4 +1,4 @@
-.attendance-table {
+.PI-attendance-table {
   border-collapse: collapse;
 }
 .status-poor {
@@ -38,12 +38,12 @@
   font-size: 16px;
   font-weight: 500;
 }
-.attendanceheading {
+.PI-attendanceheading {
   border: 1px solid gray;
   padding: 4px;
   color: gray;
   white-space: nowrap;
-  width: auto !important;
+  width: auto;
   height: 30px;
 
   /* text-overflow: ellipsis; */
@@ -98,7 +98,7 @@
   white-space: nowrap;
 }
 
-.attendancerows-head {
+.PI-attendancerows-head {
   background-color: #ffcb9b;
   color: gray;
   /* font-weight: 100; */
@@ -131,11 +131,11 @@
   width: 100%;
   overflow-y: auto;
 }
-.attendancerows {
+.PI-attendancerows {
   height: 30px;
 }
 
-.attendancerows:hover {
+.PI-attendancerows:hover {
   background-color: #f2f2f2;
 }
 
@@ -208,7 +208,7 @@ html::-webkit-scrollbar {
   color: #ffcb9b;
 }
 
-.full-width {
+.PI-full-width {
   width: 100%;
 }
 .PI-Count {
@@ -216,7 +216,7 @@ html::-webkit-scrollbar {
   display: flex;
   gap: 2px;
 }
-.container {
+.PI-container {
   width: 100%;
   height: auto;
   padding-top: 10px;
@@ -241,7 +241,7 @@ html::-webkit-scrollbar {
   color: gray;
 }
 
-.attendance-form {
+.PI-attendance-form {
   width: 60%;
   padding: 16px;
   border-radius: 8px;
@@ -250,30 +250,31 @@ html::-webkit-scrollbar {
   justify-content: center;
   align-items: start;
 }
-.radio-buttons {
+.PI-radio-buttons {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.radio-label {
+.PI-radio-label {
   width: 100%;
   display: flex;
   justify-content: start;
-  gap: 10px;
+  gap: 2px;
   align-items: center;
 }
 
-.date-inputs {
+.PI-date-inputs {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 10px 0px;
   gap: 8px;
 }
 
-.date-input {
+.PI-date-input {
   width: 40%;
   height: 30px;
   padding: 8px;
@@ -334,12 +335,12 @@ html::-webkit-scrollbar {
   background: white;
   width: 150px;
 }
-.dropdown-container {
+.PI-dropdown-container {
   position: relative;
-  width: 300px;
+  width: 100%;
 }
-.dropdown-container-main {
-  width: 30%;
+.PI-dropdown-container-main {
+  width: 25%;
 }
 .PI-Dropdown {
   padding: 10px;
@@ -375,27 +376,28 @@ html::-webkit-scrollbar {
   z-index: 10;
 }
 
-.dropdown-section {
+.PI-dropdown-section {
   margin-bottom: 5px;
   padding-left: 10px; /* Indent each hierarchy level */
 }
 
-.dropdown-row {
+.PI-dropdown-row {
   /* padding: 5px 10px; */
   display: flex;
   gap: 5px;
   align-items: center;
 }
 
-.dropdown-column {
+.PI-dropdown-column {
   padding-left: 20px; /* Indent nested items */
   border-left: 1px solid #ced4da; /* Optional: add a visual line to indicate hierarchy */
   margin-top: 5px; /* Add space above nested items */
 }
 
 .clickable-label {
+  width: 100%;
   cursor: pointer;
-  margin-left: 10px;
+  padding: 0px 5px;
   display: flex;
   gap: 5px;
   align-items: center;
@@ -405,4 +407,9 @@ html::-webkit-scrollbar {
 .dropdown-arrow {
   margin-left: 5px;
   font-size: 12px;
+}
+.PI-attendance-container {
+  width: 100%;
+  height: 70vh;
+  overflow-x: scroll;
 }

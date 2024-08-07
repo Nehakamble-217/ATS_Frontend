@@ -68,49 +68,13 @@ function DailyWork({
   const { userType } = useParams();
 
   useEffect(() => {
-
-    const fetchEmployeeData = async () => {
-      try {
-        const response = await axios.get(
-          `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
-
-        );
-        setEmployeeData(response.data);
-        // console.log(response.data);
-        //Akash_Pawar_DailyWork_senderinformation_09/07_74
-        onCurrentEmployeeJobRoleSet(response.data.jobRole);
-        const emailSender = {
-          senderName: response.data.name,
-          senderMail: response.data.officialMail,
-        };
-        emailSenderInformation(emailSender);
-        //Akash_Pawar_DailyWork_senderinformation_09/07_81
-        if (response.data.profileImage) {
-          const byteCharacters = atob(response.data.profileImage);
-          const byteNumbers = new Array(byteCharacters.length);
-          for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-          }
-          const byteArray = new Uint8Array(byteNumbers);
-          const blob = new Blob([byteArray], { type: "image/jpeg" });
-          const url = URL.createObjectURL(blob);
-          setProfileImage(url);
-          return () => URL.revokeObjectURL(url);
-        }
-      } catch (error) {
-        console.error("Error fetching employee details:", error);
-      }
-    };
-
-
     fetchEmployeeData();
   }, [lateMark, leaveType, paidLeave, unpaidLeave, loginTime, data]);
 
   const fetchEmployeeData = async () => {
     try {
-      console.log("2-------------");
       const response = await axios.get(
-        `http://192.168.1.50:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
       );
       setEmployeeData(response.data);
       if (response.data) {
@@ -182,15 +146,12 @@ function DailyWork({
       `loginDetailsSaved_${employeeId}`
     );
     if (storedLoginDetailsSaved === "true") {
-
       setLoginDetailsSaved(true);
     }
 
     let executed = false;
-
     const saveLoginDetails = async () => {
       if (loginDetailsSaved) {
-
         fetchCurrentEmployerWorkId();
         console.log(userType + "   " + employeeId + " " + name);
         console.log("Login details already saved.");
@@ -262,7 +223,6 @@ function DailyWork({
       );
 
       setFetchWorkId(response.data);
-      console.log(response.data + "hello-------------");
     } catch (error) {
       console.error("Error fetching work ID:", error);
     }

@@ -780,7 +780,7 @@ function Sidebar({
 
                 {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_633 */}
 
-                {userType != "Vendor" ? (
+                {userType === "SuperUser" ? (
 
                   <li
                     onClick={handleButtonClick(
@@ -1054,36 +1054,44 @@ function Sidebar({
                         }`}
                     >
                       <li style={{ marginLeft: "10px" }}>
-                        <span
-                          className="sidebar-text"
-                          onClick={toggeleRightsInstructions}
-                        >
-                          Rights & Instructions
-                        </span>
+                        <a href="#">
+                          <span
+                            className="sidebar-text"
+                            onClick={toggeleRightsInstructions}
+                          >
+                            Rights & Instructions
+                          </span>
+                        </a>
                       </li>
                       <li style={{ marginLeft: "10px" }}>
-                        <span
-                          className="sidebar-text"
-                          onClick={toggeleCompanyPolicy}
-                        >
-                          Company Policy
-                        </span>
+                        <a href="#">
+                          <span
+                            className="sidebar-text"
+                            onClick={toggeleCompanyPolicy}
+                          >
+                            Company Policy
+                          </span>
+                        </a>
                       </li>
                       <li style={{ marginLeft: "10px" }}>
-                        <span
-                          className="sidebar-text"
-                          onClick={toggeleIssueSolving}
-                        >
-                          Issues Solving
-                        </span>
+                        <a href="#">
+                          <span
+                            className="sidebar-text"
+                            onClick={toggeleIssueSolving}
+                          >
+                            Issues Solving
+                          </span>
+                        </a>
                       </li>
                       <li style={{ marginLeft: "10px" }}>
-                        <span
-                          className="sidebar-text"
-                          onClick={toggelePainArea}
-                        >
-                          Recruites Pain Area
-                        </span>
+                        <a href="#">
+                          <span
+                            className="sidebar-text"
+                            onClick={toggelePainArea}
+                          >
+                            Recruites Pain Area
+                          </span>
+                        </a>
                       </li>
                     </ul>
                   </li>
@@ -1098,63 +1106,9 @@ function Sidebar({
                 >
                   <a href="#">
                     {/* <i className="icon ph-bold ph-chart-bar"></i> */}
-                <i
-                  className="fa-brands fa-linkedin"
-                  style={{ color: "gray" }}
-                ></i>
-                <span className="sidebar-text">Portal</span>
-                <i className="arrow ph-bold ph-caret-down"></i>
-                <ul
-                  className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
-                    }`}
-                >
-                  <li style={{ marginLeft: "10px" }}>
-                    <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span
-                        className="sidebar-text"
-                        onClick={openNaukriPlatform}
-                      >
-                        Naukri
-                      </span>
-                    </a>
-                  </li>
-                  <li style={{ marginLeft: "10px" }}>
-                    <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span
-                        className="sidebar-text"
-                        onClick={openLinkedinPlatform}
-                      >
-                        LinkedIn
-                      </span>
-                    </a>
-                  </li>
-                  <li style={{ marginLeft: "10px" }}>
-                    <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span
-                        className="sidebar-text"
-                        onClick={openTimesPlatform}
-                      >
-                        Times Jobs
-                      </span>
-                    </a>
-                  </li>
-                  <li style={{ marginLeft: "10px" }}>
-                    <a href="#">
-                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                      <span
-                        className="sidebar-text"
-                        onClick={openIndeedPlatform}
-                      >
-                        Indeed
-                      </span>
-                    </a>
-                  </li>
-                </ul>
+
                 {/* </li> */}
-                {userType != "Vendor" ? (
+                {/* {userType != "Vendor" ? (
                   <li
                     className={activeSubMenu === "aboutus" ? "active" : ""}
                     onClick={toggleSubMenu("aboutus")}
@@ -1205,18 +1159,7 @@ function Sidebar({
                       </li>
                     </ul>
                   </li>
-                ) : null}
-
-                <li onClick={toggelCandidateHistory}>
-                  <a href="#">
-
-                    <i
-                      className="fa-regular fa-circle-question"
-                      style={{ color: "gray" }}
-                    ></i>
-                    <span className="sidebar-text">Help</span>
-                  </a>
-                </li>
+                ) : null} */}
                 <li
                   className={activeSubMenu === "help" ? "active" : ""}
                   onClick={toggleSubMenu("help")}
@@ -1230,15 +1173,20 @@ function Sidebar({
                     className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "help" ? "active" : ""
                       }`}
                   >
-
-
                     <li style={{ marginLeft: "10px" }}>
-                      <span
-                        className="sidebar-text"
-                        onClick={toggeleInterviewForm}
-                      >
-                        Interview Form
-                      </span>
+                      <a href="#">
+                        <span
+                          className="sidebar-text"
+                          onClick={toggeleInterviewForm}
+                        >
+                          Interview Form
+                        </span>
+                      </a>
+                    </li >
+                    <li style={{ marginLeft: "10px" }} onClick={toggelCandidateHistory}>
+                      <a href="#">
+                        <span className="sidebar-text">Candidate History Tracker</span>
+                      </a>
                     </li>
 
                   </ul>

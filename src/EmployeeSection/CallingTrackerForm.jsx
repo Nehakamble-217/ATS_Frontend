@@ -155,7 +155,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9090/api/ats/157industries/company-details`
+        `http://192.168.1.43:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -524,7 +524,7 @@ const CallingTrackerForm = ({
     const lakhValue = parseFloat(lakh) || 0;
     const thousandValue = parseFloat(thousand) || 0;
     // Combine lakh and thousand to a single CTC value in thousands
-    const combinedCTC = lakhValue * 100000 + thousandValue;
+    const combinedCTC = lakhValue * 100000 + thousandValue * 1000;
     // Format the combined CTC
     setconvertedCurrentCTC(combinedCTC.toFixed(2));
   };
@@ -534,7 +534,7 @@ const CallingTrackerForm = ({
     const lakhValue = parseFloat(lakh) || 0;
     const thousandValue = parseFloat(thousand) || 0;
     // Combine lakh and thousand to a single CTC value in thousands
-    const combinedCTC = lakhValue * 100000 + thousandValue;
+    const combinedCTC = lakhValue * 100000 + thousandValue * 1000;
     // Format the combined CTC
     setconvertedExpectedCTC(combinedCTC.toFixed(2));
   };
@@ -604,7 +604,7 @@ const CallingTrackerForm = ({
                       onClick={handleShow}
                       className="calling-tracker-popup-open-btn"
                     >
-                      View More
+                      Help
                     </button>
                   </div>
                 </div>
@@ -1777,12 +1777,9 @@ const ModalComponent = ({
   handleClose,
   startingPoint,
   endingPoint,
-  currentCTCInLakh = "",
-  currentCTCInThousand = "",
   expectedCTCInLakh = "",
   expectedCTCInThousand = "",
   convertedCurrentCTC,
-  convertedExpectedCTC,
   onUpdateExpectedCTCLakh,
   onUpdateExpectedCTCThousand,
 }) => {
@@ -1807,47 +1804,33 @@ const ModalComponent = ({
     setShowHikeInput(true); // Reset hike input visibility on prop change
   }, [startingPoint, endingPoint, expectedCTCInLakh, expectedCTCInThousand]);
 
-  const handleExpectedCTCCalculation = () => {
-    setShowHikeInput(true);
-    if (!expectedHike) {
-      return;
+  useEffect(() => {
+    if (expectedHike) {
+      const currentCTCNum = parseFloat(convertedCurrentCTC);
+      const expectedHikeNum = parseFloat(expectedHike);
+      const expectedCTCNum =
+        currentCTCNum + (currentCTCNum * expectedHikeNum) / 100;
+      setExpectedCTC(expectedCTCNum.toFixed(2));
+      setCalculatedHike("");
     }
-
-    const currentCTCNum = parseFloat(convertedCurrentCTC);
-    const expectedHikeNum = parseFloat(expectedHike);
-    const expectedCTCNum =
-      currentCTCNum + (currentCTCNum * expectedHikeNum) / 100;
-    setExpectedCTC(expectedCTCNum.toFixed(2));
     setCalculatedHike("");
-  };
+  }, [expectedHike, convertedCurrentCTC]);
 
-  const updateExpectedCTC = (lakh, thousand) => {
-    const lakhValue = parseFloat(lakh) || 0;
-    const thousandValue = parseFloat(thousand) || 0;
-    const combinedCTC = lakhValue * 100000 + thousandValue;
-    return combinedCTC.toFixed(2);
-  };
-
-  const handleHikeCalculation = () => {
-    if (!convertedExpectedCTC) {
-      alert("Please enter the expected CTC.");
-      return;
+  useEffect(() => {
+    if (expectedCTCLakh || expectedCTCThousand) {
+      const lakhValue = parseFloat(expectedCTCLakh) || 0;
+      const thousandValue = parseFloat(expectedCTCThousand) || 0;
+      const combinedCTC = lakhValue * 100000 + thousandValue * 1000;
+      const currentCTCNum = parseFloat(convertedCurrentCTC);
+      const expectedCTCNum = parseFloat(combinedCTC);
+      const hikePercentage =
+        ((expectedCTCNum - currentCTCNum) / currentCTCNum) * 100;
+      setCalculatedHike(hikePercentage.toFixed(2));
     }
-    const convertedExpected = updateExpectedCTC(
-      expectedCTCLakh,
-      expectedCTCThousand
-    );
-    const currentCTCNum = parseFloat(convertedCurrentCTC);
-    const expectedCTCNum = parseFloat(convertedExpected);
-    const hikePercentage =
-      ((expectedCTCNum - currentCTCNum) / currentCTCNum) * 100;
-    setCalculatedHike(hikePercentage.toFixed(2));
-    setExpectedHike("");
-    setShowHikeInput(false);
-  };
+  }, [expectedCTCLakh, expectedCTCThousand, convertedCurrentCTC]);
 
   return (
-    <Modal size="lg" centered show={show} onHide={handleClose}>
+    <Modal size="xl" centered show={show} onHide={handleClose}>
       <Modal.Body className="p-0">
         <div className="calling-tracker-popup">
           <div className="calling-tracker-popup-sidebar">
@@ -1907,109 +1890,126 @@ const ModalComponent = ({
             )}
             {activeField === "salary" && (
               <div className="salary-calculation">
-                <div className="form-group">
-                  <label htmlFor="currentCTCLakh">Current CTC (Lakh)</label>
-                  <input
-                    type="number"
-                    id="currentCTCLakh"
-                    className="form-control"
-                    placeholder="Enter current CTC in lakh"
-                    value={currentCTCInLakh}
-                    readOnly
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="currentCTCThousand">
-                    Current CTC (Thousand)
-                  </label>
-                  <input
-                    type="number"
-                    id="currentCTCThousand"
-                    className="form-control"
-                    placeholder="Enter current CTC in thousand"
-                    value={currentCTCInThousand}
-                    readOnly
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="expectedCTCLakh">Expected CTC (Lakh)</label>
-                  <input
-                    type="number"
-                    id="expectedCTCLakh"
-                    className="form-control"
-                    placeholder="Enter expected CTC in lakh"
-                    value={expectedCTCLakh}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setExpectedCTCLakh(value);
-                      onUpdateExpectedCTCLakh(value); // Send to parent
-                    }}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="expectedCTCThousand">
-                    Expected CTC (Thousand)
-                  </label>
-                  <input
-                    type="number"
-                    id="expectedCTCThousand"
-                    className="form-control"
-                    placeholder="Enter expected CTC in thousand"
-                    value={expectedCTCThousand}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setExpectedCTCThousand(value);
-                      onUpdateExpectedCTCThousand(value); // Send to parent
-                    }}
-                  />
-                </div>
-                {showHikeInput && (
-                  <div className="form-group">
-                    <label htmlFor="expectedHike">Expected Hike (%)</label>
-                    <input
-                      type="number"
-                      id="expectedHike"
-                      className="form-control"
-                      placeholder="Enter expected hike percentage"
-                      value={expectedHike}
-                      onChange={(e) => setExpectedHike(e.target.value)}
-                    />
-                  </div>
-                )}
-                <div className="callingTracker-calculations">
-                  <button
-                    className="calling-tracker-popup-calExeCtc"
-                    onClick={handleExpectedCTCCalculation}
-                  >
-                    Calculate Expected CTC
-                  </button>
-                  <p>
-                    Expected CTC:{" "}
-                    <input
-                      type="text"
-                      className="border-1 rounded-lg"
-                      readOnly
-                      value={expectedCTC}
-                    />
-                  </p>
-                </div>
-                <div className="callingTracker-calculations">
-                  <button
-                    className="calling-tracker-popup-calHike"
-                    onClick={handleHikeCalculation}
-                  >
-                    Calculate Hike Percentage
-                  </button>
-                  <p>
-                    Calculated Hike:{" "}
-                    <input
-                      type="text"
-                      className="border-1 rounded-lg"
-                      readOnly
-                      value={calculatedHike}
-                    />
-                  </p>
-                </div>
+                <table className="table table-bordered text-secondary">
+                  <thead>
+                    <tr>
+                      <th className="sal-cal-th">Current Salary</th>
+                      <th className="sal-cal-th">Hike (%)</th>
+                      <th className="sal-cal-th">Calculated Expected CTC</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="text-secondary">
+                        <div className="form-group">
+                          {/* <label htmlFor="currentCTCLakh"></label> */}
+                          <input
+                            type="number"
+                            id="currentCTCLakh"
+                            className="form-control"
+                            placeholder="Enter current CTC in lakh"
+                            value={convertedCurrentCTC}
+                            readOnly
+                          />
+                        </div>
+                      </td>
+                      <td className="text-secondary">
+                        <div className="form-group">
+                          {/* <label htmlFor="expectedHike">Hike (%)</label> */}
+                          <input
+                            type="number"
+                            id="expectedHike"
+                            className="form-control"
+                            placeholder="Enter expected hike percentage"
+                            value={expectedHike}
+                            onChange={(e) => setExpectedHike(e.target.value)}
+                          />
+                        </div>
+                      </td>
+                      <td className="text-secondary">
+                        <input
+                          type="text"
+                          className="form-control"
+                          readOnly
+                          value={expectedCTC}
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th className="sal-cal-th">Current Salary</th>
+                      <th className="sal-cal-th">Expected Salary</th>
+                      <th className="sal-cal-th">Calculated Hike (%)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="text-secondary">
+                        <input
+                          type="number"
+                          id="currentCTCLakh"
+                          className="form-control"
+                          placeholder="Enter current CTC in lakh"
+                          value={convertedCurrentCTC}
+                          readOnly
+                        />
+                      </td>
+                      <td className="text-secondary">
+                        <div>
+                          <div className="form-group">
+                            {/* <label htmlFor="expectedCTCLakh">Lakh</label> */}
+                            <input
+                              type="text"
+                              id="expectedCTCLakh"
+                              className="form-control"
+                              placeholder="Enter expected CTC in lakh"
+                              value={expectedCTCLakh}
+                              maxLength="2"
+                              pattern="\d*"
+                              inputMode="numeric"
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                setExpectedCTCLakh(value);
+                                onUpdateExpectedCTCLakh(value); // Send to parent
+                              }}
+                            />
+                          </div>
+                          <div className="form-group">
+                            {/* <label htmlFor="expectedCTCThousand">
+                              Thousand
+                            </label> */}
+                            <input
+                              type="text"
+                              id="expectedCTCThousand"
+                              className="form-control"
+                              placeholder="Enter expected CTC in thousand"
+                              maxLength="2"
+                              pattern="\d*"
+                              inputMode="numeric"
+                              value={expectedCTCThousand}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                setExpectedCTCThousand(value);
+                                onUpdateExpectedCTCThousand(value); // Send to parent
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="text-secondary">
+                        <input
+                          type="text"
+                          className="form-control"
+                          readOnly
+                          value={calculatedHike}
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             )}
           </div>

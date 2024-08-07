@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import './InterviewForm.css'; // Import the CSS file
 import axios from 'axios';
 
-const InterviewForm = ({toggleAllInterviewResponse}) => {
+const InterviewForm = ({ toggleAllInterviewResponse }) => {
   const [formData, setFormData] = useState({
     requirementId: '',
     jobDesignation: '',
@@ -23,7 +23,7 @@ const InterviewForm = ({toggleAllInterviewResponse}) => {
     reasonNotAttending: '',
     attending: '',
     responseGiven: '',
-    comments: '',
+    // comments: '',
   });
 
   const initialInterviewDataState = {
@@ -32,9 +32,9 @@ const InterviewForm = ({toggleAllInterviewResponse}) => {
     requirementCompany: "",
   };
 
-    const { employeeId } = useParams();
+  const { employeeId } = useParams();
 
-     const [interviewData, setInterviewData] = useState(
+  const [interviewData, setInterviewData] = useState(
     initialInterviewDataState
   );
 
@@ -43,19 +43,19 @@ const InterviewForm = ({toggleAllInterviewResponse}) => {
   const [showNoFields, setShowNoFields] = useState(false);
   const [showYetToBeConfirmedFields, setShowYetToBeConfirmedFields] = useState(false);
   const [requirementOptions, setRequirementOptions] = useState([]);
-  const [candidateData,setCandidateData]=useState([]);
+  const [candidateData, setCandidateData] = useState([]);
   const [newCandidateData, setNewCandidateData] = useState({
     candidateId: '',
     candidateName: '',
     candidateInterview: '',
     candidateInterviewTime: ''
-  });  
-   const [errors, setErrors] = useState({});
+  });
+  const [errors, setErrors] = useState({});
 
-useEffect(() => {
-  console.log(formData);
-}, [formData]);
-   useEffect(() => {
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+  useEffect(() => {
     // fetchRecruiterName();
     fetchRequirementOptions();
   }, [employeeId]);
@@ -98,34 +98,34 @@ useEffect(() => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-      setFormData({...formData,...newCandidateData,...interviewData})
-      console.log(formData);
-  try {
-    let response;
-    if (formData.interviewStatus === "Yes") {
-      response = await axios.post('http://localhost:1414/api/interview/details', formData);
-      await axios.post('http://localhost:1414/api/interview/status/yes', formData);
-    } else if (formData.interviewStatus === "No") {
-      response = await axios.post('http://localhost:1414/api/interview/details', formData);
-      await axios.post('http://localhost:1414/api/interview/status/no', formData);
-    } else if (formData.interviewStatus === "Yet to be confirmed") {
-      response = await axios.post('http://localhost:1414/api/interview/details', formData);
-      await axios.post('http://localhost:1414/api/interview/status/yet-to-be-confirmed', formData);
-    }
+    e.preventDefault();
+    setFormData({ ...formData, ...newCandidateData, ...interviewData })
+    console.log(formData);
+    try {
+      let response;
+      if (formData.interviewStatus === "Yes") {
+        response = await axios.post('http://localhost:1414/api/interview/details', formData);
+        await axios.post('http://localhost:1414/api/interview/status/yes', formData);
+      } else if (formData.interviewStatus === "No") {
+        response = await axios.post('http://localhost:1414/api/interview/details', formData);
+        await axios.post('http://localhost:1414/api/interview/status/no', formData);
+      } else if (formData.interviewStatus === "Yet to be confirmed") {
+        response = await axios.post('http://localhost:1414/api/interview/details', formData);
+        await axios.post('http://localhost:1414/api/interview/status/yet-to-be-confirmed', formData);
+      }
 
-    if (response.interviewStatus == 200) {
-      alert("Data submitted successfully!");
+      if (response.interviewStatus == 200) {
+        alert("Data submitted successfully!");
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      alert("There was an error submitting the form. Please try again.");
     }
-  } catch (error) {
-    console.error("Error submitting data:", error);
-    alert("There was an error submitting the form. Please try again.");
-  }
-};
+  };
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.50:9090/api/ats/157industries/company-details`
+        `http://192.168.1.43:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -134,10 +134,10 @@ useEffect(() => {
     }
   };
 
-   const fetchRequirementIdCandidate = async (requirementId) => {
+  const fetchRequirementIdCandidate = async (requirementId) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.50:9090/api/ats/157industries/candidate-details/${requirementId}`
+        `http://192.168.1.43:9090/api/ats/157industries/candidate-details/${requirementId}`
       );
       const { data } = response;
 
@@ -146,14 +146,14 @@ useEffect(() => {
       console.error("Error fetching requirement options:", error);
     }
   };
-  
+
 
   const handleRequirementChange = (e) => {
     const { value } = e.target;
     const selectedRequirement = requirementOptions.find(
       (requirement) => requirement.requirementId === parseInt(value)
     );
-    if(selectedRequirement){
+    if (selectedRequirement) {
       fetchRequirementIdCandidate(selectedRequirement.requirementId);
     }
 
@@ -164,7 +164,7 @@ useEffect(() => {
         jobDesignation: selectedRequirement.designation,
         requirementCompany: selectedRequirement.companyName,
       }));
-     
+
       setendPoint(selectedRequirement.detailAddress);
     } else {
       setInterviewData((prevState) => ({
@@ -173,9 +173,9 @@ useEffect(() => {
         jobDesignation: "",
         requirementCompany: "",
       }));
-      
+
     }
-//     setErrors((prevErrors) => ({ ...prevErrors, requirementId: "" }));
+    //     setErrors((prevErrors) => ({ ...prevErrors, requirementId: "" }));
   };
 
   const handleCandidateChange = (e) => {
@@ -202,287 +202,287 @@ useEffect(() => {
 
 
   return (
-<div>
+    <div>
       <form onSubmit={handleSubmit}>
-    <div className="dhann-container">
-      <div className="card left-card">
-        <div className="dhansform-group">
-             <button onClick={toggleAllInterviewResponse}>View all Responses</button>
-          <div className="dhansform-label-input">
-           
-            <div className="dhansform-label">
-                <label>Job Id</label>
-             </div >  
-             <div>
-                    <select
-                      id="requirementId"
-                      name="requirementId"
-                      value={interviewData.requirementId}
-                      onChange={handleRequirementChange}
-                      className='bhagyainput'
-                    >
-                      <option value="">Select Job Id</option>
-                      {requirementOptions.map((option) => (
-                        <option
-                          key={option.requirementId}
-                          value={option.requirementId}
-                        >
-                          {option.requirementId}
-                        </option>
-                      ))}
-                    </select>
-                   
-                
+        <div className="dhann-container">
+          <div className="card left-card">
+            <div className="dhansform-group">
+              <button onClick={toggleAllInterviewResponse}>View all Responses</button>
+              <div className="dhansform-label-input">
+
+                <div className="dhansform-label">
+                  <label>Job Id</label>
+                </div >
+                <div>
+                  <selects
+                    id="requirementId"
+                    name="requirementId"
+                    value={interviewData.requirementId}
+                    onChange={handleRequirementChange}
+                    className='bhagyainput'
+                  >
+                    <option value="">Select Job Id</option>
+                    {requirementOptions.map((option) => (
+                      <option
+                        key={option.requirementId}
+                        value={option.requirementId}
+                      >
+                        {option.requirementId}
+                      </option>
+                    ))}
+                  </selects>
+
+
+                </div>
+
               </div>
-        
-          </div>
-        </div>
-        <div className="dhansform-group">
-          <div className="dhansform-label-input">
-            <div className="dhansform-label">
-              <label>Company Name:</label>
             </div>
-            <div className="dhansform-input">
-             <input
+            <div className="dhansform-group">
+              <div className="dhansform-label-input">
+                <div className="dhansform-label">
+                  <label>Company Name:</label>
+                </div>
+                <div className="dhansform-input">
+                  <input
                     type="text"
                     placeholder="Company"
                     id="requirementCompany"
                     name="requirementCompany"
-                    
+
                     value={interviewData.requirementCompany}
                     readOnly
                   />
-                  </div>
-          </div>
-        </div>
-        <div className="dhansform-group">
-          <div className="dhansform-label-input">
-            <div className="dhansform-label">
-              <label>Designation:</label>
+                </div>
+              </div>
             </div>
-           <div className="dhansform-input">
-              <input
+            <div className="dhansform-group">
+              <div className="dhansform-label-input">
+                <div className="dhansform-label">
+                  <label>Designation:</label>
+                </div>
+                <div className="dhansform-input">
+                  <input
                     type="text"
                     id="jobDesignation"
                     name="jobDesignation"
-                   
+
                     value={interviewData.jobDesignation}
                     placeholder="Enter Position"
                     readOnly
                   />
+                </div>
+              </div>
+            </div>
+            <div className="dhansform-group">
+              <div className="dhansform-label-input">
+
+                <div className="dhansform-label">
+                  <label>Candidate name</label>
+                </div >
+                <div>
+                  <select
+                    id="candidateId"
+                    name="candidateId"
+                    value={newCandidateData.candidateId}
+                    onChange={handleCandidateChange}
+                    className='bhagyainput'
+                  >
+                    <option value="">Select Candidate</option>
+                    {Array.isArray(candidateData) && candidateData.map((option) => (
+                      <option
+                        key={option[0]}
+                        value={option[0]}
+                      >
+                        {option[1]}
+                      </option>
+                    ))}
+                  </select>
+
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+            <div className="dhansform-group">
+              <div className="dhansform-label-input">
+                <div className="dhansform-label">
+                  <label>Candidate ID:</label>
+                </div>
+                <div className="dhansform-input">
+                  <label>{newCandidateData.candidateId}</label>
+                </div>
+              </div>
+            </div>
+
+            <div className="dhansform-group">
+              <div className="dhansform-label-input">
+                <div className="dhansform-label">
+                  <label>Interview Schedule Time:</label>
+                </div>
+                <div className="dhansform-input">
+                  <label>{newCandidateData.candidateInterviewTime}</label>
+                </div>
+              </div>
+            </div>
+            <div className="dhansform-group">
+              <div className="dhansform-label-input">
+                <div className="dhansform-label">
+                  <label>Interview Type:</label>
+                </div>
+                <div className="dhansform-input">
+                  <label>{newCandidateData.candidateInterview}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div className='SampleBhagya'>
+            <div className="card right-card">
+              <div className="dhansform-group">
+                <div className="dhansform-label-input">
+                  <div className="dhansform-label">
+                    <label>Interview Status:</label>
                   </div>
-          </div>
-        </div>
-        <div className="dhansform-group">
-          <div className="dhansform-label-input">
-           
-            <div className="dhansform-label">
-                <label>Candidate name</label>
-             </div >  
-             <div>
+                  <div className="dhansform-input">
                     <select
-                      id="candidateId"
-                      name="candidateId"
-                     value={newCandidateData.candidateId}
-                      onChange={handleCandidateChange}
-                      className='bhagyainput'
-                    >
-                      <option value="">Select Candidate</option>
-                      {Array.isArray(candidateData) && candidateData.map((option) => (
-                        <option
-                          key={option[0]}
-                          value={option[0]}
-                        >
-                          {option[1]}
-                        </option>
-                      ))}
+                      name="interviewStatus"
+                      value={formData.interviewStatus}
+                      onChange={handleStatusChange}
+                      className="bhagyainput"  >
+                      <option value="">Select Status</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                      <option value="Yet to be confirmed">Yet to be confirmed</option>
                     </select>
-                   
-                
-              </div>
-        
-          </div>
-
-          
-        </div>
-        
-        <div className="dhansform-group">
-          <div className="dhansform-label-input">
-            <div className="dhansform-label">
-              <label>Candidate ID:</label>
-            </div>
-            <div className="dhansform-input">
-              <label>{newCandidateData.candidateId}</label>
-            </div> 
-          </div>  
-        </div>
-        
-        <div className="dhansform-group">
-          <div className="dhansform-label-input">
-            <div className="dhansform-label">
-              <label>Interview Schedule Time:</label>
-            </div>
-            <div className="dhansform-input">
-              <label>{newCandidateData.candidateInterviewTime}</label>
-            </div> 
-          </div>
-        </div>
-        <div className="dhansform-group">
-          <div className="dhansform-label-input">
-            <div className="dhansform-label">
-              <label>Interview Type:</label>
-            </div>
-            <div className="dhansform-input">
-              <label>{newCandidateData.candidateInterview}</label>
-            </div> 
-          </div>
-        </div>
-      </div>
-
-
-<div className='SampleBhagya'>
-      <div className="card right-card">
-        <div className="dhansform-group">
-          <div className="dhansform-label-input">
-            <div className="dhansform-label">
-              <label>Interview Status:</label>
-            </div>
-            <div className="dhansform-input">
-              <select
-                name="interviewStatus"
-                value={formData.interviewStatus}
-                onChange={handleStatusChange}
-              className="bhagyainput"  >
-                <option value="">Select Status</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Yet to be confirmed">Yet to be confirmed</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {showAdditionalFields && (
-          <div>
-           
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Who has taken the interview:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="interviewerName"
-                    value={formData.interviewerName}
-                    onChange={handleChange}
-                    placeholder="Name of the interviewer"
-                    className="bhagyainput"
-                  />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Duration of the interview:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="interviewDuration"
-                    value={formData.interviewDuration}
-                    onChange={handleChange}
-                    placeholder="Enter Duration"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
+              {showAdditionalFields && (
+                <div>
 
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Questions asked in the interview:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="questionsAsked"
-                    value={formData.questionsAsked}
-                    onChange={handleChange}
-                    placeholder="Enter Questions Asked"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Who has taken the interview:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="interviewerName"
+                          value={formData.interviewerName}
+                          onChange={handleChange}
+                          placeholder="Name of the interviewer"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Which questions you answered?</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="answersGiven"
-                    value={formData.answersGiven}
-                    onChange={handleChange}
-                    placeholder="Enter Answers Given"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Duration of the interview:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="interviewDuration"
+                          value={formData.interviewDuration}
+                          onChange={handleChange}
+                          placeholder="Enter Duration"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Which questions remain unanswered?
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Questions asked in the interview:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="questionsAsked"
+                          value={formData.questionsAsked}
+                          onChange={handleChange}
+                          placeholder="Enter Questions Asked"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-</label>
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Which questions you answered?</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="answersGiven"
+                          value={formData.answersGiven}
+                          onChange={handleChange}
+                          placeholder="Enter Answers Given"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Which questions remain unanswered?
+
+                        </label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="answersNotGiven"
+                          value={formData.answersNotGiven}
+                          onChange={handleChange}
+                          placeholder="Enter Answers Not Given"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Comment:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="comments"
+                          value={formData.comments}
+                          onChange={handleChange}
+                          placeholder="Enter The Comment Below"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="answersNotGiven"
-                    value={formData.answersNotGiven}
-                    onChange={handleChange}
-                    placeholder="Enter Answers Not Given"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
 
+              )}
 
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Comment:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="comments"
-                    value={formData.comments}
-                    onChange={handleChange}
-                    placeholder="Enter The Comment Below"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
-
-          </div>
-          
-        )}
-
-        {showNoFields && (
-          <div>
-            {/* <div className="dhansform-group">
+              {showNoFields && (
+                <div>
+                  {/* <div className="dhansform-group">
               <div className="dhansform-label-input">
                 <div className="dhansform-label">
                   <label>Discussion End:</label>
@@ -499,121 +499,121 @@ useEffect(() => {
               </div>
             </div> */}
 
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Request to Reschedule:</label>
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Request to Reschedule:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="requestInterviewSchedule"
+                          value={formData.requestReschedule}
+                          onChange={handleChange}
+                          placeholder="Enter Rescheduling Request"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Reason for not attending the interview:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="reasonNotAttending"
+                          value={formData.reasonNotAttending}
+                          onChange={handleChange}
+                          placeholder="Enter Reason"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="requestInterviewSchedule"
-                    value={formData.requestReschedule}
-                    onChange={handleChange}
-                    placeholder="Enter Rescheduling Request"
-                    className="bhagyainput"
-                  />
+              )}
+
+              {showYetToBeConfirmedFields && (
+                <div>
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Attending:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="attending"
+                          value={formData.attending}
+                          onChange={handleChange}
+                          placeholder="Enter Attending Status"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Response Given:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="responseGiven"
+                          value={formData.responseGiven}
+                          onChange={handleChange}
+                          placeholder="Enter Response"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dhansform-group">
+                    <div className="dhansform-label-input">
+                      <div className="dhansform-label">
+                        <label>Comment:</label>
+                      </div>
+                      <div className="dhansform-input">
+                        <input
+                          type="text"
+                          name="comments"
+                          value={formData.comments}
+                          onChange={handleChange}
+                          placeholder="Enter The Comment Below"
+                          className="bhagyainput"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
+              )}
+
+
+              <div className="submit-container">
+                <button type="submit" className="submit-button">
+                  Submit
+                </button>
               </div>
+
+
             </div>
 
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Reason for not attending the interview:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="reasonNotAttending"
-                    value={formData.reasonNotAttending}
-                    onChange={handleChange}
-                    placeholder="Enter Reason"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
+
+
           </div>
-        )}
-
-        {showYetToBeConfirmedFields && (
-          <div>
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Attending:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="attending"
-                    value={formData.attending}
-                    onChange={handleChange}
-                    placeholder="Enter Attending Status"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Response Given:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="responseGiven"
-                    value={formData.responseGiven}
-                    onChange={handleChange}
-                    placeholder="Enter Response"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Comment:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="comments"
-                    value={formData.comments}
-                    onChange={handleChange}
-                    placeholder="Enter The Comment Below"
-                    className="bhagyainput"
-                  />
-                </div>
-              </div>
-            </div>
-
-          </div>
-        )}
 
 
- <div className="submit-container">
-      <button type="submit" className="submit-button">
-        Submit
-      </button>
-    </div>
-
-      
-      </div>
 
 
-     
-</div>
-
-
-     
-
-    </div>
-    </form>
+        </div>
+      </form>
     </div>
   );
 };
