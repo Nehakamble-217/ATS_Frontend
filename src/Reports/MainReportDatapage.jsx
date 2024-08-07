@@ -4,9 +4,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import "../Reports/MainReportDatapage.css";
-
 import CreateReportTable from "../Reports/CreateReportTable";
-
 import axios from "axios";
 import { json, useParams } from "react-router-dom";
 
@@ -18,41 +16,25 @@ const MonthReport = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedMainAdmin, setSelectedMainAdmin] = useState(null);
   const [selectedTeamLeader, setSelectedTeamLeader] = useState([]);
-
   const [selectedRecruiters, setSelectedRecruiters] = useState([]);
-
-
   const [selectedManager, setSelectedManager] = useState([]);
   const [selectedTeamLeaders, setSelectedTeamLeaders] = useState([]);
-
-
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [assignments, setAssignments] = useState({});
-
-
   const [allSelected, setAllSelected] = useState(false);
-
   const [selectedManagers, setSelectedManagers] = useState([]);
-
   const [columnName, setColumnName] = useState(null);
   const [editRecruiter, setEditRecruiter] = useState(null);
   const [openCategory, setOpenCategory] = useState(null); // New state for open category
   const [showReport, setShowReport] = useState(false); // State to control the visibility of the report
-
-
   const [SelectedManagerName, setSelectedManagerName] = useState({});
-
   const [manager, setManager] = useState([]);  //prachi
-
   //Name:-Akash Pawar Component:-Team_Leadder Subcategory:-Assign Column TeamLeader Names and Recruiter Names(changed) Start LineNo:-17  Date:-03/07
   const [teamLeaderNames, setTeamLeaderNames] = useState([]);
   const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]); //Prachi
   const [teamLeaderUnderManager, setTeamLeaderUnderManager] = useState([]);  //Prachi
   const [recruiterUnderTeamLeaderData, setRecruiterUnderTeamLeaderData] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-
-
-
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [showCustomDiv, setShowCustomDiv] = useState(false);
@@ -62,36 +44,15 @@ const MonthReport = () => {
   const [reportSelectedDate, setreportSelectedDate] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [candidatesDatewiseData, setcandidatesDatewiseData] = useState([]);
-  // State to track the currently selected month
   const [selectedMonth, setSelectedMonth] = useState('lastMonth');
   const [reportDataDatewise, setReportDataDatewise] = useState(null);
-
-
-  //  console.log(JSON.stringify(selectedManager));
-  // console.log(JSON.stringify(selectedTeamLeader));
-  // console.log(JSON.stringify(selectedRecruiters))
-
-
 
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
-
       );
-
       setManager(response.data);
-
-      // console.log(response.data);
-
-      // if(userType==="SuperUser"){
-      //   setManager(response.data);
-      // }else{
-      //   setManager(
-      //     response.data.filter((manager)=>manager.managerId==employeeId)
-      //   );
-      // }
-
     };
     fetchManagerNames();
   }, []);
@@ -99,23 +60,18 @@ const MonthReport = () => {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-
         `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
       );
       setTeamLeaderUnderManager(response.data);
-
-
     };
     if (selectedManager.managerId != "") {
       fetchTeamLeaderNames();
     }
-
   }, [selectedManager]);
 
   const fetchRecruiterUnderTeamLeaderData = useCallback(async () => {
     const response = await axios.get(
       `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
-
     );
     setRecruiterUnderTeamLeaderData(response.data);
   }, [selectedTeamLeader]);
@@ -123,20 +79,14 @@ const MonthReport = () => {
   useEffect(() => {
     if (selectedTeamLeader != null) {
       fetchRecruiterUnderTeamLeaderData();
-
-
     }
   }, [selectedTeamLeader]);
 
-  // Date Handling Prachi 
   const today = new Date();
 
   const lastMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-
   useEffect(() => {
-
     const fetchDateData = async () => {
-
     }
     fetchDateData();
 
@@ -151,18 +101,14 @@ const MonthReport = () => {
   }
   const showDataReport = () => {
     setshowReportData(true);
-
-
   }
 
   const handleToggle = () => {
-
     setShowToggle(!showToggle);
     setShowCustomDiv(false);
     setshowReportData(false)
   };
 
-  //Prachi last month data
   const fetchLastMonthData = () => {
 
     const today = new Date();
@@ -170,17 +116,9 @@ const MonthReport = () => {
     const lastMonthEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
     const lastMonthStartDate = lastMonthStartDate1.toISOString().slice(0, 10);
     const lastMonthEndDate = lastMonthEndDate1.toISOString().slice(0, 10);
-    console.log(lastMonthStartDate + " Start date");
-    console.log(lastMonthEndDate + " End date");
-
-
-    console.log(selectedTeamLeader.teamLeaderId);
-    console.log(selectedTeamLeader.teamLeaderJobRole);
 
     const FetchDataDatewise = async () => {
-
       let baseURL = '';
-
       if (selectedManager.managerId) {
         baseURL = `${selectedManager.managerId}/${selectedManager.managerJobRole}`;
       }
@@ -194,46 +132,18 @@ const MonthReport = () => {
 
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastMonthStartDate}/${lastMonthEndDate}`
-
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
-      // console.log(baseURL+"hhhhhhhhh");
     };
     FetchDataDatewise();
 
   }
 
-  // Custom Date
-
   const handleCustomDate = () => {
-
-    // if (startDate && endDate) {
-    //   const filtered = data.filter(item => {
-    //     const itemDate = new Date(item.date);
-    //     const start = new Date(startDate);
-    //     const end = new Date(endDate);
-    //     return itemDate >= start && itemDate <= end;
-    //   });
-    // }
-    console.log(startDate + "aaaaaaa");
-    console.log(endDate + "aaaaaaaa");
-
-
-
     const today = new Date();
-    // const lastThreeMonthStartDate1 = startDate;
-    // const lastThreeMonthEndDate1 = endDate;
-
     const lastThreeMonthStartDate = startDate;
     const lastThreeMonthEndDate = endDate;
-    console.log(lastThreeMonthStartDate + " Start date");
-    console.log(lastThreeMonthEndDate + " End date");
-
-
-    console.log(selectedTeamLeader.teamLeaderId);
-    console.log(selectedTeamLeader.teamLeaderJobRole);
-
     const FetchDataDatewise = async () => {
 
       let baseURL = '';
@@ -247,11 +157,8 @@ const MonthReport = () => {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
 
-      // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
-
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
-
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -287,36 +194,22 @@ const MonthReport = () => {
       } if (selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId) {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
-
-
-      // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
-
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
-
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
     };
     FetchDataDatewise();
-
-
   }
 
   const fetchSixMonthData = () => {
 
     const today = new Date();
-
     const lastSixMonthStartDate1 = new Date(today.getFullYear(), today.getMonth() - 6, 1);
     const lastSixMonthEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
     const lastSixMonthStartDate = lastSixMonthStartDate1.toISOString().slice(0, 10);
     const lastSixMonthEndDate = lastSixMonthEndDate1.toISOString().slice(0, 10);
-    console.log(lastSixMonthStartDate + " Start date");
-    console.log(lastSixMonthEndDate + " End date");
-
-
-    console.log(selectedTeamLeader.teamLeaderId);
-    console.log(selectedTeamLeader.teamLeaderJobRole);
 
     const FetchDataDatewise = async () => {
 
@@ -330,20 +223,13 @@ const MonthReport = () => {
       } if (selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId) {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
-
-
-      // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
-
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastSixMonthStartDate}/${lastSixMonthEndDate}`
-        // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
     };
     FetchDataDatewise();
-
-
   }
 
   const fetchOneYearData = () => {
@@ -371,62 +257,14 @@ const MonthReport = () => {
       } if (selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId) {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
-
-
-      // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
-
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
-        // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
     };
     FetchDataDatewise();
-
-
-
   }
-  // const fetchCustomDateData=()=>{
-  //   const today = new Date();
-  //   const lastOneYearStartDate1 = new Date(today.getFullYear(), today.getMonth() - 12, 1);
-  //   const lastOneYearEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
-  //   const lastOneYearStartDate=lastOneYearStartDate1.toISOString().slice(0,10);
-  //   const lastOneYearEndDate=lastOneYearEndDate1.toISOString().slice(0,10);
-  //   console.log(lastOneYearStartDate  + " Start date");
-  //   console.log(lastOneYearEndDate + " End date");
-
-
-  // console.log(selectedTeamLeader.teamLeaderId);
-  // console.log(selectedTeamLeader.teamLeaderJobRole);
-
-  //   const FetchDataDatewise=async()=>{
-
-  //     let baseURL='';
-
-  //     if(selectedManager.managerId){
-  //       baseURL=`${selectedManager.managerId}/${selectedManager.managerJobRole}`;
-  //     }
-  //      if(selectedManager.managerId && selectedTeamLeader.teamLeaderId){
-  //       baseURL=`${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}`
-  //     } if(selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId){
-  //       baseURL=`${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
-  //     }
-
-
-  //     // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
-
-  //     const response=await axios.get(
-  //       `http://192.168.1.36:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
-  //       // `http://192.168.1.46:9090/api/ats/157industries/report-count/870/Manager/2024-01-01/2024-07-18`
-  //     )
-  //     setReportDataDatewise(response.data);
-  //     console.log(response.data);
-  //   };
-  //   FetchDataDatewise();
-
-  // }
-
 
   const fetchJoiningDateData = () => {
     const today = new Date();
@@ -453,21 +291,13 @@ const MonthReport = () => {
       } if (selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId) {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
-
-
-      // const ApiData=`${selectedManager.managerId}/${selectedManager.managerJobRole}/${lastMonthStartDate}/${lastMonthEndDate}`;
-
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
-
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
     };
     FetchDataDatewise();
-
-
-
   }
 
   const fetchCurrentMonthData = () => {
@@ -488,7 +318,6 @@ const MonthReport = () => {
     const FetchDataDatewise = async () => {
 
       let baseURL = '';
-
       if (selectedManager.managerId) {
         baseURL = `${selectedManager.managerId}/${selectedManager.managerJobRole}`;
       }
@@ -500,7 +329,6 @@ const MonthReport = () => {
 
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastCurrentMonthStartDate}/${lastCurrentMonthEndDate}`
-
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -510,10 +338,8 @@ const MonthReport = () => {
   }
 
 
-  // Handler function for radio button change
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
-    // alert(event.target.value);
 
     if (event.target.value === 'CurrentMonth') {
       fetchCurrentMonthData();
@@ -526,11 +352,7 @@ const MonthReport = () => {
       fetchSixMonthData();
     } else if (event.target.value === 'Last1Year') {
       fetchOneYearData();
-    }
-    // else if(event.target.value==='CustomDate'){
-    //   fetchCustomDateData();
-    // }
-    else if (event.target.value === 'JoiningDate') {
+    } else if (event.target.value === 'JoiningDate') {
       fetchJoiningDateData();
     }
 
@@ -543,12 +365,6 @@ const MonthReport = () => {
   const hideCustomDateDiv = () => {
     setShowCustomDiv(false);
   }
-
-
-
-  // Filtered data based on selected month
-  // const filteredData = data.find(entry => entry.month === selectedMonth);
-
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
@@ -560,13 +376,8 @@ const MonthReport = () => {
     fetchTeamLeaderNames();
   }, []);
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
-    //   const response = await axios.get(
-    //     ` http://192.168.1.42:7676/emp-stats/api/dailywork/api/work-summary/${selectedTeamLeader}`
-
-    //   );
     const response = await axios.get(
       `http://192.168.1.43:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
-
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -616,30 +427,13 @@ const MonthReport = () => {
   );
 
   const handleOkClick = () => {
-
-
     if (selectedManager.managerId != "") {
       setDropdownOpen(false);
       setShowReport(true);
     }
-
-    //  console.log(selectedManager.managerId);
-
-
-
   };
 
-
   const handleSearchChange = useCallback((event) => {
-    // const name=event.target.name;
-    // const value=event.target.value;
-    // console.log(name);
-    // console.log(value);
-    // setSearchTerm((prev)=>{
-    //   return {...prev, [name]:value};
-
-    // })
-
     setSearchTerm(event.target.value);
   }, []);
 
@@ -653,51 +447,6 @@ const MonthReport = () => {
       checked ? [...prev, value] : prev.filter((option) => option !== value)
     );
   }, []);
-
-  // const handleSelectAll = () => {
-  //   if (allSelected) {
-  //     setSelectedOptions([]);
-  //   } else {
-  //     const allRowIds = columnName
-  //       .filter((cat) => openCategory === cat.columnCategory)
-  //       .map((item) => item.columnId);
-  //     setSelectedOptions(allRowIds);
-  //   }
-  //   setAllSelected(!allSelected);
-  // };
-
-
-
-
-  // const handleSelectAll = () => {
-  //   if (allSelected) {
-  //     setSelectedOptions([]);
-  //   } else {
-  //     const allOptions = options.map((option) => option.label);
-  //     setSelectedOptions(allOptions);
-  //   }
-  //   setAllSelected(!allSelected);
-  // };
-
-  // const handleSelectAll = () => {
-  //   if (allSelected) {
-  //     setSelectedOptions([]);
-  //   } else {
-  //     const allOptions = options.map((option) => option.value); // Assuming you have a 'value' property in your options
-  //     setSelectedOptions(allOptions);
-  //   }
-  //   setAllSelected(!allSelected);
-  // };
-
-  // const handleSelectAll = () => {
-  //   if (allSelected) {
-  //     setSelectedOptions([]);
-  //   } else {
-  //     const allOptions = options.map((option) => option.columnId);
-  //     setSelectedOptions(allOptions);
-  //   }
-  //   setAllSelected(!allSelected);
-  // };
 
   const handleSelectAll = () => {
     if (allSelected) {
@@ -806,57 +555,17 @@ const MonthReport = () => {
     setAllSelected((prev) => !prev);
   }, [allSelected, filteredRecruiters]);
 
-  // const handleUpdateClick = (recruiter) => {
-  //   setEditRecruiter(recruiter);
-  //   setSelectedRecruiters([recruiter]);
-  //   setSelectedOptions(
-  //     Object.keys(assignments[recruiter] || {}).reduce(
-  //       (options, category) => [
-  //         ...options,
-  //         ...assignments[recruiter][category],
-  //       ],
-  //       []
-  //     )
-  //   );
-  //   setDropdownOpen(false);
-  // };
-
-  // const handleRemoveClick = (recruiter) => {
-  //   setSelectedRecruiters((prev) => prev.filter((item) => item !== recruiter));
-  //   const updatedAssignments = { ...assignments };
-  //   delete updatedAssignments[recruiter];
-  //   setAssignments(updatedAssignments);
-  // };
-
-  // function getClassForCategory(category) {
-  //   switch (category) {
-  //     case "Common Assign":
-  //       return "common-assign";
-  //     case "Important Assign":
-  //       return "important-assign";
-  //     case "Most Important Assign":
-  //       return "most-important-assign";
-  //     default:
-  //       return "";
-  //   }
-  // }
-
-
   return (
     <>
       <div className="report-AppsTL">
         <div className="reports-selection-containerTL">
-
           <div className="report-hierarchy-sectionTL">
-
             <div className="report-custom-dropdownTL">
-
               <div className="reports-Admin-Dropdown" onClick={toggleDropdown}>
                 {selectedRecruiters.length === 0
                   ? "Manager"
                   : "Manager"
                 }
-                {/* : `${selectedRecruiters.length} Recruiter(s) selected`} */}
                 <span
                   className={`dropdown-icon_open ${dropdownOpen ? "open" : ""}`}
                 >
@@ -884,17 +593,13 @@ const MonthReport = () => {
                           <label>
                             <input
                               type='checkbox'
-                              // name='manager'
                               name={`manager${manager.employeeId}`}
-
                               value={id.managerId}
-                              // checked={selectedManager.managerId===id.managerId}
                               checked={selectedManagers.includes(id.managerId)}
                               onChange={() => {
                                 setSelectedManager({
                                   managerId: id.managerId,
                                   managerJobRole: id.jobRole,
-
                                 })
 
                               }}
@@ -1059,35 +764,13 @@ const MonthReport = () => {
               )}
             </div>
           </div>
-
-          <div className="options-section">
-
-
-
-            {/* <div className="report-DetailsReport-btn">
-                        <button
-                          onClick={()=>setShowReport(true)}
-                          
-                          className="report-assign-optionbtn"
-                        >
-                          {editRecruiter ? "Update Options" : "Details Report"}
-          
-                        </button>
-                      </div> */}
-          </div>
         </div>
-
         {showReport && (
           <div>
             <div className="month-report">
-
               <h2>Report</h2>
-
               <div className="month-selector">
-
-
                 {selectedDate && <PDFGenerator selectedDate={selectedDate} />}
-
                 <label>
                   <input
                     type="radio"
@@ -1219,45 +902,15 @@ const MonthReport = () => {
               )}
             </div>
 
-            {/* imp data */}
-            {/* <h3>{selectedManager.managerId}</h3>
-                <h3>{selectedManager.managerJobRole}</h3>
-                <h3>{selectedManager.managerName}</h3>
-          
-                    <h3>{selectedTeamLeader.teamLeaderId}</h3>
-                    <h3>{selectedTeamLeader.teamLeaderJobRole}</h3>
-          
-                <h3>{selectedRecruiters.index}</h3>
-                <h3>{selectedRecruiters.recruiterId}</h3>
-                <h3>{selectedRecruiters.recruiterJobRole}</h3> */}
-
-
             {showReportData ? (
-
-
               <div>
-                {/* <TabContentReportData/> */}
-
-                <div>
-                  {/* Display data  imp Prachi
-                  {
-                    reportDataDatewise ?(<pre>{JSON.stringify(reportDataDatewise, null, 2)}</pre>):(<p>No data to display</p>)
-                  } */}
-                </div>
-                {/* prachi */}
                 <CreateReportTable reportDataDatewise={reportDataDatewise} />
-
               </div>
-
-
             ) : (<p></p>)}
-
           </div>
         )}
       </div>
-
     </>
-
   );
 };
 
