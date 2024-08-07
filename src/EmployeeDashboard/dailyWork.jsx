@@ -7,6 +7,7 @@ import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 // SwapnilRokade_DailyWork_LogoutFunctionalityWorking_31/07
+
 function DailyWork({
   onCurrentEmployeeJobRoleSet,
   successCount,
@@ -17,6 +18,7 @@ function DailyWork({
   jobRole,
   emailSenderInformation,
 }) {
+
   const { employeeId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
   const [fetchWorkId, setFetchWorkId] = useState(null);
@@ -28,8 +30,32 @@ function DailyWork({
   const [showAllDailyBtns, setShowAllDailyBtns] = useState(true);
 
   const [loginDetailsSaved, setLoginDetailsSaved] = useState(false);
-  const [showAlreadyLoggedInMessage, setShowAlreadyLoggedInMessage] =
-    useState(false);
+  const [showAlreadyLoggedInMessage, setShowAlreadyLoggedInMessage] = useState(false);
+
+  const [buttonColor, setButtonColor] = useState(() => {
+    return localStorage.getItem('buttonColor') || '#ffb281';
+  });
+
+
+  const handleColorChange = (color, btnColor) => {
+    setBackgroundColor(color);
+    setButtonColor(btnColor);
+    localStorage.setItem('sidebarBackgroundColor', color);
+    localStorage.setItem('buttonColor', btnColor);
+  };
+
+  const [backgroundColor, setBackgroundColor] = useState(() => {
+    return localStorage.getItem('sidebarBackgroundColor') || '#ffe5b5';
+  });
+
+  useEffect(() => {
+    setButtonColor('#ffb281');
+    setBackgroundColor('#ffe5b5');
+    localStorage.setItem('buttonColor', '#ffb281');
+    localStorage.setItem('sidebarBackgroundColor', '#ffe5b5');
+  }, []);
+
+
 
   const toggleDailyTBtn = () => {
     setShowDetails(!showDetails);
@@ -483,8 +509,7 @@ function DailyWork({
   };
 
   return (
-    <div className="daily-timeanddate">
-      {/* <div className="header-clouds"></div> */}
+    <div className="daily-timeanddate" style={{ backgroundColor: backgroundColor }}>
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
@@ -496,8 +521,29 @@ function DailyWork({
             157{employeeId}
           </p>
         </div>
-
       </div>
+
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#7ab3ef", "#5a9be8")}>
+        Blue
+      </button>
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#c8e1cc", "#a3d2a8")}>
+        Green
+      </button>
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#fff77d", "Yellow")}>
+        Yellow
+      </button>
+      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#f8d1ee", "#f3a9dc")}>
+        Pink
+      </button>
+      
+      <button
+        className="toggle-all-daily-btns"
+        onClick={toggleAllDailyBtns}
+        style={{ backgroundColor: buttonColor }}
+      >
+        {!showAllDailyBtns ? "Show" : "Hide"} All Buttons
+      </button>
+
       {userType != "SuperUser" &&
         userType != "Applicant" &&
         userType != "Vendor" ? (
@@ -506,14 +552,14 @@ function DailyWork({
             className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}
           >
             <div className="daily-t-btn">
-              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
+              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }}>
                 Target : 10
               </button>
               <button
                 className="daily-tr-btn"
                 style={{
                   color: data.archived <= 3 ? "red" : "green",
-                  background: "#ffcb9b",
+                  backgroundColor: buttonColor,
                 }}
               >
                 Archived : {data.archived}
@@ -522,13 +568,13 @@ function DailyWork({
                 className="daily-tr-btn"
                 style={{
                   color: data.pending < 7 ? "green" : "red",
-                  background: "#ffcb9b",
+                  backgroundColor: buttonColor,
                 }}
               >
                 Pending : {data.pending}
               </button>
             </div>
-            <button className="loging-hr">
+            <button className="loging-hr" style={{ backgroundColor: buttonColor }}>
               <h6 hidden>Time: {currentTime}</h6>
               <h6 hidden>Date: {currentDate}</h6>
               Login Hours : {time.hours.toString().padStart(2, "0")}:
@@ -562,7 +608,7 @@ function DailyWork({
             <button
               className={running ? "timer-break-btn" : "timer-break-btn"}
               onClick={running ? handlePause : handleResume}
-              style={{ height: "30px" }}
+              style={{ height: "30px", backgroundColor: buttonColor }}
             >
               {running ? "Pause" : "Resume"}
             </button>

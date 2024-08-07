@@ -56,12 +56,14 @@ import IssueSolving from "../AboutUs/issueSolving";
 import WorkplacePolicy from "../AboutUs/companyPolicy";
 import PainAreaSolving from "../AboutUs/painAreaSolving";
 import RightsAndInstructions from "../AboutUs/rightsAndInstructions";
-import TeamDetails from "../TeamDetails/teamDetails";
+// import TeamDetails from "../TeamDetails/teamDetails";
 import InterviewForm from "../Help/InterviewForm";
 import InterviewDataTables from "../Help/InterviewTable";
-
 // import TeamDetails from "../TeamDetails/teamDetails";
 import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
+import PerformanceImprovement from "../EmployeeSection/performanceImprovement";
+
+
 
 const EmpDashboard = ({ userGroup }) => {
   const [showInterviewDate, setShowInterviewDate] = useState(false);
@@ -142,6 +144,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showPayment, setShowPayment] = useState(false);
   const [showCandidateHistory, setShowCandidateHistory] = useState(false);
   const [showInterviewForm, setShowInterviewForm] = useState(false);
+  const [showPerformanceImprovement, setShowPerformanceImprovement] = useState(false)
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -309,6 +312,7 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCandidateHistory(false)
     setShowInterviewForm(false);
     setShowAllInterviewResponses(false)
+    setShowPerformanceImprovement(false)
   };
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -560,6 +564,11 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCandidateHistory(!showCandidateHistory)
   }
 
+  const togglePerformanceImprovement = () => {
+    resetAllToggles();
+    setShowPerformanceImprovement(!showPerformanceImprovement)
+  }
+
 
   return (
     <div
@@ -573,7 +582,7 @@ const EmpDashboard = ({ userGroup }) => {
         toggleSelfCalling={toggleSelfCalling}
         toggelLineUp={toggelLineUp}
         toggleCallingTrackerForm={toggleCallingTrackerForm}
-        toggleAttendance={toggleAttendance}
+        // toggleAttendance={toggleAttendance}
         toggleShortListed={toggleShortListed}
         toggleSelectCandidate={toggleSelectCandidate}
         toggleRejectedCandidate={toggleRejectedCandidate}
@@ -654,6 +663,8 @@ const EmpDashboard = ({ userGroup }) => {
               toggleAttendance={toggleAttendance}
               // toggleTeamDetails={toggleTeamDetails}
               toggleTeamDetails={toggleTeamDetails}
+        togglePerformanceImprovement={togglePerformanceImprovement}
+
             ></EmployeeProfileData>
           )}
         </div>
@@ -817,7 +828,13 @@ const EmpDashboard = ({ userGroup }) => {
         <div>
           {showAllInterviewResponses && (
             <InterviewDataTables />
-          )}</div>
+          )}
+        </div>
+        <div>
+          {showPerformanceImprovement && (
+            <PerformanceImprovement />
+          )}
+        </div>
         {/* <div>
           {showTeamDetails && (
             <TeamDetails></TeamDetails>
