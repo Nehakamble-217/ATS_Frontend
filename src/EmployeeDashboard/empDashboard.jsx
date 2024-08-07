@@ -56,6 +56,10 @@ import IssueSolving from "../AboutUs/issueSolving";
 import WorkplacePolicy from "../AboutUs/companyPolicy";
 import PainAreaSolving from "../AboutUs/painAreaSolving";
 import RightsAndInstructions from "../AboutUs/rightsAndInstructions";
+import TeamDetails from "../TeamDetails/teamDetails";
+import InterviewForm from "../Help/InterviewForm";
+import InterviewDataTables from "../Help/InterviewTable";
+
 // import TeamDetails from "../TeamDetails/teamDetails";
 
 const EmpDashboard = ({ userGroup }) => {
@@ -136,6 +140,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showSubscription, setShowSubscription] = useState(false);
   const [showBilling, setShowBilling] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [showInterviewForm,setShowInterviewForm]=useState(false);
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -165,6 +170,7 @@ const EmpDashboard = ({ userGroup }) => {
 
   const [loginEmployeeName, setLoginEmployeeName] = useState("");
   const [clientEmailSender, setClientEmailSender] = useState();
+  const [showAllInterviewResponses,setShowAllInterviewResponses]=useState(false)
   const handleEmailSenderInformation = (data) => {
     setLoginEmployeeName(data.senderName); //akash_pawar_SelectedCandidate_ShareFunctionality_16/07_151
     setClientEmailSender(data);
@@ -174,7 +180,7 @@ const EmpDashboard = ({ userGroup }) => {
   const [showIssueSolving, setShowIssueSolving] = useState(false);
   const [showPainArea, setShowPainArea] = useState(false);
   const [showRightsInstruction, setShowRightsInstruction] = useState(false);
-   const [showTeamDetails, setShowTeamDetails] = useState(false);
+  const [showTeamDetails, setShowTeamDetails] = useState(false);
 
   const [id, setId] = useState(0);
   const navigator = useNavigate();
@@ -300,6 +306,8 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCompanyPolicy(false);
     setShowPainArea(false);
     setShowIssueSolving(false);
+    setShowInterviewForm(false);
+    setShowAllInterviewResponses(false)
   };
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -512,10 +520,10 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowRightsInstruction(!showRightsInstruction);
   };
-  // const toggleTeamDetails = () => {
-  //   resetAllToggles();
-  //   setShowTeamDetails(!showTeamDetails);
-  // };
+  const toggleTeamDetails = () => {
+    resetAllToggles();
+    setShowTeamDetails(!showTeamDetails);
+  };
   const toggeleCompanyPolicy = () => {
     resetAllToggles();
     setShowCompanyPolicy(!showCompanyPolicy);
@@ -540,6 +548,14 @@ const EmpDashboard = ({ userGroup }) => {
     resetAllToggles();
     setShowPayment(!showPayment);
   };
+  const toggeleInterviewForm=()=>{
+    resetAllToggles();
+    setShowInterviewForm(!showInterviewForm)
+  }
+  const toggleAllInterviewResponse=()=>{
+    resetAllToggles();
+    setShowAllInterviewResponses(!showAllInterviewResponses)
+  }
 
   return (
     <div
@@ -607,10 +623,11 @@ const EmpDashboard = ({ userGroup }) => {
         toggleBilling={toggleBilling}
         togglescheduleinterview={togglescheduleinterview}
         toggeleRightsInstructions={toggeleRightsInstructions}
-        // toggleTeamDetails={toggleTeamDetails}
+        toggleTeamDetails={toggleTeamDetails}
         toggeleCompanyPolicy={toggeleCompanyPolicy}
         toggeleIssueSolving={toggeleIssueSolving}
         toggelePainArea={toggelePainArea}
+        toggeleInterviewForm={toggeleInterviewForm}
       />
 
       <div className="empDash-main-content">
@@ -633,7 +650,7 @@ const EmpDashboard = ({ userGroup }) => {
               onClose={handleCloseProfile}
               toggleIncentive={toggleIncentive}
               toggleAttendance={toggleAttendance}
-              // toggleTeamDetails={toggleTeamDetails}
+              toggleTeamDetails={toggleTeamDetails}
             ></EmployeeProfileData>
           )}
         </div>
@@ -788,10 +805,19 @@ const EmpDashboard = ({ userGroup }) => {
           )}
         </div>
         <div>
+          {showInterviewForm && (
+            <InterviewForm  toggleAllInterviewResponse={toggleAllInterviewResponse}/>
+          )}
+        </div>
+        <div>
+          {showAllInterviewResponses && (
+            <InterviewDataTables/>
+          )}</div>
+        {/* <div>
           {showTeamDetails && (
             <TeamDetails></TeamDetails>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

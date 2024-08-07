@@ -124,7 +124,7 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_16/07_128
   const fetchCallingTrackerData = async () => {
-    const url = `http://192.168.1.42:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
+    const url = `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -151,7 +151,8 @@ const LineUpList = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
+
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -167,7 +168,8 @@ const LineUpList = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${empId}`
+
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -178,7 +180,8 @@ const LineUpList = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -216,7 +219,8 @@ const LineUpList = ({
   const handleUpdateSuccess = () => {
     setShowUpdateCallingTracker(false);
     fetch(
-      `http://192.168.1.42:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
+      `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
+
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -451,7 +455,8 @@ const LineUpList = ({
   const handleShare = async () => {
 
     setIsDataSending(true);
-    let url = `http://192.168.1.42:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://192.168.1.43:9090/api/ats/157industries/updateIds/${userType}`;
+
     let requestData;
     if (
       userType === "TeamLeader" &&
@@ -619,7 +624,7 @@ const LineUpList = ({
       "Gender",
       "Education",
       "Year Of Passing",
-      "Call Summary",
+      "Any Extra Certification",
       "Holding Any Offer",
       "Offer Letter Msg",
       "Notice Period",
@@ -660,17 +665,17 @@ const LineUpList = ({
           item.experienceMonth || 0
         } Months`,
         "Relevant Experience": item.relevantExperience || "-",
-        "Current CTC": `${item.currentCTCLakh || 0} Lakh ${
-          item.currentCTCThousand || 0
+        "Current CTC": `${item.currentCtcLakh || 0} Lakh ${
+          item.currentCtcThousand || 0
         } Thousand`,
-        "Expected CTC": `${item.expectedCTCLakh || 0} Lakh ${
-          item.expectedCTCThousand || 0
+        "Expected CTC": `${item.expectedCtcLakh || 0} Lakh ${
+          item.expectedCtcThousand || 0
         } Thousand`,
         "Date Of Birth": item.dateOfBirth || "-",
         Gender: item.gender || "-",
         Education: item.qualification || "-",
         "Year Of Passing": item.yearOfPassing || "-",
-        "Call Summary": item.extraCertification || "-",
+        "Any Extra Certification": item.extraCertification || "-",
         "Holding Any Offer": item.holdingAnyOffer || "-",
         "Offer Letter Msg": item.offerLetterMsg || "-",
         "Notice Period": item.noticePeriod || "-",
@@ -964,7 +969,7 @@ const LineUpList = ({
                       <th className="attendanceheading">Gender</th>
                       <th className="attendanceheading">Education</th>
                       <th className="attendanceheading">Year Of Passing</th>
-                      <th className="attendanceheading">Call Summary</th>
+                      <th className="attendanceheading">Any Extra Certification</th>
                       {/* <th className="attendanceheading">Feedback</th> */}
                       <th className="attendanceheading">Holding Any Offer</th>
                       <th className="attendanceheading">Offer Letter Msg</th>
@@ -1282,14 +1287,14 @@ const LineUpList = ({
                             onMouseOver={handleMouseOver}
                             onMouseOut={handleMouseOut}
                           >
-                            {`${item.currentCTCLakh || 0} Lakh ${
-                              item.currentCTCThousand || 0
+                            {`${item.currentCtcLakh || 0} Lakh ${
+                              item.currentCtcThousand || 0
                             } Thousand`}
                             <div className="tooltip">
                               <span className="tooltiptext">{`${
-                                item.expectedCTCLakh || 0
+                                item.expectedCtcLakh || 0
                               } Lakh ${
-                                item.expectedCTCThousand || 0
+                                item.expectedCtcThousand || 0
                               } Thousand`}</span>
                             </div>
                           </td>
@@ -1299,14 +1304,14 @@ const LineUpList = ({
                             onMouseOver={handleMouseOver}
                             onMouseOut={handleMouseOut}
                           >
-                            {`${item.expectedCTCLakh || 0} Lakh ${
-                              item.expectedCTCThousand || 0
+                            {`${item.expectedCtcLakh || 0} Lakh ${
+                              item.expectedCtcThousand || 0
                             } Thousand`}
                             <div className="tooltip">
                               <span className="tooltiptext">{`${
-                                item.expectedCTCLakh || 0
+                                item.expectedCtcLakh || 0
                               } Lakh ${
-                                item.expectedCTCThousand || 0
+                                item.expectedCtcThousand || 0
                               } Thousand`}</span>
                             </div>
                           </td>

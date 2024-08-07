@@ -133,7 +133,8 @@ const CallingTrackerForm = ({
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+        `http://192.168.1.43:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -152,7 +153,8 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/company-details`
+        `http://192.168.1.43:9090/api/ats/157industries/company-details`
+
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -383,7 +385,8 @@ const CallingTrackerForm = ({
         dataToUpdate.lineUp = lineUpData;
       }
       const response = await axios.post(
-        `http://192.168.1.42:9090/api/ats/157industries/calling-tracker/${userType}`,
+        `http://192.168.1.43:9090/api/ats/157industries/calling-tracker/${userType}`,
+
         dataToUpdate
       );
     
@@ -612,7 +615,7 @@ const CallingTrackerForm = ({
                     value={callingTracker.candidateName}
                     className={`plain-input`}
                     onChange={handleChange}
-                    placeholder="Enter Candidate Name"
+                    placeholder="Enter Candidate Name" 
                   />
                   {errors.candidateName && (
                     <div className="error-message">{errors.candidateName}</div>
@@ -852,8 +855,9 @@ const CallingTrackerForm = ({
                   </div>
 
                   <div className="calling-check-box-container">
+                   <div className="callingTracker-male-div"> 
                     <div className="calling-check-box">
-                      <input
+                      <input 
                         type="checkbox"
                         name="male"
                         value="male"
@@ -865,10 +869,15 @@ const CallingTrackerForm = ({
                             gender: e.target.value,
                           })
                         }
+                        
                       />
+                      
+                    </div>
+                    <div>
                       Male
                     </div>
-
+                    </div>
+                    <div className="callingTracker-male-div">
                     <div className="calling-check-box">
                       <input
                         type="checkbox"
@@ -884,7 +893,9 @@ const CallingTrackerForm = ({
                           })
                         }
                       />
-                      Female
+                      
+                    </div>
+                    <div>Female</div>
                     </div>
                   </div>
                 </div>

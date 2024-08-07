@@ -90,7 +90,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
   useEffect(() => {
     fetch(
-      `http://192.168.1.42:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
+      `http://localhost:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -1163,7 +1163,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.42:9090/api/ats/157industries/add-client-details",
+        "http://localhost:9090/api/ats/157industries/add-client-details",
         clientData
       );
       if (response) {
@@ -1198,7 +1198,7 @@ const SendEmailPopup = ({
 
     axios
       .post(
-        "http://192.168.1.42:9090/api/ats/157industries/send-email",
+        "http://localhost:9090/api/ats/157industries/send-email",
         emailData
       )
       .then((response) => {

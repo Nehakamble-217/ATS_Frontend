@@ -1,7 +1,7 @@
  /* Name:-Prachi Parab Component:-PieChart report
          End LineNo:-1 to 105 Date:-10/07 */
 
-         import React from 'react';
+         import React, { useState } from 'react';
          import "../Reports/PieChartReport.css";
          import { Pie } from 'react-chartjs-2';
          import { Chart, ArcElement,Tooltip } from 'chart.js';
@@ -10,32 +10,35 @@
          Chart.register(ArcElement);
          
          const PieChart = ({data}) => {
+         
+           console.log(data)
+         
            
            const tableData = {
-             labels: data.map(item => item.status),
+             labels: data.map(item => item.category),
          
              datasets: [
                {
                  label: '',
-                 data:  data.map(item => item.CandidateCount),
+                 data:  data.map(item => item.count),
                  backgroundColor: [
-                   'rgba(255, 99, 132, 0.6)',
-                   'rgba(54, 162, 235, 0.6)',
-                   'rgba(255, 206, 86, 0.6)',
-                   'rgba(75, 192, 192, 0.6)',
-                   'rgba(153, 102, 255, 0.6)',
-                   'rgba(255, 159, 64, 0.6)',
-                   'rgba(0, 255, 255, 0.6)',     
-                   'rgba(255, 0, 255, 0.6)',     
-                   'rgba(0, 255, 0, 0.6)',       
-                   'rgba(255, 192, 203, 0.6)',   
-                   'rgba(0, 128, 128, 0.6)',     
-                   'rgba(230, 230, 250, 0.6)',   
-                   'rgb(88, 165, 122, 0.6)',
-                   'rgb(59, 48, 94, 0.6)',
-                   'rgb(132, 175, 206, 0.6)',
-                   'rgb(228, 112, 229, 0.6)',
-                   'rgb(157, 33, 80, 0.6)'
+                   'rgba(160, 82, 45, 0.7)',
+                   '#ffc3ba',
+                   '#B4B4B8',
+                   'rgba(127,101,77,0.8)',
+                   '#004c4c',
+                   '#ff8080',
+                   'rgba(117,118,118)',     
+                   '#bf4545',     
+                   '#ffded9',       
+                   'rgba(127,108,84,0.5)',   
+                   '#982828',     
+                   '#f8cec8',   
+                   '#008080',
+                   'rgba(168,118,118, 0.9)',
+                   '#EF9C66',
+                   'rgba(255,213,175,0.7)',
+                   '#6b0b0b'
          
                  ],
                  borderWidth: 2,
@@ -82,27 +85,26 @@
                      <div className='piechart-legend-flex'>
                      
                    <ul className="legend">
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(255, 99, 132, 0.6)'}}></span> Selected</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(54, 162, 235, 0.6)'}} ></span> Rejected</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(255, 206, 86, 0.6)'}}></span> LineUp</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(75, 192, 192, 0.6)'}}></span> Hold</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(153, 102, 255, 0.6)'}}></span> Dropout</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(255, 159, 64, 0.6)'}}></span> Join</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(0, 255, 255, 0.6)'}} ></span> Not Join</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(255, 0, 255, 0.6)'}}></span> Active</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(160, 82, 45, 0.7)'}}></span> Selected</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#ffc3ba'}} ></span> Rejected</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#B4B4B8'}}></span> LineUp</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(127,101,77,0.8)'}}></span> Hold</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#004c4c'}}></span> Dropout</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#ff8080'}}></span> Join</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(117,118,118)'}} ></span> Not Join</li>
+                     
                     
                    </ul>
                    <div className='piechart-legend-flex'>
                    <ul className="legend">
-                   <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(0, 255, 0, 0.6)'}}></span> InActive</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(255, 192, 203, 0.6)'}}></span> Round 1</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(0, 128, 128, 0.6)'}}></span> Round 2</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(230, 230, 250, 0.6)'}} ></span> Round 3</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(88, 165, 122, 0.6)'}}></span> Round 4</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(59, 48, 94, 0.6)'}}></span> Round 5</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(132, 175, 206, 0.6)'}}></span> Round 6</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(228, 112, 229, 0.6)'}}></span> Yet To Schedule</li>
-                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(157, 33, 80, 0.6)'}}></span> No Show</li> 
+                   
+                      <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#6b0b0b'}}></span> No Show</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#ffded9'}}></span> Active</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#ffded9'}}></span> Inactive</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'rgba(127,108,84,0.5)'}}></span> L1</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#982828'}} ></span> L2</li>
+                     <li className="legend-item"><span className="legend-color" style={{backgroundColor:'#f8cec8'}}></span> L3</li>
+            
                      </ul>
                      </div>
          

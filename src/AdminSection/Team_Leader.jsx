@@ -11,22 +11,29 @@ function Accesstable() {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   // const [selectedMainAdmin, setSelectedMainAdmin] = useState(null);
-  const [selectedTeamLeader, setSelectedTeamLeader] = useState({
-    teamLeaderId: "",
-    teamLeaderJobRole: "",
-  });
-  const [selectedManager, setSelectedManager] = useState({
-    managerId: "",
-    managerJobRole: "",
-  });
-  const [selectedRecruiters, setSelectedRecruiters] = useState({
-    index: "",
-    recruiterId: "",
-    recruiterJobRole: "",
-  });
+  // const [selectedTeamLeader, setSelectedTeamLeader] = useState({
+  //   teamLeaderId: "",
+  //   teamLeaderJobRole: "",
+  // });
+  // const [selectedManager, setSelectedManager] = useState({
+  //   managerId: "",
+  //   managerJobRole: "",
+  // });
+
+  const [selectedManager, setSelectedManager] = useState({});
+  const [selectedManagers, setSelectedManagers] = useState([]);
+  const [selectedTeamLeaders, setSelectedTeamLeaders] = useState([]);
+
+
+  const [selectedTeamLeader, setSelectedTeamLeader] = useState({});
+
+  const [selectedRecruiters, setSelectedRecruiters] = useState([]);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   // const [assignments, setAssignments] = useState({});
   const [allSelected, setAllSelected] = useState(false);
+  
+  
   // const [editRecruiter, setEditRecruiter] = useState(null);
   const [openCategory, setOpenCategory] = useState(""); // New state for open category
   // const [showSelection, setShowSelection] = useState(true);
@@ -43,6 +50,7 @@ function Accesstable() {
   const [fetchUpdateAssignedColumn, setFetchupdateAssignedColumn] = useState(
     []
   );
+  
   const [assignedColumnRecruiterUpdate, setAssignedColumnRecruiterUpdate] =
     useState([]);
 
@@ -51,7 +59,7 @@ function Accesstable() {
     const fetchManagerNames = async () => {
       const response = await axios.get(
 
-        `http://192.168.1.42:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
       );
       if (userType === "SuperUser") {
         // Show all managers for the superuser
@@ -70,7 +78,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
+        `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
       );
       setTeamLeaderUnderManager(response.data);
     };
@@ -81,8 +89,7 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-
-      `http://192.168.1.42:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+      `http://192.168.1.50:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
 
     );
     setRecruiterUnderTeamLeader(response.data);
@@ -98,8 +105,7 @@ function Accesstable() {
 
   const fetchColumnsNames = async () => {
     const response = await axios.get(
-
-      `http://192.168.1.42:9090/api/ats/157industries/fetch-columns-names`
+      `http://192.168.1.43:9090/api/ats/157industries/fetch-columns-names`
 
     );
     setColumnName(response.data);
@@ -116,14 +122,22 @@ function Accesstable() {
     setDropdownOpen((prev) => !prev);
   }, []);
 
+  // const handleOptionChange = (columnId) => {
+  //   setSelectedOptions((prevSelectedRows) => {
+  //     if (prevSelectedRows.includes(columnId)) {
+  //       return prevSelectedRows.filter((id) => id !== columnId);
+  //     } else {
+  //       return [...prevSelectedRows, columnId];
+  //     }
+  //   });
+  // };
+
   const handleOptionChange = (columnId) => {
-    setSelectedOptions((prevSelectedRows) => {
-      if (prevSelectedRows.includes(columnId)) {
-        return prevSelectedRows.filter((id) => id !== columnId);
-      } else {
-        return [...prevSelectedRows, columnId];
-      }
-    });
+    if (selectedOptions.includes(columnId)) {
+      setSelectedOptions(selectedOptions.filter((id) => id !== columnId));
+    } else {
+      setSelectedOptions([...selectedOptions, columnId]);
+    }
   };
 
   const filteredRecruiters = useMemo(() => {
@@ -165,7 +179,7 @@ function Accesstable() {
   const fetchAssignedColumn = async (assigneID, assigneeJobRole) => {
     const response = await axios.get(
 
-      `http://192.168.1.42:9090/api/ats/157industries/column-by-id/${assigneID}/${assigneeJobRole}`
+      `http://192.168.1.43:9090/api/ats/157industries/column-by-id/${assigneID}/${assigneeJobRole}`
 
     );
     setFetchupdateAssignedColumn(response.data);
@@ -186,7 +200,8 @@ function Accesstable() {
       if (selectedRecruiters.recruiterId != "") {
         response = await axios.post(
 
-          `http://192.168.1.42:9090/api/ats/157industries/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
+
+          `http://192.168.1.43:9090/api/ats/157industries/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
 
 
           JSON.stringify(selectedOptions),
@@ -199,7 +214,7 @@ function Accesstable() {
       } else if (selectedTeamLeader.teamLeaderId != "") {
         response = await axios.post(
 
-          `http://192.168.1.42:9090/api/ats/157industries/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
+          `http://192.168.1.43:9090/api/ats/157industries/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
 
 
           JSON.stringify(selectedOptions),
@@ -212,7 +227,7 @@ function Accesstable() {
       } else {
         response = await axios.post(
 
-          `http://192.168.1.42:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
+          `http://192.168.1.43:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
 
 
           JSON.stringify(selectedOptions),
@@ -244,24 +259,51 @@ function Accesstable() {
     }
   };
 
+  // const handleSelectAll = () => {
+  //   if (allSelected) {
+  //     setSelectedOptions([]);
+  //   } else {
+  //     const allRowIds = columnName
+  //       .filter((cat) => openCategory === cat.columnCategory)
+  //       .map((item) => item.columnId);
+  //     setSelectedOptions(allRowIds);
+  //   }
+  //   setAllSelected(!allSelected);
+  // };
+
+  // const handleSelectAll = () => {
+  //   if (allSelected) {
+  //     setSelectedOptions([]);
+  //   } else {
+  //     const allOptionIds = columnName
+  //       .filter((item) => item.columnCategory === openCategory)
+  //       .map((option) => option.columnId);
+  //     setSelectedOptions(allOptionIds);
+  //   }
+  //   setAllSelected(!allSelected);
+  // };
+
   const handleSelectAll = () => {
     if (allSelected) {
-      setSelectedOptions([]);
+      // Deselect all
+      setSelectedManagers([]);
+      setSelectedTeamLeaders([]);
+      setSelectedRecruiters([]);
     } else {
-      const allRowIds = columnName
-        .filter((cat) => openCategory === cat.columnCategory)
-        .map((item) => item.columnId);
-      setSelectedOptions(allRowIds);
+      // Select all
+      setSelectedManagers(manager.map((id) => id.managerId));
+      setSelectedTeamLeaders(teamLeaderUnderManager.map((teamleader) => teamleader.teamLeaderId));
+      setSelectedRecruiters(recruiterUnderTeamLeaderData.map((recruiter) => recruiter.employeeId));
     }
     setAllSelected(!allSelected);
-  };
+  }
+  
 
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_260_269
   const fetchAssignedColumnCount = async () => {
     const response = await axios.get(
 
-      `http://192.168.1.42:9090/api/ats/157industries/column-category-counts/${employeeId}/${userType}`
-
+      `http://192.168.1.43:9090/api/ats/157industries/column-category-counts/${employeeId}/${userType}`
     );
     setAssignedColumnsCount(response.data);
   };
@@ -301,12 +343,7 @@ function Accesstable() {
                   onChange={handleSearchChange}
                   className="search-inputTL"
                 />
-                {/* <button
-                  className="select-all-buttonTL"
-                  onClick={toggleSelectAll}
-                >
-                  {allSelected ? "Deselect All" : "Select All"}
-                </button> */}
+                
                 <div className="team-leadersTL">
                   {manager.map((id, index) => (
                     <div
@@ -315,7 +352,7 @@ function Accesstable() {
                     >
                       <label>
                         <input
-                          type="radio"
+                          type="chechbox"
                           name="manager"
                           value={id.managerId}
                           checked={selectedManager.managerId === id.managerId}
@@ -337,7 +374,7 @@ function Accesstable() {
                                 <div>
                                   <label key={tIndex}>
                                     <input
-                                      type="radio"
+                                      type="checkbox"
                                       name="teamleader"
                                       value={teamleader.teamLeaderId}
                                       checked={
@@ -361,21 +398,12 @@ function Accesstable() {
                                           (recruiter, rIndex) => (
                                             <label key={rIndex}>
                                               <input
-                                                type="radio"
-                                                name="recruiter"
+                                                type="checkbox"
+                                                name={`recruiter${recruiter.employeeId}`}
                                                 value={recruiter.employeeId}
-                                                checked={
-                                                  selectedRecruiters.recruiterId ===
-                                                  recruiter.employeeId
-                                                }
+                                                
                                                 onChange={() =>
-                                                  setSelectedRecruiters({
-                                                    index: 1,
-                                                    recruiterId:
-                                                      recruiter.employeeId,
-                                                    recruiterJobRole:
-                                                      recruiter.jobRole,
-                                                  })
+                                                  setSelectedRecruiters((prevRecruiters)=>[...prevRecruiters,recruiter.employeeId])
                                                 }
                                               />
                                               {recruiter.employeeName}
@@ -394,17 +422,25 @@ function Accesstable() {
                 </div>
 
                 <div className="TLR-buttons-div">
+                <button
+                  className="select-all-buttonTL"
+                  // onClick={toggleSelectAll}
+                  onClick={handleSelectAll}
+                >
+                  {allSelected ? "Deselect All" : "Select All"}
+                </button>
+                
                   <button className="ok-button" onClick={handleOkClick}>
                     OK
                   </button>
                   <button
                     className="reset-selectTL-button"
                     onClick={() => {
-                      setSelectedRecruiters({
+                      setSelectedRecruiters([{
                         recruiterId: "",
                         recruiterJobRole: "",
                         index: "",
-                      });
+                      }]);
                       setSelectedManager({ managerId: "", managerJobRole: "" });
                       setSelectedTeamLeader({
                         teamLeaderId: "",
@@ -622,8 +658,13 @@ function Accesstable() {
                           }
                           className="all_assignbtn-Action"
                         >
-                          Update
+                          <i
+                              // onClick={() => handleUpdate(item.candidateId)}
+                              className="fa-regular fa-pen-to-square"
+                            ></i>
+                          
                         </button>
+                        
                         {/* <button onClick={() => handleRemoveClick(assignee)} className='remove_assignbtn'>
                           Remove
                         </button> */}
@@ -681,7 +722,7 @@ const UpdateAccessTable = ({
   const handleUpdateClick = async () => {
     try {
       const response = await axios.post(
-        `http://192.168.1.42:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
+        `http://192.168.1.43:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
 
         JSON.stringify(selectedOptions),
         {

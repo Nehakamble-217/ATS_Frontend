@@ -191,7 +191,7 @@ const AddEmployee = () => {
     console.log(formData);
     try {
       const response = await fetch(
-        "http://192.168.1.40:9090/api/ats/157industries/add-employee",
+        "http://localhost:9090/api/ats/157industries/add-employee",
         {
           method: "POST",
           body: formDataToSend,

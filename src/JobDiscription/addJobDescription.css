@@ -175,7 +175,7 @@
 
 .job-button {
   margin-left: 2px;
-  width: 20%;
+  width: 265px;
   height: 30px;
   background-color: #ffcb9b;
   border-radius: 15px;
@@ -200,4 +200,8 @@
   padding: 0 10px 0 10px;
   color: red;
   margin: 0px 14px 0px 8px;
+}
+.ajd-btndiv-div{
+  display: flex;
+  justify-content: center;
 }
