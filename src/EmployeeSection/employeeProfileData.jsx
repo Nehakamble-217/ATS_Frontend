@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
-// import TeamDetails from "../TeamDetails/teamDetails"
+import TeamDetails from "../TeamDetails/teamDetails"
 
 const EmployeeProfileData = ({
   onClose,
   toggleIncentive,
   toggleAttendance,
-  // toggleTeamDetails,
+  toggleTeamDetails,
 }) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const EmployeeProfileData = ({
 
   useEffect(() => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -514,9 +514,9 @@ const EmployeeProfileData = ({
               Attendance
             </button>
 
-            <button 
-            // onClick={toggleTeamDetails} 
-            className="emp-pro-incentive">
+            <button
+              onClick={toggleTeamDetails}
+              className="emp-pro-incentive">
               Team Details
             </button>
 
@@ -526,7 +526,7 @@ const EmployeeProfileData = ({
             >
               More
             </button>
-           
+
           </Modal.Footer>
         </Modal.Dialog>
       ) : (

@@ -11,7 +11,7 @@ const Bday = () => {
   useEffect(() => {
     const fetchRecruiters = async () => {
       try {
-        const response = await fetch('http://192.168.1.40:9090/api/ats/157industries/fetch-profile-details/1/Recruiters');
+        const response = await fetch('http://192.168.1.43:9090/api/ats/157industries/fetch-profile-details/1/Recruiters');
         const data = await response.json();
 
         // Check if the API response is an array or a single object

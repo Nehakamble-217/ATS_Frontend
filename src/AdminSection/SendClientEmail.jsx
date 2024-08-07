@@ -88,10 +88,10 @@ const SendClientEmail = ({ clientEmailSender }) => {
     "sourceName",
     "yearOfPassing",
   ];
-  
+
   useEffect(() => {
     fetch(
-      `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
+      `http://localhost:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -381,7 +381,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
               onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
-            <h5 style={{ color: "gray" , fontSize:"18px" }}>Candidate Data</h5>
+            <h5 style={{ color: "gray", fontSize: "18px" }}>Candidate Data</h5>
 
             <div
               style={{
@@ -848,15 +848,12 @@ const SendClientEmail = ({ clientEmailSender }) => {
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
                       >
-                        {`${item.currentCTCLakh || 0} Lakh ${
-                          item.currentCTCThousand || 0
-                        } Thousand`}
+                        {`${item.currentCTCLakh || 0} Lakh ${item.currentCTCThousand || 0
+                          } Thousand`}
                         <div className="tooltip">
-                          <span className="tooltiptext">{`${
-                            item.expectedCTCLakh || 0
-                          } Lakh ${
-                            item.expectedCTCThousand || 0
-                          } Thousand`}</span>
+                          <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                            } Lakh ${item.expectedCTCThousand || 0
+                            } Thousand`}</span>
                         </div>
                       </td>
 
@@ -865,15 +862,12 @@ const SendClientEmail = ({ clientEmailSender }) => {
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
                       >
-                        {`${item.expectedCTCLakh || 0} Lakh ${
-                          item.expectedCTCThousand || 0
-                        } Thousand`}
+                        {`${item.expectedCTCLakh || 0} Lakh ${item.expectedCTCThousand || 0
+                          } Thousand`}
                         <div className="tooltip">
-                          <span className="tooltiptext">{`${
-                            item.expectedCTCLakh || 0
-                          } Lakh ${
-                            item.expectedCTCThousand || 0
-                          } Thousand`}</span>
+                          <span className="tooltiptext">{`${item.expectedCTCLakh || 0
+                            } Lakh ${item.expectedCTCThousand || 0
+                            } Thousand`}</span>
                         </div>
                       </td>
 
@@ -1076,7 +1070,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
                 selectedCandidate={selectedRows}
                 onSuccessFullEmailSend={handleSuccessEmailSend}
                 clientEmailSender={clientEmailSender}
-                // date1={date1}
+              // date1={date1}
               />
             ) : null}
             {/* Name:-Akash Pawar Component:-LineUpList
@@ -1159,7 +1153,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://192.168.1.50:9090/api/ats/157industries/add-client-details",
+        "http://localhost:9090/api/ats/157industries/add-client-details",
         clientData
       );
       if (response) {
@@ -1194,26 +1188,26 @@ const SendEmailPopup = ({
 
     axios
       .post(
-        "http://192.168.1.50:9090/api/ats/157industries/send-email",
+        "http://localhost:9090/api/ats/157industries/send-email",
         emailData
       )
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
-        console.log("Email sent successfully:", response.data); 
+        console.log("Email sent successfully:", response.data);
         toast.success("Email sent successfully");
 
         selectedCandidate.forEach(async (can) => {
-            try {
-              const performanceId = await axios.get(
-                `http://192.168.1.50:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
-              );
-              UpdatePerformace(performanceId.data);
-            } catch (error) {
-              console.log(error);
-            }
+          try {
+            const performanceId = await axios.get(
+              `http://192.168.1.50:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
+            );
+            UpdatePerformace(performanceId.data);
+          } catch (error) {
+            console.log(error);
+          }
         });
-        
+
         toast.success("Email sent successfully");
 
       })
@@ -1227,10 +1221,10 @@ const SendEmailPopup = ({
   };
 
 
-  const UpdatePerformace =async(id)=>{
+  const UpdatePerformace = async (id) => {
     try {
       const additionalData = {
-        mailToClient:new Date()
+        mailToClient: new Date()
       };
       // console.log("Sending additional data:", additionalData);
       const response1 = await axios.put(

@@ -22,7 +22,7 @@ const CallingTrackerForm = ({
   loginEmployeeName,
 }) => {
   const { employeeId } = useParams();
-  const [submited,setSubmited]=useState(false);
+  const [submited, setSubmited] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const { userType } = useParams();
   const initialCallingTrackerState = {
@@ -86,7 +86,7 @@ const CallingTrackerForm = ({
     resume: null,
   };
 
-  
+
 
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
@@ -135,7 +135,8 @@ const CallingTrackerForm = ({
     try {
 
       const response = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+        `http://192.168.1.43:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -355,7 +356,7 @@ const CallingTrackerForm = ({
     try {
       let dataToUpdate = {
         ...callingTracker,
-          performanceIndicator: {
+        performanceIndicator: {
           employeeId: employeeId,
           employeeName: loginEmployeeName,
           jobRole: userType,
@@ -375,7 +376,7 @@ const CallingTrackerForm = ({
           letterResponse: null,
           joiningProcess: null,
           joinDate: null,
-      },
+        },
       };
 
       if (userType === "Recruiters") {
@@ -389,10 +390,11 @@ const CallingTrackerForm = ({
         dataToUpdate.lineUp = lineUpData;
       }
       const response = await axios.post(
-        `http://192.168.1.42:9090/api/ats/157industries/calling-tracker/${userType}`,
+        `http://192.168.1.43:9090/api/ats/157industries/calling-tracker/${userType}`,
+
         dataToUpdate
       );
-    
+
       console.log(response);
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
       if (callingTracker.selectYesOrNo === "Interested") {
@@ -858,39 +860,47 @@ const CallingTrackerForm = ({
                   </div>
 
                   <div className="calling-check-box-container">
-                    <div className="calling-check-box">
-                      <input
-                        type="checkbox"
-                        name="male"
-                        value="male"
-                        className="gender"
-                        checked={lineUpData.gender === "male"}
-                        onChange={(e) =>
-                          setLineUpData({
-                            ...lineUpData,
-                            gender: e.target.value,
-                          })
-                        }
-                      />
-                      Male
-                    </div>
+                    <div className="callingTracker-male-div">
+                      <div className="calling-check-box">
+                        <input
+                          type="checkbox"
+                          name="male"
+                          value="male"
+                          className="gender"
+                          checked={lineUpData.gender === "male"}
+                          onChange={(e) =>
+                            setLineUpData({
+                              ...lineUpData,
+                              gender: e.target.value,
+                            })
+                          }
 
-                    <div className="calling-check-box">
-                      <input
-                        type="checkbox"
-                        name="female"
-                        value="female"
-                        className="gender"
-                        style={{ paddingLeft: "auto" }}
-                        checked={lineUpData.gender === "female"}
-                        onChange={(e) =>
-                          setLineUpData({
-                            ...lineUpData,
-                            gender: e.target.value,
-                          })
-                        }
-                      />
-                      Female
+                        />
+
+                      </div>
+                      <div>
+                        Male
+                      </div>
+                    </div>
+                    <div className="callingTracker-male-div">
+                      <div className="calling-check-box">
+                        <input
+                          type="checkbox"
+                          name="female"
+                          value="female"
+                          className="gender"
+                          style={{ paddingLeft: "auto" }}
+                          checked={lineUpData.gender === "female"}
+                          onChange={(e) =>
+                            setLineUpData({
+                              ...lineUpData,
+                              gender: e.target.value,
+                            })
+                          }
+                        />
+
+                      </div>
+                      <div>Female</div>
                     </div>
                   </div>
                 </div>

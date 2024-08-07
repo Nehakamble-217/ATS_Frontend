@@ -24,7 +24,7 @@ const LoginSignup = ({ onLogin }) => {
   useEffect(() => {
     if (employeeId && userType) {
       fetch(
-        `http://192.168.1.50:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+        `http://localhost:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -36,7 +36,7 @@ const LoginSignup = ({ onLogin }) => {
     }
   }, [employeeId, userType]);
 
-  
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "employeeId") {
@@ -79,9 +79,8 @@ const LoginSignup = ({ onLogin }) => {
             </div>
           )}
           <div
-            className={`${
-              showForgotPassword ? "full-width-panel" : "right-panel"
-            }`}
+            className={`${showForgotPassword ? "full-width-panel" : "right-panel"
+              }`}
             data-aos="fade-left"
           >
             {showForgotPassword ? (
@@ -131,7 +130,7 @@ const LoginSignup = ({ onLogin }) => {
                   type="submit"
                   data-aos="fade-top"
                 >
-                  Login 
+                  Login
                 </button>
                 <button
                   type="button"
@@ -139,7 +138,7 @@ const LoginSignup = ({ onLogin }) => {
                   onClick={dashboardLink}
                   data-aos="fade-top"
                 >
-                  Dashboard 
+                  Dashboard
                 </button>
                 <center>
                   <span

@@ -382,11 +382,16 @@ html::-webkit-scrollbar {
 }
 
 .select-all-buttonTL {
+  
   background-color: #ffcb9b;
   color: #fff;
-  border: none;
-  padding: 5px 10px;
-  margin-bottom: 10px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  height: 30px;
+  padding: 0px 10px 0px 10px;
+
+  /* padding: 5px 10px; */
+  /* margin-bottom: 10px; */
   cursor: pointer;
 }
 
@@ -514,16 +519,16 @@ html::-webkit-scrollbar {
 
 /* Prachi ChatSection 28/06 line no 431 to 449 */
 .checkbox-teamleader-assign input[type="checkbox" i] {
-  height: 25px;
-  width: 25px;
+  height: 15px;
+  width: 15px;
   margin-right: 22px;
   margin-left: 20px;
   margin-bottom: 5px;
 }
 
 .radio-teamleader-assign input[type="radio" i] {
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   margin-right: 9px;
 
 
@@ -637,10 +642,10 @@ html::-webkit-scrollbar {
   font-size: 16px;
   border-radius: 15px;
   height: 30px;
-  width: 80px;
+  width: auto;
   /* width: 100%; */
   margin: 2px;
-  padding: 0px 8px 0px 8px;
+  padding: 0px 12px 0px 0px;
 
 }
 
@@ -649,7 +654,7 @@ html::-webkit-scrollbar {
   color: #ffcb9b;
   /* padding: 10px 10px; */
   cursor: pointer;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   border-radius: 15px;
 
 }
@@ -684,7 +689,7 @@ html::-webkit-scrollbar {
   display: flex;
   justify-content: end;
   gap: 5px;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .ok-button,

@@ -24,7 +24,7 @@ const CallingExcel = ({ onClose }) => {
     setActiveTable(tableName);
   };
 
-  useEffect(() => {}, [file]);
+  useEffect(() => { }, [file]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -57,8 +57,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append("file", file);
     try {
       await axios.post(
-
-        `http://192.168.1.42:9090/api/ats/157industries/uploadData/${employeeId}`,
+        `http://localhost:9090/api/ats/157industries/uploadData/${employeeId}`,
         formData,
         {
           headers: {
@@ -90,9 +89,7 @@ const CallingExcel = ({ onClose }) => {
     console.log(employeeId + " - line Page 01");
     try {
       await axios.post(
-
-        `http://192.168.1.42:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
-
+        `http://localhost:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
         formData,
         {
           headers: {
@@ -122,7 +119,7 @@ const CallingExcel = ({ onClose }) => {
     }
     try {
       await axios.post(
-        "http://192.168.1.42:9090/api/ats/157industries/add-multiple-resume",
+        "http://localhost:9090/api/ats/157industries/add-multiple-resume",
         formData
       );
       setUploadSuccessResume(true);
@@ -140,7 +137,7 @@ const CallingExcel = ({ onClose }) => {
 
     axios
       .post(
-        "http://192.168.1.42:9090/api/ats/157industries/add-multiple-resume",
+        "http://localhost:9090/api/ats/157industries/add-multiple-resume",
         formData
       )
 
@@ -194,7 +191,7 @@ const CallingExcel = ({ onClose }) => {
               <div className="gap-2 d-grid">
                 <button onClick={handleUpload}>Upload</button>
 
-                
+
                 <button onClick={() => handleTableChange("CallingExcelList")}>
                   View
                 </button>
@@ -223,7 +220,7 @@ const CallingExcel = ({ onClose }) => {
               </div>
               <div className="gap-2 d-grid">
                 <button onClick={handleUploadLineupFile}>Upload</button>
-                
+
                 <button onClick={() => handleTableChange("LineupExcelData")}>
                   View
                 </button>
@@ -231,7 +228,7 @@ const CallingExcel = ({ onClose }) => {
             </div>
           </div>
         </div>
-        
+
         <div>
           <div
             className="card fixed-card"

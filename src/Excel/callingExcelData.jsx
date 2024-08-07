@@ -35,10 +35,9 @@ const CallingExcelList = ({
   const navigator = useNavigate();
 
   useEffect(() => {
-    console.log(employeeId+"---00---");
+    console.log(employeeId + "---00---");
     fetch(
-
-      `http://192.168.1.42:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.43:9090/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -194,7 +193,7 @@ const CallingExcelList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.42:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.43:9090/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {

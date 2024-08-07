@@ -122,9 +122,9 @@
   border-radius: 5px;
 }
 
-.job-button {
+/* .job-button {
   margin-left: 2px;
-  width: 20%;
+  width: 25%;
   height: 30px;
   background-color: #ffcb9b;
   border-radius: 15px;
@@ -136,7 +136,7 @@
 .job-button:hover {
   color: #ffcb9b;
   background-color: white;
-}
+} */
 
 .job-submit-button {
   width: 100%;

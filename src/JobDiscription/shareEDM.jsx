@@ -13,9 +13,9 @@ function ShareEDM({ Descriptions, onShareEdm }) {
     const { employeeId } = useParams()
 
     useEffect(() => {
-        fetch(`http://192.168.1.36:9090/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
+        fetch(`http://localhost:9090/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
 
-            .then((response) => response.text())    
+            .then((response) => response.text())
             .then((data) => {
                 console.log(data);
                 setData(data);

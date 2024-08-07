@@ -62,6 +62,9 @@ function Sidebar({
   toggelSubscriptions,
   toggleBilling,// toggleTeamDetails,
   toggelCandidateHistory,
+  toggleTeamDetails,
+  /*ArbazPathan_EmpDashboard_AddedInterviewForm_29/07/2024_LineNo_65-66 */
+  toggeleInterviewForm
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -209,8 +212,8 @@ function Sidebar({
 
                   <li
                     className={`${activeSubMenu === "candidate" || isCandidateSectionActive
-                        ? "active"
-                        : ""
+                      ? "active"
+                      : ""
                       }`}
                     onClick={toggleSubMenu("candidate")}
                   >
@@ -255,8 +258,8 @@ function Sidebar({
                         onClick={handleButtonClick("lineUp", toggelLineUp)}
                         className={activeButton === "lineUp" ? "active" : ""}
                       >
-                           <a href="#">
-                        <span className="sidebar-text">Lineup Tracker</span>
+                        <a href="#">
+                          <span className="sidebar-text">Lineup Tracker</span>
                         </a>
                         {successAddUpdateResponse ? (
                           <span className="text-xl font-bold text-red-600">
@@ -372,8 +375,8 @@ function Sidebar({
                 </>
                 <li
                   className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
@@ -511,8 +514,8 @@ function Sidebar({
                         </a>
                         <ul
                           className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section"
-                              ? "active"
-                              : ""
+                            ? "active"
+                            : ""
                             }`}
                         >
                           <li
@@ -800,7 +803,7 @@ function Sidebar({
                       <li
                         style={{ marginLeft: "10px" }}
                         className={activeButton === "SuperUser" ? "active" : ""}
-                        // onClick={toggeleProfitChart}
+                      // onClick={toggeleProfitChart}
                       >
                         <a href="#">
                           <span className="sidebar-text">P & L Chart</span>
@@ -809,12 +812,12 @@ function Sidebar({
                     </ul>
                   </li>
 
-                  
-                   ) : null}
-                   {/* toggeleProfitChart */}
-                   {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_660 */}
 
-                  {userType != "Vendor" ? (
+                ) : null}
+                {/* toggeleProfitChart */}
+                {/* ArshadAttar_EmpDashboard_Added_SuperUser_11/07/2024_LineNo_660 */}
+
+                {userType != "Vendor" ? (
                   <li
                     className={activeSubMenu === "database" ? "active" : ""}
                     onClick={toggleSubMenu("database")}
@@ -1086,6 +1089,124 @@ function Sidebar({
                   </li>
                 ) : null}
 
+                {/* <li
+                onClick={handleButtonClick(
+                  "help",
+                  toggelHelp
+                )}
+>>>>>>> 3becee9c1e227847a4a3f1d0618e458dc56f1799
+                >
+                  <a href="#">
+                    {/* <i className="icon ph-bold ph-chart-bar"></i> */}
+                <i
+                  className="fa-brands fa-linkedin"
+                  style={{ color: "gray" }}
+                ></i>
+                <span className="sidebar-text">Portal</span>
+                <i className="arrow ph-bold ph-caret-down"></i>
+                <ul
+                  className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
+                    }`}
+                >
+                  <li style={{ marginLeft: "10px" }}>
+                    <a href="#">
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span
+                        className="sidebar-text"
+                        onClick={openNaukriPlatform}
+                      >
+                        Naukri
+                      </span>
+                    </a>
+                  </li>
+                  <li style={{ marginLeft: "10px" }}>
+                    <a href="#">
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span
+                        className="sidebar-text"
+                        onClick={openLinkedinPlatform}
+                      >
+                        LinkedIn
+                      </span>
+                    </a>
+                  </li>
+                  <li style={{ marginLeft: "10px" }}>
+                    <a href="#">
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span
+                        className="sidebar-text"
+                        onClick={openTimesPlatform}
+                      >
+                        Times Jobs
+                      </span>
+                    </a>
+                  </li>
+                  <li style={{ marginLeft: "10px" }}>
+                    <a href="#">
+                      {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                      <span
+                        className="sidebar-text"
+                        onClick={openIndeedPlatform}
+                      >
+                        Indeed
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                {/* </li> */}
+                {userType != "Vendor" ? (
+                  <li
+                    className={activeSubMenu === "aboutus" ? "active" : ""}
+                    onClick={toggleSubMenu("aboutus")}
+                  >
+                    <a href="#">
+                      <i
+                        className="fa-solid fa-circle-info"
+                        style={{ color: "gray" }}
+                      ></i>
+                      <span className="sidebar-text">About Us</span>
+                      <i className="arrow ph-bold ph-caret-down"></i>
+                    </a>
+                    <ul
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "aboutus" ? "active" : ""
+                        }`}
+                    >
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggeleRightsInstructions}
+                        >
+                          Rights & Instructions
+                        </span>
+                      </li>
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggeleCompanyPolicy}
+                        >
+                          Company Policy
+                        </span>
+                      </li>
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggeleIssueSolving}
+                        >
+                          Issues Solving
+                        </span>
+                      </li>
+                      <li style={{ marginLeft: "10px" }}>
+                        <span
+                          className="sidebar-text"
+                          onClick={toggelePainArea}
+                        >
+                          Recruites Pain Area
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                ) : null}
+
                 <li onClick={toggelCandidateHistory}>
                   <a href="#">
 
@@ -1096,7 +1217,32 @@ function Sidebar({
                     <span className="sidebar-text">Help</span>
                   </a>
                 </li>
+                <li
+                  className={activeSubMenu === "help" ? "active" : ""}
+                  onClick={toggleSubMenu("help")}
+                >
+                  <a href="#">
+                    <i className="fa-regular fa-circle-question" style={{ color: "gray" }}></i>
+                    <span className="sidebar-text">Help</span>
+                    <i className="arrow ph-bold ph-caret-down"></i>
+                  </a>
+                  <ul
+                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "help" ? "active" : ""
+                      }`}
+                  >
 
+
+                    <li style={{ marginLeft: "10px" }}>
+                      <span
+                        className="sidebar-text"
+                        onClick={toggeleInterviewForm}
+                      >
+                        Interview Form
+                      </span>
+                    </li>
+
+                  </ul>
+                </li>
 
                 <li onClick={() => setShowConfirmation(true)}>
                   <a href="#">
@@ -1116,7 +1262,7 @@ function Sidebar({
             </div>
           </div>
         </div>
-      </div>
+      </div >
 
       {showConfirmation && (
         <div
@@ -1161,7 +1307,8 @@ function Sidebar({
             </Modal.Body>
           </Modal.Dialog>
         </div>
-      )}
+      )
+      }
     </>
   );
 }

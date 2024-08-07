@@ -68,8 +68,7 @@ const AddCompanyDetails = () => {
 
   const fetchPreviousCompanyDetailsId = async () => {
     const response = await axios.get(
-
-      "http://192.168.1.42:9090/api/ats/157industries/fetch-details-ids"
+      "http://192.168.1.50:9090/api/ats/157industries/fetch-details-ids"
     );
     if (addedCompanyDetailsId < response.data.length) {
       setLatestAddedCompanyData(response.data[0]);
@@ -168,8 +167,7 @@ const AddCompanyDetails = () => {
     doc.text(`PF Certificate: ${formData.pfCertificateNumber || ""}`, 10, yPos);
     yPos += fontSize * lineHeightFactor;
     doc.text(
-      `Professional Tax Certificate: ${
-        formData.professionalTaxCertificateNumber || ""
+      `Professional Tax Certificate: ${formData.professionalTaxCertificateNumber || ""
       }`,
       10,
       yPos
@@ -262,7 +260,7 @@ const AddCompanyDetails = () => {
             </center> */}
             <div className="ACD-desc-form">
               {/* Align AddJobDescription name center and changing color to gray */}
-       <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
+              <h3 className="text-center text-[18px] text-gray-500 py-2"> Add  Company Details</h3>
               <div className="ACD_Field-column">
                 <div className="ACD_Field-Row-white">
                   <div className="ACD_Field">
@@ -282,7 +280,7 @@ const AddCompanyDetails = () => {
                       name="companyLogoImg"
                       onChange={handleChange}
                       className="uploadcompanydocs"
-                      style={{width:"50%"}}
+                      style={{ width: "50%" }}
                       accept=".pdf"
                     />
                   </div>
@@ -734,7 +732,7 @@ const AddCompanyDetails = () => {
                     />
                   </div>
                 </div>
-                <div className="ACD_Field-Row-white" style={{borderBottom:"1px solid gray"}}>
+                <div className="ACD_Field-Row-white" style={{ borderBottom: "1px solid gray" }}>
                   <div className="ACD_Field">
                     <label htmlFor="">Branch Name</label>
                     <input

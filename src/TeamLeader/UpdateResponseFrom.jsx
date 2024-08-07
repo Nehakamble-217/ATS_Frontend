@@ -8,9 +8,9 @@ import { toast } from "react-toastify";
 // SwapnilRokade_UpdateResponseFrom_addedProcessImprovmentEvaluatorFunctionalityStoringInterviweResponse_08_to_486_29/07/2024
 const UpdateResponseFrom = ({ candidateId, onClose }) => {
   const [data, setData] = useState([]);
-  const [submited,setSubmited]=useState(false);
+  const [submited, setSubmited] = useState(false);
   const [errors, setErrors] = useState({});
-  const [performanceId,setPerformanceId]=useState();
+  const [performanceId, setPerformanceId] = useState();
   const [formData, setFormData] = useState({
     interviewRound: "",
     interviewResponse: "",
@@ -30,8 +30,8 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   const fetchDataToUpdate = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.43:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
 
+        `http://localhost:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
       );
       const responseData = await response.json();
       console.log(responseData);
@@ -43,7 +43,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   };
 
 
-  const fetchPerformanceId = async()=>{
+  const fetchPerformanceId = async () => {
     try {
       const performanceId = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
@@ -93,79 +93,79 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
         console.log("response received");
         const firstResponse = response.data;
         console.log(firstResponse); // Assuming you want the first response's date
-    
+
         const responseUpdatedDateStr = firstResponse.responseUpdatedDate;
         const responseUpdatedDate = new Date(responseUpdatedDateStr);
         const currentDateTime = new Date(); // Current date and time
-    
+
         const timeDifference = currentDateTime - responseUpdatedDate;
         const absoluteTimeDifference = Math.abs(timeDifference);
-    
+
         const daysDifference = Math.floor(absoluteTimeDifference / (1000 * 60 * 60 * 24));
-    
+
         const hoursDifference = Math.floor((absoluteTimeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutesDifference = Math.floor((absoluteTimeDifference % (1000 * 60 * 60)) / (1000 * 60));
         const difference = `${daysDifference} days, ${hoursDifference} hours, and ${minutesDifference} minutes.`;
-    
+
         console.log(data.length);
-    
-        if (data.length===0) {
+
+        if (data.length === 0) {
           const additionalData = {
             mailResponse: formatDateToIST(currentDateTime),
             interviewRoundsList: [
-                {
-                    interviewRound: "shortListed For Technical Round",
-                    roundResponse: "shortListed For Technical Round",
-                    time: formatDateToIST(currentDateTime),
-                    diffBTNRoundToNextRound: 0
-                }
+              {
+                interviewRound: "shortListed For Technical Round",
+                roundResponse: "shortListed For Technical Round",
+                time: formatDateToIST(currentDateTime),
+                diffBTNRoundToNextRound: 0
+              }
             ]
-        };
-        console.log("Sending additional data:", additionalData);
-        try {
+          };
+          console.log("Sending additional data:", additionalData);
+          try {
             const response1 = await axios.put(
-                `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
-                additionalData
+              `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
+              additionalData
             );
             console.log("Second API Response:", response1.data);
             toast.success("Response updated successfully.");
             setSubmited(false)
             onClose(true);
-        } catch (error) {
+          } catch (error) {
             console.error("Error updating performance data:", error);
             toast.error("Failed to Update Response");
             setSubmited(false)
-        }
+          }
         } else {
           const additionalData = {
-              interviewRoundsList: [
-                  {
-                      interviewRound: firstResponse.interviewRound,
-                      roundResponse: firstResponse.interviewResponse,
-                      time: currentDateTime,
-                      diffBTNRoundToNextRound: difference
-                  }
-              ]
+            interviewRoundsList: [
+              {
+                interviewRound: firstResponse.interviewRound,
+                roundResponse: firstResponse.interviewResponse,
+                time: currentDateTime,
+                diffBTNRoundToNextRound: difference
+              }
+            ]
           };
           console.log("2 additional data:", additionalData);
           try {
-              const response1 = await axios.put(
-                  `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
-                  additionalData
-              );
-              console.log("Second API Response:", response1.data);
-              toast.success("Response updated successfully.");
-              setSubmited(false)
-              onClose(true);
+            const response1 = await axios.put(
+              `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
+              additionalData
+            );
+            console.log("Second API Response:", response1.data);
+            toast.success("Response updated successfully.");
+            setSubmited(false)
+            onClose(true);
           } catch (error) {
-              console.error("Error updating performance data:", error);
-              toast.error("Failed to Update Response");
+            console.error("Error updating performance data:", error);
+            toast.error("Failed to Update Response");
           }
-        }   
-    } else {
-      setSubmited(false)
+        }
+      } else {
+        setSubmited(false)
         toast.error("Failed to Update Response");
-    }
+      }
     } catch (err) {
       setSubmited(false)
       toast.error("Failed to Update Response");
@@ -178,10 +178,10 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
       ...formData,
       [name]: value,
     });
-  }; 
+  };
 
- 
-  
+
+
   return (
     <div className="p-6 bg-white shadow-md rounded-lg max-w-full">
       <div className="mb-4">
@@ -243,19 +243,19 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
                     >
                       <option value="">Update Response</option>
                       <option value="Shortlisted For Hr Round">
-                         Hr Round
+                        Hr Round
                       </option>
                       <option value="Shortlisted For Technical Round">
-                         Technical Round
+                        Technical Round
                       </option>
                       <option value="Shortlisted For L1 Round">
-                         L1 Round
+                        L1 Round
                       </option>
                       <option value="Shortlisted For L2 Round">
                         L2 Round
                       </option>
                       <option value="Shortlisted For L3 Round">
-                         L3 Round
+                        L3 Round
                       </option>
                       <option value="Selected">Selected</option>
                       <option value="Rejected">Rejected</option>
@@ -425,12 +425,12 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
         </div>
       </form>
       {submited && (
-      <div className="SCE_Loading_Animation">
-        <ClipLoader size={50} color="#ffb281" />
-      </div>
-    )}
+        <div className="SCE_Loading_Animation">
+          <ClipLoader size={50} color="#ffb281" />
+        </div>
+      )}
     </div>
-    
+
   );
 };
 
