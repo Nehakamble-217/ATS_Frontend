@@ -867,7 +867,7 @@ const LineUpList = ({
                             className="white-Btn"
                             onClick={() => handleFilterOptionClick(option)}
                           >
-                            {option}
+                            {option.toUpperCase()}
                             <span className="filter-icon">&#x25bc;</span>
                           </button>
                           {activeFilterOption === option && (

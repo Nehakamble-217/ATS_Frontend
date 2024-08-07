@@ -429,6 +429,8 @@ function DailyWork({
       {
         present = "present";
       }
+      let checkHalfDay = "No";
+      console.log(typeof(totalHoursWork));
       const formData = {
         employeeId,
         date: `${day}/${month}/${year}`,
