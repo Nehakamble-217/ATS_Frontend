@@ -395,8 +395,8 @@ const ShortListedCandidates = ({
           item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
         (item.selectYesOrNo &&
           item.selectYesOrNo.toLowerCase().includes(searchTermLower)) ||
-        (item.totalExperience &&
-          item.totalExperience.toLowerCase().includes(searchTermLower)) ||
+        (item.experienceYear &&
+          item.experienceYear.toLowerCase().includes(searchTermLower)) ||
         (item.dateOfBirth &&
           item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
         (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
@@ -956,12 +956,12 @@ const ShortListedCandidates = ({
                   </td>
                   <td className="tabledata">{item.callingFeedback}</td>
                   <td className="tabledata">{item.incentive}</td>
-                  <td className="tabledata">{item.interseedOrNot}</td>
-                  <td className="tabledata">{item.currentCompany}</td>
-                  <td className="tabledata">{item.totalExperience}</td>
+                  <td className="tabledata">{item.selectYesOrNo}</td>
+                  <td className="tabledata">{item.companyName}</td>
+                  <td className="tabledata">{item.experienceYear}</td>
                   <td className="tabledata">{item.relevantExperience}</td>
-                  <td className="tabledata">{item.currentCTC}</td>
-                  <td className="tabledata">{item.expectedCTC}</td>
+                  <td className="tabledata">{item.currentCtcLakh}</td>
+                  <td className="tabledata">{item.expectedCtcLakh}</td>
                   <td className="tabledata">{item.dateOfBirth}</td>
                   <td className="tabledata">{item.gender}</td>
                   <td className="tabledata">{item.qualification}</td>

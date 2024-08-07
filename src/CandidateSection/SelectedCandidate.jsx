@@ -1436,7 +1436,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                         <td className="tabledata ">
                           <i
                             onClick={() => viewPage(item.candidateId,item.requirementId)}
-                            className="fa-solid fa-person-walking-arrow-right"
+                            className="fa-regular fa-pen-to-square"
                           ></i>
                         </td>
                       </tr>

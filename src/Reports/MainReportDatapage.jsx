@@ -1079,8 +1079,10 @@
                   {showReport &&  (
               <div>
                   <div className="month-report">
+
+                    <div className='month-report-sub-Div'>
                     
-                <h2>Report</h2>
+                {/* <h2>Report</h2> */}
                     
                 <div className="month-selector">
        
@@ -1206,16 +1208,22 @@
                   </div>
                 </div>
                 </div>
+
                 )}
-                
-              
-                
+
+</div>
+                <div className='get-report-main-div '>
                 { (
                     <div className='filterDataButton'>
                     <button className='filterDataButton1' onClick={showDataReport} >Get Report</button>
           
                     </div>
                 )}
+                </div>
+                
+              
+                
+                
                 </div>
 
                 {/* imp data */}
