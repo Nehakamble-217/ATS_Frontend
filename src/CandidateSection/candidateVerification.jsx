@@ -8,8 +8,6 @@ function CandidateVerification() {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const location = useLocation();
-
-
     useEffect(() => {
         console.log(location);
         axios.get(`http://192.168.1.43:9090/api/ats/157industries/verify${location.search}`);

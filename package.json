@@ -21,6 +21,7 @@
     "@react-pdf/renderer": "^3.4.4",
     "@stomp/stompjs": "^7.0.0",
     "aos": "^2.3.4",
+    "ats": "file:",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
