@@ -926,8 +926,8 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                       <th className="attendanceheading">Gender</th>
                       <th className="attendanceheading">Education</th>
                       <th className="attendanceheading">Year Of Passing</th>
-                      <th className="attendanceheading">Call Summary</th>
-                      {/* <th className="attendanceheading">Feedback</th> */}
+                      <th className="attendanceheading">Extra Certification</th>
+                      <th className="attendanceheading">Calling FeedBack</th>
                       <th className="attendanceheading">Holding Any Offer</th>
                       <th className="attendanceheading">
                         Offer Letter Message
@@ -1144,7 +1144,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                             </span>
                           </div>
                         </td>
-                        {/* <td
+                        <td
                       className="tabledata "
                       onMouseOver={handleMouseOver}
                       onMouseOut={handleMouseOut}
@@ -1155,7 +1155,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           {item.callingFeedback}{" "}
                         </span>
                       </div>
-                    </td> */}
+                    </td>
                         <td
                           className="tabledata "
                           onMouseOver={handleMouseOver}
@@ -1186,10 +1186,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.companyName}{" "}
+                          {item.companyName}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.companyName}
+                              {item.companyName}
                             </span>
                           </div>
                         </td>
@@ -1198,13 +1198,13 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.experienceYear} Years
-                          {item.lineUp?.experienceMonth} Month
+                          {item.experienceYear} Years
+                          {item.experienceMonth} Month
                           <div className="tooltip">
                             <span className="tooltiptext">
                               {" "}
-                              {item.lineUp?.experienceYear} Years
-                              {item.lineUp?.experienceMonth} Month
+                              {item.experienceYear} Years
+                              {item.experienceMonth} Month
                             </span>
                           </div>
                         </td>
@@ -1213,10 +1213,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.relevantExperience}{" "}
+                          {item.relevantExperience}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.relevantExperience}
+                              {item.relevantExperience}
                             </span>
                           </div>
                         </td>
@@ -1225,12 +1225,12 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.currentCTCLakh} Lakh
-                          {item.lineUp?.currentCTCThousand} Thousand
+                          {item.currentCtcLakh} Lakh
+                          {item.currentCtcThousand} Thousand
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.currentCTCLakh} Lakh
-                              {item.lineUp?.currentCTCThousand} Thousand
+                              {item.currentCtcLakh} Lakh
+                              {item.currentCtcThousand} Thousand
                             </span>
                           </div>
                         </td>
@@ -1239,12 +1239,12 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.expectedCTCLakh} Lakh
-                          {item.lineUp?.expectedCTCThousand} Thousand
+                          {item.expectedCtcLakh} Lakh
+                          {item.expectedCtcThousand} Thousand
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.expectedCTCLakh} Lakh
-                              {item.lineUp?.expectedCTCThousand} Thousand
+                              {item.expectedCtcLakh} Lakh
+                              {item.expectedCtcThousand} Thousand
                             </span>
                           </div>
                         </td>
@@ -1253,10 +1253,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.dateOfBirth}{" "}
+                          {item.dateOfBirth}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.dateOfBirth}
+                              {item.dateOfBirth}
                             </span>
                           </div>
                         </td>
@@ -1265,10 +1265,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.gender}{" "}
+                          {item.gender}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.gender}
+                              {item.gender}
                             </span>
                           </div>
                         </td>
@@ -1277,10 +1277,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.qualification}{" "}
+                          {item.qualification}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.qualification}
+                              {item.qualification}
                             </span>
                           </div>
                         </td>
@@ -1289,10 +1289,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.yearOfPassing}{" "}
+                          {item.yearOfPassing}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.yearOfPassing}
+                              {item.yearOfPassing}
                             </span>
                           </div>
                         </td>
@@ -1301,10 +1301,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.extraCertification}{" "}
+                          {item.extraCertification}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.extraCertification}
+                              {item.extraCertification}
                             </span>
                           </div>
                         </td>
@@ -1313,10 +1313,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.feedBack}{" "}
+                          {item.feedBack}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.feedBack}{" "}
+                              {item.feedBack}{" "}
                             </span>
                           </div>
                         </td>
@@ -1325,10 +1325,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.holdingAnyOffer}{" "}
+                          {item.holdingAnyOffer}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.holdingAnyOffer}
+                              {item.holdingAnyOffer}
                             </span>
                           </div>
                         </td>
@@ -1337,10 +1337,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.offerLetterMsg}{" "}
+                          {item.offerLetterMsg}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.offerLetterMsg}
+                              {item.offerLetterMsg}
                             </span>
                           </div>
                         </td>
@@ -1363,7 +1363,7 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                         <td className="tabledata">
                           <button
                             className="text-secondary"
-                            onClick={() => openResumeModal(item.lineUp.resume)}
+                            onClick={() => openResumeModal(item.resume)}
                           >
                             <i className="fas fa-eye"></i>
                           </button>
@@ -1377,10 +1377,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.noticePeriod}{" "}
+                          {item.noticePeriod}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.noticePeriod}
+                              {item.noticePeriod}
                             </span>
                           </div>
                         </td>
@@ -1389,10 +1389,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.msgForTeamLeader}{" "}
+                          {item.msgForTeamLeader}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.msgForTeamLeader}
+                              {item.msgForTeamLeader}
                             </span>
                           </div>
                         </td>
@@ -1401,10 +1401,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.availabilityForInterview}{" "}
+                          {item.availabilityForInterview}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.availabilityForInterview}{" "}
+                              {item.availabilityForInterview}{" "}
                             </span>
                           </div>
                         </td>
@@ -1413,10 +1413,10 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.interviewTime}{" "}
+                          {item.interviewTime}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.interviewTime}
+                              {item.interviewTime}
                             </span>
                           </div>
                         </td>
@@ -1425,17 +1425,18 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                           onMouseOver={handleMouseOver}
                           onMouseOut={handleMouseOut}
                         >
-                          {item.lineUp?.finalStatus}{" "}
+                          {item.finalStatus}{" "}
                           <div className="tooltip">
                             <span className="tooltiptext">
-                              {item.lineUp?.finalStatus}
+                              {item.finalStatus}
                             </span>
                           </div>
                         </td>
                         <td className="tabledata ">
                           <i
-                            onClick={() => viewPage(item.candidateId, item.requirementId)}
-                            className="fa-solid fa-person-walking-arrow-right"
+                            onClick={() => viewPage(item.candidateId,item.requirementId)}
+                            className="fa-regular fa-pen-to-square"
+
                           ></i>
                         </td>
                       </tr>

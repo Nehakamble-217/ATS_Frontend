@@ -67,7 +67,7 @@ const AfterSelection = ({
   const fetchCandidateData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.50:9090/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.43:9090/api/ats/157industries/specific-data/${candidateId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -83,7 +83,7 @@ const AfterSelection = ({
   const fetchPerformaceId = async()=>{
     try {
       const performanceId = await axios.get(
-        `http://192.168.1.42:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
       );
       setPerformanceId(performanceId.data);
     } catch (error) {
@@ -97,7 +97,7 @@ const AfterSelection = ({
     console.log(requirementId + "-->requirementId");
     try {
       const response = await fetch(
-        `http://192.168.1.50:9090/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -119,7 +119,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -175,7 +175,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -700,7 +700,7 @@ const AfterSelection = ({
 
                       <tr id="table-row">
                         <th scope="col"> Date of Birth:</th>
-                        <td>{candidateData.lineUp?.dateOfBirth}</td>
+                        <td>{candidateData.dateOfBirth}</td>
                         <th scope="col">Placed Company:</th>
                         <td> {candidateData.requirementCompany}</td>
                         <th scope="col"> Location:</th>
@@ -708,39 +708,22 @@ const AfterSelection = ({
                       </tr>
 
                       <tr id="table-row">
-                        <th scope="col">Gender</th>
-                        <td>{candidateData.lineUp?.gender}</td>
-                        <th scope="col">Qualification:</th>
-                        <td> {candidateData.lineUp?.qualification} </td>
-                        <th scope="col"> Year of Passing:</th>
-                        <td> {candidateData.lineUp?.yearOfPassing} </td>
-                      </tr>
-
-                      <tr id="table-row">
-                        <th scope="col">Pervious Company Name:</th>
-                        <td>{candidateData.lineUp?.companyName}</td>
+                      <th scope="col">Gender</th>
+                      <td>{candidateData.gender}</td>
                         <th scope="col">Total Experience:</th>
-                        <td> {candidateData.lineUp?.totalExperience} </td>
-                        <th scope="col"> Notice Period:</th>
-                        <td> {candidateData.lineUp?.noticePeriod} </td>
+                        <td> {candidateData.experienceYear} Year {candidateData.experienceMonth} Month </td>
+                        <th scope="col">Source Name :</th>
+                        <td>{candidateData.sourceName}</td>
+                        
                       </tr>
 
                       <tr id="table-row">
                         <th scope="col">Position:</th>
-                        <td>{candidateData.position}</td>
+                        <td>{candidateData.jobDesignation}</td>
                         <th scope="col">Contact Number:</th>
-                        <td> {candidateData.lineUp?.totalExperience} </td>
+                        <td> {candidateData.contactNumber} </td>
                         <th scope="col"> Alternate Number:</th>
                         <td> {candidateData.alternateNumber}</td>
-                      </tr>
-
-                      <tr id="table-row">
-                        <th scope="col">Source Name :</th>
-                        <td>{candidateData.sourceName}</td>
-                        <th scope="col">Holding Any Offer :</th>
-                        <td> {candidateData.lineUp?.holdingAnyOffer} </td>
-                        <th scope="col"> Feedback:</th>
-                        <td> {candidateData.lineUp?.feedBack}</td>
                       </tr>
 
                       <tr id="table-row">
@@ -752,8 +735,8 @@ const AfterSelection = ({
                         <td> dd-mm-yyyy </td>
                         <th scope="col"> Days Remainig :</th>
                         <td style={{ color: "red", fontWeight: "bold" }}>
-                          {" "}
-                          dd-mm-yyyy
+                         
+                         0 Days
                         </td>
                       </tr>
                     </tbody>

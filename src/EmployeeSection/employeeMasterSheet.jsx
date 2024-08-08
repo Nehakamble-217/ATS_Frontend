@@ -456,7 +456,7 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Office Environment</th>
               <th className="attendanceheading">Staff Behavior</th>
               <th className="attendanceheading">FollowUp History</th>
-              <th className="attendanceheading">Action</th>
+              {/* <th className="attendanceheading">Action</th> */}
             </tr>
           </thead>
           <tbody>
@@ -649,9 +649,9 @@ const EmployeeMasterSheet = () => {
                 <td className="tabledata">
                   <button className="FollowUp-History">View</button>
                 </td>
-                <td className="tabledata">
-                  <i className="fas fa-eye"></i>
-                </td>
+                {/* <td className="tabledata">
+                  <i className="fa-regular fa-pen-to-square"></i>
+                </td> */}
               </tr>
             ))}
           </tbody>

@@ -95,19 +95,21 @@
         
         
         
-        .App-after {
+        .report-App-after {
           width: 100%;
           background-attachment: fixed;
           height: 92vh;
           overflow: hidden !important;
+          margin-left: -120px;
         }
         
-        .attendance-table {
+        .report-attendance-table {
           width: 100%;
           border-collapse: collapse;
+          margin-top: -70px;
         }
         
-        .attendance-table thead th {
+        .report-attendance-table thead th {
           position: sticky;
           top: 0;
           background-color: #ffcb9b;
@@ -233,5 +235,9 @@
           overflow-x: hidden;
           overflow-y: scroll;
         } */
+         .silderReport-align-div{
+          display: flex;
+          justify-content: space-around;
+         }
       
       

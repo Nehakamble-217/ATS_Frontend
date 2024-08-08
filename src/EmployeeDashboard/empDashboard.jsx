@@ -790,11 +790,6 @@ const EmpDashboard = ({ userGroup }) => {
             <UpdateResponse onSuccessAdd={handleSuccessAdd} />
           )}
         </div>
-        <div>
-          {showUpdateResponse && (
-            <UpdateResponse onSuccessAdd={handleSuccessAdd} />
-          )}
-        </div>
         <div>{showscheduleinterview && <ScheduleInterview />}</div>
         <div>
           {showSendClientMail && (

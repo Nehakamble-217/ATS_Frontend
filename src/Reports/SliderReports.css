@@ -1,6 +1,8 @@
 .progress-bar {
 
   align-items: center;
+  height:auto;
+  /* border: 1px solid red; */
 }
 
 .progress-bar-inner {
@@ -65,4 +67,9 @@
   color: #19fd04;
   font-size: 70px;
 
+}
+.fiter-heading-data{
+  margin-top: 40px;
+/* display: flex; */
+/* align-content: center; */
 }

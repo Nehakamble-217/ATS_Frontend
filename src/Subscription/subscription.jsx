@@ -12,7 +12,7 @@ const SubscriptionPlans = () => {
   useEffect(() => {
     // Fetch subscription plans from the backend
     axios
-      .get("http://192.168.1.43:8081/fetchAllPlans")
+      .get("http://192.168.1.43:9090/api/ats/157industries/fetchAllPlans")
       .then((response) => {
         setPlans(response.data);
       })

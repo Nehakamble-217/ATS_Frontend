@@ -882,10 +882,10 @@ const Attendance = () => {
           </div>
         </div>
       </div>
+      
       <div className="PI-attendance-container">
         <table className="PI-attendance-table">
           <thead className="PI-attendancerows-head" >
-            {/* <tr className="PI-attendancerows-head"> */}
               <th className="PI-attendanceheading">Sr No</th>
               <th className="PI-attendanceheading">Working Date</th>
               <th className="PI-attendanceheading">Employee Name</th>
@@ -901,12 +901,10 @@ const Attendance = () => {
               <th className="PI-attendanceheading">Holiday Leave</th>
               <th className="PI-attendanceheading">Work Type</th>
               <th className="PI-attendanceheading">Day Status</th>
-              {/* <th className="PI-attendanceheading">Breaks</th> */}
               <th className="PI-attendanceheading">Working Hours</th>
               <th className="PI-attendanceheading">Logout Time</th>
               <th className="PI-attendanceheading">Employee Id</th>
               <th className="PI-attendanceheading">Team Leader Id</th>
-            {/* </tr> */}
           </thead>
           <tbody>
             {attendanceData.map((data, index) => (

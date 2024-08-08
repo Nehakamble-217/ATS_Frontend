@@ -371,7 +371,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
                       <th className="attendanceheading">Requirement Company</th>
                       <th className="attendanceheading">Job Designation</th>
                       <th className="attendanceheading">Comment for TL</th>
-                      <th className="attendanceheading">Final Status</th>
+                      <th className="attendanceheading">Last Status</th>
                       <th className="attendanceheading">Interview Round</th>
                       <th className="attendanceheading">Interview Response</th>
                       <th className="attendanceheading">

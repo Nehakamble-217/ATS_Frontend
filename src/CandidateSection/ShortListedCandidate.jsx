@@ -389,8 +389,8 @@ const ShortListedCandidates = ({
           item.callingFeedback.toLowerCase().includes(searchTermLower)) ||
         (item.selectYesOrNo &&
           item.selectYesOrNo.toLowerCase().includes(searchTermLower)) ||
-        (item.totalExperience &&
-          item.totalExperience.toLowerCase().includes(searchTermLower)) ||
+        (item.experienceYear &&
+          item.experienceYear.toLowerCase().includes(searchTermLower)) ||
         (item.dateOfBirth &&
           item.dateOfBirth.toLowerCase().includes(searchTermLower)) ||
         (item.gender && item.gender.toLowerCase().includes(searchTermLower)) ||
@@ -759,7 +759,7 @@ const ShortListedCandidates = ({
                 <th className="attendanceheading">Gender</th>
                 <th className="attendanceheading">Education</th>
                 <th className="attendanceheading">Year Of Passing</th>
-                <th className="attendanceheading">Call Summary</th>
+                <th className="attendanceheading">Extra Certification</th>
                 {/* call summary */}
                 {/* <th className="attendanceheading">Feedback</th> */}
                 <th className="attendanceheading">Holding Any Offer</th>
@@ -950,18 +950,18 @@ const ShortListedCandidates = ({
                   </td>
                   <td className="tabledata">{item.callingFeedback}</td>
                   <td className="tabledata">{item.incentive}</td>
-                  <td className="tabledata">{item.interseedOrNot}</td>
-                  <td className="tabledata">{item.currentCompany}</td>
-                  <td className="tabledata">{item.totalExperience}</td>
+                  <td className="tabledata">{item.selectYesOrNo}</td>
+                  <td className="tabledata">{item.companyName}</td>
+                  <td className="tabledata">{item.experienceYear} Year {item.experienceMonth} Month</td>
                   <td className="tabledata">{item.relevantExperience}</td>
-                  <td className="tabledata">{item.currentCTC}</td>
-                  <td className="tabledata">{item.expectedCTC}</td>
+                  <td className="tabledata">{item.currentCtcLakh} Lakh {item.currentCtcThousand} Thousand</td>
+                  <td className="tabledata">{item.expectedCtcLakh} Lakh {item.expectedCtcThousand} Thousand </td>
                   <td className="tabledata">{item.dateOfBirth}</td>
                   <td className="tabledata">{item.gender}</td>
                   <td className="tabledata">{item.qualification}</td>
                   <td className="tabledata">{item.yearOfPassing}</td>
                   <td className="tabledata">
-                    {item.linup?.extraCertification}
+                    {item.extraCertification}
                   </td>
                   {/* <td className="tabledata">{item.feedback}</td> */}
                   <td className="tabledata">{item.holdingAnyOffer}</td>
@@ -987,12 +987,7 @@ const ShortListedCandidates = ({
                   <td className="tabledata">{item.interviewTime}</td>
                   <td className="tabledata">{item.finalStatus}</td>
                   <td className="tabledata">
-                    {/* <button
-                      className="lineUp-share-btn"
-                      onClick={() => handleUpdate(item.candidateId)}
-                    >
-                      Up
-                    </button> */}
+                  
                     <i
                       onClick={() => handleUpdate(item.candidateId)}
                       className="fa-regular fa-pen-to-square"

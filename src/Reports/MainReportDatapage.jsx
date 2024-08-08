@@ -1,13 +1,11 @@
-
 {/* Name:-Prachi Parab Component:-Report data page
            End LineNo:-1 to 249 Date:-04/07 */}
-
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import "../Reports/MainReportDatapage.css";
 import CreateReportTable from "../Reports/CreateReportTable";
 import axios from "axios";
 import { json, useParams } from "react-router-dom";
-
+import "../Reports/MainReportDatapage.css";
 
 const MonthReport = () => {
   const { userType } = useParams();
@@ -29,6 +27,7 @@ const MonthReport = () => {
   const [showReport, setShowReport] = useState(false); // State to control the visibility of the report
   const [SelectedManagerName, setSelectedManagerName] = useState({});
   const [manager, setManager] = useState([]);  //prachi
+
   //Name:-Akash Pawar Component:-Team_Leadder Subcategory:-Assign Column TeamLeader Names and Recruiter Names(changed) Start LineNo:-17  Date:-03/07
   const [teamLeaderNames, setTeamLeaderNames] = useState([]);
   const [recruiterUnderTeamLeader, setRecruiterUnderTeamLeader] = useState([]); //Prachi
@@ -44,6 +43,7 @@ const MonthReport = () => {
   const [reportSelectedDate, setreportSelectedDate] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [candidatesDatewiseData, setcandidatesDatewiseData] = useState([]);
+  // State to track the currently selected month
   const [selectedMonth, setSelectedMonth] = useState('lastMonth');
   const [reportDataDatewise, setReportDataDatewise] = useState(null);
 
@@ -51,6 +51,7 @@ const MonthReport = () => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
+
       );
       setManager(response.data);
     };
@@ -63,15 +64,18 @@ const MonthReport = () => {
         `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
       );
       setTeamLeaderUnderManager(response.data);
+
     };
     if (selectedManager.managerId != "") {
       fetchTeamLeaderNames();
     }
+
   }, [selectedManager]);
 
   const fetchRecruiterUnderTeamLeaderData = useCallback(async () => {
     const response = await axios.get(
       `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+
     );
     setRecruiterUnderTeamLeaderData(response.data);
   }, [selectedTeamLeader]);
@@ -79,14 +83,19 @@ const MonthReport = () => {
   useEffect(() => {
     if (selectedTeamLeader != null) {
       fetchRecruiterUnderTeamLeaderData();
+
+
     }
   }, [selectedTeamLeader]);
 
   const today = new Date();
 
   const lastMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+
   useEffect(() => {
+
     const fetchDateData = async () => {
+
     }
     fetchDateData();
 
@@ -104,6 +113,7 @@ const MonthReport = () => {
   }
 
   const handleToggle = () => {
+
     setShowToggle(!showToggle);
     setShowCustomDiv(false);
     setshowReportData(false)
@@ -116,9 +126,17 @@ const MonthReport = () => {
     const lastMonthEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
     const lastMonthStartDate = lastMonthStartDate1.toISOString().slice(0, 10);
     const lastMonthEndDate = lastMonthEndDate1.toISOString().slice(0, 10);
+    console.log(lastMonthStartDate + " Start date");
+    console.log(lastMonthEndDate + " End date");
+
+
+    console.log(selectedTeamLeader.teamLeaderId);
+    console.log(selectedTeamLeader.teamLeaderJobRole);
 
     const FetchDataDatewise = async () => {
+
       let baseURL = '';
+
       if (selectedManager.managerId) {
         baseURL = `${selectedManager.managerId}/${selectedManager.managerJobRole}`;
       }
@@ -132,18 +150,29 @@ const MonthReport = () => {
 
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastMonthStartDate}/${lastMonthEndDate}`
+
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
+      // console.log(baseURL+"hhhhhhhhh");
     };
     FetchDataDatewise();
 
   }
 
+  // Custom Date
+
   const handleCustomDate = () => {
     const today = new Date();
     const lastThreeMonthStartDate = startDate;
     const lastThreeMonthEndDate = endDate;
+    console.log(lastThreeMonthStartDate + " Start date");
+    console.log(lastThreeMonthEndDate + " End date");
+
+
+    console.log(selectedTeamLeader.teamLeaderId);
+    console.log(selectedTeamLeader.teamLeaderJobRole);
+
     const FetchDataDatewise = async () => {
 
       let baseURL = '';
@@ -159,6 +188,7 @@ const MonthReport = () => {
 
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
+
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -194,8 +224,10 @@ const MonthReport = () => {
       } if (selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId) {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
+
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
+
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -206,6 +238,7 @@ const MonthReport = () => {
   const fetchSixMonthData = () => {
 
     const today = new Date();
+
     const lastSixMonthStartDate1 = new Date(today.getFullYear(), today.getMonth() - 6, 1);
     const lastSixMonthEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
     const lastSixMonthStartDate = lastSixMonthStartDate1.toISOString().slice(0, 10);
@@ -223,6 +256,7 @@ const MonthReport = () => {
       } if (selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId) {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
+
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastSixMonthStartDate}/${lastSixMonthEndDate}`
       )
@@ -238,13 +272,6 @@ const MonthReport = () => {
     const lastOneYearEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
     const lastOneYearStartDate = lastOneYearStartDate1.toISOString().slice(0, 10);
     const lastOneYearEndDate = lastOneYearEndDate1.toISOString().slice(0, 10);
-    console.log(lastOneYearStartDate + " Start date");
-    console.log(lastOneYearEndDate + " End date");
-
-
-    console.log(selectedTeamLeader.teamLeaderId);
-    console.log(selectedTeamLeader.teamLeaderJobRole);
-
     const FetchDataDatewise = async () => {
 
       let baseURL = '';
@@ -257,6 +284,7 @@ const MonthReport = () => {
       } if (selectedManager.managerId && selectedTeamLeader.teamLeaderId && selectedRecruiters.recruiterId) {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
+
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
       )
@@ -265,7 +293,6 @@ const MonthReport = () => {
     };
     FetchDataDatewise();
   }
-
   const fetchJoiningDateData = () => {
     const today = new Date();
     const lastOneYearStartDate1 = new Date(today.getFullYear(), today.getMonth() - 12, 1);
@@ -293,6 +320,7 @@ const MonthReport = () => {
       }
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
+
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -318,6 +346,7 @@ const MonthReport = () => {
     const FetchDataDatewise = async () => {
 
       let baseURL = '';
+
       if (selectedManager.managerId) {
         baseURL = `${selectedManager.managerId}/${selectedManager.managerJobRole}`;
       }
@@ -329,6 +358,7 @@ const MonthReport = () => {
 
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/report-count/${baseURL}/${lastCurrentMonthStartDate}/${lastCurrentMonthEndDate}`
+
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -336,7 +366,6 @@ const MonthReport = () => {
     FetchDataDatewise();
 
   }
-
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
@@ -352,7 +381,8 @@ const MonthReport = () => {
       fetchSixMonthData();
     } else if (event.target.value === 'Last1Year') {
       fetchOneYearData();
-    } else if (event.target.value === 'JoiningDate') {
+    }
+    else if (event.target.value === 'JoiningDate') {
       fetchJoiningDateData();
     }
 
@@ -365,6 +395,12 @@ const MonthReport = () => {
   const hideCustomDateDiv = () => {
     setShowCustomDiv(false);
   }
+
+
+
+  // Filtered data based on selected month
+  // const filteredData = data.find(entry => entry.month === selectedMonth);
+
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
@@ -378,6 +414,7 @@ const MonthReport = () => {
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
       `http://192.168.1.43:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -433,6 +470,7 @@ const MonthReport = () => {
     }
   };
 
+
   const handleSearchChange = useCallback((event) => {
     setSearchTerm(event.target.value);
   }, []);
@@ -450,12 +488,10 @@ const MonthReport = () => {
 
   const handleSelectAll = () => {
     if (allSelected) {
-      // Deselect all
       setSelectedManagers([]);
       setSelectedTeamLeaders([]);
       setSelectedRecruiters([]);
     } else {
-      // Select all
       setSelectedManagers(manager.map((id) => id.managerId));
       setSelectedTeamLeaders(teamLeaderUnderManager.map((teamleader) => teamleader.teamLeaderId));
       setSelectedRecruiters(recruiterUnderTeamLeaderData.map((recruiter) => recruiter.employeeId));
@@ -555,12 +591,16 @@ const MonthReport = () => {
     setAllSelected((prev) => !prev);
   }, [allSelected, filteredRecruiters]);
 
+
   return (
     <>
       <div className="report-AppsTL">
         <div className="reports-selection-containerTL">
+
           <div className="report-hierarchy-sectionTL">
+
             <div className="report-custom-dropdownTL">
+
               <div className="reports-Admin-Dropdown" onClick={toggleDropdown}>
                 {selectedRecruiters.length === 0
                   ? "Manager"
@@ -594,12 +634,14 @@ const MonthReport = () => {
                             <input
                               type='checkbox'
                               name={`manager${manager.employeeId}`}
+
                               value={id.managerId}
                               checked={selectedManagers.includes(id.managerId)}
                               onChange={() => {
                                 setSelectedManager({
                                   managerId: id.managerId,
                                   managerJobRole: id.jobRole,
+
                                 })
 
                               }}
@@ -621,13 +663,9 @@ const MonthReport = () => {
                                         <label key={tIndex}>
                                           <input
                                             type='checkbox'
-                                            // name='teamleader'
                                             name={`teamleader${teamleader.employeeId}`}
 
                                             value={teamleader.teamLeaderId}
-                                            // checked={
-                                            //   selectedTeamLeader.teamLeaderId===teamleader.teamLeaderId
-                                            // }
                                             checked={selectedTeamLeaders.includes(teamleader.teamLeaderId)}
 
                                             onChange={() =>
@@ -678,19 +716,13 @@ const MonthReport = () => {
                                     )
                                   )
                                 }
-
                               </div>
-
                             )
                           }
-
-
                         </div>
 
                       ))
                     }
-
-
                   </div>
 
                   <div className="report-buttons-div">
@@ -747,9 +779,6 @@ const MonthReport = () => {
                                       checked={selectedRecruiters.includes(
                                         recruiter[0]
                                       )}
-                                    // onChange={() =>
-                                    //   setSelectedRecruiters([recruiter[0]])
-                                    // }
                                     />
                                     {recruiter[1]}
                                   </label>
@@ -764,144 +793,153 @@ const MonthReport = () => {
               )}
             </div>
           </div>
+
+          <div className="options-section">
+          </div>
         </div>
+
         {showReport && (
           <div>
             <div className="month-report">
-              <h2>Report</h2>
-              <div className="month-selector">
-                {selectedDate && <PDFGenerator selectedDate={selectedDate} />}
-                <label>
-                  <input
-                    type="radio"
-                    value="CurrentMonth"
-                    id='CurrentMonth'
-                    name="reportOption"
 
-                    checked={selectedMonth === 'CurrentMonth'}
-                    onChange={handleMonthChange}
-                    onClick={handleToggle}
+              <div className='month-report-sub-Div'>
 
-                  />
-                  Current Month
-                </label>
-
-                <label>
-                  <input
-                    type="radio"
-                    value="LastMonth"
-                    id='LastMonth'
-                    name="reportOption"
-
-                    checked={selectedMonth === 'LastMonth'}
-                    onChange={handleMonthChange}
-                    onClick={handleToggle}
-
-                  />
-                  Last Month
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Last3Months"
-                    id='Last3Months'
-                    name='reportOption'
-                    checked={selectedMonth === 'Last3Months'}
-                    onChange={handleMonthChange}
-                    onClick={handleToggle}
-
-                  />
-                  Last 3 Months
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Last6Months"
-                    name='reportOption'
-                    id='Last6Months'
-                    checked={selectedMonth === 'Last6Months'}
-                    onChange={handleMonthChange}
-                    onClick={handleToggle}
-
-                  />
-                  Last 6 Months
-                </label>
-
-                <label>
-                  <input
-                    type='radio'
-                    value="Last1Year"
-                    name='reportOption'
-                    id='Last1Year'
-                    checked={selectedMonth === "Last1Year"}
-                    onChange={handleMonthChange}
-                    onClick={handleToggle}
-
-                  />
-                  Last 1 Year
-                </label>
+                <div className="month-selector">
 
 
-                <label>
-                  <input
-                    type='radio'
-                    value="CustomDate"
-                    name='reportOption'
-                    id='CustomDate'
-                    checked={selectedMonth === "CustomDate"}
-                    // onChange={handleMonthChange}
-                    onClick={showCustomDateDiv}
-                  />
-                  Custom Date
-                </label>
-                <label>
-                  <input
-                    type='radio'
-                    value="JoiningDate"
-                    name='reportOption'
-                    id='JoiningDate'
-                    checked={selectedMonth === "JoiningDate"}
-                    onChange={handleMonthChange}
-                    onClick={handleToggle}
-                  />
-                  Joining Date
-                </label>
+                  {selectedDate && <PDFGenerator selectedDate={selectedDate} />}
+                  <label>
+                    <input
+                      type="radio"
+                      value="CurrentMonth"
+                      id='CurrentMonth'
+                      name="reportOption"
+
+                      checked={selectedMonth === 'CurrentMonth'}
+                      onChange={handleMonthChange}
+                      onClick={handleToggle}
+
+                    />
+                    Current Month
+                  </label>
+
+                  <label>
+                    <input
+                      type="radio"
+                      value="LastMonth"
+                      id='LastMonth'
+                      name="reportOption"
+
+                      checked={selectedMonth === 'LastMonth'}
+                      onChange={handleMonthChange}
+                      onClick={handleToggle}
+
+                    />
+                    Last Month
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Last3Months"
+                      id='Last3Months'
+                      name='reportOption'
+                      checked={selectedMonth === 'Last3Months'}
+                      onChange={handleMonthChange}
+                      onClick={handleToggle}
+
+                    />
+                    Last 3 Months
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Last6Months"
+                      name='reportOption'
+                      id='Last6Months'
+                      checked={selectedMonth === 'Last6Months'}
+                      onChange={handleMonthChange}
+                      onClick={handleToggle}
+
+                    />
+                    Last 6 Months
+                  </label>
+
+                  <label>
+                    <input
+                      type='radio'
+                      value="Last1Year"
+                      name='reportOption'
+                      id='Last1Year'
+                      checked={selectedMonth === "Last1Year"}
+                      onChange={handleMonthChange}
+                      onClick={handleToggle}
+
+                    />
+                    Last 1 Year
+                  </label>
 
 
-              </div>
-              {
-                showCustomDiv && (
-                  <div>
-                    <div className="date-inputs" >
+                  <label>
+                    <input
+                      type='radio'
+                      value="CustomDate"
+                      name='reportOption'
+                      id='CustomDate'
+                      checked={selectedMonth === "CustomDate"}
+                      // onChange={handleMonthChange}
+                      onClick={showCustomDateDiv}
+                    />
+                    Custom Date
+                  </label>
+                  <label>
+                    <input
+                      type='radio'
+                      value="JoiningDate"
+                      name='reportOption'
+                      id='JoiningDate'
+                      checked={selectedMonth === "JoiningDate"}
+                      onChange={handleMonthChange}
+                      onClick={handleToggle}
+                    />
+                    Joining Date
+                  </label>
 
-                      <label>
-                        Start Date:
-                        <input type="date" value={startDate} onChange={handleStartDateChange} />
-                      </label>
-                      <label>
-                        End Date:
-                        <input type="date" value={endDate} onChange={handleEndDateChange} />
-                      </label>
-
-
-                      <div className='filterDataButton'>
-                        <button onClick={handleCustomDate}>Filter Data</button>
-
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-
-
-              {(
-                <div className='filterDataButton'>
-                  <button className='filterDataButton1' onClick={showDataReport} >Get Report</button>
 
                 </div>
-              )}
-            </div>
+                {
+                  showCustomDiv && (
+                    <div>
+                      <div className="date-inputs" >
 
+                        <label>
+                          Start Date:
+                          <input type="date" value={startDate} onChange={handleStartDateChange} />
+                        </label>
+                        <label>
+                          End Date:
+                          <input type="date" value={endDate} onChange={handleEndDateChange} />
+                        </label>
+
+
+                        <div className='filterDataButton'>
+                          <button onClick={handleCustomDate}>Filter Data</button>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  )}
+
+              </div>
+              <div className='get-report-main-div '>
+                {(
+                  <div className='filterDataButton'>
+                    <button className='filterDataButton1' onClick={showDataReport} >Get Report</button>
+
+                  </div>
+                )}
+              </div>
+            </div>
             {showReportData ? (
               <div>
                 <CreateReportTable reportDataDatewise={reportDataDatewise} />

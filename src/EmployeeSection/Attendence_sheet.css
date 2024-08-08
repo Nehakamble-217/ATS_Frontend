@@ -1,6 +1,7 @@
 .PI-attendance-table {
   border-collapse: collapse;
 }
+
 .status-poor {
   border-radius: 10px;
   background-color: #f87171;
