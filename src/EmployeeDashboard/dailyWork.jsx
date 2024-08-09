@@ -446,6 +446,8 @@ function DailyWork({
       if (data.pending >= 5 && data.archived >= 5) {
         present = "present";
       }
+      let checkHalfDay = "No";
+      console.log(typeof(totalHoursWork));
       const formData = {
         employeeId,
         date: `${day}/${month}/${year}`,
@@ -509,7 +511,7 @@ function DailyWork({
   };
 
   return (
-    <div className="daily-timeanddate" style={{ backgroundColor: backgroundColor }}>
+    <div className="daily-timeanddate">
       <div className="head">
         <div className="user-img">
           <img src={profileImage} alt="Profile" onClick={profilePageLink} />
@@ -521,21 +523,7 @@ function DailyWork({
             157{employeeId}
           </p>
         </div>
-      </div>
-
-      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#7ab3ef", "#5a9be8")}>
-        Blue
-      </button>
-      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#c8e1cc", "#a3d2a8")}>
-        Green
-      </button>
-      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#fff77d", "Yellow")}>
-        Yellow
-      </button>
-      <button className="daily-cr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }} onClick={() => handleColorChange("#f8d1ee", "#f3a9dc")}>
-        Pink
-      </button>
-      
+      </div>      
       <button
         className="toggle-all-daily-btns"
         onClick={toggleAllDailyBtns}

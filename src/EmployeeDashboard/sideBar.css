@@ -26,7 +26,7 @@ body {
   background-repeat: initial;
   display: flex;
   flex-direction: column;
-  background-color: #ffe5b5;
+  background-color: var(--Bg-color);
   padding: 0px;
   transition: width 0.8s;
 }
@@ -37,11 +37,11 @@ body {
   width: 5px; /* Width of the scrollbar */
 }
 .sidebar::-webkit-scrollbar-thumb {
-  background: #ffcb9b; /* Color of the scrollbar thumb */
+  background: var(--Bg-color); /* Color of the scrollbar thumb */
   border-radius: 4px; /* Rounded corners */
 }
 .sidebar::-webkit-scrollbar-thumb:hover {
-  background: #ffcb9b; /* Darker color on hover */
+  background: var(--Bg-color); /* Darker color on hover */
 }
 
 .sidebar-clouds1 {
@@ -129,7 +129,7 @@ body {
 .sidebar-menu ul li.active > a {
   /* color: gray; */
   /* padding: 7px; */
-  background-color: #ffd8a8;
+  background-color: var(--hover-effect);
 }
 .sidebar-menu ul li a ul li {
   margin-left: 30px;
@@ -173,8 +173,8 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #ffb281;
-  border: 1px solid #ffb281;
+  color:var(--button-color);
+  border: 1px solid var(--Bg-color);
   background-color: #fff;
 }
 
@@ -188,7 +188,7 @@ body {
 }
 .sidebar-menu-btn:hover i {
   /* color: gray; */
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 0px 2px;
   border-radius: 8px;
   background-color: #fff;
@@ -230,7 +230,7 @@ body {
   padding: 10px;
   border-radius: 4px;
   color: gary;
-  background-color: #ffe5b5;
+  background-color: var(--Bg-color);
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
@@ -243,7 +243,7 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 2px;
-  background-color: #ffe5b5;
+  background-color: var(--Bg-color);
   transform: rotate(45deg);
   z-index: -1;
 }
@@ -254,13 +254,12 @@ body {
 }
 .sidebar.active .sidebar-menu .sub-menu {
   position: fixed;
-  /* top: 0; */
   left: 45px;
   width: 200px;
   border-radius: 15px;
   padding: 10px 20px;
   border: 1px solid gray;
-  background-color: #fec08e;
+  background-color: var(--Bg-color);
   box-shadow: 0px 10px 8px gray;
 }
 
@@ -301,8 +300,8 @@ body {
  }
 
  .buttoncss:hover{
-     background-color: white;
-     color: #ffb281;
+     background-color: var(--button-hover-color);
+     color: var(--text-hover-color);
      border: 1px solid #ffb281;
  }
  
@@ -318,7 +317,7 @@ body {
     font-size: 18px;
     border-radius: 15px;
     color:white;
-    background-color: #ffb281;
+    background-color: var(--button-color);
     display: inline-block;
     padding: 8px 25px;
     margin: 10px;

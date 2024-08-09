@@ -1,4 +1,4 @@
-.form-container {
+.AddRec-form-container {
   width: 100%;
   margin: 0 auto;
   padding: 20px;
@@ -15,7 +15,7 @@
   padding-top: 10px;
 }
 
-.form-group {
+.AddRec-form-group {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

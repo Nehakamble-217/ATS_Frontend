@@ -117,7 +117,7 @@
   color: white;
   padding-left: 7px;
   padding-right:7px;
-  background: #ffcb9b;
+  background: var(--button-color);
   border: 1px solid grey;
   cursor: pointer;
   margin-bottom: 10px;
@@ -125,8 +125,8 @@
   }
   
   .Candi-History-tracker-button:hover{
-  background-color: white;
-  color: #ffcb9b;
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
   border: #f2f2f2;
   border: 1px solid #ffcb9b;
   }
@@ -147,7 +147,7 @@
   }
   
   .bhafilter-button {
-    background-color: #ffb281;
+    background-color: var(--button-color);
     color: white;
     border: 1px solid gray;
     padding: 0px 8px; /* Adjust padding as needed */
@@ -162,13 +162,13 @@
   }
   
   .bhafilter-button:hover {
-    background-color: white;
-    color: #ffb281;
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
   }
   
   .bhafilter-button.active {
     background-color: #f2f2f2; /* Background color when active */
-    color: #ffb281;
+    color: var(--button-color);
   }
   
   .bhafilter-button:active {

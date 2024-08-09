@@ -8,7 +8,7 @@
 
 .sidebar {
   grid-column: 1 / 2;
-  background-color: #ffe5b5;
+  background-color: var(--Bg-color);
 }
 
 .empDash-main-content {

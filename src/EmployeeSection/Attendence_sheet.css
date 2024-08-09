@@ -100,8 +100,8 @@
 }
 
 .PI-attendancerows-head {
-  background-color: #ffcb9b;
-  color: gray;
+  background-color: var(--Bg-color);
+  color: var(--);
   /* font-weight: 100; */
   text-align: center;
   font-size: 18px;
@@ -148,7 +148,7 @@ html::-webkit-scrollbar {
 }
 
 .attendence-btn {
-  background: #ffcb9b;
+  background: var(--button-color);
   border: 1px solid grey;
   padding: 0px 3px;
   height: 30px;
@@ -163,8 +163,8 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 .attendence-btn:hover {
-  background: white;
-  color: #ffcb9b;
+  background-color: var(button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .PI-Ok,
@@ -177,7 +177,7 @@ html::-webkit-scrollbar {
   color: white;
   padding-left: 15px;
   padding-right: 15px;
-  background: #ffcb9b;
+  background: var(--button-color);
   border: 1px solid gray;
   cursor: pointer;
 }
@@ -186,9 +186,8 @@ html::-webkit-scrollbar {
 .reset-selectTL-button:hover,
 .update-assign-column-btn:hover,
 .update-assign-column-close-btn:hover {
-  background-color: white;
-  color: #ffcb9b;
-  border: #f2f2f2;
+  background-color: var(button-hover-color);
+  color: var(--text-hover-color);
   border: 1px solid gray;
 }
 .select-div {
@@ -202,14 +201,14 @@ html::-webkit-scrollbar {
   color: white;
   padding-left: 15px;
   padding-right: 15px;
-  background: #ffcb9b;
+  background: var(--button-color);
   border: 1px solid gray;
   cursor: pointer;
   margin-bottom: 10px;
 }
 .selected-btn:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .PI-full-width {
@@ -322,7 +321,7 @@ html::-webkit-scrollbar {
   color: white;
   padding-left: 15px;
   padding-right: 15px;
-  background: #ffcb9b;
+  background-color: var(--button-color);
   border: 1px solid gray;
   cursor: pointer;
 }
@@ -416,6 +415,7 @@ html::-webkit-scrollbar {
 .clickable-label {
   width: 100%;
   cursor: pointer;
+
   padding: 0px 5px;
   display: flex;
   gap: 5px;
@@ -427,8 +427,9 @@ html::-webkit-scrollbar {
   margin-left: 5px;
   font-size: 12px;
 }
-.PI-attendance-container {
+.PI-attendance-container{
   width: 100%;
   height: 70vh;
   overflow-x: scroll;
 }
+

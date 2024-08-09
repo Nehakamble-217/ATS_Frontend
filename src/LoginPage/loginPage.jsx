@@ -55,7 +55,7 @@ const LoginSignup = ({ onLogin }) => {
 
   console.log(userType);
   const createAccount = () => {
-    navigate("/createAccount/Applicant");
+    navigate("/createAccount/Vendor");
   };
 
   return (

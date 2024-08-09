@@ -13,11 +13,15 @@
 
 .action-button {
     padding: 2px 2px;
-    background: #ffcb9b;
+    background-color:var(--button-color) ;
     font-size: 16px;
     border-radius: 15px;
     border: 1px solid gray;
     padding: 0px 10px;
+}
+.action-button:hover{
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
 }
 
 .emp-details-act-btn {

@@ -30,7 +30,7 @@
     z-index: 1000;
     /* Ensure header stays above content */
     /* border-bottom: 3px solid #f0f0f0; */
-    background: linear-gradient(90deg, #ffb281, #ffe5b5, #ffb281);
+    background-color: var(--Bg-color);
     font-size: 18px;
 }
 
@@ -96,7 +96,7 @@
     margin-right: 10px;
     /* Added margin-right for spacing between buttons */
     padding: 10px 20px;
-    background-color: #ffcb9b;
+    background-color: var(--button-color);
     color: white;
     border: none;
     height: 30px;
@@ -108,8 +108,8 @@
 }
 
 .painarea-button:hover {
-    background-color: white;
-    color: #ffcb9b;
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
 }
 
 .painarea-button {

@@ -60,14 +60,14 @@
     color: white;
     padding-left: 15px;
     padding-right: 15px;
-    background: #ffcb9b;
+    background: var(--button-color);
     border: 1px solid gray;
     cursor: pointer;
     margin-bottom: 10px;
 }
 .lineUp-Filter-btn:hover,.lineUp-share-close-btn:hover,.lineUp-share-btn:hover,.lineUp-share-select-btn:hover,.lineUp-forward-btn:hover,.lineUp-share-forward-popup-btn:hover,.lineUp-close-forward-popup-btn:hover{
-  background-color: white;
-    color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
     opacity: 0.8;
 }
 
@@ -98,8 +98,8 @@
 }
 
 .buttoncss-ctn:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .buttoncss-ctn {
@@ -109,7 +109,7 @@
   padding-left: 15px;
   padding-right: 15px;
   height: 30px;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   display: inline-block;
   margin: 10px;
   text-align: center;

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../EmployeeDashboard/sideBar.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams,useLocation } from "react-router-dom";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
 import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+
 // Swapnil_Sidebar_AddingEmployeeDetailsinto_ManagerSection_17/07
 
 function Sidebar({
@@ -60,7 +61,7 @@ function Sidebar({
   toggelePainArea,
   /*ArbazPathan_EmpDashboard_AddedSubscription_&_InoviceReportToggeleFunction_19/07/2024_LineNo_59-60 */
   toggelSubscriptions,
-  toggleBilling,// toggleTeamDetails,
+  toggleBilling, // toggleTeamDetails,
   toggelCandidateHistory,
   toggleTeamDetails,
   /*ArbazPathan_EmpDashboard_AddedInterviewForm_29/07/2024_LineNo_65-66 */
@@ -72,52 +73,111 @@ function Sidebar({
   const [activeSubMenu, setActiveSubMenu] = useState(null); // Track the active submenu
   const [activeButton, setActiveButton] = useState(null); // Track the active button
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('#ffe5b5');
-  const [buttonBackgroundColor, setButtonBackgroundColor] = useState('#ffb281');
+ const [showColor,setShowColor] = useState(false);
 
   const navigator = useNavigate();
   const { employeeId } = useParams();
   const empid = parseInt(employeeId);
   const { userType } = useParams();
   console.log(userType + "userType");
+  const navigate = useNavigate();
+  const location = useLocation();
 
-
-  const handleColorChange = (color) => {
-    setSidebarBackgroundColor(color);
-    let btnColor;
-    switch (color) {
-      case '#7ab3ef':
-        btnColor = '#7ab3ef';
-        break;
-      case '#c8e1cc':
-        btnColor = '#c8e1cc';
-        break;
-      case '#fff77d':
-        btnColor = '#fff77d';
-        break;
-      case '#f8d1ee':
-        btnColor = '#f8d1ee';
-        break;
-      default:
-        btnColor = '#ffb281';
-    }
-    setButtonBackgroundColor(btnColor);
-  };
+  const pastelColors = [
+    "#a8d5ba", // Mint Green
+    "#f5d0c5", // Light Pink
+    "#f9f1a5", // Pale Yellow
+    "#d5e1df", // Pastel Grey
+    "#ffdfba", // Peach
+    "#c6e2e9", // Pastel Blue
+    "#f7c8e0", // Light Lavender
+    "#f8c8dc", // Soft Coral
+    "#e4c2d1", // Pastel Mauve
+    "#ffdac1", // Apricot
+  ];
 
   useEffect(() => {
-    setButtonBackgroundColor('#ffb281');
+    // Check if there's a saved color in the session storage
+    const savedColor = localStorage.getItem("selectedColor");
+
+    if (savedColor) {
+      applyColor(savedColor);
+    }
   }, []);
 
+  const applyColor = (color) => {
+    const darkenColor = (color, amount) => {
+      let colorInt = parseInt(color.slice(1), 16);
+      let r = (colorInt >> 16) + amount;
+      let g = ((colorInt >> 8) & 0x00ff) + amount;
+      let b = (colorInt & 0x0000ff) + amount;
 
+      r = Math.max(Math.min(255, r), 0);
+      g = Math.max(Math.min(255, g), 0);
+      b = Math.max(Math.min(255, b), 0);
+
+      return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
+    };
+
+    const hoverColor = darkenColor(color, -30);
+
+    document.documentElement.style.setProperty("--Bg-color", color);
+    document.documentElement.style.setProperty("--button-color", color);
+    document.documentElement.style.setProperty("--button-hover-color", hoverColor);
+    document.documentElement.style.setProperty("--hover-effect", hoverColor);
+    document.documentElement.style.setProperty("--filter-color", color);
+  };
+
+  const handleColorClick = (color) => {
+    applyColor(color);
+    setShowColor(false);
+
+    // Save the selected color in the session storage
+    localStorage.setItem("selectedColor", color);
+
+    // Use history.pushState to update the URL without showing the parameter
+    const url = new URL(window.location);
+    url.searchParams.delete("color"); // Ensure no color param in the URL
+    window.history.pushState({}, "", url);
+  };
+
+  // const handleColorClick = (color) => {
+  //   // Convert the color to a darker shade for hover effect
+  //   const darkenColor = (color, amount) => {
+  //     let colorInt = parseInt(color.slice(1), 16);
+  //     let r = (colorInt >> 16) + amount;
+  //     let g = ((colorInt >> 8) & 0x00ff) + amount;
+  //     let b = (colorInt & 0x0000ff) + amount;
+
+  //     r = Math.max(Math.min(255, r), 0);
+  //     g = Math.max(Math.min(255, g), 0);
+  //     b = Math.max(Math.min(255, b), 0);
+
+  //     return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
+  //   };
+
+  //   const hoverColor = darkenColor(color, -20);
+
+  //   // Update CSS variables
+  //   document.documentElement.style.setProperty("--Bg-color", color);
+  //   document.documentElement.style.setProperty("--button-color", color);
+  //   document.documentElement.style.setProperty(
+  //     "--button-hover-color",
+  //     hoverColor
+  //   );
+  //   document.documentElement.style.setProperty("--hover-effect", hoverColor);
+  //   document.documentElement.style.setProperty("--filter-color", color);
+  //   setShowColor(false);
+  // };
   // Helper function to determine the parent submenu of a button
   const getParentSubMenu = (buttonKey) => {
     const subMenuMap = {
-      selfCalling: 'candidate',
-      lineUp: 'candidate',
-      shortListed: 'candidate',
-      selectCandidate: 'candidate',
-      holdCandidate: 'candidate',
-      rejectedCandidate: 'candidate',
+      selfCalling: "candidate",
+      lineUp: "candidate",
+      shortListed: "candidate",
+      selectCandidate: "candidate",
+      holdCandidate: "candidate",
+      rejectedCandidate: "candidate",
       // Add mappings for other submenus as needed
     };
     return subMenuMap[buttonKey] || null;
@@ -177,7 +237,6 @@ function Sidebar({
     onLogout(logoutTime);
   };
 
-
   useEffect(() => {
     if (window.innerWidth <= 980) {
       setIsActive(false);
@@ -189,14 +248,14 @@ function Sidebar({
         setIsActive(true);
       }
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize(); // Initial check
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <>
-      <div className={`sidebar ${isActive ? "active" : ""}`} style={{ backgroundColor: sidebarBackgroundColor }}>
+      <div className={`sidebar ${isActive ? "active" : ""}`}>
         {/* Swapnil_SideBar_responsiveAccordingToScreen_161to162_02/07 */}
         <div className="head-sidebar">
           <div className="sidebar-menu-btn" onClick={toggleSidebar}>
@@ -271,10 +330,12 @@ function Sidebar({
 
                   {userType != "SuperUser" ? (
                     <li
-                      className={`${activeSubMenu === "candidate" || isCandidateSectionActive
-                        ? "active"
-                        : ""
-                        }`}
+                      className={`${
+                        activeSubMenu === "candidate" ||
+                        isCandidateSectionActive
+                          ? "active"
+                          : ""
+                      }`}
                       onClick={toggleSubMenu("candidate")}
                     >
                       <a href="#">
@@ -283,7 +344,10 @@ function Sidebar({
                           style={{ color: "gray" }}
                         ></i>
 
-                        <span className="sidebar-text" style={{ color: "gray" }}>
+                        <span
+                          className="sidebar-text"
+                          style={{ color: "gray" }}
+                        >
                           Find Candidate
                         </span>
                         {successAddUpdateResponse ? (
@@ -294,8 +358,9 @@ function Sidebar({
                         <i className="arrow ph-bold ph-caret-down"></i>
                       </a>
                       <ul
-                        className={`sub-menu ${activeSubMenu === "candidate" ? "active" : ""
-                          }`}
+                        className={`sub-menu ${
+                          activeSubMenu === "candidate" ? "active" : ""
+                        }`}
                       >
                         <li
                           style={{ marginLeft: "10px" }}
@@ -309,7 +374,9 @@ function Sidebar({
                         >
                           <a href="#">
                             {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span className="sidebar-text">Calling Tracker</span>
+                            <span className="sidebar-text">
+                              Calling Tracker
+                            </span>
                           </a>
                         </li>
 
@@ -318,14 +385,13 @@ function Sidebar({
                           onClick={handleButtonClick("lineUp", toggelLineUp)}
                           className={activeButton === "lineUp" ? "active" : ""}
                         >
-                           <a href="#">
-                          <span className="sidebar-text">Lineup Tracker</span>
-                          {successAddUpdateResponse ? (
-                            <span className="text-xl font-bold text-red-600">
-                              *
-                            </span>
-                            
-                          ) : null}
+                          <a href="#">
+                            <span className="sidebar-text">Lineup Tracker</span>
+                            {successAddUpdateResponse ? (
+                              <span className="text-xl font-bold text-red-600">
+                                *
+                              </span>
+                            ) : null}
                           </a>
                         </li>
                         {userType != "Vendor" ? (
@@ -374,7 +440,9 @@ function Sidebar({
                                 toggleSelectCandidate
                               )}
                               className={
-                                activeButton === "selectCandidate" ? "active" : ""
+                                activeButton === "selectCandidate"
+                                  ? "active"
+                                  : ""
                               }
                             >
                               <a href="#">
@@ -396,7 +464,9 @@ function Sidebar({
                             >
                               <a href="#">
                                 {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                                <span className="sidebar-text">Hold Candidate</span>
+                                <span className="sidebar-text">
+                                  Hold Candidate
+                                </span>
                               </a>
                             </li>
 
@@ -407,7 +477,9 @@ function Sidebar({
                                 toggleRejectedCandidate
                               )}
                               className={
-                                activeButton === "rejectedCandidate" ? "active" : ""
+                                activeButton === "rejectedCandidate"
+                                  ? "active"
+                                  : ""
                               }
                             >
                               <a href="#">
@@ -426,21 +498,23 @@ function Sidebar({
                             >
                               <a href="#">
                                 {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                                <span className="sidebar-text">Master Tracker</span>
+                                <span className="sidebar-text">
+                                  Master Tracker
+                                </span>
                               </a>
                             </li>
                           </>
                         ) : null}
                       </ul>
                     </li>
-
                   ) : null}
                 </>
                 <li
-                  className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
-                    ? "active"
-                    : ""
-                    }`}
+                  className={`${
+                    activeSubMenu === "Jobdiscription" || isJobDescriptionActive
+                      ? "active"
+                      : ""
+                  }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
                   <a href="#">
@@ -453,8 +527,9 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu ${activeSubMenu === "Jobdiscription" ? "active" : ""
-                      }`}
+                    className={`sub-menu ${
+                      activeSubMenu === "Jobdiscription" ? "active" : ""
+                    }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -478,7 +553,7 @@ function Sidebar({
                     {(userType != "Recruiters" &&
                       userType != "SuperUser" &&
                       userType != "Vendor") ||
-                      (userType === "TeamLeader" && userType === "Manager") ? (
+                    (userType === "TeamLeader" && userType === "Manager") ? (
                       <li
                         style={{ marginLeft: "10px" }}
                         onClick={handleButtonClick(
@@ -519,8 +594,9 @@ function Sidebar({
                       </a> */}
 
                       <ul
-                        className={`sub-menu sub-menu1 ${activeSubMenu === "employee" ? "active" : ""
-                          }`}
+                        className={`sub-menu sub-menu1 ${
+                          activeSubMenu === "employee" ? "active" : ""
+                        }`}
                       >
                         <li
                           style={{ marginLeft: "10px" }}
@@ -576,10 +652,11 @@ function Sidebar({
                           <i className="arrow ph-bold ph-caret-down"></i>
                         </a>
                         <ul
-                          className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section"
-                            ? "active"
-                            : ""
-                            }`}
+                          className={`sub-menu sub-menu1 ${
+                            activeSubMenu === "TeamLeader-section"
+                              ? "active"
+                              : ""
+                          }`}
                         >
                           <li
                             onClick={handleButtonClick(
@@ -687,7 +764,9 @@ function Sidebar({
                           >
                             <a href="#">
                               {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                              <span className="sidebar-text">Employee Details</span>
+                              <span className="sidebar-text">
+                                Employee Details
+                              </span>
                             </a>
                           </li>
                         </ul>
@@ -711,19 +790,15 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
-                        }`}
+                      className={`sub-menu sub-menu1 ${
+                        activeSubMenu === "admin-section" ? "active" : ""
+                      }`}
                     >
                       <>
                         <li
-                          onClick={handleButtonClick(
-                            "billing",
-                            toggleBilling
-                          )}
+                          onClick={handleButtonClick("billing", toggleBilling)}
                           style={{ marginLeft: "10px" }}
-                          className={
-                            activeButton === "billing" ? "active" : ""
-                          }
+                          className={activeButton === "billing" ? "active" : ""}
                         >
                           <a href="#">
                             <span className="sidebar-text">
@@ -732,34 +807,21 @@ function Sidebar({
                           </a>
                         </li>
                         <li
-                          onClick={handleButtonClick(
-                            "payRoll",
-                            togglePayRoll
-                          )}
+                          onClick={handleButtonClick("payRoll", togglePayRoll)}
                           style={{ marginLeft: "10px" }}
-                          className={
-                            activeButton === "payRoll" ? "active" : ""
-                          }
+                          className={activeButton === "payRoll" ? "active" : ""}
                         >
                           <a href="#">
                             <span className="sidebar-text">Pay Roll</span>
                           </a>
                         </li>
                         <li
-                          onClick={handleButtonClick(
-                            "invoice",
-                            toggleInvoice
-                          )}
+                          onClick={handleButtonClick("invoice", toggleInvoice)}
                           style={{ marginLeft: "10px" }}
-                          className={
-                            activeButton === "invoice" ? "active" : ""
-                          }
+                          className={activeButton === "invoice" ? "active" : ""}
                         >
                           <a href="#">
-                            <span className="sidebar-text">
-                              {" "}
-                              Make Invoice
-                            </span>
+                            <span className="sidebar-text"> Make Invoice</span>
                           </a>
                         </li>
 
@@ -821,9 +883,7 @@ function Sidebar({
                             togglescheduleinterview
                           )}
                           className={
-                            activeButton === "scheduleinterview"
-                              ? "active"
-                              : ""
+                            activeButton === "scheduleinterview" ? "active" : ""
                           }
                           style={{ marginLeft: "10px" }}
                         >
@@ -864,9 +924,7 @@ function Sidebar({
                         >
                           <a href="#">
                             {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span className="sidebar-text">
-                              Assign Columns
-                            </span>
+                            <span className="sidebar-text">Assign Columns</span>
                           </a>
                         </li>
                       </>
@@ -893,9 +951,7 @@ function Sidebar({
                         >
                           <a href="#">
                             {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span className="sidebar-text">
-                              Add Recruiters
-                            </span>
+                            <span className="sidebar-text">Add Recruiters</span>
                           </a>
                         </li>
                       </>
@@ -966,8 +1022,9 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "SuperUser" ? "active" : ""
-                        }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${
+                        activeSubMenu === "SuperUser" ? "active" : ""
+                      }`}
                     >
                       <li
                         style={{ marginLeft: "10px" }}
@@ -979,14 +1036,9 @@ function Sidebar({
                         </a>
                       </li>
                       <li
-                        onClick={handleButtonClick(
-                          "billing",
-                          toggleBilling
-                        )}
+                        onClick={handleButtonClick("billing", toggleBilling)}
                         style={{ marginLeft: "10px" }}
-                        className={
-                          activeButton === "billing" ? "active" : ""
-                        }
+                        className={activeButton === "billing" ? "active" : ""}
                       >
                         <a href="#">
                           <span className="sidebar-text">
@@ -995,20 +1047,12 @@ function Sidebar({
                         </a>
                       </li>
                       <li
-                        onClick={handleButtonClick(
-                          "invoice",
-                          toggleInvoice
-                        )}
+                        onClick={handleButtonClick("invoice", toggleInvoice)}
                         style={{ marginLeft: "10px" }}
-                        className={
-                          activeButton === "invoice" ? "active" : ""
-                        }
+                        className={activeButton === "invoice" ? "active" : ""}
                       >
                         <a href="#">
-                          <span className="sidebar-text">
-                            {" "}
-                            Make Invoice
-                          </span>
+                          <span className="sidebar-text"> Make Invoice</span>
                         </a>
                       </li>
 
@@ -1023,10 +1067,7 @@ function Sidebar({
                         }
                       >
                         <a href="#">
-                          <span className="sidebar-text">
-                            {" "}
-                            Invoice Report
-                          </span>
+                          <span className="sidebar-text"> Invoice Report</span>
                         </a>
                       </li>
                       <li
@@ -1073,9 +1114,7 @@ function Sidebar({
                       >
                         <a href="#">
                           {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                          <span className="sidebar-text">
-                            Add Recruiters
-                          </span>
+                          <span className="sidebar-text">Add Recruiters</span>
                         </a>
                       </li>
                       <li
@@ -1107,8 +1146,9 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
-                        }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${
+                        activeSubMenu === "database" ? "active" : ""
+                      }`}
                     >
                       <li
                         onClick={handleButtonClick(
@@ -1209,9 +1249,6 @@ function Sidebar({
 
                 {userType != "SuperUser" && userType != "Vendor" ? (
                   <>
-
-
-
                     <li
                       onClick={handleButtonClick(
                         "notepad",
@@ -1228,14 +1265,14 @@ function Sidebar({
                       </a>
                     </li>
                     {userType != "Vendor" && userType != "Recruiters" ? (
-                      <li className={
-                        activeButton === "report" ? "active" : ""
-                      }
+                      <li
+                        className={activeButton === "report" ? "active" : ""}
                         onClick={handleButtonClick(
                           "report",
                           // toggleReports
                           toggleMainReportDatapage
-                        )}>
+                        )}
+                      >
                         <a href="#">
                           <i
                             className="fa-regular fa-address-book"
@@ -1245,8 +1282,6 @@ function Sidebar({
                         </a>
                       </li>
                     ) : null}
-
-
                   </>
                 ) : null}
                 {userType != "SuperUser" && userType != "Manager" ? (
@@ -1264,8 +1299,9 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
-                        }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${
+                        activeSubMenu === "portal" ? "active" : ""
+                      }`}
                     >
                       <li style={{ marginLeft: "10px" }}>
                         <a href="#">
@@ -1328,8 +1364,9 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "aboutus" ? "active" : ""
-                        }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${
+                        activeSubMenu === "aboutus" ? "active" : ""
+                      }`}
                     >
                       <li style={{ marginLeft: "10px" }}>
                         <span
@@ -1367,34 +1404,42 @@ function Sidebar({
                   </li>
                 ) : null}
 
-          
                 {userType != "SuperUser" && userType != "Vendor" ? (
                   <li
                     className={activeSubMenu === "help" ? "active" : ""}
                     onClick={toggleSubMenu("help")}
                   >
                     <a href="#">
-                      <i className="fa-regular fa-circle-question" style={{ color: "gray" }}></i>
+                      <i
+                        className="fa-regular fa-circle-question"
+                        style={{ color: "gray" }}
+                      ></i>
                       <span className="sidebar-text">Help</span>
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "help" ? "active" : ""
-                        }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${
+                        activeSubMenu === "help" ? "active" : ""
+                      }`}
                     >
                       <li style={{ marginLeft: "10px" }}>
                         <span
                           className="sidebar-text"
                           onClick={toggeleInterviewForm}
                         >
-                        Interview Questions
+                          Interview Questions
                         </span>
                       </li>
-                      <li style={{ marginLeft: "10px" }} onClick={toggelCandidateHistory}>
-                      <a href="#">
-                        <span className="sidebar-text">Candidate History Tracker</span>
-                      </a>
-                    </li>
+                      <li
+                        style={{ marginLeft: "10px" }}
+                        onClick={toggelCandidateHistory}
+                      >
+                        <a href="#">
+                          <span className="sidebar-text">
+                            Candidate History Tracker
+                          </span>
+                        </a>
+                      </li>
                     </ul>
                   </li>
                 ) : null}
@@ -1404,48 +1449,12 @@ function Sidebar({
                   onClick={toggleSubMenu("color")}
                 >
                   <a href="#">
-                  <i className="fa-solid fa-palette" style={{ color: "gray" }}></i>
-                    <span className="sidebar-text">Chose Color</span>
-                    <i className="arrow ph-bold ph-caret-down"></i>
-                  </a>
-                  <ul
-                    className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "color" ? "active" : ""
-                      }`}
-                  >
-                    <li style={{ marginLeft: "10px" }}>
-                      <span
-                        className="sidebar-text"
-                        style={{ backgroundColor: buttonBackgroundColor, whiteSpace: "nowrap" }} onClick={() => handleColorChange('#7ab3ef')}
-                      >
-                        Blue
-                      </span>
-                    </li>
-                    <li style={{ marginLeft: "10px" }}>
-                      <span
-                        className="sidebar-text"
-                        style={{ backgroundColor: buttonBackgroundColor, whiteSpace: "nowrap" }} onClick={() => handleColorChange('#c8e1cc')}
-                      >
-                       Off Blue
-                      </span>
-                    </li>
-                    <li style={{ marginLeft: "10px" }}>
-                      <span
-                        className="sidebar-text"
-                        style={{ backgroundColor: buttonBackgroundColor, whiteSpace: "nowrap" }} onClick={() => handleColorChange('#fff77d')}
-                      >
-                     Yellow
-                      </span>
-                    </li>
-                    <li style={{ marginLeft: "10px" }}>
-                      <span
-                        className="sidebar-text"
-                        style={{ backgroundColor: buttonBackgroundColor, whiteSpace: "nowrap" }} onClick={() => handleColorChange('#f8d1ee')}
-                      >
-                        Levendor
-                      </span>
-                    </li>
-
-                  </ul>
+                    <i
+                      className="fa-solid fa-palette"
+                      style={{ color: "gray" }}
+                    ></i>
+                    <span className="sidebar-text" onClick={()=>{setShowColor(true)}}>Choose Colour</span>
+                  </a>   
                 </li>
 
                 <li onClick={() => setShowConfirmation(true)}>
@@ -1462,6 +1471,51 @@ function Sidebar({
           </div>
         </div>
       </div>
+      {
+        showColor &&(
+          <div
+          className="bg-black bg-opacity-50 modal show"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "fixed",
+            width: "100%",
+            height: "100vh",
+          }}
+        >
+          <Modal.Dialog
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+              <Modal.Body>
+              <div className="color-picker">
+                      {pastelColors.map((color, index) => (
+                        <button
+                          key={index}
+                          style={{
+                            backgroundColor: color,
+                            border: "none",
+                            width: "40px",
+                            height: "40px",
+                            cursor: "pointer",
+                            margin: "5px",
+                          }}
+                          onClick={() => handleColorClick(color)}
+                        />
+                      ))}
+                    </div>
+
+              </Modal.Body>
+
+          </Modal.Dialog>
+
+        </div>
+        )
+      }
 
       {showConfirmation && (
         <div
