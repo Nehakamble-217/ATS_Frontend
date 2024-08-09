@@ -34,7 +34,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   ) => {
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
+        `http://192.168.1.43:9090/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
       );
 
       const data = await response.json();
@@ -53,7 +53,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/interview-date/${employeeIdNew}/${userType}`
+        `http://192.168.1.43:9090/api/ats/157industries/interview-date/${employeeIdNew}/${userType}`
       );
       console.log(employeeIdNew + " ---01--- Interview Dates");
       console.log(userType + " ---01--- User Type");
@@ -78,7 +78,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/today-interview/${formattedDate}/${employeeId}/${userType}`
+        `http://192.168.1.43:9090/api/ats/157industries/today-interview/${formattedDate}/${employeeId}/${userType}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -103,7 +103,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://localhost:9090/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `http://192.168.1.43:9090/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -158,7 +158,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:9090/api/ats/157industries/save-interview-response",
+        "http://192.168.1.43:9090/api/ats/157industries/save-interview-response",
         {
           method: "POST",
           headers: {

@@ -18,7 +18,7 @@ const ResumeList = ({ handleUpdate }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://192.168.1.42:9090/api/ats/157industries/all-resumes-data"
+          "http://192.168.1.43:9090/api/ats/157industries/all-resumes-data"
         ); // Replace with your API URL
 
         if (!response.ok) {
@@ -39,7 +39,7 @@ const ResumeList = ({ handleUpdate }) => {
   const handleUpdateSuccess = () => {
     // Assuming `employeeId` is a known variable or prop
     fetch(
-      `http://192.168.1.42:9090/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.43:9090/api/ats/157industries/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {

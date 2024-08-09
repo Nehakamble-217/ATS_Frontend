@@ -191,7 +191,7 @@ const AddEmployee = () => {
     console.log(formData);
     try {
       const response = await fetch(
-        "http://localhost:9090/api/ats/157industries/add-employee",
+        "http://192.168.1.43:9090/api/ats/157industries/add-employee",
         {
           method: "POST",
           body: formDataToSend,
@@ -221,9 +221,9 @@ const AddEmployee = () => {
   const hideconfirmPassword = () => setconfirmPasswordVisible(false);
 
   return (
-    <div className="form-container">
+    <div className="AddRec-form-container">
       <form
-        className="form-group"
+        className="AddRec-form-group"
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
@@ -974,8 +974,6 @@ const AddEmployee = () => {
              onMouseLeave={hidePassword}> 
           <i className="fas fa-eye"></i>
           </div>
-
-          <div className="password-input-container">
             <input
               type={passwordVisible ? "text" : "password"}
               name="employeePassword"
@@ -983,18 +981,7 @@ const AddEmployee = () => {
               value={formData.employeePassword}
               onChange={handleInputChange}
             />
-            {/* <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="show-pass-btn"
-            >
-              {passwordVisible ? "Hide" : "Show"}
-            </button> */}
           </div>
-
-          </div>
-
-
         </div>
 
         <div className="addRec-form-row">

@@ -31,7 +31,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     try {
       const response = await fetch(
 
-        `http://localhost:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
+        `http://192.168.1.43:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
       );
       const responseData = await response.json();
       console.log(responseData);

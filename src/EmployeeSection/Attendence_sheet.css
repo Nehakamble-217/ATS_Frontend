@@ -43,7 +43,7 @@
   padding: 4px;
   color: gray;
   white-space: nowrap;
-  width: auto ;
+  width: auto;
   height: 30px;
 
   /* text-overflow: ellipsis; */
@@ -397,7 +397,8 @@ html::-webkit-scrollbar {
 .clickable-label {
   width: 100%;
   cursor: pointer;
-  padding:0px 5px ;
+
+  padding: 0px 5px;
   display: flex;
   gap: 5px;
   align-items: center;
@@ -413,3 +414,4 @@ html::-webkit-scrollbar {
   height: 70vh;
   overflow-x: scroll;
 }
+

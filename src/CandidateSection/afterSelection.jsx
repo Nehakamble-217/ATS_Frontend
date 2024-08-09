@@ -198,7 +198,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -222,7 +222,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -240,7 +240,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.42:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `http://192.168.1.43:9090/api/ats/157industries/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -271,7 +271,7 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-        "http://192.168.1.50:9090/api/ats/157industries/add-after-selection",
+        "http://192.168.1.43:9090/api/ats/157industries/add-after-selection",
         {
           method: "POST",
           headers: {
@@ -331,7 +331,7 @@ const AfterSelection = ({
 
     try {
       const response = await fetch(
-        "http://192.168.1.50:9090/api/ats/157industries/save-join-data",
+        "http://192.168.1.43:9090/api/ats/157industries/save-join-data",
         {
           method: "POST",
           body: formData,

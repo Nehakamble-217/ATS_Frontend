@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./addJobDescription.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -81,7 +81,7 @@ const AddJobDescription = () => {
       ],
     }));
   };
-   
+
   useEffect(() => {
     let subscription;
     const setupWebSocket = async () => {
@@ -116,7 +116,7 @@ const AddJobDescription = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:9090/api/ats/157industries/add-requirement",
+        "http://192.168.1.43:9090/api/ats/157industries/add-requirement",
         {
           method: "POST",
           headers: {
@@ -529,7 +529,7 @@ const AddJobDescription = () => {
                         }
                         placeholder="Enter Round Of Interview"
                       />
-                       <button
+                      <button
                         type="button"
                         className="job-remove-button"
                         onClick={() => handleRemove("RoundOfInterView", index)}
@@ -537,18 +537,18 @@ const AddJobDescription = () => {
                         X
                       </button>
                     </div>
-                   
+
                   </div>
                 ))}
                 <div className="ajd-btndiv-div">
-                <button
-                  type="button"
-                  className="job-button"
-                  onClick={() => handleAddMore("RoundOfInterView")}
-                >
-                  Add More Interview Rounds
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    className="job-button"
+                    onClick={() => handleAddMore("RoundOfInterView")}
+                  >
+                    Add More Interview Rounds
+                  </button>
+                </div>
               </div>
 
               <div className="bg-white multi-field">
@@ -589,15 +589,15 @@ const AddJobDescription = () => {
                   </div>
                 ))}
 
-<div className="ajd-btndiv-div">
-                <button
-                  type="button"
-                  className="job-button"
-                  onClick={() => handleAddMore("responsibilities")}
-                >
-                  Add More Responsibilities
-                </button>
-              </div>
+                <div className="ajd-btndiv-div">
+                  <button
+                    type="button"
+                    className="job-button"
+                    onClick={() => handleAddMore("responsibilities")}
+                  >
+                    Add More Responsibilities
+                  </button>
+                </div>
               </div>
 
               <div className="bg-gray-100 multi-field">
@@ -614,7 +614,7 @@ const AddJobDescription = () => {
                           handleInputChange(e, "jobRequirements", index)
                         }
                       />
-                     
+
                     </div>
                     <div className="field">
                       <label>Job Requirement Message:</label>
@@ -627,7 +627,7 @@ const AddJobDescription = () => {
                         }
                         placeholder="Enter Job Requirement Message"
                       />
-                       <button
+                      <button
                         type="button"
                         className="job-remove-button"
                         onClick={() => handleRemove("jobRequirements", index)}
@@ -638,15 +638,15 @@ const AddJobDescription = () => {
                   </div>
                 ))}
 
-<div className="ajd-btndiv-div">
-                <button
-                  type="button"
-                  className="job-button"
-                  onClick={() => handleAddMore("jobRequirements")}
-                >
-                  Add More Job Requirements
-                </button>
-              </div>
+                <div className="ajd-btndiv-div">
+                  <button
+                    type="button"
+                    className="job-button"
+                    onClick={() => handleAddMore("jobRequirements")}
+                  >
+                    Add More Job Requirements
+                  </button>
+                </div>
               </div>
 
               <div className="multi-field">
@@ -675,7 +675,7 @@ const AddJobDescription = () => {
                         }
                         placeholder="Enter Preferred Qualification Message"
                       />
-                       <button
+                      <button
                         type="button"
                         className="job-remove-button"
                         onClick={() => handleRemove("preferredQualifications", index)}
@@ -686,13 +686,13 @@ const AddJobDescription = () => {
                   </div>
                 ))}
                 <div className="ajd-btndiv-div">
-                <button
-                  type="button"
-                  className="job-button"
-                  onClick={() => handleAddMore("preferredQualifications")}
-                >
-                  Add More Preferred Qualifications
-                </button>
+                  <button
+                    type="button"
+                    className="job-button"
+                    onClick={() => handleAddMore("preferredQualifications")}
+                  >
+                    Add More Preferred Qualifications
+                  </button>
                 </div>
               </div>
             </div>

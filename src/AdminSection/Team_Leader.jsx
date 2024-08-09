@@ -89,7 +89,7 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-      `http://192.168.1.50:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+      `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
 
     );
     setRecruiterUnderTeamLeader(response.data);
