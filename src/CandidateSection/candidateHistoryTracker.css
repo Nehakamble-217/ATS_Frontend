@@ -95,7 +95,8 @@
   }
   
   .checkbox-label {
-    display: flex;
+    /* width: 10%; */
+    display: flex; 
     align-items: center;
     margin: 5px 0;
   }
@@ -136,9 +137,9 @@
   .bhabutton-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
-    padding: 20px;
+    padding: 5px;
   }
   
   .bha-dropdown {
