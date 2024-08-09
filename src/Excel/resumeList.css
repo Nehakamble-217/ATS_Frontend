@@ -99,7 +99,7 @@
 }
 
 .d-grid button {
-  background: #ffcb9b;
+  background: var(--button-color);
   border: none;
   height: 30px;
   width: 100%;
@@ -120,8 +120,8 @@
 }
 
 .d-grid button:hover {
-  background: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .text-danger {
@@ -208,7 +208,7 @@
   border-radius: 15px;
   padding: 0px 10px 0px 10px;
   color: gray;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   margin-bottom: 6px;
   /* margin-right: 100px; */
   /* display: flex; */
@@ -216,8 +216,8 @@
 }
 
 .rl-create-Excel-btn:hover {
-  color: #ffcb9b;
-  background-color: white;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .rl-btn-div {

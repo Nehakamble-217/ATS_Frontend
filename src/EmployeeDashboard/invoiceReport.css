@@ -114,7 +114,7 @@
 .attendance-table thead th {
   position: sticky;
   top: 0;
-  background-color: #ffcb9b;
+  background-color: var(--Bg-color);
   color: gray;
   z-index: 1;
   height: 30px;
@@ -152,7 +152,7 @@
 
 .tooltip {
   visibility: hidden;
-  background-color: #ffcb9b;
+  background-color: var(--Bg-color);
   color: #000;
   text-align: center;
   border-radius: 5px;
@@ -177,7 +177,7 @@
 
 
 .attendancerows-head {
-  background-color: #ffcb9b;
+  background-color: var(--Bg-color);
   color: gray;
   /* font-weight: 100; */
   text-align: center;

@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --Bg-color: #ffe5b5;
+  --button-color:#ffcb9b;
+  --button-hover-color:white;
+  --text-color:gray;
+  --text-hover-color:gray;
+  --hover-effect:#ffcb9b;
+  --filter-color:#ffcb9b;
+}
+
 .accordion {
     width: 100%;
     max-width: 600px;
@@ -16,7 +26,7 @@
   .accordion-header {
     cursor: pointer;
     padding: 10px;
-    background-color: #ffb281;
+    background-color: var(--hover-effect);
     font-size: 18px;
 }
 .accordion-title {
@@ -38,7 +48,7 @@
   .accordion-header-SU,.accordion-header-M{
     cursor: pointer;
     padding: 10px;
-    background-color: #ffb281;
+    background-color: var(--Bg-color);
     font-size: 16px;
     color: gray;
   }
@@ -86,3 +96,4 @@
     background-color: black ;
     color: white !important;
   }
+  

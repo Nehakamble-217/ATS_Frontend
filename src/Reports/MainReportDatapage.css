@@ -263,7 +263,7 @@ color: grey;
   
     
   .attendancerows-head {
-    background-color: #ffcb9b;
+    background-color: var(--Bg-color);
     color: gray;
     /* font-weight: 100; */
     text-align: center;
@@ -779,7 +779,7 @@ color: grey;
       width: auto;
       /* width: 85px; */
       margin-top: 2px;
-      color: #ffcb9b; 
+      color: var(--button-color); 
       padding-left: 8px;
       padding-right:8px;
       background-color: white;
@@ -787,8 +787,8 @@ color: grey;
       cursor: pointer;
     }
     .report-category-share-btn:hover{
-      color: white;
-      background: #ffcb9b;
+      background-color: var(--button-hover-color);
+      color: var(--text-hover-color);
     }
     .report-buttons-div{
       display: flex;
@@ -803,15 +803,15 @@ color: grey;
       color: white;
       padding-left: 7px;
       padding-right:7px;
-      background: #ffcb9b;
+      background: var(--button-color);
       border: 1px solid gray;
       cursor: pointer;
       margin-bottom: 10px;
     }
   
     .report-ok-button:hover,.report-reset-selectTL-button:hover{
-      background-color: white;
-      color: #ffcb9b;
+      background-color: var(--button-hover-color);
+      color: var(--text-hover-color);
       border: #f2f2f2;
       border: 1px solid gray;
     }
@@ -902,7 +902,7 @@ color: grey;
     }
   
     .filterDataButton button {
-      background: #ffcb9b;
+      background: var(--button-color);
       border: 1px solid grey;
       height: 30px;
       width: auto; /* Adjust width as needed */
@@ -918,11 +918,11 @@ color: grey;
     }
   
     .filterDataButton button:hover {
-      background: white;
-      color: #ffcb9b;
+      background-color: var(--button-hover-color);
+      color: var(--text-hover-color);
     }
     .filterDataButton1 button {
-      background: #ffcb9b;
+      background: var(--button-color);
       border: 1px solid grey;
       height: 30px;
       width: auto; /* Adjust width as needed */
@@ -938,8 +938,8 @@ color: grey;
     }
   
     .filterDataButton1 button:hover {
-      background: white;
-      color: #ffcb9b;
+      background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
     }
     .filterDataButton{
       text-align: center;
@@ -956,8 +956,8 @@ color: grey;
   }
   
   .candidate-report select:hover{
-   background-color:#ffcb9b;
-  color: grey;
+   background-color:var(--Bg-color);
+  color: var(--text-color);
   }
   
   .candidate-report{

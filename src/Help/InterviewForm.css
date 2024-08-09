@@ -27,7 +27,7 @@
 /* Left and Right Cards */
 .left-card {
   height: 100%; /* Ensure it takes full height of the container */
-  background-color: #ffe5b5;
+  background-color: var(--Bg-color);
  width: 500px;
 }
 
@@ -233,7 +233,7 @@ h6 {
   text-align: center;
 }
 .submit-button {
-  background-color: #ffcb9b; /* Background color */
+  background-color: var(--button-color); /* Background color */
   color: white; /* Text color */
   border: 1px solid gray;
   padding-left: 10px;
@@ -249,8 +249,8 @@ h6 {
 }
 
 .submit-button:hover {
-  background-color: white; /* Background color on hover */
-  color: #ffb281; /* Text color on hover */
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);/* Text color on hover */
   border: 1px solid gray;
 }
 

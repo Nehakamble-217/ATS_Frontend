@@ -5,7 +5,7 @@
     font-size: 18px;
 }
 .instr-headings-span{
-    background-color: #ffcb9b;
+    background-color: var(--Bg-color);
 
 }
 
@@ -57,7 +57,7 @@
     padding-top: 10px;
     z-index: 1000; /* Ensure header stays above content */
     border-bottom: 3px solid #f0f0f0;
-    background: linear-gradient(90deg, #ffb281,  #ffe5b5,  #ffb281);
+    background-color: var(--Bg-color);
     font-size: 18px;
     margin-bottom: 16px;
     

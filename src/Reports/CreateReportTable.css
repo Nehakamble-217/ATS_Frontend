@@ -172,7 +172,7 @@
         
           
         .attendancerows-head {
-          background-color: #ffcb9b;
+          background-color: var(--Bg-color);
           color: gray;
           /* font-weight: 100; */
           text-align: center;

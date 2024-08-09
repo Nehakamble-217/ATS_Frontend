@@ -704,7 +704,7 @@ const HoldCandidate = ({
       {loading ? (
         <div className="register">
           <HashLoader
-            color={color}
+             color={`${localStorage.getItem("selectedColor")}`}
             aria-label="Loading Spinner"
             data-testid="loader"
           />

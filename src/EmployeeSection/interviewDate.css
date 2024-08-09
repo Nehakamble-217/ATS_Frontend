@@ -103,11 +103,11 @@ button.react-calendar__tile.react-calendar__month-view__days__day {
 }
 
 button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day {
-  background-color: #ffb281;
+  background-color: var(--Bg-color);
 }
 
 button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view__days__day {
-  background-color: #ffe5b5;
+  background-color: var(--Bg-color);
 }
 
 .calender-main-div {
@@ -133,8 +133,6 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   padding-top: 30px;
   padding-left: 10px;
   padding-right: 20px;
-
-
 }
 
 .shortlist-table-div table {
@@ -206,7 +204,7 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   margin-top: -10px;
   font-size: 16px;
   margin-bottom: 10px;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   color: white;
   border: none;
   cursor: pointer;
@@ -214,8 +212,8 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
 }
 
 .shortlisted-submite-btn button:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
   border: 1px solid gray;
   /* transform: translateY(-2px); */
 }

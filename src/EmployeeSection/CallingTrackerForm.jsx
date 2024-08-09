@@ -85,9 +85,6 @@ const CallingTrackerForm = ({
     finalStatus: "",
     resume: null,
   };
-
-
-
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
   );
