@@ -6,6 +6,7 @@ import "./interviewDate.css";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
+import '../EmployeeSection/interviewDate.css'
 
 const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -234,10 +235,11 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     return (
       <div className="App-after">
-        <div className="attendanceTableData" id="interview-table-scroll">
-          <table id="interviewDates-id" className="attendance-table">
-            <thead>
-              <tr className="attendancerows-head">
+
+        <div className="interview-data-div">
+        <table id="shortlisted-table-id" className="attendance-table">
+        <thead>
+        <tr className="attendancerows-head">
                 <th className="attendanceheading">No</th>
                 <th className="attendanceheading">Candidate Id</th>
                 <th className="attendanceheading">Added Date</th>
@@ -260,7 +262,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <th className="attendanceheading">Incentive</th>
                 <th className="attendanceheading">Interview Status</th>
                 <th className="attendanceheading">Action</th>
-              </tr>
+                </tr>
             </thead>
             <tbody>
               {interviewData.map((item, index) => (
@@ -287,7 +289,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                     </div>
                   </td>
                   <td
-                    className="tabledata"
+                     className="tabledata"
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                   >

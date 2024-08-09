@@ -616,7 +616,7 @@ const Attendance = () => {
             <div className="PI-header">{userType}</div>
             <div className="PI-dropdown-container">
               <div className="PI-Dropdown" onClick={toggleDropdown}>
-                {userType === "SuperUser" && <span>Select Manager</span>}
+                {userType === "SuperUser" && <span>Select  Manager</span>}
                 {userType === "Manager" && <span>Select Team Leader</span>}
                 {userType === "TeamLeader" && <span>Select Recruiters</span>}
                 <span className={`dropdown-icon`} />
@@ -671,7 +671,7 @@ const Attendance = () => {
                     {selectedTeamLeaders.length ||
                       employeeCount.teamLeaderCount}
                   </p>
-                  <p>Recruiter Count : {employeeCount.employeeCount}</p>
+                  <p>Recruiter  Count : {employeeCount.employeeCount}</p>
                 </>
               )}
               {userType === "TeamLeader" && (
@@ -682,9 +682,9 @@ const Attendance = () => {
             </div>
             {showCalculation && (
               <div className="PI-table-container">
-                <table className="summary-table">
-                  <tbody>
-                    <tr>
+                <table className="summary-table" >
+                  <tbody >
+                    <tr >
                       <td className="text-gray">Working Days</td>
                       <td className="text-gray">{summary.workingDays}</td>
                       <td className="text-gray">Total Working Hours</td>
@@ -708,16 +708,7 @@ const Attendance = () => {
                       <td className="text-gray">Absent</td>
                       <td className="text-gray">{summary.absent}</td>
                     </tr>
-                    <tr
-                      className={`${getStatusClassName(
-                        summary.performanceStatus
-                      )}`}
-                    >
-                      <td >Achievement Rate</td>
-                      <td >{summary.achievementRate}</td>
-                      <td >Performance Status</td>
-                      <td >{summary.performanceStatus}</td>
-                    </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -815,11 +806,8 @@ const Attendance = () => {
                 />
               </div>
             )}
-            {/* <div className="date-info">
-        <p className="date-info-p-s" >Start Date: {startDate}</p>
-        <p className="date-info-p">End Date: {endDate}</p>
-      </div> */}
-            <div className="PI-filters">
+  
+            <div className="PI-filters" >
               <button className="PI-attendence-btn" onClick={showDataReport}>
                 Get Attendance
               </button>
@@ -879,13 +867,25 @@ const Attendance = () => {
                 </div>
               )}
             </div>
+            
+            <div
+              className={`${getStatusClassName(
+                summary.performanceStatus
+              )}`}
+              id="total-Performance-percentage"
+            >
+              <p>Achievement Rate</p>
+              <p>{summary.achievementRate}</p>
+              <p>Performance Status</p> -
+              <p>{summary.performanceStatus}</p>
+            </div>
           </div>
         </div>
       </div>
+      
       <div className="PI-attendance-container">
         <table className="PI-attendance-table">
-          <thead>
-            <tr className="PI-attendancerows-head">
+          <thead className="PI-attendancerows-head" >
               <th className="PI-attendanceheading">Sr No</th>
               <th className="PI-attendanceheading">Working Date</th>
               <th className="PI-attendanceheading">Employee Name</th>
@@ -901,12 +901,10 @@ const Attendance = () => {
               <th className="PI-attendanceheading">Holiday Leave</th>
               <th className="PI-attendanceheading">Work Type</th>
               <th className="PI-attendanceheading">Day Status</th>
-              {/* <th className="PI-attendanceheading">Breaks</th> */}
               <th className="PI-attendanceheading">Working Hours</th>
               <th className="PI-attendanceheading">Logout Time</th>
               <th className="PI-attendanceheading">Employee Id</th>
               <th className="PI-attendanceheading">Team Leader Id</th>
-            </tr>
           </thead>
           <tbody>
             {attendanceData.map((data, index) => (

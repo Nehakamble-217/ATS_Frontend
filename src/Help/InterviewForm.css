@@ -2,13 +2,14 @@
 /* RecruiterReminder.css */
 /* General Styles */
 
-
 .dhann-container {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: auto; /* Ensure container takes full viewport height */
   max-width: 1800px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .card {
@@ -23,27 +24,20 @@
   flex-direction: column; /* Stack children vertically */
 }
 
-
-
 /* Left and Right Cards */
 .left-card {
-  flex: 0 0 25%; /* 25% width for left card */
   height: 100%; /* Ensure it takes full height of the container */
   background-color: #ffe5b5;
-  height: 100%;
+ width: 500px;
 }
-
-
-
 
 /* Right Card with Fixed Width */
 .right-card {
   flex: 0 0 75%; /* 75% width for right card */
-  width: 910px; /* Set a fixed width for the right card */
+  width: 750px; /* Set a fixed width for the right card */
   height: 100%; /* Ensure it takes full height of the container */
   max-width: 100%; /* Ensure it does not exceed the container width */
 }
-
 
 /* Ensure text within the card remains on a single line */
 .dhansform-group {
@@ -66,7 +60,7 @@
 }
 
 .dhansform-input {
-  margin: 13px;
+  margin: 10px;
   margin-left: 10px;
   font-size: 16px;
   overflow: hidden; /* Hide any overflowing content */
@@ -75,6 +69,10 @@
   width: 55%; /* Adjust the width as needed */
 }
 
+.job-id-side-input{
+  margin: 10px;
+  width: 210px;
+}
 
 .dhanssform-input {
   margin: 16px;
@@ -86,19 +84,15 @@
   width: 100%; /* Adjust the width as needed */
 }
 
-
-.bhagyainput{
-
+.bhagyainput {
   width: 100%; /* Adjust the width as needed */
   padding: 3px;
 }
 
-
-.bhagyashreeinput{
+.bhagyashreeinput {
   width: 100%;
   padding: 3px;
 }
-
 
 /* Input and Textarea styling */
 input[type="text"],
@@ -121,7 +115,6 @@ input:-webkit-autofill {
 /* Status styling */
 .status {
   color: gray; /* Set text color for status elements to gray */
-
 }
 
 .status-text {
@@ -139,20 +132,21 @@ select {
 }
 
 /* Heading styles */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: gray; /* Set color to gray for all headings */
   overflow-wrap: break-word; /* Break long words */
 }
 
 /* Responsive Design */
 
-
 /* Dhanashree_InterviewForm_Date(27/07)_Css End line no. 148*/
 
-
-
 /* Dhanashree_InterviewForm_Date(29/07)_Css Start line no. 164*/
-
 
 /* Additional Responsive Styles */
 
@@ -168,8 +162,7 @@ h1, h2, h3, h4, h5, h6 {
 
   .left-card {
     height: 100vh; /* Allow height to adjust */
-        max-height: fit-content;
-
+    max-height: fit-content;
   }
 
   .dhann-container {
@@ -195,7 +188,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 10px 5px; /* Reduce margin for smaller screens */
   }
 
-  .dhansform-input, 
+  .dhansform-input,
   .dhanssform-input {
     width: 100%; /* Ensure inputs take full width */
     font-size: 14px; /* Reduce font size for better fit */
@@ -216,7 +209,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 14px; /* Further adjust label font size */
   }
 
-  .dhansform-input, 
+  .dhansform-input,
   .dhanssform-input {
     font-size: 12px; /* Further reduce input font size */
   }
@@ -226,16 +219,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-
-
 /* Dhanashree_InterviewForm_Date(29/07)_Css End line no. 228*/
 
-
-
-
 /* Dhanashree_InterviewForm_Date(27/07)_Css Start line no. 242*/
-
-
 
 /* Flexbox for footer */
 .submit-container {
@@ -247,35 +233,39 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 .submit-button {
-  background-color: #ffb281; /* Background color */
+  background-color: #ffcb9b; /* Background color */
   color: white; /* Text color */
-  padding: 5px 10px; /* Padding */
+  border: 1px solid gray;
+  padding-left: 10px;
+  padding-right: 10px;
   text-align: center; /* Center text */
   text-decoration: none; /* Remove underline */
   display: inline-block; /* Align with other inline elements */
   font-size: 16px; /* Font size */
-  margin: 4px 2px; /* Margins */
   cursor: pointer; /* Cursor pointer */
   border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
-  border: 1px solid #f2f2f2; /* Gray border */
-  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Transition effects */
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+    border-color 0.3s ease; /* Transition effects */
 }
 
 .submit-button:hover {
   background-color: white; /* Background color on hover */
   color: #ffb281; /* Text color on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
-  border-color: #f2f2f2; /* Border color on hover */
+  border: 1px solid gray;
 }
-
 
 .SampleBhagyashree {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+ 
 }
 
-
 /* Dhanashree_InterviewForm_Date(27/07)_Css End line no. 279*/
+
+.interview-question-view-btn {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

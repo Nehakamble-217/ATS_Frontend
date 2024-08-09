@@ -104,14 +104,14 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
     try {
       let response;
       if (formData.interviewStatus === "Yes") {
-        response = await axios.post('http://localhost:1414/api/interview/details', formData);
-        await axios.post('http://localhost:1414/api/interview/status/yes', formData);
+        response = await axios.post('http://192.168.1.43:1414/api/interview/details', formData);
+        await axios.post('http://192.168.1.43:1414/api/interview/status/yes', formData);
       } else if (formData.interviewStatus === "No") {
-        response = await axios.post('http://localhost:1414/api/interview/details', formData);
-        await axios.post('http://localhost:1414/api/interview/status/no', formData);
+        response = await axios.post('http://192.168.1.43:1414/api/interview/details', formData);
+        await axios.post('http://192.168.1.43:1414/api/interview/status/no', formData);
       } else if (formData.interviewStatus === "Yet to be confirmed") {
-        response = await axios.post('http://localhost:1414/api/interview/details', formData);
-        await axios.post('http://localhost:1414/api/interview/status/yet-to-be-confirmed', formData);
+        response = await axios.post('http://192.168.1.43:1414/api/interview/details', formData);
+        await axios.post('http://192.168.1.43:1414/api/interview/status/yet-to-be-confirmed', formData);
       }
 
       if (response.interviewStatus == 200) {
@@ -207,19 +207,19 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
         <div className="dhann-container">
           <div className="card left-card">
             <div className="dhansform-group">
-              <button onClick={toggleAllInterviewResponse}>View all Responses</button>
               <div className="dhansform-label-input">
 
                 <div className="dhansform-label">
                   <label>Job Id</label>
                 </div >
+
                 <div>
-                  <selects
+                  <select
                     id="requirementId"
                     name="requirementId"
                     value={interviewData.requirementId}
                     onChange={handleRequirementChange}
-                    className='bhagyainput'
+                   className="job-id-side-input"
                   >
                     <option value="">Select Job Id</option>
                     {requirementOptions.map((option) => (
@@ -230,8 +230,7 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                         {option.requirementId}
                       </option>
                     ))}
-                  </selects>
-
+                  </select>
 
                 </div>
 
@@ -242,13 +241,12 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                 <div className="dhansform-label">
                   <label>Company Name:</label>
                 </div>
-                <div className="dhansform-input">
+                <div className="job-id-side-input">
                   <input
                     type="text"
                     placeholder="Company"
                     id="requirementCompany"
                     name="requirementCompany"
-
                     value={interviewData.requirementCompany}
                     readOnly
                   />
@@ -260,7 +258,7 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                 <div className="dhansform-label">
                   <label>Designation:</label>
                 </div>
-                <div className="dhansform-input">
+                <div className="job-id-side-input">
                   <input
                     type="text"
                     id="jobDesignation"
@@ -280,12 +278,12 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                   <label>Candidate name</label>
                 </div >
                 <div>
-                  <select
+                  <select 
                     id="candidateId"
                     name="candidateId"
                     value={newCandidateData.candidateId}
                     onChange={handleCandidateChange}
-                    className='bhagyainput'
+                    className="job-id-side-input"
                   >
                     <option value="">Select Candidate</option>
                     {Array.isArray(candidateData) && candidateData.map((option) => (
@@ -297,21 +295,15 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                       </option>
                     ))}
                   </select>
-
-
                 </div>
-
               </div>
-
-
             </div>
-
             <div className="dhansform-group">
               <div className="dhansform-label-input">
                 <div className="dhansform-label">
                   <label>Candidate ID:</label>
                 </div>
-                <div className="dhansform-input">
+                <div className="job-id-side-input">
                   <label>{newCandidateData.candidateId}</label>
                 </div>
               </div>
@@ -322,7 +314,7 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                 <div className="dhansform-label">
                   <label>Interview Schedule Time:</label>
                 </div>
-                <div className="dhansform-input">
+                <div className="job-id-side-input">
                   <label>{newCandidateData.candidateInterviewTime}</label>
                 </div>
               </div>
@@ -332,9 +324,12 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                 <div className="dhansform-label">
                   <label>Interview Type:</label>
                 </div>
-                <div className="dhansform-input">
+                <div className="job-id-side-input">
                   <label>{newCandidateData.candidateInterview}</label>
                 </div>
+              </div>
+              <div className='interview-question-view-btn'>
+                <button className='submit-button' onClick={toggleAllInterviewResponse}>View all Responses</button>
               </div>
             </div>
           </div>
@@ -475,30 +470,12 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
                       </div>
                     </div>
                   </div>
-
                 </div>
 
               )}
 
               {showNoFields && (
                 <div>
-                  {/* <div className="dhansform-group">
-              <div className="dhansform-label-input">
-                <div className="dhansform-label">
-                  <label>Discussion End:</label>
-                </div>
-                <div className="dhansform-input">
-                  <input
-                    type="text"
-                    name="discussionEnd"
-                    value={formData.discussionEnd}
-                    onChange={handleChange}
-                    placeholder="Enter Discussion End Time"
-                  />
-                </div>
-              </div>
-            </div> */}
-
                   <div className="dhansform-group">
                     <div className="dhansform-label-input">
                       <div className="dhansform-label">
@@ -594,24 +571,13 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
 
                 </div>
               )}
-
-
               <div className="submit-container">
                 <button type="submit" className="submit-button">
                   Submit
                 </button>
               </div>
-
-
             </div>
-
-
-
           </div>
-
-
-
-
         </div>
       </form>
     </div>

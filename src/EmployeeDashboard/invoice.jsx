@@ -833,7 +833,7 @@ const InvoiceTable = () => {
             </div>
           </div>
           <div className="shortlisted-submite-btn">
-            <button type="submit" className="">
+            <button type="submit" >
               Save Invoice
             </button>
           </div>

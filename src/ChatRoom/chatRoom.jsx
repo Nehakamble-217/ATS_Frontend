@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "./chatRoom.css";
+import React, { useEffect, useState, useRef } from "react";
+import '../ChatRoom/chatRoom.css';
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
@@ -12,15 +12,22 @@ const ChatRoom = () => {
   const [publicChats, setPublicChats] = useState([]);
   const [color] = useState("#ffcb9b");
   const [tab, setTab] = useState("CHATROOM");
+  const [profileImage, setProfileImage] = useState(null);
+  const [employeeData, setEmployeeData] = useState({});
+  const [showAttachOptions, setShowAttachOptions] = useState(false);
+
   const [userData, setUserData] = useState({
     username: "",
     receivername: "",
     connected: false,
     message: "",
     file: null,
+    fileType: "", // Added to track the file type
   });
 
   const { employeeId, userType } = useParams();
+  const fileInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
 
   useEffect(() => {
     fetchUsername();
@@ -34,9 +41,6 @@ const ChatRoom = () => {
 
   const fetchUsername = async () => {
     try {
-      console.log('Employee ID:', employeeId);
-      console.log('User Type:', userType);
-
       const response = await fetch(
         `http://192.168.1.43:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
       );
@@ -54,14 +58,13 @@ const ChatRoom = () => {
         ...prevUserData,
         username: username,
       }));
-      console.log('Fetched Username:', username);
     } catch (error) {
       console.error("Failed to fetch username:", error);
     }
   };
 
   const connect = (username) => {
-    let Sock = new SockJS("http:///192.168.1.43:9090/ws");
+    let Sock = new SockJS("http://192.168.1.43:9090/ws");
     stompClient = over(Sock);
     stompClient.connect({}, () => onConnected(username), onError);
   };
@@ -86,6 +89,7 @@ const ChatRoom = () => {
 
   const onMessageReceived = (payload) => {
     const payloadData = JSON.parse(payload.body);
+
     switch (payloadData.status) {
       case "JOIN":
         if (!privateChats.get(payloadData.senderName)) {
@@ -98,7 +102,17 @@ const ChatRoom = () => {
         break;
       case "FILE":
         if (payloadData.senderName !== userData.username) {
-          setPublicChats((prevChats) => [...prevChats, payloadData]);
+          if (payloadData.fileUrl) {
+            setPublicChats((prevChats) => [
+              ...prevChats,
+              {
+                senderName: payloadData.senderName,
+                fileName: payloadData.fileName,
+                fileUrl: payloadData.fileUrl,
+                status: "FILE",
+              },
+            ]);
+          }
         }
         break;
       default:
@@ -133,10 +147,12 @@ const ChatRoom = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      file,
-    }));
+    if (file) {
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        file,
+      }));
+    }
   };
 
   const sendValue = () => {
@@ -166,9 +182,7 @@ const ChatRoom = () => {
     formData.append("file", userData.file);
     formData.append("senderName", userData.username);
 
-
-    fetch("http:///192.168.1.43:9090/upload", {
-
+    fetch("http://192.168.1.43:9090/upload", {
       method: "POST",
       body: formData,
     })
@@ -187,6 +201,7 @@ const ChatRoom = () => {
           setUserData((prevUserData) => ({
             ...prevUserData,
             file: null,
+            fileType: "", // Reset fileType after sending
           }));
           setPublicChats((prevChats) => [
             ...prevChats,
@@ -209,15 +224,44 @@ const ChatRoom = () => {
     window.open(fileUrl, "_blank");
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendValue();
+    }
+  };
+
+  const toggleAttachOptions = () => {
+    setShowAttachOptions((prev) => !prev);
+  };
+  {/* Mohini_chatRoom_Date_6/07/24 */ }
+
+  const handleOptionSelect = (option) => {
+    setShowAttachOptions(false);
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      fileType: option, // Set the file type based on the selected option
+    }));
+    switch (option) {
+      case "Document":
+        fileInputRef.current.click();
+        break;
+      case "Gallery":
+        galleryInputRef.current.click();
+        break;
+      default:
+        break;
+    }
+  };
+  {/* Mohini_chatRoom_Date_6/07/24 */ }
+
+
   return (
-    <div className="container" >
+    <div className="chat-container">
       {userData.connected ? (
         <div className="chat-box">
           <div className="member-list">
             <ul>
-              <div>
-                <h1>{userData.username} Chat Room</h1>
-              </div>
               <li
                 onClick={() => {
                   setTab("CHATROOM");
@@ -239,99 +283,77 @@ const ChatRoom = () => {
               ))}
             </ul>
           </div>
-          {tab === "CHATROOM" && (
-            <div className="chat-content">
-              <ul className="chat-messages">
-                {publicChats.map((chat, index) => (
-                  <li
-                    className={`message ${chat.senderName === userData.username && "self"
-                      }`}
-                    key={index}
-                  >
-                    {chat.senderName !== userData.username && (
-                      <div className="avatar">{chat.senderName}</div>
-                    )}
-                    {chat.message ? (
-                      <div className="message-data">{chat.message}</div>
-                    ) : (
-                      <div className="file-data">
-                        <p>File: {chat.fileName}</p>
-
-                        <img
-                          src={chat.fileUrl}
-                          alt=""
-                          style={{ width: "100%", height: "200px" }}
-                        />
-                        <button onClick={() => openFile(chat.fileUrl)}>
-                          Open File
-                        </button>
-                      </div>
-                    )}
-                    {chat.senderName === userData.username && (
-                      <div className="avatar self">{chat.senderName}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <div className="send-message">
-                <input
-                  type="text"
-                  className="input-message"
-                  placeholder="Enter the message"
-                  value={userData.message}
-                  onChange={handleMessage}
-                />
-                <button className="chat-Send-btn" onClick={sendValue}>
-                  Send
+          <div className="chat-content">
+            <ul className="chat-messages">
+              {(tab === "CHATROOM" ? publicChats : privateChats.get(tab)).map((chat, index) => (
+                <li
+                  className={`message ${chat.senderName === userData.username && "self"}`}
+                  key={index}
+                >
+                  {chat.senderName !== userData.username && (
+                    <div className="avatar" style={{ marginLeft: "10px" }}>
+                      {chat.senderName}
+                    </div>
+                  )}
+                  {chat.message ? (
+                    <div className="message-data" style={{ marginLeft: "10px", background: "#ffcb9b" }}>
+                      {chat.message}
+                    </div>
+                  ) : (
+                    <div className="file-data">
+                      <p>File: {chat.fileName}</p>
+                      <img src={chat.fileUrl} alt="" style={{ width: "100%", height: "200px" }} />
+                      <button onClick={() => openFile(chat.fileUrl)}>Open File</button>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div className="send-message">
+              <input
+                type="text"
+                className="input-message"
+                placeholder="Enter the message"
+                value={userData.message}
+                onChange={handleMessage}
+                onKeyPress={handleKeyPress}
+              />
+              <div className="chat-actions">
+                <button className="send-btn" onClick={sendValue}>
+                  <i className="fas fa-paper-plane"></i>
                 </button>
-                <input type="file" className="chat-Send-file" onChange={handleFileChange} />
+                <button className="attach-btn" onClick={toggleAttachOptions}>
+                  <i className="fas fa-paperclip"></i>
+                </button>
+                {/* Mohini_chatRoom_Date_6/07/24 */}
+                {showAttachOptions && (
+                  <div className="attach-options">
+                    <ul>
+                      <li className="document-button" onClick={() => handleOptionSelect("Document")}>Document</li>
+                      <li className="gallery-button" onClick={() => handleOptionSelect("Gallery")}>Image</li>
+                    </ul>
+                  </div>
+                )}
+
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                  accept=".pdf,.doc,.docx,.xls,.xlsx" // Adjust file types as needed
+                />
+                <input
+                  type="file"
+                  ref={galleryInputRef}
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                  accept=".png,.jpg,.jpeg" // Adjust file types as needed
+                />
+                {/* Mohini_chatRoom_Date_6/07/24 */}
 
               </div>
             </div>
-          )}
-          {tab !== "CHATROOM" && (
-            <div className="chat-content">
-              <ul className="chat-messages">
-                {[...privateChats.get(tab)].map((chat, index) => (
-                  <li
-                    className={`message ${chat.senderName === userData.username && "self"
-                      }`}
-                    key={index}
-                  >
-                    {chat.senderName !== userData.username && (
-                      <div className="avatar">{chat.senderName}</div>
-                    )}
-                    {chat.message ? (
-                      <div className="message-data">{chat.message}</div>
-                    ) : (
-                      <div className="file-data">
-                        <p>File uploaded by {chat.senderName}</p>
-                        <button onClick={() => openFile(chat.fileUrl)}>
-                          Open File
-                        </button>
-                      </div>
-                    )}
-                    {chat.senderName === userData.username && (
-                      <div className="avatar self">{chat.senderName}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <div className="send-message">
-                <input
-                  type="text"
-                  className="input-message"
-                  placeholder="Enter the message"
-                  value={userData.message}
-                  onChange={handleMessage}
-                />
-                <input type="file" onChange={handleFileChange} />
-                <button className="chat-Send-btn" onClick={sendValue}>
-                  Send
-                </button>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       ) : (
         <div className="register">
@@ -347,4 +369,3 @@ const ChatRoom = () => {
 };
 
 export default ChatRoom;
-

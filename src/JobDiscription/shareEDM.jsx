@@ -13,15 +13,12 @@ function ShareEDM({ Descriptions, onShareEdm }) {
     const { employeeId } = useParams()
 
     useEffect(() => {
-        fetch(`http://192.168.1.43:9090/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
+        fetch(`http://192.168.1.43:9090/api/ats/157industries/edm-details/1/1`)
 
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((data) => {
                 console.log(data);
                 setData(data);
-                console.log(Descriptions + "  - 1st Attempt...");
-                console.log(employeeId + "  - 1st Attempt...");
-
             })
             .catch((error) => console.error("Error fetching data:", error));
     }, []);

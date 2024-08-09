@@ -1343,6 +1343,18 @@ const RejectedCandidate = ({ updateState, funForGettingCandidateId }) => {
                               </span>
                             </div>
                           </td>
+                          <td
+                            className="tabledata"
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                          >
+                            {item.feedBack || "-"}
+                            <div className="tooltip">
+                              <span className="tooltiptext">
+                                {item.feedBack}
+                              </span>
+                            </div>
+                          </td>
 
                           {/* <td
                               className="tabledata"

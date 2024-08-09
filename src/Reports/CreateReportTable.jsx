@@ -740,13 +740,19 @@
            };
          
            return (
-             <div className="App-after">
+             <div className="report-App-after">
                <div className="container-after1">
                  <div className="attendanceTableData">
                    <div style={{ textAlign: "-webkit-center" }}>
-                     <SliderReport totalCandidateCount={totalCandidateCount} />
                    </div>
+
+                   <div className="silderReport-align-div">
+                   <div className="fiter-heading-data">
                    <h3>Filter Data By</h3>
+                   </div>
+                   <div>
+                   <SliderReport totalCandidateCount={totalCandidateCount} />
+                   </div>
                    <div
                      style={{
                        display: "flex",
@@ -764,8 +770,9 @@
                      </button>
                      {/* <PdfModal isOpen={modalIsOpen} closeModal={closeModal} pdfContent={pdfUrl} /> */}
                    </div>
+                   </div>
          
-                   <table className="attendance-table">
+                   <table className="report-attendance-table">
                      <thead>
                        <tr className="attendancerows-head">
                          <th className="attendanceheading">Selected</th>

@@ -104,14 +104,14 @@ useEffect(() => {
   try {
     let response;
     if (formData.interviewStatus === "Yes") {
-      response = await axios.post('http://localhost:1414/api/interview/details', formData);
-      await axios.post('http://localhost:1414/api/interview/status/yes', formData);
+      response = await axios.post('http://192.168.1.43:1414/api/interview/details', formData);
+      await axios.post('http://192.168.1.43:1414/api/interview/status/yes', formData);
     } else if (formData.interviewStatus === "No") {
-      response = await axios.post('http://localhost:1414/api/interview/details', formData);
-      await axios.post('http://localhost:1414/api/interview/status/no', formData);
+      response = await axios.post('http://192.168.1.43:1414/api/interview/details', formData);
+      await axios.post('http://192.168.1.43:1414/api/interview/status/no', formData);
     } else if (formData.interviewStatus === "Yet to be confirmed") {
-      response = await axios.post('http://localhost:1414/api/interview/details', formData);
-      await axios.post('http://localhost:1414/api/interview/status/yet-to-be-confirmed', formData);
+      response = await axios.post('http://192.168.1.43:1414/api/interview/details', formData);
+      await axios.post('http://192.168.1.43:1414/api/interview/status/yet-to-be-confirmed', formData);
     }
 
     if (response.interviewStatus == 200) {
