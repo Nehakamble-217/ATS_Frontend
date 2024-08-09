@@ -112,7 +112,7 @@ const Billing = () => {
       <div className="cards">
         <div className="card-dhanu">
           <h3>Total GST Calculation by Month</h3>
-          <table className="month-table">
+          <table className="table-container">
             <thead>
               <tr>
                 <th>Jan</th>
@@ -134,27 +134,57 @@ const Billing = () => {
                 <td>
                   <i
                     style={{ fontSize: "16px", marginRight: "5px" }}
-                    class="fa-solid fa-indian-rupee-sign"
+                    className="fa-solid fa-indian-rupee-sign"
                   ></i>
                   {monthlyGST["January"] || "0.00"}
                 </td>
                 <td>
                   <i
                     style={{ fontSize: "16px", marginRight: "5px" }}
-                    class="fa-solid fa-indian-rupee-sign"
+                   className="fa-solid fa-indian-rupee-sign"
                   ></i>
                   {monthlyGST["February"] || "0.00"}
                 </td>
-                <td>${monthlyGST["March"] || "0.00"}</td>
-                <td>${monthlyGST["April"] || "0.00"}</td>
-                <td>${monthlyGST["May"] || "0.00"}</td>
-                <td>${monthlyGST["June"] || "0.00"}</td>
-                <td>${monthlyGST["July"] || "0.00"}</td>
-                <td>${monthlyGST["August"] || "0.00"}</td>
-                <td>${monthlyGST["September"] || "0.00"}</td>
-                <td>${monthlyGST["October"] || "0.00"}</td>
-                <td>${monthlyGST["November"] || "0.00"}</td>
-                <td>${monthlyGST["December"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["March"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["April"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["May"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["June"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["July"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["August"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["September"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["October"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["November"] || "0.00"}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{monthlyGST["December"] || "0.00"}</td>
               </tr>
             </tbody>
           </table>
@@ -200,9 +230,14 @@ const Billing = () => {
               <tr key={invoice.id}>
                 <td>{invoice.id}</td>
                 <td>{invoice.client}</td>
-                <td>${invoice.amount}</td>
-                <td>${calculateGST(invoice.amount)}</td>{" "}
-                {/* Display GST amount */}
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{invoice.amount}</td>
+                <td><i
+                    style={{ fontSize: "16px", marginRight: "5px" }}
+                   className="fa-solid fa-indian-rupee-sign"
+                  ></i>{calculateGST(invoice.amount)}</td>{" "}
                 <td onClick={() => handleStatusChange(invoice.id, "Unpaid")}>
                   Unpaid
                 </td>

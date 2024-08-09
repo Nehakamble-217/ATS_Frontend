@@ -318,12 +318,15 @@ function Sidebar({
                           onClick={handleButtonClick("lineUp", toggelLineUp)}
                           className={activeButton === "lineUp" ? "active" : ""}
                         >
+                           <a href="#">
                           <span className="sidebar-text">Lineup Tracker</span>
                           {successAddUpdateResponse ? (
                             <span className="text-xl font-bold text-red-600">
                               *
                             </span>
+                            
                           ) : null}
+                          </a>
                         </li>
                         {userType != "Vendor" ? (
                           <>
@@ -711,18 +714,7 @@ function Sidebar({
                       className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
                         }`}
                     >
-
                       <>
-                        {/* ArshadAttar_EmpDashboard_AddedPayrollToggeleFunction_10/07/2024_LineNo_438-445 */}
-                        <li
-                          style={{ marginLeft: "10px" }}
-                          className={activeButton === "SuperUser" ? "active" : ""}
-                          onClick={toggeleProfitChart}
-                        >
-                          <a href="#">
-                            <span className="sidebar-text">P & L Chart</span>
-                          </a>
-                        </li>
                         <li
                           onClick={handleButtonClick(
                             "billing",

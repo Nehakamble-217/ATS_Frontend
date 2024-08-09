@@ -23,7 +23,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #ffe5b5;
+
 }
 
 .card-dhanu2 {
@@ -42,8 +42,8 @@
 }
 
 .view-details-button {
-  background-color: #f2f2f2;
-  color: #000;
+  background-color: #ffcb9b;
+  /* color: #000; */
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
@@ -71,15 +71,20 @@
 
 .table-container th {
   background-color: #ffcb9b;
-  padding: 5px;
+  /* padding: 5px; */
   text-align: center;
   border: 1px solid gray;
   color: gray;
   white-space: nowrap;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 16px;
 }
 
 .table-container td {
-  padding: 1px;
+  /* padding: 1px; */
+  margin: 2px;
+  font-size: 16px;
   padding-right: 5px;
   padding-left: 5px;
   text-align: center;
@@ -97,7 +102,7 @@
 .view-details-button {
   padding: 1px 10px;
   margin: 1px;
-  background-color: #ffb282;
+  background-color: #ffcb9b;
   color: white;
   border: 1px solid gray;
   border-radius: 15px;

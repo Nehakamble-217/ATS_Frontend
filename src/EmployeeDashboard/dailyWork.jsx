@@ -552,14 +552,14 @@ function DailyWork({
             className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}
           >
             <div className="daily-t-btn">
-              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap", backgroundColor: buttonColor }}>
+              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap"}}>
                 Target : 10
               </button>
               <button
                 className="daily-tr-btn"
                 style={{
                   color: data.archived <= 3 ? "red" : "green",
-                  backgroundColor: buttonColor,
+                  // backgroundColor: buttonColor,
                 }}
               >
                 Archived : {data.archived}
@@ -568,13 +568,13 @@ function DailyWork({
                 className="daily-tr-btn"
                 style={{
                   color: data.pending < 7 ? "green" : "red",
-                  backgroundColor: buttonColor,
+                  // backgroundColor: buttonColor,
                 }}
               >
                 Pending : {data.pending}
               </button>
             </div>
-            <button className="loging-hr" style={{ backgroundColor: buttonColor }}>
+            <button className="loging-hr" >
               <h6 hidden>Time: {currentTime}</h6>
               <h6 hidden>Date: {currentDate}</h6>
               Login Hours : {time.hours.toString().padStart(2, "0")}:
@@ -608,7 +608,7 @@ function DailyWork({
             <button
               className={running ? "timer-break-btn" : "timer-break-btn"}
               onClick={running ? handlePause : handleResume}
-              style={{ height: "30px", backgroundColor: buttonColor }}
+              style={{ height: "30px"}}
             >
               {running ? "Pause" : "Resume"}
             </button>

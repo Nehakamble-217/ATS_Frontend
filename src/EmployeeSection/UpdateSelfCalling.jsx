@@ -215,7 +215,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 <div className="update-calling-tracker-two-input">
                   <input
                     type="text"
-                    //id="currentDate"
                     name="date"
                     value={callingTracker?.date}
                     className="update-update-calling-tracker-two-input"
@@ -375,14 +374,11 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   id="jobDesignation"
                   name="jobDesignation"
                   className="calling-tracker-two-input"
-
                   // className="form-control"
                   value={callingTracker?.jobDesignation}
                   // readOnly
                   onChange={handleChange}
-
                 />
-
                 <input
                   type="text"
                   placeholder="Company"
@@ -391,7 +387,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   value={callingTracker?.requirementCompany}
                   // readOnly
                   onChange={handleChange}
-
                 />
               </div>
             </div>
@@ -410,7 +405,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   <option value="PCMC">PCMC</option>
                   <option value="Other">Other</option>
                 </select>
-
                 <input
                   type="text"
                   name="fullAddress"
@@ -437,9 +431,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   <option value="Call Done">Call Done</option>
                   <option value="Asked for Call Back">Asked for Call Back</option>
                   <option value="No Answer">No Answer</option>
-                  {/* <option value="Call Disconnected by Candidate">
-                      Call Disconnected by Candidate
-                    </option> */}
                   <option value="Network Issue">Network Issue</option>
                   <option value="Invalid Number">Invalid Number</option>
                   <option value="Need to call back">Need to call back</option>
@@ -504,8 +495,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                   value={callingTracker.msgForTeamLeader}
                   onChange={handleChange}
                   className="plain-input"
-
-
                 />
               </div>
             </div>
@@ -515,7 +504,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
                 {!isOtherEducationSelected ? (
                   <select
                     name="qualification"
-                    // className="form-control"
                     style={{
                       height: "30px",
                       width: "100%",

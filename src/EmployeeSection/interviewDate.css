@@ -210,14 +210,14 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   color: white;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid gray;
 }
 
 .shortlisted-submite-btn button:hover {
   background-color: white;
   color: #ffcb9b;
-  transform: translateY(-2px);
+  border: 1px solid gray;
+  /* transform: translateY(-2px); */
 }
 
 .shortlisted-submite-btn button:focus {
