@@ -16,10 +16,15 @@ import { Button, Modal } from "react-bootstrap";
 import Confetti from "react-confetti";
 import ClipLoader from "react-spinners/ClipLoader";
 
+import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
+
+
+
 const CallingTrackerForm = ({
   onsuccessfulDataAdditions,
   initialData,
   loginEmployeeName,
+  // toggelCandidateHistory
 }) => {
   const { employeeId } = useParams();
   const [submited, setSubmited] = useState(false);
@@ -178,7 +183,7 @@ const CallingTrackerForm = ({
     return errors;
   };
 
-
+  
 
   const validateLineUpData = () => {
     let errors = {};
@@ -1845,6 +1850,20 @@ const ModalComponent = ({
             >
               Salary Calculation
             </p>
+            <p
+              className={`sidebar-item ${activeField === "historyTracker" ? "active" : ""
+                }`}
+              onClick={() => setActiveField("historyTracker")}
+            >
+              History Tracker 
+            </p>
+            <p
+              className={`sidebar-item ${activeField === "previousQuestion" ? "active" : ""
+                }`}
+              onClick={() => setActiveField("previousQuestion")}
+            >
+              Previous Question
+            </p>
           </div>
           <div className="calling-tracker-popup-dashboard">
             {activeField === "distance" && (
@@ -2007,6 +2026,55 @@ const ModalComponent = ({
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            )}
+            {activeField === "historyTracker" && (
+              <div className="history-Tracker">
+                
+                <div className="form-group">
+
+               < CandidateHistoryTracker/>
+                     <div>
+         
+        </div>
+                </div>
+                
+              </div>
+            )}
+            {activeField === "previousQuestion" && (
+              <div className="previousQuestion">
+                <h5>Previous Question</h5>
+                <div className="form-group">
+                  <label htmlFor="jobId">Job Id</label>
+                  <input
+                    type="text"
+                    id="jobId"
+                    className="form-control"
+                    placeholder="Enter Job Id"
+                    
+                  />
+                </div>
+
+                <div className="card">
+            <h2 className="card-title">Previous Question</h2>
+            <p className="card-content">Q.1. What is Java Full Stack Development?</p>
+            <p className="card-content">Q.2. Explain the difference between front-end and back-end development.</p>
+            <p className="card-content">Q.3. What do you need to build a typical web application?</p>
+            <p className="card-content">Q.4. What is the Java Virtual Machine (JVM), and why is it important?</p>
+            <p className="card-content">Q.5. What's a servlet, and why is it used in Java web development?</p>
+            
+        </div>
+                <div className="card">
+            <h2 className="card-title">Previous Question</h2>
+            <p className="card-content">Q.1. What's the Spring Framework, and why is it useful for Java?</p>
+            <p className="card-content">Q.2. What are RESTful web services, and why are they important in Java?</p>
+            <p className="card-content">Q.3. What's Hibernate, and how does it help with databases in Java?</p>
+            <p className="card-content">Q.4. Can you explain what dependency injection means in Spring?</p>
+            <p className="card-content">Q.5. What's a singleton pattern, and why does it matter in Java?</p>
+           
+        </div>
+               
+               
               </div>
             )}
           </div>
