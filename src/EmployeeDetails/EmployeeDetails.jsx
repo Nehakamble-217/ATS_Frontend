@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -138,7 +139,7 @@ const EmployeeDetails = () => {
             <table className="attendance-table">
               <thead>
                 <tr className="attendancerows-head">
-                  <th className="attendanceheading">Employee Id</th>
+                  <th className="attendanceheading">Employee  Id</th>
                   <th className="attendanceheading">Employee Name</th>
                   <th className="attendanceheading">Employee Number</th>
                   <th className="attendanceheading">Date of Joining</th>
@@ -146,8 +147,8 @@ const EmployeeDetails = () => {
 
                   <th className="attendanceheading">Job Role</th>
                   <th className="attendanceheading">Department  </th>
-                  <th className="attendanceheading">Reporting Manager Name</th>
-                  <th className="attendanceheading">Resume File</th>
+                  <th className="attendanceheading">Manager Name</th>
+                  <th className="attendanceheading">Resume </th>
                   <th className="attendanceheading">Employee Status</th>
                   <th className="ActionCol">Action</th>
                 </tr>
