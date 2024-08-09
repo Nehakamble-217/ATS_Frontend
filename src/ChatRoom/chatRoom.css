@@ -212,7 +212,7 @@
 .member {
   padding: 5px;
   font-size: 16px;
-  background: #ffcb9b;
+  background: var(--button-color);
   color: white;
   /* border:white; */
   cursor: pointer;
@@ -222,16 +222,16 @@
 }
 .member.active {
   font-size: 16px;
-  background: #ffcb9b;
+  background: var(--button-color);
   color: white;
 }
 .member:hover {
-  background: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 .member.active:hover {
-  background: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .send-message .input-message::placeholder {

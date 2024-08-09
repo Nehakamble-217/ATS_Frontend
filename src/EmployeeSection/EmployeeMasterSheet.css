@@ -10,7 +10,7 @@
   color: white;
   padding-left: 15px;
   padding-right: 15px;
-  background: #ffcb9b;
+  background: var(--button-color);
   border: 1px solid gray;
   cursor: pointer;
   margin-bottom: 10px;
@@ -24,8 +24,8 @@
 .EmployeeMasterSheet-close-forward-popup-btn:hover,
 .View-Interview-History:hover,
 .FollowUp-History:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
   opacity: 0.8;
 }
 

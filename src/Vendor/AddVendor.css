@@ -60,7 +60,7 @@
   }
   
   .ctf-btn {
-    background-color: #ffcb9b;
+    background-color:var(--button-color);
     color: white;
     border-radius: 12px;
     border: 1px solid gray;
@@ -72,8 +72,8 @@
   }
   
   .ctf-btn:hover {
-    background-color: white;
-    color: #ffcb9b;
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
     border-color: gray;
     transform: translateY(-5px);
   }
@@ -144,7 +144,7 @@
   .show-pass-btn {
     height: 30px;
     width: auto;
-    background-color: #ffcb9b;
+    background-color: var(--button-color);
     border-radius: 15px;
     padding: 0 5px;
     margin-top: 5px;
@@ -164,17 +164,16 @@
     font-size: 16px;
     border-radius: 15px;
     width: 120px;
-    background-color: #ffb281;
+    background-color: var(--button-color);
     color: white;
     border: 1px solid gray;
     transition: background-color 0.3s, color 0.3s;
   }
   
   .submit-button-add-emp:hover {
-    background-color: white;
-    color: #ffb281;
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
   }
-  
   .error {
     color: red;
   }

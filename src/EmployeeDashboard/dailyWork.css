@@ -24,8 +24,8 @@
 }
 
 .select:hover {
-  background-color: #ffcb9b;
-  color: grey;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 
@@ -67,21 +67,21 @@
   height: 30px;
   width: 90px;
   color: white;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   transition: background-color 0.3s ease;
 }
 
 .timer-break-btn:hover,
 .logout-btn:hover {
-  background-color: white;
+  background-color: var(--button-hover-color);
   border: 1px solid gray;
-  color: #ffcb9b;
+  color: var(--text-hover-color);
 }
 
 .logout-btn:hover {
-  background-color: white;
+  background-color: var(--button-hover-color);
   border: 1px solid gray;
-  color: #ffcb9b;
+  color: var(--text-hover-color);
 }
 
 .logout-btn {
@@ -92,7 +92,7 @@
   height: 30px;
   width: 40px;
 
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
 
 }
 
@@ -102,7 +102,7 @@
   align-items: center;
   border: 1px solid gray;
   border-radius: 15px;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   color: white;
   height: 30px;
   padding-left: 15px;
@@ -112,17 +112,17 @@
 }
 
 .loging-hr:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
   border: 1px solid gray;
 }
 
 .daily-tr-btn {
   border: 1px solid gray;
   border-radius: 15px;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   font-size: 16px;
-  color: white;
+  color: var(--text-hover-color);
   height: 30px;
   width: auto;
   padding-left: 15px;
@@ -133,8 +133,8 @@
 }
 
 .daily-tr-btn:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
   border: 1px solid gray;
 
 }
@@ -147,6 +147,7 @@
   gap: 30px;
   width: 100%;
   padding: 10px;
+  background-color: var(--Bg-color);
 }
 
 .all-daily-btns {
@@ -201,7 +202,7 @@
   border-radius: 15px;
   height: 30px;
   width: 120px;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   color: white;
   transition: background-color 0.3s ease;
   margin: 10px auto;
@@ -212,8 +213,8 @@
 }
 
 .toggle-all-daily-btns:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
   border: 1px solid gray;
 }
 

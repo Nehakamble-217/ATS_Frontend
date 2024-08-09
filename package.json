@@ -39,6 +39,7 @@
     "react-bootstrap": "^2.10.2",
     "react-calendar": "^5.0.0",
     "react-chartjs-2": "^5.2.0",
+    "react-color": "^2.19.3",
     "react-confetti": "^6.1.0",
     "react-datepicker": "^6.9.0",
     "react-dom": "^18.2.0",
@@ -62,6 +63,7 @@
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "svg-to-img": "^2.0.9",
+    "theme-change": "^2.5.0",
     "xlsx": "^0.18.5",
     "yup": "^1.4.0"
   },

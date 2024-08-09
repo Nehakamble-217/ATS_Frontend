@@ -321,7 +321,7 @@ function Accesstable() {
   return (
     <div className="AppsTL">
       <div className="selection-containerTL">
-        <div className="hierarchy-sectionTL" style={{ border: "1px solid black" }}>
+        <div className="hierarchy-sectionTL">
           <div className="custom-dropdownTL">
             <div className="dropdown-headerTL" onClick={toggleDropdown}>
               {selectedRecruiters.index === ""

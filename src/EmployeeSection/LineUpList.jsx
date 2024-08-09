@@ -22,8 +22,6 @@ const LineUpList = ({
   const [showUpdateCallingTracker, setShowUpdateCallingTracker] =
     useState(false);
   const [selectedCandidateId, setSelectedCandidateId] = useState(null);
-  let [color, setColor] = useState("#ffcb9b");
-
   const [shortListedData, setShortListedData] = useState([]);
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -743,7 +741,7 @@ const LineUpList = ({
       {loading ? (
         <div className="register">
           <HashLoader
-            color={color}
+            color={`${localStorage.getItem("selectedColor")}`}
             aria-label="Loading Spinner"
             data-testid="loader"
           />

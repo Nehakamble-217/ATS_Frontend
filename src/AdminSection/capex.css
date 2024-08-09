@@ -17,7 +17,7 @@
 }
 
 .capex-my-button {
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   color: white;
   border: 1px solid gray;
   border-radius: 15px;
@@ -30,8 +30,8 @@
 }
 
 .capex-my-button:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .capex-form-container {
@@ -76,7 +76,7 @@
 }
 
 .capex-form button, .opex-form button {
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   color: white;
   border: 1px solid gray;
   border-radius: 15px;
@@ -90,8 +90,8 @@
 }
 
 .capex-form button:hover, .opex-form button:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .capex-sub-btn, .opex-sub-btn {

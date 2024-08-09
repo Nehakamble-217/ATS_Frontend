@@ -1,7 +1,7 @@
 /* neha_schedule_interview_all_page_18_07_ */
 .Interview-App {
   text-align: center;
-  background-color: #FFE5B5;
+  background-color: var(--Bg-color);
   height: 80vh;
   padding-top: 50px;
   justify-content: center;

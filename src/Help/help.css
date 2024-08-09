@@ -43,6 +43,6 @@
   
   button:hover {
     background-color: white;
-    color: #ffcb9b;
+    color: var(--text-color);
   }
   

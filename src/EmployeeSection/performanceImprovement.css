@@ -31,7 +31,7 @@
     padding: 0 10px;
     font-size: 16px;
     /* padding: 0%; */
-    background-color: #ffcb9b;
+    background-color: var(--Bg-color);
     text-align: center;
     font-weight: 500;
   }
@@ -46,14 +46,14 @@
         color: white;
         padding-left: 15px;
         padding-right: 15px;
-        background: #ffcb9b;
+        background-color: var(--button-color);
         border: 1px solid gray;
         cursor: pointer;
   }
   
   .PIE-timetrackre-btn:hover{
-  background-color: white;
-  color: #ffcb9b;
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
   opacity: 0.8;}
   tr:hover {
     background-color: #ddd;
@@ -140,14 +140,14 @@
     margin-top: 10px;
   }
   .PIE-filter-Btn{
-    background-color: #ffcb9b;
+    background-color: var(--button-color);
     border-radius: 15px;
     padding: 0 10px;
     color: white;
   }
   .PIE-filter-Btn:hover{
-    background-color: white;
-   color: #ffcb9b;
+    background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
    border: 1px solid #ffcb9b;
   }
   
@@ -189,7 +189,7 @@
   .PIE-process-dropdown-content-Okbtn,.PIE-process-dropdown-content-Resetbtn{
     float: right;
     margin-left: 5px;
-    background-color: #ffcb9b;
+    background-color: var(--button-color);
     border-radius: 15px;
     padding: 0 10px;
     /* margin: 5px; */
@@ -198,8 +198,8 @@
   }
   .PIE-process-dropdown-content-Okbtn:hover,.PIE-process-dropdown-content-Resetbtn:hover{
     /* margin: 5px; */
-   background-color: white;
-   color: #ffcb9b;
+    background-color: var(--button-hover-color);
+    color: var(--text-hover-color);
    border: 1px solid #ffcb9b;
   }
   

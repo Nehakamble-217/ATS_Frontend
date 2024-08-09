@@ -120,7 +120,7 @@
   height: 30px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: #ffcb9b;
+  background-color:var(--button-color);
   color: white;
   border: none;
   border-radius: 15px;
@@ -128,8 +128,8 @@
 }
 
 .buttons button:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .alert {
