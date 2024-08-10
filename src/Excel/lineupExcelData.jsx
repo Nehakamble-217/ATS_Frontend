@@ -36,7 +36,7 @@ const LineupExcelData = ({
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.43:9090/api/ats/157industries/lineup-excel-data/${employeeId}`
+      `http://93.127.199.85:9090/api/ats/157industries/lineup-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -201,7 +201,7 @@ const LineupExcelData = ({
 
   const handleUpdateSuccess = () => {
 
-    fetch(`http://192.168.1.43:9090/api/ats/157industries/lineup-excel-data/${employeeId}`)
+    fetch(`http://93.127.199.85:9090/api/ats/157industries/lineup-excel-data/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         setLineUpList(data);

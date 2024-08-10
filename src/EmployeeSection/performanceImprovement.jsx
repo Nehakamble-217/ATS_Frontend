@@ -196,7 +196,7 @@ const PerformanceImprovement = () => {
         const fetchManagerNames = async () => {
             try {
                 const response = await axios.get(
-                    `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
+                    `http://93.127.199.85:9090/api/ats/157industries/get-all-managers`
                 );
                 setManagers(response.data);
             } catch (error) {
@@ -228,7 +228,7 @@ const PerformanceImprovement = () => {
     const fetchTeamLeaderNames = async (id) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${id}`
+                `http://93.127.199.85:9090/api/ats/157industries/tl-namesIds/${id}`
             );
             setTeamLeaders(response.data);
         } catch (error) {
@@ -239,7 +239,7 @@ const PerformanceImprovement = () => {
     const fetchRecruiterUnderTeamLeaderData = useCallback(async (id) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${id}`
+                `http://93.127.199.85:9090/api/ats/157industries/employeeId-names/${id}`
             );
             setRecruiters(response.data);
         } catch (error) {
@@ -250,7 +250,7 @@ const PerformanceImprovement = () => {
     const fetchEmployeeCount = async (ids, role) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.43:9090/api/ats/157industries/head-count/${role}/${ids}`
+                `http://93.127.199.85:9090/api/ats/157industries/head-count/${role}/${ids}`
             );
             setEmployeeCount(response.data);
         } catch (error) { }
@@ -276,7 +276,7 @@ const PerformanceImprovement = () => {
     const fetchJobIds = async (ids, startDate, endDate, role) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.43:9090/api/ats/157industries/performance-jobIds?empIds=${ids}&startDate=${startDate}&endDate=${endDate}&jobRole=${role}`
+                `http://93.127.199.85:9090/api/ats/157industries/performance-jobIds?empIds=${ids}&startDate=${startDate}&endDate=${endDate}&jobRole=${role}`
             );
             setClientDetails(response.data);
         } catch (error) {
@@ -326,7 +326,7 @@ const PerformanceImprovement = () => {
     // const fetchClientDetails = async (requirementIds) => {
     //   try {
     //     const response = await axios.get(
-    //       `http://192.168.1.43:9090/api/ats/157industries/performance-jobIds?empIds=870&startDate=2024-06-01&endDate=2024-07-26&jobRole=Manager`
+    //       `http://93.127.199.85:9090/api/ats/157industries/performance-jobIds?empIds=870&startDate=2024-06-01&endDate=2024-07-26&jobRole=Manager`
     //     );
     //     setClientDetails(response.data);
     //   } catch (error) {
@@ -502,7 +502,7 @@ const PerformanceImprovement = () => {
 
         try {
             const response = await axios.get(
-                `http://192.168.1.43:9090/api/ats/157industries/fetch-process-timings`,
+                `http://93.127.199.85:9090/api/ats/157industries/fetch-process-timings`,
                 {
                     params: {
                         employeeIds: ids,

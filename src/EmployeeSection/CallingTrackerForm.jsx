@@ -137,7 +137,7 @@ const CallingTrackerForm = ({
     try {
 
       const response = await axios.get(
-        `http://192.168.1.43:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+        `http://93.127.199.85:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
 
       );
       const { data } = response;
@@ -157,7 +157,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.43:9090/api/ats/157industries/company-details`
+        `http://93.127.199.85:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -392,7 +392,7 @@ const CallingTrackerForm = ({
         dataToUpdate.lineUp = lineUpData;
       }
       const response = await axios.post(
-        `http://192.168.1.43:9090/api/ats/157industries/calling-tracker/${userType}`,
+        `http://93.127.199.85:9090/api/ats/157industries/calling-tracker/${userType}`,
 
         dataToUpdate
       );
