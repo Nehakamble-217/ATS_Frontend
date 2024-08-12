@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../EmployeeDashboard/JobList.css";
+import AddJobDescription from "../JobDiscription/addJobDescription";
 import { bottom } from "@popperjs/core";
 import ShareDescription from "./shareDescription";
 import JobDescriptionEdm from "../JobDiscription/jobDescriptionEdm";
@@ -21,11 +22,13 @@ const JobListing = () => {
   const [selectedRequirementId, setSelectedRequirementId] = useState(null);
   const [requirementData, setRequirementData] = useState();
   const [showEDM, setShowEDM] = useState(false);
+  const [showAddJobDescription, setShowAddJobDescription] = useState(false)
   const [searchQuery, setSearchQuery] = useState({
     designation: "",
     location: "",
     experience: "",
   });
+  const [heldJobId, setHeldJobId] = useState(null);
   const limitedOption = [
     "jobRole",
     "jobType",
@@ -41,7 +44,7 @@ const JobListing = () => {
   ];
 
   useEffect(() => {
-    fetch("http://192.168.1.43:9090/api/ats/157industries/all-job-descriptions")
+    fetch("http://93.127.199.85:9090/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -109,52 +112,61 @@ const JobListing = () => {
     });
   };
 
+  const handleUpdateSuccess = () => {
+    setShowUpdateCallingTracker(false);
+    fetchShortListedData(); // Corrected from fetchRejectedData to fetchShortListedData
+  };
+
+  
   const handleInputSearch = (event) => {
     const { name, value } = event.target;
     setSearchQuery((prevQuery) => ({ ...prevQuery, [name]: value }));
   };
-
+  
   useEffect(() => {
     const options = Object.keys(jobDescriptions[0] || {}).filter((key) =>
       limitedOption.includes(key)
-    );
-    setFilterOptions(options);
-  }, [jobDescriptions]);
+  );
+  setFilterOptions(options);
+}, [jobDescriptions]);
 
-  console.log(filteredJobDescriptions);
+console.log(filteredJobDescriptions);
 
-  const handleFilter = () => {
-    const filtered = jobDescriptions.filter((job) => {
-      return (
-        (job.designation &&
-          job.designation
-            .toLowerCase()
-            .includes(searchQuery.designation.toLowerCase())) ||
+const handleFilter = () => {
+  const filtered = jobDescriptions.filter((job) => {
+    return (
+      (job.designation &&
+        job.designation
+        .toLowerCase()
+        .includes(searchQuery.designation.toLowerCase())) ||
         (job.location &&
           job.location
-            .toLowerCase()
-            .includes(searchQuery.location.toLowerCase())) ||
-        (job.experience &&
-          job.experience
+          .toLowerCase()
+          .includes(searchQuery.location.toLowerCase())) ||
+          (job.experience &&
+            job.experience
             .toLowerCase()
             .includes(searchQuery.experience.toLowerCase()))
-      );
-    });
-    setFilteredJobDescriptions(filtered);
-  };
-
-  const handleFilterOptionClick = (option) => {
-    if (activeFilterOption === option) {
-      setActiveFilterOption(null);
-    } else {
-      setActiveFilterOption(option);
-    }
-  };
-
-  const toggleJobDescription = (requirementId) => {
-    console.log(requirementId + "before Api");
+          );
+        });
+        setFilteredJobDescriptions(filtered);
+      };
+      
+      const handleFilterOptionClick = (option) => {
+        if (activeFilterOption === option) {
+          setActiveFilterOption(null);
+        } else {
+          setActiveFilterOption(option);
+        }
+      };
+      const handleUpdate = (requirementId) => {
+        setShowAddJobDescription(requirementId);
+      };
+      
+      const toggleJobDescription = (requirementId) => {
+        console.log(requirementId + "before Api");
     fetch(
-      `http://192.168.1.43:9090/api/ats/157industries/requirement-info/${requirementId}`
+      `http://93.127.199.85:9090/api/ats/157industries/requirement-info/${requirementId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -171,6 +183,8 @@ const JobListing = () => {
     setShowEDM(!showEDM);
     // document.querySelector(".main-description-share2").style.display = "block";
   };
+
+
 
   const handleclose = () => {
     setShowViewMore(false);
@@ -189,11 +203,24 @@ const JobListing = () => {
   const handleShareEdm = (res) => {
     setShowEDM(res);
   };
+  const handleAddJD = (res) => {
+    setShowAddJobDescription
+  }
   const handleJobDescriptionEdm = (res) => {
     setShowJobDescriptionEdm(res);
   };
   const handleShareJobDescription = (res) => {
     setShowJobDescriptionShare(res);
+  };
+  // const handleHoldClick = (requirementId) => {
+  //   setHeldJobId(requirementId);
+  // };
+  const handleHoldClick = (requirementId) => {
+    if (heldJobId === requirementId) {
+      setHeldJobId(null); 
+    } else {
+      setHeldJobId(requirementId); 
+    }
   };
 
   return (
@@ -280,7 +307,7 @@ const JobListing = () => {
       </div>
       {!showViewMore && (
         <div className="jdCards">
-          {filteredJobDescriptions.map((item, index) => (
+          {filteredJobDescriptions.map((item,job, index) => (
             <div className="job-listing" key={index}>
               <div className="job-header">
                 {/* <h3 >{item.requirementId}</h3> */}
@@ -315,6 +342,16 @@ const JobListing = () => {
               </div>
               {/* Arshad Added this button to share edm  */}
               <div className="job-actions">
+                <button className="daily-tr-btn" 
+                onClick={() => handleUpdate(item.requirementId)}>
+                  Edit
+                </button>
+                <button className="daily-tr-btn"
+                onClick={() => handleHoldClick(job.requirementId)}
+                >
+                  
+                  {heldJobId === job.requirementId ? "UnHold" : "Hold"}
+                </button>
                 <button
                   className="daily-tr-btn"
                   onClick={() => toggleJobDescription(item.requirementId)}
@@ -323,6 +360,10 @@ const JobListing = () => {
                 </button>
                 {/* <button className='daily-tr-btn' onClick={()=>toggleEdm(index)}> EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button> */}
               </div>
+              {heldJobId === job.requirementId && (
+                  <p style={{color:"red", display:"flex" , justifyContent:"center"}}>
+                    This Job Id Hold By Manager</p>
+                )}
             </div>
           ))}
         </div>
@@ -507,6 +548,14 @@ const JobListing = () => {
         <>
           <ShareEDM
             onShareEdm={handleShareEdm}
+            Descriptions={requirementData.requirementId}
+          />
+        </>
+      )}
+      {showAddJobDescription && (
+        <>
+          <AddJobDescription
+            onAddJD={handleAddJD}
             Descriptions={requirementData.requirementId}
           />
         </>

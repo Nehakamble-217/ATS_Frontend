@@ -16,7 +16,7 @@ function JobDescriptionEdm({ Descriptions, onJobDescriptionEdm }) {
   const { employeeId } = useParams()
 
   useEffect(() => {
-    fetch(`http://192.168.1.43:9090/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
+    fetch(`http://93.127.199.85:9090/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
