@@ -6,6 +6,7 @@ import logoutImg from "../photos/download.jpeg";
 import { RiTeamFill } from "react-icons/ri";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import ColorPicker from "../HomePage/ColorPicker";
 
 // Swapnil_Sidebar_AddingEmployeeDetailsinto_ManagerSection_17/07
 
@@ -139,6 +140,14 @@ function Sidebar({
     const url = new URL(window.location);
     url.searchParams.delete("color"); // Ensure no color param in the URL
     window.history.pushState({}, "", url);
+  };
+
+
+  const handleColorApplied = (color) => {
+   
+    // Save the selected color to local storage
+    localStorage.setItem("selectedColor", color);
+    setShowColor(false); // Close the color picker modal when color is applied
   };
 
   // const handleColorClick = (color) => {
@@ -1493,7 +1502,8 @@ function Sidebar({
           >
               <Modal.Body>
               <div className="color-picker">
-                      {pastelColors.map((color, index) => (
+                <ColorPicker onColorApplied={handleColorApplied} />
+                      {/* {pastelColors.map((color, index) => (
                         <button
                           key={index}
                           style={{
@@ -1506,7 +1516,7 @@ function Sidebar({
                           }}
                           onClick={() => handleColorClick(color)}
                         />
-                      ))}
+                      ))} */}
                     </div>
 
               </Modal.Body>

@@ -22,6 +22,36 @@ const LoginSignup = ({ onLogin }) => {
     AOS.init({ duration: 3000 });
   }, []);
 
+  useEffect(() => {
+    // Retrieve the saved color from local storage and apply it
+    const savedColor = localStorage.getItem("selectedColor");
+    if (savedColor) {
+      applyColor(savedColor);
+    }
+  }, []);
+  const applyColor = (color) => {
+    const darkenColor = (color, amount) => {
+      let colorInt = parseInt(color.slice(1), 16);
+      let r = (colorInt >> 16) + amount;
+      let g = ((colorInt >> 8) & 0x00ff) + amount;
+      let b = (colorInt & 0x0000ff) + amount;
+
+      r = Math.max(Math.min(255, r), 0);
+      g = Math.max(Math.min(255, g), 0);
+      b = Math.max(Math.min(255, b), 0);
+
+      return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
+    };
+
+    const hoverColor = darkenColor(color, -30);
+
+    document.documentElement.style.setProperty("--Bg-color", color);
+    document.documentElement.style.setProperty("--button-color", color);
+    document.documentElement.style.setProperty("--button-hover-color", hoverColor);
+    document.documentElement.style.setProperty("--hover-effect", hoverColor);
+    document.documentElement.style.setProperty("--filter-color", color);
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "employeeId") {

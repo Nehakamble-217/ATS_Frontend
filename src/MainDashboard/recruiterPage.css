@@ -13,7 +13,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: #ffe5b5;
+  background-color: var(--Bg-color);
   font-family: 'Arial', sans-serif;
   position: relative;
   overflow: hidden;
@@ -73,7 +73,8 @@
   border: 3px solid white;
   border-radius: 10px;
   box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #ffe5b5, #ffd8a8, #ffcb9b, #fec08e, #ffb281);
+  background-color: var(--Bg-color);
+  /* background: linear-gradient(135deg, #ffe5b5, #ffd8a8, #ffcb9b, #fec08e, #ffb281); */
   position: absolute;
   width: 30vw;
   height: 32vh;
@@ -99,29 +100,29 @@
   top: 60%;
   left: 30%;
   background: white;
-  border: 3px solid #ffb281;
-  color: #ffb281;
+  border: 3px solid var(--Bg-color);
+  color: var(--Bg-color);
 }
 
 .recpage-square-box:nth-child(4) {
   top: 60%;
   left: 62%;
   background: white;
-  border: 3px solid #ffb281;
-  color: #ffb281;
+  border: 3px solid var(--Bg-color);
+  color: var(--Bg-color);
 }
 
 .recpage-square-box:hover {
   background: white;
-  color: #fec08e;
-  border: 3px solid #ffb281;
+  color: var(--Bg-color);
+  border: 3px solid var(--Bg-color);
   transform: scale(1.03);
   box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
 }
 
 .recpage-square-box:hover .recpage-login,
 .recpage-square-box:hover .recpage-login1 {
-  background-color: #ffcb9b;
+  background-color: var(--Bg-color);
   color: white;
   border-color: gray;
 }
@@ -129,13 +130,14 @@
 .recpage-square-box:nth-child(3):hover .recpage-login1,
 .recpage-square-box:nth-child(4):hover .recpage-login1 {
   background-color: white;
-  color: #ffcb9b;
+  color: var(--Bg-color);
   border-color: gray;
 }
 
 .recpage-square-box:nth-child(3):hover,
 .recpage-square-box:nth-child(4):hover {
-  background: linear-gradient(135deg, #ffb281, #fec08e, #ffcb9b, #ffd8a8, #ffe5b5);
+  background-color: var(--Bg-color);
+  /* background: linear-gradient(135deg, #ffb281, #fec08e, #ffcb9b, #ffd8a8, #ffe5b5); */
   border: 3px solid white;
   color: white;
 }
@@ -168,12 +170,12 @@
   overflow: hidden;
   position: relative;
   background-color: white;
-  color: #ffcb9b;
+  color: var(--Bg-color);
 }
 
 .recpage-login:hover,
 .recpage-login1:hover {
-  background-color: #ffcb9b;
+  background-color: var(--Bg-color);
   color: white;
   border-color: gray;
 }
@@ -186,7 +188,7 @@
   left: 0;
   width: 50px;
   height: 100%;
-  background: #ffcb9b;
+  background: var(--Bg-color);
   transform: skewX(45deg) translateX(150px);
   transition: transform 0.8s;
 }
@@ -197,7 +199,7 @@
 }
 
 .recpage-login1 {
-  background-color: #ffcb9b;
+  background-color: var(--Bg-color);
   color: white;
   margin-left: 0;
 }

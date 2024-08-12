@@ -18,7 +18,7 @@
 }
 
 .payroll-table-heading {
-  background-color: #ffcb9b;
+  background-color: var(--Bg-color);
 }
 
 .payroll-table-heading th {
@@ -32,7 +32,7 @@
 .payroll-table button {
   padding: 0 8px 0 8px;
   height: 30px;
-  background-color: #ffcb9b;
+  background-color: var(--button-color);
   color: white;
   border: 1px solid gray;
   border-radius: 15px;
@@ -41,8 +41,8 @@
 }
 
 .payroll-table button:hover {
-  background-color: white;
-  color: #ffcb9b;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 .payroll-table-layout th,
