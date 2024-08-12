@@ -50,7 +50,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `http://192.168.1.43:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
+        `http://192.168.1.51:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
       );
       const data = await res.json();
       setCallingList(data);

@@ -133,7 +133,7 @@ const Attendance = () => {
     const fetchManagerNames = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.43:9090/api/ats/157industries/get-all-managers`
+          `http://192.168.1.51:9090/api/ats/157industries/get-all-managers`
         );
         setManagers(response.data);
       } catch (error) {
@@ -165,7 +165,7 @@ const Attendance = () => {
   const fetchTeamLeaderNames = async (id) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.43:9090/api/ats/157industries/tl-namesIds/${id}`
+        `http://192.168.1.51:9090/api/ats/157industries/tl-namesIds/${id}`
       );
       setTeamLeaders(response.data);
     } catch (error) {
@@ -176,7 +176,7 @@ const Attendance = () => {
   const fetchRecruiterUnderTeamLeaderData = useCallback(async (id) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.43:9090/api/ats/157industries/employeeId-names/${id}`
+        `http://192.168.1.51:9090/api/ats/157industries/employeeId-names/${id}`
       );
       setRecruiters(response.data);
     } catch (error) {
@@ -214,7 +214,7 @@ const Attendance = () => {
   const fetchData = async (id, roles, startDate, endDate) => {
     try {
       const response = await fetch(
-        `http://192.168.1.43:9090/api/ats/157industries/attendance-data/${id}/${roles}/${startDate}/${endDate}`
+        `http://192.168.1.51:9090/api/ats/157industries/attendance-data/${id}/${roles}/${startDate}/${endDate}`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -347,7 +347,7 @@ const Attendance = () => {
   const fetchEmployeeCount = async (ids, role) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.43:9090/api/ats/157industries/head-count/${role}/${ids}`
+        `http://192.168.1.51:9090/api/ats/157industries/head-count/${role}/${ids}`
       );
       setEmployeeCount(response.data);
     } catch (error) { }

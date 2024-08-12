@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+  import React, { useState } from "react";
 import axios from "axios";
 import "./AddResumes.css"; // Import the CSS file
 
@@ -16,7 +16,7 @@ const AddResumes = ({ show }) => {
     }
     axios
       .post(
-        "http://192.168.1.43:9090/api/ats/157industries/add-resume-data",
+        "http://192.168.1.51:9090/api/ats/157industries/add-resume-data",
         formData
       )
 

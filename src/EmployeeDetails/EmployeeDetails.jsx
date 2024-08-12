@@ -22,7 +22,7 @@ const EmployeeDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://192.168.1.43:9090/api/ats/157industries/detail-for-update/870"
+          "http://192.168.1.51:9090/api/ats/157industries/detail-for-update/870"
         );
         setEmployeeData(response.data);
         setLoading(false);

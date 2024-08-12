@@ -9,7 +9,7 @@ const PayRollMain = () => {
     const fetchEmployees = async () => {
       try {
         const res = await axios.get(
-          "http://192.168.1.43:9090/api/ats/157industries/findAll-all-payrolls"
+          "http://192.168.1.51:9090/api/ats/157industries/findAll-all-payrolls"
         );
         setEmployees(res.data);
       } catch (error) {
