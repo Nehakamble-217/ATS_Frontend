@@ -15,10 +15,7 @@ import { toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 import Confetti from "react-confetti";
 import ClipLoader from "react-spinners/ClipLoader";
-
 import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
-
-
 
 const CallingTrackerForm = ({
   onsuccessfulDataAdditions,
@@ -90,6 +87,7 @@ const CallingTrackerForm = ({
     finalStatus: "",
     resume: null,
   };
+
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
   );
@@ -135,10 +133,8 @@ const CallingTrackerForm = ({
 
   const fetchRecruiterName = async () => {
     try {
-
       const response = await axios.get(
         `http://192.168.1.43:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
-
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -237,7 +233,6 @@ const CallingTrackerForm = ({
     ) {
       return;
     }
-
     if (
       (name === "candidateName" ||
         name === "sourceName" ||
@@ -247,12 +242,9 @@ const CallingTrackerForm = ({
     ) {
       return;
     }
-
     setCallingTracker({ ...callingTracker, [name]: value });
-
     if (!startTime) {
       setStartTime(Date.now());
-
       console.log("timmer Start");
     }
     if (name === "selectYesOrNo" && value === "No") {
@@ -288,7 +280,6 @@ const CallingTrackerForm = ({
     ) {
       return;
     }
-
     if (
       (name === "candidateName" ||
         name === "sourceName" ||
