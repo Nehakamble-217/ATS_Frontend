@@ -28,7 +28,7 @@ const EmployeeProfileData = ({
 
   useEffect(() => {
     fetch(
-      `http://93.127.199.85:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `http://192.168.139.131:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
