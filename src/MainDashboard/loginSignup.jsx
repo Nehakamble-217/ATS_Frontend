@@ -54,7 +54,7 @@ const LoginSignup = ({ onLogin }) => {
   useEffect(() => {
     if (employeeId && userType) {
       fetch(
-        `http://93.127.199.85:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+        `http://192.168.1.51:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -162,14 +162,7 @@ const LoginSignup = ({ onLogin }) => {
                 >
                   Login
                 </button>
-                <button
-                  type="button"
-                  className="dashboard-button"
-                  onClick={dashboardLink}
-                  data-aos="fade-top"
-                >
-                  Dashboard
-                </button>
+         
                 <center>
                   <span
                     className="psw"

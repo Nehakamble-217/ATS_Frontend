@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Form, useParams } from "react-router-dom";
+import { Form, json, useParams } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -47,7 +47,7 @@ const CallingTrackerForm = ({
     fullAddress: "",
     communicationRating: "",
     selectYesOrNo: "No",
-    callingFeedback: "",
+    callingFeedback: ""
   };
 
   const initialLineUpState = {
@@ -87,8 +87,7 @@ const CallingTrackerForm = ({
     msgForTeamLeader: "",
     availabilityForInterview: "",
     interviewTime: "",
-    finalStatus: "",
-    resume: null,
+    finalStatus: ""
   };
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
@@ -108,6 +107,7 @@ const CallingTrackerForm = ({
   const [convertedCurrentCTC, setconvertedCurrentCTC] = useState("");
   const [startpoint, setStartPoint] = useState("");
   const [endpoint, setendPoint] = useState("");
+  const [resumeFile,setResumeFile] = useState(null);
 
   useEffect(() => {
     // fetchRecruiterName();
@@ -137,7 +137,7 @@ const CallingTrackerForm = ({
     try {
 
       const response = await axios.get(
-        `http://93.127.199.85:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+        `http://192.168.1.51:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
 
       );
       const { data } = response;
@@ -157,7 +157,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://93.127.199.85:9090/api/ats/157industries/company-details`
+        `http://192.168.1.51:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -330,8 +330,8 @@ const CallingTrackerForm = ({
   };
 
   const handleSubmit = async (e) => {
-    setSubmited(true);
     e.preventDefault();
+    
     let callingTrackerErrors = validateCallingTracker();
     let lineUpDataErrors = validateLineUpData();
     if (
@@ -341,20 +341,21 @@ const CallingTrackerForm = ({
       setErrors({ ...callingTrackerErrors, ...lineUpDataErrors });
       return;
     }
-
+  
     let fromFillingTime = null;
     if (startTime) {
-      const endTime = ((new Date()).getDate() + 2)
+      const endTime = new Date().getTime(); // Get the current time in milliseconds
       const timeTaken = (endTime - startTime) / 1000; // Time in seconds
       const minutes = Math.floor(timeTaken / 60);
       const seconds = Math.floor(timeTaken % 60);
-      const days = Math.floor(timeTaken / (1000 * 60 * 60 * 24))
       console.log(
-        `Time taken to fill the form:${days} days, ${minutes} minutes and ${seconds} seconds`
+        `Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`
       );
       fromFillingTime = `${minutes} minutes and ${seconds} seconds`;
     }
-
+    
+    setSubmited(true);
+  
     try {
       let dataToUpdate = {
         ...callingTracker,
@@ -378,48 +379,59 @@ const CallingTrackerForm = ({
           letterResponse: null,
           joiningProcess: null,
           joinDate: null,
+          interviewRoundList: []
         },
       };
-
+  
       if (userType === "Recruiters") {
-        console.log(employeeId);
         dataToUpdate.employee = { employeeId: employeeId };
       } else if (userType === "TeamLeader") {
-        console.log(employeeId);
         dataToUpdate.teamLeader = { teamLeaderId: employeeId };
       }
       if (callingTracker.selectYesOrNo === "Interested") {
         dataToUpdate.lineUp = lineUpData;
       }
+  
+      console.log(dataToUpdate);
+      
+      // Create FormData object
+      const data = new FormData();
+      data.append('callingTracker', JSON.stringify(dataToUpdate)); // Convert the object to a JSON string
+      data.append('resumeFile', resumeFile);
+      
       const response = await axios.post(
-        `http://93.127.199.85:9090/api/ats/157industries/calling-tracker/${userType}`,
-
-        dataToUpdate
+        `http://192.168.1.51:9090/api/ats/157industries/calling-tracker/${userType}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
-
+  
       console.log(response);
-      //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
+      
       if (callingTracker.selectYesOrNo === "Interested") {
         onsuccessfulDataAdditions(true);
       } else {
         onsuccessfulDataAdditions(false);
       }
-      // Name:-Swapnil Rokade Componenet;-callingTracker Adding time Taken Functionality Date:-26/07
+  
       if (response.data) {
         console.log(response.data.body);
         setSubmited(false);
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 5000);
-        toast.success("Data Added successfully:");
+        toast.success("Data added successfully!");
         setCallingTracker(initialCallingTrackerState);
         setLineUpData(initialLineUpState);
       }
     } catch (error) {
       setSubmited(false);
-      toast.error(error);
+      toast.error(error.message);
     }
   };
-
+  
   const handleLocationChange = (e) => {
     const value = e.target.value;
     if (value === "Other") {
@@ -448,6 +460,7 @@ const CallingTrackerForm = ({
 
   const handleResumeFileChange = (e) => {
     const file = e.target.files[0];
+    setResumeFile(e.target.files[0]);
 
     if (file) {
       const reader = new FileReader();
