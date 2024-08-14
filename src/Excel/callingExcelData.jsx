@@ -37,7 +37,7 @@ const CallingExcelList = ({
   useEffect(() => {
     console.log(employeeId + "---00---");
     fetch(
-      `http://192.168.1.51:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://localhost:9090/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -193,7 +193,7 @@ const CallingExcelList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.51:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://localhost:9090/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -275,9 +275,7 @@ const CallingExcelList = ({
               onClick={() => setShowSearchBar(!showSearchBar)}
               style={{ margin: "10px", width: "auto", fontSize: "15px" }}
             ></i>
-            {/* <h5 style={{ color: "gray", paddingTop: "5px" }}>Excel Uploaded data</h5> */}
             <h1 className="excel-calling-data-heading">Excel Calling Data</h1>
-
             <button
               onClick={toggleFilterSection}
               style={{
@@ -295,11 +293,6 @@ const CallingExcelList = ({
               Filter <i className="fa-solid fa-filter"></i>
             </button>
           </div>
-          {/* <div style={{ display: 'flex' }}>
-            <button onClick={onCloseTable} className="close-button">
-              Close
-            </button>
-          </div> */}
           {showSearchBar && (
             <input
               type="text"
@@ -315,11 +308,9 @@ const CallingExcelList = ({
               <h5 style={{ color: "gray", paddingTop: "5px" }}>Filter</h5>
 
               <div className="filter-dropdowns">
-                {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
 
                 {filterOptions.map((option) => (
                   <div key={option} className="filter-dropdown">
-                    {/* <label htmlFor={option}>{option}</label> */}
                     <div className="dropdown">
                       <button className="dropbtn">{option}</button>
                       <div className="dropdown-content">
@@ -364,7 +355,6 @@ const CallingExcelList = ({
           )}
 
           <div className="attendanceTableData">
-            {/* <button onClick={onCloseTable} style={{ float: 'right' }}>Close</button> */}
             <table className="selfcalling-table attendance-table">
               <thead>
                 <tr className="attendancerows-head">

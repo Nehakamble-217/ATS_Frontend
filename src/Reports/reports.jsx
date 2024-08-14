@@ -116,7 +116,6 @@ function Accesstable() {
     //   );
       const response = await axios.get(
         `http://192.168.1.51:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
-    
       );
       setRecruiterUnderTeamLeader(response.data);
     }, [selectedTeamLeader]);

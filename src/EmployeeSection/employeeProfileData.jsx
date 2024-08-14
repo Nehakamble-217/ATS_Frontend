@@ -28,7 +28,7 @@ const EmployeeProfileData = ({
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.51:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `http://localhost:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {

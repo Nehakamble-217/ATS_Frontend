@@ -1250,10 +1250,7 @@ function Sidebar({
                 {userType != "SuperUser" && userType != "Vendor" ? (
                   <>
                     <li
-                      onClick={handleButtonClick(
-                        "notepad",
-                        toggelDisplayNotPad
-                      )}
+                      onClick={handleButtonClick("notepad",toggelDisplayNotPad)}
                       className={activeButton === "notepad" ? "active" : ""}
                     >
                       <a href="#">

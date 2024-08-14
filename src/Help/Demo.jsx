@@ -311,12 +311,6 @@ const fetchRequirementOptions = async () => {
         </div>
       </div>
 
-
-
-
-
-
-
 <div className='SampleBhagya'>
       <div className="card right-card">
         <div className="dhansform-group">

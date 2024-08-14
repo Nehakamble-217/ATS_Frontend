@@ -1192,7 +1192,6 @@ const SendEmailPopup = ({
     axios
       .post(
         "http://192.168.1.51:9090/api/ats/157industries/send-email",
-        emailData
       )
       .then((response) => {
         handleStoreClientInformation();

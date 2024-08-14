@@ -14,7 +14,7 @@ import "../EmployeeSection/CallingTrackerForm.css";
 import { toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 import Confetti from "react-confetti";
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
 
 const CallingTrackerForm = ({
@@ -134,7 +134,7 @@ const CallingTrackerForm = ({
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.51:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+        `http://192.168.1.51:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -179,7 +179,7 @@ const CallingTrackerForm = ({
     return errors;
   };
 
-  
+
 
   const validateLineUpData = () => {
     let errors = {};
@@ -191,9 +191,6 @@ const CallingTrackerForm = ({
       if (!lineUpData.dateOfBirth) {
         errors.dateOfBirth = "Date of Birth is required";
       }
-      // if (!lineUpData.resume) {
-      //   errors.resume = "Resume is required";
-      // }
       if (!lineUpData.experienceYear || !lineUpData.experienceMonth) {
         errors.experienceYear = "Experience is required";
       }
@@ -320,6 +317,7 @@ const CallingTrackerForm = ({
     }
   };
 
+
   const handleSubmit = async (e) => {
     setSubmited(true);
     e.preventDefault();
@@ -371,7 +369,6 @@ const CallingTrackerForm = ({
           joinDate: null,
         },
       };
-
       if (userType === "Recruiters") {
         console.log(employeeId);
         dataToUpdate.employee = { employeeId: employeeId };
@@ -383,11 +380,9 @@ const CallingTrackerForm = ({
         dataToUpdate.lineUp = lineUpData;
       }
       const response = await axios.post(
-        `http://192.168.1.51:9090/api/ats/157industries/calling-tracker/${userType}`,
-
+        `http://localhost:9090/api/ats/157industries/calling-tracker/${userType}`,
         dataToUpdate
       );
-
       console.log(response);
       //Name:-Akash Pawar Component:-CallingTrackerForm Subcategory:-CheckedIfCandidateIsLineUp and successfulDataAdditions Start LineNo:-217 Date:-01/07
       if (callingTracker.selectYesOrNo === "Interested") {
@@ -398,7 +393,7 @@ const CallingTrackerForm = ({
       // Name:-Swapnil Rokade Componenet;-callingTracker Adding time Taken Functionality Date:-26/07
       if (response.data) {
         console.log(response.data.body);
-        setSubmited(false);
+        // setSubmited(false);
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 5000);
         toast.success("Data Added successfully:");
@@ -406,10 +401,11 @@ const CallingTrackerForm = ({
         setLineUpData(initialLineUpState);
       }
     } catch (error) {
-      setSubmited(false);
+      // setSubmited(false);
       toast.error(error);
     }
   };
+
 
   const handleLocationChange = (e) => {
     const value = e.target.value;
@@ -1756,11 +1752,11 @@ const CallingTrackerForm = ({
         onUpdateExpectedCTCLakh={handleUpdateExpectedCTCLakh}
         onUpdateExpectedCTCThousand={handleUpdateExpectedCTCThousand}
       />
-      {submited && (
+      {/* {submited && (
         <div className="SCE_Loading_Animation">
           <ClipLoader size={50} color="#ffb281" />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
@@ -1846,7 +1842,7 @@ const ModalComponent = ({
                 }`}
               onClick={() => setActiveField("historyTracker")}
             >
-              History Tracker 
+              History Tracker
             </p>
             <p
               className={`sidebar-item ${activeField === "previousQuestion" ? "active" : ""
@@ -2021,15 +2017,15 @@ const ModalComponent = ({
             )}
             {activeField === "historyTracker" && (
               <div className="history-Tracker">
-                
+
                 <div className="form-group">
 
-               < CandidateHistoryTracker/>
-                     <div>
-         
-        </div>
+                  < CandidateHistoryTracker />
+                  <div>
+
+                  </div>
                 </div>
-                
+
               </div>
             )}
             {activeField === "previousQuestion" && (
@@ -2042,30 +2038,30 @@ const ModalComponent = ({
                     id="jobId"
                     className="form-control"
                     placeholder="Enter Job Id"
-                    
+
                   />
                 </div>
 
                 <div className="card">
-            <h2 className="card-title">Previous Question</h2>
-            <p className="card-content">Q.1. What is Java Full Stack Development?</p>
-            <p className="card-content">Q.2. Explain the difference between front-end and back-end development.</p>
-            <p className="card-content">Q.3. What do you need to build a typical web application?</p>
-            <p className="card-content">Q.4. What is the Java Virtual Machine (JVM), and why is it important?</p>
-            <p className="card-content">Q.5. What's a servlet, and why is it used in Java web development?</p>
-            
-        </div>
+                  <h2 className="card-title">Previous Question</h2>
+                  <p className="card-content">Q.1. What is Java Full Stack Development?</p>
+                  <p className="card-content">Q.2. Explain the difference between front-end and back-end development.</p>
+                  <p className="card-content">Q.3. What do you need to build a typical web application?</p>
+                  <p className="card-content">Q.4. What is the Java Virtual Machine (JVM), and why is it important?</p>
+                  <p className="card-content">Q.5. What's a servlet, and why is it used in Java web development?</p>
+
+                </div>
                 <div className="card">
-            <h2 className="card-title">Previous Question</h2>
-            <p className="card-content">Q.1. What's the Spring Framework, and why is it useful for Java?</p>
-            <p className="card-content">Q.2. What are RESTful web services, and why are they important in Java?</p>
-            <p className="card-content">Q.3. What's Hibernate, and how does it help with databases in Java?</p>
-            <p className="card-content">Q.4. Can you explain what dependency injection means in Spring?</p>
-            <p className="card-content">Q.5. What's a singleton pattern, and why does it matter in Java?</p>
-           
-        </div>
-               
-               
+                  <h2 className="card-title">Previous Question</h2>
+                  <p className="card-content">Q.1. What's the Spring Framework, and why is it useful for Java?</p>
+                  <p className="card-content">Q.2. What are RESTful web services, and why are they important in Java?</p>
+                  <p className="card-content">Q.3. What's Hibernate, and how does it help with databases in Java?</p>
+                  <p className="card-content">Q.4. Can you explain what dependency injection means in Spring?</p>
+                  <p className="card-content">Q.5. What's a singleton pattern, and why does it matter in Java?</p>
+
+                </div>
+
+
               </div>
             )}
           </div>

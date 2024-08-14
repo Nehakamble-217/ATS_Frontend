@@ -1,4 +1,3 @@
-//login Page ise used to user  wise
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AOS from "aos";
@@ -24,7 +23,7 @@ const LoginSignup = ({ onLogin }) => {
   useEffect(() => {
     if (employeeId && userType) {
       fetch(
-        `http://192.168.1.51:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+        `http://localhost:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -35,7 +34,6 @@ const LoginSignup = ({ onLogin }) => {
         });
     }
   }, [employeeId, userType]);
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,10 +46,15 @@ const LoginSignup = ({ onLogin }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!employeeId || !password) {
+      setError("Please fill in both fields before submitting.");
+      return;
+    }
+
     try {
       if (login === password) {
         localStorage.setItem("employeeId", employeeId);
-        navigate(`/empDash/${employeeId}/${userType}`);
+        navigate(`/Dashboard/${employeeId}/${userType}`);
         onLogin();
       } else {
         setError("Invalid login for this user. Please try again.");
@@ -62,9 +65,6 @@ const LoginSignup = ({ onLogin }) => {
     }
   };
 
-  const dashboardLink = () => {
-    navigate("/empDash/870/Manager");
-  };
 
   return (
     <div className="main-body">
@@ -131,14 +131,6 @@ const LoginSignup = ({ onLogin }) => {
                   data-aos="fade-top"
                 >
                   Login
-                </button>
-                <button
-                  type="button"
-                  className="dashboard-button"
-                  onClick={dashboardLink}
-                  data-aos="fade-top"
-                >
-                  Dashboard
                 </button>
                 <center>
                   <span

@@ -16,7 +16,7 @@ const HomePage = () => {
           </h1>
           <div style={{ width: "50%", margin: "auto" }}>
             <h1 style={{ fontFamily: "inherit", fontWeight: "600", fontSize: "70px", textAlign: "center", color: "#c40b0b", zIndex: "1" }}> Recruiter's Gear </h1>
-            <Link to="/mainDashboard">
+            <Link to="/Main-Dashboard">
               <div className="landingbtn" style={{ display: "flex", width: "100%", justifyContent: "center", paddingLeft: "5px", paddingRight: "80px", paddingTop: "20px" }}>
                 <button className="main-homepage-btn">Let's begin</button>
               </div></Link>

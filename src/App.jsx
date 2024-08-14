@@ -19,21 +19,16 @@ import SelfTechnicalUser from "./MainDashboard/selfTechnicalUser.jsx";
 import { ToastContainer } from "react-toastify";
 import AddVendor from "./Vendor/AddVendor.jsx";
 
-
-
-
 const App = () => {
-
   return (
     <div>
-
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/mainDashboard" element={<MainDashboard />} />
+          <Route path="/Main-Dashboard" element={<MainDashboard />} />
           <Route path="/employee-login/:userType" element={<Login />} />
           <Route path="/forgotPassword" element={<ForgotPasswordForm/>}/>
-          <Route path="/empDash/:employeeId/:userType" element={<EmpDashboard />} />
+          <Route path="/Dashboard/:employeeId/:userType" element={<EmpDashboard />} />
           <Route path="/follow-up/:candidateId" element={<AfterSelection />} />
           <Route path="/admin-login" element={<AdminLogin></AdminLogin>}></Route>
           <Route path="api/ats/157industries/verify" element={<CandidateVerification></CandidateVerification>}></Route>

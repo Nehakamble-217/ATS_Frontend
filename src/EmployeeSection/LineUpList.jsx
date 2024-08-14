@@ -149,9 +149,7 @@ const LineUpList = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-
         `http://192.168.1.51:9090/api/ats/157industries/get-all-managers`
-
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -167,9 +165,7 @@ const LineUpList = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-
         `http://192.168.1.51:9090/api/ats/157industries/tl-namesIds/${empId}`
-
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -220,7 +216,6 @@ const LineUpList = ({
     fetch(
 
       `http://192.168.1.51:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
-
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))

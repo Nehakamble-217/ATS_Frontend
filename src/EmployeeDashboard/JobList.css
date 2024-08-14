@@ -490,3 +490,10 @@
   color: gray;
   padding-left: 5px;
 }
+
+
+.jd-edit-hold-div{
+  display: flex;
+  gap: 5px;
+  /* border: 1px solid black; */
+}
