@@ -25,7 +25,7 @@ const CallingExcelList = ({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
 
-  const { employeeId } = useParams();
+  const { employeeId,userType } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeId + "emp 1111 id");
 
@@ -37,7 +37,7 @@ const CallingExcelList = ({
   useEffect(() => {
     console.log(employeeId + "---00---");
     fetch(
-      `http://localhost:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://localhost:9090/api/ats/157industries/calling-excel-data/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -193,7 +193,7 @@ const CallingExcelList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://localhost:9090/api/ats/157industries/calling-excel-data/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {

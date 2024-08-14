@@ -41,7 +41,7 @@
   padding-right: 10px;
   color: white;
   width: auto;
-  background-color: #ffb281;
+  background-color: var(--button-color);
   border: 1px solid gray;
   border-radius: 15px;
   cursor: pointer;
@@ -50,8 +50,8 @@
 }
 
 .employee-form button:hover {
-  background-color: white;
-  color: #ffb281;
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
 }
 
 @media (max-width: 480px) {

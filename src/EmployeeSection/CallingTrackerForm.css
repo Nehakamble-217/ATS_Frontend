@@ -559,14 +559,14 @@ strong {
   padding: 2px 5px;
   width: fit-content;
   border-radius: 15px;
-  background-color: #ffb281;
+  background-color: var(--button-color);
   border: 1px solid #ccc;
   color: white;
 }
 
 .calling-tracker-popup-open-btn:hover {
-  color: #ffb281;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--button-hover-color);
+  color: var(--text-hover-color);
   border: 1px solid #ccc;
 }
 
@@ -597,7 +597,7 @@ strong {
 
 .sidebar-item.active,
 .sidebar-item:hover {
-  background-color: #ffb281;
+  background-color: var(--button-color);
   color: #fff;
 }
 
@@ -635,13 +635,13 @@ strong {
   font-size: 16px;
   border: none;
   border-radius: 15px;
-  background-color: #ffb281;
+  background-color: var(--button-color);
   border: 1px solid #ccc;
   color: white;
 }
 
 .callingTracker-popup-close-btn:hover {
-  color: #ffb281;
+  color: var(--button-color);
   background-color: rgb(255, 255, 255);
   border: 1px solid #ccc;
 }
@@ -654,5 +654,5 @@ strong {
 }
 .sal-cal-th {
   color: white !important;
-  background-color: #ffb281 !important;
+  background-color: var(--Bg-color) !important;
 }

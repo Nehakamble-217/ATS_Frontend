@@ -8,7 +8,7 @@ const ResumeList = ({ handleUpdate }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { employeeId } = useParams();
+  const { employeeId,userType } = useParams();
   console.log(employeeId + "empId in resume List");
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
@@ -18,8 +18,8 @@ const ResumeList = ({ handleUpdate }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:9090/api/ats/157industries/all-resumes-data"
-        ); // Replace with your API URL
+          `http://localhost:9090/api/ats/157industries/fetch-resumes-data/${employeeId}/${userType}`
+        ); 
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -39,7 +39,7 @@ const ResumeList = ({ handleUpdate }) => {
   const handleUpdateSuccess = () => {
     // Assuming `employeeId` is a known variable or prop
     fetch(
-      `http://localhost:9090/api/ats/157industries/callingData/${employeeId}`
+      `http://localhost:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -193,7 +193,7 @@ const ResumeList = ({ handleUpdate }) => {
               <tr className="attendancerows-head">
                 <th className="attendanceheading">Sr No</th>
 
-                <th className="attendanceheading">Candidate Name</th>
+                <th className="attendanceheading">Candidate  Name</th>
                 <th className="attendanceheading">Contact Number</th>
                 <th className="attendanceheading">Alternate Number</th>
                 <th className="attendanceheading">Candidate Email</th>

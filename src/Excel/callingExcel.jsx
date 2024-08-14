@@ -119,7 +119,7 @@ const CallingExcel = ({ onClose, displayCandidateForm }) => {
     }
     try {
       await axios.post(
-        "http://localhost:9090/api/ats/157industries/add-multiple-resume",
+        `http://localhost:9090/api/ats/157industries/add-multiple-resume/${employeeId}/${userType}`,
         formData
       );
       setUploadSuccessResume(true);

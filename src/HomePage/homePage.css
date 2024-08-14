@@ -161,6 +161,25 @@
         top: -850px;
     }
 }
+.Choose-color-container{
+  width: 100%;
+  display: flex;
+  /* border: 1px solid red; */
+}
+.Choose-Color-Btn {
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.Choose-Color-Btn:hover {
+  background-color: #e0e0e0; /* Change background color on hover */
+  transform: scale(1.1); /* Slightly scale the button */
+}
 
 /* header.css */
 

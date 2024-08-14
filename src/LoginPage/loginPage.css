@@ -8,7 +8,7 @@
 
 /* General Styles */
 .main-body {
-    background-color: #ffe5b5;
+    background-color: var(--Bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +118,7 @@
 .right-panel h2 {
     font-size: 1.5rem;
     text-align: center;
-    color: #ffcb9b;
+    color: var(--Bg-color);
     margin-bottom: 20px;
     opacity: 0;
     animation: slideIn 1s forwards 0.5s;
@@ -167,7 +167,7 @@
     font-size: 18px;
     height: 30px;
     color: white;
-    background-color: #ffcb9b;
+    background-color: var(--button-color);
     border: none;
     border-radius: 15px;
     cursor: pointer;
@@ -181,15 +181,14 @@
 .login-button:hover,
 .dashboard-button:hover {
     background-color: white;
-    color: #ffcb9b;
+    color: var(--Bg-color);
     transform: translateY(-2px);
-    color: #ffb281;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Hover styles for buttons */
 .button-hover {
-    background-color: #ffcb9b;
+    background-color: var(--Bg-color);
     color: white;
     border-radius: 30px;
     border: 1px solid #f2f2f2;
@@ -200,7 +199,7 @@
 
 .button-hover:hover {
     background-color: white;
-    color: #ffcb9b;
+    color: var(--Bg-color);
 }
 
 

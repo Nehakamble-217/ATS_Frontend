@@ -25,7 +25,7 @@ const LineupExcelData = ({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
 
-  const { employeeId } = useParams();
+  const { employeeId,userType } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
@@ -36,7 +36,7 @@ const LineupExcelData = ({
 
   useEffect(() => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/lineup-excel-data/${employeeId}`
+      `http://localhost:9090/api/ats/157industries/lineup-excel-data/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -200,7 +200,7 @@ const LineupExcelData = ({
   };
 
   const handleUpdateSuccess = () => {
-    fetch(`http://localhost:9090/api/ats/157industries/lineup-excel-data/${employeeId}`)
+    fetch(`http://localhost:9090/api/ats/157industries/lineup-excel-data/${employeeId}/${userType}`)
       .then((response) => response.json())
       .then((data) => {
         setLineUpList(data);

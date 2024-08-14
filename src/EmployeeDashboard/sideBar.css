@@ -154,7 +154,7 @@ body {
   margin-left: 1px;
   padding-left: 2px;
   padding-top: 1px;
-  border-left: 1px solid #ffb281;
+  /* border-left: 1px solid #ffb281; */
 }
 .sidebar-menu .sub-menu li a {
   width: auto;
