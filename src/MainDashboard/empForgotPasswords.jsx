@@ -32,7 +32,7 @@ const ForgotPasswordForm = () => {
 
   const handleSendOtp = async () => {
     try {
-      await axios.post("http://93.127.199.85:8081/api/auth/forgot-password", null, {
+      await axios.post("http://192.168.1.38:8081/api/auth/forgot-password", null, {
         params: { emailId: formData.emailId, jobRole: formData.jobRole },
       });
       setOtpSent(true);
@@ -49,7 +49,7 @@ const ForgotPasswordForm = () => {
 
   const handleVerifyOtp = async () => {
     try {
-      await axios.post("http://93.127.199.85:8081/api/auth/validate-otp", null, {
+      await axios.post("http://192.168.1.38:8081/api/auth/validate-otp", null, {
         params: { emailId: formData.emailId, otp: formData.otp },
       });
       setStep(3);
@@ -66,7 +66,7 @@ const ForgotPasswordForm = () => {
         return;
       }
 
-      await axios.post("http://93.127.199.85:8081/api/auth/reset-password", null, {
+      await axios.post("http://192.168.1.38:8081/api/auth/reset-password", null, {
         params: { emailId: formData.emailId, password: formData.password },
       });
       setError("");

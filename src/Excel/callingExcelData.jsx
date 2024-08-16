@@ -8,6 +8,7 @@ const CallingExcelList = ({
   updateState,
   funForGettingCandidateId,
   onCloseTable,
+  loginEmployeeName
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
@@ -25,7 +26,7 @@ const CallingExcelList = ({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
 
-  const { employeeId } = useParams();
+  const { employeeId,userType } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeId + "emp 1111 id");
 
@@ -37,7 +38,7 @@ const CallingExcelList = ({
   useEffect(() => {
     console.log(employeeId + "---00---");
     fetch(
-      `http://93.127.199.85:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.38:9090/api/ats/157industries/calling-excel-data/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -188,12 +189,14 @@ const CallingExcelList = ({
   };
 
   const handleUpdate = (candidateData) => {
-    setSelectedCandidate(candidateData); // Set candidate data for CallingTrackerForm
+    setSelectedCandidate(candidateData);
+    console.log(candidateData);
+     // Set candidate data for CallingTrackerForm
   };
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://93.127.199.85:9090/api/ats/157industries/calling-excel-data/${employeeId}`
+      `http://192.168.1.38:9090/api/ats/157industries/calling-excel-data/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -614,7 +617,7 @@ const CallingExcelList = ({
                     </td>
                     <td className="tabledata" style={{ textAlign: "center" }}>
                       <i
-                        onClick={() => handleUpdate(item.candidateId)}
+                        onClick={() => handleUpdate(item)}
                         className="fa-regular fa-pen-to-square"
                       ></i>
                     </td>
@@ -627,9 +630,10 @@ const CallingExcelList = ({
       )}
       {selectedCandidate && (
         <CallingTrackerForm
-          candidateData={selectedCandidate}
+          initialData={selectedCandidate}
+          loginEmployeeName={loginEmployeeName}
           onClose={() => setSelectedCandidate(null)}
-          onSuccess={handleUpdateSuccess}
+          // onSuccess={handleUpdateSuccess}
         />
       )}
     </div>

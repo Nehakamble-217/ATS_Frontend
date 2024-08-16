@@ -31,7 +31,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     try {
       const response = await fetch(
 
-        `http://93.127.199.85:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
+        `http://192.168.1.38:9090/api/ats/157industries/fetch-specific-response/${candidateId}`
       );
       const responseData = await response.json();
       console.log(responseData);
@@ -46,7 +46,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
   const fetchPerformanceId = async () => {
     try {
       const performanceId = await axios.get(
-        `http://93.127.199.85:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
+        `http://192.168.1.38:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
       );
       setPerformanceId(performanceId.data);
     } catch (error) {
@@ -80,7 +80,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
     try {
       // Save new interview response
       const response = await axios.post(
-        "http://93.127.199.85:9090/api/ats/157industries/save-interview-response",
+        "http://192.168.1.38:9090/api/ats/157industries/save-interview-response",
         formData,
         {
           headers: {
@@ -124,7 +124,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
           console.log("Sending additional data:", additionalData);
           try {
             const response1 = await axios.put(
-              `http://93.127.199.85:9090/api/ats/157industries/update-performance/${performanceId}`,
+              `http://192.168.1.38:9090/api/ats/157industries/update-performance/${performanceId}`,
               additionalData
             );
             console.log("Second API Response:", response1.data);
@@ -150,7 +150,7 @@ const UpdateResponseFrom = ({ candidateId, onClose }) => {
           console.log("2 additional data:", additionalData);
           try {
             const response1 = await axios.put(
-              `http://93.127.199.85:9090/api/ats/157industries/update-performance/${performanceId}`,
+              `http://192.168.1.38:9090/api/ats/157industries/update-performance/${performanceId}`,
               additionalData
             );
             console.log("Second API Response:", response1.data);

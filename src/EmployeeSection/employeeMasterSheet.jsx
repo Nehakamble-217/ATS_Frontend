@@ -60,7 +60,7 @@ const EmployeeMasterSheet = () => {
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://93.127.199.85:9090/api/ats/157industries/get-all-managers`
+        `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -72,7 +72,7 @@ const EmployeeMasterSheet = () => {
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://93.127.199.85:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -83,7 +83,7 @@ const EmployeeMasterSheet = () => {
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://93.127.199.85:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -104,7 +104,7 @@ const EmployeeMasterSheet = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `http://93.127.199.85:9090/api/ats/157industries/master-sheet/${employeeId}/${userType}`
+        `http://192.168.1.38:9090/api/ats/157industries/master-sheet/${employeeId}/${userType}`
       );
       const data = await response.json();
 
@@ -176,7 +176,7 @@ const EmployeeMasterSheet = () => {
 
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://93.127.199.85:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `http://192.168.1.38:9090/api/ats/157industries/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&

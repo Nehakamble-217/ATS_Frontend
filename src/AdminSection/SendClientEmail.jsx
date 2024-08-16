@@ -91,7 +91,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
 
   useEffect(() => {
     fetch(
-      `http://93.127.199.85:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
+      `http://192.168.1.38:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -1155,7 +1155,7 @@ const SendEmailPopup = ({
       };
 
       const response = await axios.post(
-        "http://93.127.199.85:9090/api/ats/157industries/add-client-details",
+        "http://192.168.1.38:9090/api/ats/157industries/add-client-details",
         clientData
       );
       if (response) {
@@ -1191,7 +1191,7 @@ const SendEmailPopup = ({
 
     axios
       .post(
-        "http://93.127.199.85:9090/api/ats/157industries/send-email",
+        "http://192.168.1.38:9090/api/ats/157industries/send-email",
         emailData
       )
       .then((response) => {
@@ -1203,7 +1203,7 @@ const SendEmailPopup = ({
         selectedCandidate.forEach(async (can) => {
           try {
             const performanceId = await axios.get(
-              `http://93.127.199.85:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
+              `http://192.168.1.38:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
             );
             UpdatePerformace(performanceId.data);
           } catch (error) {
@@ -1231,7 +1231,7 @@ const SendEmailPopup = ({
       };
       // console.log("Sending additional data:", additionalData);
       const response1 = await axios.put(
-        `http://93.127.199.85:9090/api/ats/157industries/update-performance/${id}`,
+        `http://192.168.1.38:9090/api/ats/157industries/update-performance/${id}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);

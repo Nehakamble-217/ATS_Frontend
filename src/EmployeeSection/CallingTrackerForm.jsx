@@ -22,7 +22,7 @@ import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker
 
 const CallingTrackerForm = ({
   onsuccessfulDataAdditions,
-  initialData,
+  initialData={},
   loginEmployeeName,
   // toggelCandidateHistory
 }) => {
@@ -88,8 +88,8 @@ const CallingTrackerForm = ({
     useState(false);
   const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [convertedExpectedCTC, setconvertedExpectedCTC] = useState("");
-  const [convertedCurrentCTC, setconvertedCurrentCTC] = useState("");
+  const [convertedExpectedCTC, setConvertedExpectedCTC] = useState("");
+  const [convertedCurrentCTC, setConvertedCurrentCTC] = useState("");
   const [startpoint, setStartPoint] = useState("");
   const [endpoint, setendPoint] = useState("");
   const [resumeFile,setResumeFile] = useState(null);
@@ -98,6 +98,35 @@ const CallingTrackerForm = ({
     // fetchRecruiterName();
     fetchRequirementOptions();
   }, [employeeId]);
+  
+  useEffect(() => {
+    if (initialData) {
+      const updatedCallingTracker = { ...initialCallingTrackerState };
+      const updatedLineUpData = { ...initialLineUpState };
+  
+      Object.keys(initialData).forEach((key) => {
+        if (key === "date") {
+          // Set date to current date if it is present in initialData
+          updatedCallingTracker[key] = new Date().toISOString().slice(0, 10);
+          updatedLineUpData[key] = new Date().toISOString().slice(0, 10);
+        } else if (["candidateId", "candidateAddedTime"].includes(key)) {
+          // Set candidateId and candidateAddedTime to empty string if present
+          updatedCallingTracker[key] = "";
+          updatedLineUpData[key] = "";
+        } else {
+          // Ensure the value is a string for other fields
+          updatedCallingTracker[key] = ensureStringValue(initialData[key]);
+          updatedLineUpData[key] = ensureStringValue(initialData[key]);
+        }
+      });
+  
+      setCallingTracker(updatedCallingTracker);
+      setLineUpData(updatedLineUpData);
+    }
+  }, [initialData]);
+  
+  
+  
 
   useEffect(() => {
     const updateTimer = () => {
@@ -106,23 +135,29 @@ const CallingTrackerForm = ({
       const minutes = String(now.getMinutes()).padStart(2, "0");
       const seconds = String(now.getSeconds()).padStart(2, "0");
       const time = `${hours}:${minutes}:${seconds}`;
+      
       setCandidateAddedTime(time);
       setCallingTracker((prevState) => ({
         ...prevState,
         candidateAddedTime: time,
       }));
     };
-
+  
     updateTimer();
     const timerInterval = setInterval(updateTimer, 1000);
     return () => clearInterval(timerInterval);
   }, []);
 
+
+    // Helper function to only update with non-null and non-undefined values
+    const ensureStringValue = (value) => (value !== undefined && value !== null ? String(value) : "");
+  
   const fetchRecruiterName = async () => {
     try {
 
+
       const response = await axios.get(
-        `http://192.168.37.131:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
+        `http://192.14468.1.38:9090/api/ats/157industries/employeeName/${employeeId}/Recruiters`
 
       );
       const { data } = response;
@@ -142,7 +177,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.37.131:9090/api/ats/157industries/company-details`
+        `http://192.168.1.38:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -260,6 +295,8 @@ const CallingTrackerForm = ({
 
   const handleLineUpChange = (e) => {
     const { name, value } = e.target;
+  
+    // Restrict non-numeric input for specific fields
     if (
       (name === "contactNumber" ||
         name === "alternateNumber" ||
@@ -273,7 +310,8 @@ const CallingTrackerForm = ({
     ) {
       return;
     }
-
+  
+    // Restrict non-alphabetic input for specific fields
     if (
       (name === "candidateName" ||
         name === "sourceName" ||
@@ -282,37 +320,27 @@ const CallingTrackerForm = ({
     ) {
       return;
     }
-
-    setLineUpData({ ...lineUpData, [name]: value });
+  
+    const updatedLineUpData = { ...lineUpData, [name]: value };
+  
+    if (name === "currentCTCLakh" || name === "currentCTCThousand") {
+      const lakhValue = parseFloat(updatedLineUpData.currentCTCLakh) || 0;
+      const thousandValue = parseFloat(updatedLineUpData.currentCTCThousand) || 0;
+      const combinedCTC = lakhValue * 100000 + thousandValue * 1000;
+      setConvertedCurrentCTC(combinedCTC.toFixed(2));
+    }
+  
+    if (name === "expectedCTCLakh" || name === "expectedCTCThousand") {
+      const lakhValue = parseFloat(updatedLineUpData.expectedCTCLakh) || 0;
+      const thousandValue = parseFloat(updatedLineUpData.expectedCTCThousand) || 0;
+      const combinedCTC = lakhValue * 100000 + thousandValue * 1000;
+      setConvertedExpectedCTC(combinedCTC.toFixed(2));
+    }
+  
+    setLineUpData(updatedLineUpData);
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-    if (name === "currentLocation") {
-      console.log(value);
-      setStartPoint(value);
-    }
-
-    if (name === "dateOfBirth") {
-      const today = new Date();
-      const birthDate = new Date(value);
-
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      const dayDiff = today.getDate() - birthDate.getDate();
-
-      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-        age--;
-      }
-
-      if (age < 18 || age > 60) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          dateOfBirth:
-            "Date of birth must make the user between 18 and 60 years old.",
-        }));
-      } else {
-        setErrors((prevErrors) => ({ ...prevErrors, dateOfBirth: "" }));
-      }
-    }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -364,8 +392,6 @@ const CallingTrackerForm = ({
             },
         };
         console.log(dataToUpdate);
-        
-
         if (userType === "Recruiters") {
             dataToUpdate.callingTracker.employee = { employeeId: employeeId };
         } else if (userType === "TeamLeader") {
@@ -378,7 +404,7 @@ const CallingTrackerForm = ({
 
         // Make API call
         const response = await axios.post(
-            `http://192.168.37.131:9090/api/ats/157industries/calling-tracker`,
+            `http://192.168.1.38:9090/api/ats/157industries/calling-tracker`,
             dataToUpdate,
             {
               headers: {
@@ -491,14 +517,14 @@ const CallingTrackerForm = ({
     setShowModal(true);
   };
   const handleClose = () => setShowModal(false);
-  useEffect(() => {
-    // Update currentCTC when lineUpData changes
-    updateCurrentCTC(lineUpData.currentCTCLakh, lineUpData.currentCTCThousand);
-    updateExpectedCTC(
-      lineUpData.expectedCTCLakh,
-      lineUpData.expectedCTCThousand
-    );
-  }, [lineUpData]);
+  // useEffect(() => {
+  //   // Update currentCTC when lineUpData changes
+  //   updateCurrentCTC(lineUpData.currentCTCLakh, lineUpData.currentCTCThousand);
+  //   updateExpectedCTC(
+  //     lineUpData.expectedCTCLakh,
+  //     lineUpData.expectedCTCThousand
+  //   );
+  // }, [lineUpData]);
 
   const updateCurrentCTC = (lakh, thousand) => {
     // Convert lakh and thousand values to numbers

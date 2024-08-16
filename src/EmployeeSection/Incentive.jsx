@@ -11,7 +11,7 @@ const Incentive = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://93.127.199.85:9090/api/ats/157industries/fetch-incentive/${employeeId}/${userType}`
+          `http://192.168.1.38:9090/api/ats/157industries/fetch-incentive/${employeeId}/${userType}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

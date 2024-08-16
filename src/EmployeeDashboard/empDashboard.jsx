@@ -716,7 +716,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{attendancesheet && <Attendancesheet />}</div>
 
         <div>
-          {showCallingExcelList && <CallingExcelList></CallingExcelList>}
+          {showCallingExcelList && <CallingExcelList loginEmployeeName={loginEmployeeName}></CallingExcelList>}
         </div>
         <div>{showInterviewDate && <InterviewDates />}</div>
         <div>{showAddEmployee && <AddEmployee />}</div>
@@ -735,10 +735,10 @@ const EmpDashboard = ({ userGroup }) => {
             <HoldCandidate loginEmployeeName={loginEmployeeName} />
           )}
         </div>
-        <div>{showCallingExcel && <CallingExcel />}</div>
-        <div>{showLineupExcelList && <LineupExcelData></LineupExcelData>}</div>
+        <div>{showCallingExcel && <CallingExcel  />}</div>
+        <div>{showLineupExcelList && <LineupExcelData loginEmployeeName={loginEmployeeName}></LineupExcelData>}</div>
         <div>
-          {showResumeData && <ResumeList handleUpdate={handleUpdate} />}
+          {showResumeData && <ResumeList loginEmployeeName={loginEmployeeName} handleUpdate={handleUpdate} />}
         </div>
         <div>{showNotePad && <NotePad />}</div>
         {/* <div>{showReports && <Reports />}</div> */}

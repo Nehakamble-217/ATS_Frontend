@@ -44,7 +44,7 @@ const JobListing = () => {
   ];
 
   useEffect(() => {
-    fetch("http://93.127.199.85:9090/api/ats/157industries/all-job-descriptions")
+    fetch("http://192.168.1.38:9090/api/ats/157industries/all-job-descriptions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -166,7 +166,7 @@ const handleFilter = () => {
       const toggleJobDescription = (requirementId) => {
         console.log(requirementId + "before Api");
     fetch(
-      `http://93.127.199.85:9090/api/ats/157industries/requirement-info/${requirementId}`
+      `http://192.168.1.38:9090/api/ats/157industries/requirement-info/${requirementId}`
     )
       .then((response) => response.json())
       .then((data) => {

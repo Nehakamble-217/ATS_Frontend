@@ -22,10 +22,10 @@ const InterviewDataTables = () => {
     try {
       setLoading(true);
       const [detailsRes, yesRes, noRes, yetToBeConfirmedRes] = await Promise.all([
-        axios.get('http://93.127.199.85:1414/api/interview/details'),
-        axios.get('http://93.127.199.85:1414/api/interview/status/yes/All'),
-        axios.get('http://93.127.199.85:1414/api/interview/status/no/All'),
-        axios.get('http://93.127.199.85:1414/api/interview/status/yet-to-be-confirmed/All')
+        axios.get('http://192.168.1.38:1414/api/interview/details'),
+        axios.get('http://192.168.1.38:1414/api/interview/status/yes/All'),
+        axios.get('http://192.168.1.38:1414/api/interview/status/no/All'),
+        axios.get('http://192.168.1.38:1414/api/interview/status/yet-to-be-confirmed/All')
       ]);
       setDetails(detailsRes.data);
 setStatusYes(yesRes.data);

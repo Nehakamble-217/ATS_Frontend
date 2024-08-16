@@ -40,7 +40,7 @@ const AddUser = ({ selectedPlan }) => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       try {
-        const response = await fetch('http://93.127.199.85:9090/api/ats/157industries/SaveUser', {
+        const response = await fetch('http://192.168.1.38:9090/api/ats/157industries/SaveUser', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",

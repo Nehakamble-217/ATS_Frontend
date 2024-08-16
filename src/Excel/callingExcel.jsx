@@ -18,7 +18,7 @@ const CallingExcel = ({ onClose }) => {
   const [uploadSuccessResume, setUploadSuccessResume] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const fileInputRef = useRef(null);
-  const { employeeId } = useParams();
+  const { employeeId,userType } = useParams();
 
   const handleTableChange = (tableName) => {
     setActiveTable(tableName);
@@ -57,7 +57,7 @@ const CallingExcel = ({ onClose }) => {
     formData.append("file", file);
     try {
       await axios.post(
-        `http://93.127.199.85:9090/api/ats/157industries/uploadData/${employeeId}`,
+        `http://192.168.1.38:9090/api/ats/157industries/uploadData-calling-data/${employeeId}/${userType}`,
         formData,
         {
           headers: {
@@ -89,7 +89,7 @@ const CallingExcel = ({ onClose }) => {
     console.log(employeeId + " - line Page 01");
     try {
       await axios.post(
-        `http://93.127.199.85:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
+        `http://192.168.1.38:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
         formData,
         {
           headers: {
@@ -119,7 +119,7 @@ const CallingExcel = ({ onClose }) => {
     }
     try {
       await axios.post(
-        "http://93.127.199.85:9090/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.38:9090/api/ats/157industries/add-multiple-resume",
         formData
       );
       setUploadSuccessResume(true);
@@ -137,7 +137,7 @@ const CallingExcel = ({ onClose }) => {
 
     axios
       .post(
-        "http://93.127.199.85:9090/api/ats/157industries/add-multiple-resume",
+        "http://192.168.1.38:9090/api/ats/157industries/add-multiple-resume",
         formData
       )
 
