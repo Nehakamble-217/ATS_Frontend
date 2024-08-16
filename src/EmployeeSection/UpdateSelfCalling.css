@@ -208,13 +208,17 @@
   border: 1px solid gray;
 }
 
-.buttonDiv {
+.updata-page-submit-div {
   display: flex;
   align-items: center;
   justify-content: center;
   color: gray;
+  border: 1px solid red;
 }
 
+.updata-page-cancel-div{
+  
+}
 #currentDate {
   width: 75%;
   padding: 10px;

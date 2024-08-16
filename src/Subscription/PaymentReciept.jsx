@@ -63,7 +63,7 @@ const PaymentReciept = ({ userId, plan }) => {
     }
 
     try {
-      await axios.post(`http://192.168.1.51:9090/api/ats/157industries/subscribe`, null, {
+      await axios.post(`http://192.168.1.38:9090/api/ats/157industries/subscribe`, null, {
         params: {
           userId,
           planId: plan.id,

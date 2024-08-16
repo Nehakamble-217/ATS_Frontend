@@ -29,8 +29,8 @@ const NotePad = () => {
     };
     try {
       let url = editMessageId
-        ? `http://192.168.1.51:9090/api/ats/157industries/updateNoteData/${editMessageId}`
-        : "http://192.168.1.51:9090/api/ats/157industries/notes";
+        ? `http://192.168.1.38:9090/api/ats/157industries/updateNoteData/${editMessageId}`
+        : "http://192.168.1.38:9090/api/ats/157industries/notes";
       const response = await fetch(url, {
         method: editMessageId ? "PUT" : "POST",
         headers: {
@@ -59,7 +59,7 @@ const NotePad = () => {
   const fetchNotePadData = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.51:9090/api/ats/157industries/notesData"
+        "http://192.168.1.38:9090/api/ats/157industries/notesData"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -76,7 +76,7 @@ const NotePad = () => {
   const updateMessage = async (messageId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.51:9090/api/ats/157industries/updateNoteData/${messageId}`
+        `http://192.168.1.38:9090/api/ats/157industries/updateNoteData/${messageId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -100,7 +100,7 @@ const NotePad = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.51:9090/api/ats/157industries/deleteNoteData/${messageId}`,
+        `http://192.168.1.38:9090/api/ats/157industries/deleteNoteData/${messageId}`,
         {
           method: "DELETE",
         }

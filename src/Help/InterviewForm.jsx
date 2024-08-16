@@ -104,14 +104,14 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
     try {
       let response;
       if (formData.interviewStatus === "Yes") {
-        response = await axios.post('http://192.168.1.51:1414/api/interview/details', formData);
-        await axios.post('http://192.168.1.51:1414/api/interview/status/yes', formData);
+        response = await axios.post('http://192.168.1.38:1414/api/interview/details', formData);
+        await axios.post('http://192.168.1.38:1414/api/interview/status/yes', formData);
       } else if (formData.interviewStatus === "No") {
-        response = await axios.post('http://192.168.1.51:1414/api/interview/details', formData);
-        await axios.post('http://192.168.1.51:1414/api/interview/status/no', formData);
+        response = await axios.post('http://192.168.1.38:1414/api/interview/details', formData);
+        await axios.post('http://192.168.1.38:1414/api/interview/status/no', formData);
       } else if (formData.interviewStatus === "Yet to be confirmed") {
-        response = await axios.post('http://192.168.1.51:1414/api/interview/details', formData);
-        await axios.post('http://192.168.1.51:1414/api/interview/status/yet-to-be-confirmed', formData);
+        response = await axios.post('http://192.168.1.38:1414/api/interview/details', formData);
+        await axios.post('http://192.168.1.38:1414/api/interview/status/yet-to-be-confirmed', formData);
       }
 
       if (response.interviewStatus == 200) {
@@ -125,7 +125,7 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.51:9090/api/ats/157industries/company-details`
+        `http://192.168.1.38:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -137,7 +137,7 @@ const InterviewForm = ({ toggleAllInterviewResponse }) => {
   const fetchRequirementIdCandidate = async (requirementId) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.51:9090/api/ats/157industries/candidate-details/${requirementId}`
+        `http://192.168.1.38:9090/api/ats/157industries/candidate-details/${requirementId}`
       );
       const { data } = response;
 

@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "../EmployeeSection/UpdateSelfCalling.css"
 
-const UpdateCallingTracker = ({ initialData, candidateId }) => {
+const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) => {
   const [isOtherEducationSelected, setIsOtherEducationSelected] =
     useState(false);
   const [callingTracker, setCallingTracker] = useState({
@@ -28,7 +28,6 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     fullAddress: "",
     communicationRating: "",
     selectYesOrNo: "No",
-
 
     lineUp: {
       companyName: "",
@@ -83,7 +82,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchEmployeeName = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.51:9090/api/ats/157industries/employeeName/${newCandidateId}`
+        `http://192.168.1.38:9090/api/ats/157industries/employeeName/${newCandidateId}`
       );
       const data = await response.text();
       setRecruiterName(data);
@@ -95,7 +94,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchCandidateData = async (candidateId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.51:9090/api/ats/157industries/specific-data/${candidateId}`
+        `http://192.168.1.38:9090/api/ats/157industries/specific-data/${candidateId}`
       );
       const data = await response.json();
       setCallingTracker(data);
@@ -108,7 +107,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.51:9090/api/ats/157industries/company-details`
+        `http://192.168.1.38:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -149,7 +148,7 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
       };
 
       const response = await fetch(
-        `http://192.168.1.51:9090/api/ats/157industries/update-callingData/${candidateId}`,
+        `http://192.168.1.38:9090/api/ats/157industries/update-calling-data/${candidateId}`,
         {
           method: "POST",
           headers: {
@@ -177,6 +176,10 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
     }
   };
 
+    // const showLastComponenet = () => {
+
+    // }
+
   const handleRequirementChange = (e) => {
     const { value } = e.target;
     const selectedRequirement = requirementOptions.find(
@@ -201,6 +204,9 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
       }));
     }
   };
+
+
+  
 
   //neha_updateselfcalling_designing_start_lineno_205_date_16/07/24
   return (
@@ -1221,17 +1227,16 @@ const UpdateCallingTracker = ({ initialData, candidateId }) => {
             </div>
           </div>
         </div>
-        <center>
-          <div className="buttonDiv" style={{ marginTop: "20px", gap: "10px" }}>
-            <button type="submit" className="ctf-btn">
-              Update Data
-            </button>
-            <button className="ctf-btn" id="uploadbtn2">
-              Cancel
-            </button>
-          </div>
-        </center>
+        <div className="buttonDiv" style={{ marginTop: "20px", gap: "10px" }}>
+          <button type="submit" className="ctf-btn">
+            Update Data
+          </button>
+          <button className="ctf-btn" onClick={showLastComponenet} id="uploadbtn2">
+            Cancel
+          </button>
+        </div>
       </form>
+      
     </div>
   );
 };

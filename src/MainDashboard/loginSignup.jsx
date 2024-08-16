@@ -53,7 +53,7 @@ const LoginSignup = ({ onLogin }) => {
   useEffect(() => {
     if (employeeId && userType) {
       fetch(
-        `http://192.168.1.51:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+        `http://localhost:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {

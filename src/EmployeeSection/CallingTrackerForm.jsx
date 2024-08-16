@@ -48,22 +48,6 @@ const CallingTrackerForm = ({
   };
 
   const initialLineUpState = {
-    date: new Date().toISOString().slice(0, 10),
-    candidateAddedTime: "",
-    recruiterName: loginEmployeeName,
-    candidateName: "",
-    candidateEmail: "",
-    jobDesignation: "",
-    incentive: "",
-    requirementId: "",
-    requirementCompany: "",
-    sourceName: "",
-    contactNumber: "",
-    alternateNumber: "",
-    currentLocation: "",
-    communicationRating: "",
-    selectYesOrNo: "No",
-    callingFeedback: "",
     companyName: "",
     experienceYear: "",
     experienceMonth: "",
@@ -84,9 +68,9 @@ const CallingTrackerForm = ({
     msgForTeamLeader: "",
     availabilityForInterview: "",
     interviewTime: "",
-    finalStatus: ""
-  };
-
+    finalStatus: "",
+    resume:[]
+    };
   const [callingTracker, setCallingTracker] = useState(
     initialCallingTrackerState
   );
@@ -134,7 +118,7 @@ const CallingTrackerForm = ({
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.51:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
+        `http://192.168.1.38:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -153,7 +137,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.51:9090/api/ats/157industries/company-details`
+        `http://192.168.1.38:9090/api/ats/157industries/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -320,114 +304,107 @@ const CallingTrackerForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Validate data
     let callingTrackerErrors = validateCallingTracker();
     let lineUpDataErrors = validateLineUpData();
-    if (
-      Object.keys(callingTrackerErrors).length > 0 ||
-      Object.keys(lineUpDataErrors).length > 0
-    ) {
-      setErrors({ ...callingTrackerErrors, ...lineUpDataErrors });
-      return;
+    if (Object.keys(callingTrackerErrors).length > 0 || Object.keys(lineUpDataErrors).length > 0) {
+        setErrors({ ...callingTrackerErrors, ...lineUpDataErrors });
+        return;
     }
-  
-    let fromFillingTime = null;
+
+    let formFillingTime = null;
     if (startTime) {
-      const endTime = new Date().getTime(); // Get the current time in milliseconds
-      const timeTaken = (endTime - startTime) / 1000; // Time in seconds
-      const minutes = Math.floor(timeTaken / 60);
-      const seconds = Math.floor(timeTaken % 60);
-      console.log(
-        `Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`
-      );
-      fromFillingTime = `${minutes} minutes and ${seconds} seconds`;
+        const endTime = new Date().getTime(); // Get the current time in milliseconds
+        const timeTaken = (endTime - startTime) / 1000; // Time in seconds
+        const minutes = Math.floor(timeTaken / 60);
+        const seconds = Math.floor(timeTaken % 60);
+        console.log(`Time taken to fill the form: ${minutes} minutes and ${seconds} seconds`);
+        formFillingTime = `${minutes} minutes and ${seconds} seconds`;
     }
-    
+
     setSubmited(true);
-  
+
     try {
-      let dataToUpdate = {
-        ...callingTracker,
-        performanceIndicator: {
-          employeeId: employeeId,
-          employeeName: loginEmployeeName,
-          jobRole: userType,
-          candidateName: callingTracker.candidateName,
-          jobId: callingTracker.requirementId,
-          salary: convertedCurrentCTC,
-          experience: `${lineUpData.experienceYear} years ${lineUpData.experienceMonth} months`,
-          companyName: callingTracker.requirementCompany,
-          designation: callingTracker.jobDesignation,
-          candidateFormFillingDuration: fromFillingTime,
-          callingTacker: new Date(),
-          lineup: new Date(),
-          mailToClient: null,
-          mailResponse: null,
-          sendingDocument: null,
-          issueOfferLetter: null,
-          letterResponse: null,
-          joiningProcess: null,
-          joinDate: null,
-          interviewRoundList: []
-        },
-      };
-      if (userType === "Recruiters") {
-        dataToUpdate.employee = { employeeId: employeeId };
-      } else if (userType === "TeamLeader") {
-        dataToUpdate.teamLeader = { teamLeaderId: employeeId };
-      }
-      if (callingTracker.selectYesOrNo === "Interested") {
-        dataToUpdate.lineUp = lineUpData;
-      }
-  
-      console.log(dataToUpdate);
-      
-      // Create FormData object
-      const data = new FormData();
-      data.append('callingTracker', JSON.stringify(dataToUpdate)); // Convert the object to a JSON string
-      data.append('resumeFile', resumeFile);
-      
-      const response = await axios.post(
-        `http://192.168.1.51:9090/api/ats/157industries/calling-tracker`,
-        data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+        let dataToUpdate = {
+           callingTracker:{ ...callingTracker},
+            performanceIndicator: {
+                employeeId: employeeId,
+                employeeName: loginEmployeeName,
+                jobRole: userType,
+                candidateName: callingTracker.candidateName,
+                jobId: callingTracker.requirementId,
+                salary: convertedCurrentCTC,
+                experience: `${lineUpData.experienceYear} years ${lineUpData.experienceMonth} months`,
+                companyName: callingTracker.requirementCompany,
+                designation: callingTracker.jobDesignation,
+                candidateFormFillingDuration: formFillingTime,
+                callingTacker: new Date(),
+                lineup: new Date(),
+                mailToClient: null,
+                mailResponse: null,
+                sendingDocument: null,
+                issueOfferLetter: null,
+                letterResponse: null,
+                joiningProcess: null,
+                joinDate: null,
+                interviewRoundList: []
+            },
+        };
+        console.log(dataToUpdate);
+        
+
+        if (userType === "Recruiters") {
+            dataToUpdate.callingTracker.employee = { employeeId: employeeId };
+        } else if (userType === "TeamLeader") {
+            dataToUpdate.callingTracker.teamLeader = { teamLeaderId: employeeId };
         }
-      );  
-      console.log(response);
-      
-      if (callingTracker.selectYesOrNo === "Interested") {
-        onsuccessfulDataAdditions(true);
-      } else {
-        onsuccessfulDataAdditions(false);
-      }
-  
-      if (response.data) {
-        console.log(response.data.body);
-        // setSubmited(false);
-        setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 5000);
-        toast.success("Data added successfully!");
-        setCallingTracker(initialCallingTrackerState);
-        setLineUpData(initialLineUpState);
-      }
+
+        if (callingTracker.selectYesOrNo === "Interested") {
+            dataToUpdate.lineUp = lineUpData;
+        }
+
+        // Make API call
+        const response = await axios.post(
+            `http://192.168.1.38:9090/api/ats/157industries/calling-tracker`,
+            dataToUpdate,
+            {
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          }
+        );
+
+        console.log("Response data:", response.data);
+
+        if (callingTracker.selectYesOrNo === "Interested") {
+            onsuccessfulDataAdditions(true);
+        } else {
+            onsuccessfulDataAdditions(false);
+        }
+
+        if (response.status === 200) { // Check for successful status
+            setSubmited(false);
+            setShowConfetti(true);
+            setTimeout(() => setShowConfetti(false), 5000);
+            toast.success("Data added successfully!");
+            setCallingTracker(initialCallingTrackerState);
+            setLineUpData(initialLineUpState);
+        }
     } catch (error) {
-      setSubmited(false);
-      toast.error(error.message);
+        setSubmited(false);
+        toast.error("An error occurred: " + error.message);
     }
-  };
-  
+};
+
+
   const handleLocationChange = (e) => {
     const value = e.target.value;
     if (value === "Other") {
       setIsOtherLocationSelected(true);
-      setCallingTracker({ ...callingTracker, currentLocation: "" });
       setLineUpData({ ...lineUpData, currentLocation: "" });
     } else {
       setIsOtherLocationSelected(false);
-      setCallingTracker({ ...callingTracker, currentLocation: value });
       setLineUpData({ ...lineUpData, currentLocation: value });
     }
     setErrors((prevErrors) => ({ ...prevErrors, currentLocation: "" }));
@@ -437,36 +414,40 @@ const CallingTrackerForm = ({
     const value = e.target.value;
     if (value === "Other") {
       setIsOtherEducationSelected(true);
-      setCallingTracker({ ...callingTracker, qualification: "" });
       setLineUpData({ ...lineUpData, qualification: "" });
     } else {
-      setCallingTracker({ ...callingTracker, qualification: value });
       setLineUpData({ ...lineUpData, qualification: value });
     }
   };
 
   const handleResumeFileChange = (e) => {
     const file = e.target.files[0];
-    setResumeFile(e.target.files[0]);
-
+    
     if (file) {
       const reader = new FileReader();
-
-      reader.onload = (event) => {
-        const arrayBuffer = event.target.result;
+      
+      reader.onloadend = () => {
+        const arrayBuffer = reader.result;
         const byteArray = new Uint8Array(arrayBuffer);
-
+        const byteNumbers = Array.from(byteArray);
+  
+        // Convert the byte array to a Base64 string
+        const base64String = btoa(String.fromCharCode(...byteNumbers));
+  
+        console.log(base64String); // Print the Base64 string
+  
+        // Update the lineUpData state with the Base64 string of the resume file
         setLineUpData((prevState) => ({
           ...prevState,
-          resume: byteArray,
+          resume: base64String, // Store the Base64 string
         }));
-        setResumeUploaded(true);
-        // setErrors((prevErrors) => ({ ...prevErrors, resume: "" }));
       };
-
-      reader.readAsArrayBuffer(file);
+  
+      reader.readAsArrayBuffer(file); // Read the file as an ArrayBuffer
     }
   };
+  
+  
 
   const handleRequirementChange = (e) => {
     const { value } = e.target;
@@ -475,13 +456,6 @@ const CallingTrackerForm = ({
     );
 
     if (selectedRequirement) {
-      setCallingTracker((prevState) => ({
-        ...prevState,
-        requirementId: selectedRequirement.requirementId,
-        jobDesignation: selectedRequirement.designation,
-        requirementCompany: selectedRequirement.companyName,
-        incentive: selectedRequirement.incentive,
-      }));
       setLineUpData((prevState) => ({
         ...prevState,
         requirementId: selectedRequirement.requirementId,
@@ -491,13 +465,6 @@ const CallingTrackerForm = ({
       }));
       setendPoint(selectedRequirement.detailAddress);
     } else {
-      setCallingTracker((prevState) => ({
-        ...prevState,
-        requirementId: value,
-        jobDesignation: "",
-        requirementCompany: "",
-        incentive: "",
-      }));
       setLineUpData((prevState) => ({
         ...prevState,
         requirementId: value,
@@ -718,7 +685,7 @@ const CallingTrackerForm = ({
                     <select
                       id="requirementId"
                       name="requirementId"
-                      value={callingTracker.requirementId}
+                      value={lineUpData.requirementId}
                       onChange={handleRequirementChange}
                     >
                       <option value="">Select Job Id</option>
@@ -740,7 +707,7 @@ const CallingTrackerForm = ({
                   <div className="calling-tracker-two-input">
                     <input
                       placeholder=" Your Incentive"
-                      value={callingTracker.incentive}
+                      value={lineUpData.incentive}
                       readOnly
                       type="text"
                     />
@@ -757,7 +724,7 @@ const CallingTrackerForm = ({
                     id="jobDesignation"
                     name="jobDesignation"
                     className="calling-tracker-two-input"
-                    value={callingTracker.jobDesignation}
+                    value={lineUpData.jobDesignation}
                     placeholder="Enter Position"
                     readOnly
                   />
@@ -767,7 +734,7 @@ const CallingTrackerForm = ({
                     id="requirementCompany"
                     name="requirementCompany"
                     className="calling-tracker-two-input"
-                    value={callingTracker.requirementCompany}
+                    value={lineUpData.requirementCompany}
                     readOnly
                   />
                 </div>
@@ -779,7 +746,7 @@ const CallingTrackerForm = ({
                     {!isOtherLocationSelected ? (
                       <select
                         name="currentLocation"
-                        value={callingTracker.currentLocation}
+                        value={lineUpData.currentLocation}
                         onChange={handleLocationChange}
                       >
                         <option value="" style={{ color: "gray" }}>
@@ -1392,6 +1359,7 @@ const CallingTrackerForm = ({
                 <div className="calling-tracker-field-sub-div">
                   <input
                     type="file"
+                    name="resume"
                     onChange={handleResumeFileChange}
                     accept=".pdf,.doc,.docx"
                     className="plain-input"
