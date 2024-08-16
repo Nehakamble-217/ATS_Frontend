@@ -322,18 +322,6 @@ const PerformanceImprovement = () => {
             setSelectedJobId(null);
         }
     };
-
-    // const fetchClientDetails = async (requirementIds) => {
-    //   try {
-    //     const response = await axios.get(
-    //       `http://192.168.1.38:9090/api/ats/157industries/performance-jobIds?empIds=870&startDate=2024-06-01&endDate=2024-07-26&jobRole=Manager`
-    //     );
-    //     setClientDetails(response.data);
-    //   } catch (error) {
-    //     console.error("Error fetching client details:", error);
-    //   }
-    // };
-
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };

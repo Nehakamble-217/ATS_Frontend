@@ -62,6 +62,7 @@ import InterviewDataTables from "../Help/InterviewTable";
 // import TeamDetails from "../TeamDetails/teamDetails";
 import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
 import PerformanceImprovement from "../EmployeeSection/performanceImprovement";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -409,10 +410,6 @@ const EmpDashboard = ({ userGroup }) => {
     setLineUp(!lineUp);
   };
 
-  const toggleExcelCalling = () => {
-    resetAllToggles();
-    setShowCallingExcel(!showCallingExcel);
-  };
 
   const toggelResumeData = () => {
     resetAllToggles();
@@ -473,16 +470,16 @@ const EmpDashboard = ({ userGroup }) => {
     setShowProfile(false);
   };
 
-  const handleUpdate = (id) => {
-    setId(id);
-    setAddCandidate(!addCandidate);
-    setShowResumeData(false);
-  };
-
   const toggelAddResumes = () => {
     resetAllToggles();
     setShowAddedResumes(!showAddedResumes);
   };
+
+  
+  const toggleExcelCalling = () => {
+    resetAllToggles();
+    setShowCallingExcel(!showCallingExcel);
+  }; 
 
   const toggeExcelCallingData = () => {
     resetAllToggles();
@@ -569,6 +566,11 @@ const EmpDashboard = ({ userGroup }) => {
     setShowPerformanceImprovement(!showPerformanceImprovement)
   }
 
+  const displayCandidateForm = () =>{
+    resetAllToggles();
+    setShowCallingExcel(false)
+    setShowCallingTrackerForm(!showCallingTrackerForm)
+  }
 
   return (
     <div
@@ -738,10 +740,9 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showCallingExcel && <CallingExcel  />}</div>
         <div>{showLineupExcelList && <LineupExcelData loginEmployeeName={loginEmployeeName}></LineupExcelData>}</div>
         <div>
-          {showResumeData && <ResumeList loginEmployeeName={loginEmployeeName} handleUpdate={handleUpdate} />}
+          {showResumeData && <ResumeList loginEmployeeName={loginEmployeeName}></ResumeList>}
         </div>
         <div>{showNotePad && <NotePad />}</div>
-        {/* <div>{showReports && <Reports />}</div> */}
         <div>{showMainReportDatapage && <MainReportDatapage />}</div>
         <div>{showChatRoom && <ChatRoom />}</div>
         <div>
@@ -753,7 +754,6 @@ const EmpDashboard = ({ userGroup }) => {
             <CallingTrackerForm
               loginEmployeeName={loginEmployeeName}
               onsuccessfulDataAdditions={handleSuccessfulDataAdditions}
-              // CandidateHistoryTracker={}
 
             />
           )}

@@ -7,8 +7,12 @@ import JobDescriptionEdm from "../JobDiscription/jobDescriptionEdm";
 import jobDiscriptions from "../employeeComponents/jobDiscriptions";
 import ShareEDM from "../JobDiscription/shareEDM";
 import { values } from "pdf-lib";
+import { useParams } from "react-router-dom";
 // SwapnilRokade_JobListing_filter_option__18/07
 const JobListing = () => {
+
+  const { employeeId, userType } = useParams();
+
   const [jobDescriptions, setJobDescriptions] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
   const [activeFilterOption, setActiveFilterOption] = useState(null);
@@ -117,54 +121,54 @@ const JobListing = () => {
     fetchShortListedData(); // Corrected from fetchRejectedData to fetchShortListedData
   };
 
-  
+
   const handleInputSearch = (event) => {
     const { name, value } = event.target;
     setSearchQuery((prevQuery) => ({ ...prevQuery, [name]: value }));
   };
-  
+
   useEffect(() => {
     const options = Object.keys(jobDescriptions[0] || {}).filter((key) =>
       limitedOption.includes(key)
-  );
-  setFilterOptions(options);
-}, [jobDescriptions]);
+    );
+    setFilterOptions(options);
+  }, [jobDescriptions]);
 
-console.log(filteredJobDescriptions);
+  console.log(filteredJobDescriptions);
 
-const handleFilter = () => {
-  const filtered = jobDescriptions.filter((job) => {
-    return (
-      (job.designation &&
-        job.designation
-        .toLowerCase()
-        .includes(searchQuery.designation.toLowerCase())) ||
+  const handleFilter = () => {
+    const filtered = jobDescriptions.filter((job) => {
+      return (
+        (job.designation &&
+          job.designation
+            .toLowerCase()
+            .includes(searchQuery.designation.toLowerCase())) ||
         (job.location &&
           job.location
-          .toLowerCase()
-          .includes(searchQuery.location.toLowerCase())) ||
-          (job.experience &&
-            job.experience
+            .toLowerCase()
+            .includes(searchQuery.location.toLowerCase())) ||
+        (job.experience &&
+          job.experience
             .toLowerCase()
             .includes(searchQuery.experience.toLowerCase()))
-          );
-        });
-        setFilteredJobDescriptions(filtered);
-      };
-      
-      const handleFilterOptionClick = (option) => {
-        if (activeFilterOption === option) {
-          setActiveFilterOption(null);
-        } else {
-          setActiveFilterOption(option);
-        }
-      };
-      const handleUpdate = (requirementId) => {
-        setShowAddJobDescription(requirementId);
-      };
-      
-      const toggleJobDescription = (requirementId) => {
-        console.log(requirementId + "before Api");
+      );
+    });
+    setFilteredJobDescriptions(filtered);
+  };
+
+  const handleFilterOptionClick = (option) => {
+    if (activeFilterOption === option) {
+      setActiveFilterOption(null);
+    } else {
+      setActiveFilterOption(option);
+    }
+  };
+  const handleUpdate = (requirementId) => {
+    setShowAddJobDescription(requirementId);
+  };
+
+  const toggleJobDescription = (requirementId) => {
+    console.log(requirementId + "before Api");
     fetch(
       `http://192.168.1.38:9090/api/ats/157industries/requirement-info/${requirementId}`
     )
@@ -217,9 +221,9 @@ const handleFilter = () => {
   // };
   const handleHoldClick = (requirementId) => {
     if (heldJobId === requirementId) {
-      setHeldJobId(null); 
+      setHeldJobId(null);
     } else {
-      setHeldJobId(requirementId); 
+      setHeldJobId(requirementId);
     }
   };
 
@@ -307,7 +311,7 @@ const handleFilter = () => {
       </div>
       {!showViewMore && (
         <div className="jdCards">
-          {filteredJobDescriptions.map((item,job, index) => (
+          {filteredJobDescriptions.map((item, job, index) => (
             <div className="job-listing" key={index}>
               <div className="job-header">
                 {/* <h3 >{item.requirementId}</h3> */}
@@ -341,17 +345,23 @@ const handleFilter = () => {
         </div> */}
               </div>
               {/* Arshad Added this button to share edm  */}
+
               <div className="job-actions">
-                <button className="daily-tr-btn" 
-                onClick={() => handleUpdate(item.requirementId)}>
-                  Edit
-                </button>
-                <button className="daily-tr-btn"
-                onClick={() => handleHoldClick(job.requirementId)}
-                >
-                  
-                  {heldJobId === job.requirementId ? "UnHold" : "Hold"}
-                </button>
+                {userType === "Manager" ||  userType === "TeamLeader"  ? (
+                  <div className="jd-edit-hold-div">
+                    <button className="daily-tr-btn"
+                    >
+                      Edit
+                    </button>
+                    <button className="daily-tr-btn"
+                      onClick={() => handleHoldClick(job.requirementId)}
+                    >
+
+                      {heldJobId === job.requirementId ? "UnHold" : "Hold"}
+                    </button>
+                  </div>
+                ) : null}
+
                 <button
                   className="daily-tr-btn"
                   onClick={() => toggleJobDescription(item.requirementId)}
@@ -361,9 +371,9 @@ const handleFilter = () => {
                 {/* <button className='daily-tr-btn' onClick={()=>toggleEdm(index)}> EDM  <i id='edm-share-icon'  className="fa-solid fa-eye"></i></button> */}
               </div>
               {heldJobId === job.requirementId && (
-                  <p style={{color:"red", display:"flex" , justifyContent:"center"}}>
-                    This Job Id Hold By Manager</p>
-                )}
+                <p style={{ color: "red", display: "flex", justifyContent: "center" }}>
+                  This Job Id Hold By Manager</p>
+              )}
             </div>
           ))}
         </div>

@@ -1,4 +1,3 @@
-//login Page ise used to user  wise
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AOS from "aos";
@@ -66,7 +65,6 @@ const LoginSignup = ({ onLogin }) => {
     }
   }, [employeeId, userType]);
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "employeeId") {
@@ -78,10 +76,15 @@ const LoginSignup = ({ onLogin }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!employeeId || !password) {
+      setError("Please fill in both fields before submitting.");
+      return;
+    }
+
     try {
       if (login === password) {
         localStorage.setItem("employeeId", employeeId);
-        navigate(`/empDash/${employeeId}/${userType}`);
+        navigate(`/Dashboard/${employeeId}/${userType}`);
         onLogin();
       } else {
         setError("Invalid login for this user. Please try again.");
@@ -92,9 +95,6 @@ const LoginSignup = ({ onLogin }) => {
     }
   };
 
-  const dashboardLink = () => {
-    navigate("/empDash/870/Manager");
-  };
 
   return (
     <div className="main-body">
@@ -162,7 +162,6 @@ const LoginSignup = ({ onLogin }) => {
                 >
                   Login
                 </button>
-         
                 <center>
                   <span
                     className="psw"

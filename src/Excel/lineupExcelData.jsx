@@ -26,7 +26,7 @@ const LineupExcelData = ({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
 
-  const { employeeId,userType } = useParams();
+  const { employeeId, userType } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
@@ -201,8 +201,7 @@ const LineupExcelData = ({
   };
 
   const handleUpdateSuccess = () => {
-
-    fetch(`http://192.168.1.38:9090/api/ats/157industries/lineup-excel-data/${employeeId}`)
+    fetch(`http://localhost:9090/api/ats/157industries/lineup-excel-data/${employeeId}/${userType}`)
       .then((response) => response.json())
       .then((data) => {
         setLineUpList(data);

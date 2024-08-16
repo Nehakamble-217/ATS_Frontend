@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../EmployeeDashboard/sideBar.css";
-import { useNavigate, useParams,useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Circle from "../LogoImages/circle.png";
 import logoutImg from "../photos/download.jpeg";
 import { RiTeamFill } from "react-icons/ri";
@@ -74,7 +74,7 @@ function Sidebar({
   const [activeSubMenu, setActiveSubMenu] = useState(null); // Track the active submenu
   const [activeButton, setActiveButton] = useState(null); // Track the active button
   const [showConfirmation, setShowConfirmation] = useState(false);
- const [showColor,setShowColor] = useState(false);
+  const [showColor, setShowColor] = useState(false);
 
   const navigator = useNavigate();
   const { employeeId } = useParams();
@@ -144,7 +144,7 @@ function Sidebar({
 
 
   const handleColorApplied = (color) => {
-   
+
     // Save the selected color to local storage
     localStorage.setItem("selectedColor", color);
     setShowColor(false); // Close the color picker modal when color is applied
@@ -339,12 +339,11 @@ function Sidebar({
 
                   {userType != "SuperUser" ? (
                     <li
-                      className={`${
-                        activeSubMenu === "candidate" ||
-                        isCandidateSectionActive
+                      className={`${activeSubMenu === "candidate" ||
+                          isCandidateSectionActive
                           ? "active"
                           : ""
-                      }`}
+                        }`}
                       onClick={toggleSubMenu("candidate")}
                     >
                       <a href="#">
@@ -367,9 +366,8 @@ function Sidebar({
                         <i className="arrow ph-bold ph-caret-down"></i>
                       </a>
                       <ul
-                        className={`sub-menu ${
-                          activeSubMenu === "candidate" ? "active" : ""
-                        }`}
+                        className={`sub-menu ${activeSubMenu === "candidate" ? "active" : ""
+                          }`}
                       >
                         <li
                           style={{ marginLeft: "10px" }}
@@ -519,11 +517,10 @@ function Sidebar({
                   ) : null}
                 </>
                 <li
-                  className={`${
-                    activeSubMenu === "Jobdiscription" || isJobDescriptionActive
+                  className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
                       ? "active"
                       : ""
-                  }`}
+                    }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
                   <a href="#">
@@ -536,9 +533,8 @@ function Sidebar({
                   </a>
 
                   <ul
-                    className={`sub-menu ${
-                      activeSubMenu === "Jobdiscription" ? "active" : ""
-                    }`}
+                    className={`sub-menu ${activeSubMenu === "Jobdiscription" ? "active" : ""
+                      }`}
                   >
                     <li
                       style={{ marginLeft: "10px" }}
@@ -562,7 +558,7 @@ function Sidebar({
                     {(userType != "Recruiters" &&
                       userType != "SuperUser" &&
                       userType != "Vendor") ||
-                    (userType === "TeamLeader" && userType === "Manager") ? (
+                      (userType === "TeamLeader" && userType === "Manager") ? (
                       <li
                         style={{ marginLeft: "10px" }}
                         onClick={handleButtonClick(
@@ -603,9 +599,8 @@ function Sidebar({
                       </a> */}
 
                       <ul
-                        className={`sub-menu sub-menu1 ${
-                          activeSubMenu === "employee" ? "active" : ""
-                        }`}
+                        className={`sub-menu sub-menu1 ${activeSubMenu === "employee" ? "active" : ""
+                          }`}
                       >
                         <li
                           style={{ marginLeft: "10px" }}
@@ -661,11 +656,10 @@ function Sidebar({
                           <i className="arrow ph-bold ph-caret-down"></i>
                         </a>
                         <ul
-                          className={`sub-menu sub-menu1 ${
-                            activeSubMenu === "TeamLeader-section"
+                          className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section"
                               ? "active"
                               : ""
-                          }`}
+                            }`}
                         >
                           <li
                             onClick={handleButtonClick(
@@ -799,9 +793,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 ${
-                        activeSubMenu === "admin-section" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 ${activeSubMenu === "admin-section" ? "active" : ""
+                        }`}
                     >
                       <>
                         <li
@@ -1031,9 +1024,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "SuperUser" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "SuperUser" ? "active" : ""
+                        }`}
                     >
                       <li
                         style={{ marginLeft: "10px" }}
@@ -1155,9 +1147,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "database" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "database" ? "active" : ""
+                        }`}
                     >
                       <li
                         onClick={handleButtonClick(
@@ -1259,10 +1250,7 @@ function Sidebar({
                 {userType != "SuperUser" && userType != "Vendor" ? (
                   <>
                     <li
-                      onClick={handleButtonClick(
-                        "notepad",
-                        toggelDisplayNotPad
-                      )}
+                      onClick={handleButtonClick("notepad", toggelDisplayNotPad)}
                       className={activeButton === "notepad" ? "active" : ""}
                     >
                       <a href="#">
@@ -1308,9 +1296,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "portal" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "portal" ? "active" : ""
+                        }`}
                     >
                       <li style={{ marginLeft: "10px" }}>
                         <a href="#">
@@ -1373,9 +1360,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "aboutus" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "aboutus" ? "active" : ""
+                        }`}
                     >
                       <li style={{ marginLeft: "10px" }}>
                         <span
@@ -1427,9 +1413,8 @@ function Sidebar({
                       <i className="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul
-                      className={`sub-menu sub-menu1 sub-menu2 ${
-                        activeSubMenu === "help" ? "active" : ""
-                      }`}
+                      className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "help" ? "active" : ""
+                        }`}
                     >
                       <li style={{ marginLeft: "10px" }}>
                         <span
@@ -1462,8 +1447,8 @@ function Sidebar({
                       className="fa-solid fa-palette"
                       style={{ color: "gray" }}
                     ></i>
-                    <span className="sidebar-text" onClick={()=>{setShowColor(true)}}>Choose Colour</span>
-                  </a>   
+                    <span className="sidebar-text" onClick={() => { setShowColor(true) }}>Choose Colour</span>
+                  </a>
                 </li>
 
                 <li onClick={() => setShowConfirmation(true)}>
@@ -1481,29 +1466,29 @@ function Sidebar({
         </div>
       </div>
       {
-        showColor &&(
+        showColor && (
           <div
-          className="bg-black bg-opacity-50 modal show"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "fixed",
-            width: "100%",
-            height: "100vh",
-          }}
-        >
-          <Modal.Dialog
+            className="bg-black bg-opacity-50 modal show"
             style={{
               display: "flex",
-              alignItems: "center",
               justifyContent: "center",
+              alignItems: "center",
+              position: "fixed",
+              width: "100%",
+              height: "100vh",
             }}
           >
+            <Modal.Dialog
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Modal.Body>
-              <div className="color-picker">
-                <ColorPicker onColorApplied={handleColorApplied} />
-                      {/* {pastelColors.map((color, index) => (
+                <div className="color-picker">
+                  <ColorPicker onColorApplied={handleColorApplied} />
+                  {/* {pastelColors.map((color, index) => (
                         <button
                           key={index}
                           style={{
@@ -1517,13 +1502,13 @@ function Sidebar({
                           onClick={() => handleColorClick(color)}
                         />
                       ))} */}
-                    </div>
+                </div>
 
               </Modal.Body>
 
-          </Modal.Dialog>
+            </Modal.Dialog>
 
-        </div>
+          </div>
         )
       }
 

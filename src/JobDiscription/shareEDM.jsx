@@ -14,7 +14,6 @@ function ShareEDM({ Descriptions, onShareEdm }) {
 
     useEffect(() => {
         fetch(`http://192.168.1.38:9090/api/ats/157industries/edm-details/1/1`)
-
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);

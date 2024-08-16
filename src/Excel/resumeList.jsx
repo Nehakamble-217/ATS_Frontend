@@ -4,15 +4,15 @@ import "../Excel/resumeList.css";
 import { useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 
-const ResumeList = () => {
+const ResumeList = ({ loginEmployeeName}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCandidate, setSelectedCandidate] = useState(null);
-  const { employeeId ,userType} = useParams();
+  const { employeeId, userType } = useParams();
   console.log(employeeId + "empId in resume List");
 
-  const [selectedCandidateId, setSelectedCandidateId] = useState();
+  const [selectedCandidate, setSelectedCandidate] = useState();
+  const [show, setShow] = useState(false);
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
 
   useEffect(() => {
@@ -20,8 +20,7 @@ const ResumeList = () => {
       try {
         const response = await fetch(
           `http://192.168.1.38:9090/api/ats/157industries/fetch-resumes-data/${employeeId}/${userType}`
-        ); // Replace with your API URL
-
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -38,7 +37,6 @@ const ResumeList = () => {
   }, []);
 
   const handleUpdateSuccess = () => {
-    // Assuming `employeeId` is a known variable or prop
     fetch(
       `http://192.168.1.38:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
     )
@@ -157,14 +155,15 @@ const ResumeList = () => {
   const cancelExport = () => {
     hidePopup();
   };
-
   const handleUpdate = (candidateData) => {
+    setShow(true);
     setSelectedCandidate(candidateData); // Set candidate data for CallingTrackerForm
   };
   //Swapnil_Rokade_ResumeList_columnsToInclude_columnsToExclude_18/07/2024//
 
   return (
     <>
+    {!selectedCandidate&&(
       <div className="table-container">
         <div className="rl-filterSection">
           <div className="filterSection">
@@ -198,7 +197,7 @@ const ResumeList = () => {
               <tr className="attendancerows-head">
                 <th className="attendanceheading">Sr No</th>
 
-                <th className="attendanceheading">Candidate Name</th>
+                <th className="attendanceheading">Candidate  Name</th>
                 <th className="attendanceheading">Contact Number</th>
                 <th className="attendanceheading">Alternate Number</th>
                 <th className="attendanceheading">Candidate Email</th>
@@ -317,14 +316,15 @@ const ResumeList = () => {
             </tbody>
           </table>
         </div>
-        {selectedCandidateId && (
+        </div>
+        )}
+        {selectedCandidate && (
           <CallingTrackerForm
             initialData={selectedCandidate}
-            onClose={() => setSelectedCandidateId(null)}
-            onSuccess={handleUpdateSuccess}
+            loginEmployeeName={loginEmployeeName}
           />
         )}
-      </div>
+      
     </>
   );
 };

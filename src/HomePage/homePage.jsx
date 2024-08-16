@@ -12,7 +12,6 @@ const HomePage = () => {
   const [bgColor, setBgColor] = useState("#ffcb9b");
 
   useEffect(() => {
-    // Retrieve the saved color from local storage and apply it
     const savedColor = localStorage.getItem("selectedColor");
     if (savedColor) {
       setBgColor(savedColor);
@@ -21,7 +20,6 @@ const HomePage = () => {
 
   const handleColorApplied = (color) => {
     setBgColor(color);
-    // Save the selected color to local storage
     localStorage.setItem("selectedColor", color);
     setChooseColor(false); // Close the color picker modal when color is applied
   };
@@ -94,14 +92,14 @@ const HomePage = () => {
                 paddingTop: "20px",
               }}
             >
-              <Link to="/mainDashboard">
+            <Link to="/Main-Dashboard">
                 <button className="main-homepage-btn">Let's begin</button>
               </Link>
             </div>
           </div>
             <div className="Choose-color-container">
               <button className="Choose-Color-Btn"   onMouseEnter={handleMouseEnter}
-            onMouseOut={handleMouseOut}><i class="fa-solid fa-fill-drip"></i></button>
+            onMouseOut={handleMouseOut}><i className="fa-solid fa-fill-drip"></i></button>
             </div>
         </div>
       </div>

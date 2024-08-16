@@ -1,4 +1,3 @@
-//This is Vendor , Clinet And Applicaint loging page 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AOS from "aos";
@@ -33,12 +32,17 @@ const LoginSignup = ({ onLogin }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!employeeId || !password) {
+      setError("Please fill in both fields.");
+      return;
+    }
+
     try {
       const response = await getPasswordFromDB(employeeId);
       const fetchedPassword = response.data;
       if (fetchedPassword === password) {
         localStorage.setItem("employeeId", employeeId);
-        navigate(`/empDash/${employeeId}`);
+        navigate(`/Dashboard/${employeeId}`);
         onLogin();
       } else {
         setError("Invalid credentials. Please try again.");
@@ -49,14 +53,9 @@ const LoginSignup = ({ onLogin }) => {
     }
   };
 
-  const dashboardLink = () => {
-    navigate("/empDash/1/Vendor");
-  };
-
-  console.log(userType);
-  const createAccount = () => {
-    navigate("/createAccount/Vendor");
-  };
+  // const createAccount = () => {
+  //   navigate("/createAccount/Vendor");
+  // };
 
   return (
     <div className="main-body">
@@ -115,21 +114,12 @@ const LoginSignup = ({ onLogin }) => {
                 </button>
                 <button
                   className="login-button"
-                  onClick={createAccount}
+                  // onClick={createAccount}
                   data-aos="fade-top"
                 >
-                  Create account
+                  Create account 
                 </button>
-                {userType === "vendor" && (
-                  <button
-                    type="button"
-                    className="dashboard-button"
-                    onClick={dashboardLink}
-                    data-aos="fade-top"
-                  >
-                    Vendor
-                  </button>
-                )}
+             
                 <center>
                   <span
                     className="psw"
