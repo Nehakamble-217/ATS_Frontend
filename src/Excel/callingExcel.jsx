@@ -89,7 +89,7 @@ const CallingExcel = ({ onClose }) => {
     console.log(employeeId + " - line Page 01");
     try {
       await axios.post(
-        `http://192.168.1.38:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}`,
+        `http://192.168.1.38:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}/${userType}`,
         formData,
         {
           headers: {
@@ -119,7 +119,7 @@ const CallingExcel = ({ onClose }) => {
     }
     try {
       await axios.post(
-        "http://192.168.1.38:9090/api/ats/157industries/add-multiple-resume",
+        `http://192.168.1.38:9090/api/ats/157industries/add-multiple-resume/${employeeId}/${userType}`,
         formData
       );
       setUploadSuccessResume(true);
@@ -134,19 +134,6 @@ const CallingExcel = ({ onClose }) => {
       toast.error("Error uploading files:", error);
       // setUploadErrorResume("Error uploading file. Please try again.");
     }
-
-    axios
-      .post(
-        "http://192.168.1.38:9090/api/ats/157industries/add-multiple-resume",
-        formData
-      )
-
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error uploading files: ", error);
-      });
   };
 
   const handleView = () => {

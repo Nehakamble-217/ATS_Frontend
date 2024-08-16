@@ -416,9 +416,9 @@ const CallingTrackerForm = ({
         console.log("Response data:", response.data);
 
         if (callingTracker.selectYesOrNo === "Interested") {
-            onsuccessfulDataAdditions(true);
+          onsuccessfulDataAdditions=true;
         } else {
-            onsuccessfulDataAdditions(false);
+          onsuccessfulDataAdditions=false;
         }
 
         if (response.status === 200) { // Check for successful status

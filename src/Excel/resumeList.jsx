@@ -4,11 +4,12 @@ import "../Excel/resumeList.css";
 import { useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 
-const ResumeList = ({ handleUpdate }) => {
+const ResumeList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { employeeId } = useParams();
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const { employeeId ,userType} = useParams();
   console.log(employeeId + "empId in resume List");
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
@@ -18,7 +19,7 @@ const ResumeList = ({ handleUpdate }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://192.168.1.38:9090/api/ats/157industries/all-resumes-data"
+          `http://192.168.1.38:9090/api/ats/157industries/fetch-resumes-data/${employeeId}/${userType}`
         ); // Replace with your API URL
 
         if (!response.ok) {
@@ -39,7 +40,7 @@ const ResumeList = ({ handleUpdate }) => {
   const handleUpdateSuccess = () => {
     // Assuming `employeeId` is a known variable or prop
     fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/callingData/${employeeId}`
+      `http://192.168.1.38:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -155,6 +156,10 @@ const ResumeList = ({ handleUpdate }) => {
 
   const cancelExport = () => {
     hidePopup();
+  };
+
+  const handleUpdate = (candidateData) => {
+    setSelectedCandidate(candidateData); // Set candidate data for CallingTrackerForm
   };
   //Swapnil_Rokade_ResumeList_columnsToInclude_columnsToExclude_18/07/2024//
 
@@ -303,7 +308,7 @@ const ResumeList = ({ handleUpdate }) => {
 
                   <td className="tabledata" style={{ textAlign: "center" }}>
                     <i
-                      onClick={() => handleUpdate(item.candidateId)}
+                      onClick={() => handleUpdate(item)}
                       className="fa-regular fa-pen-to-square"
                     ></i>
                   </td>
@@ -314,7 +319,7 @@ const ResumeList = ({ handleUpdate }) => {
         </div>
         {selectedCandidateId && (
           <CallingTrackerForm
-            candidateData={selectedCandidateId}
+            initialData={selectedCandidate}
             onClose={() => setSelectedCandidateId(null)}
             onSuccess={handleUpdateSuccess}
           />
