@@ -24,7 +24,7 @@ const CallingExcel = ({ onClose, displayCandidateForm }) => {
   const fileInputRef = useRef(null);
   const lineupFileInputRef = useRef(null);
   const resumeFileInputRef = useRef(null);
-  const { employeeId,userType } = useParams();
+  const { employeeId, userType } = useParams();
 
   const handleTableChange = (tableName) => {
     setActiveTable(tableName);
@@ -62,7 +62,7 @@ const CallingExcel = ({ onClose, displayCandidateForm }) => {
     formData.append("file", file);
     try {
       await axios.post(
-        `http://localhost:9090/api/ats/157industries/uploadData-calling-data/${employeeId}/${userType}`,
+        `http://192.168.1.38:9090/api/ats/157industries/uploadData-calling-data/${employeeId}/${userType}`,
         formData,
         {
           headers: {

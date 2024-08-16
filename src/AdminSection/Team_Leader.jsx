@@ -204,8 +204,6 @@ function Accesstable() {
         );
       } else {
         response = await axios.post(
-
-
           `http://192.168.1.38:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
           JSON.stringify(selectedOptions),
           {

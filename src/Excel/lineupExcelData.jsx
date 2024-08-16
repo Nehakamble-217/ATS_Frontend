@@ -8,6 +8,7 @@ const LineupExcelData = ({
   updateState,
   funForGettingCandidateId,
   onCloseTable,
+  loginEmployeeName
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
@@ -25,7 +26,7 @@ const LineupExcelData = ({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
 
-  const { employeeId,userType } = useParams();
+  const { employeeId, userType } = useParams();
   const employeeIdw = parseInt(employeeId);
   console.log(employeeIdw + "emp @@@@ id");
   console.log(employeeId + "emp 1111 id");
@@ -36,7 +37,7 @@ const LineupExcelData = ({
 
   useEffect(() => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/lineup-excel-data/${employeeId}/${userType}`
+      `http://192.168.1.38:9090/api/ats/157industries/lineup-excel-data/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -906,7 +907,7 @@ const LineupExcelData = ({
                     </td>
                     <td className="tabledata">
                       <i
-                        onClick={() => handleUpdate(item.candidateId)}
+                        onClick={() => handleUpdate(item)}
                         className="fa-regular fa-pen-to-square"
                       ></i>
                     </td>
@@ -919,7 +920,8 @@ const LineupExcelData = ({
       )}
       {selectedCandidate && (
         <CallingTrackerForm
-          candidateData={selectedCandidate}
+          initialData={selectedCandidate}
+          loginEmployeeName={loginEmployeeName}
           onClose={() => setSelectedCandidate(null)}
           onSuccess={handleUpdateSuccess}
         />

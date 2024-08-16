@@ -8,7 +8,7 @@ const ResumeList = ({ handleUpdate }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { employeeId,userType } = useParams();
+  const { employeeId, userType } = useParams();
   console.log(employeeId + "empId in resume List");
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
@@ -19,8 +19,7 @@ const ResumeList = ({ handleUpdate }) => {
       try {
         const response = await fetch(
           `http://localhost:9090/api/ats/157industries/fetch-resumes-data/${employeeId}/${userType}`
-        ); 
-
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -37,7 +36,6 @@ const ResumeList = ({ handleUpdate }) => {
   }, []);
 
   const handleUpdateSuccess = () => {
-    // Assuming `employeeId` is a known variable or prop
     fetch(
       `http://localhost:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
     )

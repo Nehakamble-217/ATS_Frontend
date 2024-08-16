@@ -176,9 +176,9 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
     }
   };
 
-    // const showLastComponenet = () => {
+  // const showLastComponenet = () => {
 
-    // }
+  // }
 
   const handleRequirementChange = (e) => {
     const { value } = e.target;
@@ -206,7 +206,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
   };
 
 
-  
+
 
   //neha_updateselfcalling_designing_start_lineno_205_date_16/07/24
   return (
@@ -1236,7 +1236,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
           </button>
         </div>
       </form>
-      
+
     </div>
   );
 };

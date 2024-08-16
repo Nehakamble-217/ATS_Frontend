@@ -322,7 +322,6 @@ const PerformanceImprovement = () => {
             setSelectedJobId(null);
         }
     };
-
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
