@@ -9,7 +9,6 @@ const ResumeList = ({ handleUpdate }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { employeeId, userType } = useParams();
-  console.log(employeeId + "empId in resume List");
 
   const [selectedCandidateId, setSelectedCandidateId] = useState();
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
