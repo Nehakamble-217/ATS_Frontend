@@ -90,6 +90,7 @@ const CallingTrackerForm = ({
   const [startpoint, setStartPoint] = useState("");
   const [endpoint, setendPoint] = useState("");
   const [resumeFile,setResumeFile] = useState(null);
+  
 
   useEffect(() => {
     // fetchRecruiterName();
@@ -98,6 +99,8 @@ const CallingTrackerForm = ({
   
   useEffect(() => {
     if (initialData) {
+      console.log(initialData);
+      
       const updatedCallingTracker = { ...initialCallingTrackerState };
       const updatedLineUpData = { ...initialLineUpState };
   
@@ -402,9 +405,9 @@ const CallingTrackerForm = ({
         console.log("Response data:", response.data);
 
         if (callingTracker.selectYesOrNo === "Interested") {
-            onsuccessfulDataAdditions(true);
+          onsuccessfulDataAdditions=true;
         } else {
-            onsuccessfulDataAdditions(false);
+          onsuccessfulDataAdditions=false;
         }
 
         if (response.status === 200) { // Check for successful status

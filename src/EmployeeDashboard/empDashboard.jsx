@@ -470,12 +470,6 @@ const EmpDashboard = ({ userGroup }) => {
     setShowProfile(false);
   };
 
-  const handleUpdate = (id) => {
-    setId(id);
-    setAddCandidate(!addCandidate);
-    setShowResumeData(false);
-  };
-
   const toggelAddResumes = () => {
     resetAllToggles();
     setShowAddedResumes(!showAddedResumes);
@@ -746,7 +740,7 @@ const EmpDashboard = ({ userGroup }) => {
         <div>{showCallingExcel && <CallingExcel  />}</div>
         <div>{showLineupExcelList && <LineupExcelData loginEmployeeName={loginEmployeeName}></LineupExcelData>}</div>
         <div>
-          {showResumeData && <ResumeList loginEmployeeName={loginEmployeeName} handleUpdate={handleUpdate} />}
+          {showResumeData && <ResumeList loginEmployeeName={loginEmployeeName}></ResumeList>}
         </div>
         <div>{showNotePad && <NotePad />}</div>
         <div>{showMainReportDatapage && <MainReportDatapage />}</div>

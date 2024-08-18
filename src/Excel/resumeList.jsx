@@ -4,20 +4,21 @@ import "../Excel/resumeList.css";
 import { useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 
-const ResumeList = ({ handleUpdate }) => {
+const ResumeList = ({ loginEmployeeName}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { employeeId, userType } = useParams();
 
-  const [selectedCandidateId, setSelectedCandidateId] = useState();
+  const [selectedCandidate, setSelectedCandidate] = useState();
+  const [show, setShow] = useState(false);
   const [showExportConfirmation, setShowExportConfirmation] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:9090/api/ats/157industries/fetch-resumes-data/${employeeId}/${userType}`
+          `http://192.168.1.38:9090/api/ats/157industries/fetch-resumes-data/${employeeId}/${userType}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -36,7 +37,7 @@ const ResumeList = ({ handleUpdate }) => {
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://localhost:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
+      `http://192.168.1.38:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -153,10 +154,15 @@ const ResumeList = ({ handleUpdate }) => {
   const cancelExport = () => {
     hidePopup();
   };
+  const handleUpdate = (candidateData) => {
+    setShow(true);
+    setSelectedCandidate(candidateData); // Set candidate data for CallingTrackerForm
+  };
   //Swapnil_Rokade_ResumeList_columnsToInclude_columnsToExclude_18/07/2024//
 
   return (
     <>
+    {!selectedCandidate&&(
       <div className="table-container">
         <div className="rl-filterSection">
           <div className="filterSection">
@@ -300,7 +306,7 @@ const ResumeList = ({ handleUpdate }) => {
 
                   <td className="tabledata" style={{ textAlign: "center" }}>
                     <i
-                      onClick={() => handleUpdate(item.candidateId)}
+                      onClick={() => handleUpdate(item)}
                       className="fa-regular fa-pen-to-square"
                     ></i>
                   </td>
@@ -309,14 +315,15 @@ const ResumeList = ({ handleUpdate }) => {
             </tbody>
           </table>
         </div>
-        {selectedCandidateId && (
+        </div>
+        )}
+        {selectedCandidate && (
           <CallingTrackerForm
-            candidateData={selectedCandidateId}
-            onClose={() => setSelectedCandidateId(null)}
-            onSuccess={handleUpdateSuccess}
+            initialData={selectedCandidate}
+            loginEmployeeName={loginEmployeeName}
           />
         )}
-      </div>
+      
     </>
   );
 };

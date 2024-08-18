@@ -1,9 +1,11 @@
   import React, { useState } from "react";
 import axios from "axios";
 import "./AddResumes.css"; // Import the CSS file
+import { useParams } from "react-router-dom";
 
 const AddResumes = ({ show }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const {employeeId,userType} = useParams();
 
   const handleFileChange = (event) => {
     setSelectedFiles(event.target.files);
@@ -16,7 +18,7 @@ const AddResumes = ({ show }) => {
     }
     axios
       .post(
-        "http://192.168.1.38:9090/api/ats/157industries/add-resume-data",
+        `http://localhost:9090/api/ats/157industries/add-multiple-resume/${employeeId}/${userType}`,
         formData
       )
 
