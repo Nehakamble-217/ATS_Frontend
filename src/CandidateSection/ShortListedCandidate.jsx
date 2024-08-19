@@ -6,6 +6,7 @@ import InterviewDates from "../EmployeeSection/interviewDate";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ClipLoader from "react-spinners/ClipLoader";
+import { API_BASE_URL } from "../api/api";
 // SwapnilRokade_ShortListedCandidates_ModifyFilters_11/07
 
 const ShortListedCandidates = ({
@@ -123,7 +124,7 @@ const ShortListedCandidates = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
+        `${API_BASE_URL}/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -135,7 +136,7 @@ const ShortListedCandidates = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `${API_BASE_URL}/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -146,7 +147,7 @@ const ShortListedCandidates = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `${API_BASE_URL}/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -177,7 +178,7 @@ const ShortListedCandidates = ({
   const fetchShortListedData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/shortListed-date/${newEmployeeId}/${userType}`
+        `${API_BASE_URL}/shortListed-date/${newEmployeeId}/${userType}`
       );
       const data = await response.json();
       setShortListedData(data);
@@ -272,7 +273,7 @@ const ShortListedCandidates = ({
 
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://192.168.1.38:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `${API_BASE_URL}/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&

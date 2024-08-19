@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 import "../EmployeeSection/performanceImprovement.css";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
 
 const PerformanceImprovement = () => {
     const { employeeId } = useParams();
@@ -196,7 +197,7 @@ const PerformanceImprovement = () => {
         const fetchManagerNames = async () => {
             try {
                 const response = await axios.get(
-                    `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
+                    `${API_BASE_URL}/get-all-managers`
                 );
                 setManagers(response.data);
             } catch (error) {
@@ -228,7 +229,7 @@ const PerformanceImprovement = () => {
     const fetchTeamLeaderNames = async (id) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${id}`
+                `${API_BASE_URL}/tl-namesIds/${id}`
             );
             setTeamLeaders(response.data);
         } catch (error) {
@@ -239,7 +240,7 @@ const PerformanceImprovement = () => {
     const fetchRecruiterUnderTeamLeaderData = useCallback(async (id) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${id}`
+                `${API_BASE_URL}/employeeId-names/${id}`
             );
             setRecruiters(response.data);
         } catch (error) {
@@ -250,7 +251,7 @@ const PerformanceImprovement = () => {
     const fetchEmployeeCount = async (ids, role) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.38:9090/api/ats/157industries/head-count/${role}/${ids}`
+                `${API_BASE_URL}/head-count/${role}/${ids}`
             );
             setEmployeeCount(response.data);
         } catch (error) { }
@@ -276,7 +277,7 @@ const PerformanceImprovement = () => {
     const fetchJobIds = async (ids, startDate, endDate, role) => {
         try {
             const response = await axios.get(
-                `http://192.168.1.38:9090/api/ats/157industries/performance-jobIds?empIds=${ids}&startDate=${startDate}&endDate=${endDate}&jobRole=${role}`
+                `${API_BASE_URL}/performance-jobIds?empIds=${ids}&startDate=${startDate}&endDate=${endDate}&jobRole=${role}`
             );
             setClientDetails(response.data);
         } catch (error) {
@@ -490,7 +491,7 @@ const PerformanceImprovement = () => {
 
         try {
             const response = await axios.get(
-                `http://192.168.1.38:9090/api/ats/157industries/fetch-process-timings`,
+                `${API_BASE_URL}/fetch-process-timings`,
                 {
                     params: {
                         employeeIds: ids,

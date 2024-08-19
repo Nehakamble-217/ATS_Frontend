@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../notPad/notePad.css";
+import { API_BASE_URL } from "../api/api";
+
 
 const NotePad = () => {
   const [message, setMessage] = useState("");
@@ -29,8 +31,8 @@ const NotePad = () => {
     };
     try {
       let url = editMessageId
-        ? `http://192.168.1.38:9090/api/ats/157industries/updateNoteData/${editMessageId}`
-        : "http://192.168.1.38:9090/api/ats/157industries/notes";
+        ? `${API_BASE_URL}/updateNoteData/${editMessageId}`
+        : `${API_BASE_URL}/notes`;
       const response = await fetch(url, {
         method: editMessageId ? "PUT" : "POST",
         headers: {
@@ -59,7 +61,7 @@ const NotePad = () => {
   const fetchNotePadData = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.38:9090/api/ats/157industries/notesData"
+        `${API_BASE_URL}/notesData`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -76,7 +78,7 @@ const NotePad = () => {
   const updateMessage = async (messageId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/updateNoteData/${messageId}`
+        `${API_BASE_URL}/updateNoteData/${messageId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -84,7 +86,6 @@ const NotePad = () => {
       const data = await response.json();
       setMessage(data.message); // Populate the textarea with the message
       setEditMessageId(data.messageId); // Set the messageId for the edited note
-      // Open the modal for editing
       document.getElementById("editModal").style.display = "block";
     } catch (error) {
       console.error("Failed to fetch NotePad data:", error);
@@ -100,7 +101,7 @@ const NotePad = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/deleteNoteData/${messageId}`,
+        `${API_BASE_URL}/deleteNoteData/${messageId}`,
         {
           method: "DELETE",
         }

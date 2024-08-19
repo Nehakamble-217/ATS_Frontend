@@ -8,6 +8,7 @@ import jobDiscriptions from "../employeeComponents/jobDiscriptions";
 import ShareEDM from "../JobDiscription/shareEDM";
 import { values } from "pdf-lib";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/api";
 // SwapnilRokade_JobListing_filter_option__18/07
 const JobListing = () => {
 
@@ -48,7 +49,7 @@ const JobListing = () => {
   ];
 
   useEffect(() => {
-    fetch("http://192.168.1.38:9090/api/ats/157industries/all-job-descriptions")
+    fetch(`${API_BASE_URL}/all-job-descriptions`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the fetched data to inspect its structure
@@ -170,7 +171,7 @@ const JobListing = () => {
   const toggleJobDescription = (requirementId) => {
     console.log(requirementId + "before Api");
     fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/requirement-info/${requirementId}`
+      `${API_BASE_URL}/requirement-info/${requirementId}`
     )
       .then((response) => response.json())
       .then((data) => {

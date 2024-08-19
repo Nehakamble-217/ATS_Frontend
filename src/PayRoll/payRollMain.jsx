@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PayrollTable from "./payRollTable";
 import PayRollForm from "./payRollForm";
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
+
 
 const PayRollMain = () => {
   const [employees, setEmployees] = useState([]);
@@ -9,7 +11,7 @@ const PayRollMain = () => {
     const fetchEmployees = async () => {
       try {
         const res = await axios.get(
-          "http://192.168.1.38:9090/api/ats/157industries/findAll-all-payrolls"
+          `${API_BASE_URL}/findAll-all-payrolls`
         );
         setEmployees(res.data);
       } catch (error) {

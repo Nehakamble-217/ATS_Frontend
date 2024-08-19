@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/api";
 
 const Incentive = () => {
   const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ const Incentive = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.38:9090/api/ats/157industries/fetch-incentive/${employeeId}/${userType}`
+          `${API_BASE_URL}/fetch-incentive/${employeeId}/${userType}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

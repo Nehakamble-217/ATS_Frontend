@@ -16,6 +16,7 @@ import { Button, Modal } from "react-bootstrap";
 import Confetti from "react-confetti";
 // import ClipLoader from "react-spinners/ClipLoader";
 import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
+import { API_BASE_URL } from "../api/api";
 
 const CallingTrackerForm = ({
   onsuccessfulDataAdditions,
@@ -155,7 +156,7 @@ const CallingTrackerForm = ({
   const fetchRecruiterName = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
+        `${API_BASE_URL}/employeeName/${employeeId}/${userType}`
       );
       const { data } = response;
       setCallingTracker((prevState) => ({
@@ -174,7 +175,7 @@ const CallingTrackerForm = ({
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/company-details`
+        `${API_BASE_URL}/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -393,7 +394,7 @@ const CallingTrackerForm = ({
 
         // Make API call
         const response = await axios.post(
-            `http://192.168.1.38:9090/api/ats/157industries/calling-tracker`,
+            `${API_BASE_URL}/calling-tracker`,
             dataToUpdate,
             {
               headers: {

@@ -6,9 +6,9 @@ import UpdateCallingTracker from "./UpdateSelfCalling";
 import Modal from "react-bootstrap/Modal";
 import HashLoader from "react-spinners/HashLoader";
 import * as XLSX from "xlsx";
-
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
 
 const CallingList = ({
   updateState,
@@ -104,7 +104,7 @@ const CallingList = ({
   const fetchCallingTrackerData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
+        `${API_BASE_URL}/callingData/${employeeId}/${userType}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -127,7 +127,7 @@ const CallingList = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
+        `${API_BASE_URL}/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -141,7 +141,7 @@ const CallingList = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `${API_BASE_URL}/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -152,7 +152,7 @@ const CallingList = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `${API_BASE_URL}/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -336,7 +336,7 @@ const CallingList = ({
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/callingData/${employeeId}`
+      `${API_BASE_URL}/callingData/${employeeId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -431,7 +431,7 @@ const CallingList = ({
   //akash_pawar_selfCallingTracker_ShareFunctionality_17/07_435
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://192.168.1.38:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `${API_BASE_URL}/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&

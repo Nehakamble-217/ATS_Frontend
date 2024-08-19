@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import '../EmployeeSection/interviewDate.css'
+import { API_BASE_URL } from "../api/api";
 
 const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -35,7 +36,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   ) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
+        `${API_BASE_URL}/interview-response/${candidateId}/${employeeIdNew}/${requirementId}`
       );
 
       const data = await response.json();
@@ -54,7 +55,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
   const fetchInterviewDates = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/interview-date/${employeeIdNew}/${userType}`
+        `${API_BASE_URL}/interview-date/${employeeIdNew}/${userType}`
       );
       console.log(employeeIdNew + " ---01--- Interview Dates");
       console.log(userType + " ---01--- User Type");
@@ -79,7 +80,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/today-interview/${formattedDate}/${employeeId}/${userType}`
+        `${API_BASE_URL}/today-interview/${formattedDate}/${employeeId}/${userType}`
       );
       const data = await response.json();
       if (data.length === 0) {
@@ -104,7 +105,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
       try {
         const response = await fetch(
-          `http://192.168.1.38:9090/api/ats/157industries/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
+          `${API_BASE_URL}/fetch-by-month?id=${employeeIdNew}&month=${monthString}`
         );
         const data = await response.json();
         if (data.length === 0) {
@@ -159,7 +160,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.38:9090/api/ats/157industries/save-interview-response",
+        `${API_BASE_URL}/save-interview-response`,
         {
           method: "POST",
           headers: {

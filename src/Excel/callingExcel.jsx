@@ -7,6 +7,7 @@ import CallingExcelList from "../Excel/callingExcelData";
 import ResumeList from "./resumeList";
 import { toast } from "react-toastify";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
+import { API_BASE_URL } from "../api/api";
 
 const CallingExcel = ({ onClose, displayCandidateForm }) => {
   const [file, setFile] = useState(null);
@@ -62,7 +63,7 @@ const CallingExcel = ({ onClose, displayCandidateForm }) => {
     formData.append("file", file);
     try {
       await axios.post(
-        `http://192.168.1.38:9090/api/ats/157industries/uploadData-calling-data/${employeeId}/${userType}`,
+        `${API_BASE_URL}/uploadData-calling-data/${employeeId}/${userType}`,
         formData,
         {
           headers: {
@@ -93,7 +94,7 @@ const CallingExcel = ({ onClose, displayCandidateForm }) => {
     try {
       await axios.post(
 
-        `http://192.168.1.38:9090/api/ats/157industries/upload-calling-lineup-data/${employeeId}/${userType}`,
+        `${API_BASE_URL}/upload-calling-lineup-data/${employeeId}/${userType}`,
 
         formData,
         {
@@ -121,7 +122,7 @@ const CallingExcel = ({ onClose, displayCandidateForm }) => {
     }
     try {
       await axios.post(
-        `http://192.168.1.38:9090/api/ats/157industries/add-multiple-resume/${employeeId}/${userType}`,
+        `${API_BASE_URL}/add-multiple-resume/${employeeId}/${userType}`,
 
         formData
       );

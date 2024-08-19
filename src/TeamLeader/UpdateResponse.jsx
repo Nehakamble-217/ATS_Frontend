@@ -5,6 +5,8 @@ import { data } from "autoprefixer";
 import UpdateResponseFrom from "./UpdateResponseFrom";
 import HashLoader from "react-spinners/HashLoader";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/api";
+
 
 const UpdateResponse = ({ onSuccessAdd, date }) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
@@ -50,7 +52,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
+        `${API_BASE_URL}/calling-lineup/${employeeId}/${userType}`
       );
       const data = await res.json();
       setCallingList(data);

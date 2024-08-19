@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../EmployeeSection/addEmployee.css";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
 
 const AddEmployee = () => {
   const [formData, setFormData] = useState({
@@ -191,7 +192,7 @@ const AddEmployee = () => {
     console.log(formData);
     try {
       const response = await fetch(
-        "http://192.168.1.38:9090/api/ats/157industries/add-employee",
+        `${API_BASE_URL}/add-employee`,
         {
           method: "POST",
           body: formDataToSend,
@@ -242,22 +243,36 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div className="addRec-form-row">
-          <label>Date of Joining:</label>
-          <input
+        <div id="user-name-div" className="addRec-form-row">
+    <div className="user-name-div-label-input">
+        <label className="user-name-div-labels">User Name:</label>
+        <input
+            type="text"
+            className="user-name-div-inputs"
+            name="userName"
+            value={formData.userName}
+            onChange={handleInputChange}
+        />
+    </div>
+    <div className="user-name-div-label-input">
+        <label className="user-name-div-labels">Date of Joining:</label>
+        <input
             type="date"
+            className="user-name-div-inputs"
             name="dateOfJoining"
             value={formData.dateOfJoining}
             onChange={handleInputChange}
-          />
-        </div>
+        />
+    </div>
+</div>
+
 
         <div className="addRec-form-row">
           <label>Designation:</label>
           <input
             type="text"
             name="designation"
-            placeholder="Eg: FrontEnd Developer"
+            placeholder="Ex: Front End Developer"
             value={formData.designation}
             onChange={handleInputChange}
           />
@@ -288,10 +303,10 @@ const AddEmployee = () => {
             onChange={handleInputChange}
           >
             <option value="">Select Job Role</option>
-            <option value="Team Leader">Team Leader</option>
-            <option value="Admin">Admin</option>
-            <option value="Senior Recruiter">Senior Recruiter</option>
-            <option value="Recruiter">recruiter</option>
+            <option value="Recruiters">Recruiter </option>
+            <option value="TeamLeader">Team Leader</option>
+            <option value="Manager">Manager</option>
+            
           </select>
         </div>
 
@@ -963,6 +978,7 @@ const AddEmployee = () => {
           <input type="file" 
           multiple
           name="document" onChange={handleInputChange} />
+          <span className="file-placeholder">Ex. Aadhaar, PAN, Driving License</span>
         </div>
 
         <div className="addRec-form-row">
@@ -1007,7 +1023,7 @@ const AddEmployee = () => {
 
         <div className="add-employee-submit-div">
           <button type="submit" className="submit-button-add-emp">
-            Submit
+            Create Account
           </button>
         </div>
         {successMessage && (

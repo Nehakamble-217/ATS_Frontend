@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Add this line to include AOS styles
+import { API_BASE_URL } from "../api/api";
+
 
 const AdminLogin = ({ onLogin }) => {
   const [employeeId, setEmployeeId] = useState("");
@@ -30,7 +32,7 @@ const AdminLogin = ({ onLogin }) => {
   const handleBlur = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/fetch-pass-on-role/${empId}`
+        `${API_BASE_URL}/fetch-pass-on-role/${empId}`
       );
 
       if (!response.ok) {

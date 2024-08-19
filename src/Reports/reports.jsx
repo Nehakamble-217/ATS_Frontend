@@ -5,8 +5,9 @@ import "../Reports/reports.css"
 import CreateReportTable from "../Reports/CreateReportTable";
 import ReportsPieChart from "../Reports/reportsPieChart"
 // import ProgressBar from "./progressBar";
-
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
+
 
 function Accesstable() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -102,7 +103,7 @@ function Accesstable() {
     useEffect(() => {
       const fetchTeamLeaderNames = async () => {
         const response = await axios.get(
-          `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds`
+          `${API_BASE_URL}/tl-namesIds`
         );
         setTeamLeaderNames(response.data);
       };
@@ -115,7 +116,7 @@ function Accesstable() {
     
     //   );
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+        `${API_BASE_URL}/byTeamLeader/${selectedTeamLeader}`
       );
       setRecruiterUnderTeamLeader(response.data);
     }, [selectedTeamLeader]);

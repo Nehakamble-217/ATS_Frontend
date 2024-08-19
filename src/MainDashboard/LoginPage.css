@@ -203,11 +203,7 @@
 }
 
 
-.psw {
-    margin-top: 2px;
-    font-size: 12px;
-    cursor: pointer;
-}
+
 
 @keyframes fadeIn {
     from {
@@ -256,4 +252,28 @@
 .loginpage-error {
     color: red;
     font-size: 16px;
+}
+
+
+.acc-create-div {    
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 5px;
+}
+
+.account-create-span {
+    font-size: 13px;
+    padding-top: 2px;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+    transform-origin: left center; /* Scale from the left side */
+}
+
+.account-create-span:hover {
+    color: blue;
+    transform: scale(1.02); /* Slightly increase size */
+    text-decoration: underline;
 }

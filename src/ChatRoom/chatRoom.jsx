@@ -4,6 +4,8 @@ import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
+import { CHAT_BASE_URL } from "../api/api";
+import { API_BASE_URL } from "../api/api";  
 
 let stompClient = null;
 
@@ -42,7 +44,7 @@ const ChatRoom = () => {
   const fetchUsername = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeName/${employeeId}/${userType}`
+        `${API_BASE_URL}/employeeName/${employeeId}/${userType}`
       );
 
       let result;
@@ -64,7 +66,7 @@ const ChatRoom = () => {
   };
 
   const connect = (username) => {
-    let Sock = new SockJS("http://192.168.1.38:9090/ws");
+    let Sock = new SockJS(`${CHAT_BASE_URL}/ws`);
     stompClient = over(Sock);
     stompClient.connect({}, () => onConnected(username), onError);
   };
@@ -182,7 +184,7 @@ const ChatRoom = () => {
     formData.append("file", userData.file);
     formData.append("senderName", userData.username);
 
-    fetch("http://192.168.1.38:9090/upload", {
+    fetch(`${CHAT_BASE_URL}/upload`, {
       method: "POST",
       body: formData,
     })

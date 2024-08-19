@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./subscription.css";
 import AddUser from "./AddUser";
+import { API_BASE_URL } from "../api/api";
+
 
 const SubscriptionPlans = () => {
   const [plans, setPlans] = useState([]);
@@ -12,7 +14,7 @@ const SubscriptionPlans = () => {
   useEffect(() => {
     // Fetch subscription plans from the backend
     axios
-      .get("http://192.168.1.38:9090/api/ats/157industries/fetchAllPlans")
+      .get(`${API_BASE_URL}/fetchAllPlans`)
       .then((response) => {
         setPlans(response.data);
       })

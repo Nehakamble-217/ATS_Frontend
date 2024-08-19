@@ -6,6 +6,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Form } from "react-bootstrap";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/api";
 
 const AddCompanyDetails = () => {
   /*Akash_Pawar_EmpDashboard_AddedAddCompanyFunction_11/07_LineNo_11*/
@@ -67,9 +68,7 @@ const AddCompanyDetails = () => {
   });
 
   const fetchPreviousCompanyDetailsId = async () => {
-    const response = await axios.get(
-      "http://192.168.1.38:9090/api/ats/157industries/fetch-details-ids"
-    );
+    const response = await axios.get(`${API_BASE_URL}/fetch-details-ids`);
     if (addedCompanyDetailsId < response.data.length) {
       setLatestAddedCompanyData(response.data[0]);
     }
@@ -222,9 +221,7 @@ const AddCompanyDetails = () => {
     console.log(initialFormData);
     try {
       // Send the form data to the backend
-      const response = await axios.post(
-        "http://192.168.1.38:9090/api/ats/157industries/save-our-company",
-        initialFormData,
+      const response = await axios.post(`${API_BASE_URL}/save-our-company`, initialFormData,
         {
           headers: {
             "Content-Type": "multipart/form-data", // Ensure correct content type for form data
@@ -855,13 +852,9 @@ const SendEmailPopup = ({
     const fetchCompanyDetailsById = async () => {
       let response;
       if (onOptionChange != null) {
-        response = await axios.get(
-          `http://192.168.1.38:9090/api/ats/157industries/details-by-Id/${onOptionChange}`
-        );
+        response = await axios.get(`${API_BASE_URL}/details-by-Id/${onOptionChange}`);
       } else {
-        response = await axios.get(
-          `http://192.168.1.38:9090/api/ats/157industries/details-by-Id/${latestAddedData}`
-        );
+        response = await axios.get(`${API_BASE_URL}/details-by-Id/${latestAddedData}`);
       }
       setCompanyDetails(response.data);
     };
@@ -887,10 +880,7 @@ const SendEmailPopup = ({
         employeeId: parseInt(employeeId),
       };
 
-      const response = await axios.post(
-        "http://192.168.1.38:9090/api/ats/157industries/save-send-details",
-        clientData
-      );
+      const response = await axios.post(`${API_BASE_URL}/save-send-details`, clientData);
       if (response) {
         setIsMailSending(false);
         setResponse(response.data);
@@ -1003,10 +993,7 @@ const SendEmailPopup = ({
     setIsMailSending(true);
 
     axios
-      .post(
-        "http://192.168.1.38:9090/api/ats/157industries/company-detail-email",
-        emailData
-      )
+      .post(`${API_BASE_URL}/company-detail-email`,emailData)
       .then((response) => {
         handleStoreClientInformation();
         setIsMailSending(false);

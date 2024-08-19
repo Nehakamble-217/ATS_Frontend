@@ -4,6 +4,7 @@ import profileImage from '../LogoImages/157logo.jpeg';
 import { useParams } from 'react-router-dom';
 import html2canvas from "html2canvas";
 import { toast } from 'react-toastify';
+import { API_BASE_URL } from "../api/api";
 
 
 
@@ -13,7 +14,7 @@ function ShareEDM({ Descriptions, onShareEdm }) {
     const { employeeId } = useParams()
 
     useEffect(() => {
-        fetch(`http://192.168.1.38:9090/api/ats/157industries/edm-details/1/1`)
+        fetch(`${API_BASE_URL}/edm-details/1/1`)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);

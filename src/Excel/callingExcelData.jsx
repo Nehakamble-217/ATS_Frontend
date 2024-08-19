@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../Excel/callingExcelData.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
+import { API_BASE_URL } from "../api/api";
 
 const CallingExcelList = ({
   updateState,
@@ -38,7 +39,7 @@ const CallingExcelList = ({
   useEffect(() => {
     console.log(employeeId + "---00---");
     fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/calling-excel-data/${employeeId}/${userType}`
+      `${API_BASE_URL}/calling-excel-data/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {

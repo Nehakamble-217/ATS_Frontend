@@ -7,6 +7,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "../EmployeeSection/UpdateSelfCalling.css"
+import { API_BASE_URL } from "../api/api";
 
 const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) => {
   const [isOtherEducationSelected, setIsOtherEducationSelected] =
@@ -82,7 +83,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
   const fetchEmployeeName = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeName/${newCandidateId}`
+        `${API_BASE_URL}/employeeName/${newCandidateId}`
       );
       const data = await response.text();
       setRecruiterName(data);
@@ -94,7 +95,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
   const fetchCandidateData = async (candidateId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/specific-data/${candidateId}`
+        `${API_BASE_URL}/specific-data/${candidateId}`
       );
       const data = await response.json();
       setCallingTracker(data);
@@ -107,7 +108,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
   const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/company-details`
+        `${API_BASE_URL}/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);
@@ -148,7 +149,7 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
       };
 
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/update-calling-data/${candidateId}`,
+        `${API_BASE_URL}/update-calling-data/${candidateId}`,
         {
           method: "POST",
           headers: {
@@ -175,10 +176,6 @@ const UpdateCallingTracker = ({ initialData, candidateId, showLastComponenet }) 
       toast.error("Error updating data:", error);
     }
   };
-
-  // const showLastComponenet = () => {
-
-  // }
 
   const handleRequirementChange = (e) => {
     const { value } = e.target;

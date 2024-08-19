@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./AddUser.css";
 import PaymentReciept from "./PaymentReciept";
+import { API_BASE_URL } from "../api/api";
+
 
 const AddUser = ({ selectedPlan }) => {
   const [formData, setFormData] = useState({
@@ -40,7 +42,7 @@ const AddUser = ({ selectedPlan }) => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       try {
-        const response = await fetch('http://192.168.1.38:9090/api/ats/157industries/SaveUser', {
+        const response = await fetch(`${API_BASE_URL}/SaveUser`, {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",

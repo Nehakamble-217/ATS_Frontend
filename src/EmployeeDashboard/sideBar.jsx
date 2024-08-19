@@ -75,12 +75,11 @@ function Sidebar({
   const [activeButton, setActiveButton] = useState(null); // Track the active button
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showColor, setShowColor] = useState(false);
+  const [activeItem, setActiveItem] = useState(null);
 
   const navigator = useNavigate();
-  const { employeeId } = useParams();
-  const empid = parseInt(employeeId);
-  const { userType } = useParams();
-  console.log(userType + "userType");
+  const { employeeId, userType } = useParams();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -145,49 +144,30 @@ function Sidebar({
 
   const handleColorApplied = (color) => {
 
-    // Save the selected color to local storage
     localStorage.setItem("selectedColor", color);
     setShowColor(false); // Close the color picker modal when color is applied
   };
 
-  // const handleColorClick = (color) => {
-  //   // Convert the color to a darker shade for hover effect
-  //   const darkenColor = (color, amount) => {
-  //     let colorInt = parseInt(color.slice(1), 16);
-  //     let r = (colorInt >> 16) + amount;
-  //     let g = ((colorInt >> 8) & 0x00ff) + amount;
-  //     let b = (colorInt & 0x0000ff) + amount;
-
-  //     r = Math.max(Math.min(255, r), 0);
-  //     g = Math.max(Math.min(255, g), 0);
-  //     b = Math.max(Math.min(255, b), 0);
-
-  //     return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
-  //   };
-
-  //   const hoverColor = darkenColor(color, -20);
-
-  //   // Update CSS variables
-  //   document.documentElement.style.setProperty("--Bg-color", color);
-  //   document.documentElement.style.setProperty("--button-color", color);
-  //   document.documentElement.style.setProperty(
-  //     "--button-hover-color",
-  //     hoverColor
-  //   );
-  //   document.documentElement.style.setProperty("--hover-effect", hoverColor);
-  //   document.documentElement.style.setProperty("--filter-color", color);
-  //   setShowColor(false);
-  // };
-  // Helper function to determine the parent submenu of a button
   const getParentSubMenu = (buttonKey) => {
     const subMenuMap = {
-      selfCalling: "candidate",
-      lineUp: "candidate",
-      shortListed: "candidate",
-      selectCandidate: "candidate",
-      holdCandidate: "candidate",
-      rejectedCandidate: "candidate",
-      // Add mappings for other submenus as needed
+      selfCalling: 'candidate',
+      lineUp: 'candidate',
+      shortListed: 'candidate',
+      selectCandidate: 'candidate',
+      holdCandidate: 'candidate',
+      rejectedCandidate: 'candidate',
+      jobDescription: 'Jobdiscription',
+      addJobDescription: 'Jobdiscription',
+      incentive: 'employee',
+      attendance: 'employee',
+      assignColumns: 'adminSection',
+      allMasterSheet: 'adminSection',
+      addRecruiters: 'adminSection',
+      addTeamLeaders: 'adminSection',
+      callingData: 'database',
+      lineUpData: 'database',
+      resumeData: 'database',
+      addResumes: 'database'
     };
     return subMenuMap[buttonKey] || null;
   };
@@ -218,10 +198,23 @@ function Sidebar({
     window.open("https://in.indeed.com/?from=gnav-homepage", "_blank");
   };
 
+  // const handleButtonClick = (buttonKey, callback) => (e) => {
+  //   e.stopPropagation();
+  //   setActiveButton(buttonKey);
+  //   setActiveSubMenu(getParentSubMenu(buttonKey)); // Keep parent submenu open
+  //   callback(e);
+  // };
+
+  //Dhanshree Code 
   const handleButtonClick = (buttonKey, callback) => (e) => {
+    e.stopPropagation();
     setActiveButton(buttonKey);
-    setActiveSubMenu(getParentSubMenu(buttonKey)); // Keep parent submenu open
-    callback(e);
+    const parentSubMenu = getParentSubMenu(buttonKey);
+
+    if (parentSubMenu) {
+      setActiveSubMenu(parentSubMenu);
+    }
+    if (callback) callback(e);
   };
 
   const isCandidateSectionActive = [
@@ -262,6 +255,51 @@ function Sidebar({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  //Dhanshreee Code From Here
+
+  const handleItemClick = (itemKey) => {
+    setActiveItem(itemKey);
+  };
+
+
+
+  const renderMenuItem = (item, isSubMenu = false) => {
+    const isActive = activeItem === item.key ||
+      (item.subMenu && item.subMenu.some(subItem => activeItem === subItem.key));
+    const style = isSubMenu ? { marginLeft: "10px" } : {};
+    /* Dhanashree_Sidebar_Date(09/08) End 151*/
+
+    return (
+      /* Dhanashree_Sidebar_Date(09/08) Start 157*/
+
+      <li
+        key={item.key}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleItemClick(item.key);
+          if (item.onClick) item.onClick(e);
+          if (item.subMenu) {
+            toggleSubMenu(item.key)(e);
+          }
+        }}
+        className={`${isActive ? 'active' : ''}`}
+        style={style}
+      >
+        <a href="#">
+          {item.icon && <i className={item.icon} style={{ color: "gray" }}></i>}
+          <span className="sidebar-text">{item.text}</span>
+          {isActive && <span className="active-dot"></span>}
+          {item.arrow && <i className={`arrow ph-bold ph-caret-${activeSubMenu === item.key ? 'up' : 'down'}`}></i>}
+        </a>
+        {item.subMenu && (
+          <ul className={`sub-menu ${activeSubMenu === item.key ? 'active' : ''}`}>
+            {item.subMenu.map(subItem => renderMenuItem(subItem, true))}
+          </ul>
+        )}
+      </li>
+    );
+  };
+
   return (
     <>
       <div className={`sidebar ${isActive ? "active" : ""}`}>
@@ -272,6 +310,8 @@ function Sidebar({
           </div>
           <div className="nav">
             <div className="sidebar-menu">
+              
+                        
               <ul>
                 <>
                   {userType === "SuperUser" ? (
@@ -340,9 +380,9 @@ function Sidebar({
                   {userType != "SuperUser" ? (
                     <li
                       className={`${activeSubMenu === "candidate" ||
-                          isCandidateSectionActive
-                          ? "active"
-                          : ""
+                        isCandidateSectionActive
+                        ? "active"
+                        : ""
                         }`}
                       onClick={toggleSubMenu("candidate")}
                     >
@@ -518,8 +558,8 @@ function Sidebar({
                 </>
                 <li
                   className={`${activeSubMenu === "Jobdiscription" || isJobDescriptionActive
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={toggleSubMenu("Jobdiscription")}
                 >
@@ -657,8 +697,8 @@ function Sidebar({
                         </a>
                         <ul
                           className={`sub-menu sub-menu1 ${activeSubMenu === "TeamLeader-section"
-                              ? "active"
-                              : ""
+                            ? "active"
+                            : ""
                             }`}
                         >
                           <li

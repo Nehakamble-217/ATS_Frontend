@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../api/api";
+
 // SwapnilRokade_UpdateEmployee_AutoFeildFunctionality_16/07
 const UpdateEmployee = ({ id, userType }) => {
   const [profileImage, setProfileImage] = useState("");
@@ -82,7 +84,7 @@ const UpdateEmployee = ({ id, userType }) => {
   const fetchEmployeeDetails = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/fetch-profile-details/${id}/${userType}`
+        `${API_BASE_URL}/fetch-profile-details/${id}/${userType}`
       );
       const initialResponse = response.data;
       console.log(initialResponse);
@@ -374,7 +376,7 @@ const UpdateEmployee = ({ id, userType }) => {
 
     try {
       const response = await fetch(
-        ` http://192.168.1.38:9090/api/ats/157industries/add-employee/432`,
+        ` ${API_BASE_URL}/add-employee/432`,
         {
           method: "POST",
           body: formDataToSend,

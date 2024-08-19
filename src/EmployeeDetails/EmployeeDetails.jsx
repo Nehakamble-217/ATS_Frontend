@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import "./EmployeeDetails.css";
 import UpdateEmployee from "./UpdateEmployee";
 import HashLoader from "react-spinners/HashLoader";
+import { API_BASE_URL } from "../api/api";
+
 // SwapnilRokade_UpdateEmployee_fetchingData From DataBase_16/07
 const EmployeeDetails = () => {
   const [employeeData, setEmployeeData] = useState([]);
@@ -22,7 +24,7 @@ const EmployeeDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://192.168.1.38:9090/api/ats/157industries/detail-for-update/870"
+          `${API_BASE_URL}/detail-for-update/870`
         );
         setEmployeeData(response.data);
         setLoading(false);
