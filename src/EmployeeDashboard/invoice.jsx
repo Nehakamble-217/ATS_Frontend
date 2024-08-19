@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import "./invoice.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
 // SwapnilRokade_InvoiceTable_StroreFormDateToDatabase__07_to_654_12/07
 // SwapnilRokade_InvoiceTable_StoringSupplierSection_09To664_15/07
 const InvoiceTable = () => {
@@ -113,7 +114,7 @@ const InvoiceTable = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `http://192.168.1.38:9090/api/ats/157industries/saveInvoice`,
+        `${API_BASE_URL}/saveInvoice`,
         formData,
         {
           headers: {

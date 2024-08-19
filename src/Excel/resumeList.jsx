@@ -3,13 +3,13 @@ import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 import "../Excel/resumeList.css";
 import { useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
+import { API_BASE_URL } from "../api/api";
 
-const ResumeList = ({ loginEmployeeName}) => {
+const ResumeList = ({ loginEmployeeName }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { employeeId, userType } = useParams();
-  console.log(employeeId + "empId in resume List");
 
   const [selectedCandidate, setSelectedCandidate] = useState();
   const [show, setShow] = useState(false);
@@ -19,7 +19,7 @@ const ResumeList = ({ loginEmployeeName}) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.38:9090/api/ats/157industries/fetch-resumes-data/${employeeId}/${userType}`
+          `${API_BASE_URL}/fetch-resumes-data/${employeeId}/${userType}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -38,7 +38,7 @@ const ResumeList = ({ loginEmployeeName}) => {
 
   const handleUpdateSuccess = () => {
     fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/callingData/${employeeId}/${userType}`
+      `${API_BASE_URL}/callingData/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -77,7 +77,6 @@ const ResumeList = ({ loginEmployeeName}) => {
   };
   //Swapnil_Rokade_ResumeList_columnsToInclude_columnsToExclude_18/07/2024//
   const handleExportToExcel = () => {
-    // Define columns to include in export
     const columnsToInclude = [
       "No.",
       "Candidate's Name",
@@ -89,9 +88,8 @@ const ResumeList = ({ loginEmployeeName}) => {
       "Current Location",
     ];
 
-    // Clone the data and map to match columnsToInclude order
+  
     const dataToExport = data.map((item, index) => {
-      // Create a filtered item without the 'Resume' field
       const filteredItem = {
         "No.": index + 1,
         "Candidate's Name": item.name || "-",
@@ -106,12 +104,10 @@ const ResumeList = ({ loginEmployeeName}) => {
       return filteredItem;
     });
 
-    // Define sheet name and create worksheet
     const ws = XLSX.utils.json_to_sheet(dataToExport, {
       header: columnsToInclude,
     });
 
-    // Add conditional formatting for header row
     const headerRange = XLSX.utils.decode_range(ws["!ref"]);
     for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
       const cell = ws[XLSX.utils.encode_cell({ r: headerRange.s.r, c: C })];
@@ -163,168 +159,157 @@ const ResumeList = ({ loginEmployeeName}) => {
 
   return (
     <>
-    {!selectedCandidate&&(
-      <div className="table-container">
-        <div className="rl-filterSection">
-          <div className="filterSection">
-            <h1 className="resume-data-heading">Resume Data</h1>
-          </div>
-          {/* Swapnil_Rokade_ResumeList_CreateExcel_18/07/2024 */}
-          <div>
-            <div className="rl-btn-div">
-              <button className="rl-create-Excel-btn" onClick={showPopup}>
-                Create Excel
-              </button>
+      {!selectedCandidate && (
+        <div className="table-container">
+          <div className="rl-filterSection">
+            <div className="filterSection">
+              <h1 className="resume-data-heading">Resume Data</h1>
             </div>
-            {showExportConfirmation && (
-              <div className="popup-containers">
-                <p className="confirmation-texts">
-                  Are you sure you want to generate the Excel file?
-                </p>
-                <button onClick={confirmExport} className="buttoncss-ctn">
-                  Yes
-                </button>
-                <button onClick={cancelExport} className="buttoncss-ctn">
-                  No
+            {/* Swapnil_Rokade_ResumeList_CreateExcel_18/07/2024 */}
+            <div>
+              <div className="rl-btn-div">
+                <button className="rl-create-Excel-btn" onClick={showPopup}>
+                  Create Excel
                 </button>
               </div>
-            )}
+              {showExportConfirmation && (
+                <div className="popup-containers">
+                  <p className="confirmation-texts">
+                    Are you sure you want to generate the Excel file?
+                  </p>
+                  <button onClick={confirmExport} className="buttoncss-ctn">
+                    Yes
+                  </button>
+                  <button onClick={cancelExport} className="buttoncss-ctn">
+                    No
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="attendanceTableData">
+            <table className="attendance-table">
+              <thead>
+                <tr className="attendancerows-head">
+                  <th className="attendanceheading">Sr No</th>
+
+                  <th className="attendanceheading">Candidate  Name</th>
+                  <th className="attendanceheading">Contact Number</th>
+                  <th className="attendanceheading">Candidate Email</th>
+                  <th className="attendanceheading">Education</th>
+                  <th className="attendanceheading">Experience</th>
+                  <th className="attendanceheading">Current Location</th>
+                  <th className="attendanceheading">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, index) => (
+                  <tr key={item.candidateId} className="attendancerows">
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {index + 1}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{index + 1}</span>
+                      </div>
+                    </td>
+                    <td
+                      hidden
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateId}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.candidateId}</span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateName}{" "}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.candidateName}</span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.contactNumber}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.contactNumber}</span>
+                      </div>
+                    </td>
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.candidateEmail}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.candidateEmail}</span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.qualification}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.qualification}</span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.relevantExperience}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.relevantExperience}</span>
+                      </div>
+                    </td>
+
+                    <td
+                      className="tabledata"
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {item.currentLocation}
+                      <div className="tooltip">
+                        <span className="tooltiptext">{item.currentLocation}</span>
+                      </div>
+                    </td>
+
+                    <td className="tabledata" style={{ textAlign: "center" }}>
+                      <i
+                        onClick={() => handleUpdate(item)}
+                        className="fa-regular fa-pen-to-square"
+                      ></i>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-        <div className="attendanceTableData">
-          <table className="attendance-table">
-            <thead>
-              <tr className="attendancerows-head">
-                <th className="attendanceheading">Sr No</th>
+      )}
+      {selectedCandidate && (
+        <CallingTrackerForm
+          initialData={selectedCandidate}
+          loginEmployeeName={loginEmployeeName}
+        />
+      )}
 
-                <th className="attendanceheading">Candidate  Name</th>
-                <th className="attendanceheading">Contact Number</th>
-                <th className="attendanceheading">Alternate Number</th>
-                <th className="attendanceheading">Candidate Email</th>
-                <th className="attendanceheading">Education</th>
-                <th className="attendanceheading">Experience</th>
-                <th className="attendanceheading">Current Location</th>
-                <th className="attendanceheading">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={item.id} className="attendancerows">
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {index + 1}{" "}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{index + 1}</span>
-                    </div>
-                  </td>
-                  <td
-                    hidden
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.id}{" "}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.id}</span>
-                    </div>
-                  </td>
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.name}{" "}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.name}</span>
-                    </div>
-                  </td>
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.phone}{" "}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.phone}</span>
-                    </div>
-                  </td>
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.phone}{" "}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.phone}</span>
-                    </div>
-                  </td>
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.email}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.email}</span>
-                    </div>
-                  </td>
-
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.education}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.education}</span>
-                    </div>
-                  </td>
-
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.experience}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.experience}</span>
-                    </div>
-                  </td>
-
-                  <td
-                    className="tabledata"
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {item.location}
-                    <div className="tooltip">
-                      <span className="tooltiptext">{item.location}</span>
-                    </div>
-                  </td>
-
-                  <td className="tabledata" style={{ textAlign: "center" }}>
-                    <i
-                      onClick={() => handleUpdate(item)}
-                      className="fa-regular fa-pen-to-square"
-                    ></i>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        </div>
-        )}
-        {selectedCandidate && (
-          <CallingTrackerForm
-            initialData={selectedCandidate}
-            loginEmployeeName={loginEmployeeName}
-          />
-        )}
-      
     </>
   );
 };

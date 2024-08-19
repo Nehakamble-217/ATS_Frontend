@@ -6,6 +6,8 @@ import CreateReportTable from "../Reports/CreateReportTable";
 import axios from "axios";
 import { json, useParams } from "react-router-dom";
 import "../Reports/MainReportDatapage.css";
+import { API_BASE_URL } from "../api/api";
+
 
 const MonthReport = () => {
   const { userType } = useParams();
@@ -50,7 +52,7 @@ const MonthReport = () => {
   useEffect(() => {
     const fetchManagerNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
+        `${API_BASE_URL}/get-all-managers`
       );
       setManager(response.data);
     };
@@ -60,7 +62,7 @@ const MonthReport = () => {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
+        `${API_BASE_URL}/tl-namesIds/${selectedManager.managerId}`
       );
       setTeamLeaderUnderManager(response.data);
 
@@ -73,7 +75,7 @@ const MonthReport = () => {
 
   const fetchRecruiterUnderTeamLeaderData = useCallback(async () => {
     const response = await axios.get(
-      `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+      `${API_BASE_URL}/employeeId-names/${selectedTeamLeader.teamLeaderId}`
     );
     setRecruiterUnderTeamLeaderData(response.data);
   }, [selectedTeamLeader]);
@@ -124,12 +126,6 @@ const MonthReport = () => {
     const lastMonthEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
     const lastMonthStartDate = lastMonthStartDate1.toISOString().slice(0, 10);
     const lastMonthEndDate = lastMonthEndDate1.toISOString().slice(0, 10);
-    console.log(lastMonthStartDate + " Start date");
-    console.log(lastMonthEndDate + " End date");
-
-
-    console.log(selectedTeamLeader.teamLeaderId);
-    console.log(selectedTeamLeader.teamLeaderJobRole);
 
     const FetchDataDatewise = async () => {
 
@@ -147,7 +143,7 @@ const MonthReport = () => {
 
 
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/report-count/${baseURL}/${lastMonthStartDate}/${lastMonthEndDate}`
+        `${API_BASE_URL}/report-count/${baseURL}/${lastMonthStartDate}/${lastMonthEndDate}`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -163,12 +159,6 @@ const MonthReport = () => {
     const today = new Date();
     const lastThreeMonthStartDate = startDate;
     const lastThreeMonthEndDate = endDate;
-    console.log(lastThreeMonthStartDate + " Start date");
-    console.log(lastThreeMonthEndDate + " End date");
-
-
-    console.log(selectedTeamLeader.teamLeaderId);
-    console.log(selectedTeamLeader.teamLeaderJobRole);
 
     const FetchDataDatewise = async () => {
 
@@ -184,7 +174,7 @@ const MonthReport = () => {
       }
 
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
+        `${API_BASE_URL}/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -201,13 +191,7 @@ const MonthReport = () => {
     const lastThreeMonthEndDate1 = new Date(today.getFullYear(), today.getMonth(), 0);
     const lastThreeMonthStartDate = lastThreeMonthStartDate1.toISOString().slice(0, 10);
     const lastThreeMonthEndDate = lastThreeMonthEndDate1.toISOString().slice(0, 10);
-    console.log(lastThreeMonthStartDate + " Start date");
-    console.log(lastThreeMonthEndDate + " End date");
-
-
-    console.log(selectedTeamLeader.teamLeaderId);
-    console.log(selectedTeamLeader.teamLeaderJobRole);
-
+  
     const FetchDataDatewise = async () => {
 
       let baseURL = '';
@@ -222,7 +206,7 @@ const MonthReport = () => {
       }
 
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
+        `${API_BASE_URL}/report-count/${baseURL}/${lastThreeMonthStartDate}/${lastThreeMonthEndDate}`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -253,7 +237,7 @@ const MonthReport = () => {
       }
 
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/report-count/${baseURL}/${lastSixMonthStartDate}/${lastSixMonthEndDate}`
+        `${API_BASE_URL}/report-count/${baseURL}/${lastSixMonthStartDate}/${lastSixMonthEndDate}`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -281,7 +265,7 @@ const MonthReport = () => {
       }
 
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
+        `${API_BASE_URL}/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -314,7 +298,7 @@ const MonthReport = () => {
         baseURL = `${selectedRecruiters.recruiterId} /${selectedRecruiters.recruiterJobRole}`
       }
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
+        `${API_BASE_URL}/report-count/${baseURL}/${lastOneYearStartDate}/${lastOneYearEndDate}`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -351,7 +335,7 @@ const MonthReport = () => {
       }
 
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/report-count/${baseURL}/${lastCurrentMonthStartDate}/${lastCurrentMonthEndDate}`
+        `${API_BASE_URL}/report-count/${baseURL}/${lastCurrentMonthStartDate}/${lastCurrentMonthEndDate}`
       )
       setReportDataDatewise(response.data);
       console.log(response.data);
@@ -397,7 +381,7 @@ const MonthReport = () => {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds`
+        `${API_BASE_URL}/tl-namesIds`
       );
       setTeamLeaderNames(response.data);
     };
@@ -405,7 +389,7 @@ const MonthReport = () => {
   }, []);
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-      `http://192.168.1.38:9090/api/ats/157industries/byTeamLeader/${selectedTeamLeader}`
+      `${API_BASE_URL}/byTeamLeader/${selectedTeamLeader}`
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);

@@ -1,197 +1,74 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../CandidateSection/candidateHistoryTracker.css";
-import { useReactToPrint } from 'react-to-print';
-
-const dummyData = {
-  "Holding Offer Letters": [
-    { companyName: "Company A", count: 5 },
-    { companyName: "Company B", count: 3 },
-    { companyName: "Company Z", count: 8 },
-    // Add more dummy data as needed
-  ],
-  "Source Name": [
-    { sourceName: "Referral", count: 10 },
-    { sourceName: "Online", count: 8 },
-    // Add more dummy data as needed
-  ],
-  Certification: [
-    { certification: "Certification A", count: 6 },
-    { certification: "Certification B", count: 4 },
-    // Add more dummy data as needed
-  ],
-  "TAT Reports": [
-    { reportName: "Report A", count: 7 },
-    { reportName: "Report B", count: 5 },
-    // Add more dummy data as needed
-  ],
-  "Pickup and drop": [
-    { option: "Yes", count: 12 },
-    { option: "No", count: 5 },
-    // Add more dummy data as needed
-  ],
-  "Communication Rating": [
-    { rating: "Excellent", count: 9 },
-    { rating: "Good", count: 7 },
-    // Add more dummy data as needed
-  ],
-  Age: [
-    { ageRange: "18-21", count: 15 },
-    { ageRange: "22-25", count: 20 },
-    { ageRange: "26-29", count: 10 },
-    { ageRange: "30-33", count: 5 },
-    { ageRange: "34-37", count: 2 },
-    { ageRange: "38-41", count: 1 },
-    { ageRange: "38-41", count: 1 },
-    // Add more age ranges as needed
-  ],
-  "Marrital Status": [
-    { status: "Single", count: 10 },
-    { status: "Married", count: 8 },
-    // Add more dummy data as needed
-  ],
-  Gender: [
-    { gender: "Male", count: 12 },
-    { gender: "Female", count: 8 },
-    // Add more dummy data as needed
-  ],
-  "Last Company": [
-    { companyName: "Wipro", count: 9 },
-    { companyName: "TCS", count: 7 },
-    // Add more dummy data as needed
-  ],
-  Education: [
-    { degree: "Bachelor", count: 12 },
-    { degree: "Master", count: 8 },
-    // Add more dummy data as needed
-  ],
-  Requirements: [
-    { requirement: "Requirement A", count: 5 },
-    { requirement: "Requirement B", count: 10 },
-    // Add more dummy data as needed
-  ],
-  "Incentive Recruiters": [
-    { recruiter: "Recruiter A", count: 6 },
-    { recruiter: "Recruiter B", count: 4 },
-    // Add more dummy data as needed
-  ],
-  "Notice Period": [
-    { period: "30 days", count: 8 },
-    { period: "60 days", count: 6 },
-    // Add more dummy data as needed
-  ],
-  "Company Type": [
-    { type: "IT", count: 10 },
-    { type: "Non-IT", count: 5 },
-    // Add more dummy data as needed
-  ],
-  "OnRole Third Party": [
-    { role: "Yes", count: 7 },
-    { role: "No", count: 6 },
-    // Add more dummy data as needed
-  ],
-  Experience: [
-    { experience: "0-1 years", count: 5 },
-    { experience: "2-5 years", count: 12 },
-    // Add more dummy data as needed
-  ],
-  "Skills Set": [
-    { skill: "Java", count: 8 },
-    { skill: "React", count: 7 },
-    // Add more dummy data as needed
-  ],
-  Designations: [
-    { designation: "Developer", count: 10 },
-    { designation: "Tester", count: 5 },
-    // Add more dummy data as needed
-  ],
-  Salary: [
-    { salaryRange: "20k-30k", count: 12 },
-    { salaryRange: "30k-40k", count: 8 },
-    // Add more dummy data as needed
-  ],
-  Distance: [
-    { distance: "0-5 km", count: 10 },
-    { distance: "5-10 km", count: 8 },
-    // Add more dummy data as needed
-  ],
-  Department: [
-    { department: "HR", count: 6 },
-    { department: "Engineering", count: 10 },
-    // Add more dummy data as needed
-  ],
-  CompanyName:[
-    {companyname:"TCS"},
-    {companyname:"Infosys"}
-  ],
-  Position:[
-    {position:"ReactJS Developer",count:5},
-    {position:".Net Developer",count:6}
-  ]
-};
-
-
-
+import { useReactToPrint } from "react-to-print";
+import axios from "axios";
+import { API_BASE_URL } from "../api/api";
+import { endOfMonth, format, startOfMonth, subMonths, subYears } from "date-fns";
 const CandidateHistoryTracker = () => {
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [data, setData] = useState([]);
   const [popupData, setPopupData] = useState(null);
   const [OpenCompanyPosition, setOpenCompanyPosition] = useState(null);
   const [companyName, setCompanyName] = useState("");
   const [position, setPosition] = useState("");
-  const [monthSelector,setmonthSelector]=useState("");
-  const [showCustomDiv,setshowCustomDiv]=useState(false);
-  const [selectAll,setSelectAll]=useState(true);
+  const [monthSelector, setmonthSelector] = useState("");
+  const [showCustomDiv, setshowCustomDiv] = useState(false);
+  const [selectAll, setSelectAll] = useState(true);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [dateRange, setDateRange] = useState("");
+  const [customStartDate, setCustomStartDate] = useState("");
+  const [customEndDate, setCustomEndDate] = useState("");
 
   const popupRef = useRef();
 
-  const policyRef=useRef();   //Prachi Parab Filter Data pdf 156 to 207
+  const policyRef = useRef(); //Prachi Parab Filter Data pdf 156 to 207
 
   const handleGeneratePDF = async () => {
-      
-      const issueContainer = document.getElementById('issue-containers');
-      const canvas = await html2canvas(issueContainer, { scale: 2 });
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'pt', 'a4');
-      
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const margin = 30;  // Set margin size (in points)
-      const borderWidth = 1;  // Set border width (in points)
-      
-      const contentWidth = pdfWidth - 2 * margin;
-      const imgProps = pdf.getImageProperties(imgData);
-      const imgHeight = (imgProps.height * contentWidth) / imgProps.width;
-      
-      let heightLeft = imgHeight;
-      let position = margin;
-      
-      pdf.setLineWidth(borderWidth);
-      
-      let page = 1;
-      while (heightLeft > 0) {
-          if (page > 1) {
-              pdf.addPage();
-          }
-          if(position!==margin){
-            pdf.addPage();
-            position=margin;
-          }
-          pdf.addImage(imgData, 'PNG', margin, position, contentWidth, imgHeight);
-          pdf.rect(margin, margin, contentWidth, pdfHeight - 2 * margin);  // Add border
-          
-          heightLeft -= (pdfHeight - 2 * margin);
-          position -= (pdfHeight - 2 * margin);  // Adjust position for next page
-          
-          page++;
+    const issueContainer = document.getElementById("issue-containers");
+    const canvas = await html2canvas(issueContainer, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "pt", "a4");
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const margin = 30; // Set margin size (in points)
+    const borderWidth = 1; // Set border width (in points)
+
+    const contentWidth = pdfWidth - 2 * margin;
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgHeight = (imgProps.height * contentWidth) / imgProps.width;
+
+    let heightLeft = imgHeight;
+    let position = margin;
+
+    pdf.setLineWidth(borderWidth);
+
+    let page = 1;
+    while (heightLeft > 0) {
+      if (page > 1) {
+        pdf.addPage();
       }
-      
-      // Saving the PDF
-      pdf.save('Report.pdf');
+      if (position !== margin) {
+        pdf.addPage();
+        position = margin;
+      }
+      pdf.addImage(imgData, "PNG", margin, position, contentWidth, imgHeight);
+      pdf.rect(margin, margin, contentWidth, pdfHeight - 2 * margin); // Add border
+
+      heightLeft -= pdfHeight - 2 * margin;
+      position -= pdfHeight - 2 * margin; // Adjust position for next page
+
+      page++;
+    }
+
+    // Saving the PDF
+    pdf.save("Report.pdf");
   };
 
-  
   const handlePrint = useReactToPrint({
-      content: () => policyRef.current,
-      documentTitle: 'Report',
+    content: () => policyRef.current,
+    documentTitle: "Report",
   });
 
   const handleFilterChange = (e) => {
@@ -210,10 +87,10 @@ const CandidateHistoryTracker = () => {
   };
 
   const showPopup = (filter) => {
-    const data = dummyData[filter] || [];
+    const setdata = data[filter] || [];
     setPopupData({
       filter,
-      data: calculatePercentages(data).sort((a, b) => b.count - a.count),
+      data: calculatePercentages(setdata).sort((a, b) => b.count - a.count),
     });
   };
 
@@ -222,6 +99,7 @@ const CandidateHistoryTracker = () => {
       setPopupData(null);
     }
   };
+  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -234,163 +112,233 @@ const CandidateHistoryTracker = () => {
     setIsVisible(!isVisible);
   };
 
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState("");
 
   const handleDropdownToggle = (label) => {
     console.log(label);
     setOpenDropdown(label);
   };
+  useEffect(()=>{
+    fetchData();
+  },[startDate,endDate,openDropdown])
 
+  const handleDropDownCompany = (label) => {
+    setOpenCompanyPosition(OpenCompanyPosition === label ? null : label);
+  };
 
-  const handleDropDownCompany=(label)=>{
-    setOpenCompanyPosition(OpenCompanyPosition===label ?null:label);
-  }
-
-  const handleCompanyChange=(event)=>{
+  const handleCompanyChange = (event) => {
     setCompanyName(event.target.value);
-  }
-  const handlePositionChange=(event)=>{
+  };
+  const handlePositionChange = (event) => {
     setPosition(event.target.value);
-  }
-  const handleMonthChange=(event)=>{
-    setmonthSelector(event.target.value);
+  };
+  const handleDateRangeChange = (event) => {
+    const selectedRange = event.target.value;
+    setDateRange(selectedRange);
+  
+    const today = new Date();
+    let start, end;
+  
+    switch (selectedRange) {
+      case "Current Month":
+        start = startOfMonth(today);
+        end = today;
+        break;
+      case "Last Month":
+        start = startOfMonth(subMonths(today, 1));
+        end = endOfMonth(subMonths(today, 1));
+        break;
+      case "Last 3 Months":
+        start = startOfMonth(subMonths(today, 2));
+        end = endOfMonth(today);
+        break;
+      case "Last 6 Months":
+        start = startOfMonth(subMonths(today, 5));
+        end = endOfMonth(today);
+        break;
+      case "Last 1 Year":
+        start = startOfMonth(subYears(today, 1));
+        end = today;
+        break;
+      case "custom":
+        // Don't set dates for custom option
+        return;
+      default:
+        return;
+    }
+  
+    setStartDate(format(start, "yyyy-MM-dd"));
+    setEndDate(format(end, "yyyy-MM-dd"));
+  };
+  
+  const handleCustomStartDateChange = (event) => {
+    const date = new Date(event.target.value);
+    setCustomStartDate(event.target.value);
+    setStartDate(format(startOfDay(date), "yyyy-MM-dd"));
+  };
 
-  }
-  const handleCustomChange=(event)=>{
-    setmonthSelector(event.target.value);
-    setshowCustomDiv(true);
-
-  }
-  const selectAllFilters=(event)=>{
-    if(selectAll){
+  const handleCustomEndDateChange = (event) => {
+    const date = new Date(event.target.value);
+    setCustomEndDate(event.target.value);
+    setEndDate(format(endOfDay(date), "yyyy-MM-dd"));
+  };
+  const selectAllFilters = (event) => {
+    if (selectAll) {
       const allFilters = [
-        "Holding Offer Letters",
-        "Source Name",
-        "Certification",
-        "TAT Reports",
-        "Pickup and Drop",
-        "Communication Rating",
-        "Age",
-        "Marital Status",
-        "Gender",
-        "Last Company",
-        "Education",
-        "Requirements",
-        "Incentive Recruiters",
-        "Notice Period",
-        "Company Type",
-        "On Role Third Party",
-        "Experience",
-        "Skills Set",
-        "Designations",
-        "Salary",
-        "Distance",
-        "Department",];
+        "holdingAnyOffers",
+        "sourceNames",
+        "tatCounts",
+        "pickUpAndDrops",
+        "ageGroupCounts",
+        "extraCertification",
+        // "Communication Rating",
+        "maritalStatuses",
+        "genders",
+        // "Last Company",
+        "qualifications",
+        "requirementCompanies",
+        // "Incentive Recruiters",
+        "noticePeriods",
+        "companyNames",
+        // "On Role Third Party",
+        "experienceYearCounts",
+        // "Skills Set",
+        "positions",
+        // "Salary",
+        "distanceCounts",
+        // "Department",
+        "extraCertifications",
+        "joiningTypeCounts"
+      ];
       setSelectedFilters(allFilters);
-
-    }else{
+    } else {
       setSelectedFilters([]);
     }
     setSelectAll(!selectAll);
+  }; 
+   
+  const fetchData = async () => {
+    console.log( startDate+" "+endDate+" "+openDropdown);
+    
+    if (startDate && endDate && openDropdown !== null) {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/history-allCounts`, {
+          params: {
+            startDate: "2022-01-01",
+            endDate: "2024-08-01",
+            finalStatus: openDropdown,
+          },
+        });
+        console.log("API response:", response.data);
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data from API:", error);
+      }
+    } else {
+      console.warn("Missing parameters: startDate, endDate, or openDropdown");
+    }
+  };
 
-  }
 
   return (
     <div>
-    <div className="HeadingHistory">Candidate History</div>      
-     {/* Date */}
-    <div className="tracker-date-report-option">
-          <label>
-              <input
-                type="radio"
-                value="Current Month"
-                id='CurrentMonth'
-                name="reportOption"
-                onClick={handleMonthChange}
-               
-              />
-              Current Month
-           </label>
-           <label>
-              <input
-                type="radio"
-                value="Last Month"
-                id='LastMonth'
-                name="reportOption"
-                onClick={handleMonthChange}
-              />
-              Last Month
-          </label>
-          <label>
-              <input
-                type="radio"
-                value="Last 3 Months"
-                id='Last3Months'
-                name='reportOption'
-                onClick={handleMonthChange}
-              
-              />
-              Last 3 Months
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="Last 6 Months"
-                name='reportOption'
-                id='Last6Months'
-                onClick={handleMonthChange}                
-              />
-              Last 6 Months
-            </label>
-            <label>
-              <input
-                type='radio'
-                value="Last 1 Year"
-                name='reportOption'
-                id='Last1Year'
-                onClick={handleMonthChange}
-                />
-                Last 1 Year
-            </label>
-            <label>
-              <input 
-                type='radio'
-                value="Custom Date"
-                name='reportOption'
-                id='CustomDate'
-                onClick={handleCustomChange}
-                />
-                Custom Date
-            </label>
+      <div className="HeadingHistory">Candidate History</div>
+      {/* Date */}
+      <div className="tracker-date-report-option">
+        <label>
+          <input
+            type="radio"
+            value="Current Month"
+            id="CurrentMonth"
+            name="reportOption"
+            onClick={handleDateRangeChange}
+          />
+          Current Month
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Last Month"
+            id="LastMonth"
+            name="reportOption"
+            onClick={handleDateRangeChange}
+          />
+          Last Month
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Last 3 Months"
+            id="Last3Months"
+            name="reportOption"
+            onClick={handleDateRangeChange}
+          />
+          Last 3 Months
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Last 6 Months"
+            name="reportOption"
+            id="Last6Months"
+            onClick={handleDateRangeChange}
+          />
+          Last 6 Months
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Last 1 Year"
+            name="reportOption"
+            id="Last1Year"
+            onClick={handleDateRangeChange}
+          />
+          Last 1 Year
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="custom"
+            checked={dateRange === "custom"}
+            name="reportOption"
+            id="CustomDate"
+            onClick={handleDateRangeChange}
+          />
+          Custom Date
+        </label>
+        <div>
+          {showCustomDiv && (
             <div>
-            {
-                showCustomDiv && (
-                <div>
-                <div className="date-inputs" >
-          
-                  <label>
-                    Start Date:
-                    <input type="date" />
-                  </label>
-                  <label>
-                    End Date:
-                    <input type="date"  />
-                  </label>
-                
-                
-                <div className='filterDataButton'>
-                  <button className="Candi-History-tracker-button">Filter Data</button>
-                  
-                  </div>
+              <div className="date-inputs">
+                <label>
+                  Start Date:
+                  <input
+                    type="date"
+                    value={customStartDate}
+                    onChange={handleCustomStartDateChange}
+                  />
+                </label>
+                <label>
+                  End Date:
+                  <input
+                    type="date"
+                    value={customEndDate}
+                    onChange={handleCustomEndDateChange}
+                  />
+                </label>
+
+                <div className="filterDataButton">
+                  <button className="Candi-History-tracker-button">
+                    Filter Data
+                  </button>
                 </div>
-                </div>
-              )}
+              </div>
             </div>
-
-
+          )}
         </div>
+      </div>
 
-        {/* Categories */}
+      {/* Categories */}
       <div className="bhabutton-container">
         {[
           "Selected",
@@ -420,63 +368,59 @@ const CandidateHistoryTracker = () => {
       {/* DropDown */}
 
       <div className="company-position-container">
-      <div className="combobox-container">
-        <select value={companyName} onChange={handleCompanyChange}>
-          <option value="">Select Company</option>
-          <option value="CompanyX">CompanyX</option>
-          <option value="CompanyY">CompanyY</option>
-          {/* Add more companies as needed */}
-        </select>
+        <div className="combobox-container">
+          <select value={companyName} onChange={handleCompanyChange}>
+            <option value="">Select Company</option>
+            <option value="CompanyX">CompanyX</option>
+            <option value="CompanyY">CompanyY</option>
+            {/* Add more companies as needed */}
+          </select>
         </div>
         <div className="combobox-container">
-        <select value={position} onChange={handlePositionChange}>
-          <option value="">Select Position</option>
-          <option value="Developer">Developer</option>
-          <option value="Designer">Designer</option>
-          {/* Add more positions as needed */}
-        </select>
+          <select value={position} onChange={handlePositionChange}>
+            <option value="">Select Position</option>
+            <option value="Developer">Developer</option>
+            <option value="Designer">Designer</option>
+            {/* Add more positions as needed */}
+          </select>
+        </div>
       </div>
-
-      
-    </div>
 
       {openDropdown && (
         <div className="Candi-History-tracker-div">
-       
           <button
             onClick={handleButtonClick}
             className="Candi-History-tracker-button"
           >
             {isVisible ? "Hide Filters" : "Show Filters"}
-          </button> &nbsp; &nbsp;
-          {
-            isVisible &&
+          </button>{" "}
+          &nbsp; &nbsp;
+          {isVisible && (
             <button
-            onClick={selectAllFilters}
-            className="Candi-History-tracker-button"
-          >
-             {selectAll ? "Select All" : "Deselect All"}
-          </button>
-          }
-        
-
-          
-          {selectedFilters.length>0 &&(
-
-            <span className='handlePrintDiv'>
-            <button className='Candi-History-tracker-button' onClick={handlePrint}>Export PDF</button>
-          </span>
-          )
-          }
+              onClick={selectAllFilters}
+              className="Candi-History-tracker-button"
+            >
+              {selectAll ? "Select All" : "Deselect All"}
+            </button>
+          )}
+          {selectedFilters.length > 0 && (
+            <span className="handlePrintDiv">
+              <button
+                className="Candi-History-tracker-button"
+                onClick={handlePrint}
+              >
+                Export PDF
+              </button>
+            </span>
+          )}
           {isVisible && (
             <div className="outer-Candi-History-tracker-div">
-
               <div className="inner-Candi-History-tracker-div">
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Age"
-                    checked={selectedFilters.includes("Age")}
+                    value="ageGroupCounts"
+                    checked={selectedFilters.includes("ageGroupCounts")}
                     onChange={handleFilterChange}
                   />{" "}
                   Age
@@ -484,13 +428,13 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Certification"
-                    checked={selectedFilters.includes("Certification")}
+                    value="extraCertification"
+                    checked={selectedFilters.includes("extraCertification")}
                     onChange={handleFilterChange}
                   />{" "}
                   Certification
                 </label>
-                <label className="checkbox-label">
+                {/* <label className="checkbox-label">
                   <input
                     type="checkbox"
                     value="Communication Rating"
@@ -498,17 +442,17 @@ const CandidateHistoryTracker = () => {
                     onChange={handleFilterChange}
                   />{" "}
                   Communication Rating
-                </label>
+                </label> */}
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Company Type"
-                    checked={selectedFilters.includes("Company Type")}
+                    value="companyNames"
+                    checked={selectedFilters.includes("companyNames")}
                     onChange={handleFilterChange}
                   />{" "}
                   Company Type
                 </label>
-                <label className="checkbox-label">
+                {/* <label className="checkbox-label">
                   <input
                     type="checkbox"
                     value="Department"
@@ -516,12 +460,12 @@ const CandidateHistoryTracker = () => {
                     onChange={handleFilterChange}
                   />{" "}
                   Department
-                </label>
+                </label> */}
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Designations"
-                    checked={selectedFilters.includes("Designations")}
+                    value="positions"
+                    checked={selectedFilters.includes("positions")}
                     onChange={handleFilterChange}
                   />{" "}
                   Designations
@@ -531,8 +475,8 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Distance"
-                    checked={selectedFilters.includes("Distance")}
+                    value="distanceCounts"
+                    checked={selectedFilters.includes("distanceCounts")}
                     onChange={handleFilterChange}
                   />{" "}
                   Distance ( Company Near Location)
@@ -540,8 +484,8 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Education"
-                    checked={selectedFilters.includes("Education")}
+                    value="qualifications"
+                    checked={selectedFilters.includes("qualifications")}
                     onChange={handleFilterChange}
                   />{" "}
                   Education
@@ -549,8 +493,8 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Experience"
-                    checked={selectedFilters.includes("Experience")}
+                    value="experienceYearCounts"
+                    checked={selectedFilters.includes("experienceYearCounts")}
                     onChange={handleFilterChange}
                   />{" "}
                   Experience
@@ -558,8 +502,8 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Gender"
-                    checked={selectedFilters.includes("Gender")}
+                    value="genders"
+                    checked={selectedFilters.includes("genders")}
                     onChange={handleFilterChange}
                   />{" "}
                   Gender
@@ -567,13 +511,13 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Holding Offer Letters"
-                    checked={selectedFilters.includes("Holding Offer Letters")}
+                    value="holdingAnyOffers"
+                    checked={selectedFilters.includes("holdingAnyOffers")}
                     onChange={handleFilterChange}
                   />{" "}
                   Holding Offer Letters
                 </label>
-                <label className="checkbox-label">
+                {/* <label className="checkbox-label">
                   <input
                     type="checkbox"
                     value="Incentive Recruiters"
@@ -581,10 +525,10 @@ const CandidateHistoryTracker = () => {
                     onChange={handleFilterChange}
                   />{" "}
                   Incentive Recruiters
-                </label>
+                </label> */}
               </div>
               <div className="inner-Candi-History-tracker-div">
-                <label className="checkbox-label">
+                {/* <label className="checkbox-label">
                   <input
                     type="checkbox"
                     value="Last Company"
@@ -592,12 +536,12 @@ const CandidateHistoryTracker = () => {
                     onChange={handleFilterChange}
                   />{" "}
                   Last Company
-                </label>
+                </label> */}
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Marital Status"
-                    checked={selectedFilters.includes("Marital Status")}
+                    value="maritalStatuses"
+                    checked={selectedFilters.includes("maritalStatuses")}
                     onChange={handleFilterChange}
                   />{" "}
                   Marital Status
@@ -605,13 +549,13 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Notice Period"
-                    checked={selectedFilters.includes("Notice Period")}
+                    value="noticePeriods"
+                    checked={selectedFilters.includes("noticePeriods")}
                     onChange={handleFilterChange}
                   />{" "}
                   Notice Period
                 </label>
-                <label className="checkbox-label">
+                {/* <label className="checkbox-label">
                   <input
                     type="checkbox"
                     value="On Role Third Party"
@@ -619,12 +563,12 @@ const CandidateHistoryTracker = () => {
                     onChange={handleFilterChange}
                   />{" "}
                   On Role(Third Party)
-                </label>
+                </label> */}
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Pickup and Drop"
-                    checked={selectedFilters.includes("Pickup and Drop")}
+                    value="pickUpAndDrops"
+                    checked={selectedFilters.includes("pickUpAndDrops")}
                     onChange={handleFilterChange}
                   />{" "}
                   Pick Up and Drop
@@ -632,8 +576,8 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Requirements"
-                    checked={selectedFilters.includes("Requirements")}
+                    value="requirementCompanies"
+                    checked={selectedFilters.includes("requirementCompanies")}
                     onChange={handleFilterChange}
                   />{" "}
                   Requirements
@@ -641,7 +585,7 @@ const CandidateHistoryTracker = () => {
               </div>
 
               <div className="inner-Candi-History-tracker-div">
-                <label className="checkbox-label">
+                {/* <label className="checkbox-label">
                   <input
                     type="checkbox"
                     value="Salary"
@@ -649,8 +593,8 @@ const CandidateHistoryTracker = () => {
                     onChange={handleFilterChange}
                   />{" "}
                   Salary
-                </label>
-                <label className="checkbox-label">
+                </label> */}
+                {/* <label className="checkbox-label">
                   <input
                     type="checkbox"
                     value="Skills Set"
@@ -658,12 +602,12 @@ const CandidateHistoryTracker = () => {
                     onChange={handleFilterChange}
                   />{" "}
                   Skills Set
-                </label>
+                </label> */}
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="Source Name"
-                    checked={selectedFilters.includes("Source Name")}
+                    value="sourceNames"
+                    checked={selectedFilters.includes("sourceNames")}
                     onChange={handleFilterChange}
                   />{" "}
                   Source Name
@@ -671,8 +615,8 @@ const CandidateHistoryTracker = () => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value="TAT Reports"
-                    checked={selectedFilters.includes("TAT Reports")}
+                    value="tatCounts"
+                    checked={selectedFilters.includes("tatCounts")}
                     onChange={handleFilterChange}
                   />{" "}
                   TAT Reports
@@ -683,26 +627,30 @@ const CandidateHistoryTracker = () => {
           )}
         </div>
       )}
-      
 
       {/* <h5>{openDropdown}</h5> */}
-      <div className="can-history-filter-data-section" ref={policyRef} id="issue-containers">
+      <div
+        className="can-history-filter-data-section"
+        ref={policyRef}
+        id="issue-containers"
+      >
         {selectedFilters.map((filter) => {
-          const data = dummyData[filter] || [];
-          const sortedData = data.sort((a, b) => b.count - a.count).slice(0, 6);
-          const hasMoreItems = data.length > 6;
+          const setData = data[filter] || [];
+          const sortedData = setData.sort((a, b) => b.count - a.count).slice(0, 6);
+          const hasMoreItems = setData.length > 6;
 
           return (
-            <div className="can-history-filter-data" key={filter}  >
-             
+            <div className="can-history-filter-data" key={filter}>
               <h3>
-              <strong>Company Name : {companyName}</strong><br></br>
-              <strong>Position : {position}</strong><br></br>
-              <strong>Category : {openDropdown}</strong><br></br>
-              <strong>Filtered Data by : {filter}</strong><br></br>
-              <strong>Data for {monthSelector}</strong>
-
-
+                <strong>Company Name : {companyName}</strong>
+                <br></br>
+                <strong>Position : {position}</strong>
+                <br></br>
+                <strong>Category : {openDropdown}</strong>
+                <br></br>
+                <strong>Filtered Data by : {filter}</strong>
+                <br></br>
+                <strong>Data for {monthSelector}</strong>
               </h3>
               <div className="can-history-filter-data-content">
                 <div className="can-history-data-table-container">
@@ -725,7 +673,7 @@ const CandidateHistoryTracker = () => {
                             item.reportName ||
                             item.option ||
                             item.rating ||
-                            item.status ||
+                            item.maritalStatuses ||
                             item.gender ||
                             item.degree ||
                             item.requirement ||
@@ -738,33 +686,41 @@ const CandidateHistoryTracker = () => {
                             item.designation ||
                             item.salaryRange ||
                             item.distance ||
-                            item.department
+                            item.department ||
+                            item.extraCertification
                           }
                         >
                           <td>
-                            {item.companyName ||
+                            {
+                              item.companyName ||
                               item.ageRange ||
                               item.sourceName ||
-                              item.certification ||
                               item.reportName ||
                               item.option ||
                               item.rating ||
-                              item.status ||
+                              item.maritalStatus ||
                               item.gender ||
-                              item.degree ||
-                              item.requirement ||
+                              item.qualification ||
+                              item.requirementCompany ||
                               item.recruiter ||
-                              item.period ||
+                              item.noticePeriod ||
                               item.type ||
                               item.role ||
-                              item.experience ||
+                              item.experienceGroup ||
                               item.skill ||
                               item.designation ||
                               item.salaryRange ||
                               item.distance ||
-                              item.department}
+                              item.department ||
+                              item.tat ||
+                              item.holdingAnyOffer||
+                              item.position ||
+                              item.pickUpAndDrop||
+                              item.joiningType ||
+                              item.extraCertification
+                              }
                           </td>
-                          <td>{item.count}</td>
+                          <td>{item.count || item.COUNT || item.countCallingTracker || item.candidateCount}</td>
                           <td>{item.percentage}%</td>
                         </tr>
                       ))}
@@ -808,14 +764,14 @@ const CandidateHistoryTracker = () => {
                 {popupData.data.map((item) => (
                   <tr
                     key={
-                      item.companyName ||
+                      item.companyNames ||
                       item.ageRange ||
                       item.sourceName ||
                       item.certification ||
                       item.reportName ||
                       item.option ||
                       item.rating ||
-                      item.status ||
+                      item.maritalStatuses ||
                       item.gender ||
                       item.degree ||
                       item.requirement ||
@@ -832,14 +788,14 @@ const CandidateHistoryTracker = () => {
                     }
                   >
                     <td>
-                      {item.companyName ||
+                      {item.companyNames ||
                         item.ageRange ||
                         item.sourceName ||
                         item.certification ||
                         item.reportName ||
                         item.option ||
                         item.rating ||
-                        item.status ||
+                        item.maritalStatuses ||
                         item.gender ||
                         item.degree ||
                         item.requirement ||

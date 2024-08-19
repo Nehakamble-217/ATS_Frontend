@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import "../EmployeeSection/employeeProfile.css";
 import TeamDetails from "../TeamDetails/teamDetails"
+import { API_BASE_URL } from "../api/api";
 
 const EmployeeProfileData = ({
   onClose,
@@ -28,7 +29,7 @@ const EmployeeProfileData = ({
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+      `${API_BASE_URL}/fetch-profile-details/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {

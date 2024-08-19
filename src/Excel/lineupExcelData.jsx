@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
+import { API_BASE_URL } from "../api/api";
 import "../Excel/lineUpData.css";
 
 const LineupExcelData = ({
@@ -37,7 +38,7 @@ const LineupExcelData = ({
 
   useEffect(() => {
     fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/lineup-excel-data/${employeeId}/${userType}`
+      `${API_BASE_URL}/lineup-excel-data/${employeeId}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => {

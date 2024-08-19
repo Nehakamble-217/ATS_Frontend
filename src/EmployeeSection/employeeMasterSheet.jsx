@@ -7,6 +7,7 @@ import { fetchEmployeeMasterSheet, fetchFile } from "../api/api";
 import "./EmployeeMasterSheet.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
 
 const EmployeeMasterSheet = () => {
   const [data, setData] = useState([]);
@@ -60,7 +61,7 @@ const EmployeeMasterSheet = () => {
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
+        `${API_BASE_URL}/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -72,7 +73,7 @@ const EmployeeMasterSheet = () => {
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `${API_BASE_URL}/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -83,7 +84,7 @@ const EmployeeMasterSheet = () => {
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `${API_BASE_URL}/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -104,7 +105,7 @@ const EmployeeMasterSheet = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/master-sheet/${employeeId}/${userType}`
+        `${API_BASE_URL}/master-sheet/${employeeId}/${userType}`
       );
       const data = await response.json();
 
@@ -176,7 +177,7 @@ const EmployeeMasterSheet = () => {
 
   const handleShare = async () => {
     setIsDataSending(true);
-    let url = `http://192.168.1.38:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `${API_BASE_URL}/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&

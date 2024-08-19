@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './RecruiterReminder.css'; // Import the CSS file
+import { API_BASE_URL } from "../api/api";
 
 const InterviewForm = ({toggleAllInterviewResponse}) => {
   const [formData, setFormData] = useState({
@@ -125,7 +126,7 @@ useEffect(() => {
 const fetchRequirementIdCandidate = async (requirementId) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/candidate-details/${requirementId}`
+        `${API_BASE_URL}/candidate-details/${requirementId}`
       );
       const { data } = response;
 
@@ -192,7 +193,7 @@ const fetchRequirementIdCandidate = async (requirementId) => {
 const fetchRequirementOptions = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/company-details`
+        `${API_BASE_URL}/company-details`
       );
       const { data } = response;
       setRequirementOptions(data);

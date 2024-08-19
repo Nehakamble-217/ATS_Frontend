@@ -6,6 +6,7 @@ import InvoicePdf from "./invoicePdf";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import HashLoader from "react-spinners/HashLoader";
+import { API_BASE_URL } from "../api/api";
 
 // SwapnilRokade_InvoiceReport_FetchDataFromApiAndDisplay_09_to_664_12/07
 // SwapnilRokade_InvoiceReport_FetchDataFromApiAndDisplay_09To664_15/07
@@ -24,7 +25,7 @@ const InvoiceReport = () => {
   // Fetch invoice data from API
   const fetchInvoice = async () => {
     try {
-      const response = await fetch("http://192.168.1.38:9090/api/ats/157industries/fetchInvoice");
+      const response = await fetch(`${API_BASE_URL}/fetch-all-Invoice`);
       const data = await response.json();
       setInvoiceReport(data);
       setLoading(true);

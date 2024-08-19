@@ -2,6 +2,8 @@
 import axios from "axios";
 import "./AddResumes.css"; // Import the CSS file
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/api";
+
 
 const AddResumes = ({ show }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -18,7 +20,7 @@ const AddResumes = ({ show }) => {
     }
     axios
       .post(
-        `http://localhost:9090/api/ats/157industries/add-multiple-resume/${employeeId}/${userType}`,
+        `${API_BASE_URL}/add-multiple-resume/${employeeId}/${userType}`,
         formData
       )
 

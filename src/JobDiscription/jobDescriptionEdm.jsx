@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import html2canvas from "html2canvas";
 import profileImage from '../LogoImages/157logo.jpeg';
+import { API_BASE_URL } from "../api/api";
 import "./jobDescriptionEdm.css"
 
 
@@ -16,7 +17,7 @@ function JobDescriptionEdm({ Descriptions, onJobDescriptionEdm }) {
   const { employeeId } = useParams()
 
   useEffect(() => {
-    fetch(`http://192.168.1.38:9090/api/ats/157industries/edm-details/${Descriptions}/${employeeId}`)
+    fetch(`${API_BASE_URL}/edm-details/${Descriptions}/${employeeId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

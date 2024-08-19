@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../CandidateSection/candidateVerification.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
 function CandidateVerification() {
     const [message, setMessage] = useState("Verifying...");
@@ -10,13 +11,13 @@ function CandidateVerification() {
     const location = useLocation();
     useEffect(() => {
         console.log(location);
-        axios.get(`http://192.168.1.38:9090/api/ats/157industries/verify${location.search}`);
+        axios.get(`${API_BASE_URL}/verify${location.search}`);
     }, [location.search]);
 
     useEffect(() => {
         axios
             .get(
-                `http://192.168.1.38:9090/api/ats/157industries/verify/${location.search.split("email=")[1]
+                `${API_BASE_URL}/verify/${location.search.split("email=")[1]
                 }`
             )
             .then((resolve) => {

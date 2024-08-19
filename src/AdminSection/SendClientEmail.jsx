@@ -11,6 +11,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Form, Table } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
 // SwapnilRokade_SendClientEmail_ModifyFilters_11/07
 // SwapnilROkade_AddingErrorAndSuccessMessage_19/07
 
@@ -90,9 +91,7 @@ const SendClientEmail = ({ clientEmailSender }) => {
   ];
 
   useEffect(() => {
-    fetch(
-      `http://192.168.1.38:9090/api/ats/157industries/calling-lineup/${employeeId}/${userType}`
-    )
+    fetch(`${API_BASE_URL}/calling-lineup/${employeeId}/${userType}`)
       .then((response) => response.json())
       .then((data) => {
         setFilteredCallingList(data);
@@ -1154,10 +1153,7 @@ const SendEmailPopup = ({
         toBCCNames: [],
       };
 
-      const response = await axios.post(
-        "http://192.168.1.38:9090/api/ats/157industries/add-client-details",
-        clientData
-      );
+      const response = await axios.post(`${API_BASE_URL}/add-client-details`,clientData);
       if (response) {
         setIsMailSending(false);
         setResponse(response.data);
@@ -1190,10 +1186,7 @@ const SendEmailPopup = ({
     };
 
     axios
-      .post(
-        "http://192.168.1.38:9090/api/ats/157industries/send-email",
-        emailData
-      )
+      .post(`${API_BASE_URL}/send-email`,emailData)
       .then((response) => {
         handleStoreClientInformation();
         onSuccessFullEmailSend(true);
@@ -1202,9 +1195,7 @@ const SendEmailPopup = ({
 
         selectedCandidate.forEach(async (can) => {
           try {
-            const performanceId = await axios.get(
-              `http://192.168.1.38:9090/api/ats/157industries/fetch-performance-id/${can.candidateId}`
-            );
+            const performanceId = await axios.get(`${API_BASE_URL}/fetch-performance-id/${can.candidateId}`);
             UpdatePerformace(performanceId.data);
           } catch (error) {
             console.log(error);
@@ -1230,10 +1221,7 @@ const SendEmailPopup = ({
         mailToClient: new Date()
       };
       // console.log("Sending additional data:", additionalData);
-      const response1 = await axios.put(
-        `http://192.168.1.38:9090/api/ats/157industries/update-performance/${id}`,
-        additionalData
-      );
+      const response1 = await axios.put(`${API_BASE_URL}/update-performance/${id}`,additionalData);
       console.log("Second API Response:", response1.data);
     } catch (error) {
       console.log(error);

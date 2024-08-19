@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Confetti from "react-confetti";
+import { API_BASE_URL } from "../api/api";
+
 
 const GST_RATE = 0.18;
 
@@ -63,7 +65,7 @@ const PaymentReciept = ({ userId, plan }) => {
     }
 
     try {
-      await axios.post(`http://192.168.1.38:9090/api/ats/157industries/subscribe`, null, {
+      await axios.post(`${API_BASE_URL}/subscribe`, null, {
         params: {
           userId,
           planId: plan.id,

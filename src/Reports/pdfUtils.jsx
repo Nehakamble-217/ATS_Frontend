@@ -2,10 +2,7 @@
          End LineNo:-4 to 93 Date:-08/07 */
 
          import { drawText, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-
-
-
-
+         
          async function createPdf(data,SuperUserName,TeamLeaderName,ManagerName,RecruiterName,DateReportData,totalCandidatepdf) {
              const pdfDoc = await PDFDocument.create();
              const page = pdfDoc.addPage();

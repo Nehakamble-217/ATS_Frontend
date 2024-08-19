@@ -4,22 +4,13 @@ import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import { json, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
 
 function Accesstable() {
   const { employeeId } = useParams();
   const { userType } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const [selectedMainAdmin, setSelectedMainAdmin] = useState(null);
-  // const [selectedTeamLeader, setSelectedTeamLeader] = useState({
-  //   teamLeaderId: "",
-  //   teamLeaderJobRole: "",
-  // });
-  // const [selectedManager, setSelectedManager] = useState({
-  //   managerId: "",
-  //   managerJobRole: "",
-  // });
-
   const [selectedManager, setSelectedManager] = useState({});
   const [selectedManagers, setSelectedManagers] = useState([]);
   const [selectedTeamLeaders, setSelectedTeamLeaders] = useState([]);
@@ -57,9 +48,7 @@ function Accesstable() {
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_49_65
   useEffect(() => {
     const fetchManagerNames = async () => {
-      const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
-      );
+      const response = await axios.get(`${API_BASE_URL}/get-all-managers`);
       if (userType === "SuperUser") {
         // Show all managers for the superuser
         setManager(response.data);
@@ -77,7 +66,7 @@ function Accesstable() {
   useEffect(() => {
     const fetchTeamLeaderNames = async () => {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${selectedManager.managerId}`
+        `${API_BASE_URL}/tl-namesIds/${selectedManager.managerId}`
       );
       setTeamLeaderUnderManager(response.data);
     };
@@ -88,7 +77,7 @@ function Accesstable() {
 
   const fetchRecruiterUnderTeamLeader = useCallback(async () => {
     const response = await axios.get(
-      `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${selectedTeamLeader.teamLeaderId}`
+      `${API_BASE_URL}/employeeId-names/${selectedTeamLeader.teamLeaderId}`
     );
     setRecruiterUnderTeamLeader(response.data);
   }, [selectedTeamLeader]);
@@ -103,7 +92,7 @@ function Accesstable() {
 
   const fetchColumnsNames = async () => {
     const response = await axios.get(
-      `http://192.168.1.38:9090/api/ats/157industries/fetch-columns-names`
+      `${API_BASE_URL}/fetch-columns-names`
     );
     setColumnName(response.data);
   };
@@ -166,7 +155,7 @@ function Accesstable() {
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_158_165
   const fetchAssignedColumn = async (assigneID, assigneeJobRole) => {
     const response = await axios.get(
-      `http://192.168.1.38:9090/api/ats/157industries/column-by-id/${assigneID}/${assigneeJobRole}`
+      `${API_BASE_URL}/column-by-id/${assigneID}/${assigneeJobRole}`
     );
     setFetchupdateAssignedColumn(response.data);
   };
@@ -184,7 +173,7 @@ function Accesstable() {
     try {
       if (selectedRecruiters.recruiterId != "") {
         response = await axios.post(
-          `http://192.168.1.38:9090/api/ats/157industries/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
+          `${API_BASE_URL}/${selectedRecruiters.recruiterId}/${selectedRecruiters.recruiterJobRole}/assign-column`,
           JSON.stringify(selectedOptions),
           {
             headers: {
@@ -194,7 +183,7 @@ function Accesstable() {
         );
       } else if (selectedTeamLeader.teamLeaderId != "") {
         response = await axios.post(
-          `http://192.168.1.38:9090/api/ats/157industries/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
+          `${API_BASE_URL}/${selectedTeamLeader.teamLeaderId}/${selectedTeamLeader.teamLeaderJobRole}/assign-column`,
           JSON.stringify(selectedOptions),
           {
             headers: {
@@ -204,7 +193,7 @@ function Accesstable() {
         );
       } else {
         response = await axios.post(
-          `http://192.168.1.38:9090/api/ats/157industries/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
+          `${API_BASE_URL}/${selectedManager.managerId}/${selectedManager.managerJobRole}/assign-column`,
           JSON.stringify(selectedOptions),
           {
             headers: {
@@ -253,7 +242,7 @@ function Accesstable() {
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_260_269
   const fetchAssignedColumnCount = async () => {
     const response = await axios.get(
-      `http://192.168.1.38:9090/api/ats/157industries/column-category-counts/${employeeId}/${userType}`
+      `${API_BASE_URL}/column-category-counts/${employeeId}/${userType}`
     );
     setAssignedColumnsCount(response.data);
   };
@@ -671,8 +660,7 @@ const UpdateAccessTable = ({
   // Akash_Pawar_AssignColumn_AssignColumnToRecruiterAndTeamLeader_15/07_LineNo_680_701
   const handleUpdateClick = async () => {
     try {
-      const response = await axios.post(
-        `http://192.168.1.38:9090/api/ats/157industries/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
+      const response = await axios.post(`${API_BASE_URL}/${assignedColumnRecruiterUpdate.id}/${assignedColumnRecruiterUpdate.jobRole}/assign-column`,
         JSON.stringify(selectedOptions),
         {
           headers: {

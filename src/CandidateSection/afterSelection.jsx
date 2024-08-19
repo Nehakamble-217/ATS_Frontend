@@ -5,6 +5,7 @@ import RightTick from "../photos/greenTick.jpg";
 import "./afterSelection.css";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 // SwapnilRokade_AfterSelection_addedProcessImprovmentEvaluatorFunctionalityStoringInterviweResponse_08_to_386_29/07/2024
 const AfterSelection = ({
   candidateId,
@@ -66,9 +67,7 @@ const AfterSelection = ({
 
   const fetchCandidateData = async () => {
     try {
-      const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/specific-data/${candidateId}`
-      );
+      const response = await fetch(`${API_BASE_URL}/specific-data/${candidateId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -82,9 +81,7 @@ const AfterSelection = ({
 
   const fetchPerformaceId = async()=>{
     try {
-      const performanceId = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/fetch-performance-id/${candidateId}`
-      );
+      const performanceId = await axios.get(`${API_BASE_URL}/fetch-performance-id/${candidateId}`);
       setPerformanceId(performanceId.data);
     } catch (error) {
       console.log(error);
@@ -96,9 +93,7 @@ const AfterSelection = ({
     console.log(employeeId + "---> employeeId");
     console.log(requirementId + "-->requirementId");
     try {
-      const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`
-      );
+      const response = await fetch(`${API_BASE_URL}/fetch-after-selection?candidateId=${candidateId}&employeeId=${employeeId}&requirementId=${requirementId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -119,7 +114,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.38:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `${API_BASE_URL}/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -175,7 +170,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.38:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `${API_BASE_URL}/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -187,18 +182,13 @@ const AfterSelection = ({
   const handleOfferLetterAcceptedChange =async (e) => {
     const accepted = e.target.value;
     setOfferLetterAccepted(accepted);
-    // if (accepted === "accepted") {
-    //   setJoinStatus("join");
-    // } else {
-    //   setJoinStatus("");
-    // }
     try {
       const additionalData = {
         issueOfferLetter:new Date(),
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.38:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `${API_BASE_URL}/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -221,10 +211,7 @@ const AfterSelection = ({
         joiningProcess:new Date()
       };
       console.log(additionalData);
-      const response1 = await axios.put(
-        `http://192.168.1.38:9090/api/ats/157industries/update-performance/${performanceId}`,
-        additionalData
-      );
+      const response1 = await axios.put(`${API_BASE_URL}/update-performance/${performanceId}`,additionalData);
       console.log("Second API Response:", response1.data);
     } catch (error) {
       console.log(error);
@@ -240,7 +227,7 @@ const AfterSelection = ({
       };
       console.log(additionalData);
       const response1 = await axios.put(
-        `http://192.168.1.38:9090/api/ats/157industries/update-performance/${performanceId}`,
+        `${API_BASE_URL}/update-performance/${performanceId}`,
         additionalData
       );
       console.log("Second API Response:", response1.data);
@@ -270,8 +257,7 @@ const AfterSelection = ({
     };
 
     try {
-      const response = await fetch(
-        "http://192.168.1.38:9090/api/ats/157industries/add-after-selection",
+      const response = await fetch(`${API_BASE_URL}/add-after-selection`,
         {
           method: "POST",
           headers: {
@@ -330,8 +316,7 @@ const AfterSelection = ({
     formData.append("joinDate", joinDate);
 
     try {
-      const response = await fetch(
-        "http://192.168.1.38:9090/api/ats/157industries/save-join-data",
+      const response = await fetch(`${API_BASE_URL}/save-join-data`,
         {
           method: "POST",
           body: formData,

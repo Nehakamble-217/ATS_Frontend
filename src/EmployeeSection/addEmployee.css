@@ -216,3 +216,38 @@ input[type='number'] {
   .password-eye-icon i{
     color:gray;
   }
+
+  .file-placeholder{
+    font-size: 12px;
+  }
+
+  #user-name-div { 
+    display: flex;
+    gap: 20px; 
+}
+
+.user-name-div-label-input {
+    display: flex;
+    flex-direction: column; 
+    width: 350px;
+    color: gray;
+    font-size: 16px;
+    /* border: 1px solid #ccc; */
+    border-radius: 4px;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    
+}
+
+.user-name-div-labels {
+    margin-bottom: 5px;
+}
+
+.user-name-div-inputs {
+    width: 200px; 
+    height: 30px;
+    padding: 5px; 
+    box-sizing: border-box; 
+    
+}

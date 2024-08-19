@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./addJobDescription.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from "../api/api";
 // import WebSocketService from '../websocket/WebSocketService';
 
 const AddJobDescription = () => {
@@ -116,7 +117,7 @@ const AddJobDescription = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://192.168.1.38:9090/api/ats/157industries/add-requirement",
+        `${API_BASE_URL}/add-requirement`,
         {
           method: "POST",
           headers: {

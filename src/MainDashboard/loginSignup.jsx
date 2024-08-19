@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 import "./LoginPage.css";
 import LoginImage from "../LogoImages/LoginImge.jpg";
 import ForgotPasswordForms from "./empForgotPasswords";
+import { API_BASE_URL } from "../api/api";
 
 const LoginSignup = ({ onLogin }) => {
   const { userType } = useParams();
@@ -52,8 +53,7 @@ const LoginSignup = ({ onLogin }) => {
 
   useEffect(() => {
     if (employeeId && userType) {
-      fetch(
-        `http://93.127.199.85:9090/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+      fetch(`${API_BASE_URL}/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -94,6 +94,10 @@ const LoginSignup = ({ onLogin }) => {
       setError("Error occurred. Please try again.");
     }
   };
+
+  const createAccount = () =>{
+    navigate('/create-recruiter-account')
+  }
 
 
   return (
@@ -162,14 +166,20 @@ const LoginSignup = ({ onLogin }) => {
                 >
                   Login
                 </button>
-                <center>
+                <div className="acc-create-div">
+                <span
+                    className="account-create-span"
+                    onClick={createAccount}
+                  >
+                   Create Account 
+                  </span>
                   <span
-                    className="psw"
+                    className="account-create-span"
                     onClick={() => setShowForgotPassword(true)}
                   >
-                    Forgot password?
+                    Forgot password ?
                   </span>
-                </center>
+                </div>
               </form>
             )}
           </div>

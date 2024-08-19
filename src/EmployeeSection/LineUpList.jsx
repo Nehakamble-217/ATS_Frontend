@@ -3,12 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../EmployeeSection/LineUpList.css";
 import UpdateCallingTracker from "./UpdateSelfCalling";
 import * as XLSX from "xlsx";
-
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import HashLoader from "react-spinners/HashLoader";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../api/api";
+
 // SwapnilRokade_lineUpList_ModifyFilters_47to534_11/07
 const LineUpList = ({
   updateState,
@@ -122,7 +123,7 @@ const LineUpList = ({
 
   //akash_pawar_LineUpList_ShareFunctionality_16/07_128
   const fetchCallingTrackerData = async () => {
-    const url = `http://192.168.1.38:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`;
+    const url = `${API_BASE_URL}/calling-lineup/${employeeIdnew}/${userType}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -149,7 +150,7 @@ const LineUpList = ({
   const fetchManager = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
+        `${API_BASE_URL}/get-all-managers`
       );
       const data = await response.json();
       setFetchAllManager(data);
@@ -165,7 +166,7 @@ const LineUpList = ({
   const fetchTeamLeader = async (empId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${empId}`
+        `${API_BASE_URL}/tl-namesIds/${empId}`
       );
       const data = await response.json();
       setFetchTeamleader(data);
@@ -176,7 +177,7 @@ const LineUpList = ({
   const fetchRecruiters = async (teamLeaderId) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${teamLeaderId}`
+        `${API_BASE_URL}/employeeId-names/${teamLeaderId}`
       );
       const data = await response.json();
       setRecruiterUnderTeamLeader(data);
@@ -215,7 +216,7 @@ const LineUpList = ({
     setShowUpdateCallingTracker(false);
     fetch(
 
-      `http://192.168.1.38:9090/api/ats/157industries/calling-lineup/${employeeIdnew}/${userType}`
+      `${API_BASE_URL}/calling-lineup/${employeeIdnew}/${userType}`
     )
       .then((response) => response.json())
       .then((data) => setCallingList(data))
@@ -450,7 +451,7 @@ const LineUpList = ({
   const handleShare = async () => {
 
     setIsDataSending(true);
-    let url = `http://192.168.1.38:9090/api/ats/157industries/updateIds/${userType}`;
+    let url = `${API_BASE_URL}/updateIds/${userType}`;
     let requestData;
     if (
       userType === "TeamLeader" &&

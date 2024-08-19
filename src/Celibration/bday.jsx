@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BirthdayPage from './BirthdayPage'; // Adjust the path if needed
 import './bday.css'
+import { API_BASE_URL } from "../api/api";
 
 const Bday = () => {
   const [messages, setMessages] = useState([]); // State for messages
@@ -11,7 +12,7 @@ const Bday = () => {
   useEffect(() => {
     const fetchRecruiters = async () => {
       try {
-        const response = await fetch('http://192.168.1.38:9090/api/ats/157industries/fetch-profile-details/1/Recruiters');
+        const response = await fetch(`${API_BASE_URL}/fetch-profile-details/1/Recruiters`);
         const data = await response.json();
 
         // Check if the API response is an array or a single object

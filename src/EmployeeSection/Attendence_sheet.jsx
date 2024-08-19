@@ -21,6 +21,7 @@ import {
 import '../EmployeeSection/Attendence_sheet.css';
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/api";
 
 const Attendance = () => {
   const { employeeId, userType } = useParams();
@@ -133,7 +134,7 @@ const Attendance = () => {
     const fetchManagerNames = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.38:9090/api/ats/157industries/get-all-managers`
+          `${API_BASE_URL}/get-all-managers`
         );
         setManagers(response.data);
       } catch (error) {
@@ -165,7 +166,7 @@ const Attendance = () => {
   const fetchTeamLeaderNames = async (id) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/tl-namesIds/${id}`
+        `${API_BASE_URL}/tl-namesIds/${id}`
       );
       setTeamLeaders(response.data);
     } catch (error) {
@@ -176,7 +177,7 @@ const Attendance = () => {
   const fetchRecruiterUnderTeamLeaderData = useCallback(async (id) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/employeeId-names/${id}`
+        `${API_BASE_URL}/employeeId-names/${id}`
       );
       setRecruiters(response.data);
     } catch (error) {
@@ -189,11 +190,6 @@ const Attendance = () => {
     }
   }, [attendanceData]);
 
-  // const getMonthInterval = () => {
-  //   const start = startOfMonth(new Date());
-  //   const end = endOfMonth(new Date());
-  //   return { start, end };
-  // };
 
   const calculateWeekendsAndHolidays = (startDate, endDate) => {
     const interval = eachDayOfInterval({ start: startDate, end: endDate });
@@ -214,7 +210,7 @@ const Attendance = () => {
   const fetchData = async (id, roles, startDate, endDate) => {
     try {
       const response = await fetch(
-        `http://192.168.1.38:9090/api/ats/157industries/attendance-data/${id}/${roles}/${startDate}/${endDate}`
+        `${API_BASE_URL}/attendance-data/${id}/${roles}/${startDate}/${endDate}`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -347,7 +343,7 @@ const Attendance = () => {
   const fetchEmployeeCount = async (ids, role) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.38:9090/api/ats/157industries/head-count/${role}/${ids}`
+        `${API_BASE_URL}/head-count/${role}/${ids}`
       );
       setEmployeeCount(response.data);
     } catch (error) { }

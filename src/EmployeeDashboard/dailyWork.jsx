@@ -6,6 +6,7 @@ import Profile from "../photos/profileImg.webp";
 import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
+import { API_BASE_URL } from "../api/api";
 // SwapnilRokade_DailyWork_LogoutFunctionalityWorking_31/07
 
 function DailyWork({
@@ -100,7 +101,7 @@ function DailyWork({
   const fetchEmployeeData = async () => {
     try {
       const response = await axios.get(
-        `http://93.127.199.85:9090/api/ats/157industries/fetch-profile-details/${employeeId}/${userType}`
+        `${API_BASE_URL}/fetch-profile-details/${employeeId}/${userType}`
       );
       setEmployeeData(response.data);
       if (response.data) {
@@ -213,13 +214,12 @@ function DailyWork({
 
         console.log(formData);
         const response = await axios.post(
-          `http://93.127.199.85:9090/api/ats/157industries/save-daily-work/${employeeId}/${userType}`,
+          `${API_BASE_URL}/save-daily-work/${employeeId}/${userType}`,
           formData
         );
 
         if (response.data) {
-          console.log(response.data);
-          
+          console.log(response.data);     
           fetchCurrentEmployerWorkId();
         }
         console.log("Login details saved successfully.");
@@ -247,7 +247,7 @@ function DailyWork({
   const fetchCurrentEmployerWorkId = async () => {
     try {
       const response = await axios.get(
-        `http://93.127.199.85:9090/api/ats/157industries/fetch-work-id/${employeeId}/${userType}`
+        `${API_BASE_URL}/fetch-work-id/${employeeId}/${userType}`
       );
 
       setFetchWorkId(response.data);
@@ -475,7 +475,7 @@ function DailyWork({
       };
 
       await axios.put(
-        `http://93.127.199.85:9090/api/ats/157industries/update-daily-work/${fetchWorkId} `,
+        `${API_BASE_URL}/update-daily-work/${fetchWorkId} `,
         formData
       );
 
