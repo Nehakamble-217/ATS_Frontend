@@ -97,7 +97,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   const createAccount = () =>{
-    navigate('/create-recruiter-account')
+    navigate(`/create-account/${userType}`)
   }
 
 

@@ -248,6 +248,47 @@ input[type='number'] {
     width: 200px; 
     height: 30px;
     padding: 5px; 
-    box-sizing: border-box; 
-    
+    box-sizing: border-box;    
 }
+
+
+.otp-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.otp-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.otp-modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.otp-modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.otp-modal-content button {
+  padding: 10px 20px;
+  margin: 5px;
+}
+
+.otp-error {
+  color: red;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+

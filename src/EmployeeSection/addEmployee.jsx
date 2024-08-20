@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "../EmployeeSection/addEmployee.css";
-import { toast } from "react-toastify";
-import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify"
 
 const AddEmployee = () => {
   const [formData, setFormData] = useState({
+    employeeId:"",
     employeeName: "",
     dateOfJoining: "",
+    userName:"",
     designation: "",
     department: "",
     officialMail: "",
@@ -192,7 +193,7 @@ const AddEmployee = () => {
     console.log(formData);
     try {
       const response = await fetch(
-        `${API_BASE_URL}/add-employee`,
+        `http://localhost:9090/api/ats/157industries/add-employee/432`,
         {
           method: "POST",
           body: formDataToSend,
@@ -243,36 +244,29 @@ const AddEmployee = () => {
           )}
         </div>
 
-        <div id="user-name-div" className="addRec-form-row">
-    <div className="user-name-div-label-input">
-        <label className="user-name-div-labels">User Name:</label>
-        <input
-            type="text"
-            className="user-name-div-inputs"
-            name="userName"
-            value={formData.userName}
-            onChange={handleInputChange}
-        />
-    </div>
-    <div className="user-name-div-label-input">
-        <label className="user-name-div-labels">Date of Joining:</label>
-        <input
+        
+        <input hidden
             type="date"
-            className="user-name-div-inputs"
+            name="employeeId"
+            value={formData.employeeId}
+            onChange={handleInputChange}
+          />
+        <div className="addRec-form-row">
+          <label>Date of Joining:</label>
+          <input
+            type="date"
             name="dateOfJoining"
             value={formData.dateOfJoining}
             onChange={handleInputChange}
-        />
-    </div>
-</div>
-
+          />
+        </div>
 
         <div className="addRec-form-row">
           <label>Designation:</label>
           <input
             type="text"
             name="designation"
-            placeholder="Ex: Front End Developer"
+            placeholder="Eg: FrontEnd Developer"
             value={formData.designation}
             onChange={handleInputChange}
           />
@@ -303,10 +297,10 @@ const AddEmployee = () => {
             onChange={handleInputChange}
           >
             <option value="">Select Job Role</option>
-            <option value="Recruiters">Recruiter </option>
-            <option value="TeamLeader">Team Leader</option>
-            <option value="Manager">Manager</option>
-            
+            <option value="Team Leader">Team Leader</option>
+            <option value="Admin">Admin</option>
+            <option value="Senior Recruiter">Senior Recruiter</option>
+            <option value="Recruiter">recruiter</option>
           </select>
         </div>
 
@@ -333,17 +327,15 @@ const AddEmployee = () => {
         </div>
 
         <div className="addRec-form-row">
-          <label>Mobile Number:</label>
+          <label>User Name </label>
           <input
             type="text"
-            name="employeeNumber"
-            placeholder="Enter Mobile Number"
-            value={formData.employeeNumber}
+            name="userName"
+            placeholder="Enter User Name  "
+            value={formData.userName}
             onChange={handleInputChange}
           />
-          {errors.employeeNumber && (
-            <div className="error">{errors.employeeNumber}</div>
-          )}
+         
         </div>
 
         <div className="addRec-form-row">
@@ -978,7 +970,6 @@ const AddEmployee = () => {
           <input type="file" 
           multiple
           name="document" onChange={handleInputChange} />
-          <span className="file-placeholder">Ex. Aadhaar, PAN, Driving License</span>
         </div>
 
         <div className="addRec-form-row">
@@ -1023,7 +1014,7 @@ const AddEmployee = () => {
 
         <div className="add-employee-submit-div">
           <button type="submit" className="submit-button-add-emp">
-            Create Account
+            Submit
           </button>
         </div>
         {successMessage && (

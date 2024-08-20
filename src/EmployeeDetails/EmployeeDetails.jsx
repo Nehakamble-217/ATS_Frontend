@@ -24,7 +24,7 @@ const EmployeeDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/detail-for-update/870`
+          `${API_BASE_URL}/detail-for-update/${employeeId}`
         );
         setEmployeeData(response.data);
         setLoading(false);
@@ -146,7 +146,6 @@ const EmployeeDetails = () => {
                   <th className="attendanceheading">Employee Number</th>
                   <th className="attendanceheading">Date of Joining</th>
                   <th className="attendanceheading">Designation</th>
-
                   <th className="attendanceheading">Job Role</th>
                   <th className="attendanceheading">Department  </th>
                   <th className="attendanceheading">Manager Name</th>

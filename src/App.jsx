@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/forgot-password/:userType" element={<ForgotPasswordsForm/>}/>
           <Route path="/createAccount/Vendor" element={<AddVendor/>}></Route>
           <Route path="/manager/technicalUser" element={<SelfTechnicalUser/>}></Route>
-          <Route path="/create-recruiter-account" element={<AddEmployee/>}></Route>
+          <Route path="/create-account/:userType" element={<AddEmployee/>}></Route>
 
           
         </Routes>
