@@ -53,8 +53,7 @@ const LoginSignup = ({ onLogin }) => {
 
   useEffect(() => {
     if (employeeId && userType) {
-      fetch(
-        `${API_BASE_URL}/fetch-pass-on-role/${employeeId}/${userType}`
+      fetch(`${API_BASE_URL}/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {

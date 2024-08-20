@@ -219,6 +219,7 @@ function DailyWork({
         );
 
         if (response.data) {
+          console.log(response.data);     
           fetchCurrentEmployerWorkId();
         }
         console.log("Login details saved successfully.");
@@ -250,6 +251,8 @@ function DailyWork({
       );
 
       setFetchWorkId(response.data);
+      console.log(response.data);
+      
     } catch (error) {
       console.error("Error fetching work ID:", error);
     }
