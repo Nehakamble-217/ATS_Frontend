@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./EmployeeDetails.css";
 import UpdateEmployee from "./UpdateEmployee";
 import HashLoader from "react-spinners/HashLoader";
@@ -17,9 +17,11 @@ const EmployeeDetails = () => {
   const [deletedEmployees, setDeletedEmployees] = useState([]);
   const [blockedEmployees, setBlockedEmployees] = useState([]);
   const [Loading, setLoading] = useState(true);
-  const [employeeId, setEmployeeId] = useState(null);
+  // const [employeeId, setEmployeeId] = useState(null);
   const [employeeRole, setEmployeeRole] = useState("");
   const [showEmployee, setShowEmployee] = useState(false);
+  const { employeeId } = useParams();
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -301,7 +303,7 @@ const EmployeeDetails = () => {
       ) : (
         <div className="register">
           <HashLoader
-             color={`${localStorage.getItem("selectedColor")}`}
+            color={`${localStorage.getItem("selectedColor")}`}
             aria-label="Loading Spinner"
             data-testid="loader"
           />

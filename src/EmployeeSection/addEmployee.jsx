@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "../EmployeeSection/addEmployee.css";
 import { toast } from "react-toastify"
+import { useParams } from "react-router-dom";
 
 const AddEmployee = () => {
+  const { employeeId,userType } = useParams();
+
   const [formData, setFormData] = useState({
-    employeeId:"",
+    employeeId: "0",
     employeeName: "",
     dateOfJoining: "",
-    userName:"",
+    userName: "",
     designation: "",
     department: "",
     officialMail: "",
@@ -54,7 +57,7 @@ const AddEmployee = () => {
     panNo: "",
     educationalQualification: "",
     offeredSalary: "",
-    jobRole: "",
+    jobRole: userType === "TeamLeader" ? "Recruiters" : "",
     professionalPtNo: "",
     esIcNo: "",
     pfNo: "",
@@ -162,7 +165,7 @@ const AddEmployee = () => {
       }
     }
   };
-  
+
 
   const handleConfirmPasswordBlur = () => {
     if (formData.employeePassword !== formData.confirmPassword) {
@@ -190,25 +193,32 @@ const AddEmployee = () => {
         formDataToSend.append(key, formData[key]);
       }
     }
-    console.log(formData);
-    try {
-      const response = await fetch(
-        `http://localhost:9090/api/ats/157industries/add-employee/432`,
-        {
-          method: "POST",
-          body: formDataToSend,
-        }
-      );
-      if (response) {
-        toast.success("Employee Data Added Successfully."); //Swapnil Error&success message
-      } else {
-        toast.error(data.message || "Failed to add employee data."); //Swapnil Error&success message
+    for (const pair of formDataToSend.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+  }
+
+  try {
+    const response = await fetch(
+      `${userType}/add-employee/${employeeId}`,
+      {
+        method: "POST",
+        body: formDataToSend,
       }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Error occurred while adding employee data."); //Swapnil Error&success message
+    );
+  
+    const result = await response.json(); // Parse the response body
+  
+    if (response.ok) {
+      toast.success(result.message || "Employee Data Added Successfully."); // Show success message
+    } else {
+      toast.error(result.error || "Failed to add employee data."); // Show error message
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    toast.error("Error occurred while adding employee data."); // Show error message in case of fetch failure
+  }
+}
+
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
@@ -221,6 +231,18 @@ const AddEmployee = () => {
   const hidePassword = () => setPasswordVisible(false);
   const showconfirmPassword = () => setconfirmPasswordVisible(true);
   const hideconfirmPassword = () => setconfirmPasswordVisible(false);
+
+  const jobRoles = (() => {
+    if (userType === "TeamLeader") {
+      return ["Recruiters"];
+    } else if (userType === "Manager") {
+      return ["Recruiters", "TeamLeader"];
+    } else if (userType === "SuperUser") {
+      return ["Recruiters", "TeamLeader", "Manager"];
+    } else {
+      return [];
+    }
+  })();
 
   return (
     <div className="AddRec-form-container">
@@ -244,13 +266,13 @@ const AddEmployee = () => {
           )}
         </div>
 
-        
+
         <input hidden
-            type="date"
-            name="employeeId"
-            value={formData.employeeId}
-            onChange={handleInputChange}
-          />
+          type="date"
+          name="employeeId"
+          value={formData.employeeId}
+          onChange={handleInputChange}
+        />
         <div className="addRec-form-row">
           <label>Date of Joining:</label>
           <input
@@ -295,12 +317,14 @@ const AddEmployee = () => {
             name="jobRole"
             value={formData.jobRole}
             onChange={handleInputChange}
+            disabled={userType === "TeamLeader"} // Disable dropdown if userType is TeamLeader
           >
             <option value="">Select Job Role</option>
-            <option value="Team Leader">Team Leader</option>
-            <option value="Admin">Admin</option>
-            <option value="Senior Recruiter">Senior Recruiter</option>
-            <option value="Recruiter">recruiter</option>
+            {jobRoles.map((role, index) => (
+              <option key={index} value={role}>
+                {role}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -335,7 +359,7 @@ const AddEmployee = () => {
             value={formData.userName}
             onChange={handleInputChange}
           />
-         
+
         </div>
 
         <div className="addRec-form-row">
@@ -952,9 +976,9 @@ const AddEmployee = () => {
         </div>
         <div className="addRec-form-row">
           <label>Upload Resume:</label>
-          <input type="file" 
-          multiple
-          name="resumeFile" onChange={handleInputChange} />
+          <input type="file"
+            multiple
+            name="resumeFile" onChange={handleInputChange} />
         </div>
         <div className="addRec-form-row">
           <label>Upload Profile Image:</label>
@@ -967,20 +991,20 @@ const AddEmployee = () => {
 
         <div className="addRec-form-row">
           <label>Upload Document:</label>
-          <input type="file" 
-          multiple
-          name="document" onChange={handleInputChange} />
+          <input type="file"
+            multiple
+            name="document" onChange={handleInputChange} />
         </div>
 
         <div className="addRec-form-row">
           <label>Password:</label>
 
-        <div class="wrapper-eye">
-          <div className="password-eye-icon"
-             onMouseEnter={showPassword}
-             onMouseLeave={hidePassword}> 
-          <i className="fas fa-eye"></i>
-          </div>
+          <div class="wrapper-eye">
+            <div className="password-eye-icon"
+              onMouseEnter={showPassword}
+              onMouseLeave={hidePassword}>
+              <i className="fas fa-eye"></i>
+            </div>
             <input
               type={passwordVisible ? "text" : "password"}
               name="employeePassword"
@@ -994,19 +1018,19 @@ const AddEmployee = () => {
         <div className="addRec-form-row">
           <label>Confirm Password:</label>
           <div class="wrapper-eye">
-          <div className="password-eye-icon"
-          onMouseEnter={showPassword}
-          onMouseLeave={hidePassword}> 
-          <i className="fas fa-eye"></i>
-          </div>
-          <input
-            type={passwordVisible ? "text" : "password"}
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-            onBlur={handleConfirmPasswordBlur}
-          />
+            <div className="password-eye-icon"
+              onMouseEnter={showPassword}
+              onMouseLeave={hidePassword}>
+              <i className="fas fa-eye"></i>
+            </div>
+            <input
+              type={passwordVisible ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              onBlur={handleConfirmPasswordBlur}
+            />
           </div>
 
           {!passwordMatch && <div className="error">{passwordError}</div>}

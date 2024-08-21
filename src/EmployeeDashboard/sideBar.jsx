@@ -902,7 +902,7 @@ function Sidebar({
                           </a>
                         </li>
 
-                        <li
+                        {/* <li
                           onClick={handleButtonClick(
                             "questionPaper",
                             toggleQuestionPaper
@@ -917,7 +917,7 @@ function Sidebar({
                               Create Question paper
                             </span>
                           </a>
-                        </li>
+                        </li> */}
                         {/* neha_add_scheduleinterview_page_line_no511_523 */}
                         <li
                           onClick={handleButtonClick(
@@ -993,7 +993,7 @@ function Sidebar({
                         >
                           <a href="#">
                             {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                            <span className="sidebar-text">Add Recruiters</span>
+                            <span className="sidebar-text">Add Team Leader</span>
                           </a>
                         </li>
                       </>
@@ -1067,7 +1067,7 @@ function Sidebar({
                       className={`sub-menu sub-menu1 sub-menu2 ${activeSubMenu === "SuperUser" ? "active" : ""
                         }`}
                     >
-                      <li
+                      {/* <li
                         style={{ marginLeft: "10px" }}
                         className={activeButton === "SuperUser" ? "active" : ""}
                         onClick={toggeleProfitChart}
@@ -1075,7 +1075,7 @@ function Sidebar({
                         <a href="#">
                           <span className="sidebar-text">P & L Chart</span>
                         </a>
-                      </li>
+                      </li> */}
                       <li
                         onClick={handleButtonClick("billing", toggleBilling)}
                         style={{ marginLeft: "10px" }}
@@ -1155,7 +1155,7 @@ function Sidebar({
                       >
                         <a href="#">
                           {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                          <span className="sidebar-text">Add Recruiters</span>
+                          <span className="sidebar-text">Add Manager</span>
                         </a>
                       </li>
                       <li

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./UpdateResponse.css";
 import { Button, Modal } from "react-bootstrap";
-import { data } from "autoprefixer";
 import UpdateResponseFrom from "./UpdateResponseFrom";
 import HashLoader from "react-spinners/HashLoader";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../api/api";
-
 
 const UpdateResponse = ({ onSuccessAdd, date }) => {
   const [updateResponseList, setUpdateResponseList] = useState([]);
@@ -23,7 +21,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
   const [filteredCallingList, setFilteredCallingList] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [showFilterOptions, setShowFilterOptions] = useState(false);
-  const [activeFilterOption, setActiveFilterOption] = useState(null); // New state to track the active filter option
+  const [activeFilterOption, setActiveFilterOption] = useState(null);
   const filterOptions = [
     "candidateId",
     "candidateName",
@@ -52,14 +50,20 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `${API_BASE_URL}/calling-lineup/${employeeId}/${userType}`
+        `${API_BASE_URL}/update-candidate-data/${employeeId}`
       );
-      const data = await res.json();
-      setCallingList(data);
-      setFilteredCallingList(data);
-      setUpdateResponseList(data);
+      const data = await res.json(); // Update here to parse JSON correctly
+      if (Array.isArray(data)) {
+        setCallingList(data);
+        setFilteredCallingList(data);
+        setUpdateResponseList(data);
+      } else {
+        console.error("Expected array but received:", data);
+        setCallingList([]);
+        setFilteredCallingList([]);
+        setUpdateResponseList([]);
+      }
       setLoading(false);
-      console.log(callingList);
     } catch (err) {
       console.log("Error fetching shortlisted data:", err);
       setLoading(false);
@@ -96,24 +100,17 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
       try {
         const fileType = fileName.split(".").pop().toLowerCase();
 
-        if (fileType === "pdf") {
-          const binary = atob(byteCode);
-          const array = new Uint8Array(binary.length);
-          for (let i = 0; i < binary.length; i++) {
-            array[i] = binary.charCodeAt(i);
-          }
-          const blob = new Blob([array], { type: "application/pdf" });
-          return URL.createObjectURL(blob);
-        }
-
-        if (fileType === "docx") {
+        if (fileType === "pdf" || fileType === "docx") {
           const binary = atob(byteCode);
           const array = new Uint8Array(binary.length);
           for (let i = 0; i < binary.length; i++) {
             array[i] = binary.charCodeAt(i);
           }
           const blob = new Blob([array], {
-            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            type:
+              fileType === "pdf"
+                ? "application/pdf"
+                : "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
           });
           return URL.createObjectURL(blob);
         }
@@ -186,34 +183,11 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
     let filteredData = [...callingList];
     Object.entries(selectedFilters).forEach(([option, values]) => {
       if (values.length > 0) {
-        if (option === "candidateId") {
-          filteredData = filteredData.filter((item) =>
-            values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
-            )
-          );
-        } else if (option === "requirementId") {
-          filteredData = filteredData.filter((item) =>
-            values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
-            )
-          );
-        } else if (option === "employeeId") {
-          filteredData = filteredData.filter((item) =>
-            values.some((value) =>
-              item[option]?.toString().toLowerCase().includes(value)
-            )
-          );
-        } else {
-          filteredData = filteredData.filter((item) =>
-            values.some((value) =>
-              item[option]
-                ?.toString()
-                .toLowerCase()
-                .includes(value.toLowerCase())
-            )
-          );
-        }
+        filteredData = filteredData.filter((item) =>
+          values.some((value) =>
+            item[option]?.toString().toLowerCase().includes(value.toLowerCase())
+          )
+        );
       }
     });
     setFilteredCallingList(filteredData);
@@ -246,6 +220,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
       setActiveFilterOption(option); // Show selected option
     }
   };
+
 
   return (
     // SwapnilRokade_UpdateResponse_FilterAdded_7_to_504_10/07"
@@ -369,6 +344,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
                       <th className="attendanceheading">Candidate Name</th>
                       <th className="attendanceheading">Candidate Email</th>
                       <th className="attendanceheading">Contact Number</th>
+                      <th className="attendanceheading">Source</th>
                       <th className="attendanceheading">Requirement ID</th>
                       <th className="attendanceheading">Requirement Company</th>
                       <th className="attendanceheading">Job Designation</th>
@@ -389,7 +365,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
                       <th className="attendanceheading">Job Role</th>
                       <th className="attendanceheading">View Resume</th>
                       <th className="attendanceheading">
-                        Reporting Manager Name
+                         Manager Name
                       </th>
                       <th className="attendanceheading">Action</th>
                     </tr>
@@ -424,6 +400,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
                           </div>
                         </td>
                         <td className="tabledata">{data.contactNumber}</td>
+                        <td className="tabledata">{data.sourceName}</td>
                         <td className="tabledata">{data.requirementId}</td>
                         <td
                           className="tabledata"
@@ -539,6 +516,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
                         <td className="tabledata">
                           {data.reportingManagerName}
                         </td>
+
                         <td className=" TeamLead-main-table-td">
                           <button
                             className="TeamLead-main-table-button"

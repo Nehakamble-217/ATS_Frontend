@@ -95,9 +95,9 @@ const LoginSignup = ({ onLogin }) => {
     }
   };
 
-  const createAccount = () =>{
-    navigate(`/create-account/${userType}`)
-  }
+  // const createAccount = () =>{
+  //   navigate(`/create-account/${userType}`)
+  // }
 
 
   return (
@@ -167,12 +167,12 @@ const LoginSignup = ({ onLogin }) => {
                   Login
                 </button>
                 <div className="acc-create-div">
-                <span
+                  {/* <span
                     className="account-create-span"
                     onClick={createAccount}
                   >
-                   Create Account 
-                  </span>
+                    Create Account
+                  </span> */}
                   <span
                     className="account-create-span"
                     onClick={() => setShowForgotPassword(true)}
