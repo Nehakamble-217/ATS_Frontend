@@ -53,7 +53,7 @@ const LoginSignup = ({ onLogin }) => {
 
   useEffect(() => {
     if (employeeId && userType) {
-      fetch(`${API_BASE_URL}/fetch-pass-on-role/${employeeId}/${userType}`
+      fetch(`http://93.127.199.85/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -95,9 +95,23 @@ const LoginSignup = ({ onLogin }) => {
     }
   };
 
-  // const createAccount = () =>{
-  //   navigate(`/create-account/${userType}`)
-  // }
+  const dashboardLinke = () => {
+    console.log(userType + "------------");
+
+    if (userType === "Recruiters") {
+      navigate("/Dashboard/1/Recruiters");
+    } else if (userType === "TeamLeader") {
+      navigate("/Dashboard/434/TeamLeader");
+    } else if (userType === "Manager") {
+      navigate("/Dashboard/870/Manager");
+    } else if (userType === "SuperUser") {
+      navigate("/Dashboard/390/SuperUser");
+    } else {
+      console.log("Invalid user type");
+    }
+  };
+
+
 
 
   return (
@@ -167,12 +181,12 @@ const LoginSignup = ({ onLogin }) => {
                   Login
                 </button>
                 <div className="acc-create-div">
-                  {/* <span
+                  <span
                     className="account-create-span"
-                    onClick={createAccount}
+                    onClick={dashboardLinke}
                   >
-                    Create Account
-                  </span> */}
+                    Dash Board Link
+                  </span>
                   <span
                     className="account-create-span"
                     onClick={() => setShowForgotPassword(true)}
