@@ -198,7 +198,7 @@ const LineupExcelData = ({
   };
 
   const handleUpdate = (candidateData) => {
-    setSelectedCandidate(candidateData); // Set candidate data for CallingTrackerForm
+    setSelectedCandidate(candidateData); 
   };
 
   const handleUpdateSuccess = () => {

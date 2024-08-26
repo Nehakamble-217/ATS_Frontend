@@ -63,11 +63,12 @@ import InterviewDataTables from "../Help/InterviewTable";
 import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
 import PerformanceImprovement from "../EmployeeSection/performanceImprovement";
 import { faL } from "@fortawesome/free-solid-svg-icons";
-
-
+import AddTeamLeader from "../EmployeeSection/addTeamLeader";
+import AddManager from "../EmployeeSection/addManager";
 
 const EmpDashboard = ({ userGroup }) => {
-  const [showInterviewDate, setShowInterviewDate] = useState(false);
+  const {userType} = useParams();
+  const [showInterviewDate, setShowInterviewDate] = useState(userType === 'SuperUser' ? false : true);
   const [addCandidate, setAddCandidate] = useState(false);
   const [candidateIdForUpdate, setCandidateIdForUpdate] = useState(0);
   const [selfCalling, setSelfCalling] = useState(false);
@@ -146,6 +147,9 @@ const EmpDashboard = ({ userGroup }) => {
   const [showCandidateHistory, setShowCandidateHistory] = useState(false);
   const [showInterviewForm, setShowInterviewForm] = useState(false);
   const [showPerformanceImprovement, setShowPerformanceImprovement] = useState(false)
+  const [showAddManager,setShowAddManager]=useState(false)
+  const [showAddTeamLeader,setShowAddTeamLeader]=useState(false)
+
 
   const handleLogoutTime = (timestamp) => {
     setLogoutTimestamp(timestamp);
@@ -314,6 +318,8 @@ const EmpDashboard = ({ userGroup }) => {
     setShowInterviewForm(false);
     setShowAllInterviewResponses(false)
     setShowPerformanceImprovement(false)
+    setShowAddManager(false)
+    setShowAddTeamLeader(false)
   };
 
   /* ArshadAttar_EmpDashboa_Added_showProfitLoss_11/07/2024_LineNo_221-225 */
@@ -572,6 +578,16 @@ const EmpDashboard = ({ userGroup }) => {
     setShowCallingTrackerForm(!showCallingTrackerForm)
   }
 
+  const toggeleAddManager = () =>{
+    resetAllToggles();
+    setShowAddManager(true)
+  }
+
+  const toggeleAddTeamLeader = () =>{
+    resetAllToggles();
+    setShowAddTeamLeader(true)
+  }
+
   return (
     <div
       className={`grid-container ${openSidebarToggle ? "sidebar-open" : "sidebar-closed"
@@ -641,6 +657,8 @@ const EmpDashboard = ({ userGroup }) => {
         toggelePainArea={toggelePainArea}
         toggelCandidateHistory={toggelCandidateHistory}
         toggeleInterviewForm={toggeleInterviewForm}
+        toggeleAddTeamLeader={toggeleAddTeamLeader}
+        toggeleAddManager={toggeleAddManager}
       />
 
       <div className="empDash-main-content">
@@ -837,6 +855,8 @@ const EmpDashboard = ({ userGroup }) => {
             <TeamDetails></TeamDetails>
           )}
         </div> */}
+        <div>{showAddTeamLeader && (<AddTeamLeader></AddTeamLeader>)}</div>
+        <div>{showAddManager && (<AddManager></AddManager>)}</div>
       </div>
     </div>
   );

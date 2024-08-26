@@ -88,7 +88,6 @@
 
 .react-calendar__month-view__days {
   display: flex;
-  gap: 10px;
 }
 
 button.react-calendar__tile.react-calendar__month-view__days__day {
@@ -283,3 +282,10 @@ button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view
   /* or any other highlighting style */
 }
 
+.interview-data-div {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  margin-top: 20px; /* Space above the table */
+}
+
+
+  

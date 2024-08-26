@@ -4,76 +4,75 @@ import { toast } from "react-toastify"
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../api/api";
 
-const AddEmployee = () => {
+const AddTeamLeader = () => {
   const { employeeId, userType } = useParams();
   const [formData, setFormData] = useState({
-    employeeId: "0",
-    employeeName: "",
-    dateOfJoining: "",
+    teamLeaderId:"0",
+    teamLeaderName: "",
     userName: "",
-    designation: "",
-    department: "",
-    officialMail: "",
-    employeeEmail: "",
-    employeeNumber: "",
-    officialContactNumber: "",
-    alternateContactNo: "",
-    dateOfBirth: "",
-    gender: "",
-    companyMobileNumber: "",
-    whatsAppNumber: "",
-    emergencyContactPerson: "",
-    emergencyContactNumber: "",
-    emergencyPersonRelation: "",
-    employeePresentAddress: "",
-    employeeExperience: "",
-    perks: "",
-    maritalStatus: "",
-    anniversaryDate: "",
-    tshirtSize: "",
-    lastCompany: "",
-    workLocation: "",
-    entrySource: "",
-    employeeStatus: "",
+    tlDateOfJoining: "",
+    tlDesignation: "",
+    tlDepartment: "",
+    tlOfficialMail: "",
+    tlPersonalEmailId: "",
+    tlOfficialContactNo: "",
+    tlAlternateContactNo: "",
+    tlDateOfBirth: "",
+    tlGender: "",
+    tlCompanyMobileNo: "",
+    tlWhatsAppNo: "",
+    tlEmergencyContactPerson: "",
+    tlEmergencyContactNo: "",
+    tlEmergencyPersonRelation: "",
+    tlPresentAddress: "",
+    tlExperience: "",
+    tlPerks: "",
+    tlMaritalStatus: "",
+    tlAnniversaryDate: "",
+    tlTShirtSize: "",
+    tlLastCompany: "",
+    tlWorkLocation: "",
+    tlEntrySource: "",
+    teamLeaderStatus: "",
     lastWorkingDate: "",
-    reasonForLeaving: "",
-    inductionYesOrNo: "",
-    inductionComment: "",
-    trainingSource: "",
-    trainingCompletedYesOrNo: "",
-    trainingTakenCount: "",
-    roundsOfInterview: "",
-    interviewTakenPerson: "",
-    warningComments: "",
-    performanceIndicator: "",
-    teamLeaderMsg: "",
+    tlReasonForLeaving: "",
+    tlInductionYesOrNo: "",
+    tlInductionComment: "",
+    tlTrainingSource: "",
+    tlTrainingCompleted: "",
+    tlTrainingTakenCount: "",
+    tlRoundsOfInterview: "",
+    tlInterviewTakenPerson: "",
+    tlWarningComments: "",
+    tlPerformanceIndicator: "",
+    messageForAdmin: "",
     editDeleteAuthority: "",
-    linkedInURl: "",
+    linkedInURL: "",
     faceBookURL: "",
-    twitterURl: "",
-    employeeAddress: "",
+    twitterURL: "",
+    tlAddress: "",
     bloodGroup: "",
-    aadhaarNo: "",
-    panNo: "",
-    educationalQualification: "",
-    offeredSalary: "",
-    jobRole: "Recruiters",
+    tlAadhaarNo: "",
+    tlPanNo: "",
+    tlQualification: "",
+    tlSalary: "",
+    jobLevel: "TeamLeader",
     professionalPtNo: "",
     esIcNo: "",
     pfNo: "",
-    employeePassword: "",
-    confirmPassword: "",
+    tlPassword: "",
+    tlConfirmPassword: "",
+    tlInsuranceNumber: "",
+    reportingAdminName: "",
+    reportingAdminDesignation: "",
     profileImage: null,
     document: null,
     resumeFile: null,
-    insuranceNumber: "",
-    reportingMangerName: "",
-    reportingMangerDesignation: "",
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [confirmpasswordVisible, setconfirmPasswordVisible] = useState(false);
+  const [confirmpasswordVisible, settlConfirmPasswordVisible] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
@@ -87,27 +86,27 @@ const AddEmployee = () => {
       }));
     } else {
       if (
-        name === "employeeName" ||
-        name === "designation" ||
-        name === "department" ||
-        name === "perks" ||
-        name === "lastCompany" ||
-        name === "workLocation" ||
-        name === "entrySource" ||
-        name === "reasonForLeaving" ||
-        name === "inductionComment" ||
-        name === "trainingSource" ||
-        name === "emergencyContactPerson" ||
-        name === "emergencyPersonRelation" ||
-        name === "interviewTakenPerson" ||
-        name === "warningComments" ||
-        name === "performanceIndicator" ||
-        name === "teamLeaderMsg" ||
+        name === "teamLeaderName" ||
+        name === "tlDesignation" ||
+        name === "tlDepartment" ||
+        name === "tlPerks" ||
+        name === "tlLastCompany" ||
+        name === "tlWorkLocation" ||
+        name === "tlEntrySource" ||
+        name === "tlReasonForLeaving" ||
+        name === "tlInductionComment" ||
+        name === "tlTrainingSource" ||
+        name === "tlEmergencyContactPerson" ||
+        name === "tlEmergencyPersonRelation" ||
+        name === "tlInterviewTakenPerson" ||
+        name === "tlWarningComments" ||
+        name === "tlPerformanceIndicator" ||
+        name === "messageForAdmin" ||
         name === "editDeleteAuthority" ||
         name === "bloodGroup" ||
-        name === "educationalQualification" ||
-        name === "reportingMangerName" ||
-        name === "reportingMangerDesignation"
+        name === "tlQualification" ||
+        name === "reportingAdminName" ||
+        name === "reportingAdminDesignation"
       ) {
         if (/\d/.test(value)) {
           setErrors((prevErrors) => ({
@@ -125,20 +124,19 @@ const AddEmployee = () => {
           }));
         }
       } else if (
-        name === "employeeNumber" ||
-        name === "officialContactNumber" ||
-        name === "alternateContactNo" ||
-        name === "companyMobileNumber" ||
-        name === "whatsAppNumber" ||
-        name === "emergencyContactNumber" ||
-        name === "insuranceNumber" ||
-        name === "aadhaarNo" ||
-        name === "offeredSalary" ||
-        name === "trainingTakenCount" ||
+        name === "tlOfficialContactNo" ||
+        name === "tlAlternateContactNo" ||
+        name === "tlCompanyMobileNo" ||
+        name === "tlWhatsAppNo" ||
+        name === "tlEmergencyContactNo" ||
+        name === "tlInsuranceNumber" ||
+        name === "tlAadhaarNo" ||
+        name === "tlSalary" ||
+        name === "tlTrainingTakenCount" ||
         name === "professionalPtNo" ||
         name === "esIcNo" ||
         name === "pfNo" ||
-        name === "roundsOfInterview"
+        name === "tlRoundsOfInterview"
       ) {
         if (/[^0-9]/.test(value)) {
           setErrors((prevErrors) => ({
@@ -164,10 +162,8 @@ const AddEmployee = () => {
     }
   };
 
-
-  
   const handleConfirmPasswordBlur = () => {
-    if (formData.employeePassword !== formData.confirmPassword) {
+    if (formData.tlPassword !== formData.tlConfirmPassword) {
       setPasswordMatch(false);
       setPasswordError("Passwords do not match");
     } else {
@@ -176,32 +172,15 @@ const AddEmployee = () => {
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key] && key !== "profileImage" && key !== "document" && key !== "resumeFile") {
-        newErrors[key] = "This field is required";
-      }
-    });
-  
-    // Ensure file fields are selected
-    if (!formData.profileImage) newErrors.profileImage = "Profile Image is required";
-  
-    if (formData.employeePassword !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-      setPasswordMatch(false);
-    } else {
-      setPasswordMatch(true);
-    }
-  
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!passwordMatch) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+
     const formDataToSend = new FormData();
     for (const key in formData) {
       if (formData[key] instanceof File) {
@@ -210,107 +189,105 @@ const AddEmployee = () => {
         formDataToSend.append(key, formData[key]);
       }
     }
-  
+    for (const pair of formDataToSend.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+ 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/add-employee/${employeeId}`,
+        `${API_BASE_URL}/save-teamLeader/${employeeId}`,
         {
           method: "POST",
           body: formDataToSend,
         }
       );
-  
-      const result = await response.text(); 
-  
-      if (response.ok) {
-        toast.success(result.message || "Employee Data Added Successfully.");
-        setFormData({
-          employeeId: "0",
-          employeeName: "",
-          dateOfJoining: "",
-          userName: "",
-          designation: "",
-          department: "",
-          officialMail: "",
-          employeeEmail: "",
-          employeeNumber: "",
-          officialContactNumber: "",
-          alternateContactNo: "",
-          dateOfBirth: "",
-          gender: "",
-          companyMobileNumber: "",
-          whatsAppNumber: "",
-          emergencyContactPerson: "",
-          emergencyContactNumber: "",
-          emergencyPersonRelation: "",
-          employeePresentAddress: "",
-          employeeExperience: "",
-          perks: "",
-          maritalStatus: "",
-          anniversaryDate: "",
-          tshirtSize: "",
-          lastCompany: "",
-          workLocation: "",
-          entrySource: "",
-          employeeStatus: "",
-          lastWorkingDate: "",
-          reasonForLeaving: "",
-          inductionYesOrNo: "",
-          inductionComment: "",
-          trainingSource: "",
-          trainingCompletedYesOrNo: "",
-          trainingTakenCount: "",
-          roundsOfInterview: "",
-          interviewTakenPerson: "",
-          warningComments: "",
-          performanceIndicator: "",
-          teamLeaderMsg: "",
-          editDeleteAuthority: "",
-          linkedInURl: "",
-          faceBookURL: "",
-          twitterURl: "",
-          employeeAddress: "",
-          bloodGroup: "",
-          aadhaarNo: "",
-          panNo: "",
-          educationalQualification: "",
-          offeredSalary: "",
-          jobRole: "Recruiters",
-          professionalPtNo: "",
-          esIcNo: "",
-          pfNo: "",
-          employeePassword: "",
-          confirmPassword: "",
-          profileImage: null,
-          document: null,
-          resumeFile: null,
-          insuranceNumber: "",
-          reportingMangerName: "",
-          reportingMangerDesignation: "",
-        });
 
+      const result = await response.text(); 
+      if (response.ok) {
+        toast.success(result.message || "Team Leader Data Added Successfully."); 
+        setFormData({teamLeaderId:"0",
+            teamLeaderName: "",
+            userName: "",
+            tlDateOfJoining: "",
+            tlDesignation: "",
+            tlDepartment: "",
+            tlOfficialMail: "",
+            tlPersonalEmailId: "",
+            tlOfficialContactNo: "",
+            tlAlternateContactNo: "",
+            tlDateOfBirth: "",
+            tlGender: "",
+            tlCompanyMobileNo: "",
+            tlWhatsAppNo: "",
+            tlEmergencyContactPerson: "",
+            tlEmergencyContactNo: "",
+            tlEmergencyPersonRelation: "",
+            tlPresentAddress: "",
+            tlExperience: "",
+            tlPerks: "",
+            tlMaritalStatus: "",
+            tlAnniversaryDate: "",
+            tlTShirtSize: "",
+            tlLastCompany: "",
+            tlWorkLocation: "",
+            tlEntrySource: "",
+            teamLeaderStatus: "",
+            lastWorkingDate: "",
+            tlReasonForLeaving: "",
+            tlInductionYesOrNo: "",
+            tlInductionComment: "",
+            tlTrainingSource: "",
+            tlTrainingCompleted: "",
+            tlTrainingTakenCount: "",
+            tlRoundsOfInterview: "",
+            tlInterviewTakenPerson: "",
+            tlWarningComments: "",
+            tlPerformanceIndicator: "",
+            messageForAdmin: "",
+            editDeleteAuthority: "",
+            linkedInURL: "",
+            faceBookURL: "",
+            twitterURL: "",
+            tlAddress: "",
+            bloodGroup: "",
+            tlAadhaarNo: "",
+            tlPanNo: "",
+            tlQualification: "",
+            tlSalary: "",
+            jobLevel: "TeamLeader",
+            professionalPtNo: "",
+            esIcNo: "",
+            pfNo: "",
+            tlPassword: "",
+            tlConfirmPassword: "",
+            tlInsuranceNumber: "",
+            reportingAdminName: "",
+            reportingAdminDesignation: "",
+            profileImage: null,
+            document: null,
+            resumeFile: null,
+        })
       } else {
-        toast.error(result.error || "Please Fill All Inputs.");
+        toast.error(result.error || "All Fields Are Mandatory. Please Fill All Fields."); 
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Error occurred while adding employee data.");
+      toast.error("Error occurred while adding Team Leader data."); 
     }
-  };
+  }
 
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
   };
-  const toggleconfirmPasswordVisibility = () => {
-    setconfirmPasswordVisible((prev) => !prev);
+  const toggletlConfirmPasswordVisibility = () => {
+    settlConfirmPasswordVisible((prev) => !prev);
   };
 
   const showPassword = () => setPasswordVisible(true);
   const hidePassword = () => setPasswordVisible(false);
-  const showconfirmPassword = () => setconfirmPasswordVisible(true);
-  const hideconfirmPassword = () => setconfirmPasswordVisible(false);
-
+  const showtlConfirmPassword = () => settlConfirmPasswordVisible(true);
+  const hidetlConfirmPassword = () => settlConfirmPasswordVisible(false);
 
   return (
     <div className="AddRec-form-container">
@@ -319,34 +296,29 @@ const AddEmployee = () => {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
+        <input type="text" name="teamLeaderId" value={formData.teamLeaderId} hidden id="" />
+    
         <div className="addRec-form-row">
-          <label>Employee Name:</label>
+          <label>Team Leader Name:</label>
           <input
             type="text"
-            name="employeeName"
+            name="teamLeaderName"
             className="employee-inputs"
             placeholder="Enter Employee Full Name"
-            value={formData.employeeName}
+            value={formData.teamLeaderName}
             onChange={handleInputChange}
           />
-          {errors.employeeName && (
-            <div className="error">{errors.employeeName}</div>
+          {errors.teamLeaderName && (
+            <div className="error">{errors.teamLeaderName}</div>
           )}
         </div>
 
-
-        <input hidden
-          type="date"
-          name="employeeId"
-          value={formData.employeeId}
-          onChange={handleInputChange}
-        />
         <div className="addRec-form-row">
           <label>Date of Joining:</label>
           <input
             type="date"
-            name="dateOfJoining"
-            value={formData.dateOfJoining}
+            name="tlDateOfJoining"
+            value={formData.tlDateOfJoining}
             onChange={handleInputChange}
           />
         </div>
@@ -355,13 +327,13 @@ const AddEmployee = () => {
           <label>Designation:</label>
           <input
             type="text"
-            name="designation"
+            name="tlDesignation"
             placeholder="Eg: FrontEnd Developer"
-            value={formData.designation}
+            value={formData.tlDesignation}
             onChange={handleInputChange}
           />
-          {errors.designation && (
-            <div className="error">{errors.designation}</div>
+          {errors.tlDesignation && (
+            <div className="error">{errors.tlDesignation}</div>
           )}
         </div>
 
@@ -369,35 +341,34 @@ const AddEmployee = () => {
           <label>Department:</label>
           <input
             type="text"
-            name="department"
+            name="tlDepartment"
             placeholder="Enter Department"
-            value={formData.department}
+            value={formData.tlDepartment}
             onChange={handleInputChange}
           />
-          {errors.department && (
-            <div className="error">{errors.department}</div>
+          {errors.tlDepartment && (
+            <div className="error">{errors.tlDepartment}</div>
           )}
         </div>
 
         <div className="addRec-form-row">
-          <label>Job Role:</label>
-          <input
+        <label>Job Role:</label>
+        <input
             type="text"
-            name="jobRole"
-            value={formData.jobRole} 
+            name="jobLevel"
+            value={formData.jobLevel} 
             readOnly 
             className="readonly-input" 
-          />
+        />
         </div>
-
 
         <div className="addRec-form-row">
           <label>Official Email:</label>
           <input
             type="email"
-            name="officialMail"
+            name="tlOfficialMail"
             placeholder="Enter Official Email"
-            value={formData.officialMail}
+            value={formData.tlOfficialMail}
             onChange={handleInputChange}
           />
         </div>
@@ -406,9 +377,9 @@ const AddEmployee = () => {
           <label>Personal Email:</label>
           <input
             type="email"
-            name="employeeEmail"
+            name="tlPersonalEmailId"
             placeholder="Enter Employee Email"
-            value={formData.employeeEmail}
+            value={formData.tlPersonalEmailId}
             onChange={handleInputChange}
           />
         </div>
@@ -422,6 +393,7 @@ const AddEmployee = () => {
             value={formData.userName}
             onChange={handleInputChange}
           />
+
         </div>
 
         <div className="addRec-form-row">
@@ -429,13 +401,13 @@ const AddEmployee = () => {
           <input
             type="text"
             accept="0-9"
-            name="alternateContactNo"
+            name="tlAlternateContactNo"
             placeholder="Enter Alternate Mobile Number"
-            value={formData.alternateContactNo}
+            value={formData.tlAlternateContactNo}
             onChange={handleInputChange}
           />
-          {errors.alternateContactNo && (
-            <div className="error">{errors.alternateContactNo}</div>
+          {errors.tlAlternateContactNo && (
+            <div className="error">{errors.tlAlternateContactNo}</div>
           )}
         </div>
 
@@ -444,13 +416,13 @@ const AddEmployee = () => {
           <input
             type="text"
             accept="0-9"
-            name="officialContactNumber"
+            name="tlOfficialContactNo"
             placeholder="Enter Company Mobile Number"
-            value={formData.officialContactNumber}
+            value={formData.tlOfficialContactNo}
             onChange={handleInputChange}
           />
-          {errors.officialContactNumber && (
-            <div className="error">{errors.officialContactNumber}</div>
+          {errors.tlOfficialContactNo && (
+            <div className="error">{errors.tlOfficialContactNo}</div>
           )}
         </div>
         <div className="addRec-form-row">
@@ -458,13 +430,13 @@ const AddEmployee = () => {
           <input
             type="text"
             accept="0-9"
-            name="companyMobileNumber"
+            name="tlCompanyMobileNo"
             placeholder="Enter Company Mobile Number"
-            value={formData.companyMobileNumber}
+            value={formData.tlCompanyMobileNo}
             onChange={handleInputChange}
           />
-          {errors.companyMobileNumber && (
-            <div className="error">{errors.companyMobileNumber}</div>
+          {errors.tlCompanyMobileNo && (
+            <div className="error">{errors.tlCompanyMobileNo}</div>
           )}
         </div>
 
@@ -473,13 +445,13 @@ const AddEmployee = () => {
           <input
             type="text"
             accept="0-9"
-            name="whatsAppNumber"
+            name="tlWhatsAppNo"
             placeholder="Enter WhatsApp Number"
-            value={formData.whatsAppNumber}
+            value={formData.tlWhatsAppNo}
             onChange={handleInputChange}
           />
-          {errors.whatsAppNumber && (
-            <div className="error">{errors.whatsAppNumber}</div>
+          {errors.tlWhatsAppNo && (
+            <div className="error">{errors.tlWhatsAppNo}</div>
           )}
         </div>
 
@@ -487,8 +459,8 @@ const AddEmployee = () => {
           <label>Date of Birth:</label>
           <input
             type="date"
-            name="dateOfBirth"
-            value={formData.dateOfBirth}
+            name="tlDateOfBirth"
+            value={formData.tlDateOfBirth}
             onChange={handleInputChange}
           />
         </div>
@@ -496,8 +468,8 @@ const AddEmployee = () => {
         <div className="addRec-form-row">
           <label>Gender:</label>
           <select
-            name="gender"
-            value={formData.gender}
+            name="tlGender"
+            value={formData.tlGender}
             onChange={handleInputChange}
           >
             <option value="">Select Gender</option>
@@ -509,8 +481,8 @@ const AddEmployee = () => {
         <div className="addRec-form-row">
           <label>Marital Status:</label>
           <select
-            name="maritalStatus"
-            value={formData.maritalStatus}
+            name="tlMaritalStatus"
+            value={formData.tlMaritalStatus}
             onChange={handleInputChange}
           >
             <option value={""}>Select Marital Status</option>
@@ -525,8 +497,8 @@ const AddEmployee = () => {
           <label>Anniversary Date:</label>
           <input
             type="date"
-            name="anniversaryDate"
-            value={formData.anniversaryDate}
+            name="tlAnniversaryDate"
+            value={formData.tlAnniversaryDate}
             onChange={handleInputChange}
           />
         </div>
@@ -535,13 +507,13 @@ const AddEmployee = () => {
           <label>Emergency Contact Person:</label>
           <input
             type="text"
-            name="emergencyContactPerson"
+            name="tlEmergencyContactPerson"
             placeholder="Enter Emergency Contact Person Name"
-            value={formData.emergencyContactPerson}
+            value={formData.tlEmergencyContactPerson}
             onChange={handleInputChange}
           />
-          {errors.emergencyContactPerson && (
-            <div className="error">{errors.emergencyContactPerson}</div>
+          {errors.tlEmergencyContactPerson && (
+            <div className="error">{errors.tlEmergencyContactPerson}</div>
           )}
         </div>
 
@@ -549,13 +521,13 @@ const AddEmployee = () => {
           <label>Emergency Contact Number:</label>
           <input
             type="text"
-            name="emergencyContactNumber"
+            name="tlEmergencyContactNo"
             placeholder="Enter Emergency Contact Number"
-            value={formData.emergencyContactNumber}
+            value={formData.tlEmergencyContactNo}
             onChange={handleInputChange}
           />
-          {errors.emergencyContactNumber && (
-            <div className="error">{errors.emergencyContactNumber}</div>
+          {errors.tlEmergencyContactNo && (
+            <div className="error">{errors.tlEmergencyContactNo}</div>
           )}
         </div>
 
@@ -563,21 +535,21 @@ const AddEmployee = () => {
           <label> Relation With Person:</label>
           <input
             type="text"
-            name="emergencyPersonRelation"
+            name="tlEmergencyPersonRelation"
             placeholder="Enter Emergency Person Relation"
-            value={formData.emergencyPersonRelation}
+            value={formData.tlEmergencyPersonRelation}
             onChange={handleInputChange}
           />
-          {errors.emergencyPersonRelation && (
-            <div className="error">{errors.emergencyPersonRelation}</div>
+          {errors.tlEmergencyPersonRelation && (
+            <div className="error">{errors.tlEmergencyPersonRelation}</div>
           )}
         </div>
 
         <div className="addRec-form-row">
           <label>T-shirt Size:</label>
           <select
-            name="tshirtSize"
-            value={formData.tshirtSize}
+            name="tlTShirtSize"
+            value={formData.tlTShirtSize}
             onChange={handleInputChange}
           >
             <option value={""}>Select T-Shirt Size</option>
@@ -607,21 +579,21 @@ const AddEmployee = () => {
           <label>Aadhaar Number:</label>
           <input
             type="text"
-            name="aadhaarNo"
+            name="tlAadhaarNo"
             placeholder="Enter Aadhaar Number"
-            value={formData.aadhaarNo}
+            value={formData.tlAadhaarNo}
             onChange={handleInputChange}
           />
-          {errors.aadhaarNo && <div className="error">{errors.aadhaarNo}</div>}
+          {errors.tlAadhaarNo && <div className="error">{errors.tlAadhaarNo}</div>}
         </div>
 
         <div className="addRec-form-row">
           <label>PAN Card Number:</label>
           <input
             type="text"
-            name="panNo"
+            name="tlPanNo"
             placeholder="Enter PAN Card Number"
-            value={formData.panNo}
+            value={formData.tlPanNo}
             onChange={handleInputChange}
           />
         </div>
@@ -630,9 +602,9 @@ const AddEmployee = () => {
           <label>Educational Qualification:</label>
           <input
             type="text"
-            name="educationalQualification"
+            name="tlQualification"
             placeholder="Enter Educational Qualification"
-            value={formData.educationalQualification}
+            value={formData.tlQualification}
             onChange={handleInputChange}
           />
         </div>
@@ -641,13 +613,13 @@ const AddEmployee = () => {
           <label>Gross Salary:</label>
           <input
             type="text"
-            name="offeredSalary"
+            name="tlSalary"
             placeholder="Enter Gross Salary"
-            value={formData.offeredSalary}
+            value={formData.tlSalary}
             onChange={handleInputChange}
           />
-          {errors.offeredSalary && (
-            <div className="error">{errors.offeredSalary}</div>
+          {errors.tlSalary && (
+            <div className="error">{errors.tlSalary}</div>
           )}
         </div>
 
@@ -655,9 +627,9 @@ const AddEmployee = () => {
           <label>Employee Present Address:</label>
           <input
             type="text"
-            name="employeePresentAddress"
+            name="tlPresentAddress"
             placeholder="Enter Present Address"
-            value={formData.employeePresentAddress}
+            value={formData.tlPresentAddress}
             onChange={handleInputChange}
           />
         </div>
@@ -666,9 +638,9 @@ const AddEmployee = () => {
           <label>Employee Experience:</label>
           <input
             type="text"
-            name="employeeExperience"
+            name="tlExperience"
             placeholder="Enter Experience"
-            value={formData.employeeExperience}
+            value={formData.tlExperience}
             onChange={handleInputChange}
           />
         </div>
@@ -677,21 +649,21 @@ const AddEmployee = () => {
           <label>Perks:</label>
           <input
             type="text"
-            name="perks"
+            name="tlPerks"
             placeholder="Enter Perks"
-            value={formData.perks}
+            value={formData.tlPerks}
             onChange={handleInputChange}
           />
-          {errors.perks && <div className="error">{errors.perks}</div>}
+          {errors.tlPerks && <div className="error">{errors.tlPerks}</div>}
         </div>
 
         <div className="addRec-form-row">
           <label>Last Company:</label>
           <input
             type="text"
-            name="lastCompany"
+            name="tlLastCompany"
             placeholder="Enter Last Company"
-            value={formData.lastCompany}
+            value={formData.tlLastCompany}
             onChange={handleInputChange}
           />
         </div>
@@ -700,13 +672,13 @@ const AddEmployee = () => {
           <label>Work Location:</label>
           <input
             type="text"
-            name="workLocation"
+            name="tlWorkLocation"
             placeholder="Enter Work Location"
-            value={formData.workLocation}
+            value={formData.tlWorkLocation}
             onChange={handleInputChange}
           />
-          {errors.workLocation && (
-            <div className="error">{errors.workLocation}</div>
+          {errors.tlWorkLocation && (
+            <div className="error">{errors.tlWorkLocation}</div>
           )}
         </div>
 
@@ -714,21 +686,21 @@ const AddEmployee = () => {
           <label>Entry Source:</label>
           <input
             type="text"
-            name="entrySource"
+            name="tlEntrySource"
             placeholder="Enter Entry Source"
-            value={formData.entrySource}
+            value={formData.tlEntrySource}
             onChange={handleInputChange}
           />
-          {errors.entrySource && (
-            <div className="error">{errors.entrySource}</div>
+          {errors.tlEntrySource && (
+            <div className="error">{errors.tlEntrySource}</div>
           )}
         </div>
 
         <div className="addRec-form-row">
           <label>Employee Status:</label>
           <select
-            name="employeeStatus"
-            value={formData.employeeStatus}
+            name="teamLeaderStatus"
+            value={formData.teamLeaderStatus}
             onChange={handleInputChange}
           >
             <option value={""}>Select Employee Status</option>
@@ -751,21 +723,21 @@ const AddEmployee = () => {
           <label>Reason for Leaving:</label>
           <input
             type="text"
-            name="reasonForLeaving"
+            name="tlReasonForLeaving"
             placeholder="Enter Reason for Leaving"
-            value={formData.reasonForLeaving}
+            value={formData.tlReasonForLeaving}
             onChange={handleInputChange}
           />
-          {errors.reasonForLeaving && (
-            <div className="error">{errors.reasonForLeaving}</div>
+          {errors.tlReasonForLeaving && (
+            <div className="error">{errors.tlReasonForLeaving}</div>
           )}
         </div>
 
         <div className="addRec-form-row">
           <label>Induction (Yes/No):</label>
           <select
-            name="inductionYesOrNo"
-            value={formData.inductionYesOrNo}
+            name="tlInductionYesOrNo"
+            value={formData.tlInductionYesOrNo}
             onChange={handleInputChange}
           >
             <option value={""}>Select Yes or No</option>
@@ -778,13 +750,13 @@ const AddEmployee = () => {
           <label>Induction Comment:</label>
           <input
             type="text"
-            name="inductionComment"
+            name="tlInductionComment"
             placeholder="Enter Induction Comment"
-            value={formData.inductionComment}
+            value={formData.tlInductionComment}
             onChange={handleInputChange}
           />
-          {errors.inductionComment && (
-            <div className="error">{errors.inductionComment}</div>
+          {errors.tlInductionComment && (
+            <div className="error">{errors.tlInductionComment}</div>
           )}
         </div>
 
@@ -792,21 +764,21 @@ const AddEmployee = () => {
           <label>Training Source:</label>
           <input
             type="text"
-            name="trainingSource"
+            name="tlTrainingSource"
             placeholder="Enter Training Source"
-            value={formData.trainingSource}
+            value={formData.tlTrainingSource}
             onChange={handleInputChange}
           />
-          {errors.trainingSource && (
-            <div className="error">{errors.trainingSource}</div>
+          {errors.tlTrainingSource && (
+            <div className="error">{errors.tlTrainingSource}</div>
           )}
         </div>
 
         <div className="addRec-form-row">
           <label>Training Completed (Yes/No):</label>
           <select
-            name="trainingCompletedYesOrNo"
-            value={formData.trainingCompletedYesOrNo}
+            name="tlTrainingCompleted"
+            value={formData.tlTrainingCompleted}
             onChange={handleInputChange}
           >
             <option value={""}>Select Yes or No</option>
@@ -819,13 +791,13 @@ const AddEmployee = () => {
           <label>Training Taken Count:</label>
           <input
             type="number"
-            name="trainingTakenCount"
+            name="tlTrainingTakenCount"
             placeholder="Enter Training Taken Count"
-            value={formData.trainingTakenCount}
+            value={formData.tlTrainingTakenCount}
             onChange={handleInputChange}
           />
-          {errors.trainingTakenCount && (
-            <div className="error">{errors.trainingTakenCount}</div>
+          {errors.tlTrainingTakenCount && (
+            <div className="error">{errors.tlTrainingTakenCount}</div>
           )}
         </div>
 
@@ -833,13 +805,13 @@ const AddEmployee = () => {
           <label>Rounds of Interview:</label>
           <input
             type="text"
-            name="roundsOfInterview"
+            name="tlRoundsOfInterview"
             placeholder="Enter Rounds of Interview"
-            value={formData.roundsOfInterview}
+            value={formData.tlRoundsOfInterview}
             onChange={handleInputChange}
           />
-          {errors.roundsOfInterview && (
-            <div className="error">{errors.roundsOfInterview}</div>
+          {errors.tlRoundsOfInterview && (
+            <div className="error">{errors.tlRoundsOfInterview}</div>
           )}
         </div>
 
@@ -847,13 +819,13 @@ const AddEmployee = () => {
           <label>Interview Taken By:</label>
           <input
             type="text"
-            name="interviewTakenPerson"
+            name="tlInterviewTakenPerson"
             placeholder="Enter Interview Taken By"
-            value={formData.interviewTakenPerson}
+            value={formData.tlInterviewTakenPerson}
             onChange={handleInputChange}
           />
-          {errors.interviewTakenPerson && (
-            <div className="error">{errors.interviewTakenPerson}</div>
+          {errors.tlInterviewTakenPerson && (
+            <div className="error">{errors.tlInterviewTakenPerson}</div>
           )}
         </div>
 
@@ -861,13 +833,13 @@ const AddEmployee = () => {
           <label>Warning Comments:</label>
           <input
             type="text"
-            name="warningComments"
+            name="tlWarningComments"
             placeholder="Enter Warning Comments"
-            value={formData.warningComments}
+            value={formData.tlWarningComments}
             onChange={handleInputChange}
           />
-          {errors.warningComments && (
-            <div className="error">{errors.warningComments}</div>
+          {errors.tlWarningComments && (
+            <div className="error">{errors.tlWarningComments}</div>
           )}
         </div>
 
@@ -875,13 +847,13 @@ const AddEmployee = () => {
           <label>Performance Indicator:</label>
           <input
             type="text"
-            name="performanceIndicator"
+            name="tlPerformanceIndicator"
             placeholder="Enter Performance Indicator"
-            value={formData.performanceIndicator}
+            value={formData.tlPerformanceIndicator}
             onChange={handleInputChange}
           />
-          {errors.performanceIndicator && (
-            <div className="error">{errors.performanceIndicator}</div>
+          {errors.tlPerformanceIndicator && (
+            <div className="error">{errors.tlPerformanceIndicator}</div>
           )}
         </div>
 
@@ -889,13 +861,13 @@ const AddEmployee = () => {
           <label>Team Leader Message:</label>
           <input
             type="text"
-            name="teamLeaderMsg"
+            name="messageForAdmin"
             placeholder="Enter Team Leader Message"
-            value={formData.teamLeaderMsg}
+            value={formData.messageForAdmin}
             onChange={handleInputChange}
           />
-          {errors.teamLeaderMsg && (
-            <div className="error">{errors.teamLeaderMsg}</div>
+          {errors.messageForAdmin && (
+            <div className="error">{errors.messageForAdmin}</div>
           )}
         </div>
 
@@ -917,9 +889,9 @@ const AddEmployee = () => {
           <label>LinkedIn URL:</label>
           <input
             type="text"
-            name="linkedInURl"
+            name="linkedInURL"
             placeholder="Enter LinkedIn URL"
-            value={formData.linkedInURl}
+            value={formData.linkedInURL}
             onChange={handleInputChange}
           />
         </div>
@@ -939,9 +911,9 @@ const AddEmployee = () => {
           <label>Twitter URL:</label>
           <input
             type="text"
-            name="twitterURl"
+            name="twitterURL"
             placeholder="Enter Twitter URL"
-            value={formData.twitterURl}
+            value={formData.twitterURL}
             onChange={handleInputChange}
           />
         </div>
@@ -950,9 +922,9 @@ const AddEmployee = () => {
           <label>Employee Address:</label>
           <input
             type="text"
-            name="employeeAddress"
+            name="tlAddress"
             placeholder="Enter Employee Address"
-            value={formData.employeeAddress}
+            value={formData.tlAddress}
             onChange={handleInputChange}
           />
         </div>
@@ -999,13 +971,13 @@ const AddEmployee = () => {
           <label>Insurance Number:</label>
           <input
             type="text"
-            name="insuranceNumber"
+            name="tlInsuranceNumber"
             placeholder="Enter Insurance Number"
-            value={formData.insuranceNumber}
+            value={formData.tlInsuranceNumber}
             onChange={handleInputChange}
           />
-          {errors.insuranceNumber && (
-            <div className="error">{errors.insuranceNumber}</div>
+          {errors.tlInsuranceNumber && (
+            <div className="error">{errors.tlInsuranceNumber}</div>
           )}
         </div>
 
@@ -1013,13 +985,13 @@ const AddEmployee = () => {
           <label>Reporting Manager Name:</label>
           <input
             type="text"
-            name="reportingMangerName"
+            name="reportingAdminName"
             placeholder="Enter Reporting Manager Name"
-            value={formData.reportingMangerName}
+            value={formData.reportingAdminName}
             onChange={handleInputChange}
           />
-          {errors.reportingMangerName && (
-            <div className="error">{errors.reportingMangerName}</div>
+          {errors.reportingAdminName && (
+            <div className="error">{errors.reportingAdminName}</div>
           )}
         </div>
 
@@ -1027,36 +999,28 @@ const AddEmployee = () => {
           <label>Reporting Manager Designation:</label>
           <input
             type="text"
-            name="reportingMangerDesignation"
+            name="reportingAdminDesignation"
             placeholder="Enter Reporting Manager Designation"
-            value={formData.reportingMangerDesignation}
+            value={formData.reportingAdminDesignation}
             onChange={handleInputChange}
           />
-          {errors.reportingMangerDesignation && (
-            <div className="error">{errors.reportingMangerDesignation}</div>
+          {errors.reportingAdminDesignation && (
+            <div className="error">{errors.reportingAdminDesignation}</div>
           )}
         </div>
-
-
         <div className="addRec-form-row">
           <label>Upload Resume:</label>
           <input type="file"
             multiple
             name="resumeFile" onChange={handleInputChange} />
         </div>
-
         <div className="addRec-form-row">
           <label>Upload Profile Image:</label>
           <input
             type="file"
             name="profileImage"
             onChange={handleInputChange}
-            
           />
-           {errors.profileImage && (
-    <div className="error">{errors.profileImage}
-    </div>
-  )}
         </div>
 
         <div className="addRec-form-row">
@@ -1064,7 +1028,6 @@ const AddEmployee = () => {
           <input type="file"
             multiple
             name="document" onChange={handleInputChange} />
-            
         </div>
 
         <div className="addRec-form-row">
@@ -1078,9 +1041,9 @@ const AddEmployee = () => {
             </div>
             <input
               type={passwordVisible ? "text" : "password"}
-              name="employeePassword"
+              name="tlPassword"
               placeholder="Enter Password"
-              value={formData.employeePassword}
+              value={formData.tlPassword}
               onChange={handleInputChange}
             />
           </div>
@@ -1096,9 +1059,9 @@ const AddEmployee = () => {
             </div>
             <input
               type={passwordVisible ? "text" : "password"}
-              name="confirmPassword"
+              name="tlConfirmPassword"
               placeholder="Confirm Password"
-              value={formData.confirmPassword}
+              value={formData.tlConfirmPassword}
               onChange={handleInputChange}
               onBlur={handleConfirmPasswordBlur}
             />
@@ -1120,4 +1083,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default AddTeamLeader;

@@ -807,6 +807,7 @@ const CallingList = ({
                         Date & Time {getSortIcon("date")}
                       </th>
                       <th className="attendanceheading">Candidate's Id</th>
+
                       <th
                         className="attendanceheading"
                         onClick={() => handleSort("recruiterName")}
@@ -841,6 +842,16 @@ const CallingList = ({
                       <th className="attendanceheading">
                         Interested and Eligible
                       </th>
+                      <th className="attendanceheading">Employee Id</th>
+                      {userType === 'TeamLeader' && (
+                        <th  className="attendanceheading">Team Leader Id</th>
+                      )}
+                      {userType === 'Manager' && (
+                        <>
+                          <th  className="attendanceheading">Team Leader ID</th>
+                          <th  className="attendanceheading">Manager ID</th>
+                        </>
+                      )}
                       <th className="attendanceheading">Action</th>
                     </tr>
                   </thead>
@@ -896,6 +907,7 @@ const CallingList = ({
                             </span>
                           </div>
                         </td>
+
 
                         <td
                           className="tabledata "
@@ -1079,6 +1091,63 @@ const CallingList = ({
                             </span>
                           </div>
                         </td>
+                        <td
+                          className="tabledata "
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.empId}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.empId}{" "}
+                            </span>
+                          </div>
+                        </td>
+
+                        {userType === 'TeamLeader' && (
+                          <td
+                            className="tabledata"
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                          >
+                            {item.teamLeaderId}
+                            <div className="tooltip">
+                              <span className="tooltiptext">
+                                {item.teamLeaderId}
+                              </span>
+                            </div>
+                          </td>
+                        )}
+
+                        {userType === 'Manager' && (
+                          <>
+                            <td
+                              className="tabledata"
+                              onMouseOver={handleMouseOver}
+                              onMouseOut={handleMouseOut}
+                            >
+                              {item.teamLeaderId}
+                              <div className="tooltip">
+                                <span className="tooltiptext">
+                                  {item.teamLeaderId}
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              className="tabledata"
+                              onMouseOver={handleMouseOver}
+                              onMouseOut={handleMouseOut}
+                            >
+                              {item.managerId}
+                              <div className="tooltip">
+                                <span className="tooltiptext">
+                                  {item.managerId}
+                                </span>
+                              </div>
+                            </td>
+                          </>
+                        )}
+
                         <td className="tabledata">
                           <i
                             onClick={() =>

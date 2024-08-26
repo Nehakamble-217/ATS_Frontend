@@ -7,6 +7,7 @@ import logoutImg from "../photos/download.jpeg";
 import { Modal, Button } from "react-bootstrap";
 import CallingTrackerForm from "../EmployeeSection/CallingTrackerForm";
 import { API_BASE_URL } from "../api/api";
+import watingImg from '../photos/fire-relax.gif'
 // SwapnilRokade_DailyWork_LogoutFunctionalityWorking_31/07
 
 function DailyWork({
@@ -21,7 +22,6 @@ function DailyWork({
 }) {
 
   const { employeeId } = useParams();
-  const [showDetails, setShowDetails] = useState(false);
   const [fetchWorkId, setFetchWorkId] = useState(null);
   const [employeeData, setEmployeeData] = useState({});
   const [employeeName, setEmployeeName] = useState();
@@ -29,14 +29,12 @@ function DailyWork({
   const [profileImageBase64, setProfileImageBase64] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [showAllDailyBtns, setShowAllDailyBtns] = useState(true);
-
   const [loginDetailsSaved, setLoginDetailsSaved] = useState(false);
   const [showAlreadyLoggedInMessage, setShowAlreadyLoggedInMessage] = useState(false);
 
   const [buttonColor, setButtonColor] = useState(() => {
     return localStorage.getItem('buttonColor') || '#ffb281';
   });
-
 
   const handleColorChange = (color, btnColor) => {
     setBackgroundColor(color);
@@ -56,11 +54,6 @@ function DailyWork({
     localStorage.setItem('sidebarBackgroundColor', '#ffe5b5');
   }, []);
 
-
-
-  const toggleDailyTBtn = () => {
-    setShowDetails(!showDetails);
-  };
 
   const getStoredTime = () => {
     const storedTime = localStorage.getItem(`stopwatchTime_${employeeId}`);
@@ -90,6 +83,8 @@ function DailyWork({
   const [dayPresentUnpaid, setDayPresentUnpaid] = useState("Yes");
   const [remoteWork, setRemoteWork] = useState("Select");
   const [profileImage, setProfileImage] = useState(null);
+  const [showPauseModal, setShowPauseModal] = useState(false);
+  const [allowCloseModal, setAllowCloseModal] = useState(false);
 
   const navigate = useNavigate();
   const { userType } = useParams();
@@ -107,7 +102,6 @@ function DailyWork({
       if (response.data) {
         saveUserDetails(response.data.name);
       }
-      //Akash_Pawar_DailyWork_senderinformation_09/07_74
       onCurrentEmployeeJobRoleSet(response.data.jobRole);
       const emailSender = {
         senderName: response.data.name,
@@ -186,7 +180,7 @@ function DailyWork({
       }
 
       try {
-        console.log("1------");
+
         console.log(name);
         const now = new Date();
         const day = now.getDate().toString().padStart(2, "0");
@@ -210,16 +204,12 @@ function DailyWork({
           `dailyWorkData_${employeeId}`,
           JSON.stringify({ archived: data.archived, pending: data.pending })
         );
-
-
-        console.log(formData);
         const response = await axios.post(
           `${API_BASE_URL}/save-daily-work/${employeeId}/${userType}`,
           formData
         );
 
         if (response.data) {
-          console.log(response.data);     
           fetchCurrentEmployerWorkId();
         }
         console.log("Login details saved successfully.");
@@ -249,10 +239,8 @@ function DailyWork({
       const response = await axios.get(
         `${API_BASE_URL}/fetch-work-id/${employeeId}/${userType}`
       );
-
       setFetchWorkId(response.data);
-      console.log(response.data);
-      
+      console.log(response.data +"----->");
     } catch (error) {
       console.error("Error fetching work ID:", error);
     }
@@ -274,17 +262,15 @@ function DailyWork({
       const login = new Date(today.toDateString() + " " + loginTime);
       const logout = logoutTime
         ? new Date(today.toDateString() + " " + logoutTime)
-        : new Date(); // Use current date and time
+        : new Date(); 
 
       console.log(`Login Date: ${login}`);
       console.log(`Logout Date: ${logout}`);
 
-      // Calculate total work time in seconds
       let totalWorkTime = (logout - login) / 1000;
 
       console.log(`Initial Total Work Time (seconds): ${totalWorkTime}`);
 
-      // Calculate total break duration in seconds
       let totalBreakDuration = 0;
       if (breaks && breaks.length > 0) {
         breaks.forEach((b) => {
@@ -307,22 +293,18 @@ function DailyWork({
 
       console.log(`Total Break Duration (seconds): ${totalBreakDuration}`);
 
-      // Subtract break durations from total work time
       totalWorkTime -= totalBreakDuration;
 
       console.log(`Adjusted Total Work Time (seconds): ${totalWorkTime}`);
 
-      // Handle negative total work time by setting it to 0
       if (totalWorkTime < 0) {
         totalWorkTime = 0;
       }
 
-      // Convert total work time from seconds to hours, minutes, seconds
       const hours = Math.floor(totalWorkTime / 3600);
       const minutes = Math.floor((totalWorkTime % 3600) / 60);
       const seconds = Math.floor(totalWorkTime % 60);
 
-      // Format the time into HH:mm:ss
       const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
         .toString()
         .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
@@ -415,7 +397,15 @@ function DailyWork({
     const updatedBreaks = [...breaks, { breakStartTime: now }];
     setBreaks(updatedBreaks);
     localStorage.setItem(`breaks_${employeeId}`, JSON.stringify(updatedBreaks));
+    setShowPauseModal(true);
   };
+
+  useEffect(() => {
+    // Reset allowCloseModal whenever showPauseModal changes
+    if (!showPauseModal) {
+      setAllowCloseModal(false); // Ensure modal cannot close until Resume is clicked again
+    }
+  }, [showPauseModal]);
 
   const handleResume = () => {
     setRunning(true);
@@ -425,6 +415,8 @@ function DailyWork({
     );
     setBreaks(updatedBreaks);
     localStorage.setItem(`breaks_${employeeId}`, JSON.stringify(updatedBreaks));
+    setAllowCloseModal(true); // Allow modal to close
+    setShowPauseModal(false); // Close the modal
   };
 
   //Name:-Akash Pawar Component:-DailyWork Subcategory:-handleLogoutLocal(changed) Start LineNo:-530 Date:-01/07
@@ -451,7 +443,7 @@ function DailyWork({
         present = "present";
       }
       let checkHalfDay = "No";
-      console.log(typeof(totalHoursWork));
+      console.log(typeof (totalHoursWork));
       const formData = {
         employeeId,
         date: `${day}/${month}/${year}`,
@@ -527,7 +519,7 @@ function DailyWork({
             157{employeeId}
           </p>
         </div>
-      </div>      
+      </div>
       <button
         className="toggle-all-daily-btns"
         onClick={toggleAllDailyBtns}
@@ -544,7 +536,7 @@ function DailyWork({
             className={`all-daily-btns ${!showAllDailyBtns ? "hidden" : ""}`}
           >
             <div className="daily-t-btn">
-              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap"}}>
+              <button className="daily-tr-btn" style={{ whiteSpace: "nowrap" }}>
                 Target : 10
               </button>
               <button
@@ -600,8 +592,7 @@ function DailyWork({
             <button
               className={running ? "timer-break-btn" : "timer-break-btn"}
               onClick={running ? handlePause : handleResume}
-              style={{ height: "30px"}}
-            >
+              style={{ height: "30px" }}>
               {running ? "Pause" : "Resume"}
             </button>
           </div>
@@ -612,6 +603,34 @@ function DailyWork({
           >
             {showAllDailyBtns ? "Hide All Buttons" : "Show All Buttons"}
           </button>
+
+          <Modal
+  show={showPauseModal}
+  onHide={() => {
+    if (allowCloseModal) {
+      setShowPauseModal(false);
+    }
+  }}
+  className="dw-modal"
+>
+  <div onClick={(e) => e.stopPropagation()} className="dw-modal-content">
+    <Modal.Header closeButton>
+      <Modal.Title className="dw-modal-title">Break Runing...</Modal.Title>
+    </Modal.Header>
+    <div>
+      <img src={watingImg} alt="Waiting" className="dw-waiting-img" />
+    </div>
+    <Modal.Footer className="dw-modal-footer">
+   <div  className="dw-resume-div">
+   <h3>Timer is paused. Click Resume to continue.</h3>
+      <div className="profile-back-button" >
+        <button className="profile-back-button"  onClick={handleResume}>Resume</button>
+      </div>
+   </div>
+    </Modal.Footer>
+  </div>
+</Modal>
+
         </>
       ) : null}
     </div>

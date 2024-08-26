@@ -26,7 +26,6 @@
 }
 
 .tabs button.active {
-  background-color: #007bff;
   color: white;
 }
 
@@ -39,7 +38,7 @@
 
 .interview-table th,
 .interview-table td {
-  padding: 12px 15px;
+  /* padding: px 10px; */
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -48,7 +47,6 @@
   background-color: #f8f8f8;
   font-weight: bold;
   color: #333;
-  text-transform: uppercase;
 }
 
 .interview-table tr:hover {

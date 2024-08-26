@@ -374,6 +374,13 @@ const EmployeeMasterSheet = () => {
                   />
                 </th>
               ) : null}
+               
+                      
+                   
+              <th className="attendanceheading">Emp ID</th>
+              {(userType === 'TeamLeader' || userType === 'Manager') && (
+                        <th className="attendanceheading">Team Leader Id</th>
+                      )}
               <th className="attendanceheading">Candidate ID</th>
               <th className="attendanceheading">Alternate Number</th>
               <th className="attendanceheading">Calling Feedback</th>
@@ -389,7 +396,6 @@ const EmployeeMasterSheet = () => {
               <th className="attendanceheading">Requirement ID</th>
               <th className="attendanceheading">Interested Or Not</th>
               <th className="attendanceheading">Source Name</th>
-              <th className="attendanceheading">Emp ID</th>
               <th className="attendanceheading">Line Up ID</th>
               <th className="attendanceheading">Added Time</th>
               <th className="attendanceheading">Full Address</th>
@@ -473,6 +479,10 @@ const EmployeeMasterSheet = () => {
                   </td>
                 ) : null}
 
+                <td className="tabledata">{entry[15]}</td>
+                {(userType === 'TeamLeader' || userType === 'Manager') && (
+                <td className="tabledata">{entry[73]}</td>
+                )}
                 <td className="tabledata">{entry[0]}</td>
                 <td className="tabledata">{entry[1]}</td>
                 <td className="tabledata">{entry[2]}</td>
@@ -488,7 +498,6 @@ const EmployeeMasterSheet = () => {
                 <td className="tabledata">{entry[12]}</td>
                 <td className="tabledata">{entry[13]}</td>
                 <td className="tabledata">{entry[14]}</td>
-                <td className="tabledata">{entry[15]}</td>
                 <td className="tabledata">{entry[16]}</td>
                 <td className="tabledata">{entry[17]}</td>
                 <td className="tabledata">{entry[18]}</td>

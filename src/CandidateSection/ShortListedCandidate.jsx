@@ -939,6 +939,7 @@ const ShortListedCandidates = ({
                       </span>
                     </div>
                   </td>
+
                   <td
                     className="tabledata"
                     onMouseOver={handleMouseOver}
@@ -949,6 +950,7 @@ const ShortListedCandidates = ({
                       <span className="tooltiptext">{item.fullAddress}</span>
                     </div>
                   </td>
+
                   <td className="tabledata">{item.callingFeedback}</td>
                   <td className="tabledata">{item.incentive}</td>
                   <td className="tabledata">{item.selectYesOrNo}</td>
@@ -986,7 +988,18 @@ const ShortListedCandidates = ({
                   <td className="tabledata">{item.msgForTeamLeader}</td>
                   <td className="tabledata">{item.availabilityForInterview}</td>
                   <td className="tabledata">{item.interviewTime}</td>
-                  <td className="tabledata">{item.finalStatus}</td>
+                  {/* <td className="tabledata">{item.finalStatus}</td> */}
+
+                  <td
+                    className="tabledata"
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                  >
+                    {item.finalStatus}
+                    <div className="tooltip">
+                      <span className="tooltiptext">{item.finalStatus}</span>
+                    </div>
+                  </td>
                   <td className="tabledata">
                   
                     <i

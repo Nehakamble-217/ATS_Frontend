@@ -14,7 +14,7 @@ import { API_BASE_URL } from "../api/api";
 const LineUpList = ({
   updateState,
   funForGettingCandidateId,
-  loginEmployeeName,  
+  loginEmployeeName,
 }) => {
   const [callingList, setCallingList] = useState([]);
   const { employeeId } = useParams();
@@ -975,6 +975,12 @@ const LineUpList = ({
                       </th>
                       <th className="attendanceheading">Interview Time</th>
                       <th className="attendanceheading">Interview Status</th>
+                      <th className="attendanceheading">Employee ID</th>
+
+                      {(userType === 'TeamLeader' || userType === 'Manager') && (
+                        <th className="attendanceheading">Team Leader Id</th>
+                      )}
+
                       <th className="attendanceheading">Action</th>
                     </tr>
                   </thead>
@@ -1494,12 +1500,41 @@ const LineUpList = ({
                             </div>
                           </td>
 
+                          <td
+                            className="tabledata"
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                          >
+                            {item.empId || "-"}
+                            <div className="tooltip">
+                              <span className="tooltiptext">
+                                {item.empId}
+                              </span>
+                            </div>
+                          </td>
+
+                          {(userType === 'TeamLeader' || userType === 'Manager') && (
+                            <td
+                              className="tabledata"
+                              onMouseOver={handleMouseOver}
+                              onMouseOut={handleMouseOut}
+                            >
+                              {item.teamLeaderId}
+                              <div className="tooltip">
+                                <span className="tooltiptext">
+                                  {item.teamLeaderId}
+                                </span>
+                              </div>
+                            </td>
+                          )}
+
                           <td className="tabledata">
                             <i
                               onClick={() => handleUpdate(item.candidateId)}
                               className="fa-regular fa-pen-to-square"
                             ></i>
                           </td>
+                          
                         </>
                       </tr>
                     ))}

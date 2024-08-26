@@ -14,15 +14,12 @@ const LoginSignup = ({ onLogin }) => {
   const [error, setError] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [login, setLogin] = useState("");
-
   const navigate = useNavigate();
-
   useEffect(() => {
     AOS.init({ duration: 3000 });
   }, []);
 
   useEffect(() => {
-    // Retrieve the saved color from local storage and apply it
     const savedColor = localStorage.getItem("selectedColor");
     if (savedColor) {
       applyColor(savedColor);
@@ -43,7 +40,6 @@ const LoginSignup = ({ onLogin }) => {
     };
 
     const hoverColor = darkenColor(color, -30);
-
     document.documentElement.style.setProperty("--Bg-color", color);
     document.documentElement.style.setProperty("--button-color", color);
     document.documentElement.style.setProperty("--button-hover-color", hoverColor);
@@ -53,7 +49,7 @@ const LoginSignup = ({ onLogin }) => {
 
   useEffect(() => {
     if (employeeId && userType) {
-      fetch(`http://93.127.199.85/api/ats/157industries/fetch-pass-on-role/${employeeId}/${userType}`
+      fetch(`${API_BASE_URL}/fetch-pass-on-role/${employeeId}/${userType}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -94,25 +90,6 @@ const LoginSignup = ({ onLogin }) => {
       setError("Error occurred. Please try again.");
     }
   };
-
-  const dashboardLinke = () => {
-    console.log(userType + "------------");
-
-    if (userType === "Recruiters") {
-      navigate("/Dashboard/1/Recruiters");
-    } else if (userType === "TeamLeader") {
-      navigate("/Dashboard/434/TeamLeader");
-    } else if (userType === "Manager") {
-      navigate("/Dashboard/870/Manager");
-    } else if (userType === "SuperUser") {
-      navigate("/Dashboard/390/SuperUser");
-    } else {
-      console.log("Invalid user type");
-    }
-  };
-
-
-
 
   return (
     <div className="main-body">
@@ -181,12 +158,7 @@ const LoginSignup = ({ onLogin }) => {
                   Login
                 </button>
                 <div className="acc-create-div">
-                  <span
-                    className="account-create-span"
-                    onClick={dashboardLinke}
-                  >
-                    Dash Board Link
-                  </span>
+
                   <span
                     className="account-create-span"
                     onClick={() => setShowForgotPassword(true)}

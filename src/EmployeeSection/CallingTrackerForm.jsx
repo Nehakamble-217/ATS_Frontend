@@ -17,6 +17,7 @@ import Confetti from "react-confetti";
 // import ClipLoader from "react-spinners/ClipLoader";
 import CandidateHistoryTracker from "../CandidateSection/candidateHistoryTracker";
 import { API_BASE_URL } from "../api/api";
+import Loader from "./loader";
 
 const CallingTrackerForm = ({
   onsuccessfulDataAdditions,
@@ -91,6 +92,7 @@ const CallingTrackerForm = ({
   const [startpoint, setStartPoint] = useState("");
   const [endpoint, setendPoint] = useState("");
   const [resumeFile,setResumeFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   
 
   useEffect(() => {
@@ -334,8 +336,6 @@ const CallingTrackerForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate data
     let callingTrackerErrors = validateCallingTracker();
     let lineUpDataErrors = validateLineUpData();
     if (Object.keys(callingTrackerErrors).length > 0 || Object.keys(lineUpDataErrors).length > 0) {
@@ -354,6 +354,7 @@ const CallingTrackerForm = ({
     }
 
     setSubmited(true);
+    setLoading(true); 
 
     try {
         let dataToUpdate = {
@@ -403,26 +404,25 @@ const CallingTrackerForm = ({
           }
         );
 
-        console.log("Response data:", response.data);
-
-        if (callingTracker.selectYesOrNo === "Interested") {
-          onsuccessfulDataAdditions=true;
-        } else {
-          onsuccessfulDataAdditions=false;
-        }
-
-        if (response.status === 200) { // Check for successful status
+        if (response.status === 200) { 
+          if (callingTracker.selectYesOrNo === "Interested") {
+            onsuccessfulDataAdditions=true;
+          } else {
+            onsuccessfulDataAdditions=false;
+          }
             setSubmited(false);
             setShowConfetti(true);
-            setTimeout(() => setShowConfetti(false), 5000);
-            toast.success("Data added successfully!");
+            setTimeout(() => setShowConfetti(false), 4000);
+            toast.success("Candidate Added Successfully..")
             setCallingTracker(initialCallingTrackerState);
             setLineUpData(initialLineUpState);
         }
     } catch (error) {
         setSubmited(false);
         toast.error("An error occurred: " + error.message);
-    }
+    }finally {
+      setLoading(false); // Hide loader
+  }
 };
 
 
@@ -546,6 +546,7 @@ const CallingTrackerForm = ({
   return (
     <div className="calling-tracker-main">
       <section className="calling-tracker-submain">
+      {loading && <Loader />}
         <form onSubmit={handleSubmit}>
           {showConfetti && (
             <Confetti
@@ -1734,12 +1735,12 @@ const CallingTrackerForm = ({
           <center>
             <div className="buttonDiv">
               {callingTracker.selectYesOrNo !== "Interested" && (
-                <button type="submit" className="ctf-btn">
+                <button type="submit" disabled={loading} className="ctf-btn">
                   Add To Calling
                 </button>
               )}
               {callingTracker.selectYesOrNo === "Interested" && (
-                <button type="submit" className="ctf-btn" id="uploadbtn2">
+                <button type="submit" disabled={loading} className="ctf-btn" id="uploadbtn2">
                   Add To LineUp
                 </button>
               )}

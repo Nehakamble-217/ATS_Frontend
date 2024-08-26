@@ -68,6 +68,8 @@ function Sidebar({
   /*ArbazPathan_EmpDashboard_AddedInterviewForm_29/07/2024_LineNo_65-66 */
   toggeleInterviewForm,
   togglePerformanceImprovement,
+  toggeleAddTeamLeader,
+  toggeleAddManager,
 }) {
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -808,7 +810,7 @@ function Sidebar({
                             <a href="#">
                               {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                               <span className="sidebar-text">
-                                Employee Details
+                                Team Details
                               </span>
                             </a>
                           </li>
@@ -976,19 +978,19 @@ function Sidebar({
                       >
                         <a href="#">
                           {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
-                          <span className="sidebar-text">Employee Details</span>
+                          <span className="sidebar-text">Team Details</span>
                         </a>
                       </li>
 
                       <>
                         <li
                           onClick={handleButtonClick(
-                            "addRecruiter",
-                            toggelAddRecruiter
+                            "addTeamLeader",
+                            toggeleAddTeamLeader
                           )}
                           style={{ marginLeft: "10px" }}
                           className={
-                            activeButton === "addRecruiter" ? "active" : ""
+                            activeButton === "addTeamLeader" ? "active" : ""
                           }
                         >
                           <a href="#">
@@ -1146,7 +1148,7 @@ function Sidebar({
                       <li
                         onClick={handleButtonClick(
                           "addRecruiter",
-                          toggelAddRecruiter
+                          toggeleAddManager
                         )}
                         style={{ marginLeft: "10px" }}
                         className={
@@ -1156,6 +1158,15 @@ function Sidebar({
                         <a href="#">
                           {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
                           <span className="sidebar-text">Add Manager</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={toggleEmployeeDetails}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        <a href="#">
+                          {/* <img src={Circle} style={{ width: "10px" }} alt="" /> */}
+                          <span className="sidebar-text">Team Details</span>
                         </a>
                       </li>
                       <li

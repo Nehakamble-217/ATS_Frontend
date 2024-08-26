@@ -943,6 +943,11 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                       </th>
                       <th className="attendanceheading">Interview Time</th>
                       <th className="attendanceheading">Final Status</th>
+                      <th className="attendanceheading">Employee Id</th>
+                      
+                      {(userType === 'TeamLeader' || userType === 'Manager') && (
+                        <th className="attendanceheading">Team Leader Id</th>
+                      )}
                       <th className="attendanceheading">Action</th>
                     </tr>
                   </thead>
@@ -1433,6 +1438,34 @@ const SelectedCandidate = ({ loginEmployeeName }) => {
                             </span>
                           </div>
                         </td>
+                        <td
+                          className="tabledata "
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {item.empId}{" "}
+                          <div className="tooltip">
+                            <span className="tooltiptext">
+                              {item.empId}
+                            </span>
+                          </div>
+                        </td>
+
+                        {(userType === 'TeamLeader' || userType === 'Manager') && (
+                            <td
+                              className="tabledata"
+                              onMouseOver={handleMouseOver}
+                              onMouseOut={handleMouseOut}
+                            >
+                              {item.teamLeaderId}
+                              <div className="tooltip">
+                                <span className="tooltiptext">
+                                  {item.teamLeaderId}
+                                </span>
+                              </div>
+                            </td>
+                          )}
+
                         <td className="tabledata ">
                           <i
                             onClick={() => viewPage(item.candidateId,item.requirementId)}

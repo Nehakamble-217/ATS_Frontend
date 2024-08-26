@@ -20,13 +20,13 @@ const EmployeeDetails = () => {
   // const [employeeId, setEmployeeId] = useState(null);
   const [employeeRole, setEmployeeRole] = useState("");
   const [showEmployee, setShowEmployee] = useState(false);
-  const { employeeId } = useParams();
+  const { employeeId,userType } = useParams();
   
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/detail-for-update/${employeeId}`
+          `${API_BASE_URL}/employee-details/${employeeId}/${userType}`
         );
         setEmployeeData(response.data);
         setLoading(false);
@@ -39,10 +39,6 @@ const EmployeeDetails = () => {
     fetchData();
   }, []);
 
-  const handleDelete = (employeeId) => {
-    console.log(`Deleting employee with ID: ${employeeId}`);
-    setDeletedEmployees([...deletedEmployees, employeeId]);
-  };
 
   const handleBlock = (employeeId) => {
     console.log(`Blocking employee with ID: ${employeeId}`);
@@ -264,14 +260,14 @@ const EmployeeDetails = () => {
                     </td>
                     <td className="tabledata">
                       <div className="emp-details-act-btn">
-                        <button
+                        {/* <button
                           className="action-button"
                           onClick={() => handleDelete(employee.id)}
                         >
                           {isDeleted(employee.employeeId)
                             ? "Deleted"
                             : "Delete"}
-                        </button>
+                        </button> */}
                         <button
                           className="action-button"
                           onClick={() => handleBlock(employee.id)}

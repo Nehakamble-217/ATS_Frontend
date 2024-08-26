@@ -50,9 +50,9 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
   const fetchUpdateResponseList = async () => {
     try {
       const res = await fetch(
-        `${API_BASE_URL}/update-candidate-data/${employeeId}`
+        `${API_BASE_URL}/update-candidate-data/${employeeId}/${userType}`
       );
-      const data = await res.json(); // Update here to parse JSON correctly
+      const data = await res.json(); 
       if (Array.isArray(data)) {
         setCallingList(data);
         setFilteredCallingList(data);
@@ -185,7 +185,7 @@ const UpdateResponse = ({ onSuccessAdd, date }) => {
       if (values.length > 0) {
         filteredData = filteredData.filter((item) =>
           values.some((value) =>
-            item[option]?.toString().toLowerCase().includes(value.toLowerCase())
+            item[option]?.toString().toLowerCase().includes(value)
           )
         );
       }

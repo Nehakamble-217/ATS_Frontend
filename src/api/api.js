@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const API_BASE_URL = "http://93.127.199.85/api/ats/157industries";
 
-export const CHAT_BASE_URL = "http://93.127.199.85/";
+export const CHAT_BASE_URL = "http://93.127.199.85";
 
 
 export const addEmployee = (employee) => {

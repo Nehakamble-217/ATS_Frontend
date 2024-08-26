@@ -236,7 +236,6 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
 
     return (
       <div className="App-after">
-
         <div className="interview-data-div">
         <table id="shortlisted-table-id" className="attendance-table">
         <thead>
@@ -245,7 +244,7 @@ const InterviewDates = ({ toggleShowShortListedCandidateData }) => {
                 <th className="attendanceheading">Candidate Id</th>
                 <th className="attendanceheading">Added Date</th>
                 <th className="attendanceheading">Interview Date</th>
-                <th className="attendanceheading">Interview Time</th>
+                <th className="attendanceheading">Interview Time </th>
                 <th className="attendanceheading">Candidate Name</th>
                 <th className="attendanceheading">Candidate Email</th>
                 <th className="attendanceheading">Job Id</th>

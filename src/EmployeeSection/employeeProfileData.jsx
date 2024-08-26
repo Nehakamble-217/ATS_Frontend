@@ -10,7 +10,7 @@ const EmployeeProfileData = ({
   onClose,
   toggleIncentive,
   toggleAttendance,
-  toggleTeamDetails,
+  // toggleTeamDetails,
   togglePerformanceImprovement,
 }) => {
   const [viewMoreProfileShow, setViewMoreProfileShow] = useState(false);
@@ -68,6 +68,13 @@ const EmployeeProfileData = ({
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  const handleEditProfile = () => {
+    history.push({
+      pathname: "/edit-employee", // replace with your AddEmployee component route
+      state: { employeeData }, // pass employeeData as state
+    });
+  };
+
   const goBackToDashBoard = (e) => {
     e.preventDefault();
     setViewMoreProfileShow(false);
@@ -90,6 +97,7 @@ const EmployeeProfileData = ({
             <div className="employee-profile-staticsection">
               <div className="employee-profile-static">
                 <div className="employee-profile-details">
+
                   <img src={profileImage} />
                   <p className="m-0">
                     <b>Name: {employeeData?.name}</b>
@@ -97,6 +105,7 @@ const EmployeeProfileData = ({
                   <p className="m-0">
                     <b>Designation: {employeeData.designation}</b>
                   </p>
+
                 </div>
                 <div className="employee-profile-basic-details">
                   <p className="m-1">
@@ -223,22 +232,31 @@ const EmployeeProfileData = ({
                     <i className="fa-solid fa-i"></i>
                   </div>
                 </div>
+
                 <div className="profile-back-button" style={{ padding: "5px" }}>
-                  <button onClick={togglePerformanceImprovement}>Team Performance</button>
-                  <button onClick={toggleAttendance}> Team Attendance </button>
+                  {userType === 'Recruiters' ? (
+                    <>
+                      <button onClick={togglePerformanceImprovement}>Your Performance</button>
+                      <button onClick={toggleAttendance}>Your Attendance</button>
+                    </>
+                  ) : (
+                    <>
+                      <button onClick={togglePerformanceImprovement}>Team Performance</button>
+                      <button onClick={toggleAttendance}>Team Attendance</button>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="employee-profile-emergency-education-details">
-                {/* Prachi EmployeeProfile 1/07 line no 205 to 210  */}
-
                 <div className="profile-back-button">
                   <button onClick={onClose}>
+                    Edit Profile
+                  </button>
+                  <button onClick={handleEditProfile}>
                     Close
                     <i className="fas fa-times"></i>
                   </button>
                 </div>
-
-
 
                 {/*End Prachi EmployeeProfile 1/07 line no 205 to 210  */}
 
@@ -523,11 +541,14 @@ const EmployeeProfileData = ({
               Attendance
             </button>
 
-            <button
-              onClick={toggleTeamDetails}
-              className="emp-pro-incentive">
-              Team Details
-            </button>
+            {/* {(userType === 'TeamLeader' || userType === 'Manager' || userType === 'SuperUser') && (
+  <button
+    onClick={toggleTeamDetails}
+    className="emp-pro-incentive">
+    Team Details
+  </button>
+)} */}
+
 
             <button
               onClick={viewMoreProfile}

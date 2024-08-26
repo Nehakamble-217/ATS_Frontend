@@ -504,13 +504,15 @@ const AddJobDescription = () => {
                 </div>
 
                 <div className="field">
+                  
                   <label>Position Overview:</label>
+                
                   <textarea
                     name="overview"
                     className="textarea"
                     value={formData.positionOverview.overview}
                     onChange={handlePositionOverviewChange}
-                    placeholder="Enter Position Overview"
+                    placeholder="Describe in only 50 Words"
                   />
                 </div>
               </div>
